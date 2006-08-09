@@ -31,6 +31,9 @@
    - No combining marks processing is done
 */
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 
 #include "my_global.h"
 #include "m_string.h"

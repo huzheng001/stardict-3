@@ -873,8 +873,8 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	gtk_widget_show_all(search_window);
 
 	//clock_t t=clock();
-	std::vector<gchar *> reslist[oLibs.ndicts()];
-	if (oLibs.LookupData(sWord, reslist, updateSearchDialog, &Dialog, &cancel)) {
+	std::vector< std::vector<gchar *> > reslist(oLibs.ndicts());
+	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
 		for (int i=0; i<oLibs.ndicts(); i++) {
 			if (!reslist[i].empty()) {
@@ -882,7 +882,7 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 				break;
 			}
 		}
-		oMidWin.oIndexWin.oListWin.SetTreeModel(reslist);
+		oMidWin.oIndexWin.oListWin.SetTreeModel(&reslist[0]);
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;

@@ -50,7 +50,10 @@ static void spawn_command(const gchar *exe, const gchar *arg)
 void play_wav_file(const std::string& filename)
 {
 #ifdef _WIN32
+//TODO: more good solution?
+#if !defined(_MSC_VER)
   PlaySound(filename.c_str(), 0, SND_ASYNC | SND_FILENAME);
+#endif
 #elif defined(CONFIG_GNOME)
   gnome_sound_play(filename.c_str());
 #else

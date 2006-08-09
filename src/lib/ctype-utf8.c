@@ -20,6 +20,10 @@
 
 /* Modified by Hu Zheng <huzheng_001@163.com> for StarDict. 2006.6.13 */
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include "my_global.h"
 #include "m_string.h"
 #include "m_ctype.h"
