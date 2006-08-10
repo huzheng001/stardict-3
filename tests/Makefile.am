@@ -1,4 +1,5 @@
-noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata
+noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata \
+	t_convert_old_ini
 EXTRA_DIST = sample1.ifo sample1.idx sample1.dict
 
 if GNOME_SUPPORT
@@ -23,7 +24,11 @@ t_query_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
 t_lookupdata_SOURCES = t_lookupdata.cpp
 t_lookupdata_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
 
+t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
+	$(top_builddir)/src/config_file.hpp \
+	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp
+
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a
 INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib
 
-TESTS = t_config_file t_dict t_query t_lookupdata
+TESTS = t_config_file t_convert_old_ini t_dict t_query t_lookupdata
