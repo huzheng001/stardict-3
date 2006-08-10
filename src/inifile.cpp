@@ -38,6 +38,7 @@ static const guchar OLD_STRING_SEP = 0xFF;
 static const gchar *myversion = "1.0";
 
 typedef ResourceWrapper<GError, GError, g_error_free> MyGError;
+typedef ResourceWrapper<gchar, void, g_free> GCharStr;
 
 void inifile::create_empty()
 {
@@ -52,7 +53,7 @@ void inifile::convert_from_old_version()
 	FILE *f = g_fopen(fname_.c_str(), "r+b");
 
 	if (!f) {
-		g_error(_("inifile: can not open %s\n"), fname_.c_str());
+		g_error(_(" can not open %s\n"), fname_.c_str());
 		exit(EXIT_FAILURE);
 	}
 	int ch;
@@ -61,7 +62,7 @@ void inifile::convert_from_old_version()
 			ch = NEW_STRING_SEP;
 		fseek(f, -1, SEEK_CUR);
 		if (fputc(ch, f) == EOF) {
-			g_error(_("inifile: can not write to %s\n"),
+			g_error(_("can not write to %s\n"),
 				fname_.c_str());
 			exit(EXIT_FAILURE);
 		}
@@ -69,6 +70,28 @@ void inifile::convert_from_old_version()
 	fprintf(f, "[stardict-private]\n version=%s\n", myversion);
 	fclose(f);
 		
+}
+
+void inifile::convert_from_locale_enc()
+{	
+	GCharStr data;
+	MyGError err;
+	if (!g_file_get_contents(fname_.c_str(), &data.get(), NULL, &err.get())) {
+		g_error(_("Can not read %s, reason %s\n"), fname_.c_str(),
+			err.get()->message);
+		exit(EXIT_SUCCESS);
+	}
+	GCharStr utfdata(g_locale_to_utf8(data.get(), -1, NULL, NULL, NULL));
+	if (!utfdata.get()) {
+		g_error(_("Can not convert ini file content to current locale\n"));
+		exit(EXIT_SUCCESS);
+	}
+
+	if (!g_file_set_contents(fname_.c_str(), utfdata.get(), -1, &err.get())) {
+		g_error("can not save content of ini file %s, reason %s\n",
+			fname_.c_str(), err.get()->message);
+		exit(EXIT_SUCCESS);
+	}
 }
 
 inifile::inifile(const std::string& path)
@@ -90,6 +113,11 @@ inifile::inifile(const std::string& path)
 		if (!g_key_file_load_from_file(gkeyfile_, path.c_str(),
 					       GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS |
 							     G_KEY_FILE_KEEP_TRANSLATIONS), &err.get())) {
+			if (err.get()->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
+				g_key_file_free(gkeyfile_);
+				convert_from_locale_enc();
+				continue;
+			}
 			g_error(_("Can not open config file: %s, reason: %s\n"),
 				path.c_str(), err.get()->message);
 			exit(EXIT_FAILURE);//just in case
@@ -101,7 +129,7 @@ inifile::inifile(const std::string& path)
 			g_free(version);
 			if (err.get()->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
 			    err.get()->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
-				g_error(_("inifile: internal error, reason: %s\n"),
+				g_error(_("internal error, reason: %s\n"),
 					err.get()->message);
 				exit(EXIT_FAILURE);//just in case
 			}
@@ -110,7 +138,7 @@ inifile::inifile(const std::string& path)
 			continue;
 		}
 		if (strcmp(version, myversion)) {			
-			g_error(_("inifile: unsupported ini file format\n"));
+			g_error(_("unsupported ini file format\n"));
 			exit(EXIT_FAILURE);			
 		}
 		done = true;
@@ -126,21 +154,21 @@ void inifile::save()
 		g_key_file_to_data(gkeyfile_, &len, &err));
 
 	if (err) {
-		g_warning(_("inifile: internal error, reason: %s\n"),
+		g_warning(_("internal error, reason: %s\n"),
 			  err->message);
 		g_error_free(err);
 		return;
 	}
 	FILE *f = g_fopen(fname_.c_str(), "w");
 	if (!f) {
-		g_warning(_("inifile: can not open file: %s\n"),
+		g_warning(_("can not open file: %s\n"),
 			  fname_.c_str());
 		return;
 	}
 	size_t writeb = fwrite(data.get(), 1, len, f);
 	fclose(f);
 	if (writeb < len)
-		g_warning(_("inifile: write to %s failed, instead of %lu,"
+		g_warning(_("write to %s failed, instead of %lu,"
 			    " we wrote %lu\n"), fname_.c_str(), gulong(len), gulong(writeb));
 }
 
@@ -157,7 +185,7 @@ static bool report_error(GError *err, const gchar *sect, const gchar *key)
 	    err->code == G_KEY_FILE_ERROR_GROUP_NOT_FOUND)
 		res = true;
 	else
-		g_warning("inifile: Can not read %s/%s value,"
+		g_warning("Can not read %s/%s value,"
 			  " reason %s\n", sect, key, err->message);
 	g_error_free(err);
 	return res;

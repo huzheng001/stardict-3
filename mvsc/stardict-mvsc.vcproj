@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;;&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\atk-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\cairo&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\pango-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\glib-2.0&quot;"
+				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src\win32&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;;&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\atk-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\cairo&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\pango-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\glib-2.0&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -199,10 +199,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\glib_wrapper.c"
-				>
-			</File>
-			<File
 				RelativePath="..\src\gtk_iskeyspressed.cpp"
 				>
 			</File>
@@ -259,6 +255,10 @@
 				>
 				<File
 					RelativePath="..\src\win32\clipboard.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\glib_wrapper.c"
 					>
 				</File>
 				<File
@@ -358,10 +358,6 @@
 			</File>
 			<File
 				RelativePath="..\src\conf.h"
-				>
-			</File>
-			<File
-				RelativePath=".\config.h"
 				>
 			</File>
 			<File
@@ -480,6 +476,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\config.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\data.hpp"
 					>
 				</File>
@@ -534,6 +534,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\stardictrc.rc"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

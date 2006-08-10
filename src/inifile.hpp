@@ -42,6 +42,7 @@ private:
 	void save();
 	void create_empty();
 	void convert_from_old_version();
+	void convert_from_locale_enc();
 };
 
 #endif//!_INIFILE_HPP_
