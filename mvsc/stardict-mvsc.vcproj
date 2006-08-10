@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\glib_wrapper.c"
+				>
+			</File>
+			<File
 				RelativePath="..\src\gtk_iskeyspressed.cpp"
 				>
 			</File>

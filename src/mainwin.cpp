@@ -656,8 +656,6 @@ void TopWin::InsertHisList(const gchar *word)
 
 void TopWin::SaveHistory()
 {
-//TODO: more good solution?
-#if !defined(_MSC_VER)
 	FILE *f=g_fopen(conf->get_string("/apps/stardict/preferences/dictionary/history").c_str(), "w");
 	if (!f)
 		return;
@@ -667,13 +665,10 @@ void TopWin::SaveHistory()
 		hist_list=g_list_next(hist_list);
 	}
 	fclose(f);
-#endif
 }
 
 void TopWin::LoadHistory()
 {
-//TODO: more good solution?
-#if !defined(_MSC_VER)
 	const gchar *filename = conf->get_string("/apps/stardict/preferences/dictionary/history").c_str();
 	struct stat stats;
 	if (g_stat (filename, &stats) == -1)
@@ -702,7 +697,6 @@ void TopWin::LoadHistory()
 	gtk_combo_set_popdown_strings(GTK_COMBO(WordCombo), HisList);
 	HisList = g_list_delete_link(HisList, HisList);
 	g_free(buffer);
-#endif
 }
 
 void TopWin::InsertBackList(const gchar *word)

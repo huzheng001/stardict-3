@@ -7,6 +7,7 @@
 #  define inline __inline
 #  define S_IRWXU 0
 #  define __attribute__(x) /**/
+#  define g_fopen my_g_fopen
 
 # include <math.h>
 static inline double round(double d)
