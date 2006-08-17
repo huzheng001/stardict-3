@@ -28,29 +28,29 @@
 
 gconf_file::gconf_file(const std::string& path)
 {
-  cfgname=path;
-  if ((gconf_client = gconf_client_get_default())==NULL)
-    g_warning("Cannot connect to gconf.\n");
-  else
-    gconf_client_add_dir(gconf_client, cfgname.c_str(), GCONF_CLIENT_PRELOAD_RECURSIVE, NULL);
+	cfgname=path;
+	if ((gconf_client = gconf_client_get_default())==NULL)
+		g_warning("Cannot connect to gconf.\n");
+	else
+		gconf_client_add_dir(gconf_client, cfgname.c_str(), GCONF_CLIENT_PRELOAD_RECURSIVE, NULL);
 }
 
 gconf_file::~gconf_file()
 {
 	for (std::vector<guint>::iterator it=notification_ids.begin();
-			 it!=notification_ids.end(); ++it)
+	     it!=notification_ids.end(); ++it)
 		gconf_client_notify_remove(gconf_client, *it);
 
 	if (!gconf_client)
 		return;
-  gconf_client_remove_dir(gconf_client, cfgname.c_str(), NULL);
-  g_object_unref(gconf_client);
+	gconf_client_remove_dir(gconf_client, cfgname.c_str(), NULL);
+	g_object_unref(gconf_client);
 }
 
 bool gconf_file::read_bool(const gchar *sect, const gchar *key, bool& val)
 {
-  if (!gconf_client)
-    return false;
+	if (!gconf_client)
+		return false;
   
 	std::string real_key(std::string(sect)+"/"+key);
 
@@ -66,7 +66,7 @@ bool gconf_file::read_bool(const gchar *sect, const gchar *key, bool& val)
 bool gconf_file::read_int(const gchar *sect, const gchar *key, int& val)
 {
 	if (!gconf_client)
-    return false;
+		return false;
 	std::string real_key(std::string(sect)+"/"+key);
 	GConfValue *gval=gconf_client_get(gconf_client, real_key.c_str(), NULL);
 	if (!gval)
@@ -80,10 +80,10 @@ bool gconf_file::read_int(const gchar *sect, const gchar *key, int& val)
 bool gconf_file::read_string(const gchar * sect, const gchar *key, std::string& val)
 {
 	if (!gconf_client)
-    return false;
+		return false;
 
 	std::string real_key(std::string(sect)+"/"+key);
-  gchar *gconf_val = gconf_client_get_string(gconf_client, real_key.c_str(), NULL);
+	gchar *gconf_val = gconf_client_get_string(gconf_client, real_key.c_str(), NULL);
 	if (gconf_val!=NULL) 
 		val=gconf_val;
 
@@ -95,7 +95,7 @@ bool gconf_file::read_string(const gchar * sect, const gchar *key, std::string& 
 bool gconf_file::read_strlist(const gchar * sect, const gchar * key, std::list<std::string>& slist)
 {
 	if (!gconf_client)
-    return false;  
+		return false;  
 
 	std::string real_key(std::string(sect)+"/"+key);
 	GSList  *gslist = gconf_client_get_list(gconf_client, real_key.c_str(), GCONF_VALUE_STRING, NULL);
@@ -116,29 +116,29 @@ bool gconf_file::read_strlist(const gchar * sect, const gchar * key, std::list<s
 
 void gconf_file::write_bool(const gchar *sect, const gchar *key, bool val)
 {
-if (!gconf_client)
-    return;
-  gchar *real_key=g_strdup_printf("%s/%s", sect, key);
-  gconf_client_set_bool(gconf_client, real_key, val, NULL);
-  g_free(real_key);
+	if (!gconf_client)
+		return;
+	gchar *real_key=g_strdup_printf("%s/%s", sect, key);
+	gconf_client_set_bool(gconf_client, real_key, val, NULL);
+	g_free(real_key);
 }
 
 void gconf_file::write_int(const gchar *sect, const gchar *key, int val)
 {
 	if (!gconf_client)
 		return;
-  gchar *real_key=g_strdup_printf("%s/%s", sect, key);
-  gconf_client_set_int(gconf_client, real_key, val, NULL);
-  g_free(real_key);
+	gchar *real_key=g_strdup_printf("%s/%s", sect, key);
+	gconf_client_set_int(gconf_client, real_key, val, NULL);
+	g_free(real_key);
 }
 
 void gconf_file::write_string(const gchar *sect, const gchar *key, const std::string& val)
 {
 	if(!gconf_client)
-    return;
-  gchar *real_key=g_strdup_printf("%s/%s", sect, key);
-  gconf_client_set_string(gconf_client, real_key, val.c_str(), NULL);
-  g_free(real_key);
+		return;
+	gchar *real_key=g_strdup_printf("%s/%s", sect, key);
+	gconf_client_set_string(gconf_client, real_key, val.c_str(), NULL);
+	g_free(real_key);
 }
 
 void gconf_file::write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist)
@@ -146,49 +146,58 @@ void gconf_file::write_strlist(const gchar *sect, const gchar *key, const std::l
 	if (!gconf_client)
 		return;
 
- GSList *gslist = NULL;
- for (std::list<std::string>::const_iterator p=slist.begin(); p!=slist.end(); ++p)
-	 gslist = g_slist_append(gslist, const_cast<char *>(p->c_str()));
+	GSList *gslist = NULL;
+	for (std::list<std::string>::const_iterator p = slist.begin();
+	     p!=slist.end(); ++p)
+		gslist = g_slist_append(gslist, const_cast<char *>(p->c_str()));
  
- gchar *real_key=g_strdup_printf("%s/%s", sect, key);
- gconf_client_set_list(gconf_client, real_key, GCONF_VALUE_STRING, gslist, NULL);
- g_free(real_key);
- g_slist_free(gslist);
+	gchar *real_key=g_strdup_printf("%s/%s", sect, key);
+	gconf_client_set_list(gconf_client, real_key, GCONF_VALUE_STRING, gslist, NULL);
+	g_free(real_key);
+	g_slist_free(gslist);
 }
 
 static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
-																		 GConfEntry *entry, gpointer user_data)
+				     GConfEntry *entry, gpointer user_data)
 {
-	change_handler<const baseconfval *> *ch=static_cast<change_handler<const baseconfval *> *>(user_data);
+	change_handler<const baseconfval *> *ch =
+		static_cast<change_handler<const baseconfval *> *>(user_data);
 	std::auto_ptr<baseconfval> cv;
 	switch (entry->value->type) {
 	case GCONF_VALUE_BOOL:
 		cv.reset(new confval<bool>);
-		static_cast<confval<bool> *>(cv.get())->val=gconf_value_get_bool(entry->value);
+		static_cast<confval<bool> *>(cv.get())->val_ =
+			gconf_value_get_bool(entry->value);
 		break;
 	case GCONF_VALUE_INT:
 		cv.reset(new confval<int>);
-		static_cast<confval<int> *>(cv.get())->val=gconf_value_get_int(entry->value);
+		static_cast<confval<int> *>(cv.get())->val_ =
+			gconf_value_get_int(entry->value);
 		break;
 	case GCONF_VALUE_STRING: {
 		cv.reset(new confval<std::string>);
-		const gchar *gconf_val=gconf_value_get_string(entry->value);
+		const gchar *gconf_val = gconf_value_get_string(entry->value);
 		if (gconf_val)
-			static_cast<confval<std::string> *>(cv.get())->val=gconf_val;		
+			static_cast<confval<std::string> *>(cv.get())->val_ =
+				gconf_val;		
 	}
 	case GCONF_VALUE_LIST: {
-		cv.reset(new confval<std::list<std::string> >);
-		GSList *gslist=gconf_value_get_list(entry->value);
+		confval<std::list<std::string> > *newval = 
+			new confval<std::list<std::string> >;
+		cv.reset(newval);
+		GSList *gslist = gconf_value_get_list(entry->value);
 		
+
 		GSList *p = gslist; 
 		while (p) {
-			static_cast< confval<std::list<std::string> > *>(cv.get())->val.push_back(static_cast<char *>(p->data));
-			p=g_slist_next(p);
+			newval->val_.push_back(static_cast<char *>(p->data));
+			p = g_slist_next(p);
 		}
 		
 	}
 		break;
 	default:
+		g_assert(false);
 		return;
 	}
 	(*ch)(cv.get());
@@ -196,18 +205,21 @@ static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
 
 static void gfree_func(gpointer data)
 {
-	change_handler<baseconfval> *bcv=static_cast<change_handler<baseconfval> *>(data);
+	change_handler<baseconfval> *bcv =
+		static_cast<change_handler<baseconfval> *>(data);
 	delete bcv;
 }
 
 void gconf_file::notify_add(const gchar *sect, const gchar *key, 
-														void (*on_change)(const baseconfval*, void *), void *arg)
+			    void (*on_change)(const baseconfval*, void *), void *arg)
 {
 	std::string name(std::string(sect)+"/"+key);
-	change_handler<const baseconfval *> *ch=new change_handler<const baseconfval*>;
+	change_handler<const baseconfval *> *ch =
+		new change_handler<const baseconfval*>;
 	ch->on_change=on_change;
 	ch->arg=arg;
 	guint id=gconf_client_notify_add(gconf_client, name.c_str(), 
-																	 gconf_client_notify_func, ch, gfree_func, NULL);
+					 gconf_client_notify_func, ch,
+					 gfree_func, NULL);
 	notification_ids.push_back(id);
 }

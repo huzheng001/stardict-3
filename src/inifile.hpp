@@ -35,8 +35,7 @@ private:
 			change_events_map_.find(name);
 		if (p == change_events_map_.end())
 			return;
-		confval<T> cv;
-		cv.val = val;
+		confval<T> cv(val);
 		p->second(&cv);
 	}
 	void save();

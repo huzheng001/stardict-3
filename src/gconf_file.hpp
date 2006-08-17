@@ -13,16 +13,16 @@ public:
 	explicit gconf_file(const std::string& path);
 	~gconf_file();
 	bool read_bool(const gchar *sect, const gchar *key, bool& val);
-  bool read_int(const gchar *sect, const gchar *key, int& val);
-  bool read_string(const gchar * sect, const gchar *key, std::string& val);
-  bool read_strlist(const gchar * sect, const gchar * key, std::list<std::string>& slist);
+	bool read_int(const gchar *sect, const gchar *key, int& val);
+	bool read_string(const gchar *, const gchar *, std::string&);
+	bool read_strlist(const gchar *, const gchar *, std::list<std::string>&);
 
-  void write_bool(const gchar *sect, const gchar *key, bool val);
-  void write_int(const gchar *sect, const gchar *key, int val);
-  void write_string(const gchar *sect, const gchar *key, const std::string& val);
-  void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
+	void write_bool(const gchar *sect, const gchar *key, bool val);
+	void write_int(const gchar *sect, const gchar *key, int val);
+	void write_string(const gchar *sect, const gchar *key, const std::string& val);
+	void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
 	void notify_add(const gchar *sect, const gchar *key, 
-									void (*on_change)(const baseconfval*, void *), void *arg);
+			void (*on_change)(const baseconfval*, void *), void *arg);
 private:
 	std::string cfgname;
 	GConfClient *gconf_client;

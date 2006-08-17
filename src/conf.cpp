@@ -22,6 +22,8 @@
 #endif
 
 #include <glib/gi18n.h>
+#include <cstring>
+
 #include "class_factory.hpp"
 #include "utils.h"
 
@@ -142,63 +144,28 @@ static std::pair<std::string, std::string> split(const std::string& s)
 	return res;
 }
 //---------------------------------------------------------------------------------
-void AppConf::save_value(const std::string& name, const baseconfval* cv) 
-{
-	std::pair<std::string, std::string> split_name = split(name);
-	switch (cv->type) {
-	case baseconfval::BOOL_TYPE:
-		cf->write_bool(split_name.first.c_str(), split_name.second.c_str(), 
-									 static_cast<const confval<bool> *>(cv)->val);
-		break;
-	case baseconfval::INT_TYPE:
-		cf->write_int(split_name.first.c_str(), split_name.second.c_str(), 
-									static_cast<const confval<int> *>(cv)->val);
-		break;
-	case baseconfval::STRING_TYPE:
-		cf->write_string(split_name.first.c_str(), split_name.second.c_str(), 
-										 static_cast<const confval<std::string> *>(cv)->val);
-		break;
-	case baseconfval::STRLIST_TYPE:
-		cf->write_strlist(split_name.first.c_str(), split_name.second.c_str(), 
-											static_cast<const confval<std::list<std::string> > *>(cv)->val);
-		break;
-	default:
-		/*nothing*/;
-	}
-}
+
 //---------------------------------------------------------------------------------
-void AppConf::notify_add(const std::string& name, void (*on_change)(const baseconfval*, void *), void *arg)
+void AppConf::notify_add(const char *name, void (*on_change)(const baseconfval*, void *), void *arg)
 {
 	std::pair<std::string, std::string> split_name = split(name);
 	cf->notify_add(split_name.first.c_str(), split_name.second.c_str(), on_change, arg);
 }
 //---------------------------------------------------------------------------------
 //load preference
-void AppConf::Load(void)
+void AppConf::Load()
 {	
 	for (cache_t::iterator p=cache.begin(); p!=cache.end(); ++p) {
 		std::pair<std::string, std::string> name = split(p->first);	
-		switch (p->second->type) {
-		case baseconfval::BOOL_TYPE:
-			cf->read_bool(name.first.c_str(), name.second.c_str(), static_cast<confval<bool> *>(p->second)->val);
-			break;
-		case baseconfval::INT_TYPE:
-			cf->read_int(name.first.c_str(), name.second.c_str(), static_cast<confval<int> *>(p->second)->val);
-			break;
-		case baseconfval::STRING_TYPE:
-			cf->read_string(name.first.c_str(), name.second.c_str(), static_cast<confval<std::string> *>(p->second)->val);
-			break;
-		case baseconfval::STRLIST_TYPE:
-			cf->read_strlist(name.first.c_str(), name.second.c_str(), static_cast<confval<std::list<std::string> > *>(p->second)->val);
-			break;
-		default:
-			/*nothing*/;
-		}
+		p->second->load(*cf, name.first.c_str(), name.second.c_str());
 	}
-	const std::list<std::string> &list= get_strlist("/apps/stardict/preferences/main_window/search_website_list");
+	const std::list<std::string> &list=
+		get_strlist("/apps/stardict/preferences/main_window/search_website_list");
 	if (list.empty()) {
-		cache_t::iterator p=cache.find("/apps/stardict/preferences/main_window/search_website_list");
-		static_cast<confval< std::list<std::string> > *>(p->second)->val=get_default_search_website_list();
+		cache_t::iterator p =
+			cache.find("/apps/stardict/preferences/main_window/search_website_list");
+		static_cast<confval< std::list<std::string> > *>(p->second)->val_ =
+			get_default_search_website_list();
 	}
 }
 //---------------------------------------------------------------------------------
@@ -241,6 +208,7 @@ std::list<std::string> AppConf::get_default_search_website_list()
 		"Yahoo	http://search.yahoo.com	http://search.yahoo.com/bin/search?p=%s\n"
 		"CMU	http://www.speech.cs.cmu.edu	http://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"	
 		);
+//TODO: use split instead?
 	gchar *p = default_website;
 	gchar *p1;
 	std::list<std::string> list;

@@ -110,9 +110,9 @@ public:
 /********************************************************************/
 AppCore::AppCore() :
 	oLibs(&gtk_show_progress,
-	      conf->get_bool("/apps/stardict/preferences/dictionary/create_cache_file"),
-	      conf->get_bool("/apps/stardict/preferences/dictionary/enable_collation"),
-	      conf->get_int("/apps/stardict/preferences/dictionary/collate_function"))
+	      conf->get_bool_at("dictionary/create_cache_file"),
+	      conf->get_bool_at("dictionary/enable_collation"),
+	      conf->get_int_at("dictionary/collate_function"))
 {
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
@@ -143,8 +143,8 @@ void AppCore::Create(gchar *queryword)
 	oLibs.set_show_progress(&gtk_show_progress);
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
-	if (conf->get_bool("/apps/stardict/preferences/dictionary/use_custom_font")) {
-		const std::string &custom_font(conf->get_string("/apps/stardict/preferences/dictionary/custom_font"));
+	if (conf->get_bool_at("dictionary/use_custom_font")) {
+		const std::string &custom_font(conf->get_string_at("dictionary/custom_font"));
 
 		if (!custom_font.empty())	{
 			gchar *aa =
@@ -158,10 +158,10 @@ void AppCore::Create(gchar *queryword)
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window),2);
-	bool maximized=conf->get_bool("/apps/stardict/preferences/main_window/maximized");
+	bool maximized=conf->get_bool_at("main_window/maximized");
 
-	int width=conf->get_int("/apps/stardict/preferences/main_window/window_width");
-	int height=conf->get_int("/apps/stardict/preferences/main_window/window_height");
+	int width=conf->get_int_at("main_window/window_width");
+	int height=conf->get_int_at("main_window/window_height");
 
 	if (width < MIN_WINDOW_WIDTH)
 		width = MIN_WINDOW_WIDTH;
@@ -187,7 +187,7 @@ void AppCore::Create(gchar *queryword)
 	oMidWin.Create(vbox);
 	oBottomWin.Create(vbox);
 	unlock_keys.reset(static_cast<hotkeys *>(stardict_class_factory::create_class_by_name("hotkeys", GTK_WINDOW(window))));
-	unlock_keys->set_comb(combnum2str(conf->get_int("/apps/stardict/preferences/dictionary/scan_modifier_key")));
+	unlock_keys->set_comb(combnum2str(conf->get_int_at("dictionary/scan_modifier_key")));
 	oFloatWin.Create();
 #ifdef _WIN32
 	oDockLet.init();
@@ -200,24 +200,24 @@ void AppCore::Create(gchar *queryword)
 	oMouseover.Init();
 	oHotkey.Init();
 #endif
-	bool scan=conf->get_bool("/apps/stardict/preferences/dictionary/scan_selection");
+	bool scan=conf->get_bool_at("dictionary/scan_selection");
 	if (scan) {
 		oSelection.start();
 #ifdef _WIN32
-		if (conf->get_bool("/apps/stardict/preferences/dictionary/scan_clipboard")) {
+		if (conf->get_bool_at("dictionary/scan_clipboard")) {
 			oClipboard.start();
 		}
 		oMouseover.start();
 #endif
 	}
 #ifdef _WIN32
-	if (conf->get_bool("/apps/stardict/preferences/dictionary/use_scan_hotkey"))
+	if (conf->get_bool_at("dictionary/use_scan_hotkey"))
 		oHotkey.start_scan();
-	if (conf->get_bool("/apps/stardict/preferences/dictionary/use_mainwindow_hotkey"))
+	if (conf->get_bool_at("dictionary/use_mainwindow_hotkey"))
 		oHotkey.start_mainwindow();
 #endif
 
-	bool hide=conf->get_bool("/apps/stardict/preferences/main_window/hide_on_startup");
+	bool hide=conf->get_bool_at("main_window/hide_on_startup");
 
 	//NOTICE: when docklet embedded failed,it should always show the window,but,how to detect the failure?
 	// As stardict is FOR GNOME,so i don't want to consider the case that haven't the Notification area applet.
@@ -261,7 +261,7 @@ gboolean AppCore::on_window_state_event(GtkWidget * window, GdkEventWindowState 
 {
 	if (event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN) {
 		if (event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) {
-			if (conf->get_bool("/apps/stardict/preferences/dictionary/scan_selection"))
+			if (conf->get_bool_at("dictionary/scan_selection"))
 				gpAppFrame->oDockLet.SetIcon(DOCKLET_SCAN_ICON);
 			else
 				gpAppFrame->oDockLet.SetIcon(DOCKLET_STOP_ICON);
@@ -281,7 +281,7 @@ gboolean AppCore::on_window_state_event(GtkWidget * window, GdkEventWindowState 
 			}
 		}
 	}	else if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED)
-	  conf->set_bool("/apps/stardict/preferences/main_window/maximized",
+	  conf->set_bool_at("main_window/maximized",
 									 (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED));
 
 	return false;
@@ -361,7 +361,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		oAppCore->oTopWin.InsertBackList();
 		gchar str[2] = { event->keyval, '\0' };
 		gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
-		oAppCore->oTopWin.SetText(str, conf->get_bool("/apps/stardict/preferences/main_window/search_while_typing"));
+		oAppCore->oTopWin.SetText(str, conf->get_bool_at("main_window/search_while_typing"));
 		gtk_editable_set_position(GTK_EDITABLE(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry), 1);
 	} else if (event->type==GDK_KEY_PRESS && event->keyval == GDK_BackSpace &&
 			!oAppCore->oTopWin.HasFocus() &&
@@ -1087,9 +1087,9 @@ void AppCore::TopWinEnterWord(const gchar *text)
 		LookupDataToMainWin(res.c_str());
 		break;
 	default:
-		if (!conf->get_bool("/apps/stardict/preferences/main_window/search_while_typing")) {
+		if (!conf->get_bool_at("main_window/search_while_typing")) {
 			if (oMidWin.oTextWin.queryWord != res) {
-				bool showfirst = conf->get_bool("/apps/stardict/preferences/main_window/showfirst_when_notfound");
+				bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
 				bool find = SimpleLookupToTextWin(res.c_str(), iCurrentIndex, NULL, true, !showfirst);
 				ListWords(res.c_str(), iCurrentIndex, !find && showfirst);
 				gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(oTopWin.WordCombo)->entry),0,-1);
@@ -1173,7 +1173,7 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 			oMidWin.oTextWin.Show(_("Full-text search..."));
 		break;
 	default:
-		bool showfirst = conf->get_bool("/apps/stardict/preferences/main_window/showfirst_when_notfound");
+		bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
 		bool find = SimpleLookupToTextWin(res.c_str(), iCurrentIndex, NULL, true, !showfirst);
 		ListWords(res.c_str(), iCurrentIndex, !find && showfirst);
 	}
@@ -1271,16 +1271,16 @@ void AppCore::PopupPrefsDlg()
 				   gpAppFrame->oAppSkin.icon.get(),
 				   unlock_keys->possible_combs());
 		bool enbcol =
-			conf->get_bool("/apps/stardict/preferences/dictionary/enable_collation");
+			conf->get_bool_at("dictionary/enable_collation");
 		int colf =
-			conf->get_int("/apps/stardict/preferences/dictionary/collate_function");
+			conf->get_int_at("dictionary/collate_function");
 		bool exiting = prefs_dlg->ShowModal();
 		delete prefs_dlg;
 		prefs_dlg = NULL;
 		if (exiting)
 			return;
-		if (enbcol == conf->get_bool("/apps/stardict/preferences/dictionary/enable_collation") &&
-		    colf == conf->get_int("/apps/stardict/preferences/dictionary/collate_function"))
+		if (enbcol == conf->get_bool_at("dictionary/enable_collation") &&
+		    colf == conf->get_int_at("dictionary/collate_function"))
 			return;
 		progress_win pw;
 		reload_show_progress_t rsp(pw);
@@ -1295,8 +1295,8 @@ void AppCore::reload_dicts()
 	oLibs.reload(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"),
 		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list"),
-		     conf->get_bool("/apps/stardict/preferences/dictionary/enable_collation"),
-		     conf->get_int("/apps/stardict/preferences/dictionary/collate_function"));
+		     conf->get_bool_at("dictionary/enable_collation"),
+		     conf->get_int_at("dictionary/collate_function"));
 	g_free(iCurrentIndex);
 	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
 	const gchar *sWord=NULL;
@@ -1395,20 +1395,20 @@ void AppFrame::Init(gchar *queryword)
 void AppFrame::Quit()
 {
 
-	if (!conf->get_bool("/apps/stardict/preferences/main_window/maximized")) {
+	if (!conf->get_bool_at("main_window/maximized")) {
 		gint width, height;
 		gtk_window_get_size(GTK_WINDOW(window), &width, &height);
-    conf->set_int("/apps/stardict/preferences/main_window/window_width", width);
-    conf->set_int("/apps/stardict/preferences/main_window/window_height", height);
+    conf->set_int_at("main_window/window_width", width);
+    conf->set_int_at("main_window/window_height", height);
 	}
 	gint pos = gtk_paned_get_position(GTK_PANED(oMidWin.hpaned));
-  conf->set_int("/apps/stardict/preferences/main_window/hpaned_pos", pos);
+  conf->set_int_at("main_window/hpaned_pos", pos);
 
-	if (conf->get_bool("/apps/stardict/preferences/floating_window/lock")) {
+	if (conf->get_bool_at("floating_window/lock")) {
 		gint x, y;
 		gtk_window_get_position(GTK_WINDOW(oFloatWin.FloatWindow), &x, &y);
-    conf->set_int("/apps/stardict/preferences/floating_window/lock_x", x);
-    conf->set_int("/apps/stardict/preferences/floating_window/lock_y", y);
+    conf->set_int_at("floating_window/lock_x", x);
+    conf->set_int_at("floating_window/lock_y", y);
 	}
 
 	End();
@@ -1424,7 +1424,7 @@ void AppFrame::Quit()
 void AppFrame::on_main_win_hide_list_changed(const baseconfval* hideval, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	bool hide=static_cast<const confval<bool> *>(hideval)->val;
+	bool hide = static_cast<const confval<bool> *>(hideval)->val_;
 	if (hide) {
 		gtk_widget_hide(app->oMidWin.oToolWin.HideListButton);
 		gtk_widget_show(app->oMidWin.oToolWin.ShowListButton);
@@ -1439,7 +1439,7 @@ void AppFrame::on_main_win_hide_list_changed(const baseconfval* hideval, void *a
 void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	bool scan=static_cast<const confval<bool> *>(scanval)->val;
+	bool scan=static_cast<const confval<bool> *>(scanval)->val_;
 
 	gtk_widget_set_sensitive(app->oFloatWin.StopButton, scan);
 	if (scan != gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->oBottomWin.ScanSelectionCheckButton)))
@@ -1448,12 +1448,12 @@ void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg
 	if (scan) {
 		if (!GTK_WIDGET_VISIBLE(app->window))
 			app->oDockLet.SetIcon(DOCKLET_SCAN_ICON);
-		bool lock=conf->get_bool("/apps/stardict/preferences/floating_window/lock");
+		bool lock=conf->get_bool_at("floating_window/lock");
 		if (lock && !app->oFloatWin.QueryingWord.empty())
 			app->oFloatWin.Show();
 		app->oSelection.start();
 #ifdef _WIN32
-		if (conf->get_bool("/apps/stardict/preferences/dictionary/scan_clipboard")) {
+		if (conf->get_bool_at("dictionary/scan_clipboard")) {
 			app->oClipboard.start();
 		}
 		app->oMouseover.start();
@@ -1464,7 +1464,7 @@ void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg
 		app->oFloatWin.Hide();
 		app->oSelection.stop();
 #ifdef _WIN32
-		if (conf->get_bool("/apps/stardict/preferences/dictionary/scan_clipboard")) {
+		if (conf->get_bool_at("dictionary/scan_clipboard")) {
 			app->oClipboard.stop();
 		}
 		app->oMouseover.stop();
@@ -1475,7 +1475,7 @@ void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg
 void AppFrame::on_floatwin_lock_changed(const baseconfval* lockval, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	bool lock=static_cast<const confval<bool> *>(lockval)->val;
+	bool lock=static_cast<const confval<bool> *>(lockval)->val_;
   if (lock)
     gtk_image_set_from_stock(GTK_IMAGE(app->oFloatWin.lock_image),GTK_STOCK_GOTO_LAST,GTK_ICON_SIZE_MENU);
   else
@@ -1485,8 +1485,8 @@ void AppFrame::on_floatwin_lock_changed(const baseconfval* lockval, void *arg)
 void AppFrame::on_floatwin_lock_x_changed(const baseconfval* lock_x_val, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	int lock_x=static_cast<const confval<int> *>(lock_x_val)->val;
-	if (conf->get_bool("/apps/stardict/preferences/floating_window/lock")) {
+	int lock_x=static_cast<const confval<int> *>(lock_x_val)->val_;
+	if (conf->get_bool_at("floating_window/lock")) {
     gint old_x, old_y;
     gtk_window_get_position(GTK_WINDOW(app->oFloatWin.FloatWindow), &old_x, &old_y);
     if (lock_x!=old_x)
@@ -1497,9 +1497,9 @@ void AppFrame::on_floatwin_lock_x_changed(const baseconfval* lock_x_val, void *a
 void AppFrame::on_floatwin_lock_y_changed(const baseconfval* lock_y_val, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	int lock_y=static_cast<const confval<int> *>(lock_y_val)->val;
+	int lock_y=static_cast<const confval<int> *>(lock_y_val)->val_;
 
-	if (conf->get_bool("/apps/stardict/preferences/floating_window/lock")) {
+	if (conf->get_bool_at("floating_window/lock")) {
     gint old_x,old_y;
     gtk_window_get_position(GTK_WINDOW(app->oFloatWin.FloatWindow), &old_x, &old_y);
     if (lock_y!=old_y)
@@ -1510,7 +1510,7 @@ void AppFrame::on_floatwin_lock_y_changed(const baseconfval* lock_y_val, void *a
 void AppFrame::on_scan_modifier_key_changed(const baseconfval* keyval, void *arg)
 {
 	AppFrame *app = static_cast<AppFrame *>(arg);
-	int key=static_cast<const confval<int> *>(keyval)->val;
+	int key=static_cast<const confval<int> *>(keyval)->val_;
 	app->unlock_keys->set_comb(combnum2str(key));
 }
 

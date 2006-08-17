@@ -9,7 +9,6 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <typeinfo>
 
 
 #include "config_file.hpp"
@@ -24,9 +23,13 @@ const int DEFAULT_MAX_FLOATWIN_WIDTH=320; // This is the lable's width in fact.
 const int DEFAULT_MAX_FLOATWIN_HEIGHT=240;
 #endif
 
+template <typename T>
+struct Type2Type {
+	typedef T OriginType;
+};
 
 /*
- * AppConf class encapsulate 
+ * AppConf class encapsulate
  * all preference of stardict.
 */
 
@@ -34,89 +37,112 @@ class AppConf {
 public:
 	AppConf();
 	~AppConf();
-  void Load();
-	
+	void Load();
+
 	typedef std::map<std::string, baseconfval *> cache_t;
 
-	const bool& get_bool(const std::string& name) const {
-		static bool empty;
-		cache_t::const_iterator p=cache.find(name);
-		if (p!=cache.end())
-			return static_cast<confval<bool> *>(p->second)->val;
-		return empty;
+	bool get_bool(const char *name) const {
+		return get(name, Type2Type<bool>());
+	}
+	bool get_bool_at(const char *name) const {
+		return get_at(name, Type2Type<bool>());
 	}
 
-	const int& get_int(const std::string& name) const {
-		static int empty;
-		cache_t::const_iterator p=cache.find(name);
-		if (p!=cache.end())
-			return static_cast<confval<int> *>(p->second)->val;
-		return empty;
+	int get_int(const char *name) const {
+		return get(name, Type2Type<int>());
 	}
 
-	const std::string& get_string(const std::string& name) const {
-		static std::string empty;
-		cache_t::const_iterator p=cache.find(name);
-		if (p!=cache.end())
-			return static_cast<confval<std::string> *>(p->second)->val;
-		return empty;
+	int get_int_at(const char *name) const {
+		return get_at(name, Type2Type<int>());
 	}
 
-	const std::list<std::string>& get_strlist(const std::string& name) const {
-		static std::list<std::string> empty;
-		cache_t::const_iterator p=cache.find(name);
-		if (p!=cache.end())
-			return static_cast<confval<std::list<std::string> > *>(p->second)->val;
-		return empty;
+	const std::string& get_string(const char *name) const {
+		return get(name, Type2Type<std::string>());
 	}
 
-	void set_bool(const std::string& name, const bool& v) {
+	const std::string& get_string_at(const char *name) const {
+		return get_at(name, Type2Type<std::string>());
+	}
+
+	const std::list<std::string>& get_strlist(const char *name) const {
+		return get(name, Type2Type< std::list<std::string> >());
+	}
+
+	const std::list<std::string>& get_strlist_at(const char *name) const {
+		return get_at(name, Type2Type< std::list<std::string> >());
+	}
+
+	void set_bool(const char *name, const bool& v) {
 		set_value(name, v);
 	}
 
-	void set_int(const std::string& name, const int& v) {
+	void set_bool_at(const char *name, const bool& v) {
+		set_value(name, v, false);
+	}
+
+	void set_int(const char *name, const int& v) {
 		set_value(name, v);
 	}
 
-	void set_string(const std::string& name, const std::string& v) {
+	void set_int_at(const char *name, const int& v) {
+		set_value(name, v, false);
+	}
+
+	void set_string(const char *name, const std::string& v) {
 		set_value(name, v);
 	}
 
-	void set_strlist(const std::string& name, const std::list<std::string>& v) {
+	void set_string_at(const char *name, const std::string& v) {
+		set_value(name, v, false);
+	}
+
+	void set_strlist(const char *name, const std::list<std::string>& v) {
 		set_value(name, v);
 	}
-	
+
+	void set_strlist_at(const char *name, const std::list<std::string>& v) {
+		set_value(name, v, false);
+	}
+
 	template <typename T>
-	void add_entry(const std::string& name, const T& def_val)
-	{
-		confval<T> *v=new confval<T>;
-		if (typeid(T)==typeid(bool))
-			v->type=baseconfval::BOOL_TYPE;
-		else if (typeid(T)==typeid(int))
-			v->type=baseconfval::INT_TYPE;
-		else if (typeid(T)==typeid(std::string))
-			v->type=baseconfval::STRING_TYPE;
-		else if (typeid(T)==typeid(std::list<std::string>))
-			v->type=baseconfval::STRLIST_TYPE;
-		v->val=def_val;
-		cache[name]=v;
+	void add_entry(const char *name, const T& def_val) {
+		confval<T> *v = new confval<T>(def_val);
+		g_assert(v->type_ != baseconfval::UNKNOWN_TYPE);
+		cache[name] = v;
 	}
-	void notify_add(const std::string& name, void (*on_change)(const baseconfval*, void *), void *arg);
+	void notify_add(const char * name, void (*on_change)(const baseconfval*, void *), void *arg);
 private:
 	std::auto_ptr<config_file> cf;
-	cache_t cache;	
+	cache_t cache;
 
 	template <typename T>
-	void set_value(const std::string& name, const T& val) {
-		cache_t::iterator p=cache.find(name);
-		if (p==cache.end())
-			return;
-		if (static_cast<confval<T> *>(p->second)->val==val)
+	void set_value(const char *name, const T& val, bool abs = true) {
+		cache_t::iterator p;
+		p = abs ? cache.find(name) : 
+			cache.find(std::string("/apps/stardict/preferences/") +
+				   name);
+		if (p == cache.end() ||
+		    static_cast<confval<T> *>(p->second)->val_ == val)
 			return;
 
-		static_cast<confval<T> *>(p->second)->val=val;
-		save_value(name, p->second);
-	}    	
+		confval<T> *cfgval = static_cast<confval<T> *> (p->second);
+		cfgval->val_ = val;
+
+		size_t len = strlen(name);
+		const char *key = static_cast<char *>(memrchr(name, '/', len));
+		if (!key)
+			key = name + len;
+		std::string sect(name, 0, key - name);
+		if (!*key)
+			key = "";
+		else
+			++key;
+		if (!abs)
+			sect = "/apps/stardict/preferences/" + sect;
+
+		cfgval->save(*cf, sect.c_str(), key);
+	}
+
 	static std::string get_default_history_filename();
 	static std::string get_default_export_filename();
 	static std::list<std::string> get_default_search_website_list();
@@ -124,7 +150,21 @@ private:
 	static bool get_win32_use_custom_font();
 	static std::string get_win32_custom_font();
 #endif
-	void save_value(const std::string& name, const baseconfval* cv);
+
+	template <typename T>
+	const T& get(const char *name, Type2Type<T>) const {
+		static T empty;
+		cache_t::const_iterator p = cache.find(name);
+		if (p != cache.end())
+			return static_cast<confval<T> *>(p->second)->val_;
+		return empty;
+	}
+
+	template <typename T>
+	const T& get_at(const char *name, Type2Type<T>) const {
+		return get((std::string("/apps/stardict/preferences/") +
+			    name).c_str(), Type2Type<T>());
+	}
 };
 
 extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
