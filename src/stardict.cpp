@@ -68,7 +68,7 @@ HINSTANCE stardictexe_hInstance;
 
 #include "stardict.h"
 
-AppFrame * gpAppFrame;
+AppCore *gpAppFrame;
 
 static gboolean hide_option = FALSE;
 
@@ -117,10 +117,16 @@ AppCore::AppCore() :
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
 	prefs_dlg = NULL;
+#ifdef CONFIG_GNOME
+    gnome_sound_init(NULL);
+#endif
 }
 
 AppCore::~AppCore()
 {
+#ifdef CONFIG_GNOME
+	gnome_sound_shutdown();
+#endif
 	delete dict_manage_dlg;
 	delete prefs_dlg;
 	g_free(iCurrentIndex);
@@ -189,11 +195,8 @@ void AppCore::Create(gchar *queryword)
 	unlock_keys.reset(static_cast<hotkeys *>(stardict_class_factory::create_class_by_name("hotkeys", GTK_WINDOW(window))));
 	unlock_keys->set_comb(combnum2str(conf->get_int_at("dictionary/scan_modifier_key")));
 	oFloatWin.Create();
-#ifdef _WIN32
-	oDockLet.init();
-#else
 	oDockLet.Create();
-#endif
+
 	oSelection.Init();
 #ifdef _WIN32
 	oClipboard.Init();
@@ -252,7 +255,7 @@ gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore 
 	if (oAppCore->oDockLet.embedded)
 		gtk_widget_hide(oAppCore->window);
 	else
-		gpAppFrame->Quit();
+		oAppCore->Quit();
 #endif
 	return true;
 }
@@ -1347,23 +1350,7 @@ void AppCore::End()
 	gtk_widget_destroy(window);
 }
 
-
-/***************************************************/
-AppFrame::AppFrame()
-{
-#ifdef CONFIG_GNOME
-    gnome_sound_init(NULL);
-#endif
-}
-
-AppFrame::~AppFrame()
-{
-#ifdef CONFIG_GNOME
-	gnome_sound_shutdown();
-#endif
-}
-
-void AppFrame::Init(gchar *queryword)
+void AppCore::Init(gchar *queryword)
 {
 	conf->notify_add("/apps/stardict/preferences/main_window/hide_list",
 									 on_main_win_hide_list_changed, this);
@@ -1392,7 +1379,7 @@ void AppFrame::Init(gchar *queryword)
 	gtk_main();
 }
 
-void AppFrame::Quit()
+void AppCore::Quit()
 {
 
 	if (!conf->get_bool_at("main_window/maximized")) {
@@ -1421,9 +1408,9 @@ void AppFrame::Quit()
 	 gtk_main_quit();
 }
 
-void AppFrame::on_main_win_hide_list_changed(const baseconfval* hideval, void *arg)
+void AppCore::on_main_win_hide_list_changed(const baseconfval* hideval, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	bool hide = static_cast<const confval<bool> *>(hideval)->val_;
 	if (hide) {
 		gtk_widget_hide(app->oMidWin.oToolWin.HideListButton);
@@ -1436,9 +1423,9 @@ void AppFrame::on_main_win_hide_list_changed(const baseconfval* hideval, void *a
 	}
 }
 
-void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
+void AppCore::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	bool scan=static_cast<const confval<bool> *>(scanval)->val_;
 
 	gtk_widget_set_sensitive(app->oFloatWin.StopButton, scan);
@@ -1472,9 +1459,9 @@ void AppFrame::on_dict_scan_select_changed(const baseconfval* scanval, void *arg
 	}
 }
 
-void AppFrame::on_floatwin_lock_changed(const baseconfval* lockval, void *arg)
+void AppCore::on_floatwin_lock_changed(const baseconfval* lockval, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	bool lock=static_cast<const confval<bool> *>(lockval)->val_;
   if (lock)
     gtk_image_set_from_stock(GTK_IMAGE(app->oFloatWin.lock_image),GTK_STOCK_GOTO_LAST,GTK_ICON_SIZE_MENU);
@@ -1482,9 +1469,9 @@ void AppFrame::on_floatwin_lock_changed(const baseconfval* lockval, void *arg)
     gtk_image_set_from_stock(GTK_IMAGE(app->oFloatWin.lock_image),GTK_STOCK_GO_FORWARD,GTK_ICON_SIZE_MENU);
 }
 
-void AppFrame::on_floatwin_lock_x_changed(const baseconfval* lock_x_val, void *arg)
+void AppCore::on_floatwin_lock_x_changed(const baseconfval* lock_x_val, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	int lock_x=static_cast<const confval<int> *>(lock_x_val)->val_;
 	if (conf->get_bool_at("floating_window/lock")) {
     gint old_x, old_y;
@@ -1494,9 +1481,9 @@ void AppFrame::on_floatwin_lock_x_changed(const baseconfval* lock_x_val, void *a
   }
 }
 
-void AppFrame::on_floatwin_lock_y_changed(const baseconfval* lock_y_val, void *arg)
+void AppCore::on_floatwin_lock_y_changed(const baseconfval* lock_y_val, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	int lock_y=static_cast<const confval<int> *>(lock_y_val)->val_;
 
 	if (conf->get_bool_at("floating_window/lock")) {
@@ -1507,9 +1494,9 @@ void AppFrame::on_floatwin_lock_y_changed(const baseconfval* lock_y_val, void *a
   }
 }
 
-void AppFrame::on_scan_modifier_key_changed(const baseconfval* keyval, void *arg)
+void AppCore::on_scan_modifier_key_changed(const baseconfval* keyval, void *arg)
 {
-	AppFrame *app = static_cast<AppFrame *>(arg);
+	AppCore *app = static_cast<AppCore *>(arg);
 	int key=static_cast<const confval<int> *>(keyval)->val_;
 	app->unlock_keys->set_comb(combnum2str(key));
 }
@@ -1798,9 +1785,9 @@ int main(int argc,char **argv)
 	}
 #endif
 	conf.reset(new AppConf);
-	AppFrame oAppFrame;
-	gpAppFrame = &oAppFrame;
-	oAppFrame.Init(queryword);
+	AppCore oAppCore;
+	gpAppFrame = &oAppCore;
+	oAppCore.Init(queryword);
 
   return EXIT_SUCCESS;
 }

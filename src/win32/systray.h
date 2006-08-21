@@ -24,7 +24,7 @@ enum DockLetIconType {
 class DockLet{
 public:	
 	DockLet();
-	void init();
+	void Create();
 	void cleanup();
 	void SetIcon(DockLetIconType icon_type);
 	static void stardict_systray_minimize( GtkWidget* );

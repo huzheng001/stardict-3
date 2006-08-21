@@ -22,7 +22,7 @@ DockLet::DockLet()
 	current_icon = DOCKLET_NORMAL_ICON;
 }
 
-void DockLet::init()
+void DockLet::Create()
 {
 	systray_hwnd = systray_create_hiddenwin();
 

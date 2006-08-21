@@ -14,7 +14,6 @@
 
 
 class AppCore;
-class AppFrame;
 
 #include "conf.h"
 #include "lib/lib.h"
@@ -35,7 +34,7 @@ class AppFrame;
 #include "readword.h"
 #include "iskeyspressed.hpp"
 
-extern AppFrame * gpAppFrame;
+extern AppCore *gpAppFrame;
 
 //notice!!! when you change these DEFAULT const value,remember that you'd better change data/stardict.schemas.in too!
 
@@ -55,6 +54,13 @@ private:
 	static gboolean on_window_state_event(GtkWidget * window, GdkEventWindowState *event , AppCore *oAppCore);
 	static gboolean vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *event , AppCore *oAppCore);
 	void reload_dicts();
+	static void on_main_win_hide_list_changed(const baseconfval*, void *arg);
+	static void on_dict_scan_select_changed(const baseconfval*, void *arg);
+	static void on_floatwin_lock_changed(const baseconfval*, void *arg);
+
+	static void on_floatwin_lock_x_changed(const baseconfval*, void *arg);
+	static void on_floatwin_lock_y_changed(const baseconfval*, void *arg);
+	static void on_scan_modifier_key_changed(const baseconfval*, void *arg);
 public:
 	CurrentIndex *iCurrentIndex;
 	GtkWidget *window;
@@ -77,9 +83,16 @@ public:
 	TreeDicts oTreeDicts;
 	std::auto_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
+	ReadWord oReadWord;
+
+#ifdef CONFIG_GNOME
+	BonoboObject *stardict_app_server;
+#endif
 
 	AppCore();
 	~AppCore();
+	void Init(gchar *queryword);
+	void Quit();
 	void Create(gchar *queryword);
 	void End();
 	void Query(const gchar *word);
@@ -106,29 +119,6 @@ public:
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();
-};
-
-class AppFrame : public AppCore {
-public:
-	ReadWord oReadWord;
-
-#ifdef CONFIG_GNOME
-	BonoboObject *stardict_app_server;
-#endif
-
-	AppFrame();
-	~AppFrame();
-	void Init(gchar *queryword);
-	void Quit();
-
-private:
-	static void on_main_win_hide_list_changed(const baseconfval*, void *arg);
-	static void on_dict_scan_select_changed(const baseconfval*, void *arg);
-	static void on_floatwin_lock_changed(const baseconfval*, void *arg);
-
-	static void on_floatwin_lock_x_changed(const baseconfval*, void *arg);
-	static void on_floatwin_lock_y_changed(const baseconfval*, void *arg);
-	static void on_scan_modifier_key_changed(const baseconfval*, void *arg);
 };
 
 #ifdef _WIN32
