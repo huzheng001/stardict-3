@@ -48,6 +48,8 @@ class AppCore {
 private:
 	DictManageDlg *dict_manage_dlg;
 	PrefsDlg *prefs_dlg;
+	guint word_change_timeout_;
+	std::string delayed_word_;
 
 	static int MatchWordCompare(const void * s1, const void * s2);
 	static gboolean on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *oAppCore);
@@ -61,6 +63,8 @@ private:
 	static void on_floatwin_lock_x_changed(const baseconfval*, void *arg);
 	static void on_floatwin_lock_y_changed(const baseconfval*, void *arg);
 	static void on_scan_modifier_key_changed(const baseconfval*, void *arg);
+	static gboolean on_word_change_timeout(gpointer data);
+	void stop_word_change_timer();
 public:
 	CurrentIndex *iCurrentIndex;
 	GtkWidget *window;

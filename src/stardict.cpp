@@ -114,6 +114,7 @@ AppCore::AppCore() :
 	      conf->get_bool_at("dictionary/enable_collation"),
 	      conf->get_int_at("dictionary/collate_function"))
 {
+	word_change_timeout_ = 0;
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
 	prefs_dlg = NULL;
@@ -1176,10 +1177,23 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 			oMidWin.oTextWin.Show(_("Full-text search..."));
 		break;
 	default:
-		bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
-		bool find = SimpleLookupToTextWin(res.c_str(), iCurrentIndex, NULL, true, !showfirst);
-		ListWords(res.c_str(), iCurrentIndex, !find && showfirst);
+		stop_word_change_timer();
+		delayed_word_ = res;
+		word_change_timeout_ = g_timeout_add(100, on_word_change_timeout, this);
 	}
+}
+
+gboolean AppCore::on_word_change_timeout(gpointer data)
+{
+	AppCore *app = static_cast<AppCore *>(data);
+	bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
+	bool find = app->SimpleLookupToTextWin(app->delayed_word_.c_str(),
+					       app->iCurrentIndex, NULL, true,
+					       !showfirst);
+	app->ListWords(app->delayed_word_.c_str(), app->iCurrentIndex,
+		       !find && showfirst);
+	app->word_change_timeout_ = 0;//next line destroy timer
+	return FALSE;
 }
 
 void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst)
@@ -1324,8 +1338,18 @@ void AppCore::PopupDictManageDlg()
 	oLibs.set_show_progress(&gtk_show_progress);
 }
 
+void AppCore::stop_word_change_timer()
+{
+	if (word_change_timeout_) {
+		g_source_remove(word_change_timeout_);
+		word_change_timeout_ = 0;
+	}
+
+}
+
 void AppCore::End()
 {
+	stop_word_change_timer();
 	oSelection.End();
 #ifdef _WIN32
 	oClipboard.End();
