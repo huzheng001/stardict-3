@@ -1,7 +1,7 @@
 SUBDIRS = acrobat nsis
 
 EXTRA_DIST = intl.h MinimizeToTray.cpp \
-	MinimizeToTray.h resource.h stardictrc.rc StdAfx.h systray.cpp \
+	MinimizeToTray.h resource.h StdAfx.h systray.cpp \
 	systray.h systray-normal.ico systray-scan.ico systray-stop.ico \
 	clipboard.cpp clipboard.h hotkey.cpp hotkey.h \
 	win32_iskeyspressed.cpp win32_iskeyspressed.h \
