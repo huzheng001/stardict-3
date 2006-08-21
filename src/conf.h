@@ -129,7 +129,7 @@ private:
 		cfgval->val_ = val;
 
 		size_t len = strlen(name);
-		const char *key = static_cast<char *>(memrchr(name, '/', len));
+		const char *key = static_cast<const char *>(memrchr(name, '/', len));
 		if (!key)
 			key = name + len;
 		std::string sect(name, 0, key - name);
