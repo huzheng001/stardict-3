@@ -641,7 +641,7 @@ void ArticleView::AppendDataSeparate()
 	AppendPangoText("\n");
 }
 
-void ArticleView::AppendHeader(const std::string& dict_name, int i)
+void ArticleView::AppendHeader(const std::string& dict_name, size_t i)
 {
 	if (!for_float_win) {
 		gchar *mark = g_strdup_printf("%d", i);

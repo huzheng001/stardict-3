@@ -25,6 +25,8 @@ DockLet::DockLet(GtkWidget *mainwin) : TrayBase(mainwin)
 void DockLet::Create()
 {
 	systray_hwnd = systray_create_hiddenwin();
+	::SetWindowLongPtr(systray_hwnd, GWL_USERDATA,
+                   reinterpret_cast<LONG_PTR>(this));
 
 	systray_create_menu();
 
@@ -105,6 +107,8 @@ void DockLet::systray_show_menu(int x, int y)
 LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	static UINT taskbarRestartMsg; /* static here means value is kept across multiple calls to this func */
+	DockLet *dock =
+        reinterpret_cast<DockLet *>(::GetWindowLongPtr(hwnd, GWL_USERDATA));
 
 	switch (msg) {
 	case WM_CREATE:
@@ -114,7 +118,7 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 	case WM_COMMAND:
 		switch(LOWORD(wparam)) {
 		case SYSTRAY_CMND_MENU_SCAN:
-			if (GetMenuState(gpAppFrame->oDockLet.systray_menu, SYSTRAY_CMND_MENU_SCAN, MF_BYCOMMAND) & MF_CHECKED) {
+			if (GetMenuState(dock->systray_menu, SYSTRAY_CMND_MENU_SCAN, MF_BYCOMMAND) & MF_CHECKED) {
 				conf->set_bool_at("dictionary/scan_selection", FALSE);
 			} else {
 				conf->set_bool_at("dictionary/scan_selection", TRUE);
@@ -133,19 +137,18 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 			}
 		} else if ( lparam == WM_LBUTTONDBLCLK ) {
 			// Only use left button will conflict with the menu.
-			if (GTK_WIDGET_VISIBLE(gpAppFrame->window)) {
-				HWND main_window = static_cast<HWND>(GDK_WINDOW_HWND(gpAppFrame->window->window));
+			if (GTK_WIDGET_VISIBLE(dock->mainwin_)) {
+				HWND main_window =
+					static_cast<HWND>(GDK_WINDOW_HWND(dock->mainwin_->window));
 				if (IsIconic(main_window)) {
 					ShowWindow(main_window,SW_RESTORE);
 				//} else if (GetForegroundWindow() != main_window) {
 					//SetForegroundWindow(main_window);
-				} else {
-					stardict_systray_minimize(gpAppFrame->window);
-					gtk_widget_hide(gpAppFrame->window);
-				}
-			} else {
-				stardict_systray_maximize(gpAppFrame->window);
-				gtk_window_present(GTK_WINDOW(gpAppFrame->window));
+				} else
+					dock->minimize_to_tray();				
+			} else {				
+				dock->maximize_from_tray();
+
 				if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
 					gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); //so user can input word directly.
 				} else {
@@ -156,9 +159,8 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 			if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
 				gpAppFrame->oSelection.LastClipWord.clear();
 				gtk_selection_convert (gpAppFrame->oSelection.selection_widget, GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-			} else {
-				stardict_systray_maximize(gpAppFrame->window);
-				gtk_window_present(GTK_WINDOW(gpAppFrame->window));
+			} else {				
+				gpAppFrame->oDockLet->maximize_from_tray();
 				gtk_selection_convert (gpAppFrame->oMidWin.oTextWin.view->Widget(), GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
 			}	
 		} else if (lparam == WM_RBUTTONUP) {
@@ -166,7 +168,7 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 			POINT mpoint;
 			GetCursorPos(&mpoint);
 
-			gpAppFrame->oDockLet.systray_show_menu(mpoint.x, mpoint.y);
+			dock->systray_show_menu(mpoint.x, mpoint.y);
 		}
 		break;
 	}
@@ -174,7 +176,7 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 		if (msg == taskbarRestartMsg) {
 			/* explorer crashed and left us hanging... 
 			   This will put the systray icon back in it's place, when it restarts */
-			Shell_NotifyIcon(NIM_ADD,&(gpAppFrame->oDockLet.stardict_nid));
+			Shell_NotifyIcon(NIM_ADD,&(dock->stardict_nid));
 		}
 	}
 
@@ -234,18 +236,15 @@ void DockLet::End()
 	DestroyWindow(systray_hwnd);
 }
 
-void DockLet::stardict_systray_minimize( GtkWidget *window )
-{
-	MinimizeWndToTray((HWND)(GDK_WINDOW_HWND(window->window)));
-}
-
-void DockLet::stardict_systray_maximize( GtkWidget *window )
-{
-	RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(window->window)));
-}
-
 void DockLet::minimize_to_tray()
-{
-	stardict_systray_minimize(mainwin_);
+{	
+	MinimizeWndToTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));
 	TrayBase::minimize_to_tray();
+}
+
+void DockLet::maximize_from_tray()
+{
+	if (!GTK_WIDGET_VISIBLE(mainwin_))
+		RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));		
+	TrayBase::maximize_from_tray();
 }

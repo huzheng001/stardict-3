@@ -14,7 +14,7 @@ public:
   ArticleView(GtkBox *owner, bool floatw=false)
     : PangoView(owner, floatw), for_float_win(floatw) {}
 
-	void AppendHeader(const std::string& dict_name, int i);
+	void AppendHeader(const std::string& dict_name, size_t i);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword);
 	void AppendNewline();

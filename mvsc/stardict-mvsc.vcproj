@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\tray.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\utils.cpp"
 				>
 			</File>
@@ -438,6 +442,10 @@
 			</File>
 			<File
 				RelativePath="..\src\win32\ThTypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\tray.hpp"
 				>
 			</File>
 			<File

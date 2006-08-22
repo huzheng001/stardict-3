@@ -231,7 +231,7 @@ MapFile* cache_file::get_cache_loadfile(const gchar *filename, const std::string
 	}
 
 	gchar *p = mf->begin();
-	bool has_prefix;
+	gboolean has_prefix;
 	if (isoftfile)
 		has_prefix = g_str_has_prefix(p, OFFSETFILE_MAGIC_DATA);
 	else
@@ -1646,7 +1646,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent)
 	return poCurrentWord;
 }
 
-bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, int iLib)
+bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, size_t iLib)
 {
 	bool isClt = EnableCollation;
 
@@ -1739,7 +1739,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 	return bFound;
 }
 
-bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, int iLib)
+bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, size_t iLib)
 {
 	glong iIndex;
 	bool bFound=false;
@@ -1813,7 +1813,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, int iLib)
 
 	if (bIsPureEnglish(sWord)) {
 		// If not Found , try other status of sWord.
-		int iWordLen=strlen(sWord);
+		size_t iWordLen=strlen(sWord);
 		bool isupcase;
 
 		gchar *sNewWord = (gchar *)g_malloc(iWordLen + 1);
@@ -2103,7 +2103,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, int iLib)
 	return bFound;
 }
 
-bool Libs::SimpleLookupWord(const gchar* sWord, glong & iWordIndex, int iLib)
+bool Libs::SimpleLookupWord(const gchar* sWord, glong & iWordIndex, size_t iLib)
 {
 	bool bFound;
 
@@ -2116,7 +2116,7 @@ bool Libs::SimpleLookupWord(const gchar* sWord, glong & iWordIndex, int iLib)
 	return bFound;
 }
 
-bool Libs::SimpleLookupSynonymWord(const gchar* sWord, glong & iWordIndex, int iLib)
+bool Libs::SimpleLookupSynonymWord(const gchar* sWord, glong & iWordIndex, size_t iLib)
 {
 	bool bFound;
 	if (EnableCollation)

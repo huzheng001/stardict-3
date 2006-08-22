@@ -22,6 +22,11 @@ public:
         {
                 gtk_widget_hide(mainwin_);
         }
+	 //! Maximize controlled widget from tray
+	virtual void maximize_from_tray()
+	{
+		gtk_window_present(GTK_WINDOW(mainwin_));
+	}
 
 protected:
 	GtkWidget *mainwin_;//!< Window widget which we should control

@@ -810,11 +810,7 @@ void FloatWin::on_query_click(GtkWidget *widget, FloatWin *oFloatWin)
 	if (!conf->get_bool_at("floating_window/lock"))
 		oFloatWin->Hide();
 	gpAppFrame->Query(oFloatWin->QueryingWord.c_str());	
-#ifdef _WIN32
-	if (!GTK_WIDGET_VISIBLE(gpAppFrame->window))
-		gpAppFrame->oDockLet.stardict_systray_maximize(gpAppFrame->window);
-#endif
-	gtk_window_present(GTK_WINDOW(gpAppFrame->window));
+	gpAppFrame->oDockLet->maximize_from_tray();
 }
 
 void FloatWin::on_save_click(GtkWidget *widget, FloatWin *oFloatWin)

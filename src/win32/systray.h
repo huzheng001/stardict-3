@@ -27,10 +27,9 @@ public:
 	DockLet(GtkWidget *mainwin);
 	void Create();
 	void End();
-	void SetIcon(DockLetIconType icon_type);
-	static void stardict_systray_minimize( GtkWidget* );
-	static void stardict_systray_maximize( GtkWidget* );
+	void SetIcon(DockLetIconType icon_type);	
 	void minimize_to_tray();
+	void maximize_from_tray();
 private:
 	DockLetIconType current_icon;
 	HWND systray_hwnd;
@@ -45,7 +44,7 @@ private:
 	void systray_show_menu(int x, int y);
 	void systray_init_icon(HWND hWnd, HICON icon);
 	void systray_change_icon(HICON icon, char* text);
-	static LRESULT CALLBACK systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	static LRESULT CALLBACK systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);		
 };
 
 #endif /* _SYSTRAY_H_ */

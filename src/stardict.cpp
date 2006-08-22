@@ -524,7 +524,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 	int SearchTimes = 2;
 	while (SearchTimes) {
 		bool bFound = false;
-		for (int iLib=0;iLib<oLibs.ndicts();iLib++)
+		for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
 			BuildResultData(P1, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, P1);

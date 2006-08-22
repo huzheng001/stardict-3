@@ -200,38 +200,38 @@ public:
 	void reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
 		    const strlist_t& disable_list, bool is_coll_enb, int collf);
 
-	glong narticles(int idict) { return oLib[idict]->narticles(); }
-	glong nsynarticles(int idict) { return oLib[idict]->nsynarticles(); }
-	const std::string& dict_name(int idict) { return oLib[idict]->dict_name(); }
+	glong narticles(size_t idict) { return oLib[idict]->narticles(); }
+	glong nsynarticles(size_t idict) { return oLib[idict]->nsynarticles(); }
+	const std::string& dict_name(size_t idict) { return oLib[idict]->dict_name(); }
 	size_t ndicts() { return oLib.size(); }
 
-	const gchar * poGetWord(glong iIndex,int iLib) {
+	const gchar * poGetWord(glong iIndex, size_t iLib) {
 		return oLib[iLib]->get_key(iIndex);
 	}
-	const gchar * poGetCltWord(glong iIndex,int iLib) {
+	const gchar * poGetCltWord(glong iIndex, size_t iLib) {
 		return oLib[iLib]->GetCltWord(iIndex);
 	}
-	const gchar * poGetSynonymWord(glong iSynonymIndex,int iLib) {
+	const gchar * poGetSynonymWord(glong iSynonymIndex, size_t iLib) {
 		return oLib[iLib]->syn_file->get_key(iSynonymIndex);
 	}
-	const gchar * poGetCltSynonymWord(glong iSynonymIndex,int iLib) {
+	const gchar * poGetCltSynonymWord(glong iSynonymIndex, size_t iLib) {
 		return oLib[iLib]->syn_file->clt_file->GetWord(iSynonymIndex);
 	}
-	glong poGetSynonymWordIdx(glong iSynonymIndex, int iLib) {
+	glong poGetSynonymWordIdx(glong iSynonymIndex, size_t iLib) {
 		oLib[iLib]->syn_file->get_key(iSynonymIndex);
 		return oLib[iLib]->syn_file->wordentry_index;
 	}
-	glong CltIndexToOrig(glong cltidx, int iLib) {
+	glong CltIndexToOrig(glong cltidx, size_t iLib) {
 		if (cltidx == INVALID_INDEX)
 			return cltidx;
 		return oLib[iLib]->idx_file->clt_file->GetOrigIndex(cltidx);
 	}
-	glong CltSynIndexToOrig(glong cltidx, int iLib) {
+	glong CltSynIndexToOrig(glong cltidx, size_t iLib) {
 		if (cltidx == UNSET_INDEX || cltidx == INVALID_INDEX)
 			return cltidx;
 		return oLib[iLib]->syn_file->clt_file->GetOrigIndex(cltidx);
 	}
-	gchar * poGetWordData(glong iIndex,int iLib) {
+	gchar * poGetWordData(glong iIndex, size_t iLib) {
 		if (iIndex==INVALID_INDEX)
 			return NULL;
 		return oLib[iLib]->get_data(iIndex);
@@ -242,26 +242,26 @@ public:
 	bool LookupWord(const gchar* sWord, glong& iWordIndex, int iLib) {
 		return oLib[iLib]->Lookup(sWord, iWordIndex);
 	}
-	bool LookupCltWord(const gchar* sWord, glong& iWordIndex, int iLib) {
+	bool LookupCltWord(const gchar* sWord, glong& iWordIndex, size_t iLib) {
 		return oLib[iLib]->LookupClt(sWord, iWordIndex);
 	}
-	bool LookupSynonymWord(const gchar* sWord, glong& iSynonymIndex, int iLib) {
+	bool LookupSynonymWord(const gchar* sWord, glong& iSynonymIndex, size_t iLib) {
 		return oLib[iLib]->LookupSynonym(sWord, iSynonymIndex);
 	}
-	bool LookupCltSynonymWord(const gchar* sWord, glong& iSynonymIndex, int iLib) {
+	bool LookupCltSynonymWord(const gchar* sWord, glong& iSynonymIndex, size_t iLib) {
 		return oLib[iLib]->LookupCltSynonym(sWord, iSynonymIndex);
 	}
-	bool LookupSimilarWord(const gchar* sWord, glong &iWordIndex, int iLib);
-	bool LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, int iLib);
-	bool SimpleLookupWord(const gchar* sWord, glong &iWordIndex, int iLib);
-	bool SimpleLookupSynonymWord(const gchar* sWord, glong &iWordIndex, int iLib);
-	gint GetWordCount(glong& iWordIndex, int iLib, bool isidx) {
+	bool LookupSimilarWord(const gchar* sWord, glong &iWordIndex, size_t iLib);
+	bool LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, size_t iLib);
+	bool SimpleLookupWord(const gchar* sWord, glong &iWordIndex, size_t iLib);
+	bool SimpleLookupSynonymWord(const gchar* sWord, glong &iWordIndex, size_t iLib);
+	gint GetWordCount(glong& iWordIndex, size_t iLib, bool isidx) {
 		return oLib[iLib]->GetWordCount(iWordIndex, isidx);
 	}
-	bool GetWordPrev(glong iWordIndex, glong &pidx, int iLib, bool isidx, bool isClt) {
+	bool GetWordPrev(glong iWordIndex, glong &pidx, size_t iLib, bool isidx, bool isClt) {
 		return oLib[iLib]->GetWordPrev(iWordIndex, pidx, isidx, isClt);
 	}
-	void GetWordNext(glong &iWordIndex, int iLib, bool isidx, bool isClt) {
+	void GetWordNext(glong &iWordIndex, size_t iLib, bool isidx, bool isClt) {
 		oLib[iLib]->GetWordNext(iWordIndex, isidx, isClt);
 	}
 
