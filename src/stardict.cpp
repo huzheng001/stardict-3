@@ -196,7 +196,8 @@ void AppCore::Create(gchar *queryword)
 	unlock_keys.reset(static_cast<hotkeys *>(stardict_class_factory::create_class_by_name("hotkeys", GTK_WINDOW(window))));
 	unlock_keys->set_comb(combnum2str(conf->get_int_at("dictionary/scan_modifier_key")));
 	oFloatWin.Create();
-	oDockLet.Create();
+	oDockLet.reset(new DockLet(window));
+	oDockLet->Create();
 
 	oSelection.Init();
 #ifdef _WIN32
@@ -231,9 +232,9 @@ void AppCore::Create(gchar *queryword)
 		gtk_widget_realize(window); // This may be needed, so gtk_window_get_screen() in gtk_iskeyspressed.cpp can always work.
 		gdk_notify_startup_complete();
 		if (scan)
-			gpAppFrame->oDockLet.SetIcon(DOCKLET_SCAN_ICON);
+			gpAppFrame->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
 		else
-			gpAppFrame->oDockLet.SetIcon(DOCKLET_STOP_ICON);
+			gpAppFrame->oDockLet->SetIcon(DOCKLET_STOP_ICON);
 	}
 
 	if (oLibs.ndicts()) {
@@ -247,18 +248,10 @@ void AppCore::Create(gchar *queryword)
 		oMidWin.oTextWin.ShowInitFailed();
 }
 
-gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *oAppCore)
+gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *app)
 {
-#ifdef _WIN32
-	oAppCore->oDockLet.stardict_systray_minimize(oAppCore->window);
-	gtk_widget_hide(oAppCore->window);
-#else
-	if (oAppCore->oDockLet.embedded)
-		gtk_widget_hide(oAppCore->window);
-	else
-		oAppCore->Quit();
-#endif
-	return true;
+	app->oDockLet->minimize_to_tray();
+	return TRUE;
 }
 
 gboolean AppCore::on_window_state_event(GtkWidget * window, GdkEventWindowState *event , AppCore *oAppCore)
@@ -266,11 +259,11 @@ gboolean AppCore::on_window_state_event(GtkWidget * window, GdkEventWindowState 
 	if (event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN) {
 		if (event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) {
 			if (conf->get_bool_at("dictionary/scan_selection"))
-				gpAppFrame->oDockLet.SetIcon(DOCKLET_SCAN_ICON);
+				gpAppFrame->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
 			else
-				gpAppFrame->oDockLet.SetIcon(DOCKLET_STOP_ICON);
+				gpAppFrame->oDockLet->SetIcon(DOCKLET_STOP_ICON);
 		} else {
-			gpAppFrame->oDockLet.SetIcon(DOCKLET_NORMAL_ICON);
+			gpAppFrame->oDockLet->SetIcon(DOCKLET_NORMAL_ICON);
 			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry))[0])
 				gtk_widget_grab_focus(oAppCore->oMidWin.oTextWin.view->Widget());
 		}
@@ -303,15 +296,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	}
 	else if ((event->keyval==GDK_x || event->keyval==GDK_X) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS) {
-#ifdef _WIN32
-			oAppCore->oDockLet.stardict_systray_minimize(oAppCore->window);
-			gtk_widget_hide(window);
-#else
-			if (oAppCore->oDockLet.embedded)
-				gtk_widget_hide(window);
-			else
-				gpAppFrame->Quit();
-#endif
+			oAppCore->oDockLet->minimize_to_tray();
 		}
 	}
 	else if ((event->keyval==GDK_z || event->keyval==GDK_Z) && only_mod1_pressed) {
@@ -1358,11 +1343,10 @@ void AppCore::End()
 	oHotkey.End();
 #endif
 	oFloatWin.End();
-#ifdef _WIN32
-	oDockLet.cleanup();
-#else
-	oDockLet.End();
-#endif
+
+	oDockLet->End();
+	oDockLet.reset(0);
+
 	if (dict_manage_dlg)
 		dict_manage_dlg->Close();
 	if (prefs_dlg)
@@ -1459,7 +1443,7 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 
 	if (scan) {
 		if (!GTK_WIDGET_VISIBLE(app->window))
-			app->oDockLet.SetIcon(DOCKLET_SCAN_ICON);
+			app->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
 		bool lock=conf->get_bool_at("floating_window/lock");
 		if (lock && !app->oFloatWin.QueryingWord.empty())
 			app->oFloatWin.Show();
@@ -1472,7 +1456,7 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 #endif
 	} else {
 		if (!GTK_WIDGET_VISIBLE(app->window))
-			app->oDockLet.SetIcon(DOCKLET_STOP_ICON);
+			app->oDockLet->SetIcon(DOCKLET_STOP_ICON);
 		app->oFloatWin.Hide();
 		app->oSelection.stop();
 #ifdef _WIN32

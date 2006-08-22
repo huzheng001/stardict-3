@@ -15,7 +15,7 @@
 #include <X11/Xatom.h>
 */
 
-DockLet::DockLet()
+DockLet::DockLet(GtkWidget *mainwin) : TrayBase(mainwin)
 {
 	menu = NULL;
 	image = NULL;
@@ -145,13 +145,13 @@ void DockLet::PopupMenu(GdkEventButton *event)
 
 gboolean DockLet::docklet_create(gpointer data)
 {
-	gpAppFrame->oDockLet.Create((DockLetIconType)(GPOINTER_TO_INT(data)));
+	gpAppFrame->oDockLet->Create((DockLetIconType)(GPOINTER_TO_INT(data)));
 	return false; /* for when we're called by the glib idle handler */
 }
 
 void DockLet::EmbeddedCallback(GtkWidget *widget, gpointer data)
 {
-	gpAppFrame->oDockLet.embedded = true;	
+	gpAppFrame->oDockLet->embedded = true;	
 }
 
 /*
@@ -242,4 +242,12 @@ gboolean DockLet::ButtonPressCallback(GtkWidget *button, GdkEventButton *event, 
 		return true;
 	}
 	return false;
+}
+
+void DockLet::minimize_to_tray()
+{
+	if (embedded)
+		TrayBase::minimize_to_tray();
+	else
+		gpAppFrame->Quit();
 }

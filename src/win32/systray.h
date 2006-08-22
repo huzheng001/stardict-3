@@ -14,6 +14,7 @@
 
 #include <windows.h>
 #include <gtk/gtk.h>
+#include "tray.hpp"
 
 enum DockLetIconType {
 	DOCKLET_NORMAL_ICON,
@@ -21,14 +22,15 @@ enum DockLetIconType {
 	DOCKLET_STOP_ICON,
 };
 
-class DockLet{
+class DockLet : public TrayBase {
 public:	
-	DockLet();
+	DockLet(GtkWidget *mainwin);
 	void Create();
-	void cleanup();
+	void End();
 	void SetIcon(DockLetIconType icon_type);
 	static void stardict_systray_minimize( GtkWidget* );
 	static void stardict_systray_maximize( GtkWidget* );
+	void minimize_to_tray();
 private:
 	DockLetIconType current_icon;
 	HWND systray_hwnd;

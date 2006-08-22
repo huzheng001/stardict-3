@@ -17,7 +17,7 @@ enum SYSTRAY_CMND {
 };
 
 
-DockLet::DockLet()
+DockLet::DockLet(GtkWidget *mainwin) : TrayBase(mainwin)
 {
 	current_icon = DOCKLET_NORMAL_ICON;
 }
@@ -227,7 +227,7 @@ void DockLet::SetIcon(DockLetIconType icon_type)
 	current_icon = icon_type;
 }
 
-void DockLet::cleanup()
+void DockLet::End()
 {
 	Shell_NotifyIcon(NIM_DELETE,&stardict_nid);	
 	DestroyMenu(systray_menu);
@@ -242,4 +242,10 @@ void DockLet::stardict_systray_minimize( GtkWidget *window )
 void DockLet::stardict_systray_maximize( GtkWidget *window )
 {
 	RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(window->window)));
+}
+
+void DockLet::minimize_to_tray()
+{
+	stardict_systray_minimize(mainwin_);
+	TrayBase::minimize_to_tray();
 }

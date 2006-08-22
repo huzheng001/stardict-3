@@ -81,7 +81,7 @@ public:
 	Hotkey oHotkey;
 #endif
 	FloatWin oFloatWin;
-	DockLet oDockLet;
+	std::auto_ptr<DockLet> oDockLet;
 
 	Libs oLibs;
 	TreeDicts oTreeDicts;

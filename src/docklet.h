@@ -2,6 +2,7 @@
 #define __SD_DOCKLET_H__
 
 #include <gtk/gtk.h>
+#include "tray.hpp"
 #include "eggtrayicon.h"
 
 enum DockLetIconType {
@@ -10,13 +11,14 @@ enum DockLetIconType {
 	DOCKLET_STOP_ICON,
 };
 
-class DockLet{
+class DockLet : public TrayBase {
 private:
 	EggTrayIcon *docklet;
 	GtkWidget *box;
 	GtkWidget *image; //icon image.
 	GtkWidget *menu,*scan_menuitem;
 	DockLetIconType current_icon;
+	gboolean embedded;
 
 	static void EmbeddedCallback(GtkWidget *widget, gpointer data);
 	static void DestroyedCallback(GtkWidget *widget, DockLet *oDockLet);
@@ -29,12 +31,13 @@ private:
 
 	void PopupMenu(GdkEventButton *event);
 public:	
-	gboolean embedded;
 
-	DockLet();
+
+	DockLet(GtkWidget *mainwin);
 	void Create(DockLetIconType iconType = DOCKLET_NORMAL_ICON);
 	void End();
 	void SetIcon(DockLetIconType icon_type);
+	void minimize_to_tray();
 };
 
 
