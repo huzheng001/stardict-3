@@ -10,15 +10,17 @@
 #  define __attribute__(x) /**/
 #  define g_fopen my_g_fopen
 
-static inline const char *memrchr(const char *mem, char c, size_t len)
+static inline void *memrchr(const void *mem, int c, size_t len)
 {
-	const char *res;
+	char *res;
+	char *cmem = (char *)mem;
+
 	if (!len)
 		return NULL;
-	res = mem + len - 1;
-	while (res != mem - 1 && *res != c)
+	res = cmem + len - 1;
+	while (res != cmem - 1 && *res != c)
 		--res;
-	return res == mem - 1 ? NULL : res;
+	return res == cmem - 1 ? NULL : res;
 }
 
 # include <math.h>
