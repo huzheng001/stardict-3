@@ -11,7 +11,9 @@ typedef char    pbool;          /* Mixed prototypes can take char */
 typedef unsigned char   uchar;  /* Short for unsigned char */
 typedef char            my_bool; /* Small bool */
 
-#define min(a, b)       ((a) < (b) ? (a) : (b))
+#ifndef min
+#  define min(a, b)       ((a) < (b) ? (a) : (b))
+#endif
 
 
 #endif /* my_global_h */
