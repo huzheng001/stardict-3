@@ -199,7 +199,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOrigin
 	mark += "</span></b>";
 	view->AppendPangoText(mark.c_str());
 	int j,k;
-	for (int i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 		if (Word[i]) {
 			view->AppendNewline();
 			view->AppendHeader(gpAppFrame->oLibs.dict_name(i), i);
@@ -233,7 +233,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOrigin
 		else
 			PronounceWord = sOriginWord;
 	} else {
-		for (int i=0;i< gpAppFrame->oLibs.ndicts(); i++) {
+		for (size_t i=0;i< gpAppFrame->oLibs.ndicts(); i++) {
 			if (Word[i] && strcmp(Word[i][0], sOriginWord)) {
 				if (gpAppFrame->oReadWord.canRead(Word[i][0])) {
 					canRead = TRUE;
@@ -306,7 +306,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
     g_free(m_str);
     mark += "</span></b>";
     view->AppendPangoText(mark.c_str());
-    for (int i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+    for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 	if (ppppWord[j][i]) {
 		view->AppendNewline();
 		view->AppendHeader(gpAppFrame->oLibs.dict_name(i), i);

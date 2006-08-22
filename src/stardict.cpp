@@ -477,7 +477,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 			*EndPointer--='\0';
 
 		bool bFound = false;
-		for (int iLib=0;iLib<oLibs.ndicts();iLib++)
+		for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
 			BuildResultData(SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, SearchWord);
@@ -739,7 +739,8 @@ void AppCore::FreeResultData(gchar ***pppWord, gchar ****ppppWordData)
 {
 	if (!pppWord)
 		return;
-	int i, j, k;
+	int j, k;
+	size_t i;
 	for (i=0; i<oLibs.ndicts(); i++) {
 		if (pppWord[i]) {
 			j=0;
@@ -779,10 +780,10 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 	else
 		iIndex = piIndex;
 
-	for (int iLib=0; iLib<oLibs.ndicts(); iLib++)
+	for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
 		BuildResultData(sWord, iIndex, piIndexValidStr, iLib, pppWord, ppppWordData, bFound, 0);
 	if (!bFound && !piIndexValidStr) {
-		for (int iLib=0; iLib<oLibs.ndicts(); iLib++)
+		for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
 			BuildResultData(sWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 	}
 	if (bFound) {
@@ -797,10 +798,10 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 					if (bShowNotfound)
 						ShowNotFoundToTextWin(sWord,_("<Not Found!>"), TEXT_WIN_NOT_FOUND);
 				} else {
-					for (int iLib=0;iLib<oLibs.ndicts();iLib++)
+					for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
 						BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 0);
 					if (!bFound) {
-						for (int iLib=0; iLib<oLibs.ndicts(); iLib++)
+						for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
 							BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 					}
 					if (bFound) {
@@ -880,7 +881,7 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	std::vector< std::vector<gchar *> > reslist(oLibs.ndicts());
 	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
-		for (int i=0; i<oLibs.ndicts(); i++) {
+		for (size_t i=0; i<oLibs.ndicts(); i++) {
 			if (!reslist[i].empty()) {
 				SimpleLookupToTextWin(reslist[i][0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 				break;
@@ -958,7 +959,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 			ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * oLibs.ndicts());
 
 			ppOriginWord[i] = fuzzy_reslist[i];
-			for (int iLib=0; iLib<oLibs.ndicts(); iLib++)
+			for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
 				BuildResultData(fuzzy_reslist[i], iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
 			if (bFound) {// it is certainly be true.
 				ppppWord[i]=pppWord;
@@ -1022,7 +1023,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const g
 	oMidWin.oTextWin.queryWord = sOriginWord;
 
 	oMidWin.oIndexWin.oResultWin.Clear();
-	for (int i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 		if (pppWord[i]) {
 			gchar *mark = g_strdup_printf("%d", i);
 			oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(i).c_str(), mark);
@@ -1035,7 +1036,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const g
 		oMidWin.oTextWin.pronounceWord = sOriginWord;
 	}
 	else {
-		for (int i=0;i< gpAppFrame->oLibs.ndicts(); i++) {
+		for (size_t i=0;i< gpAppFrame->oLibs.ndicts(); i++) {
 			if (pppWord[i] && strcmp(pppWord[i][0], sOriginWord)) {
 				if (gpAppFrame->oReadWord.canRead(pppWord[i][0])) {
 					canRead = true;
