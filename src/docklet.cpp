@@ -76,7 +76,7 @@ void DockLet::SetIcon(DockLetIconType icon_type)
 	current_icon = icon_type;
 }
 
-void DockLet::End()
+DockLet::~DockLet()
 {
 	while (g_source_remove_by_user_data(&docklet)) {
 	}
@@ -209,35 +209,35 @@ gboolean DockLet::ButtonPressCallback(GtkWidget *button, GdkEventButton *event, 
 	if (event->button ==1) {
 		
 		if ((event->state & GDK_CONTROL_MASK) && 
-				!(event->state & GDK_MOD1_MASK) && 
-				!(event->state & GDK_SHIFT_MASK)) {
-      conf->set_bool_at("dictionary/scan_selection",
-										 !conf->get_bool_at("dictionary/scan_selection"));
+		    !(event->state & GDK_MOD1_MASK) && 
+		    !(event->state & GDK_SHIFT_MASK)) {
+			conf->set_bool_at("dictionary/scan_selection",
+					  !conf->get_bool_at("dictionary/scan_selection"));
 			return true;
-    } else {			
-			if (GTK_WIDGET_VISIBLE(gpAppFrame->window)) {
+		} else {			
+			if (GTK_WIDGET_VISIBLE(oDockLet->mainwin_)) {
 				//if (GTK_WINDOW(gpAppFrame->window)->is_active) {
 				//if (my_gtk_window_get_active(gpAppFrame->window)) {
-				gtk_widget_hide(gpAppFrame->window);
-      }	else {
-				gtk_window_present(GTK_WINDOW(gpAppFrame->window));
+				gtk_widget_hide(oDockLet->mainwin_);
+			} else {
+				gtk_window_present(GTK_WINDOW(oDockLet->mainwin_));
 				if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
-				  gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); //so user can input word directly.
+					gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); //so user can input word directly.
 				} else {
 					gtk_widget_grab_focus(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry); //this won't change selection text.
 				}
 			}
 		}		
-  } else if (event->button ==2) {
+	} else if (event->button ==2) {
 		if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
 			gpAppFrame->oSelection.LastClipWord.clear();
 			gtk_selection_convert(gpAppFrame->oSelection.selection_widget, GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-    } else {
-			gtk_window_present(GTK_WINDOW(gpAppFrame->window));
+		} else {
+			gtk_window_present(GTK_WINDOW(oDockLet->mainwin_));
 			gtk_selection_convert (gpAppFrame->oMidWin.oTextWin.view->Widget(), GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
 		}
 		return true;
-  } else if (event->button ==3) {
+	} else if (event->button ==3) {
 		oDockLet->PopupMenu(event);
 		return true;
 	}

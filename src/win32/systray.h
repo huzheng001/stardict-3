@@ -25,8 +25,8 @@ enum DockLetIconType {
 class DockLet : public TrayBase {
 public:	
 	DockLet(GtkWidget *mainwin);
+	~DockLet();
 	void Create();
-	void End();
 	void SetIcon(DockLetIconType icon_type);	
 	void minimize_to_tray();
 	void maximize_from_tray();

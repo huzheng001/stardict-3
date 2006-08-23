@@ -34,8 +34,8 @@ public:
 
 
 	DockLet(GtkWidget *mainwin);
+	~DockLet();
 	void Create(DockLetIconType iconType = DOCKLET_NORMAL_ICON);
-	void End();
 	void SetIcon(DockLetIconType icon_type);
 	void minimize_to_tray();
 };

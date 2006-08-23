@@ -229,7 +229,7 @@ void DockLet::SetIcon(DockLetIconType icon_type)
 	current_icon = icon_type;
 }
 
-void DockLet::End()
+DockLet::~DockLet()
 {
 	Shell_NotifyIcon(NIM_DELETE,&stardict_nid);	
 	DestroyMenu(systray_menu);

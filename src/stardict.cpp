@@ -1344,7 +1344,6 @@ void AppCore::End()
 #endif
 	oFloatWin.End();
 
-	oDockLet->End();
 	oDockLet.reset(0);
 
 	if (dict_manage_dlg)
