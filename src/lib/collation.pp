@@ -6,6 +6,8 @@
 
 #include "collation.h"
 
+using namespace stardict_collation;
+
 static CHARSET_INFO *get_cs(CollateFunctions func)
 {
 	CHARSET_INFO *cs;
