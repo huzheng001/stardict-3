@@ -1,9 +1,7 @@
 #ifndef _m_ctype_h
 #define _m_ctype_h
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
+namespace stardict_collation {
 
 #define my_wc_t ulong
 
@@ -256,10 +254,7 @@ longlong my_strtoll10_8bit(CHARSET_INFO *cs,
 
 my_bool my_propagate_complex(CHARSET_INFO *cs, const uchar *str, uint len);*/
 
-
-#ifdef	__cplusplus
-}
-#endif
+}; //namespace
 
 #endif /* _m_ctype_h */
 
