@@ -9,7 +9,8 @@
 typedef ResourceWrapper<GdkCursor, GdkCursor, gdk_cursor_unref> Skin_cursor;
 typedef ResourceWrapper<GdkPixbuf, void, g_object_unref> Skin_pixbuf_1;
 
-struct AppSkin {
+class AppSkin {
+public:
 	int width,height;
 	Skin_cursor normal_cursor;
 	Skin_cursor watch_cursor;

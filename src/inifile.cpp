@@ -74,22 +74,26 @@ void inifile::convert_from_old_version()
 
 void inifile::convert_from_locale_enc()
 {	
-	GCharStr data;
-	MyGError err;
-	if (!g_file_get_contents(fname_.c_str(), &data.get(), NULL, &err.get())) {
+	
+	GError *err = NULL;
+	gchar *content;
+	if (!g_file_get_contents(fname_.c_str(), &content, NULL, &err)) {		
 		g_error(_("Can not read %s, reason %s\n"), fname_.c_str(),
-			err.get()->message);
+			err->message);
+		g_error_free(err);
 		exit(EXIT_SUCCESS);
 	}
+	GCharStr data(content);
 	GCharStr utfdata(g_locale_to_utf8(data.get(), -1, NULL, NULL, NULL));
 	if (!utfdata.get()) {
 		g_error(_("Can not convert ini file content to current locale\n"));
 		exit(EXIT_SUCCESS);
 	}
 
-	if (!g_file_set_contents(fname_.c_str(), utfdata.get(), -1, &err.get())) {
+	if (!g_file_set_contents(fname_.c_str(), utfdata.get(), -1, &err)) {
+		g_error_free(err);
 		g_error("can not save content of ini file %s, reason %s\n",
-			fname_.c_str(), err.get()->message);
+			fname_.c_str(), err->message);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -109,28 +113,30 @@ inifile::inifile(const std::string& path)
 			continue;
 		}
 
-		MyGError err;
+		GError *err = NULL;
 		if (!g_key_file_load_from_file(gkeyfile_, path.c_str(),
 					       GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS |
-							     G_KEY_FILE_KEEP_TRANSLATIONS), &err.get())) {
-			if (err.get()->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
+							     G_KEY_FILE_KEEP_TRANSLATIONS), &err)) {
+			MyGError myerr(err);
+			if (myerr.get()->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
 				g_key_file_free(gkeyfile_);
 				convert_from_locale_enc();
 				continue;
 			}
 			g_error(_("Can not open config file: %s, reason: %s\n"),
-				path.c_str(), err.get()->message);
+				path.c_str(), myerr.get()->message);
 			exit(EXIT_FAILURE);//just in case
 		}
 
 		gchar *version = g_key_file_get_string(gkeyfile_, "stardict-private",
-						       "version", &err.get());
-		if (err.get()) {
+						       "version", &err);
+		if (err) {
+			MyGError myerr(err);
 			g_free(version);
-			if (err.get()->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
-			    err.get()->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
+			if (myerr.get()->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
+			    myerr.get()->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
 				g_error(_("internal error, reason: %s\n"),
-					err.get()->message);
+					myerr.get()->message);
 				exit(EXIT_FAILURE);//just in case
 			}
 			g_key_file_free(gkeyfile_);

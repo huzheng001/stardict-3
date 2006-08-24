@@ -16,35 +16,30 @@
 #include <gtk/gtk.h>
 #include "tray.hpp"
 
-enum DockLetIconType {
-	DOCKLET_NORMAL_ICON,
-	DOCKLET_SCAN_ICON,
-	DOCKLET_STOP_ICON,
-};
-
 class DockLet : public TrayBase {
 public:	
-	DockLet(GtkWidget *mainwin);
-	~DockLet();
-	void Create();
-	void SetIcon(DockLetIconType icon_type);	
+	DockLet(GtkWidget *, bool);
+	~DockLet();	
 	void minimize_to_tray();
 	void maximize_from_tray();
-private:
-	DockLetIconType current_icon;
+private:	
 	HWND systray_hwnd;
 	HMENU systray_menu; // gtk menu don't work fine here.
 	NOTIFYICONDATA stardict_nid;
-	HICON sysicon_normal;
-	HICON sysicon_scan;
-	HICON sysicon_stop;
+	HICON normal_icon_;
+	HICON scan_icon_;
+	HICON stop_icon_;
 	
-	HWND systray_create_hiddenwin();
-	void systray_create_menu();
-	void systray_show_menu(int x, int y);
-	void systray_init_icon(HWND hWnd, HICON icon);
-	void systray_change_icon(HICON icon, char* text);
-	static LRESULT CALLBACK systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);		
+	HWND create_hiddenwin();
+	void create_menu();
+	void show_menu(int x, int y);
+	void init_icon(HWND hWnd, HICON icon);
+	void change_icon(HICON icon, char* text);
+	static LRESULT CALLBACK mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	void create();
+	void scan_on();
+	void scan_off();
+	void show_normal_icon();
 };
 
 #endif /* _SYSTRAY_H_ */
