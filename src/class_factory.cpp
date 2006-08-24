@@ -27,16 +27,20 @@
 #else
 #  include "inifile.hpp"
 #endif
+
 #ifdef _WIN32
 #  include "win32/win32_iskeyspressed.h"
+#  include "win32/systray.h"
 #else
 #  include "x11_iskeyspressed.hpp"
+#  include "docklet.h"
 #endif
+
 #include "utils.h"
 
 #include "class_factory.hpp"
 
-void *stardict_class_factory::create_class_by_name(const std::string& name, void *param)
+void *PlatformFactory::create_class_by_name(const std::string& name, void *param)
 {
 	if (name=="config_file") {
 #ifdef CONFIG_GNOME
@@ -54,3 +58,13 @@ void *stardict_class_factory::create_class_by_name(const std::string& name, void
 	return NULL;
 }
 
+TrayBase *PlatformFactory::create_tray_icon(GtkWidget *win, bool scan,
+					    GtkTooltips *tooltips,
+					    const AppSkin& skin)
+{
+#ifdef _WIN32
+	return new DockLet(win, scan);
+#else
+	return new DockLet(win, scan, tooltips, skin);
+#endif
+}

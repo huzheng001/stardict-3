@@ -13,7 +13,12 @@ public:
          * @param mainwin - window widget which we should control
          */
 
-	TrayBase(GtkWidget *mainwin) : mainwin_(mainwin) {}
+	TrayBase(GtkWidget *mainwin, bool is_scan_on) :
+		mainwin_(mainwin),
+		is_scan_on_(is_scan_on),
+		hide_state_(false) 
+		{
+		}
 
 	virtual ~TrayBase() {}
 
@@ -27,9 +32,32 @@ public:
 	{
 		gtk_window_present(GTK_WINDOW(mainwin_));
 	}
-
+	/**
+         * Change state of object
+         * @param is_on - turn on or turn off scan mode
+         */
+        virtual void set_scan_mode(bool is_on);
+	/**
+         * Noramlly it is called when you do not want show current state
+         */
+        void hide_state();
 protected:
 	GtkWidget *mainwin_;//!< Window widget which we should control
+
+	void on_change_scan(bool val);
+	void on_quit();
+	void on_maximize();
+	void on_middle_button_click();
+
+	virtual void scan_on() = 0;
+        virtual void scan_off() = 0;
+        virtual void show_normal_icon() = 0;
+
+	bool is_scan_on() const { return is_scan_on_; }
+	bool is_hide_state() const { return hide_state_; }
+private:
+	bool is_scan_on_;
+        bool hide_state_;
 };
 
 #endif//!_TRAY_HPP_

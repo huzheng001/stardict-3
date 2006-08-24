@@ -10,7 +10,7 @@ template <typename T, typename unref_res_t, void (*unref_res)(unref_res_t *)>
 struct ResourceWrapper {
 	ResourceWrapper(T *p = NULL) : p_(p) {}
 	~ResourceWrapper() { free_resource(); }
-	T*& get() { return p_; }
+	T* get() const { return p_; }
 	void reset(T *newp) {
 		if (p_ != newp) {
 			free_resource();

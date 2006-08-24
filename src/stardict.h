@@ -20,13 +20,12 @@ class AppCore;
 #include "skin.h"
 #include "mainwin.h"
 #ifdef _WIN32
-#  include "win32/systray.h"
 #  include "win32/clipboard.h"
 #  include "win32/mouseover.h"
 #  include "win32/hotkey.h"
-#else
-#  include "docklet.h"
 #endif
+
+#include "tray.hpp"
 #include "floatwin.h"
 #include "selection.h"
 #include "dictmanagedlg.h"
@@ -81,7 +80,7 @@ public:
 	Hotkey oHotkey;
 #endif
 	FloatWin oFloatWin;
-	std::auto_ptr<DockLet> oDockLet;
+	std::auto_ptr<TrayBase> oDockLet;
 
 	Libs oLibs;
 	TreeDicts oTreeDicts;

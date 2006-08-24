@@ -178,7 +178,7 @@ void AppCore::Create(gchar *queryword)
 	if (maximized)
 		gtk_window_maximize(GTK_WINDOW(window));
 	gtk_window_set_title (GTK_WINDOW (window), _("StarDict"));
-	gtk_window_set_icon(GTK_WINDOW(window), gpAppFrame->oAppSkin.icon.get());
+	gtk_window_set_icon(GTK_WINDOW(window), oAppSkin.icon.get());
 	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 	g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (on_delete_event), this);
 	g_signal_connect (G_OBJECT (window), "window_state_event", G_CALLBACK (on_window_state_event), this);
@@ -193,11 +193,13 @@ void AppCore::Create(gchar *queryword)
 	oTopWin.Create(vbox);
 	oMidWin.Create(vbox);
 	oBottomWin.Create(vbox);
-	unlock_keys.reset(static_cast<hotkeys *>(stardict_class_factory::create_class_by_name("hotkeys", GTK_WINDOW(window))));
+	unlock_keys.reset(static_cast<hotkeys *>(PlatformFactory::create_class_by_name("hotkeys",
+										       GTK_WINDOW(window))));
 	unlock_keys->set_comb(combnum2str(conf->get_int_at("dictionary/scan_modifier_key")));
 	oFloatWin.Create();
-	oDockLet.reset(new DockLet(window));
-	oDockLet->Create();
+	bool scan=conf->get_bool_at("dictionary/scan_selection");
+	oDockLet.reset(PlatformFactory::create_tray_icon(window, scan, tooltips,
+							 oAppSkin));
 
 	oSelection.Init();
 #ifdef _WIN32
@@ -205,7 +207,7 @@ void AppCore::Create(gchar *queryword)
 	oMouseover.Init();
 	oHotkey.Init();
 #endif
-	bool scan=conf->get_bool_at("dictionary/scan_selection");
+
 	if (scan) {
 		oSelection.start();
 #ifdef _WIN32
@@ -227,14 +229,12 @@ void AppCore::Create(gchar *queryword)
 	//NOTICE: when docklet embedded failed,it should always show the window,but,how to detect the failure?
 	// As stardict is FOR GNOME,so i don't want to consider the case that haven't the Notification area applet.
 	if (!hide_option && (queryword || !hide)) {
+		oDockLet->hide_state();
 		gtk_widget_show(window);
 	} else {
-		gtk_widget_realize(window); // This may be needed, so gtk_window_get_screen() in gtk_iskeyspressed.cpp can always work.
+// This may be needed, so gtk_window_get_screen() in gtk_iskeyspressed.cpp can always work.
+		gtk_widget_realize(window);
 		gdk_notify_startup_complete();
-		if (scan)
-			gpAppFrame->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
-		else
-			gpAppFrame->oDockLet->SetIcon(DOCKLET_STOP_ICON);
 	}
 
 	if (oLibs.ndicts()) {
@@ -254,34 +254,40 @@ gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore 
 	return TRUE;
 }
 
-gboolean AppCore::on_window_state_event(GtkWidget * window, GdkEventWindowState *event , AppCore *oAppCore)
+gboolean AppCore::on_window_state_event(GtkWidget *window,
+					GdkEventWindowState *event, AppCore *app)
 {
-	if (event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN) {
-		if (event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) {
-			if (conf->get_bool_at("dictionary/scan_selection"))
-				gpAppFrame->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
-			else
-				gpAppFrame->oDockLet->SetIcon(DOCKLET_STOP_ICON);
-		} else {
-			gpAppFrame->oDockLet->SetIcon(DOCKLET_NORMAL_ICON);
-			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry))[0])
-				gtk_widget_grab_focus(oAppCore->oMidWin.oTextWin.view->Widget());
+	switch (event->changed_mask) {
+	case GDK_WINDOW_STATE_WITHDRAWN:
+		if (conf->get_bool_at("dictionary/scan_selection"))
+			app->oDockLet->set_scan_mode(true);
+		else
+			app->oDockLet->set_scan_mode(false);
+		if (!(event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)) {
+			app->oDockLet->hide_state();
+			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(app->oTopWin.WordCombo)->entry))[0])
+				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
 		}
-	} else if (event->changed_mask == GDK_WINDOW_STATE_ICONIFIED) {
+		break;
+	case GDK_WINDOW_STATE_ICONIFIED:
 		if (!(event->new_window_state & GDK_WINDOW_STATE_ICONIFIED)) {
-			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry))[0]) {
-				gtk_widget_grab_focus(oAppCore->oMidWin.oTextWin.view->Widget()); //this is better than the next two line because it don't change selection.
-				//gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
-				//gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry), 0, -1);
+			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(app->oTopWin.WordCombo)->entry))[0]) {
+				//this is better than the next two line because it don't change selection.
+				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
 			} else {
-				gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
+				gtk_widget_grab_focus(GTK_COMBO(app->oTopWin.WordCombo)->entry);
 			}
 		}
-	}	else if (event->changed_mask == GDK_WINDOW_STATE_MAXIMIZED)
-	  conf->set_bool_at("main_window/maximized",
-									 (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED));
+		break;
+	case GDK_WINDOW_STATE_MAXIMIZED:
+		conf->set_bool_at("main_window/maximized",
+				  (event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED));
+		break;
+	default:
+		/* nothing */break;
+	}
 
-	return false;
+	return FALSE;
 }
 
 gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *event , AppCore *oAppCore)
@@ -1440,9 +1446,10 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 	if (scan != gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(app->oBottomWin.ScanSelectionCheckButton)))
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(app->oBottomWin.ScanSelectionCheckButton), scan);
 
+	app->oDockLet->set_scan_mode(scan);
+	if (GTK_WIDGET_VISIBLE(app->window))
+		app->oDockLet->hide_state();
 	if (scan) {
-		if (!GTK_WIDGET_VISIBLE(app->window))
-			app->oDockLet->SetIcon(DOCKLET_SCAN_ICON);
 		bool lock=conf->get_bool_at("floating_window/lock");
 		if (lock && !app->oFloatWin.QueryingWord.empty())
 			app->oFloatWin.Show();
@@ -1454,8 +1461,6 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval, void *arg)
 		app->oMouseover.start();
 #endif
 	} else {
-		if (!GTK_WIDGET_VISIBLE(app->window))
-			app->oDockLet->SetIcon(DOCKLET_STOP_ICON);
 		app->oFloatWin.Hide();
 		app->oSelection.stop();
 #ifdef _WIN32
