@@ -5,9 +5,10 @@ libstardict_a_SOURCES = \
 	dictziplib.cpp dictziplib.hpp	\
 	distance.cpp distance.h	\
 	mapfile.hpp file.hpp	\
-	kmp.c kmp.h	\
-	my_global.h m_ctype.h m_string.h ctype-mb.c ctype-utf8.c ctype-uca.c	\
-	collation.c collation.h \
+	kmp.cpp kmp.h	\
+	my_global.h m_ctype.h m_string.h	\
+	ctype-mb.cpp ctype-utf8.cpp ctype-uca.cpp	\
+	collation.cpp collation.h \
 	data.hpp data.cpp \
 	stddict.cpp stddict.hpp \
 	treedict.cpp treedict.hpp	\
