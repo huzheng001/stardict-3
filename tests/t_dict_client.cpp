@@ -22,33 +22,14 @@
 #  include "config.h"
 #endif
 
-#include <glib.h>
-
-#include "sockets.hpp"
+#include <cstdlib>
 
 #include "dict_client.hpp"
 
-bool DictClient::connect(const char *host, int port)
+int main()
 {
-	int sd = Socket::socket();
-	if (sd == -1 || !Socket::connect(sd, host, port)) {
-		g_warning("Can not connect to %s: %s\n",
-			  host, Socket::getErrorMsg().c_str());
-		return false;
-	}
-	if (!Socket::setNonBlocking(sd)) {
-		g_warning("Can not turn on not blocking socket mode: %s\n",
-			  Socket::getErrorMsg().c_str());
-		return false;
-	}
+	DictClient dict;
 
-	std::string res;
-	bool eof;
-	if (!Socket::nbRead(sd, res, &eof)) {
-		g_warning("Connection read error %s\n",
-			  Socket::getErrorMsg().c_str());
-		return false;
-	}
-	g_message("we get: %s\n", res.c_str());
-	return true;
+	dict.connect("localhost", 2628);
+	return EXIT_SUCCESS;
 }
