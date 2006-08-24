@@ -12,6 +12,7 @@ libstardict_a_SOURCES = \
 	data.hpp data.cpp \
 	stddict.cpp stddict.hpp \
 	treedict.cpp treedict.hpp	\
-	common.cpp common.hpp
+	common.cpp common.hpp \
+	dict_client.cpp dict_client.hpp
 
 INCLUDES = @STARDICT_CFLAGS@
