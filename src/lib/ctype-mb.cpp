@@ -14,14 +14,11 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include "my_global.h"
 #include "m_ctype.h"
 #include "m_string.h"
 
+using namespace stardict_collation;
 
 //#ifdef USE_MB
 #if 0
@@ -936,6 +933,8 @@ int my_mb_ctype_mb(CHARSET_INFO *cs, int *ctype,
 #endif
 
 
+namespace stardict_collation {
+
 MY_COLLATION_HANDLER my_collation_mb_bin_handler =
 {
     NULL,		/* init */
@@ -951,4 +950,5 @@ MY_COLLATION_HANDLER my_collation_mb_bin_handler =
     //my_propagate_simple
 };
 
+}; //namespace
 
