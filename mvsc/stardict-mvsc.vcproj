@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src\win32&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;;&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\atk-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\cairo&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\pango-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\glib-2.0&quot;"
+				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src\win32&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;;&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\atk-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\cairo&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\pango-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\glib-2.0&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -191,6 +191,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\lib\ctype-mb.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\lib\ctype-uca.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\lib\ctype-utf8.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\dictmanagedlg.cpp"
 				>
 			</File>
@@ -208,6 +220,10 @@
 			</File>
 			<File
 				RelativePath="..\src\inifile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\lib\kmp.cpp"
 				>
 			</File>
 			<File
@@ -298,23 +314,11 @@
 				Name="lib"
 				>
 				<File
-					RelativePath="..\src\lib\collation.c"
+					RelativePath="..\src\lib\collation.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\src\lib\common.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\ctype-mb.c"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\ctype-uca.c"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\ctype-utf8.c"
 					>
 				</File>
 				<File
@@ -327,10 +331,6 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\distance.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\kmp.c"
 					>
 				</File>
 				<File

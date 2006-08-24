@@ -17,30 +17,31 @@ enum SYSTRAY_CMND {
 };
 
 
-DockLet::DockLet(GtkWidget *mainwin) : TrayBase(mainwin)
+DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on) : 
+		TrayBase(mainwin, is_scan_on)
 {
-	current_icon = DOCKLET_NORMAL_ICON;
+	create();
 }
 
-void DockLet::Create()
+void DockLet::create()
 {
-	systray_hwnd = systray_create_hiddenwin();
+	systray_hwnd = create_hiddenwin();
 	::SetWindowLongPtr(systray_hwnd, GWL_USERDATA,
                    reinterpret_cast<LONG_PTR>(this));
 
-	systray_create_menu();
+	create_menu();
 
 	/* Load icons, and init systray notify icon */
-	sysicon_normal = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_NORMAL_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
-	sysicon_scan = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_SCAN_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
-	sysicon_stop = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_STOP_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
+	normal_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_NORMAL_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
+	scan_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_SCAN_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
+	stop_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_STOP_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
 
 	/* Create icon in systray */
-	systray_init_icon(systray_hwnd, sysicon_normal);
+	init_icon(systray_hwnd, normal_icon_);
 }
 
 /* Create hidden window to process systray messages */
-HWND DockLet::systray_create_hiddenwin()
+HWND DockLet::create_hiddenwin()
 {
 	WNDCLASSEX wcex;
 	TCHAR wname[32];
@@ -50,7 +51,7 @@ HWND DockLet::systray_create_hiddenwin()
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
 	wcex.style	        = 0;
-	wcex.lpfnWndProc	= (WNDPROC)systray_mainmsg_handler;
+	wcex.lpfnWndProc	= (WNDPROC)mainmsg_handler;
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= stardictexe_hInstance;
@@ -67,9 +68,9 @@ HWND DockLet::systray_create_hiddenwin()
 	return (CreateWindow(wname, "", 0, 0, 0, 0, 0, GetDesktopWindow(), NULL, stardictexe_hInstance, 0));
 }
 
-void DockLet::systray_create_menu()
+void DockLet::create_menu()
 {
-	char* locenc=NULL;
+	char* locenc = NULL;
 
 	/* create popup menu */
 	if((systray_menu = CreatePopupMenu())) {
@@ -83,7 +84,7 @@ void DockLet::systray_create_menu()
 	}
 }
 
-void DockLet::systray_show_menu(int x, int y)
+void DockLet::show_menu(int x, int y)
 {
 	/* need to call this so that the menu disappears if clicking outside
            of the menu scope */
@@ -104,7 +105,7 @@ void DockLet::systray_show_menu(int x, int y)
 		       );
 }
 
-LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	static UINT taskbarRestartMsg; /* static here means value is kept across multiple calls to this func */
 	DockLet *dock =
@@ -168,7 +169,7 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 			POINT mpoint;
 			GetCursorPos(&mpoint);
 
-			dock->systray_show_menu(mpoint.x, mpoint.y);
+			dock->show_menu(mpoint.x, mpoint.y);
 		}
 		break;
 	}
@@ -184,7 +185,7 @@ LRESULT CALLBACK DockLet::systray_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wp
 }
 
 
-void DockLet::systray_init_icon(HWND hWnd, HICON icon)
+void DockLet::init_icon(HWND hWnd, HICON icon)
 {
 	char* locenc=NULL;
 
@@ -201,7 +202,7 @@ void DockLet::systray_init_icon(HWND hWnd, HICON icon)
 	Shell_NotifyIcon(NIM_ADD,&stardict_nid);
 }
 
-void DockLet::systray_change_icon(HICON icon, char* text)
+void DockLet::change_icon(HICON icon, char* text)
 {
 	char *locenc=NULL;
 	stardict_nid.hIcon = icon;
@@ -209,24 +210,6 @@ void DockLet::systray_change_icon(HICON icon, char* text)
 	lstrcpy(stardict_nid.szTip, locenc);
 	g_free(locenc);
 	Shell_NotifyIcon(NIM_MODIFY,&stardict_nid);
-}
-
-void DockLet::SetIcon(DockLetIconType icon_type)
-{
-	if (current_icon == icon_type)
-		return;
-	switch (icon_type) {
-		case DOCKLET_NORMAL_ICON:
-			systray_change_icon(sysicon_normal, _("StarDict"));
-			break;
-		case DOCKLET_SCAN_ICON:
-			systray_change_icon(sysicon_scan, _("StarDict - Scanning"));
-			break;
-		case DOCKLET_STOP_ICON:
-			systray_change_icon(sysicon_stop, _("StarDict - Stopped"));
-			break;
-	}
-	current_icon = icon_type;
 }
 
 DockLet::~DockLet()
@@ -247,4 +230,19 @@ void DockLet::maximize_from_tray()
 	if (!GTK_WIDGET_VISIBLE(mainwin_))
 		RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));		
 	TrayBase::maximize_from_tray();
+}
+
+void DockLet::scan_on()
+{
+        change_icon(scan_icon_, _("StarDict - Scanning"));
+}
+
+void DockLet::scan_off()
+{
+        change_icon(stop_icon_, _("StarDict - Stopped"));
+}
+
+void DockLet::show_normal_icon()
+{
+        change_icon(normal_icon_, _("StarDict"));
 }
