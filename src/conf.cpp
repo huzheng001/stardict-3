@@ -44,7 +44,7 @@ std::string gStarDictDataDir;
 
 //---------------------------------------------------------------------------------
 AppConf::AppConf() : 
-	cf(static_cast<config_file *>(stardict_class_factory::create_class_by_name("config_file")))
+	cf(static_cast<config_file *>(PlatformFactory::create_class_by_name("config_file")))
 {
 	add_entry("/apps/stardict/preferences/main_window/maximized", false);
 #ifdef _WIN32

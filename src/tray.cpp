@@ -22,5 +22,66 @@
 #  include "config.h"
 #endif
 
+#include "conf.h"
+#include "stardict.h"
 
 #include "tray.hpp"
+
+void TrayBase::on_change_scan(bool val)
+{
+	conf->set_bool_at("dictionary/scan_selection", val);
+}
+
+void TrayBase::on_quit()
+{
+	gpAppFrame->Quit();
+}
+
+void TrayBase::on_maximize()
+{       
+	if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
+//so user can input word directly.
+		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); 
+	} else {
+		//this won't change selection text.
+		gtk_widget_grab_focus(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry);
+	}
+}
+
+void TrayBase::on_middle_button_click()
+{
+	if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
+		gpAppFrame->oSelection.LastClipWord.clear();
+		gtk_selection_convert(gpAppFrame->oSelection.selection_widget,
+				      GDK_SELECTION_PRIMARY,
+				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
+	} else {
+		maximize_from_tray();
+		gtk_selection_convert(gpAppFrame->oMidWin.oTextWin.view->Widget(),
+				      GDK_SELECTION_PRIMARY,
+				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
+	}
+}
+
+void TrayBase::set_scan_mode(bool is_on)
+{
+        if (!hide_state_ && is_on == is_scan_on_)
+                return;
+
+        hide_state_ = false;
+
+        if (is_on)
+                scan_on();
+        else
+                scan_off();
+
+        is_scan_on_ = is_on;
+}
+
+void TrayBase::hide_state()
+{
+        if (hide_state_)
+                return;
+        show_normal_icon();
+        hide_state_ = true;
+}

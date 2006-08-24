@@ -4,40 +4,39 @@
 #include <gtk/gtk.h>
 #include "tray.hpp"
 #include "eggtrayicon.h"
+#include "utils.h"
 
-enum DockLetIconType {
-	DOCKLET_NORMAL_ICON,
-	DOCKLET_SCAN_ICON,
-	DOCKLET_STOP_ICON,
-};
+class AppSkin;//forward declaration
 
 class DockLet : public TrayBase {
-private:
-	EggTrayIcon *docklet;
-	GtkWidget *box;
-	GtkWidget *image; //icon image.
-	GtkWidget *menu,*scan_menuitem;
-	DockLetIconType current_icon;
-	gboolean embedded;
-
-	static void EmbeddedCallback(GtkWidget *widget, gpointer data);
-	static void DestroyedCallback(GtkWidget *widget, DockLet *oDockLet);
-	static gboolean ButtonPressCallback(GtkWidget *button, GdkEventButton *event, DockLet *oDockLet);	
-
-	static void MenuScanCallback(GtkCheckMenuItem *checkmenuitem, gpointer user_data);
-	static void MenuQuitCallback(GtkMenuItem *menuitem, gpointer user_data);
-	
-	static gboolean docklet_create(gpointer data);
-
-	void PopupMenu(GdkEventButton *event);
-public:	
-
-
-	DockLet(GtkWidget *mainwin);
-	~DockLet();
-	void Create(DockLetIconType iconType = DOCKLET_NORMAL_ICON);
-	void SetIcon(DockLetIconType icon_type);
+public:
+	DockLet(GtkWidget *, bool, GtkTooltips *, const AppSkin&);
+ 	~DockLet();
 	void minimize_to_tray();
+	void set_scan_mode(bool);
+private:
+	EggTrayIcon *docklet_;
+	GtkWidget *box_;
+	GtkWidget *image_; //icon image.
+	typedef  ResourceWrapper<GtkWidget, GtkWidget, gtk_widget_destroy> GMenu;
+        GMenu menu_;
+	GtkWidget *scan_menuitem_;
+	bool embedded_;
+	GdkPixbuf *normal_icon_, *stop_icon_, *scan_icon_;
+        GtkTooltips *tooltips_;
+
+	static void on_embedded(GtkWidget *widget, gpointer data);
+	static void on_destroyed(GtkWidget *widget, DockLet *oDockLet);
+	static gboolean on_btn_press(GtkWidget *, GdkEventButton *, DockLet *);
+	static void on_menu_scan(GtkCheckMenuItem *, gpointer);
+	static void on_menu_quit(GtkMenuItem *, gpointer);	
+	static gboolean on_docklet_create(gpointer data);
+
+	void popup_menu(GdkEventButton *event);
+	void create_docklet();
+	void scan_on();
+	void scan_off();
+        void show_normal_icon();
 };
 
 
