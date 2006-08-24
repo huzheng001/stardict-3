@@ -8726,9 +8726,9 @@ static uchar ctype_utf8[] = {
 };
 #endif
 
-extern MY_CHARSET_HANDLER my_charset_utf8_handler;
-
 namespace stardict_collation {
+
+extern MY_CHARSET_HANDLER my_charset_utf8_handler;
 
 CHARSET_INFO my_charset_utf8_general_uca_ci=
 {
