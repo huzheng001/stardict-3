@@ -1,11 +1,6 @@
 #ifndef _COLLATION_H_
 #define _COLLATION_H_
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif                          /* __cplusplus */
-
 typedef enum {
 	UTF8_GENERAL_CI = 0,
 	UTF8_UNICODE_CI,
@@ -34,9 +29,5 @@ extern int utf8_collate_init(CollateFunctions func);
 extern int utf8_collate(const char *str1, const char *str2, CollateFunctions func);
 extern void utf8_collate_end();
 
-
-#ifdef __cplusplus
-}
-#endif                          /* __cplusplus */
 
 #endif
