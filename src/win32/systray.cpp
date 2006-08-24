@@ -3,11 +3,10 @@
 #include <glib/gi18n.h>
 #include "resource.h"
 #include "MinimizeToTray.h"
-#include "../stardict.h"
-#include "../conf.h"
-
 
 #include "systray.h"
+
+extern HINSTANCE stardictexe_hInstance;
 
 #define WM_TRAYMESSAGE WM_USER /* User defined WM Message */
 
@@ -90,7 +89,7 @@ void DockLet::show_menu(int x, int y)
            of the menu scope */
 	SetForegroundWindow(systray_hwnd);
 
-  if (conf->get_bool_at("dictionary/scan_selection"))
+  if (is_scan_on())
 		CheckMenuItem(systray_menu, SYSTRAY_CMND_MENU_SCAN, MF_BYCOMMAND | MF_CHECKED);
 	else
 		CheckMenuItem(systray_menu, SYSTRAY_CMND_MENU_SCAN, MF_BYCOMMAND | MF_UNCHECKED);
@@ -103,6 +102,21 @@ void DockLet::show_menu(int x, int y)
 		       systray_hwnd,        // handle to owner window
 		       NULL                 // ignored
 		       );
+}
+
+void DockLet::on_left_btn()
+{
+	if (GTK_WIDGET_VISIBLE(mainwin_)) {
+		HWND hwnd =
+			static_cast<HWND>(GDK_WINDOW_HWND(mainwin_->window));
+		if (IsIconic(hwnd))
+			ShowWindow(hwnd, SW_RESTORE);
+		else
+			minimize_to_tray();
+	} else {
+		maximize_from_tray();
+        on_maximize();
+	}
 }
 
 LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -119,56 +133,33 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 	case WM_COMMAND:
 		switch(LOWORD(wparam)) {
 		case SYSTRAY_CMND_MENU_SCAN:
-			if (GetMenuState(dock->systray_menu, SYSTRAY_CMND_MENU_SCAN, MF_BYCOMMAND) & MF_CHECKED) {
-				conf->set_bool_at("dictionary/scan_selection", FALSE);
-			} else {
-				conf->set_bool_at("dictionary/scan_selection", TRUE);
-			}				
+			if (GetMenuState(dock->systray_menu, SYSTRAY_CMND_MENU_SCAN,
+					MF_BYCOMMAND) & MF_CHECKED)
+				dock->on_change_scan(false);				
+			else
+				dock->on_change_scan(true);
+							
 			break;
 		case SYSTRAY_CMND_MENU_QUIT:
-			gpAppFrame->Quit();
+			dock->on_quit();
 			break;
 		}
 		break;
 	case WM_TRAYMESSAGE:
 	{
 		if ( lparam == WM_LBUTTONDOWN ) {
-			if (GetKeyState(VK_CONTROL)<0) {
-				conf->set_bool_at("dictionary/scan_selection", !conf->get_bool_at("dictionary/scan_selection"));
-			}
-		} else if ( lparam == WM_LBUTTONDBLCLK ) {
+			if (GetKeyState(VK_CONTROL) < 0)
+				dock->on_change_scan(!dock->is_scan_on());							
+		} else if (lparam == WM_LBUTTONDBLCLK) {
 			// Only use left button will conflict with the menu.
-			if (GTK_WIDGET_VISIBLE(dock->mainwin_)) {
-				HWND main_window =
-					static_cast<HWND>(GDK_WINDOW_HWND(dock->mainwin_->window));
-				if (IsIconic(main_window)) {
-					ShowWindow(main_window,SW_RESTORE);
-				//} else if (GetForegroundWindow() != main_window) {
-					//SetForegroundWindow(main_window);
-				} else
-					dock->minimize_to_tray();				
-			} else {				
-				dock->maximize_from_tray();
-
-				if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
-					gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); //so user can input word directly.
-				} else {
-					gtk_widget_grab_focus(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry); //this won't change selection text.
-				}
-			}
+			dock->on_left_btn();			
 		} else if (lparam == WM_MBUTTONDOWN) {
-			if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
-				gpAppFrame->oSelection.LastClipWord.clear();
-				gtk_selection_convert (gpAppFrame->oSelection.selection_widget, GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-			} else {				
-				gpAppFrame->oDockLet->maximize_from_tray();
-				gtk_selection_convert (gpAppFrame->oMidWin.oTextWin.view->Widget(), GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-			}	
+			dock->on_middle_button_click();			
 		} else if (lparam == WM_RBUTTONUP) {
 			/* Right Click */
 			POINT mpoint;
-			GetCursorPos(&mpoint);
 
+			GetCursorPos(&mpoint);
 			dock->show_menu(mpoint.x, mpoint.y);
 		}
 		break;
@@ -177,7 +168,7 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 		if (msg == taskbarRestartMsg) {
 			/* explorer crashed and left us hanging... 
 			   This will put the systray icon back in it's place, when it restarts */
-			Shell_NotifyIcon(NIM_ADD,&(dock->stardict_nid));
+			Shell_NotifyIcon(NIM_ADD, &dock->stardict_nid);
 		}
 	}
 
