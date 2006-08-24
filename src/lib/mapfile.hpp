@@ -19,13 +19,13 @@
 class MapFile {
 public:
   MapFile(void) : 
-		data(NULL),
 #ifdef HAVE_MMAP
-		mmap_fd(-1)
+		mmap_fd(-1),
 #elif defined(_WIN32)
 		hFile(0),
-		hFileMap(0)
+		hFileMap(0),
 #endif
+		data(NULL)
 	{
 	}
   ~MapFile();
@@ -33,14 +33,14 @@ public:
   inline void close();
   inline gchar *begin(void) { return data; }
 private:
-  char *data;
-  unsigned long size;
 #ifdef HAVE_MMAP
   int mmap_fd;
 #elif defined(_WIN32)
   HANDLE hFile;
   HANDLE hFileMap;
 #endif
+  char *data;
+  unsigned long size;
 };
 
 inline bool MapFile::open(const char *file_name, unsigned long file_size)
