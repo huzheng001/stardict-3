@@ -40,6 +40,7 @@ private:
 	void scan_on();
 	void scan_off();
 	void show_normal_icon();
+	void on_left_btn();
 };
 
 #endif /* _SYSTRAY_H_ */
