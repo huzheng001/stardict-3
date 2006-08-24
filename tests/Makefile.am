@@ -1,5 +1,5 @@
 noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata \
-	t_convert_old_ini
+	t_convert_old_ini t_dict_client
 EXTRA_DIST = sample1.ifo sample1.idx sample1.dict
 
 if GNOME_SUPPORT
@@ -14,6 +14,9 @@ t_config_file_SOURCES = t_config_file.cpp \
 
 t_dict_SOURCES = t_dict.cpp
 t_dict_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
+
+t_dict_client_SOURCES = t_dict_client.cpp
+t_dict_client_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
 
 t_fuzzy_SOURCES = t_fuzzy.cpp
 t_fuzzy_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
