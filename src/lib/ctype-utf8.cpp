@@ -20,14 +20,12 @@
 
 /* Modified by Hu Zheng <huzheng_001@163.com> for StarDict. 2006.6.13 */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include "my_global.h"
 #include "m_string.h"
 #include "m_ctype.h"
 //#include <errno.h>
+
+using namespace stardict_collation;
 
 //#ifndef EILSEQ
 //#define EILSEQ ENOENT
@@ -1492,6 +1490,7 @@ static MY_UNICASE_INFO planeFF[]={
   {0xFFFE,0xFFFE,0xFFFE},  {0xFFFF,0xFFFF,0xFFFF}
 };
 
+namespace stardict_collation {
 MY_UNICASE_INFO *my_unicase_default[256]={
  plane00, plane01, plane02, plane03, plane04, plane05,    NULL,    NULL,
     NULL,    NULL,    NULL,    NULL,    NULL,    NULL,    NULL,    NULL,
@@ -1527,6 +1526,8 @@ MY_UNICASE_INFO *my_unicase_default[256]={
     NULL,    NULL,    NULL,    NULL,    NULL,    NULL,    NULL, planeFF
 
 };
+
+}; //namespace
 
 #if 0
 /*
@@ -2538,6 +2539,8 @@ static MY_COLLATION_HANDLER my_collation_ci_handler =
     //my_propagate_complex
 };
 
+namespace stardict_collation {
+
 MY_CHARSET_HANDLER my_charset_utf8_handler=
 {
     NULL,               /* init */
@@ -2567,8 +2570,6 @@ MY_CHARSET_HANDLER my_charset_utf8_handler=
     //my_strtoll10_8bit,
     //my_scan_8bit
 };
-
-
 
 CHARSET_INFO my_charset_utf8_general_ci=
 {
@@ -2636,6 +2637,7 @@ CHARSET_INFO my_charset_utf8_bin=
     &my_collation_mb_bin_handler
 };
 
+}; //namespace
 
 //#ifdef HAVE_UTF8_GENERAL_CS
 #if 0
