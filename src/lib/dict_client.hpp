@@ -13,7 +13,10 @@ namespace DICT {
 		} state_;
 		Cmd() : state_(START) {}
 		virtual ~Cmd() {}
-		virtual const std::string& query() = 0;
+		const std::string& query() { return query_; }
+		virtual bool parse(gchar *str, int code) = 0;
+	protected:
+		std::string query_;
 	};
 };
 
@@ -27,6 +30,7 @@ private:
 	guint source_id_;
 	std::string host_;
 	int port_;
+	bool is_connected_;
 	std::auto_ptr<DICT::Cmd> cmd_;
 
 	void disconnect();
