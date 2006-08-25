@@ -32,16 +32,115 @@
 
 #include "dict_client.hpp"
 
+/* Status codes as defined by RFC 2229 */
+enum DICTStatusCode {
+  STATUS_INVALID                   = 0,
+    
+  STATUS_N_DATABASES_PRESENT       = 110,
+  STATUS_N_STRATEGIES_PRESENT      = 111,
+  STATUS_DATABASE_INFO             = 112,
+  STATUS_HELP_TEXT                 = 113,
+  STATUS_SERVER_INFO               = 114,
+  STATUS_CHALLENGE                 = 130,
+  STATUS_N_DEFINITIONS_RETRIEVED   = 150,
+  STATUS_WORD_DB_NAME              = 151,
+  STATUS_N_MATCHES_FOUND           = 152,
+  STATUS_CONNECT                   = 220,
+  STATUS_QUIT                      = 221,
+  STATUS_AUTH_OK                   = 230,
+  STATUS_OK                        = 250,
+  STATUS_SEND_RESPONSE             = 330,
+  /* Connect response codes */
+  STATUS_SERVER_DOWN               = 420,
+  STATUS_SHUTDOWN                  = 421,
+  /* Error codes */
+  STATUS_BAD_COMMAND               = 500,
+  STATUS_BAD_PARAMETERS            = 501,
+  STATUS_COMMAND_NOT_IMPLEMENTED   = 502,
+  STATUS_PARAMETER_NOT_IMPLEMENTED = 503,
+  STATUS_NO_ACCESS                 = 530,
+  STATUS_USE_SHOW_INFO             = 531,
+  STATUS_UNKNOWN_MECHANISM         = 532,
+  STATUS_BAD_DATABASE              = 550,
+  STATUS_BAD_STRATEGY              = 551,
+  STATUS_NO_MATCH                  = 552,
+  STATUS_NO_DATABASES_PRESENT      = 554,
+  STATUS_NO_STRATEGIES_PRESENT     = 555
+};
+
 class DefineCmd : public DICT::Cmd {
 public:
 	DefineCmd(const char *word, const char *database) {
 		query_ = std::string("DEFINE ") + database + " \"" + word +
 			"\"\r\n";
 	}
-	const std::string& query() { return query_; }
-private:
-	std::string query_;
+	bool parse(gchar *str, int code);
 };
+
+bool DefineCmd::parse(gchar *str, int code)
+{
+	if (state_ != DATA)
+		return false;
+	switch (code) {
+	case STATUS_N_DEFINITIONS_RETRIEVED: {
+		gchar *p = g_utf8_strchr(str, -1, ' ');
+		if (p)
+			p = g_utf8_next_char (p);
+          
+		g_debug("server replied: %d definitions found\n", atoi(p));                  
+		break;
+	}
+	case STATUS_WORD_DB_NAME: {		
+		gchar *word, *db_name, *db_full, *p;
+
+		word = str;
+
+		/* skip the status code */
+		word = g_utf8_strchr(word, -1, ' ');
+		word = g_utf8_next_char(word);
+          
+		if (word[0] == '\"')
+			word = g_utf8_next_char(word);
+          
+		p = g_utf8_strchr(word, -1, '\"');
+		if (p)
+			*p = '\0';
+          
+		p = g_utf8_next_char(p);
+	  
+		/* the database name is not protected by "" */
+		db_name = g_utf8_next_char(p);
+		if (!db_name)
+			break;
+          
+		p = g_utf8_strchr(db_name, -1, ' ');
+		if (p)
+			*p = '\0';
+
+		p = g_utf8_next_char(p);
+	  
+		db_full = g_utf8_next_char(p);
+		if (!db_full)
+			break;
+          
+		if (db_full[0] == '\"')
+			db_full = g_utf8_next_char(db_full);
+          
+		p = g_utf8_strchr(db_full, -1, '\"');
+		if (p)
+			*p = '\0';
+          
+		g_debug("{ word .= '%s', db_name .= '%s', db_full .= '%s' }\n",
+			word, db_name, db_full);
+          
+		break;
+	}
+	default:
+		break;		
+	}
+	return true;
+}
+
 
 DictClient::DictClient(const char *host, int port)
 {
@@ -49,6 +148,7 @@ DictClient::DictClient(const char *host, int port)
 	port_ = port;
 	channel_ = NULL;
 	source_id_ = 0;
+	is_connected_ = false;
 }
 
 DictClient::~DictClient()
@@ -116,6 +216,7 @@ void DictClient::disconnect()
 		g_io_channel_unref(channel_);
 		channel_ = NULL;
 	}
+	is_connected_ = false;
 }
 
 gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
@@ -163,10 +264,16 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 bool DictClient::parse(gchar *line, int status_code)
 {
 	g_debug("get %s\n", line);
-	if (cmd_.get()) {
-		switch (cmd_->state_) {
-		case DICT::Cmd::START: 
-		{
+	if (!is_connected_) {
+		if (status_code == STATUS_CONNECT)
+			is_connected_ = true;
+		else
+			return false;
+	}
+
+	if (!cmd_.get())
+		return true;
+	if (cmd_->state_ == DICT::Cmd::START) {
 			GIOStatus res =
 				g_io_channel_write_chars(channel_,
 							 cmd_->query().c_str(),
@@ -178,20 +285,18 @@ bool DictClient::parse(gchar *line, int status_code)
 			/* force flushing of the write buffer */
 			g_io_channel_flush(channel_, NULL);
 			cmd_->state_ = DICT::Cmd::DATA;
-		}
-		break;
-		case DICT::Cmd::DATA:
-		{
-			if (strcmp(line, ".") == 0) {
-				cmd_.reset(0);
-				disconnect();
-			}
-			break;
-		}
-		default:
-			/* nothing */ break;
-		}
+			return true;
 	}
+
+	if (status_code == STATUS_OK || cmd_->state_ == DICT::Cmd::FINISH) {
+		cmd_.reset(0);
+		return true;
+	}
+
+	if (!cmd_->parse(line, status_code))
+		return false;
+
+
 	return true;
 }
 
