@@ -28,8 +28,10 @@
 
 int main()
 {
+	GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
 	DictClient dict;
-
 	dict.connect("localhost", 2628);
+	g_main_loop_run(main_loop);
+
 	return EXIT_SUCCESS;
 }
