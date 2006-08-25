@@ -266,17 +266,17 @@ gboolean AppCore::on_window_state_event(GtkWidget *window,
 			app->oDockLet->set_scan_mode(false);
 		if (!(event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)) {
 			app->oDockLet->hide_state();
-			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(app->oTopWin.WordCombo)->entry))[0])
+			if (app->oTopWin.get_text()[0])
 				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
 		}
 		break;
 	case GDK_WINDOW_STATE_ICONIFIED:
 		if (!(event->new_window_state & GDK_WINDOW_STATE_ICONIFIED)) {
-			if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(app->oTopWin.WordCombo)->entry))[0]) {
+			if (app->oTopWin.get_text()[0]) {
 				//this is better than the next two line because it don't change selection.
 				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
 			} else {
-				gtk_widget_grab_focus(GTK_COMBO(app->oTopWin.WordCombo)->entry);
+				app->oTopWin.grab_focus();
 			}
 		}
 		break;
@@ -299,7 +299,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	gboolean only_mod1_pressed = ((event->state & GDK_MOD1_MASK)&&(!(event->state & GDK_CONTROL_MASK))&&(!(event->state & GDK_SHIFT_MASK)));
 	if ((event->keyval==GDK_q || event->keyval==GDK_Q) && only_ctrl_pressed) {
 		if (event->type==GDK_KEY_PRESS)
-			gpAppFrame->Quit();
+			oAppCore->Quit();
 	}
 	else if ((event->keyval==GDK_x || event->keyval==GDK_X) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS) {
@@ -341,7 +341,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 			oAppCore->oTopWin.do_menu();
 	}
 	else if ((event->keyval==GDK_v || event->keyval==GDK_V) && only_ctrl_pressed &&
-			!oAppCore->oTopWin.HasFocus() &&
+			!oAppCore->oTopWin.has_focus() &&
 			!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		if (event->type==GDK_KEY_PRESS) {
 			gtk_clipboard_request_text(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), oAppCore->oTopWin.ClipboardReceivedCallback, &(oAppCore->oTopWin));
@@ -351,26 +351,26 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 						 event->keyval >= 0x21 && event->keyval <= 0x7E &&
 						 !(event->state & GDK_CONTROL_MASK) &&
 						 !(event->state & GDK_MOD1_MASK) &&
-						 !oAppCore->oTopWin.HasFocus() &&
+						 !oAppCore->oTopWin.has_focus() &&
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.GetText());
+		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
 		gchar str[2] = { event->keyval, '\0' };
-		gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
+		oAppCore->oTopWin.grab_focus();
 		oAppCore->oTopWin.SetText(str, conf->get_bool_at("main_window/search_while_typing"));
-		gtk_editable_set_position(GTK_EDITABLE(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry), 1);
+		oAppCore->oTopWin.set_position_in_text(1);
 	} else if (event->type==GDK_KEY_PRESS && event->keyval == GDK_BackSpace &&
-			!oAppCore->oTopWin.HasFocus() &&
+			!oAppCore->oTopWin.has_focus() &&
 			!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry))[0]) {
-			oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.GetText());
+		if (oAppCore->oTopWin.get_text()[0]) {
+			oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
                         oAppCore->oTopWin.InsertBackList();
                         oAppCore->oTopWin.SetText("");
 		}
-		gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
+		oAppCore->oTopWin.grab_focus();
 	} else if (event->type==GDK_KEY_PRESS &&
 						 event->keyval == GDK_Return &&
-						 !oAppCore->oTopWin.HasFocus() &&
+						 !oAppCore->oTopWin.has_focus() &&
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		if (GTK_WIDGET_HAS_FOCUS(oAppCore->oMidWin.oIndexWin.oListWin.treeview)) {
 			GtkTreeModel *model;
@@ -388,37 +388,34 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 				} else {
 					gchar *word;
 					gtk_tree_model_get (model, &iter, 0, &word, -1);
-					gpAppFrame->ListClick(word);
+					oAppCore->ListClick(word);
 					g_free(word);
 				}
 			}
 		}
 		else {
-			gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
-			oAppCore->TopWinEnterWord(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry)));
+			oAppCore->oTopWin.grab_focus();
+			oAppCore->TopWinEnterWord(oAppCore->oTopWin.get_text());
 		}
 	}	else if (event->type==GDK_KEY_PRESS &&
 						 event->keyval == 0x20 &&
-						 !oAppCore->oTopWin.HasFocus() &&
+						 !oAppCore->oTopWin.has_focus() &&
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.GetText());
+		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
-		gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
-	}	else {
+		oAppCore->oTopWin.grab_focus();
+	} else {
 		switch (event->keyval) {
 		case GDK_Escape:
 			if (event->type==GDK_KEY_PRESS) {
-				if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry))[0]) {
-					oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.GetText());
+				if (oAppCore->oTopWin.get_text()[0]) {
+					oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 					oAppCore->oTopWin.InsertBackList();
 					oAppCore->oTopWin.SetText("");
-					gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
+					oAppCore->oTopWin.grab_focus();
 				} else {
-					if (GTK_WIDGET_HAS_FOCUS(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry)) {
-						//gtk_window_iconify(GTK_WINDOW(window));
-					}	else {
-						gtk_widget_grab_focus(GTK_COMBO(oAppCore->oTopWin.WordCombo)->entry);
-					}
+					if (!oAppCore->oTopWin.has_focus())
+						oAppCore->oTopWin.grab_focus();
 				}
 			}
 			break;
@@ -1021,7 +1018,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const g
 	oMidWin.oTextWin.queryWord = sOriginWord;
 
 	oMidWin.oIndexWin.oResultWin.Clear();
-	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+	for (size_t i=0; i < oLibs.ndicts(); i++) {
 		if (pppWord[i]) {
 			gchar *mark = g_strdup_printf("%d", i);
 			oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(i).c_str(), mark);
@@ -1029,14 +1026,14 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const g
 		}
 	}
 
-	gboolean canRead = gpAppFrame->oReadWord.canRead(sOriginWord);
+	gboolean canRead = oReadWord.canRead(sOriginWord);
 	if (canRead) {
 		oMidWin.oTextWin.pronounceWord = sOriginWord;
 	}
 	else {
-		for (size_t i=0;i< gpAppFrame->oLibs.ndicts(); i++) {
+		for (size_t i=0;i< oLibs.ndicts(); i++) {
 			if (pppWord[i] && strcmp(pppWord[i][0], sOriginWord)) {
-				if (gpAppFrame->oReadWord.canRead(pppWord[i][0])) {
+				if (oReadWord.canRead(pppWord[i][0])) {
 					canRead = true;
 					oMidWin.oTextWin.pronounceWord = pppWord[i][0];
 				}
@@ -1063,7 +1060,7 @@ void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextW
 
 	oMidWin.oIndexWin.oResultWin.Clear();
 
-	gboolean canRead = gpAppFrame->oReadWord.canRead(sWord);
+	gboolean canRead = oReadWord.canRead(sWord);
 	if (canRead)
 		oMidWin.oTextWin.pronounceWord = sWord;
 	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, canRead);
@@ -1095,7 +1092,7 @@ void AppCore::TopWinEnterWord(const gchar *text)
 				bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
 				bool find = SimpleLookupToTextWin(res.c_str(), iCurrentIndex, NULL, true, !showfirst);
 				ListWords(res.c_str(), iCurrentIndex, !find && showfirst);
-				gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(oTopWin.WordCombo)->entry),0,-1);
+				oTopWin.select_region_in_text(0, -1);
 				oTopWin.InsertHisList(text);
 				oTopWin.InsertBackList();
 				return;
@@ -1152,12 +1149,11 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	}
 
 	//when TEXT_WIN_TIPS,the text[0]=='\0',already returned.
-
-	gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(oTopWin.WordCombo)->entry),0,-1);
+	oTopWin.select_region_in_text(0, -1);
 	oTopWin.InsertHisList(text);
 	oTopWin.InsertBackList();
 	if (GTK_WIDGET_SENSITIVE(oMidWin.oToolWin.PronounceWordButton))
-		gpAppFrame->oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str());
+		oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str());
 }
 
 void AppCore::TopWinWordChange(const gchar* sWord)
@@ -1236,7 +1232,7 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 
 void AppCore::Query(const gchar *word)
 {
-	oTopWin.InsertHisList(oTopWin.GetText());
+	oTopWin.InsertHisList(oTopWin.get_text());
 	oTopWin.InsertBackList();
 	oTopWin.SetText(word);
 	std::string res;
@@ -1255,19 +1251,19 @@ void AppCore::Query(const gchar *word)
 	}
 
 	oTopWin.TextSelectAll();
-	oTopWin.GrabFocus();
+	oTopWin.grab_focus();
 	oTopWin.InsertHisList(word);
 	oTopWin.InsertBackList(word);
 }
 
 void AppCore::ListClick(const gchar *word)
 {
-	oTopWin.InsertHisList(oTopWin.GetText());
+	oTopWin.InsertHisList(oTopWin.get_text());
 	oTopWin.InsertBackList();
 	oTopWin.SetText(word);
 	oTopWin.InsertHisList(word);
 	oTopWin.InsertBackList(word);
-	gtk_widget_grab_focus(GTK_COMBO(oTopWin.WordCombo)->entry);
+	oTopWin.grab_focus();
 }
 
 class reload_show_progress_t : public show_progress_t {
@@ -1315,10 +1311,9 @@ void AppCore::reload_dicts()
 		     conf->get_int_at("dictionary/collate_function"));
 	g_free(iCurrentIndex);
 	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
-	const gchar *sWord=NULL;
 
-	if (oTopWin.WordCombo)
-		sWord = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oTopWin.WordCombo)->entry));
+	const gchar *sWord = oTopWin.get_text();
+
 	if (sWord && sWord[0])
 		TopWinWordChange(sWord);
 }
@@ -1630,14 +1625,11 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 			argv[argc++] = "-h";
 	}
 
-	if (gpAppFrame->oTopWin.WordCombo) {
-	    const gchar *text;
-		text = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry));
+	const gchar *text = gpAppFrame->oTopWin.get_text();
     	if (text[0]) {
-			word = g_strdup(text);
+		word = g_strdup(text);
         	argv[argc++] = word;
-		}
-	}
+	}	
 
     gnome_client_set_restart_command(client, argc, argv);
     gnome_client_set_clone_command(client, argc, argv);

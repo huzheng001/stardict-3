@@ -39,12 +39,12 @@ void TrayBase::on_quit()
 
 void TrayBase::on_maximize()
 {       
-	if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
+	if (gpAppFrame->oTopWin.get_text()[0]) {
 //so user can input word directly.
 		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); 
 	} else {
 		//this won't change selection text.
-		gtk_widget_grab_focus(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry);
+		gpAppFrame->oTopWin.grab_focus();
 	}
 }
 

@@ -45,6 +45,7 @@ private:
 	GSList *BackList;
 	GtkWidget *HistoryMenu;
 	GtkWidget *BackMenu;
+	GtkWidget* WordCombo;
 
 	static gint HisCompareFunc(gconstpointer a,gconstpointer b);
 	static gint BackListDataCompareFunc(gconstpointer a,gconstpointer b);
@@ -71,7 +72,6 @@ private:
 	void LoadHistory(void);
 	void SaveHistory(void);
 public:
-	GtkWidget* WordCombo;
 	GtkWidget* MainMenu;
 
 	TopWin();
@@ -81,9 +81,7 @@ public:
 	void Destroy(void);
 	void SetText(const gchar *word, bool notify=true);
 	//void SetText_without_notify(const gchar *word);
-	const gchar* GetText();
-	void TextSelectAll();
-	void GrabFocus();
+	void TextSelectAll();	
 	void InsertHisList(const gchar *word);
 	void InsertBackList(const gchar *word = NULL);
 	void do_back();
@@ -92,10 +90,25 @@ public:
 	void do_menu();
 
 	gboolean TextSelected();
-	bool HasFocus() {
-    return GTK_WIDGET_HAS_FOCUS(GTK_COMBO(WordCombo)->entry);
-  }
+	bool has_focus() {
+		return GTK_WIDGET_HAS_FOCUS(GTK_COMBO(WordCombo)->entry);
+	}
 	static void ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *text, gpointer data);
+
+	void set_position_in_text(gint pos) {
+		gtk_editable_set_position(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry), pos);
+	}
+	void select_region_in_text(gint beg, gint end) {
+		gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry), beg, end);
+	}
+	const gchar *get_text() {
+		if (!WordCombo)
+			return "";
+		return gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry));
+	}
+	void grab_focus() {
+		gtk_widget_grab_focus(GTK_COMBO(WordCombo)->entry);
+	}
 };
 
 class ListWin
