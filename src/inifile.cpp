@@ -1,4 +1,4 @@
-/* 
+/*
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
  * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
@@ -69,29 +69,29 @@ void inifile::convert_from_old_version()
 	}
 	fprintf(f, "[stardict-private]\n version=%s\n", myversion);
 	fclose(f);
-		
+
 }
 
 void inifile::convert_from_locale_enc()
-{	
-	
-	GError *err = NULL;
-	gchar *content;
-	if (!g_file_get_contents(fname_.c_str(), &content, NULL, &err)) {		
+{
+	MyGError err;
+	GCharStr data;
+
+	if (!g_file_get_contents(fname_.c_str(), get_addr(data), NULL,
+				 get_addr(err))) {
 		g_error(_("Can not read %s, reason %s\n"), fname_.c_str(),
-			err->message);
-		g_error_free(err);
+			err->message);		
 		exit(EXIT_SUCCESS);
 	}
-	GCharStr data(content);
-	GCharStr utfdata(g_locale_to_utf8(data.get(), -1, NULL, NULL, NULL));
-	if (!utfdata.get()) {
+
+	GCharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
+					  NULL));
+	if (!utfdata) {
 		g_error(_("Can not convert ini file content to current locale\n"));
 		exit(EXIT_SUCCESS);
 	}
 
-	if (!g_file_set_contents(fname_.c_str(), utfdata.get(), -1, &err)) {
-		g_error_free(err);
+	if (!g_file_set_contents(fname_.c_str(), get_impl(utfdata), -1, get_addr(err))) {
 		g_error("can not save content of ini file %s, reason %s\n",
 			fname_.c_str(), err->message);
 		exit(EXIT_SUCCESS);
@@ -99,7 +99,7 @@ void inifile::convert_from_locale_enc()
 }
 
 inifile::inifile(const std::string& path)
-{	
+{
 	fname_ = path;
 	bool done = false;
 	while (!done) {
@@ -113,56 +113,53 @@ inifile::inifile(const std::string& path)
 			continue;
 		}
 
-		GError *err = NULL;
+		MyGError err;
 		if (!g_key_file_load_from_file(gkeyfile_, path.c_str(),
 					       GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS |
-							     G_KEY_FILE_KEEP_TRANSLATIONS), &err)) {
-			MyGError myerr(err);
-			if (myerr.get()->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
+							     G_KEY_FILE_KEEP_TRANSLATIONS),
+					       get_addr(err))) {
+			if (err->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
 				g_key_file_free(gkeyfile_);
 				convert_from_locale_enc();
 				continue;
 			}
 			g_error(_("Can not open config file: %s, reason: %s\n"),
-				path.c_str(), myerr.get()->message);
+				path.c_str(), err->message);
 			exit(EXIT_FAILURE);//just in case
 		}
 
-		gchar *version = g_key_file_get_string(gkeyfile_, "stardict-private",
-						       "version", &err);
+		GCharStr version(g_key_file_get_string(gkeyfile_, "stardict-private",
+						       "version", get_addr(err)));
 		if (err) {
-			MyGError myerr(err);
-			g_free(version);
-			if (myerr.get()->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
-			    myerr.get()->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
+			if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
+			    err->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
 				g_error(_("internal error, reason: %s\n"),
-					myerr.get()->message);
+					err->message);
 				exit(EXIT_FAILURE);//just in case
 			}
 			g_key_file_free(gkeyfile_);
 			convert_from_old_version();
 			continue;
 		}
-		if (strcmp(version, myversion)) {			
+		if (strcmp(get_impl(version), myversion)) {
 			g_error(_("unsupported ini file format\n"));
-			exit(EXIT_FAILURE);			
+			exit(EXIT_FAILURE);
 		}
 		done = true;
 	}
-				  
+
 }
 
 void inifile::save()
 {
 	gsize len;
-	GError *err = NULL;
-	ResourceWrapper<gchar, void, g_free> data(
-		g_key_file_to_data(gkeyfile_, &len, &err));
+	MyGError err;
+	GCharStr data(
+		g_key_file_to_data(gkeyfile_, &len, get_addr(err)));
 
 	if (err) {
 		g_warning(_("internal error, reason: %s\n"),
 			  err->message);
-		g_error_free(err);
 		return;
 	}
 	FILE *f = g_fopen(fname_.c_str(), "w");
@@ -171,7 +168,7 @@ void inifile::save()
 			  fname_.c_str());
 		return;
 	}
-	size_t writeb = fwrite(data.get(), 1, len, f);
+	size_t writeb = fwrite(get_impl(data), 1, len, f);
 	fclose(f);
 	if (writeb < len)
 		g_warning(_("write to %s failed, instead of %lu,"
@@ -202,9 +199,9 @@ bool inifile::read_bool(const gchar *sect, const gchar *key, bool& val)
 	GError *err = NULL;
 
 	gboolean newval = g_key_file_get_boolean(gkeyfile_, sect, key, &err);
-	if (err) 
+	if (err)
 		return report_error(err, sect, key);
-	
+
 	val = newval;
 	return true;
 }
@@ -213,9 +210,9 @@ bool inifile::read_int(const gchar *sect, const gchar *key, int& val)
 {
 	GError *err = NULL;
 	gint newval = g_key_file_get_integer(gkeyfile_, sect, key, &err);
-	if (err) 
+	if (err)
 		return report_error(err, sect, key);
-	
+
 	val = newval;
 	return true;
 }
@@ -288,7 +285,7 @@ void inifile::write_strlist(const gchar *sect, const gchar *key,
 	expose_event(sect, key, slist);
 }
 
-void inifile::notify_add(const gchar *sect, const gchar *key, 
+void inifile::notify_add(const gchar *sect, const gchar *key,
 			 void (*on_change)(const baseconfval*, void *), void *arg)
 {
 	std::string name(std::string(sect) + "/" + key);
