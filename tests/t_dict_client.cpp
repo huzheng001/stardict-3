@@ -23,14 +23,16 @@
 #endif
 
 #include <cstdlib>
+#include <clocale>
 
 #include "dict_client.hpp"
 
 int main()
 {
+	setlocale(LC_ALL, "");//so g_debug and so on will print not garbage
 	GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-	DictClient dict;
-	dict.connect("localhost", 2628);
+	DictClient dict("localhost");
+	dict.lookup_simple("man");
 	g_main_loop_run(main_loop);
 
 	return EXIT_SUCCESS;
