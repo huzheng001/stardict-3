@@ -55,6 +55,4 @@ public:
 	static std::string getErrorMsg(int error);
 };
 
-
-
 #endif//!_SOCKETS_HPP_
