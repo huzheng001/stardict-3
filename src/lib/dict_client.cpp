@@ -36,19 +36,21 @@ bool DictClient::connect(const char *host, int port)
 			  host, Socket::getErrorMsg().c_str());
 		return false;
 	}
-	if (!Socket::setNonBlocking(sd)) {
-		g_warning("Can not turn on not blocking socket mode: %s\n",
-			  Socket::getErrorMsg().c_str());
-		return false;
-	}
+	GIOChannel *ch;
+#ifdef _WIN32
+	ch = g_io_channel_win32_new_socket(sd);
+#else
+	ch = g_io_channel_unix_new(sd);
+#endif
 
-	std::string res;
-	bool eof;
-	if (!Socket::nbRead(sd, res, &eof)) {
-		g_warning("Connection read error %s\n",
-			  Socket::getErrorMsg().c_str());
-		return false;
-	}
-	g_message("we get: %s\n", res.c_str());
+/* RFC2229 mandates the usage of UTF-8, so we force this encoding */
+	g_io_channel_set_encoding(ch, "UTF-8", NULL);
+
+	g_io_channel_set_line_term(ch, "\r\n", 2);
+
+	gchar *str = NULL;
+	if (g_io_channel_read_line(ch, &str, NULL, NULL, NULL) ==
+	    G_IO_STATUS_NORMAL)
+		g_debug("read: %s\n", str);
 	return true;
 }
