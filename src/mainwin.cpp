@@ -155,7 +155,7 @@ void TopWin::Create(GtkWidget *vbox)
 
 void TopWin::Destroy(void)
 {
-	InsertHisList(GetText());
+	InsertHisList(get_text());
 	SaveHistory();
 	if (MainMenu)
 		gtk_widget_destroy(MainMenu);
@@ -227,7 +227,7 @@ void TopWin::on_back_menu_item_activate(GtkMenuItem *menuitem, gint index)
     g_free((gpAppFrame->oTopWin.BackList)->data);
     gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);	
   }
-  gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.GetText());
+  gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.get_text());
   gpAppFrame->oTopWin.SetText(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
   if (((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value != -1) {
     ProcessGtkEvent();
@@ -243,17 +243,17 @@ void TopWin::ClearCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
 	
-	oTopWin->InsertHisList(oTopWin->GetText());
+	oTopWin->InsertHisList(oTopWin->get_text());
 	oTopWin->InsertBackList();
 	oTopWin->SetText("");
-	oTopWin->GrabFocus();
+	oTopWin->grab_focus();
 }
 
 void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
 	
-	const gchar *text = oTopWin->GetText();
+	const gchar *text = oTopWin->get_text();
 	if (text[0]=='\0')
 		return;
 	std::string res;
@@ -272,7 +272,7 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 	}
 
 	oTopWin->TextSelectAll();
-	oTopWin->GrabFocus();
+	oTopWin->grab_focus();
 	oTopWin->InsertHisList(text);
 	oTopWin->InsertBackList(text);
 }
@@ -288,7 +288,7 @@ void TopWin::do_back()
     if (!list)
       return;
   }
-  InsertHisList(GetText());
+  InsertHisList(get_text());
   SetText(((BackListData *)(list->data))->word);
   if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
     gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
@@ -590,16 +590,6 @@ void TopWin::SetText(const gchar *word, bool notify)
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry),word);
 	enable_change_cb = true;
 }*/
-
-const gchar* TopWin::GetText()
-{
-	return gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry));
-}
-
-void TopWin::GrabFocus()
-{
-	gtk_widget_grab_focus(GTK_COMBO(WordCombo)->entry);
-}
 
 void TopWin::TextSelectAll()
 {
@@ -1320,7 +1310,7 @@ void ToolWin::CopyCallback(GtkWidget *widget, ToolWin *oToolWin)
 
 void ToolWin::PlayCallback(GtkWidget *widget, ToolWin *oToolWin)
 {
-	gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.GetText());
+	gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.get_text());
 	gpAppFrame->oTopWin.InsertBackList();
 	gpAppFrame->oReadWord.read(gpAppFrame->oMidWin.oTextWin.pronounceWord.c_str());
 }
@@ -1849,8 +1839,7 @@ void BottomWin::on_internetsearch_menu_item_activate(GtkMenuItem *menuitem, cons
 	if (weblist[2].find("%s")==std::string::npos)
 		return;
 
-	const gchar *text;
-	text = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry));
+	const gchar *text = gpAppFrame->oTopWin.get_text();
 	if (text[0]) {		
 	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
 	  show_url(url);
@@ -1875,8 +1864,7 @@ void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
 	if (weblist[2].find("%s")==std::string::npos)
 		return;
 
-	const gchar *text;
-	text = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry));
+	const gchar *text = gpAppFrame->oTopWin.get_text();
 	if (text[0]) {		
 	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
 	  show_url(url);
