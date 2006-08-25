@@ -178,7 +178,8 @@ void AppCore::Create(gchar *queryword)
 	if (maximized)
 		gtk_window_maximize(GTK_WINDOW(window));
 	gtk_window_set_title (GTK_WINDOW (window), _("StarDict"));
-	gtk_window_set_icon(GTK_WINDOW(window), oAppSkin.icon.get());
+	gtk_window_set_icon(GTK_WINDOW(window),
+			    get_impl(oAppSkin.icon));
 	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 	g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (on_delete_event), this);
 	g_signal_connect (G_OBJECT (window), "window_state_event", G_CALLBACK (on_window_state_event), this);
@@ -847,7 +848,9 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 {
 	if (!sWord || !*sWord)
 		return;
-	change_cursor busy(window->window, gpAppFrame->oAppSkin.watch_cursor.get(), gpAppFrame->oAppSkin.normal_cursor.get());
+	change_cursor busy(window->window,
+			   get_impl(oAppSkin.watch_cursor),
+			   get_impl(oAppSkin.normal_cursor));
 
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(false);
@@ -894,8 +897,8 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 	if (sWord[0] == '\0')
 		return;
   change_cursor busy(window->window,
-										 gpAppFrame->oAppSkin.watch_cursor.get(),
-										 gpAppFrame->oAppSkin.normal_cursor.get());
+		     get_impl(oAppSkin.watch_cursor),
+		     get_impl(oAppSkin.normal_cursor));
 
 	gchar *fuzzy_reslist[MAX_FUZZY_MATCH_ITEM];
   bool Found=
@@ -926,7 +929,9 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 {
 	if (sWord[0] == '\0')
 		return;
-	change_cursor busy(oFloatWin.FloatWindow->window, gpAppFrame->oAppSkin.watch_cursor.get(), gpAppFrame->oAppSkin.normal_cursor.get());
+	change_cursor busy(oFloatWin.FloatWindow->window,
+			   get_impl(oAppSkin.watch_cursor),
+			   get_impl(oAppSkin.normal_cursor));
 	gchar *fuzzy_reslist[MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM];
 	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM);
 	if (Found) {
@@ -978,7 +983,9 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 
 void AppCore::LookupWithRuleToMainWin(const gchar *word)
 {
-	change_cursor busy(window->window, gpAppFrame->oAppSkin.watch_cursor.get(), gpAppFrame->oAppSkin.normal_cursor.get());
+	change_cursor busy(window->window,
+			   get_impl(oAppSkin.watch_cursor),
+			   get_impl(oAppSkin.normal_cursor));
 
 	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * oLibs.ndicts());
 	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord);
@@ -1277,8 +1284,8 @@ void AppCore::PopupPrefsDlg()
 {
 	if (!prefs_dlg) {
 		prefs_dlg = new PrefsDlg(GTK_WINDOW(window),
-				   gpAppFrame->oAppSkin.icon.get(),
-				   unlock_keys->possible_combs());
+					 get_impl(oAppSkin.icon),
+					 unlock_keys->possible_combs());
 		bool enbcol =
 			conf->get_bool_at("dictionary/enable_collation");
 		int colf =
@@ -1320,7 +1327,10 @@ void AppCore::PopupDictManageDlg()
 {
 
 	if (!dict_manage_dlg)
-		dict_manage_dlg = new DictManageDlg(GTK_WINDOW(window), oAppSkin.index_wazard.get(), oAppSkin.index_appendix.get());
+		dict_manage_dlg =
+			new DictManageDlg(GTK_WINDOW(window),
+					  get_impl(oAppSkin.index_wazard),
+					  get_impl(oAppSkin.index_appendix));
 	if (dict_manage_dlg->Show())
 		return;
 	progress_win pw;

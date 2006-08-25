@@ -465,31 +465,31 @@ void TopWin::on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
 	const gchar *authors[] = {
-    "Hu Zheng <huzheng_001@163.com>",
-    "Evgeniy <dushistov@mail.ru>",
-    "Opera Wang <wangvisual@sohu.com>",
-    "Ma Su'an <msa@wri.com.cn>",
-        NULL
-    };
-    gchar *documenters[] = {
+		"Hu Zheng <huzheng_001@163.com>",
+		"Evgeniy <dushistov@mail.ru>",
+		"Opera Wang <wangvisual@sohu.com>",
+		"Ma Su'an <msa@wri.com.cn>",
+		NULL
+	};
+	gchar *documenters[] = {
 		"Hu Zheng <huzheng_001@163.com>",
 		"Will Robinson <wsr23@stanford.edu>",
 		"Anthony Fok <foka@debian.org>",
-	    NULL
-    };
-    gchar *translator_credits = _("translator_credits");
+		NULL
+	};
+	gchar *translator_credits = _("translator_credits");
 
 	gtk_show_about_dialog(GTK_WINDOW (gpAppFrame->window),
-		"name", _("StarDict"),
-		"version", VERSION,
-		"website", "http://stardict.sourceforge.net",
-		"comments", _("StarDict is an international dictionary for GNOME."),
-		"copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2006 by Hu Zheng",
-		"authors", (const char **)authors,
-		"documenters", (const char **)documenters,
-		"translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-		"logo", gpAppFrame->oAppSkin.icon.get(),
-		NULL);
+			      "name", _("StarDict"),
+			      "version", VERSION,
+			      "website", "http://stardict.sourceforge.net",
+			      "comments", _("StarDict is an international dictionary for GNOME."),
+			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2006 by Hu Zheng",
+			      "authors", (const char **)authors,
+			      "documenters", (const char **)documenters,
+			      "translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+			      "logo", get_impl(gpAppFrame->oAppSkin.icon),
+			      NULL);
 }
 
 void TopWin::on_main_menu_quit_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
@@ -1112,7 +1112,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 #else
 	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
 	gtk_container_add (GTK_CONTAINER (wazard_button), hbox1);
-	GtkWidget *image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_wazard.get());
+	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_wazard));
 	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
 	GtkWidget *label = gtk_label_new_with_mnemonic(_("_List"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -1132,7 +1132,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 #else
 	hbox1 = gtk_hbox_new(false, 2);
 	gtk_container_add (GTK_CONTAINER (result_button), hbox1);
-	image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_dictlist.get());
+	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_dictlist));
 	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
 	label = gtk_label_new_with_mnemonic(_("_Result"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -1152,7 +1152,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 #else
 		hbox1 = gtk_hbox_new(false, 2);
 		gtk_container_add (GTK_CONTAINER (appendix_button), hbox1);
-		image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_appendix.get());
+		image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_appendix));
 		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
 		label = gtk_label_new_with_mnemonic(_("_Tree"));
 		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

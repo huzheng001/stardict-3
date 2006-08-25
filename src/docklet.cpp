@@ -16,9 +16,9 @@ DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on, GtkTooltips *tooltips,
 	embedded_ = false;
 	tooltips_ = tooltips;
 
-	normal_icon_ = skin.docklet_normal_icon.get();
-	scan_icon_ = skin.docklet_scan_icon.get();
-	stop_icon_ = skin.docklet_stop_icon.get();
+	normal_icon_ = get_impl(skin.docklet_normal_icon);
+	scan_icon_ = get_impl(skin.docklet_scan_icon);
+	stop_icon_ = get_impl(skin.docklet_stop_icon);
 
 	create_docklet();
 }
@@ -89,16 +89,18 @@ void DockLet::on_menu_quit(GtkMenuItem *menuitem, gpointer user_data)
 
 void DockLet::popup_menu(GdkEventButton *event)
 {
-	if (!menu_.get()) {
+	if (!menu_) {
 		menu_.reset(gtk_menu_new());
 
 		scan_menuitem_ = gtk_check_menu_item_new_with_mnemonic(_("_Scan"));
 		g_signal_connect(G_OBJECT(scan_menuitem_), "toggled",
 				 G_CALLBACK(on_menu_scan), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu_.get()), scan_menuitem_);
+		gtk_menu_shell_append(GTK_MENU_SHELL(get_impl(menu_)),
+				      scan_menuitem_);
 
 		GtkWidget *menuitem = gtk_separator_menu_item_new();
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu_.get()), menuitem);
+		gtk_menu_shell_append(GTK_MENU_SHELL(get_impl(menu_)),
+				      menuitem);
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Quit"));
 		GtkWidget *image;
@@ -106,14 +108,15 @@ void DockLet::popup_menu(GdkEventButton *event)
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 				 G_CALLBACK(on_menu_quit), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu_.get()), menuitem);
+		gtk_menu_shell_append(GTK_MENU_SHELL(get_impl(menu_)),
+				      menuitem);
 
-		gtk_widget_show_all(menu_.get());
+		gtk_widget_show_all(get_impl(menu_));
 	}
 	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(scan_menuitem_),
 				       is_scan_on());
 
-	gtk_menu_popup(GTK_MENU(menu_.get()), NULL, NULL, NULL, NULL,
+	gtk_menu_popup(GTK_MENU(get_impl(menu_)), NULL, NULL, NULL, NULL,
 		       event->button, event->time);
 }
 
