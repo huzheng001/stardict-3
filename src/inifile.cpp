@@ -286,10 +286,13 @@ void inifile::write_strlist(const gchar *sect, const gchar *key,
 }
 
 void inifile::notify_add(const gchar *sect, const gchar *key,
-			 void (*on_change)(const baseconfval*, void *), void *arg)
+			 const sigc::slot<void, const baseconfval*>& slot)
 {
-	std::string name(std::string(sect) + "/" + key);
-
-	change_events_map_[name].on_change = on_change;
-	change_events_map_[name].arg = arg;
+	std::string name = std::string(sect) + "/" + key;
+	
+	ChangeEventsMap::iterator it =
+                change_events_map_.insert(
+                        std::make_pair(name,
+                                       sigc::signal<void, const baseconfval*>())).first;
+        it->second.connect(slot);
 }

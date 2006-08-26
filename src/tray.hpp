@@ -2,6 +2,7 @@
 #define _TRAY_HPP_
 
 #include <gtk/gtk.h>
+#include "sigc++/sigc++.h"
 
 /**
  * Base class for platform specific implementation of tray
@@ -41,11 +42,20 @@ public:
          * Noramlly it is called when you do not want show current state
          */
         void hide_state();
+	/**
+         * Connect slot with signal which happend when quit item of menu
+	 *  was choosen
+         * @param s - slot
+         */
+        void connect_on_quit(const sigc::slot<void>& s) {
+                on_quit_.connect(s);
+        }
+
 protected:
 	GtkWidget *mainwin_;//!< Window widget which we should control
+	sigc::signal<void> on_quit_;//!< On quit menu choise
 
 	void on_change_scan(bool val);
-	void on_quit();
 	void on_maximize();
 	void on_middle_button_click();
 

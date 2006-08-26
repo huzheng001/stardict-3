@@ -13,7 +13,7 @@ INCLUDES =							                            \
 
 stardict_DEPENDENCIES = sigc++/libsigc.a lib/libstardict.a
 stardict_LDFLAGS = 
-stardict_LDADD = $(STARDICT_LIBS) lib/libstardict.a
+stardict_LDADD = $(STARDICT_LIBS) sigc++/libsigc.a lib/libstardict.a
 
 if !GNOME_SUPPORT
 CONFIG_FILE_MODULE = inifile.cpp inifile.hpp

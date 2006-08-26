@@ -31,7 +31,8 @@ t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 	$(top_builddir)/src/config_file.hpp \
 	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp
 
-LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a
+LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
+	$(top_builddir)/src/sigc++/libsigc.a
 INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib
 
 TESTS = t_config_file t_convert_old_ini t_dict t_query t_lookupdata

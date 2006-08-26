@@ -21,8 +21,8 @@ public:
 	void write_int(const gchar *sect, const gchar *key, int val);
 	void write_string(const gchar *sect, const gchar *key, const std::string& val);
 	void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
-	void notify_add(const gchar *sect, const gchar *key, 
-			void (*on_change)(const baseconfval*, void *), void *arg);
+	void notify_add(const gchar *, const gchar *,
+                        const sigc::slot<void, const baseconfval*>&);
 private:
 	std::string cfgname;
 	GConfClient *gconf_client;
