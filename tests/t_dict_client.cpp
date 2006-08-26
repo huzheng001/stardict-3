@@ -27,13 +27,53 @@
 
 #include "dict_client.hpp"
 
+class DictClientTest {
+public:
+	DictClientTest();
+	int run();
+private:
+	DictClient dict_;
+	GMainLoop *main_loop_;
+
+	void on_error(const std::string& mes);
+	void on_lookup_end(const DictClient::IndexList&);	
+};
+
+DictClientTest::DictClientTest() : dict_("localhost")
+{
+	main_loop_ = g_main_loop_new(NULL, FALSE);
+	dict_.on_error_.connect(sigc::mem_fun(this,
+					      &DictClientTest::on_error));
+	dict_.on_lookup_end_.connect(sigc::mem_fun(this,
+						   &DictClientTest::on_lookup_end));
+}
+
+int DictClientTest::run()
+{	 
+	dict_.lookup_simple("man");	
+	g_main_loop_run(main_loop_);
+	return EXIT_SUCCESS;
+}
+
+void DictClientTest::on_error(const std::string& mes)
+{
+	g_debug("%s: %s\n", __PRETTY_FUNCTION__, mes.c_str());
+}
+
+void DictClientTest::on_lookup_end(const DictClient::IndexList& ilist)
+{
+	g_debug("%s: %s\n", __PRETTY_FUNCTION__,
+		!ilist.empty() ? "found" : "not found");
+	for (size_t i = 0; i < ilist.size(); ++i)
+		g_debug("--->%s\n%s\n", dict_.get_word(ilist[i]),
+			dict_.get_word_data(ilist[i]));
+	g_main_loop_quit(main_loop_);
+}
+
 int main()
 {
 	setlocale(LC_ALL, "");//so g_debug and so on will print not garbage
-	GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-	DictClient dict("localhost");
-	dict.lookup_simple("man");
-	g_main_loop_run(main_loop);
+	DictClientTest test;	
 
-	return EXIT_SUCCESS;
+	return test.run();
 }

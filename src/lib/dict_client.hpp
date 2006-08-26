@@ -4,27 +4,48 @@
 #include <glib.h>
 #include <string>
 #include <memory>
+#include <map>
+#include <vector>
+
+#include "sigc++/sigc++.h"
 
 namespace DICT {
+	struct Definition {
+		std::string word_;
+		std::string data_;
+
+		Definition(const gchar *word): word_(word) {}
+	};
+	typedef std::vector<Definition> DefList;
+
 	class Cmd {
 	public:
 		enum State {
 			START, DATA, FINISH
 		} state_;
+
 		Cmd() : state_(START) {}
 		virtual ~Cmd() {}
-		const std::string& query() { return query_; }
+		const std::string& query() const { return query_; }
+		const DefList& result() const { return reslist_; }
 		virtual bool parse(gchar *str, int code) = 0;
 	protected:
 		std::string query_;
+		DefList reslist_;
 	};
 };
 
 class DictClient {
 public:
+	typedef std::vector<size_t> IndexList;
+	static sigc::signal<void, const std::string&> on_error_;
+	static sigc::signal<void, const IndexList&> on_lookup_end_;
+
 	DictClient(const char *host, int port = 2628);
 	~DictClient();
-	bool lookup_simple(const gchar *word);
+	void lookup_simple(const gchar *word);
+	const gchar *get_word(size_t index) const;
+	const gchar *get_word_data(size_t index) const;
 private:
 	GIOChannel *channel_;
 	guint source_id_;
@@ -32,6 +53,9 @@ private:
 	int port_;
 	bool is_connected_;
 	std::auto_ptr<DICT::Cmd> cmd_;
+	typedef std::map<size_t, DICT::Definition> DefMap;
+	DefMap defmap_;
+	size_t last_index_;
 
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
