@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = src tests pixmaps po help data doc
+SUBDIRS = m4 src tests pixmaps po help data doc
+ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
 	ChangeLog  		\
@@ -18,4 +19,5 @@ EXTRA_DIST = \
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in	\
-	stardictrc.rc
+	stardictrc.rc \
+	sigc++config.h

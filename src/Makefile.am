@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-SUBDIRS= lib pixmaps sounds win32
+SUBDIRS= sigc++ lib pixmaps sounds win32
 
 bin_PROGRAMS = stardict
 
@@ -11,7 +11,7 @@ INCLUDES =							                            \
 	-DSTARDICT_DATA_DIR=\""$(datadir)/stardict"\"
 
 
-stardict_DEPENDENCIES = lib/libstardict.a
+stardict_DEPENDENCIES = sigc++/libsigc.a lib/libstardict.a
 stardict_LDFLAGS = 
 stardict_LDADD = $(STARDICT_LIBS) lib/libstardict.a
 

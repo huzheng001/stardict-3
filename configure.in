@@ -13,11 +13,13 @@ AM_DISABLE_STATIC
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 AC_PROG_INTLTOOL([0.22])
 
+AC_CONFIG_MACRO_DIR(m4)
 AM_PROG_LIBTOOL
 
 AC_ISC_POSIX
 AC_PROG_CC
 AC_PROG_CXX
+AC_LANG_CPLUSPLUS
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 
@@ -131,6 +133,21 @@ AC_CHECK_LIB([X11], [main], , [AC_MSG_ERROR([X11 lib not found])])
 AC_SUBST(STARDICT_LIBS)
 AC_SUBST(STARDICT_CFLAGS)
 
+SIGC_CXX_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
+SIGC_CXX_MSVC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
+SIGC_CXX_SELF_REFERENCE_IN_MEMBER_INITIALIZATION()
+SIGC_CXX_HAS_NAMESPACE_STD()
+SIGC_CXX_HAS_SUN_REVERSE_ITERATOR()
+
+if test "X$config_error" = "Xyes" ; then
+  AC_ERROR(
+[One or more of the required compiler features is missing.
+If you believe this is in error, please consult the config.log file
+for further details.
+])
+fi
+
+
 dnl ==========================================================================
 
 AC_OUTPUT([
@@ -140,7 +157,9 @@ stardict-withoutgnome.spec
 data/Makefile
 doc/Makefile
 po/Makefile.in
+m4/Makefile
 src/Makefile
+src/sigc++/Makefile
 src/lib/Makefile
 src/pixmaps/Makefile
 src/sounds/Makefile
