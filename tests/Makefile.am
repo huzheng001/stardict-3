@@ -16,7 +16,8 @@ t_dict_SOURCES = t_dict.cpp
 t_dict_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
 
 t_dict_client_SOURCES = t_dict_client.cpp
-t_dict_client_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
+t_dict_client_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a \
+	$(top_builddir)/src/sigc++/libsigc.a
 
 t_fuzzy_SOURCES = t_fuzzy.cpp
 t_fuzzy_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a

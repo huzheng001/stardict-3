@@ -16,4 +16,4 @@ libstardict_a_SOURCES = \
 	dict_client.cpp dict_client.hpp \
 	sockets.cpp sockets.hpp
 
-INCLUDES = @STARDICT_CFLAGS@
+INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src

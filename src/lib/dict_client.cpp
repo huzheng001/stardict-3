@@ -32,6 +32,9 @@
 
 #include "dict_client.hpp"
 
+sigc::signal<void, const std::string&> DictClient::on_error_;
+sigc::signal<void, const DictClient::IndexList&> DictClient::on_lookup_end_;
+
 /* Status codes as defined by RFC 2229 */
 enum DICTStatusCode {
   STATUS_INVALID                   = 0,
@@ -132,10 +135,13 @@ bool DefineCmd::parse(gchar *str, int code)
           
 		g_debug("{ word .= '%s', db_name .= '%s', db_full .= '%s' }\n",
 			word, db_name, db_full);
-          
+		reslist_.push_back(DICT::Definition(word));          
 		break;
 	}
 	default:
+		if (!reslist_.empty() && strcmp(".", str))
+			reslist_.back().data_ += std::string(str) + "\n";
+		
 		break;		
 	}
 	return true;
@@ -149,6 +155,7 @@ DictClient::DictClient(const char *host, int port)
 	channel_ = NULL;
 	source_id_ = 0;
 	is_connected_ = false;
+	last_index_ = 0;
 }
 
 DictClient::~DictClient()
@@ -160,9 +167,9 @@ DictClient::~DictClient()
 bool DictClient::connect()
 {
 	int sd = Socket::socket();
+
 	if (sd == -1) {
-		g_warning("Can not connect to %s: %s\n",
-			  host_.c_str(), Socket::getErrorMsg().c_str());
+		on_error_.emit("Can not create socket: " + Socket::getErrorMsg());
 		return false;
 	}
 
@@ -183,18 +190,19 @@ bool DictClient::connect()
 	GError *err = NULL;
 	g_io_channel_set_flags(channel_, GIOFlags(flags), &err);
 	if (err) {
-		g_warning("Unable to set the channel as non-blocking: %s",
-			   err->message);
-
-		g_error_free(err);
 		g_io_channel_unref(channel_);
 		channel_ = NULL;
+		on_error_.emit("Unable to set the channel as non-blocking: " +
+			       std::string(err->message));
+		g_error_free(err);
 		return false;
 	}
 
 	if (!Socket::connect(sd, host_, port_)) {
-		g_warning("Can not connect to %s: %s\n",
-			  host_.c_str(), Socket::getErrorMsg().c_str());
+		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
+					     host_.c_str(), Socket::getErrorMsg().c_str());
+		on_error_.emit(mes);
+		g_free(mes);
 		return false;
 	}
 
@@ -225,25 +233,39 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 	DictClient *dict_client = static_cast<DictClient *>(user_data);
 
 	g_assert(dict_client);
+
 	if (!dict_client->channel_) {
 		g_warning("No channel available\n");
 		return FALSE;
 	}
 
 	if (cond & G_IO_ERR) {
-		g_warning("Channel IO error\n");
+		gchar *mes =
+			g_strdup_printf("Connection failed to the dictionary server at %s:%d",
+					dict_client->host_.c_str(), dict_client->port_);
+		on_error_.emit(mes);
+		g_free(mes);
 		return FALSE;
 	}
+
+	GError *err = NULL;
+	gsize term, len;
+	gchar *line;
+	GIOStatus res;
+
 	for (;;) {
 		if (!dict_client->channel_)
 			break;
-		gsize term, len;
-		gchar *line;
-		GIOStatus res =
-			g_io_channel_read_line(dict_client->channel_, &line,
-					       &len, &term, NULL);
+		res = g_io_channel_read_line(dict_client->channel_, &line,
+					     &len, &term, &err);
 		if (res == G_IO_STATUS_ERROR) {
-			g_warning("Channel IO error\n");
+			if (err) {
+				on_error_.emit("Error while reading reply from server: " +
+					       std::string(err->message));
+				g_error_free(err);
+			}
+			dict_client->disconnect();
+
 			return FALSE;
 		}
 		
@@ -253,9 +275,12 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 		//truncate the line terminator before parsing
 		line[term] = '\0';
 		int status_code = get_status_code(line);
-		if (!dict_client->parse(line, status_code))
-			dict_client->disconnect();
+		bool res = dict_client->parse(line, status_code);
 		g_free(line);
+		if (!res) {
+			dict_client->disconnect();
+			return FALSE;
+		}		
 	}
 
 	return TRUE;
@@ -264,15 +289,35 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 bool DictClient::parse(gchar *line, int status_code)
 {
 	g_debug("get %s\n", line);
+
 	if (!is_connected_) {
 		if (status_code == STATUS_CONNECT)
 			is_connected_ = true;
-		else
+		else if (status_code == STATUS_SERVER_DOWN ||
+			 status_code == STATUS_SHUTDOWN) {
+			gchar *mes =
+				g_strdup_printf("Unable to connect to the "
+						"dictionary server at '%s:%d'. "
+						"The server replied with code"
+						" %d (server down)",
+						host_.c_str(), port_,
+						status_code);
+			on_error_.emit(mes);
+			g_free(mes);
+			return true;
+		} else {
+			gchar *mes =
+				g_strdup_printf("Unable to parse the dictionary"
+						" server reply: '%s'", line);
+			on_error_.emit(mes);
+			g_free(mes);
 			return false;
+		}
 	}
 
 	if (!cmd_.get())
 		return true;
+
 	if (cmd_->state_ == DICT::Cmd::START) {
 			GIOStatus res =
 				g_io_channel_write_chars(channel_,
@@ -289,6 +334,15 @@ bool DictClient::parse(gchar *line, int status_code)
 	}
 
 	if (status_code == STATUS_OK || cmd_->state_ == DICT::Cmd::FINISH) {
+		defmap_.clear();
+		const DICT::DefList& res = cmd_->result();
+		IndexList ilist(res.size());
+		for (size_t i = 0; i < res.size(); ++i) {
+			ilist[i] = last_index_;
+			defmap_.insert(std::make_pair(last_index_++, res[i]));
+		}
+		on_lookup_end_.emit(ilist);
+		last_index_ = 0;
 		cmd_.reset(0);
 		return true;
 	}
@@ -323,15 +377,33 @@ int DictClient::get_status_code(gchar *line)
   return retval;
 }
 
-bool DictClient::lookup_simple(const gchar *word)
+void DictClient::lookup_simple(const gchar *word)
 {
-	if (!word || !*word)
-		return true;
-	if (!channel_ || !source_id_) {
-		if (!connect())
-			return false;
+	if (!word || !*word) {
+		on_lookup_end_.emit(IndexList());
+		return;
 	}
-	cmd_.reset(new DefineCmd(word, "*"));
 
-	return true;
+	if ((!channel_ || !source_id_) && !connect())
+			return;
+	
+	cmd_.reset(new DefineCmd(word, "*"));
+}
+
+const gchar *DictClient::get_word(size_t index) const
+{
+	DefMap::const_iterator it = defmap_.find(index);
+
+	if (it == defmap_.end())
+		return NULL;
+	return it->second.word_.c_str();
+}
+
+const gchar *DictClient::get_word_data(size_t index) const
+{
+	DefMap::const_iterator it = defmap_.find(index);
+
+	if (it == defmap_.end())
+		return NULL;
+	return it->second.data_.c_str();
 }
