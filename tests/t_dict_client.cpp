@@ -30,13 +30,15 @@
 class DictClientTest {
 public:
 	DictClientTest();
+	~DictClientTest() { g_main_loop_unref(main_loop_); }
 	int run();
 private:
 	DictClient dict_;
 	GMainLoop *main_loop_;
 
 	void on_error(const std::string& mes);
-	void on_lookup_end(const DictClient::IndexList&);	
+	void on_simple_lookup_end(const DictClient::IndexList&);	
+	void on_complex_lookup_end(const DictClient::StringList&);
 };
 
 DictClientTest::DictClientTest() : dict_("localhost")
@@ -44,8 +46,12 @@ DictClientTest::DictClientTest() : dict_("localhost")
 	main_loop_ = g_main_loop_new(NULL, FALSE);
 	dict_.on_error_.connect(sigc::mem_fun(this,
 					      &DictClientTest::on_error));
-	dict_.on_lookup_end_.connect(sigc::mem_fun(this,
-						   &DictClientTest::on_lookup_end));
+	dict_.on_simple_lookup_end_.connect(
+		sigc::mem_fun(this,
+			      &DictClientTest::on_simple_lookup_end));
+	dict_.on_complex_lookup_end_.connect(
+		sigc::mem_fun(this,
+			      &DictClientTest::on_complex_lookup_end));
 }
 
 int DictClientTest::run()
@@ -60,13 +66,25 @@ void DictClientTest::on_error(const std::string& mes)
 	g_debug("%s: %s\n", __PRETTY_FUNCTION__, mes.c_str());
 }
 
-void DictClientTest::on_lookup_end(const DictClient::IndexList& ilist)
+void DictClientTest::on_simple_lookup_end(const DictClient::IndexList& ilist)
 {
 	g_debug("%s: %s\n", __PRETTY_FUNCTION__,
 		!ilist.empty() ? "found" : "not found");
 	for (size_t i = 0; i < ilist.size(); ++i)
 		g_debug("--->%s\n%s\n", dict_.get_word(ilist[i]),
 			dict_.get_word_data(ilist[i]));
+	dict_.lookup_with_rule("m*n");
+}
+
+void DictClientTest::on_complex_lookup_end(const DictClient::StringList& slist)
+{
+	g_debug("%s: %s\n", __PRETTY_FUNCTION__,
+		!slist.empty() ? "found" : "not found");
+	DictClient::StringList::const_iterator it;
+
+	for (it = slist.begin(); it != slist.end(); ++it)
+		g_debug("--->%s\n", it->c_str());
+
 	g_main_loop_quit(main_loop_);
 }
 

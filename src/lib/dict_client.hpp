@@ -26,9 +26,11 @@ namespace DICT {
 
 		Cmd() : state_(START) {}
 		virtual ~Cmd() {}
-		const std::string& query() const { return query_; }
-		const DefList& result() const { return reslist_; }
+		virtual const std::string& query() { return query_; }
 		virtual bool parse(gchar *str, int code) = 0;
+
+		void send(GIOChannel *channel, GError *&err);
+		const DefList& result() const { return reslist_; }
 	protected:
 		std::string query_;
 		DefList reslist_;
@@ -38,12 +40,16 @@ namespace DICT {
 class DictClient {
 public:
 	typedef std::vector<size_t> IndexList;
+	typedef std::list<std::string> StringList;
+
 	static sigc::signal<void, const std::string&> on_error_;
-	static sigc::signal<void, const IndexList&> on_lookup_end_;
+	static sigc::signal<void, const IndexList&> on_simple_lookup_end_;
+	static sigc::signal<void, const StringList&> on_complex_lookup_end_;
 
 	DictClient(const char *host, int port = 2628);
 	~DictClient();
 	void lookup_simple(const gchar *word);
+	void lookup_with_rule(const gchar *word);
 	const gchar *get_word(size_t index) const;
 	const gchar *get_word_data(size_t index) const;
 private:
@@ -56,6 +62,7 @@ private:
 	typedef std::map<size_t, DICT::Definition> DefMap;
 	DefMap defmap_;
 	size_t last_index_;
+	bool simple_lookup_;
 
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
