@@ -1,7 +1,7 @@
 /* 
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
- * Copyright (C) 2005 Evgeniy <dushistov@mail.ru>
+ * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,8 +160,8 @@ void gconf_file::write_strlist(const gchar *sect, const gchar *key, const std::l
 static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
 				     GConfEntry *entry, gpointer user_data)
 {
-	change_handler<const baseconfval *> *ch =
-		static_cast<change_handler<const baseconfval *> *>(user_data);
+	sigc::signal<void, const baseconfval*> *ch =
+                static_cast< sigc::signal<void, const baseconfval*> *>(user_data);
 	std::auto_ptr<baseconfval> cv;
 	switch (entry->value->type) {
 	case GCONF_VALUE_BOOL:
@@ -200,26 +200,25 @@ static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
 		g_assert(false);
 		return;
 	}
-	(*ch)(cv.get());
+	ch->emit(cv.get());
 }
 
 static void gfree_func(gpointer data)
 {
-	change_handler<baseconfval> *bcv =
-		static_cast<change_handler<baseconfval> *>(data);
+	sigc::signal<void, const baseconfval*> *bcv =
+                static_cast< sigc::signal<void, const baseconfval*> *>(data);
 	delete bcv;
 }
 
 void gconf_file::notify_add(const gchar *sect, const gchar *key, 
-			    void (*on_change)(const baseconfval*, void *), void *arg)
+			    const sigc::slot<void, const baseconfval*>& slot)
 {
-	std::string name(std::string(sect)+"/"+key);
-	change_handler<const baseconfval *> *ch =
-		new change_handler<const baseconfval*>;
-	ch->on_change=on_change;
-	ch->arg=arg;
-	guint id=gconf_client_notify_add(gconf_client, name.c_str(), 
-					 gconf_client_notify_func, ch,
-					 gfree_func, NULL);
+	std::string name = std::string(sect) + "/" + key;
+	sigc::signal<void, const baseconfval*> *ch =
+                new sigc::signal<void, const baseconfval*>;
+        ch->connect(slot);
+	guint id = gconf_client_notify_add(gconf_client, name.c_str(), 
+					   gconf_client_notify_func, ch,
+					   gfree_func, NULL);
 	notification_ids.push_back(id);
 }

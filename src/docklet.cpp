@@ -84,7 +84,7 @@ void DockLet::on_menu_scan(GtkCheckMenuItem *checkmenuitem, gpointer user_data)
 
 void DockLet::on_menu_quit(GtkMenuItem *menuitem, gpointer user_data)
 {
-	static_cast<DockLet *>(user_data)->on_quit();
+	static_cast<DockLet *>(user_data)->on_quit_.emit();
 }
 
 void DockLet::popup_menu(GdkEventButton *event)
@@ -173,7 +173,7 @@ void DockLet::minimize_to_tray()
 	if (embedded_)
 		TrayBase::minimize_to_tray();
 	else
-		on_quit();
+		on_quit_.emit();
 }
 
 void DockLet::scan_on()

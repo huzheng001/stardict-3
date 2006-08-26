@@ -5,16 +5,7 @@
 #include <list>
 #include <string>
 
-template<typename T>
-struct change_handler {
-	void (*on_change)(T, void *);
-	void *arg;
-	change_handler() : on_change(NULL), arg(NULL) {}
-	void operator()(T val) {
-		if (on_change)
-			on_change(val, arg);
-	}
-};
+#include "sigc++/sigc++.h"
 
 class config_file;
 
@@ -48,7 +39,7 @@ public:
 	virtual void write_string(const gchar *sect, const gchar *key, const std::string& val) = 0;
 	virtual void write_strlist(const gchar *, const gchar *, const std::list<std::string>&) = 0;
 	virtual void notify_add(const gchar *sect, const gchar *key,
-				void (*on_change)(const baseconfval*, void *), void *arg) = 0;
+				const sigc::slot<void, const baseconfval*>&) = 0;
 };
 
 #define DEFINE_CONFVAL(Type, Name, MethodExt)		\

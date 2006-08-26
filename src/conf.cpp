@@ -146,10 +146,10 @@ static std::pair<std::string, std::string> split(const std::string& s)
 //---------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------
-void AppConf::notify_add(const char *name, void (*on_change)(const baseconfval*, void *), void *arg)
+void AppConf::notify_add(const char *name, const sigc::slot<void, const baseconfval*>& slot)
 {
 	std::pair<std::string, std::string> split_name = split(name);
-	cf->notify_add(split_name.first.c_str(), split_name.second.c_str(), on_change, arg);
+	cf->notify_add(split_name.first.c_str(), split_name.second.c_str(), slot);
 }
 //---------------------------------------------------------------------------------
 //load preference

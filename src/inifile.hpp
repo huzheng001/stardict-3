@@ -22,21 +22,23 @@ public:
 	void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
 
 	void notify_add(const gchar *sect, const gchar *key, 
-			void (*on_change)(const baseconfval*, void *), void *arg);
+			const sigc::slot<void, const baseconfval*>&);
 private:
-	std::map<std::string, change_handler<const baseconfval *> > change_events_map_;
+
+	typedef std::map<std::string, sigc::signal<void, const baseconfval *> >
+        ChangeEventsMap;
+	ChangeEventsMap change_events_map_;
 	GKeyFile *gkeyfile_;
 	std::string fname_;
 
 	template <typename T>
 	void expose_event(const gchar *sect, const gchar *key, const T& val) {
-		std::string name(std::string(sect)+"/"+key);
-		std::map<std::string, change_handler<const baseconfval *> >::iterator p=
-			change_events_map_.find(name);
+		std::string name = std::string(sect) + "/" + key;
+		ChangeEventsMap::iterator p = change_events_map_.find(name);
 		if (p == change_events_map_.end())
 			return;
 		confval<T> cv(val);
-		p->second(&cv);
+		p->second.emit(&cv);
 	}
 	void save();
 	void create_empty();

@@ -141,7 +141,7 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 							
 			break;
 		case SYSTRAY_CMND_MENU_QUIT:
-			dock->on_quit();
+			dock->on_quit_.emit();
 			break;
 		}
 		break;

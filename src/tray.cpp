@@ -32,11 +32,6 @@ void TrayBase::on_change_scan(bool val)
 	conf->set_bool_at("dictionary/scan_selection", val);
 }
 
-void TrayBase::on_quit()
-{
-	gpAppFrame->Quit();
-}
-
 void TrayBase::on_maximize()
 {       
 	if (gpAppFrame->oTopWin.get_text()[0]) {

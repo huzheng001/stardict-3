@@ -110,7 +110,7 @@ public:
 		g_assert(v->type_ != baseconfval::UNKNOWN_TYPE);
 		cache[name] = v;
 	}
-	void notify_add(const char * name, void (*on_change)(const baseconfval*, void *), void *arg);
+	void notify_add(const char * name, const sigc::slot<void, const baseconfval*>&);
 private:
 	std::auto_ptr<config_file> cf;
 	cache_t cache;
