@@ -33,12 +33,15 @@
 #include "dict_client.hpp"
 
 sigc::signal<void, const std::string&> DictClient::on_error_;
-sigc::signal<void, const DictClient::IndexList&> DictClient::on_lookup_end_;
+sigc::signal<void, const DictClient::IndexList&>
+DictClient::on_simple_lookup_end_;
+sigc::signal<void, const DictClient::StringList&>
+ DictClient::on_complex_lookup_end_;
 
 /* Status codes as defined by RFC 2229 */
 enum DICTStatusCode {
   STATUS_INVALID                   = 0,
-    
+
   STATUS_N_DATABASES_PRESENT       = 110,
   STATUS_N_STRATEGIES_PRESENT      = 111,
   STATUS_DATABASE_INFO             = 112,
@@ -71,14 +74,121 @@ enum DICTStatusCode {
   STATUS_NO_STRATEGIES_PRESENT     = 555
 };
 
+
+void DICT::Cmd::send(GIOChannel *channel, GError *&err)
+{
+	g_assert(channel);
+
+	GIOStatus res =
+		g_io_channel_write_chars(channel,
+					 query().c_str(),
+					 -1, NULL, &err);
+	if (res != G_IO_STATUS_NORMAL)
+		return;
+
+	/* force flushing of the write buffer */
+	res = g_io_channel_flush(channel, &err);
+
+	if (res != G_IO_STATUS_NORMAL)
+		return;
+
+	state_ = DICT::Cmd::DATA;
+}
+
 class DefineCmd : public DICT::Cmd {
 public:
-	DefineCmd(const char *word, const char *database) {
+	DefineCmd(const gchar *database, const gchar *word) {
 		query_ = std::string("DEFINE ") + database + " \"" + word +
 			"\"\r\n";
 	}
 	bool parse(gchar *str, int code);
 };
+
+class MatchCmd : public DICT::Cmd {
+public:
+	MatchCmd(const gchar *database, const gchar *strategy,
+		 const gchar *word) :
+		database_(database),
+		strategy_(strategy),
+		word_(word)
+		{		
+		}
+	const std::string& query() {
+		if (query_.empty()) {
+			handle_word();
+			query_ = "MATCH " + database_ + " " + strategy_ +
+				" \"" + word_ + "\"\r\n";
+		}
+		return DICT::Cmd::query();
+	}
+	bool parse(gchar *str, int code);
+protected:
+	std::string database_;
+	std::string strategy_;
+	std::string word_;
+
+	virtual void handle_word() = 0;
+};
+
+class RegexpCmd : public MatchCmd {
+public:
+	RegexpCmd(const gchar *database, const gchar *word) :
+		MatchCmd(database, "re", word) 
+		{
+		}
+protected:
+	void handle_word();
+};
+
+void RegexpCmd::handle_word()
+{
+	std::string newword;
+	std::string::const_iterator it;
+
+	for (it = word_.begin(); it != word_.end(); ++it)
+		if (*it == '*')
+			newword += ".*";
+		else
+			newword += *it;
+
+	word_ = "^" + newword;
+}
+
+bool MatchCmd::parse(gchar *str, int code)
+{
+	if (code == STATUS_N_MATCHES_FOUND) { 
+          gchar *p = g_utf8_strchr(str, -1, ' ');
+
+          if (p)
+            p = g_utf8_next_char (p);
+	  g_debug("server replied: %d matches found\n", atoi (p));
+        } else if (0 == strcmp (str, "."))
+		state_ = FINISH;
+	else {
+          gchar *word, *db_name, *p;
+
+          db_name = str;
+          if (!db_name)
+		  return false;
+
+          p = g_utf8_strchr(db_name, -1, ' ');
+          if (p)
+            *p = '\0';
+
+          word = g_utf8_next_char (p);
+
+          if (word[0] == '\"')
+		  word = g_utf8_next_char (word);
+
+          p = g_utf8_strchr (word, -1, '\"');
+          if (p)
+            *p = '\0';
+          
+          reslist_.push_back(DICT::Definition(word));
+        }
+
+	return true;
+}
 
 bool DefineCmd::parse(gchar *str, int code)
 {
@@ -89,11 +199,11 @@ bool DefineCmd::parse(gchar *str, int code)
 		gchar *p = g_utf8_strchr(str, -1, ' ');
 		if (p)
 			p = g_utf8_next_char (p);
-          
-		g_debug("server replied: %d definitions found\n", atoi(p));                  
+
+		g_debug("server replied: %d definitions found\n", atoi(p));
 		break;
 	}
-	case STATUS_WORD_DB_NAME: {		
+	case STATUS_WORD_DB_NAME: {
 		gchar *word, *db_name, *db_full, *p;
 
 		word = str;
@@ -101,48 +211,48 @@ bool DefineCmd::parse(gchar *str, int code)
 		/* skip the status code */
 		word = g_utf8_strchr(word, -1, ' ');
 		word = g_utf8_next_char(word);
-          
+
 		if (word[0] == '\"')
 			word = g_utf8_next_char(word);
-          
+
 		p = g_utf8_strchr(word, -1, '\"');
 		if (p)
 			*p = '\0';
-          
+
 		p = g_utf8_next_char(p);
-	  
+
 		/* the database name is not protected by "" */
 		db_name = g_utf8_next_char(p);
 		if (!db_name)
 			break;
-          
+
 		p = g_utf8_strchr(db_name, -1, ' ');
 		if (p)
 			*p = '\0';
 
 		p = g_utf8_next_char(p);
-	  
+
 		db_full = g_utf8_next_char(p);
 		if (!db_full)
 			break;
-          
+
 		if (db_full[0] == '\"')
 			db_full = g_utf8_next_char(db_full);
-          
+
 		p = g_utf8_strchr(db_full, -1, '\"');
 		if (p)
 			*p = '\0';
-          
+
 		g_debug("{ word .= '%s', db_name .= '%s', db_full .= '%s' }\n",
 			word, db_name, db_full);
-		reslist_.push_back(DICT::Definition(word));          
+		reslist_.push_back(DICT::Definition(word));
 		break;
 	}
 	default:
 		if (!reslist_.empty() && strcmp(".", str))
 			reslist_.back().data_ += std::string(str) + "\n";
-		
-		break;		
+
+		break;
 	}
 	return true;
 }
@@ -268,7 +378,7 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 
 			return FALSE;
 		}
-		
+
 		if (!len)
 			break;
 
@@ -280,7 +390,7 @@ gboolean DictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 		if (!res) {
 			dict_client->disconnect();
 			return FALSE;
-		}		
+		}
 	}
 
 	return TRUE;
@@ -290,7 +400,7 @@ bool DictClient::parse(gchar *line, int status_code)
 {
 	g_debug("get %s\n", line);
 
-	if (!is_connected_) {
+	if (!cmd_.get()) {
 		if (status_code == STATUS_CONNECT)
 			is_connected_ = true;
 		else if (status_code == STATUS_SERVER_DOWN ||
@@ -315,36 +425,72 @@ bool DictClient::parse(gchar *line, int status_code)
 		}
 	}
 
-	if (!cmd_.get())
-		return true;
+	bool success = false;
 
-	if (cmd_->state_ == DICT::Cmd::START) {
-			GIOStatus res =
-				g_io_channel_write_chars(channel_,
-							 cmd_->query().c_str(),
-							 -1, NULL, NULL);
-			if (res != G_IO_STATUS_NORMAL) {
-				g_warning("Write IO error\n");
-				return false;
-			}
-			/* force flushing of the write buffer */
-			g_io_channel_flush(channel_, NULL);
-			cmd_->state_ = DICT::Cmd::DATA;
-			return true;
+	switch (status_code) {
+	case STATUS_BAD_PARAMETERS:
+	{
+		gchar *mes = g_strdup_printf("Bad parameters for command '%s'",
+					     cmd_->query().c_str());
+		on_error_.emit(mes);
+		g_free(mes);
+		cmd_->state_ = DICT::Cmd::FINISH;
+		break;
+	}
+	case STATUS_BAD_COMMAND:
+	{
+		gchar *mes = g_strdup_printf("Bad command '%s'",
+					     cmd_->query().c_str());
+		on_error_.emit(mes);
+		g_free(mes);
+		cmd_->state_ = DICT::Cmd::FINISH;
+		break;
+	}
+	default:
+		success = true;
+		break;
 	}
 
-	if (status_code == STATUS_OK || cmd_->state_ == DICT::Cmd::FINISH) {
+	if (cmd_->state_ == DICT::Cmd::START) {
+		GError *err = NULL;
+		cmd_->send(channel_, err);
+		if (err) {
+			on_error_.emit(err->message);
+			g_error_free(err);
+			return false;
+		}
+		return true;
+	}
+
+	if (status_code == STATUS_OK || cmd_->state_ == DICT::Cmd::FINISH ||
+	    status_code == STATUS_NO_MATCH ||
+	    status_code == STATUS_BAD_DATABASE ||
+	    status_code == STATUS_BAD_STRATEGY ||
+	    status_code == STATUS_NO_DATABASES_PRESENT ||
+	    status_code == STATUS_NO_STRATEGIES_PRESENT) {
 		defmap_.clear();
 		const DICT::DefList& res = cmd_->result();
-		IndexList ilist(res.size());
-		for (size_t i = 0; i < res.size(); ++i) {
-			ilist[i] = last_index_;
-			defmap_.insert(std::make_pair(last_index_++, res[i]));
+		if (simple_lookup_) {
+			IndexList ilist(res.size());
+			for (size_t i = 0; i < res.size(); ++i) {
+				ilist[i] = last_index_;
+				defmap_.insert(std::make_pair(last_index_++, res[i]));
+			}
+			last_index_ = 0;
+			cmd_.reset(0);
+			disconnect();
+			on_simple_lookup_end_.emit(ilist);
+		} else {
+			StringList slist;
+			for (size_t i = 0; i < res.size(); ++i)
+				slist.push_back(res[i].word_);
+			last_index_ = 0;
+			cmd_.reset(0);
+			disconnect();
+			on_complex_lookup_end_.emit(slist);
 		}
-		on_lookup_end_.emit(ilist);
-		last_index_ = 0;
-		cmd_.reset(0);
-		return true;
+
+		return success;
 	}
 
 	if (!cmd_->parse(line, status_code))
@@ -379,15 +525,32 @@ int DictClient::get_status_code(gchar *line)
 
 void DictClient::lookup_simple(const gchar *word)
 {
+	simple_lookup_ = true;
+
 	if (!word || !*word) {
-		on_lookup_end_.emit(IndexList());
+		on_simple_lookup_end_.emit(IndexList());
 		return;
 	}
 
 	if ((!channel_ || !source_id_) && !connect())
 			return;
-	
-	cmd_.reset(new DefineCmd(word, "*"));
+
+	cmd_.reset(new DefineCmd("*", word));
+}
+
+void DictClient::lookup_with_rule(const gchar *word)
+{
+	simple_lookup_ = false;
+
+	if (!word || !*word) {
+		on_complex_lookup_end_.emit(StringList());
+		return;
+	}
+
+	if ((!channel_ || !source_id_) && !connect())
+			return;
+
+	cmd_.reset(new RegexpCmd("*", word));
 }
 
 const gchar *DictClient::get_word(size_t index) const
