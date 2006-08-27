@@ -116,6 +116,7 @@ public:
 	const std::string& query() {
 		if (query_.empty()) {
 			handle_word();
+//TODO: what about word with '"'?
 			query_ = "MATCH " + database_ + " " + strategy_ +
 				" \"" + word_ + "\"\r\n";
 		}
@@ -127,7 +128,15 @@ protected:
 	std::string strategy_;
 	std::string word_;
 
-	virtual void handle_word() = 0;
+	virtual void handle_word() {}
+};
+
+class LevCmd : public MatchCmd {
+public:
+	LevCmd(const gchar *database, const gchar *word) :
+		MatchCmd(database, "lev", word)
+		{
+		}
 };
 
 class RegexpCmd : public MatchCmd {
@@ -553,6 +562,21 @@ void DictClient::lookup_with_rule(const gchar *word)
 	cmd_.reset(new RegexpCmd("*", word));
 }
 
+void DictClient::lookup_with_fuzzy(const gchar *word)
+{
+	simple_lookup_ = false;
+
+	if (!word || !*word) {
+		on_complex_lookup_end_.emit(StringList());
+		return;
+	}
+
+	if ((!channel_ || !source_id_) && !connect())
+			return;
+
+	cmd_.reset(new LevCmd("*", word));
+}
+
 const gchar *DictClient::get_word(size_t index) const
 {
 	DefMap::const_iterator it = defmap_.find(index);
@@ -570,3 +594,4 @@ const gchar *DictClient::get_word_data(size_t index) const
 		return NULL;
 	return it->second.data_.c_str();
 }
+
