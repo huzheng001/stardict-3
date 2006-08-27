@@ -35,6 +35,7 @@ public:
 private:
 	DictClient dict_;
 	GMainLoop *main_loop_;
+	bool regexp_lookup_;
 
 	void on_error(const std::string& mes);
 	void on_simple_lookup_end(const DictClient::IndexList&);	
@@ -73,6 +74,8 @@ void DictClientTest::on_simple_lookup_end(const DictClient::IndexList& ilist)
 	for (size_t i = 0; i < ilist.size(); ++i)
 		g_debug("--->%s\n%s\n", dict_.get_word(ilist[i]),
 			dict_.get_word_data(ilist[i]));
+
+	regexp_lookup_ = true;
 	dict_.lookup_with_rule("m*n");
 }
 
@@ -84,8 +87,11 @@ void DictClientTest::on_complex_lookup_end(const DictClient::StringList& slist)
 
 	for (it = slist.begin(); it != slist.end(); ++it)
 		g_debug("--->%s\n", it->c_str());
-
-	g_main_loop_quit(main_loop_);
+	if (regexp_lookup_) {
+		regexp_lookup_ = false;
+		dict_.lookup_with_fuzzy("man");
+	} else
+		g_main_loop_quit(main_loop_);
 }
 
 int main()
