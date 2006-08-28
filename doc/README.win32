@@ -3,6 +3,7 @@ StarDict can be compiled and run in windows.
 Please install Dev-C++,they can be found in http://www.bloodshed.net/dev/
 
 Then install developer packages, they can be found in http://www.gimp.org/~tml/gimp/win32/downloads.html
+Notice, for Zlib, you should put the zlib1.dll in top\bin folder.
 
 Here is a stardict.dev
 use Dev-C++ to open it, then compile it. Becase the compile command is too long,it can't be compile in win98,please use win2000 or XP.
