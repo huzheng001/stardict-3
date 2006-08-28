@@ -51,11 +51,10 @@ LRESULT CALLBACK Hotkey::hotkey_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wpar
 		{
 			UINT fuModifiers = (UINT) LOWORD(lparam);
 			UINT uVirtKey = (UINT) HIWORD(lparam);
-			//TODO: what's going on? "|"
-			if ((fuModifiers == MOD_CONTROL | MOD_ALT)&&(uVirtKey == VK_F1)) {
+			if ((fuModifiers == (MOD_CONTROL | MOD_ALT))&&(uVirtKey == VK_F1)) {
 				ToggleScan();
 			}
-			else if ((fuModifiers == MOD_CONTROL | MOD_ALT)&&(uVirtKey == 'Z')) {
+			else if ((fuModifiers == (MOD_CONTROL | MOD_ALT))&&(uVirtKey == 'Z')) {
 				ShowMainwindow();
 			}
 			break;
