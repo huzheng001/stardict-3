@@ -1,59 +1,41 @@
-/* 
- * This file part of StarDict - A international dictionary for GNOME.
- * http://stardict.sourceforge.net
- * Copyright (C) 2006 Evgeniy <dushistov@mail.ru>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
 
+
 #include <cstdio>
-#include <cerrno>
+#include <cstring>
 #include <glib.h>
 
 #if defined(_WIN32)
+
 # include <winsock2.h>
-//# pragma lib(WS2_32.lib)
 
 # define EINPROGRESS	WSAEINPROGRESS
 # define EWOULDBLOCK	WSAEWOULDBLOCK
 # define ETIMEDOUT	    WSAETIMEDOUT
 #else
-
 extern "C" {
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netinet/in.h>
 # include <netdb.h>
+# include <cerrno>
 # include <fcntl.h>
 }
 #endif  // _WIN32
 
-
 #include "sockets.hpp"
+
 
 #if defined(_WIN32)
   
 static void initWinSock()
 {
   static bool wsInit = false;
-  if (!wsInit){
+  if (! wsInit)
+  {
     WORD wVersionRequested = MAKEWORD( 2, 0 );
     WSADATA wsaData;
     WSAStartup(wVersionRequested, &wsaData);
@@ -67,21 +49,27 @@ static void initWinSock()
 
 #endif // _WIN32
 
-static inline bool nonFatalError()
-{
-  int err = Socket::getError();
 
-  return err == EINPROGRESS || err == EAGAIN || err == EWOULDBLOCK || err == EINTR;
+// These errors are not considered fatal for an IO operation; the operation will be re-tried.
+static inline bool
+nonFatalError()
+{
+  int err = Socket::get_error_code();
+  return (err == EINPROGRESS || err == EAGAIN || err == EWOULDBLOCK || err == EINTR);
 }
 
-int Socket::socket()
+
+
+int
+Socket::socket()
 {
   initWinSock();
-  return int(::socket(AF_INET, SOCK_STREAM, 0));
+  return (int) ::socket(AF_INET, SOCK_STREAM, 0);
 }
 
 
-void Socket::close(int fd)
+void
+Socket::close(int fd)
 {
   g_debug("Socket::close: fd %d.", fd);
 #if defined(_WIN32)
@@ -91,26 +79,75 @@ void Socket::close(int fd)
 #endif // _WIN32
 }
 
-bool Socket::setNonBlocking(int fd)
+
+
+
+bool
+Socket::set_non_blocking(int fd)
 {
 #if defined(_WIN32)
   unsigned long flag = 1;
-  return ioctlsocket((SOCKET)fd, FIONBIO, &flag) == 0;
+  return (ioctlsocket((SOCKET)fd, FIONBIO, &flag) == 0);
 #else
   return (fcntl(fd, F_SETFL, O_NONBLOCK) == 0);
 #endif // _WIN32
 }
 
 
-bool Socket::connect(int fd, const std::string& host, int port)
+bool
+Socket::set_reuse_addr(int fd)
+{
+  // Allow this port to be re-bound immediately so server re-starts are not delayed
+  int sflag = 1;
+  return (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (const char *)&sflag, sizeof(sflag)) == 0);
+}
+
+
+// Bind to a specified port
+bool 
+Socket::bind(int fd, int port)
+{
+  struct sockaddr_in saddr;
+  memset(&saddr, 0, sizeof(saddr));
+  saddr.sin_family = AF_INET;
+  saddr.sin_addr.s_addr = htonl(INADDR_ANY);
+  saddr.sin_port = htons((u_short) port);
+  return (::bind(fd, (struct sockaddr *)&saddr, sizeof(saddr)) == 0);
+}
+
+
+// Set socket in listen mode
+bool Socket::listen(int fd, int backlog)
+{
+  return (::listen(fd, backlog) == 0);
+}
+
+
+int Socket::accept(int fd)
+{
+  struct sockaddr_in addr;
+#if defined(_WIN32)
+  int
+#else
+  socklen_t
+#endif
+    addrlen = sizeof(addr);
+
+  return (int) ::accept(fd, (struct sockaddr*)&addr, &addrlen);
+}
+
+
+    
+// Connect a socket to a server (from a client)
+bool
+Socket::connect(int fd, std::string& host, int port)
 {
   struct sockaddr_in saddr;
   memset(&saddr, 0, sizeof(saddr));
   saddr.sin_family = AF_INET;
 
   struct hostent *hp = gethostbyname(host.c_str());
-  if (hp == 0) 
-	  return false;
+  if (hp == 0) return false;
 
   saddr.sin_family = hp->h_addrtype;
   memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);
@@ -123,7 +160,9 @@ bool Socket::connect(int fd, const std::string& host, int port)
 }
 
 
-bool Socket::nbRead(int fd, std::string& s, bool *eof)
+
+// Read available text from the specified socket. Returns false on error.
+bool Socket::nb_read(int fd, std::string& s, bool *eof)
 {
   const int READ_SIZE = 4096;   // Number of bytes to attempt to read at a time
   char readBuf[READ_SIZE];
@@ -131,14 +170,14 @@ bool Socket::nbRead(int fd, std::string& s, bool *eof)
   bool wouldBlock = false;
   *eof = false;
 
-  while (!wouldBlock && !*eof) {
+  while ( ! wouldBlock && ! *eof) {
 #if defined(_WIN32)
     int n = recv(fd, readBuf, READ_SIZE-1, 0);
 #else
     int n = read(fd, readBuf, READ_SIZE-1);
 #endif
-    g_debug("Socket::nbRead: read/recv returned %d.", n);    
-
+    g_debug("Socket::nbRead: read/recv returned %d.", n);
+
     if (n > 0) {
       readBuf[n] = 0;
       s.append(readBuf, n);
@@ -154,8 +193,8 @@ bool Socket::nbRead(int fd, std::string& s, bool *eof)
 }
 
 
-
-bool Socket::nbWrite(int fd, const std::string& s, int *bytesSoFar)
+// Write text to the specified socket. Returns false on error.
+bool Socket::nb_write(int fd, std::string& s, int *bytesSoFar)
 {
   int nToWrite = int(s.length()) - *bytesSoFar;
   char *sp = const_cast<char*>(s.c_str()) + *bytesSoFar;
@@ -184,8 +223,7 @@ bool Socket::nbWrite(int fd, const std::string& s, int *bytesSoFar)
 
 
 // Returns last errno
-int 
-Socket::getError()
+int Socket::get_error_code()
 {
 #if defined(_WIN32)
   return WSAGetLastError();
@@ -196,17 +234,12 @@ Socket::getError()
 
 
 // Returns message corresponding to last errno
-std::string 
-Socket::getErrorMsg()
+std::string Socket::get_error_msg()
 {
-  return getErrorMsg(getError());
+#ifndef _WIN32
+  return strerror(get_error_code());
+#else
+# error "implement me"
+#endif
 }
 
-// Returns message corresponding to errno... well, it should anyway
-std::string 
-Socket::getErrorMsg(int error)
-{
-  char err[60];
-  snprintf(err,sizeof(err),"error %d", error);
-  return std::string(err);
-}

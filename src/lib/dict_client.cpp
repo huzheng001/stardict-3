@@ -288,7 +288,7 @@ bool DictClient::connect()
 	int sd = Socket::socket();
 
 	if (sd == -1) {
-		on_error_.emit("Can not create socket: " + Socket::getErrorMsg());
+		on_error_.emit("Can not create socket: " + Socket::get_error_msg());
 		return false;
 	}
 
@@ -319,7 +319,7 @@ bool DictClient::connect()
 
 	if (!Socket::connect(sd, host_, port_)) {
 		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
-					     host_.c_str(), Socket::getErrorMsg().c_str());
+					     host_.c_str(), Socket::get_error_msg().c_str());
 		on_error_.emit(mes);
 		g_free(mes);
 		return false;
