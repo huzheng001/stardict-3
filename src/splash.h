@@ -7,6 +7,7 @@
 
 class splash_screen {
 public:
+	splash_screen();
 	void display_action(const std::string& actname);
 	void show();
 private:
