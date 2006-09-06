@@ -38,9 +38,16 @@ splash_screen_cb(gpointer data)
 	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
+splash_screen::splash_screen()
+{
+	text = NULL;
+}
+
 void splash_screen::display_action(const std::string& actname)
 {
 	g_print("%s\n", actname.c_str());
+	if ( NULL == text )
+		return;
 	gtk_label_set_text(text, actname.c_str());
 	gtk_progress_bar_pulse(progress);
 	while(gtk_events_pending())
