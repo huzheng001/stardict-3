@@ -108,9 +108,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_dictionaries/dict_disable_list", std::list<std::string>());
 
 	std::list<std::string> dirs;
-	dirs.push_back(gStarDictDataDir+ G_DIR_SEPARATOR_S "dic");
+	dirs.push_back(gStarDictDataDir + G_DIR_SEPARATOR_S "dic");
 #ifndef _WIN32
-  dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
+	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
 #endif
 	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);
 

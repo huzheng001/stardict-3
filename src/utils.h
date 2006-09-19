@@ -49,6 +49,10 @@ public:
         }
 };
 
+namespace glib {
+	typedef ResourceWrapper<gchar, void, g_free> CharStr;
+}
+
 extern void play_wav_file(const std::string& filename);
 extern void show_help(const gchar *section);
 extern void show_url(const gchar *url);

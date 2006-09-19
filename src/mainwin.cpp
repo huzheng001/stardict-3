@@ -1468,7 +1468,13 @@ void TextWin::Create(GtkWidget *vbox)
 
 void TextWin::ShowInitFailed()
 {
-	Show(_("Warning! No dictionary is loaded.\nPlease go to StarDict's website and download some dictionaries:\nhttp://stardict.sourceforge.net"));
+	glib::CharStr mes(
+		g_strdup_printf(
+			_("Warning! No dictionary is loaded.\n"
+			  "Please go to StarDict's website, download some dictionaries:\n"
+			  "http://stardict.sourceforge.net and put them to %s."),
+			(gStarDictDataDir + G_DIR_SEPARATOR_S "dic").c_str()));
+	Show(get_impl(mes));
 }
 
 void TextWin::ShowTips()

@@ -38,7 +38,6 @@ static const guchar OLD_STRING_SEP = 0xFF;
 static const gchar *myversion = "1.0";
 
 typedef ResourceWrapper<GError, GError, g_error_free> MyGError;
-typedef ResourceWrapper<gchar, void, g_free> GCharStr;
 
 void inifile::create_empty()
 {
@@ -75,7 +74,7 @@ void inifile::convert_from_old_version()
 void inifile::convert_from_locale_enc()
 {
 	MyGError err;
-	GCharStr data;
+	glib::CharStr data;
 
 	if (!g_file_get_contents(fname_.c_str(), get_addr(data), NULL,
 				 get_addr(err))) {
@@ -84,7 +83,7 @@ void inifile::convert_from_locale_enc()
 		exit(EXIT_SUCCESS);
 	}
 
-	GCharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
+	glib::CharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
 					  NULL));
 	if (!utfdata) {
 		g_error(_("Can not convert ini file content to current locale\n"));
@@ -128,7 +127,7 @@ inifile::inifile(const std::string& path)
 			exit(EXIT_FAILURE);//just in case
 		}
 
-		GCharStr version(g_key_file_get_string(gkeyfile_, "stardict-private",
+		glib::CharStr version(g_key_file_get_string(gkeyfile_, "stardict-private",
 						       "version", get_addr(err)));
 		if (err) {
 			if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
@@ -154,7 +153,7 @@ void inifile::save()
 {
 	gsize len;
 	MyGError err;
-	GCharStr data(
+	glib::CharStr data(
 		g_key_file_to_data(gkeyfile_, &len, get_addr(err)));
 
 	if (err) {
