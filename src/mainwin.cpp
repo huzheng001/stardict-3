@@ -231,7 +231,7 @@ void TopWin::on_back_menu_item_activate(GtkMenuItem *menuitem, gint index)
   gpAppFrame->oTopWin.SetText(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
   if (((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value != -1) {
     ProcessGtkEvent();
-    gpAppFrame->oMidWin.oTextWin.view->ScrollTo(((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value);
+    gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value);
   }
   g_free(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
   g_free((gpAppFrame->oTopWin.BackList)->data);
@@ -294,7 +294,7 @@ void TopWin::do_back()
     gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
   if (((BackListData *)(list->data))->adjustment_value != -1) {
     ProcessGtkEvent(); // so all the definition text have been inserted.
-    gpAppFrame->oMidWin.oTextWin.view->ScrollTo(((BackListData *)(list->data))->adjustment_value);
+    gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(list->data))->adjustment_value);
   }
   g_free(((BackListData *)(list->data))->word);
   g_free(list->data);
@@ -704,7 +704,7 @@ void TopWin::InsertBackList(const gchar *word)
       return;
     backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
     backlistdata->word = g_strdup(word);
-    backlistdata->adjustment_value = gpAppFrame->oMidWin.oTextWin.view->ScrollPos();
+    backlistdata->adjustment_value = gpAppFrame->oMidWin.oTextWin.view->scroll_pos();
   }	
 
   GSList* list = 
@@ -1058,7 +1058,7 @@ void ResultWin::on_selection_changed(GtkTreeSelection *selection, ResultWin *oRe
 	{
 		gchar *markstr;
 		gtk_tree_model_get(model, &iter, 1, &markstr, -1);
-		GtkTextView *textview = GTK_TEXT_VIEW(gpAppFrame->oMidWin.oTextWin.view->Widget());
+		GtkTextView *textview = GTK_TEXT_VIEW(gpAppFrame->oMidWin.oTextWin.view->widget());
 		GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
 		GtkTextMark *mark = gtk_text_buffer_get_mark(buffer, markstr);
 		g_free(markstr);
@@ -1301,7 +1301,7 @@ void ToolWin::HideListCallback(GtkWidget *widget, gpointer data)
 #ifndef CONFIG_GPE
 void ToolWin::CopyCallback(GtkWidget *widget, ToolWin *oToolWin)
 {
-  std::string text = gpAppFrame->oMidWin.oTextWin.view->GetText();
+  std::string text = gpAppFrame->oMidWin.oTextWin.view->get_text();
 
   GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
   gtk_clipboard_set_text(clipboard, text.c_str(), -1);
@@ -1332,7 +1332,7 @@ void ToolWin::do_save()
 		// check for selections in Text Area
 		GtkTextIter start, end;
 		gchar *str = NULL;
-		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->Widget()));
+		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->widget()));
 		if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end))
 			 str = gtk_text_buffer_get_text(buffer, &start, &end, false);
 		FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
@@ -1343,7 +1343,7 @@ void ToolWin::do_save()
 				fputs(str,fp);
 				fputs("\n",fp);
 			} else {
-				fputs(oTextWin.view->GetText().c_str(),fp);
+				fputs(oTextWin.view->get_text().c_str(),fp);
 			}
 			//separat line
 			fputs("\n",fp);
@@ -1372,9 +1372,9 @@ void ToolWin::do_search()
 		
 	GtkTextIter start,end;
 	GtkTextBuffer *buffer = 
-		gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->Widget()));
+		gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->widget()));
 	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
-		if (gtk_text_iter_get_offset(&end) - gtk_text_iter_get_offset(&start) < 80) {			
+		if (gtk_text_iter_get_offset(&end) - gtk_text_iter_get_offset(&start) < 80) {
 			gchar *str = gtk_text_buffer_get_text(buffer, &start, &end, false);
 			oTextWin.find_text = str;
       g_free(str);
@@ -1430,9 +1430,9 @@ void TextWin::Create(GtkWidget *vbox)
 {
   view.reset(new ArticleView(GTK_BOX(vbox)));
 
-  g_signal_connect(G_OBJECT(view->Widget()), "button_press_event", 
+  g_signal_connect(G_OBJECT(view->widget()), "button_press_event", 
 		   G_CALLBACK(on_button_press), this);
-  g_signal_connect(G_OBJECT(view->Widget()), "selection_received", 
+  g_signal_connect(G_OBJECT(view->widget()), "selection_received", 
 		   G_CALLBACK(SelectionCallback), this);  
 
 	hbSearchPanel = gtk_hbox_new(FALSE, 0);
@@ -1480,28 +1480,25 @@ void TextWin::ShowInitFailed()
 void TextWin::ShowTips()
 {
   query_result = TEXT_WIN_TIPS;
-  view->SetText(
-		_(
-		  "        Welcome to StarDict!\n\n"
-		  "   Press Ctrl+Q to quit. Press Alt+Z to iconify the window or Alt+X to hide the window.\n"
-		  "   Press Alt+C or ESC to clear the input entry's text.\n"
-		  "   Press Space key to move focus to the input entry.\n"
-		  "   If the query word was not found, you can press Tab key to select the first word in the word list.\n"
-		  "   After selected some text, clicking the middle mouse button on the main window's Definition area or on the notification area icon will look up that word.\n"
-		  "   StarDict can match strings against patterns containing '*' (wildcard) and '?' (joker).\n"
-		  "   Input a word beginning with \'/\' to do a Fuzzy query.\n"
-		  "   When the floating window reports that a word was not found, double clicking will perform a fuzzy query.\n"
-		  )
-		);
-  view->ScrollTo(0);
+  view->set_text(
+	  _("        Welcome to StarDict!\n\n"
+	    "   Press Ctrl+Q to quit. Press Alt+Z to iconify the window or Alt+X to hide the window.\n"
+	    "   Press Alt+C or ESC to clear the input entry's text.\n"
+	    "   Press Space key to move focus to the input entry.\n"
+	    "   If the query word was not found, you can press Tab key to select the first word in the word list.\n"
+	    "   After selected some text, clicking the middle mouse button on the main window's Definition area or on the notification area icon will look up that word.\n"
+	    "   StarDict can match strings against patterns containing '*' (wildcard) and '?' (joker).\n"
+	    "   Input a word beginning with \'/\' to do a Fuzzy query.\n"
+	    "   When the floating window reports that a word was not found, double clicking will perform a fuzzy query.\n")
+	  );
+  view->scroll_to(0);
 }
 
 void TextWin::ShowInfo()
 {
-  query_result = TEXT_WIN_INFO;
-  view->SetText(
-		_(
-		  "       Welcome to StarDict\n"
+	query_result = TEXT_WIN_INFO;
+	view->set_text(
+		_("       Welcome to StarDict\n"
 		  "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
 		  "It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc.\n\n"
 		  "       Here is an introduction to using StarDict:\n\n"
@@ -1530,23 +1527,23 @@ void TextWin::ShowInfo()
 		  "       Statement: This program is distributed in the hope that it will be useful, "
 		  "but WITHOUT ANY WARRANTY; without the warranty "
 		  "that the word spelling, definition, and phonetic information are correct.\n"
-		  )
+			)
 		);
 
-  view->ScrollTo(0);
+	view->scroll_to(0);
 }
 
 void TextWin::Show(const gchar *str)
 {
-  view->SetText(str);
-  view->ScrollTo(0);
+  view->set_text(str);
+  view->scroll_to(0);
 }
 
 void TextWin::Show(gchar ***Word, gchar ****WordData)
 {
-	view->BeginUpdate();
-	view->Clear();
-	view->GotoBegin();
+	view->begin_update();
+	view->clear();
+	view->goto_begin();
 
 	int j,k;
 	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
@@ -1568,25 +1565,25 @@ void TextWin::Show(gchar ***Word, gchar ****WordData)
 			} while (Word[i][j]);
 		}
 	}
-	view->EndUpdate();
+	view->end_update();
 }
 
 void TextWin::ShowTreeDictData(gchar *data)
 {
-	view->BeginUpdate();
-	view->Clear();
-	view->GotoBegin();
+	view->begin_update();
+	view->clear();
+	view->goto_begin();
 	if (data) {
 		view->AppendData(data, "");
 		view->AppendNewline();
 	}
-	view->EndUpdate();
+	view->end_update();
 }
 
 gboolean TextWin::Find (const gchar *text, gboolean start)
 {    
   GtkTextBuffer *buffer = 
-    gtk_text_view_get_buffer(GTK_TEXT_VIEW(view->Widget()));
+    gtk_text_view_get_buffer(GTK_TEXT_VIEW(view->widget()));
 
   GtkTextIter iter;
   if (start) 
@@ -1605,7 +1602,7 @@ gboolean TextWin::Find (const gchar *text, gboolean start)
 				   (GtkTextSearchFlags) (GTK_TEXT_SEARCH_VISIBLE_ONLY | GTK_TEXT_SEARCH_TEXT_ONLY),
 				   &match_start, &match_end,
 				   NULL)) {
-    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(view->Widget()), &match_start,
+    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(view->widget()), &match_start,
 				 0.0, TRUE, 0.5, 0.5);
     gtk_text_buffer_place_cursor(buffer, &match_end);
     gtk_text_buffer_move_mark(buffer,

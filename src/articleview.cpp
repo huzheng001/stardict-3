@@ -1,7 +1,7 @@
 /* 
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
- * Copyright (C) 2005 Evgeniy <dushistov@mail.ru>
+ * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -628,24 +628,24 @@ void ArticleView::AppendData(gchar *data, const gchar *oword)
     }
     p += sec_size;
   }
-  AppendPangoText(mark.c_str());
+  append_pango_text(mark.c_str());
 }
 
 void ArticleView::AppendNewline()
 {
-	AppendPangoText("\n");
+	append_pango_text("\n");
 }
 
 void ArticleView::AppendDataSeparate()
 {
-	AppendPangoText("\n");
+	append_pango_text("\n");
 }
 
 void ArticleView::AppendHeader(const std::string& dict_name, size_t i)
 {
 	if (!for_float_win) {
 		gchar *mark = g_strdup_printf("%d", i);
-		AppendMark(mark);
+		pango_view_->append_mark(mark);
 		g_free(mark);
 	}
 	std::string mark= "<span foreground=\"blue\">";
@@ -662,7 +662,7 @@ void ArticleView::AppendHeader(const std::string& dict_name, size_t i)
 #else
 	mark += " ---&gt;</span>\n";
 #endif
-	AppendPangoText(mark.c_str());
+	append_pango_text(mark.c_str());
 }
 
 void ArticleView::AppendWord(const gchar *word)
@@ -673,5 +673,5 @@ void ArticleView::AppendWord(const gchar *word)
 	mark += m_str;
 	g_free(m_str);
 	mark += for_float_win ? "</span>\n" : "</span></b>\n";
-	AppendPangoText(mark.c_str());
+	append_pango_text(mark.c_str());
 }

@@ -36,7 +36,7 @@ void TrayBase::on_maximize()
 {       
 	if (gpAppFrame->oTopWin.get_text()[0]) {
 //so user can input word directly.
-		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); 
+		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->widget()); 
 	} else {
 		//this won't change selection text.
 		gpAppFrame->oTopWin.grab_focus();
@@ -52,7 +52,7 @@ void TrayBase::on_middle_button_click()
 				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
 	} else {
 		maximize_from_tray();
-		gtk_selection_convert(gpAppFrame->oMidWin.oTextWin.view->Widget(),
+		gtk_selection_convert(gpAppFrame->oMidWin.oTextWin.view->widget(),
 				      GDK_SELECTION_PRIMARY,
 				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
 	}
