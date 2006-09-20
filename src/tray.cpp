@@ -22,41 +22,7 @@
 #  include "config.h"
 #endif
 
-#include "conf.h"
-#include "stardict.h"
-
 #include "tray.hpp"
-
-void TrayBase::on_change_scan(bool val)
-{
-	conf->set_bool_at("dictionary/scan_selection", val);
-}
-
-void TrayBase::on_maximize()
-{       
-	if (gpAppFrame->oTopWin.get_text()[0]) {
-//so user can input word directly.
-		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->widget()); 
-	} else {
-		//this won't change selection text.
-		gpAppFrame->oTopWin.grab_focus();
-	}
-}
-
-void TrayBase::on_middle_button_click()
-{
-	if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
-		gpAppFrame->oSelection.LastClipWord.clear();
-		gtk_selection_convert(gpAppFrame->oSelection.selection_widget,
-				      GDK_SELECTION_PRIMARY,
-				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-	} else {
-		maximize_from_tray();
-		gtk_selection_convert(gpAppFrame->oMidWin.oTextWin.view->widget(),
-				      GDK_SELECTION_PRIMARY,
-				      gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-	}
-}
 
 void TrayBase::set_scan_mode(bool is_on)
 {

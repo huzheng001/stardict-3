@@ -9,6 +9,11 @@
  */
 class TrayBase {
 public:
+	sigc::signal<void> on_quit_;//!< On quit menu choise
+	sigc::signal<void, bool> on_change_scan_;//!< Emitted when user turn on/off scan mode
+	sigc::signal<void> on_maximize_;
+	sigc::signal<void> on_middle_btn_click_;
+
 	/**
          * A constructor
          * @param mainwin - window widget which we should control
@@ -42,22 +47,9 @@ public:
          * Noramlly it is called when you do not want show current state
          */
         void hide_state();
-	/**
-         * Connect slot with signal which happend when quit item of menu
-	 *  was choosen
-         * @param s - slot
-         */
-        void connect_on_quit(const sigc::slot<void>& s) {
-                on_quit_.connect(s);
-        }
 
 protected:
 	GtkWidget *mainwin_;//!< Window widget which we should control
-	sigc::signal<void> on_quit_;//!< On quit menu choise
-
-	void on_change_scan(bool val);
-	void on_maximize();
-	void on_middle_button_click();
 
 	virtual void scan_on() = 0;
         virtual void scan_off() = 0;

@@ -63,6 +63,9 @@ private:
 	void on_scan_modifier_key_changed(const baseconfval*);
 	static gboolean on_word_change_timeout(gpointer data);
 	void stop_word_change_timer();
+	void on_change_scan(bool val);
+	void on_maximize();
+	void on_middle_button_click();
 public:
 	CurrentIndex *iCurrentIndex;
 	GtkWidget *window;
