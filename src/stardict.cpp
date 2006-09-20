@@ -140,6 +140,38 @@ public:
 	}
 } load_show_progress;
 
+void AppCore::on_change_scan(bool val)
+{
+	conf->set_bool_at("dictionary/scan_selection", val);
+}
+
+void AppCore::on_maximize()
+{       
+	if (oTopWin.get_text()[0]) {
+//so user can input word directly.
+		gtk_widget_grab_focus(oMidWin.oTextWin.view->widget()); 
+	} else {
+		//this won't change selection text.
+		oTopWin.grab_focus();
+	}
+}
+
+void AppCore::on_middle_button_click()
+{
+	if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
+		oSelection.LastClipWord.clear();
+		gtk_selection_convert(oSelection.selection_widget,
+				      GDK_SELECTION_PRIMARY,
+				      oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
+	} else {
+		oDockLet->maximize_from_tray();
+		gtk_selection_convert(oMidWin.oTextWin.view->widget(),
+				      GDK_SELECTION_PRIMARY,
+				      oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
+	}
+}
+
+
 void AppCore::Create(gchar *queryword)
 {
 	oLibs.set_show_progress(&load_show_progress);
@@ -201,7 +233,13 @@ void AppCore::Create(gchar *queryword)
 	bool scan=conf->get_bool_at("dictionary/scan_selection");
 	oDockLet.reset(PlatformFactory::create_tray_icon(window, scan, tooltips,
 							 oAppSkin));
-	oDockLet->connect_on_quit(sigc::mem_fun(this, &AppCore::Quit));
+	oDockLet->on_quit_.connect(sigc::mem_fun(this, &AppCore::Quit));
+	oDockLet->on_change_scan_.connect(
+		sigc::mem_fun(this, &AppCore::on_change_scan));
+	oDockLet->on_maximize_.connect(
+		sigc::mem_fun(this, &AppCore::on_maximize));
+	oDockLet->on_middle_btn_click_.connect(
+		sigc::mem_fun(this, &AppCore::on_middle_button_click));
 	oSelection.Init();
 #ifdef _WIN32
 	oClipboard.Init();

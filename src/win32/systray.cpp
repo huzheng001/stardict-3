@@ -16,7 +16,7 @@ enum SYSTRAY_CMND {
 };
 
 
-DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on) : 
+DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on) :
 		TrayBase(mainwin, is_scan_on)
 {
 	create();
@@ -115,7 +115,7 @@ void DockLet::on_left_btn()
 			minimize_to_tray();
 	} else {
 		maximize_from_tray();
-        on_maximize();
+        on_maximize_.emit();
 	}
 }
 
@@ -129,16 +129,16 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 	case WM_CREATE:
 		taskbarRestartMsg = RegisterWindowMessage("TaskbarCreated");
 		break;
-		
+
 	case WM_COMMAND:
 		switch(LOWORD(wparam)) {
 		case SYSTRAY_CMND_MENU_SCAN:
 			if (GetMenuState(dock->systray_menu, SYSTRAY_CMND_MENU_SCAN,
 					MF_BYCOMMAND) & MF_CHECKED)
-				dock->on_change_scan(false);				
+				dock->on_change_scan_.emit(false);
 			else
-				dock->on_change_scan(true);
-							
+				dock->on_change_scan_.emit(true);
+
 			break;
 		case SYSTRAY_CMND_MENU_QUIT:
 			dock->on_quit_.emit();
@@ -149,12 +149,12 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 	{
 		if ( lparam == WM_LBUTTONDOWN ) {
 			if (GetKeyState(VK_CONTROL) < 0)
-				dock->on_change_scan(!dock->is_scan_on());							
+				dock->on_change_scan_.emit(!dock->is_scan_on());
 		} else if (lparam == WM_LBUTTONDBLCLK) {
 			// Only use left button will conflict with the menu.
-			dock->on_left_btn();			
+			dock->on_left_btn();
 		} else if (lparam == WM_MBUTTONDOWN) {
-			dock->on_middle_button_click();			
+			dock->on_middle_btn_click_.emit();
 		} else if (lparam == WM_RBUTTONUP) {
 			/* Right Click */
 			POINT mpoint;
@@ -164,9 +164,9 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 		}
 		break;
 	}
-	default: 
+	default:
 		if (msg == taskbarRestartMsg) {
-			/* explorer crashed and left us hanging... 
+			/* explorer crashed and left us hanging...
 			   This will put the systray icon back in it's place, when it restarts */
 			Shell_NotifyIcon(NIM_ADD, &dock->stardict_nid);
 		}
@@ -205,13 +205,13 @@ void DockLet::change_icon(HICON icon, char* text)
 
 DockLet::~DockLet()
 {
-	Shell_NotifyIcon(NIM_DELETE,&stardict_nid);	
+	Shell_NotifyIcon(NIM_DELETE,&stardict_nid);
 	DestroyMenu(systray_menu);
 	DestroyWindow(systray_hwnd);
 }
 
 void DockLet::minimize_to_tray()
-{	
+{
 	MinimizeWndToTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));
 	TrayBase::minimize_to_tray();
 }
@@ -219,7 +219,7 @@ void DockLet::minimize_to_tray()
 void DockLet::maximize_from_tray()
 {
 	if (!GTK_WIDGET_VISIBLE(mainwin_))
-		RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));		
+		RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));
 	TrayBase::maximize_from_tray();
 }
 

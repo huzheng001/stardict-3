@@ -78,7 +78,7 @@ void DockLet::on_destroyed(GtkWidget *widget, DockLet *oDockLet)
 
 void DockLet::on_menu_scan(GtkCheckMenuItem *checkmenuitem, gpointer user_data)
 {
-	static_cast<DockLet *>(user_data)->on_change_scan(
+	static_cast<DockLet *>(user_data)->on_change_scan_.emit(
                 gtk_check_menu_item_get_active(checkmenuitem));
 }
 
@@ -144,19 +144,19 @@ gboolean DockLet::on_btn_press(GtkWidget *button, GdkEventButton *event,
 		if ((event->state & GDK_CONTROL_MASK) &&
 		    !(event->state & GDK_MOD1_MASK) &&
 		    !(event->state & GDK_SHIFT_MASK)) {
-			dock->on_change_scan(!dock->is_scan_on());
+			dock->on_change_scan_.emit(!dock->is_scan_on());
 			return TRUE;
 		} else {
 			if (GTK_WIDGET_VISIBLE(dock->mainwin_))
 				gtk_widget_hide(dock->mainwin_);
 			else {
 				dock->maximize_from_tray();
-				dock->on_maximize();
+				dock->on_maximize_.emit();
 			}
 		}
 		break;
 	case 2:
-		dock->on_middle_button_click();
+		dock->on_middle_btn_click_.emit();
 		return TRUE;
 	case 3:
 		dock->popup_menu(event);
