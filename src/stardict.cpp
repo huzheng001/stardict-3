@@ -267,14 +267,14 @@ gboolean AppCore::on_window_state_event(GtkWidget *window,
 		if (!(event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN)) {
 			app->oDockLet->hide_state();
 			if (app->oTopWin.get_text()[0])
-				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
+				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->widget());
 		}
 		break;
 	case GDK_WINDOW_STATE_ICONIFIED:
 		if (!(event->new_window_state & GDK_WINDOW_STATE_ICONIFIED)) {
 			if (app->oTopWin.get_text()[0]) {
 				//this is better than the next two line because it don't change selection.
-				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->Widget());
+				gtk_widget_grab_focus(app->oMidWin.oTextWin.view->widget());
 			} else {
 				app->oTopWin.grab_focus();
 			}

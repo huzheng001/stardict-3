@@ -1,7 +1,7 @@
-/* 
+/*
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
- * Copyright (C) 2005 Evgeniy <dushistov@mail.ru>
+ * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,236 +27,283 @@
 
 #include "pangoview.h"
 
-void PangoView::Create(bool autoresize_)
+class TextPangoWidget : public PangoWidgetBase {
+public:
+	TextPangoWidget();
+	GtkWidget *widget() { return GTK_WIDGET(textview_); }
+
+	void clear();
+	void append_mark(const char *mark);
+	void begin_update();
+	void end_update();
+	std::string get_text();
+protected:
+	void do_set_text(const char *str);
+	void do_append_text(const char *str);
+	void do_append_pango_text(const char *str);
+	void do_set_pango_text(const char *str);
+private:
+	GtkTextView *textview_;
+	std::list<GtkTextMark *> marklist_;
+	GtkTextIter iter_;
+
+	void goto_begin();
+};
+
+class LabelPangoWidget : public PangoWidgetBase {
+public:
+	LabelPangoWidget();
+	GtkWidget *widget() { return GTK_WIDGET(label_); }
+
+	void clear();
+	void append_mark(const char *mark) {}
+	std::string get_text();
+protected:
+	void do_set_text(const char *str);
+	void do_append_text(const char *str);
+	void do_append_pango_text(const char *str);
+	void do_set_pango_text(const char *str);
+private:
+    GtkLabel *label_;
+};
+
+
+void PangoWidgetBase::begin_update()
 {
-	update=false;
-  autoresize=autoresize_;
-  if (!autoresize) {
-    textview = GTK_TEXT_VIEW(gtk_text_view_new());
-    gtk_widget_show(GTK_WIDGET(textview));
-    gtk_text_view_set_editable(textview, FALSE);
-    gtk_text_view_set_cursor_visible(textview, FALSE);
-    gtk_text_view_set_wrap_mode(textview, GTK_WRAP_WORD_CHAR);
-    gtk_text_view_set_left_margin(textview, 5);
-    gtk_text_view_set_right_margin(textview, 5);  
-       
-    scrolled_window = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
-    gtk_widget_show(GTK_WIDGET(scrolled_window));
-    gtk_scrolled_window_set_policy(scrolled_window,
-				   //altought textview's set_wrap_mode will cause 
-				   //this can be GTK_POLICY_NEVER,but...
-				   //there are widgets that may make this broken.
-				   GTK_POLICY_AUTOMATIC,
+	update_ = true;
+	cache_.clear();
+}
+
+void PangoWidgetBase::end_update()
+{
+	if (update_) {
+		update_ = false;
+		do_append_pango_text(cache_.c_str());
+		cache_.clear();
+	}
+}
+
+void PangoWidgetBase::append_text(const char *str)
+{
+	if (update_)
+		cache_ += str;
+	else
+		do_append_text(str);
+}
+
+void PangoWidgetBase::append_pango_text(const char *str)
+{
+	if (update_)
+		cache_ += str;
+	else
+		do_append_pango_text(str);
+}
+
+void PangoWidgetBase::set_pango_text(const char *str)
+{
+	if (update_)
+		cache_ = str;
+	else
+		do_set_pango_text(str);
+}
+
+
+void TextPangoWidget::begin_update()
+{
+	PangoWidgetBase::begin_update();
+	gtk_text_buffer_begin_user_action(
+		gtk_text_view_get_buffer(textview_));
+}
+
+
+void TextPangoWidget::end_update()
+{
+	PangoWidgetBase::end_update();
+	gtk_text_buffer_end_user_action(gtk_text_view_get_buffer(textview_));
+}
+
+
+TextPangoWidget::TextPangoWidget()
+{
+	textview_ = GTK_TEXT_VIEW(gtk_text_view_new());
+	gtk_widget_show(GTK_WIDGET(textview_));
+	gtk_text_view_set_editable(textview_, FALSE);
+	gtk_text_view_set_cursor_visible(textview_, FALSE);
+	gtk_text_view_set_wrap_mode(textview_, GTK_WRAP_WORD_CHAR);
+	gtk_text_view_set_left_margin(textview_, 5);
+	gtk_text_view_set_right_margin(textview_, 5);
+
+	scroll_win_ = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
+	gtk_widget_show(GTK_WIDGET(scroll_win_));
+	gtk_scrolled_window_set_policy(scroll_win_,
+				       //altought textview's set_wrap_mode will cause
+				       //this can be GTK_POLICY_NEVER,but...
+				       //there are widgets that may make this broken.
+				       GTK_POLICY_AUTOMATIC,
+				       GTK_POLICY_AUTOMATIC);
+	gtk_container_add(GTK_CONTAINER(scroll_win_), GTK_WIDGET(textview_));
+	gtk_scrolled_window_set_shadow_type(scroll_win_, GTK_SHADOW_IN);
+}
+
+LabelPangoWidget::LabelPangoWidget()
+{
+    label_ = GTK_LABEL(gtk_label_new(NULL));
+    gtk_label_set_justify(label_, GTK_JUSTIFY_LEFT);
+    scroll_win_ = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
+    gtk_scrolled_window_set_shadow_type(scroll_win_, GTK_SHADOW_NONE);
+    gtk_scrolled_window_set_policy(scroll_win_, GTK_POLICY_NEVER,
 				   GTK_POLICY_AUTOMATIC);
 
-    gtk_container_add(GTK_CONTAINER(scrolled_window), GTK_WIDGET(textview));
-    gtk_scrolled_window_set_shadow_type(scrolled_window, GTK_SHADOW_IN);
-  } else {
-    label = GTK_LABEL(gtk_label_new(NULL));
-    gtk_label_set_justify(label, GTK_JUSTIFY_LEFT);
-    
-    scrolled_window = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
-    gtk_scrolled_window_set_shadow_type(scrolled_window, GTK_SHADOW_NONE);
-    gtk_scrolled_window_set_policy(scrolled_window, GTK_POLICY_NEVER, 
-				   GTK_POLICY_AUTOMATIC);
-  
-    GtkWidget *viewport = 
-      gtk_viewport_new(gtk_scrolled_window_get_hadjustment(scrolled_window),
-		       gtk_scrolled_window_get_vadjustment(scrolled_window));
+    GtkWidget *viewport =
+	    gtk_viewport_new(gtk_scrolled_window_get_hadjustment(scroll_win_),
+			     gtk_scrolled_window_get_vadjustment(scroll_win_));
     gtk_widget_add_events(viewport, GDK_BUTTON1_MOTION_MASK);
-    gtk_widget_add_events(viewport, GDK_BUTTON_RELEASE_MASK);	
+    gtk_widget_add_events(viewport, GDK_BUTTON_RELEASE_MASK);
     gtk_viewport_set_shadow_type(GTK_VIEWPORT(viewport), GTK_SHADOW_NONE);
-    gtk_container_add(GTK_CONTAINER(scrolled_window), viewport);
-    gtk_container_add(GTK_CONTAINER(viewport), GTK_WIDGET(label));
-  }
+    gtk_container_add(GTK_CONTAINER(scroll_win_), viewport);
+    gtk_container_add(GTK_CONTAINER(viewport), GTK_WIDGET(label_));
 }
 
-PangoView::PangoView(GtkBox *owner, bool autoresize_)
+PangoWidgetBase *PangoWidgetBase::create(bool autoresize)
 {
-  Create(autoresize_);
-  gtk_box_pack_start(owner, GTK_WIDGET(scrolled_window), TRUE, TRUE, 0);
+	if (!autoresize)
+		return new TextPangoWidget;
+	else
+		return new LabelPangoWidget;
 }
 
-PangoView::PangoView(GtkContainer *owner, bool autoresize_)
+void TextPangoWidget::do_set_text(const char *text)
 {
-  Create(autoresize_);
-  gtk_container_add(owner, GTK_WIDGET(scrolled_window));
-}
-
-void PangoView::SetText(const char *text)
-{  
-	if (update) {
-		cache=text;
-		return;
-	}
-
-	if (!autoresize) {
-		GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
-
-		std::list<GtkTextMark *>::const_iterator it;
-		for (it=marklist.begin(); it!=marklist.end(); ++it) {
-			gtk_text_buffer_delete_mark(buffer, *it);
-		}
-		marklist.clear();
-
-		gtk_text_buffer_set_text(buffer, text, -1);
-  } else {
-    ScrollTo(0);
-    // this should speed up the next two line.
-    gtk_label_set_markup(label, ""); 
-    // so Popup()'s gtk_widget_size_request(label, &requisition); can
-    gtk_widget_set_size_request(GTK_WIDGET(label), -1, -1);
-    // get its original width.
-    gtk_label_set_line_wrap(label, FALSE); 
-    gchar *mstr=g_markup_escape_text(text, -1);
-    gtk_label_set_text(label, mstr);
-    g_free(mstr);
-  }
-}
-
-void PangoView::AppendText(const char *str)
-{
-	if (update) {
-		cache+=str;
-		return;
-	}
-
-  if (!autoresize) {
-    GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview);
-    gtk_text_buffer_insert(buffer, &iter, str, strlen(str));
-  } else
-    SetText((std::string(gtk_label_get_text(label))+str).c_str()); 
-}
-
-void PangoView::SetPangoText(const char *str)
-{  
-	if (update) {
-		cache=str;
-		return;
-	}
-
-  if (!autoresize) {
-    Clear();
-    GotoBegin();
-    AppendPangoText(str);
-  } else {
-    ScrollTo(0);
-    // this should speed up the next two line.
-    gtk_label_set_markup(label, ""); 
-    // so Popup()'s gtk_widget_size_request(label,&requisition); can
-    gtk_widget_set_size_request(GTK_WIDGET(label), -1, -1);
-    // get its original width.
-    gtk_label_set_line_wrap(label, FALSE); 
-    gtk_label_set_markup(label, str);
-  }
-}
-
-void PangoView::AppendPangoText(const char *str)
-{
-	if (update) {
-		cache+=str;
-		return;
-	}
-
-  if (!autoresize) {
-    GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview);
-    gtk_text_buffer_insert_markup(buffer, &iter, str);
-  } else {
-    SetPangoText((std::string(gtk_label_get_label(label))+str).c_str());
-  }
-}
-
-void PangoView::AppendMark(const char *mark)
-{
-	if (autoresize)
-		return;
-	GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview);
-	if (update) {
-		if (!cache.empty()) {
-			gtk_text_buffer_insert_markup(buffer, &iter, cache.c_str());
-			cache.clear();
-		}
-	}
-	marklist.push_back(gtk_text_buffer_create_mark(buffer, mark, &iter, TRUE));
-}
-
-void PangoView::ScrollTo(gdouble value)
-{
-  gtk_adjustment_set_value(
-    gtk_scrolled_window_get_vadjustment(scrolled_window), value
-  );
-}
-
-gdouble PangoView::ScrollPos(void)
-{
-  return  gtk_adjustment_get_value(
-	    gtk_scrolled_window_get_vadjustment(scrolled_window)
-	  );
-}
-
-void PangoView::BeginUpdate(void) 
-{
-	update=true;
-	cache.clear();
-  if (!autoresize)
-    gtk_text_buffer_begin_user_action(gtk_text_view_get_buffer(textview));
-}
-
-void PangoView::EndUpdate(void)
-{
-	if (update) {
-		update=false;
-		if (autoresize)
-			SetPangoText(cache.c_str());
-		else
-			AppendPangoText(cache.c_str());
-		cache.clear();
-	}
-
-  if (!autoresize)
-    gtk_text_buffer_end_user_action(gtk_text_view_get_buffer(textview));
-}
-
-void PangoView::Clear(void)
-{
-	if (!autoresize) {
-	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview_);
 
 	std::list<GtkTextMark *>::const_iterator it;
-	for (it=marklist.begin(); it!=marklist.end(); ++it) {
+	for (it = marklist_.begin(); it != marklist_.end(); ++it)
 		gtk_text_buffer_delete_mark(buffer, *it);
+	marklist_.clear();
+
+	gtk_text_buffer_set_text(buffer, text, -1);
+}
+
+void LabelPangoWidget::do_set_text(const char *text)
+{
+	scroll_to(0);
+	// this should speed up the next two line.
+	gtk_label_set_markup(label_, "");
+	// so Popup()'s gtk_widget_size_request(label, &requisition); can
+	gtk_widget_set_size_request(GTK_WIDGET(label_), -1, -1);
+	// get its original width.
+	gtk_label_set_line_wrap(label_, FALSE);
+	gchar *mstr = g_markup_escape_text(text, -1);
+	gtk_label_set_text(label_, mstr);
+	g_free(mstr);
+}
+
+void PangoWidgetBase::set_text(const char *str)
+{
+	if (update_)
+		cache_ = str;
+	else
+		do_set_text(str);
+}
+
+void TextPangoWidget::do_append_text(const char *str)
+{
+	gtk_text_buffer_insert(gtk_text_view_get_buffer(textview_),
+			       &iter_, str, strlen(str));
+}
+
+void LabelPangoWidget::do_append_text(const char *str)
+{
+	set_text((std::string(gtk_label_get_text(label_)) + str).c_str());
+}
+
+
+void TextPangoWidget::do_append_pango_text(const char *str)
+{
+    gtk_text_buffer_insert_markup(gtk_text_view_get_buffer(textview_),
+				  &iter_, str);
+}
+
+void TextPangoWidget::do_set_pango_text(const char *str)
+{
+	clear();
+	goto_begin();
+	do_append_pango_text(str);
+}
+
+void LabelPangoWidget::do_set_pango_text(const char *str)
+{
+    scroll_to(0);
+    // this should speed up the next two line.
+    gtk_label_set_markup(label_, "");
+    // so Popup()'s gtk_widget_size_request(label,&requisition); can
+    gtk_widget_set_size_request(GTK_WIDGET(label_), -1, -1);
+    // get its original width.
+    gtk_label_set_line_wrap(label_, FALSE);
+    gtk_label_set_markup(label_, str);
+}
+
+void LabelPangoWidget::do_append_pango_text(const char *str)
+{
+   do_set_pango_text((std::string(gtk_label_get_label(label_)) + str).c_str());
+}
+
+void TextPangoWidget::append_mark(const char *mark)
+{
+	GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview_);
+	if (update_) {
+		if (!cache_.empty()) {
+			gtk_text_buffer_insert_markup(buffer, &iter_, cache_.c_str());
+			cache_.clear();
+		}
 	}
-	marklist.clear();
+	marklist_.push_back(
+		gtk_text_buffer_create_mark(buffer, mark, &iter_, TRUE));
+}
+
+void TextPangoWidget::clear()
+{
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview_);
+
+	std::list<GtkTextMark *>::const_iterator it;
+	for (it = marklist_.begin(); it != marklist_.end(); ++it)
+		gtk_text_buffer_delete_mark(buffer, *it);
+
+	marklist_.clear();
 
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(buffer, &start, &end);
 	gtk_text_buffer_delete(buffer, &start, &end);
-	ScrollTo(0);
-	} else 
-		SetText("");
+	scroll_to(0);
 }
 
-void PangoView::GotoBegin(void) 
+void LabelPangoWidget::clear()
 {
-  if (!autoresize)
-    gtk_text_buffer_get_iter_at_offset(
-      gtk_text_view_get_buffer(textview), &iter, 0
-    ); 
+	set_text("");
 }
 
-std::string PangoView::GetText(void)
+void TextPangoWidget::goto_begin()
 {
-  std::string res;
-  if (!autoresize) {
-    GtkTextIter start, end;
-    GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview);
-    gtk_text_buffer_get_bounds(buffer, &start, &end);
-    gchar *text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
-    res=text;
-    g_free(text);
-  } else {
-    res=gtk_label_get_text(label);
-  }
+	gtk_text_buffer_get_iter_at_offset(
+		gtk_text_view_get_buffer(textview_), &iter_, 0
+		);
+}
 
-  return res;
+std::string TextPangoWidget::get_text()
+{
+	std::string res;
+
+	GtkTextIter start, end;
+	GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview_);
+	gtk_text_buffer_get_bounds(buffer, &start, &end);
+	gchar *text = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
+	res = text;
+	g_free(text);
+
+	return res;
+}
+
+std::string LabelPangoWidget::get_text()
+{
+	return gtk_label_get_text(label_);
 }

@@ -190,14 +190,14 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOrigin
 {
 	QueryingWord = sOriginWord;
 	found_result = FLOAT_WIN_FOUND;
-	view->BeginUpdate();
-	view->Clear();
+	view->begin_update();
+	view->clear();
 	std::string mark = "<b><span size=\"x-large\">";
 	gchar *m_str = g_markup_escape_text(sOriginWord, -1);
 	mark += m_str;
 	g_free(m_str);
 	mark += "</span></b>";
-	view->AppendPangoText(mark.c_str());
+	view->append_pango_text(mark.c_str());
 	int j,k;
 	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 		if (Word[i]) {
@@ -224,7 +224,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOrigin
 			} while (Word[i][j]);
 		}
 	}
-	view->EndUpdate();
+	view->end_update();
 	gboolean pronounced = false;
 	gboolean canRead = gpAppFrame->oReadWord.canRead(sOriginWord);
 	if (canRead) {
@@ -258,9 +258,9 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
   QueryingWord = sOriginWord;
   found_result = FLOAT_WIN_FUZZY_FOUND;
 
-  view->BeginUpdate();
-  view->Clear();
-  view->GotoBegin();
+  view->begin_update();
+  view->clear();
+  view->goto_begin();
 
   std::string mark;
   gchar *m_str;
@@ -294,7 +294,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
   mark += m_str;
   g_free(m_str);
   mark += "</span>";
-  view->AppendPangoText(mark.c_str());
+  view->append_pango_text(mark.c_str());
 
   int m,n;
   for (j=0; j<count; j++) {
@@ -305,7 +305,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
     mark += m_str;
     g_free(m_str);
     mark += "</span></b>";
-    view->AppendPangoText(mark.c_str());
+    view->append_pango_text(mark.c_str());
     for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 	if (ppppWord[j][i]) {
 		view->AppendNewline();
@@ -332,7 +332,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
 	}
     }
   }	
-  view->EndUpdate();
+  view->end_update();
 
   gboolean canRead = gpAppFrame->oReadWord.canRead(sOriginWord);
   if (canRead)
@@ -364,7 +364,7 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 	m_word = g_markup_escape_text(sWord,-1);
 	m_reason = g_markup_escape_text(sReason,-1);
 	text = g_strdup_printf("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>",m_word,m_reason);
-	view->SetPangoText(text);
+	view->set_pango_text(text);
 	
 	gboolean pronounced = false;
 	gboolean canRead = gpAppFrame->oReadWord.canRead(sWord);
@@ -393,13 +393,13 @@ void FloatWin::Popup(gboolean updatePosition)
   ismoving = true;
 
   GtkRequisition requisition;
-  gtk_widget_size_request(view->Widget(), &requisition);
+  gtk_widget_size_request(view->widget(), &requisition);
 	int max_window_width=conf->get_int_at("floating_window/max_window_width");
   if (requisition.width > max_window_width) {
 		// it is not really max window width setting.
-    gtk_widget_set_size_request(view->Widget(), max_window_width, -1);
-    gtk_label_set_line_wrap(GTK_LABEL(view->Widget()), true);
-    gtk_widget_size_request(view->Widget(), &requisition); //update requisition
+    gtk_widget_set_size_request(view->widget(), max_window_width, -1);
+    gtk_label_set_line_wrap(GTK_LABEL(view->widget()), true);
+    gtk_widget_size_request(view->widget(), &requisition); //update requisition
   }
   gint window_width,window_height;
   window_width = 2*(FLOATWIN_BORDER_WIDTH+2) + requisition.width; // 2 is the frame 's width.or get it by gtk function? i am lazy,hoho
@@ -408,18 +408,18 @@ void FloatWin::Popup(gboolean updatePosition)
   if (requisition.height > max_window_height) {
     static gint vscrollbar_width = 0;
     if (!vscrollbar_width) {
-      if (view->VScrollBar()) {
+      if (view->vscroll_bar()) {
 				GtkRequisition vscrollbar_requisition;
-				gtk_widget_size_request(view->VScrollBar(), &vscrollbar_requisition);
+				gtk_widget_size_request(view->vscroll_bar(), &vscrollbar_requisition);
 				vscrollbar_width = vscrollbar_requisition.width;
-				vscrollbar_width += view->ScrollSpace();
+				vscrollbar_width += view->scroll_space();
       }
     }
-    view->SetSize(requisition.width + vscrollbar_width, max_window_height);
+    view->set_size(requisition.width + vscrollbar_width, max_window_height);
     window_height = 2*(FLOATWIN_BORDER_WIDTH+2) + max_window_height;
     window_width += vscrollbar_width;
   } else {
-    view->SetSize(requisition.width, requisition.height);
+    view->set_size(requisition.width, requisition.height);
     window_height = 2*(FLOATWIN_BORDER_WIDTH+2) + requisition.height;
   }
   
@@ -688,7 +688,7 @@ gboolean FloatWin::vLeaveNotifyCallback (GtkWidget *widget, GdkEventCrossing *ev
 void FloatWin::on_menu_copy_activate(GtkWidget * widget, FloatWin *oFloatWin)
 {
 	GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-	gtk_clipboard_set_text(clipboard, oFloatWin->view->GetText().c_str(), -1);
+	gtk_clipboard_set_text(clipboard, oFloatWin->view->get_text().c_str(), -1);
 }
 
 void FloatWin::on_menu_save_activate(GtkWidget * widget, FloatWin *oFloatWin)
@@ -825,7 +825,7 @@ void FloatWin::on_save_click(GtkWidget *widget, FloatWin *oFloatWin)
 	} else {
 		FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
 		if(fp) {
-			fputs(oFloatWin->view->GetText().c_str(),fp);
+			fputs(oFloatWin->view->get_text().c_str(),fp);
 			fputs("\n\n",fp);
 			fclose(fp);
 		}

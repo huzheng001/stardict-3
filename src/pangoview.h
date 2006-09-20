@@ -4,55 +4,73 @@
 #include <list>
 #include <string>
 #include <gtk/gtk.h>
+#include <memory>
 
-class PangoView {
+class PangoWidgetBase {
 public:
-  PangoView(GtkContainer *owner, bool autoresize_=false);
-  PangoView(GtkBox *owner, bool autoresize_=false);
-  void AppendText(const char *str);
-  void SetText(const char *str);
-  void AppendPangoText(const char *str);
-  void SetPangoText(const char *str); 
-  void AppendMark(const char *mark);
+	PangoWidgetBase(): update_(false) {}
+	virtual ~PangoWidgetBase() {}
 
-  GtkWidget *Widget(void) {
-    if (autoresize)
-      return GTK_WIDGET(label);
-    else
-      return GTK_WIDGET(textview);
-  }
-  void ScrollTo(gdouble value);
-  gdouble ScrollPos();
-  void BeginUpdate();
-  void EndUpdate();
-  void Clear();
-  void GotoBegin();
-  std::string GetText();
-  GtkWidget *VScrollBar() { return scrolled_window->vscrollbar; }
-  void SetSize(gint w, gint h)
-  {
-    gtk_widget_set_size_request(GTK_WIDGET(scrolled_window), w, h);
-  }
-  gint ScrollSpace()
-  {
-    gint scrollbar_spacing;
-    gtk_widget_style_get(GTK_WIDGET(scrolled_window), 
-			 "scrollbar_spacing", &scrollbar_spacing, NULL);
-    return scrollbar_spacing;
-  }
+	//TODO: make it not public and introduce function to work with it
+	virtual GtkWidget *widget() = 0;
+
+	void set_text(const char *str);
+	void append_text(const char *str);
+	void append_pango_text(const char *str);
+	void set_pango_text(const char *str);
+	virtual std::string get_text() = 0;
+		
+	virtual void clear() = 0;
+	virtual void append_mark(const char *mark) = 0;
+	virtual void begin_update();
+	virtual void end_update();
+	virtual void goto_begin() {}
+
+	GtkWidget *vscroll_bar() { return scroll_win_->vscrollbar; }
+	void set_size(gint w, gint h) {
+		gtk_widget_set_size_request(GTK_WIDGET(scroll_win_), w, h);
+	}
+	gint scroll_space() {
+		gint val;
+		gtk_widget_style_get(GTK_WIDGET(scroll_win_), 
+			 "scrollbar_spacing", &val, NULL);
+		return val;
+	}
+	GtkWidget *window() { return GTK_WIDGET(scroll_win_); }
+	void scroll_to(gdouble val) {
+		gtk_adjustment_set_value(
+			gtk_scrolled_window_get_vadjustment(scroll_win_), val
+			);
+	}     
+	gdouble scroll_pos() {
+		return  gtk_adjustment_get_value(
+			gtk_scrolled_window_get_vadjustment(scroll_win_)
+			);
+	}
+
+	static PangoWidgetBase *create(GtkBox *owner, bool autoresize) {
+		PangoWidgetBase *res = create(autoresize);
+		gtk_box_pack_start(owner, res->window(), TRUE, TRUE, 0);
+		return res;
+	}
+
+	static PangoWidgetBase *create(GtkContainer *owner, bool autoresize) {
+		PangoWidgetBase *res = create(autoresize);
+		gtk_container_add(owner, res->window());
+		return res;
+	}
+protected:
+	GtkScrolledWindow *scroll_win_;
+	bool update_;
+	std::string cache_;
+
+	virtual void do_set_text(const char *str) = 0;
+	virtual void do_append_text(const char *str) = 0;
+	virtual void do_append_pango_text(const char *str) = 0;
+	virtual void do_set_pango_text(const char *str) = 0; 
 private:
-	bool update;
-	std::string cache;
-  bool autoresize;
-  GtkScrolledWindow *scrolled_window;
-  GtkTextIter iter;
-  std::list<GtkTextMark *> marklist;
-  union {
-    GtkTextView *textview;
-    GtkLabel *label;
-  };
-
-  void Create(bool autoresize_);
+	static PangoWidgetBase *create(bool autoresize);
 };
+
 
 #endif//pangoview.h
