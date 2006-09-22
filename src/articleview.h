@@ -27,6 +27,10 @@ public:
 	void append_pango_text(const char *str) { pango_view_->append_pango_text(str); }
 	void set_pango_text(const char *str) { pango_view_->set_pango_text(str); }
 	std::string get_text() { return pango_view_->get_text(); }
+	void append_pango_text_with_links(const std::string& str,
+					  const LinksPosList& links) {
+		pango_view_->append_pango_text_with_links(str, links);
+	}
 	void clear() { pango_view_->clear(); }
 	void append_mark(const char *mark) { pango_view_->append_mark(mark); }
 	void begin_update() { pango_view_->begin_update(); }
@@ -37,11 +41,12 @@ public:
 	gint scroll_space() { return pango_view_->scroll_space(); }
 	GtkWidget *window() { return pango_view_->window(); }
 	gdouble scroll_pos() { return pango_view_->scroll_pos(); }
+	void connect_on_link(const sigc::slot<void, const char *>& s);
 private:
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 
-	static std::string xdxf2pango(const char *p);
+	static std::string xdxf2pango(const char *p, LinksPosList& links_list);
 };
 
 

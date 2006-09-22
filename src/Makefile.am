@@ -58,7 +58,8 @@ stardict_SOURCES = 			                \
 	x11_iskeyspressed.cpp x11_iskeyspressed.hpp \
 	gtk_iskeyspressed.cpp gtk_iskeyspressed.hpp \
 	progresswin.cpp progresswin.hpp \
-	tray.cpp tray.hpp
+	tray.cpp tray.hpp \
+	desktop.cpp desktop.hpp
 
 if GNOME_SUPPORT
 $(IDL_SOURCES): $(IDL_FILE)

@@ -58,6 +58,7 @@
 HINSTANCE stardictexe_hInstance;
 #endif
 
+#include "desktop.hpp"
 #include "splash.h"
 #include "conf.h"
 #include "utils.h"
@@ -171,6 +172,10 @@ void AppCore::on_middle_button_click()
 	}
 }
 
+void AppCore::on_link_click(const char *link)
+{
+	oTopWin.SetText(link);
+}
 
 void AppCore::Create(gchar *queryword)
 {

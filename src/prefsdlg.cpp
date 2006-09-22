@@ -30,6 +30,7 @@
 
 #include "stardict.h"
 #include "conf.h"
+#include "desktop.hpp"
 #include "utils.h"
 #include "iskeyspressed.hpp"
 

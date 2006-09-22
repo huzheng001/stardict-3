@@ -12,6 +12,7 @@
 #endif
 
 #include "conf.h"
+#include "desktop.hpp"
 #include "lib/common.hpp"
 #include "utils.h"
 #include "lib/file.hpp"
