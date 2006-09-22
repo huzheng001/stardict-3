@@ -495,37 +495,39 @@ std::string ArticleView::xdxf2pango(const char *p)
 			  goto cycle_end;
 		  }
 
-	  next = strchr(p, '>');
-	  if (!next)
-		  continue;
+	  if (strncmp("k>", p + 1, 2) == 0) {
+		  next = strstr(p + 3, "</k>");
+		  if (next) {
+			  if (*(next + 4) == '\n')
+				  next++;
+			  next += 3;
 
-	  name.assign(p + 1, next - p - 1);
-
-	  if (name == "k") {
-		  const char *begin = next;
-		  if ((next = strstr(begin, "</k>\n")) != NULL)
-			  next += sizeof("</k>") - 1;
-		  else if ((next = strstr(begin, "</k>")) != NULL)
-			  next += sizeof("</k>") - 2;
-		  else
-			  next = begin;
-
-	  } else if (!name.empty() && name[0] == 'c' && name != "co") {
+			  p = next;
+		  } else
+			  p += 2;
+	  } else if (*(p + 1) == 'c' && (*(p + 2) == ' ' || *(p + 2) == '>')) {
+		  next = strchr(p, '>');
+		  if (!next)
+			  continue;
+		  name.assign(p + 1, next - p - 1);
 		  std::string::size_type pos = name.find("code");
 		  if (pos != std::string::npos) {
 			  pos += sizeof("code=\"") - 1;
 			  std::string::size_type end_pos = name.find("\"", pos);
 			  if (end_pos == std::string::npos)
 				  end_pos = name.length();
-					  
+
 			  std::string color(name, pos, end_pos - pos);
 			  res += "<span foreground=\"" + color + "\">";
-			  				  
 		  } else
-			  res += "<span foreground=\"blue\">";		  
+			  res += "<span foreground=\"blue\">";
+		  p = next;
+	  } else {
+		  next = strchr(p, '>');
+		  if (!next)
+			  continue;
+		  p = next;
 	  }
-
-	  p = next;
   cycle_end:
 	  ;
   }
