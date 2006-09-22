@@ -1,5 +1,5 @@
 noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata \
-	t_convert_old_ini t_dict_client
+	t_convert_old_ini t_dict_client t_articleview
 EXTRA_DIST = sample1.ifo sample1.idx sample1.dict
 
 if GNOME_SUPPORT
@@ -32,8 +32,15 @@ t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 	$(top_builddir)/src/config_file.hpp \
 	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp
 
+t_articleview_SOURCES = t_articleview.cpp \
+	$(top_builddir)/src/articleview.cpp $(top_builddir)/src/articleview.hpp \
+	$(top_builddir)/src/pangoview.cpp $(top_builddir)/src/pangoview.h \
+	$(top_builddir)/src/gtktextviewpango.cpp $(top_builddir)/src/gtktextviewpango.h
+
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
 	$(top_builddir)/src/sigc++/libsigc.a
 INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib
 
-TESTS = t_config_file t_convert_old_ini t_dict t_query t_lookupdata
+TESTS = \
+	t_config_file t_convert_old_ini t_dict t_query t_lookupdata \
+	t_articleview
