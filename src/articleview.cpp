@@ -1,4 +1,4 @@
-/* 
+/*
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
  * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
@@ -458,67 +458,83 @@ static std::string wiki2pango(const char *p, guint32 sec_size)
 	return res;
 }
 
-static std::string xdxf2pango(const char *p)
+std::string ArticleView::xdxf2pango(const char *p)
 {
   std::string res;
-  for (; *p; ++p) {
-    if (*p!='<') {
-      res+=*p;
-      continue;
-    }
+  const char *tag, *next;
+  std::string name;
 
-    const char *next=strchr(p, '>');
-    if (!next)
-      continue;
+  struct ReplaceTag {
+	  const char *match_;
+	  int match_len_;
+	  const char *replace_;
+  };
+  static const ReplaceTag replace_arr[] = {
+	  { "abr>", 4, "<span foreground=\"green\" style=\"italic\">" },
+	  { "/abr>", 5, "</span>" },
+	  { "b>", 2, "<b>"  },
+	  { "/b>", 3, "</b>" },
+	  { "i>", 2, "<i>"  },
+	  { "/i>", 3, "</i>" },
+	  { "tr>", 3, "<b>[" },
+	  { "/tr>", 4, "]</b>" },
+	  { "ex>", 3, "<span foreground=\"violet\">" },
+	  { "/ex>", 4, "</span>" },
+	  { "/c>", 3, "</span>" },
+	  { NULL, 0, NULL },
+  };
 
-    std::string name(p+1, next-p-1);
+  for (; *p && (tag = strchr(p, '<')) != NULL; ++p) {
+	  res.append(p, tag - p);
+	  p = tag;
+	  for (int i = 0; replace_arr[i].match_; ++i)
+		  if (strncmp(replace_arr[i].match_, p + 1,
+			      replace_arr[i].match_len_) == 0) {
+			  res += replace_arr[i].replace_;
+			  p += replace_arr[i].match_len_;
+			  goto cycle_end;
+		  }
 
-    if (name=="abr")
-      res+="<span foreground=\"green\" style=\"italic\">";
-    else if (name=="/abr")
-      res+="</span>";
-    else if (name=="k") {
-      const char *begin=next;
-      if ((next=strstr(begin, "</k>"))!=NULL)
-	next+=sizeof("</k>")-1-1;
-      else
-	next=begin;
-    } else if (name=="b")
-      res+="<b>";
-    else if (name=="/b")
-      res+="</b>";
-    else if (name=="i")
-      res+="<i>";
-    else if (name=="/i")
-      res+="</i>";
-	else if (name=="tr")
-	  res+="<b>[";
-	else if (name=="/tr")
-	  res+="]</b>";
-    else if (name=="ex")
-      res+="<span foreground=\"violet\">";
-    else if (name=="/ex")
-      res+="</span>";
-    else if (!name.empty() && name[0]=='c' && name!="co") {
-      std::string::size_type pos=name.find("code");
-      if (pos!=std::string::size_type(-1)) {
-	pos+=sizeof("code=\"")-1;
-	std::string::size_type end_pos=name.find("\"");
-	std::string color(name, pos, end_pos-pos);
-	res+="<span foreground=\""+color+"\">";
-      } else {
-	res+="<span foreground=\"blue\">";
-      }
-    } else if (name=="/c")
-      res+="</span>";
+	  next = strchr(p, '>');
+	  if (!next)
+		  continue;
 
-    p=next;
+	  name.assign(p + 1, next - p - 1);
+
+	  if (name == "k") {
+		  const char *begin = next;
+		  if ((next = strstr(begin, "</k>\n")) != NULL)
+			  next += sizeof("</k>") - 1;
+		  else if ((next = strstr(begin, "</k>")) != NULL)
+			  next += sizeof("</k>") - 2;
+		  else
+			  next = begin;
+
+	  } else if (!name.empty() && name[0] == 'c' && name != "co") {
+		  std::string::size_type pos = name.find("code");
+		  if (pos != std::string::npos) {
+			  pos += sizeof("code=\"") - 1;
+			  std::string::size_type end_pos = name.find("\"", pos);
+			  if (end_pos == std::string::npos)
+				  end_pos = name.length();
+					  
+			  std::string color(name, pos, end_pos - pos);
+			  res += "<span foreground=\"" + color + "\">";
+			  				  
+		  } else
+			  res += "<span foreground=\"blue\">";		  
+	  }
+
+	  p = next;
+  cycle_end:
+	  ;
   }
+  res += p;
   return res;
 }
 
 void ArticleView::AppendData(gchar *data, const gchar *oword)
-{  
+{
   std::string mark;
 
   guint32 data_size,sec_size=0;
@@ -589,7 +605,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword)
 	g_free(m_str);
 	mark += "</span>]";
       }
-      sec_size++;						
+      sec_size++;
       break;
     case 'y':
       p++;

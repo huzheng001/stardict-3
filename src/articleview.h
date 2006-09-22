@@ -40,6 +40,8 @@ public:
 private:
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
+
+	static std::string xdxf2pango(const char *p);
 };
 
 
