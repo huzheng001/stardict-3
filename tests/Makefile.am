@@ -33,7 +33,7 @@ t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp
 
 t_articleview_SOURCES = t_articleview.cpp \
-	$(top_builddir)/src/articleview.cpp $(top_builddir)/src/articleview.hpp \
+	$(top_builddir)/src/articleview.cpp $(top_builddir)/src/articleview.h \
 	$(top_builddir)/src/pangoview.cpp $(top_builddir)/src/pangoview.h \
 	$(top_builddir)/src/gtktextviewpango.cpp \
 	$(top_builddir)/src/gtktextviewpango.h \

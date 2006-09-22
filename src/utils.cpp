@@ -25,6 +25,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <cstdlib>
+#include <gtk/gtk.h>
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
