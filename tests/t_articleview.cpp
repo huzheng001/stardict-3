@@ -87,8 +87,8 @@ int main(int argc, char *argv[])
 		" <b>[neim]</b>\n"
 		"<span foreground=\"green\" style=\"italic\">noun.</span> "
 		"In the rest of article we used latinitsu\n"
-		"<b>nick</b>, <b>Imya</b>, <i>Italic</i>, <span foreground=\"green\">color</span>\n"
-		"<span foreground=\"violet\">My name is Vova.</span> "
+		"<b>nick</b>, <b><span foreground=\"blue\" underline=\"single\">Imya</span></b>, <i>Italic</i>, <span foreground=\"green\">color</span>\n"
+		"<span foreground=\"violet\">My name is <span foreground=\"blue\" underline=\"single\">Vova</span>.</span> "
 		"<span foreground=\"blue\">the</span> rest\n"
 		"of article.";
 	std::list<std::string> links_list_std;
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 		"<tr>ˈheˈləu</tr>\n"
 		"<c><co>= <kref>hallo</kref></co></c>";
 	const char *after2 = "<b>[ˈheˈləu]</b>\n"
-		"<span foreground=\"blue\">= hallo</span>";
+		"<span foreground=\"blue\">= <span foreground=\"blue\" underline=\"single\">hallo</span></span>";
 	links_list_std.clear();
 	links_list_std.push_back("hallo");
 	if (!check_xdxf2pango(ar2, after2, links_list_std))
