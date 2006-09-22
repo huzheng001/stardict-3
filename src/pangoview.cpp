@@ -261,14 +261,14 @@ void TextPangoWidget::do_set_pango_text(const char *str)
 
 void LabelPangoWidget::do_set_pango_text(const char *str)
 {
-    scroll_to(0);
-    // this should speed up the next two line.
-    gtk_label_set_markup(label_, "");
-    // so Popup()'s gtk_widget_size_request(label,&requisition); can
-    gtk_widget_set_size_request(GTK_WIDGET(label_), -1, -1);
-    // get its original width.
-    gtk_label_set_line_wrap(label_, FALSE);
-    gtk_label_set_markup(label_, str);
+	scroll_to(0);
+	// this should speed up the next two line.
+	gtk_label_set_markup(label_, "");
+	// so Popup()'s gtk_widget_size_request(label,&requisition); can
+	gtk_widget_set_size_request(GTK_WIDGET(label_), -1, -1);
+	// get its original width.
+	gtk_label_set_line_wrap(label_, FALSE);
+	gtk_label_set_markup(label_, str);
 }
 
 void LabelPangoWidget::do_append_pango_text(const char *str)
@@ -308,7 +308,7 @@ void TextPangoWidget::clear()
 
 void LabelPangoWidget::clear()
 {
-	set_text("");
+	do_set_text("");
 }
 
 void TextPangoWidget::goto_begin()
