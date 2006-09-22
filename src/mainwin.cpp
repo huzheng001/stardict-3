@@ -1,4 +1,4 @@
-/* 
+/*
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
  *
@@ -31,6 +31,7 @@
 #endif
 
 #include "conf.h"
+#include "desktop.hpp"
 #include "stardict.h"
 #include "utils.h"
 
@@ -74,7 +75,7 @@ void TopWin::Create(GtkWidget *vbox)
 #endif
 
 	GtkWidget *button;
-#ifndef CONFIG_GPE	
+#ifndef CONFIG_GPE
 	button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
 	gtk_widget_show(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -84,7 +85,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,3);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Clear the search box"),NULL);
 #endif
-	
+
 	WordCombo = gtk_combo_new();
 	LoadHistory();
 	gtk_widget_set_size_request(WordCombo,60,-1);
@@ -101,7 +102,7 @@ void TopWin::Create(GtkWidget *vbox)
 
 #ifndef CONFIG_GPE
 	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_BUTTON));	
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
@@ -112,7 +113,7 @@ void TopWin::Create(GtkWidget *vbox)
 #endif
 
 	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_UNDO,GTK_ICON_SIZE_BUTTON));	
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_UNDO,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
@@ -122,7 +123,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go Back - Right button: history (Alt+Left)"),NULL);
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_BACK,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -149,7 +150,7 @@ void TopWin::Create(GtkWidget *vbox)
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(MenuCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);	
+	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Show the main menu (Alt+M)"),NULL);
 }
 
@@ -202,11 +203,11 @@ gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event
 		}
 		if (oTopWin->BackMenu)
 			gtk_widget_destroy(oTopWin->BackMenu);
-			
+
 		oTopWin->BackMenu = gtk_menu_new();
-		
+
 		GtkWidget *menuitem;
-		while (list) {			
+		while (list) {
 			menuitem = gtk_image_menu_item_new_with_label(((BackListData *)(list->data))->word);
 			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_back_menu_item_activate), GINT_TO_POINTER(index));
 			gtk_menu_shell_append(GTK_MENU_SHELL(oTopWin->BackMenu), menuitem);
@@ -214,7 +215,7 @@ gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event
 			index++;
 		}
 		gtk_widget_show_all(oTopWin->BackMenu);
-		gtk_menu_popup(GTK_MENU(oTopWin->BackMenu), NULL, NULL, NULL, NULL, event->button, event->time);		
+		gtk_menu_popup(GTK_MENU(oTopWin->BackMenu), NULL, NULL, NULL, NULL, event->button, event->time);
 		return true;
 	}
 	return false;
@@ -225,7 +226,7 @@ void TopWin::on_back_menu_item_activate(GtkMenuItem *menuitem, gint index)
   for (int i=0; i<index; i++) {
     g_free(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
     g_free((gpAppFrame->oTopWin.BackList)->data);
-    gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);	
+    gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);
   }
   gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.get_text());
   gpAppFrame->oTopWin.SetText(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
@@ -235,14 +236,14 @@ void TopWin::on_back_menu_item_activate(GtkMenuItem *menuitem, gint index)
   }
   g_free(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
   g_free((gpAppFrame->oTopWin.BackList)->data);
-  gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);	
+  gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);
 }
 
 #ifndef CONFIG_GPE
 void TopWin::ClearCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
-	
+
 	oTopWin->InsertHisList(oTopWin->get_text());
 	oTopWin->InsertBackList();
 	oTopWin->SetText("");
@@ -252,7 +253,7 @@ void TopWin::ClearCallback(GtkWidget *widget, TopWin *oTopWin)
 void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
-	
+
 	const gchar *text = oTopWin->get_text();
 	if (text[0]=='\0')
 		return;
@@ -298,13 +299,13 @@ void TopWin::do_back()
   }
   g_free(((BackListData *)(list->data))->word);
   g_free(list->data);
-  BackList = g_slist_delete_link(BackList,list);	
+  BackList = g_slist_delete_link(BackList,list);
 }
 
 void TopWin::BackCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
-	
+
 	oTopWin->do_back();
 }
 
@@ -322,7 +323,7 @@ void TopWin::do_previous()
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
-		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);	
+		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 		if (gtk_tree_path_prev(path)) {
 			gtk_tree_model_get_iter(model,&iter,path);
 			gtk_tree_selection_select_iter(selection,&iter);
@@ -341,7 +342,7 @@ void TopWin::do_previous()
 			}
 			g_free(iPreIndex);
 			g_free(word);
-		}		
+		}
 		gtk_tree_path_free(path);
 	}
 	else if (gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
@@ -351,7 +352,7 @@ void TopWin::do_previous()
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
-		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);	
+		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 		if (gtk_tree_path_prev(path)) {
 			gtk_tree_model_get_iter(model,&iter,path);
 			gtk_tree_selection_select_iter(selection,&iter);
@@ -361,11 +362,11 @@ void TopWin::do_previous()
 			// user have selected the first row,no action is need.
 		}
 		gtk_tree_path_free(path);
-	}	
+	}
 }
 
 void TopWin::PreviousCallback(GtkWidget *widget, TopWin *oTopWin)
-{	
+{
 	play_sound_on_event("buttonactive");
 
 	oTopWin->do_previous();
@@ -400,7 +401,7 @@ void TopWin::do_next()
 				gtk_tree_selection_select_iter(selection,&iter);
 				GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 				gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(gpAppFrame->oMidWin.oIndexWin.oListWin.treeview),path,NULL,false,0,0);
-				gtk_tree_path_free(path);				
+				gtk_tree_path_free(path);
 			}
 		}
 		else {
@@ -415,7 +416,7 @@ void TopWin::do_next()
 			}
 			g_free(iNextIndex);
 			g_free(word);
-		}		
+		}
 	}
 	else if (gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
 			gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_PATTERN_LIST ||
@@ -443,7 +444,7 @@ void TopWin::NextCallback(GtkWidget *widget, TopWin *oTopWin)
 }
 
 void TopWin::on_main_menu_preferences_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
-{	
+{
 	gpAppFrame->PopupPrefsDlg();
 }
 
@@ -506,7 +507,7 @@ void TopWin::ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *tex
 void TopWin::do_menu()
 {
 	play_sound_on_event("menushow");
-	
+
 	if (!MainMenu) {
 		MainMenu = gtk_menu_new();
 
@@ -624,7 +625,7 @@ void TopWin::InsertHisList(const gchar *word)
 		HisList = g_list_prepend(HisList,str);
 	}	else
 		HisList = g_list_prepend(HisList, str);
-	
+
 	if (g_list_length(HisList)> MAX_HISTORY_WORD_ITEM_NUM) {
 		list = g_list_last(HisList);
 		g_free(list->data);
@@ -705,9 +706,9 @@ void TopWin::InsertBackList(const gchar *word)
     backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
     backlistdata->word = g_strdup(word);
     backlistdata->adjustment_value = gpAppFrame->oMidWin.oTextWin.view->scroll_pos();
-  }	
+  }
 
-  GSList* list = 
+  GSList* list =
     g_slist_find_custom(BackList, backlistdata, BackListDataCompareFunc);
   if (list) {
     g_free(((BackListData *)(list->data))->word);
@@ -733,7 +734,7 @@ ListWin::ListWin()
 void ListWin::Create(GtkWidget *notebook)
 {
 	list_word_type = LIST_WIN_EMPTY;
-	
+
 	list_model = gtk_list_store_new (1,G_TYPE_STRING);
 	tree_model = gtk_tree_store_new (1,G_TYPE_STRING);
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_model));
@@ -741,7 +742,7 @@ void ListWin::Create(GtkWidget *notebook)
 	gtk_widget_show(treeview);
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
-  
+
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
 						     "text", 0, NULL);
@@ -749,7 +750,7 @@ void ListWin::Create(GtkWidget *notebook)
 
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (on_selection_changed), this);
-	
+
 	g_signal_connect (G_OBJECT (treeview), "button_press_event", G_CALLBACK (on_button_press), this);
 
 	GtkWidget *scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
@@ -758,7 +759,7 @@ void ListWin::Create(GtkWidget *notebook)
 				       GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		
+
 	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
 
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
@@ -779,7 +780,7 @@ void ListWin::SetModel(bool isListModel)
 		}
 	}
 }
- 
+
 void ListWin::Destroy()
 {
 	g_object_unref (list_model);
@@ -795,7 +796,7 @@ void ListWin::Clear()
 /*
 void ListWin::RemoveLast()
 {
-	//note,this function is not to remove the list row,but the LIST_WIN_ROW_NUM row.	
+	//note,this function is not to remove the list row,but the LIST_WIN_ROW_NUM row.
 	gchar lastrow[5];
 	sprintf(lastrow,"%d", LIST_WIN_ROW_NUM); // not LIST_WIN_ROW_NUM -1,as Prepend is done first.
 	GtkTreePath *path = gtk_tree_path_new_from_string (lastrow);
@@ -858,7 +859,7 @@ gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Li
 	if (event->type==GDK_2BUTTON_PRESS) {
 		GtkTreeModel *model;
 		GtkTreeIter iter;
-		
+
 		GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oListWin->treeview));
 		if (gtk_tree_selection_get_selected (selection, &model, &iter))
 		{
@@ -877,7 +878,7 @@ gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Li
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
 			gpAppFrame->ListClick(word);
 			g_free(word);
-		}		
+		}
 		return true;
 	} else {
 		return false;
@@ -888,7 +889,7 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	
+
 	if (gtk_tree_selection_get_selected (selection, &model, &iter))
 	{
 		if (!oListWin->nowIsList) {
@@ -909,7 +910,7 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 /**************************************************/
 bool TreeWin::Create(GtkWidget *notebook)
 {
-  GtkTreeStore *model = 
+  GtkTreeStore *model =
 		gpAppFrame->oTreeDicts.Load(
 																conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list"),
 																conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list"),
@@ -929,7 +930,7 @@ bool TreeWin::Create(GtkWidget *notebook)
 
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (on_selection_changed), this);
-	
+
 	g_signal_connect (G_OBJECT (treeview), "button_press_event", G_CALLBACK (on_button_press), this);
 	GtkWidget *scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show(scrolledwindow);
@@ -937,7 +938,7 @@ bool TreeWin::Create(GtkWidget *notebook)
 				       GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		
+
 	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
 	return true;
@@ -949,7 +950,7 @@ gboolean TreeWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Tr
 	{
 		GtkTreeModel *model;
 		GtkTreeIter iter;
-		
+
 		GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oTreeWin->treeview));
 		if (gtk_tree_selection_get_selected (selection, &model, &iter))
 		{
@@ -975,7 +976,7 @@ gboolean TreeWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Tr
 					g_free(path_str);
 				}
 			}
-		}		
+		}
 		return true;
 	}
 	else
@@ -988,7 +989,7 @@ void TreeWin::on_selection_changed(GtkTreeSelection *selection, TreeWin *oTreeWi
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	
+
 	if (gtk_tree_selection_get_selected (selection, &model, &iter))
 	{
 		guint32 offset, size;
@@ -1023,14 +1024,14 @@ void ResultWin::Create(GtkWidget *notebook)
 
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (on_selection_changed), this);
-	
+
 	GtkWidget *scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show(scrolledwindow);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolledwindow),
 				       GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-		
+
 	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
 }
@@ -1053,7 +1054,7 @@ void ResultWin::on_selection_changed(GtkTreeSelection *selection, ResultWin *oRe
 {
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-	
+
 	if (gtk_tree_selection_get_selected (selection, &model, &iter))
 	{
 		gchar *markstr;
@@ -1079,7 +1080,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 
 	if (!conf->get_bool_at("main_window/hide_list"))
 		gtk_widget_show(vbox);
-	
+
 	gtk_paned_pack1(GTK_PANED(hpaned),vbox,true,true);
 	notebook = gtk_notebook_new();
 	gtk_widget_show(notebook);
@@ -1091,7 +1092,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 	GtkWidget *table = gtk_table_new(2, 2, FALSE);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 3);
 	gtk_box_pack_start(GTK_BOX(vbox),table, false, false, 0);
-	
+
 	GtkWidget *wazard_button = gtk_radio_button_new(NULL);
 	GTK_WIDGET_UNSET_FLAGS (wazard_button, GTK_CAN_FOCUS);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(wazard_button), false);
@@ -1147,7 +1148,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 		label = gtk_label_new_with_mnemonic(_("_Tree"));
 		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), appendix_button);	
+		gtk_label_set_mnemonic_widget(GTK_LABEL(label), appendix_button);
 #endif
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 	}
@@ -1184,7 +1185,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(vbox),hbox,false,false,3);
 #endif
-	
+
 	GtkWidget *image;
 	ShowListButton=gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_LAST,GTK_ICON_SIZE_SMALL_TOOLBAR);
@@ -1200,8 +1201,8 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),ShowListButton,false,false,5);
 #endif
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,ShowListButton,_("Show the word list"),NULL);
-	
-	HideListButton=gtk_button_new();	
+
+	HideListButton=gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_FIRST,GTK_ICON_SIZE_SMALL_TOOLBAR);
 	gtk_widget_show(image);
 	gtk_container_add(GTK_CONTAINER(HideListButton),image);
@@ -1221,8 +1222,8 @@ void ToolWin::Create(GtkWidget *vbox)
 		gtk_widget_show(ShowListButton);
 	else
 		gtk_widget_show(HideListButton);
-	
-	
+
+
 	GtkWidget *button;
 #ifndef CONFIG_GPE
 	button=gtk_button_new();
@@ -1231,7 +1232,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(CopyCallback),this);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);	
+	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Copy"),NULL);
 #endif
 
@@ -1244,12 +1245,12 @@ void ToolWin::Create(GtkWidget *vbox)
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(hbox),PronounceWordButton,false,false,0);
 #else
-	gtk_box_pack_start(GTK_BOX(hbox),PronounceWordButton,false,false,5);	
+	gtk_box_pack_start(GTK_BOX(hbox),PronounceWordButton,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,PronounceWordButton,_("Pronounce the word"),NULL);	
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,PronounceWordButton,_("Pronounce the word"),NULL);
 	gtk_widget_set_sensitive(PronounceWordButton, false);
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_SAVE,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1261,20 +1262,20 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Save to file(Alt+E)"),NULL);
-	
+
 #ifndef CONFIG_GPE
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PRINT,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PrintCallback),this);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);	
+	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Print"),NULL);
 	gtk_widget_set_sensitive(button, false);
 #endif
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1283,7 +1284,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 #else
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);	
+	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search in the definition (Ctrl+F)"),NULL);
 }
@@ -1369,9 +1370,9 @@ void ToolWin::do_search()
 	TextWin &oTextWin=gpAppFrame->oMidWin.oTextWin;
 	oTextWin.ShowSearchPanel();
 	oTextWin.search_from_beginning = TRUE;
-		
+
 	GtkTextIter start,end;
-	GtkTextBuffer *buffer = 
+	GtkTextBuffer *buffer =
 		gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->widget()));
 	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
 		if (gtk_text_iter_get_offset(&end) - gtk_text_iter_get_offset(&start) < 80) {
@@ -1386,7 +1387,7 @@ void ToolWin::do_search()
 }
 
 void ToolWin::SearchCallback(GtkWidget *widget, ToolWin *oToolWin)
-{    
+{
 	oToolWin->do_search();
 }
 
@@ -1400,10 +1401,10 @@ void TextWin::OnCloseSearchPanel(GtkWidget *widget, TextWin *oTextWin)
 
 gboolean TextWin::OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
 																	 TextWin *oTextWin)
-{  
+{
   if (event->type==GDK_KEY_PRESS && event->keyval==GDK_Return)
     gtk_button_clicked(oTextWin->btFind);
-    
+
   return FALSE;
 }
 
@@ -1417,7 +1418,7 @@ void TextWin::OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin)
       oTextWin->find_text = text;
     } else
       oTextWin->search_from_beginning = TRUE;
-  
+
 }
 
 void TextWin::ShowSearchPanel()
@@ -1430,10 +1431,10 @@ void TextWin::Create(GtkWidget *vbox)
 {
   view.reset(new ArticleView(GTK_BOX(vbox)));
 
-  g_signal_connect(G_OBJECT(view->widget()), "button_press_event", 
+  g_signal_connect(G_OBJECT(view->widget()), "button_press_event",
 		   G_CALLBACK(on_button_press), this);
-  g_signal_connect(G_OBJECT(view->widget()), "selection_received", 
-		   G_CALLBACK(SelectionCallback), this);  
+  g_signal_connect(G_OBJECT(view->widget()), "selection_received",
+		   G_CALLBACK(SelectionCallback), this);
 
 	hbSearchPanel = gtk_hbox_new(FALSE, 0);
   btClose = GTK_BUTTON(gtk_button_new());
@@ -1466,15 +1467,31 @@ void TextWin::Create(GtkWidget *vbox)
 
 }
 
+void TextWin::on_open_url(const char *url)
+{
+	show_url(url);
+}
+
 void TextWin::ShowInitFailed()
 {
+	char *fmt = _("Warning! No dictionary is loaded.\n"
+		      "Please go to StarDict's website, download some dictionaries:\n"
+		      "%s%s%s and put them to %s.");
+	const char *link_pos = strstr(fmt, "%s%s%s");
+	LinksPosList links;
+	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
+				 sizeof("http://stardict.sourceforge.net") - 1));
+	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
 	glib::CharStr mes(
-		g_strdup_printf(
-			_("Warning! No dictionary is loaded.\n"
-			  "Please go to StarDict's website, download some dictionaries:\n"
-			  "http://stardict.sourceforge.net and put them to %s."),
-			(gStarDictDataDir + G_DIR_SEPARATOR_S "dic").c_str()));
-	Show(get_impl(mes));
+		g_strdup_printf(get_impl(esc_fmt),
+				"<span foreground=\"blue\" underline=\"single\">",
+				"http://stardict.sourceforge.net",
+				"</span>",
+				(gStarDictDataDir + G_DIR_SEPARATOR_S "dic").c_str()));
+	view->connect_on_link(sigc::mem_fun(this, &TextWin::on_open_url));
+	view->clear();
+	view->append_pango_text_with_links(get_impl(mes), links);
+	view->scroll_to(0);
 }
 
 void TextWin::ShowTips()
@@ -1541,6 +1558,8 @@ void TextWin::Show(const gchar *str)
 
 void TextWin::Show(gchar ***Word, gchar ****WordData)
 {
+	view->connect_on_link(sigc::mem_fun(gpAppFrame,
+					    &AppCore::on_link_click));
 	view->begin_update();
 	view->clear();
 	view->goto_begin();
@@ -1581,22 +1600,22 @@ void TextWin::ShowTreeDictData(gchar *data)
 }
 
 gboolean TextWin::Find (const gchar *text, gboolean start)
-{    
-  GtkTextBuffer *buffer = 
+{
+  GtkTextBuffer *buffer =
     gtk_text_view_get_buffer(GTK_TEXT_VIEW(view->widget()));
 
   GtkTextIter iter;
-  if (start) 
+  if (start)
     gtk_text_buffer_get_start_iter(buffer, &iter);
   else {
     GtkTextMark *mark = gtk_text_buffer_get_mark(buffer, "last_search");
-    	
+
     if (mark)
       gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
     else
       gtk_text_buffer_get_start_iter(buffer, &iter);
   }
-    
+
   GtkTextIter match_start, match_end;
   if (gtk_text_iter_forward_search(&iter, text,
 				   (GtkTextSearchFlags) (GTK_TEXT_SEARCH_VISIBLE_ONLY | GTK_TEXT_SEARCH_TEXT_ONLY),
@@ -1609,21 +1628,21 @@ gboolean TextWin::Find (const gchar *text, gboolean start)
 			      gtk_text_buffer_get_mark(buffer, "selection_bound"),
 			      &match_start);
     gtk_text_buffer_create_mark(buffer, "last_search", &match_end, FALSE);
-    
+
     return TRUE;
   } else {
-    GtkWidget *message_dlg = 
+    GtkWidget *message_dlg =
       gtk_message_dialog_new(
 			      GTK_WINDOW(gpAppFrame->window),
 			      (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 			      GTK_MESSAGE_INFO,
 			      GTK_BUTTONS_OK,
 			      _("The text \"%s\" was not found."), text);
-    
+
     gtk_dialog_set_default_response (GTK_DIALOG (message_dlg), GTK_RESPONSE_OK);
-    
+
     gtk_window_set_resizable (GTK_WINDOW (message_dlg), FALSE);
-    
+
     if (gtk_dialog_run(GTK_DIALOG(message_dlg))!=GTK_RESPONSE_NONE)
       gtk_widget_destroy(message_dlg);
     return FALSE;
@@ -1632,15 +1651,14 @@ gboolean TextWin::Find (const gchar *text, gboolean start)
 
 gboolean TextWin::on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin)
 {
-	if (event->button==2)
-	{
-		gtk_selection_convert (widget, GDK_SELECTION_PRIMARY, gpAppFrame->oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-		return true;
+	if (event->button == 2) {
+		gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
+				      gpAppFrame->oSelection.UTF8_STRING_Atom,
+				      GDK_CURRENT_TIME);
+		return TRUE;
 	}
-	else
-	{
-		return false;
-	}
+
+	return FALSE;
 }
 
 void TextWin::SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin)
@@ -1668,7 +1686,7 @@ void TextWin::SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_da
 /*********************************************/
 void MidWin::Create(GtkWidget *vbox)
 {
-	hpaned = gtk_hpaned_new();	
+	hpaned = gtk_hpaned_new();
 	gtk_widget_show(hpaned);
 	gtk_box_pack_start(GTK_BOX(vbox), hpaned, TRUE, TRUE,0);
 
@@ -1676,9 +1694,9 @@ void MidWin::Create(GtkWidget *vbox)
 
 	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 0);
 	gtk_widget_show(vbox1);
-	gtk_paned_pack2(GTK_PANED(hpaned), vbox1, TRUE, FALSE);	
+	gtk_paned_pack2(GTK_PANED(hpaned), vbox1, TRUE, FALSE);
 	oToolWin.Create(vbox1);
-	oTextWin.Create(vbox1);	
+	oTextWin.Create(vbox1);
 
 	int pos=conf->get_int_at("main_window/hpaned_pos");
 
@@ -1701,19 +1719,19 @@ void BottomWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 2);
 #endif
-	
+
 	ScanSelectionCheckButton = gtk_check_button_new_with_mnemonic(_("_Scan"));
 	gtk_widget_show(ScanSelectionCheckButton);
 	GTK_WIDGET_UNSET_FLAGS (ScanSelectionCheckButton, GTK_CAN_FOCUS);
   bool scan=conf->get_bool_at("dictionary/scan_selection");
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ScanSelectionCheckButton), scan);
-	g_signal_connect(G_OBJECT(ScanSelectionCheckButton), "toggled", 
+	g_signal_connect(G_OBJECT(ScanSelectionCheckButton), "toggled",
 									 G_CALLBACK(ScanCallback), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),ScanSelectionCheckButton,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,ScanSelectionCheckButton,_("Scan the selection"),NULL);
 
-	GtkWidget *button = gtk_button_new();	
+	GtkWidget *button = gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1727,7 +1745,7 @@ void BottomWin::Create(GtkWidget *vbox)
 #endif
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Show info"),NULL);
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_QUIT,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1738,9 +1756,9 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Quit"), NULL);
 
 
-	// the next buttons will be pack from right to left.	
+	// the next buttons will be pack from right to left.
 #ifndef CONFIG_GPE
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PREFERENCES,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1750,7 +1768,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Preferences"),NULL);
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1760,7 +1778,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Manage dictionaries"),NULL);
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_INDEX,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1771,7 +1789,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go to the StarDict website"),NULL);
 #endif
 
-	button=gtk_button_new();	
+	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_JUMP_TO,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
@@ -1792,14 +1810,14 @@ void BottomWin::ScanCallback(GtkToggleButton *button, gpointer data)
 
 void BottomWin::AboutCallback(GtkButton *button, gpointer data)
 {
-	play_sound_on_event("buttonactive");	
+	play_sound_on_event("buttonactive");
 	gpAppFrame->oMidWin.oTextWin.ShowInfo();
 }
 
 void BottomWin::QuitCallback(GtkButton *button, gpointer data)
 {
 	play_sound_on_event("buttonactive");
-	gpAppFrame->Quit();	
+	gpAppFrame->Quit();
 }
 
 gboolean BottomWin::on_internetsearch_button_press(GtkWidget * widget, GdkEventButton * event , BottomWin *oBottomWin)
@@ -1809,14 +1827,14 @@ gboolean BottomWin::on_internetsearch_button_press(GtkWidget * widget, GdkEventB
 			conf->get_strlist_at("main_window/search_website_list");
 		if (list.empty())
 			return true;
-	
+
 		if (oBottomWin->SearchWebsiteMenu)
 			gtk_widget_destroy(oBottomWin->SearchWebsiteMenu);
-			
+
 		oBottomWin->SearchWebsiteMenu = gtk_menu_new();
-		
+
 		GtkWidget *menuitem;
-		
+
 		for (std::list<std::string>::const_iterator ci=list.begin(); ci!=list.end(); ++ci) {
 			std::vector<std::string> web_list = split(*ci, '\t');
 			if (web_list.size()==3 && web_list[2].find("%s")!=std::string::npos) {
@@ -1829,7 +1847,7 @@ gboolean BottomWin::on_internetsearch_button_press(GtkWidget * widget, GdkEventB
 		}
 
 		gtk_widget_show_all(oBottomWin->SearchWebsiteMenu);
-		gtk_menu_popup(GTK_MENU(oBottomWin->SearchWebsiteMenu), NULL, NULL, NULL, NULL, event->button, event->time);		
+		gtk_menu_popup(GTK_MENU(oBottomWin->SearchWebsiteMenu), NULL, NULL, NULL, NULL, event->button, event->time);
 		return true;
 	}
 	return false;
@@ -1843,22 +1861,22 @@ void BottomWin::on_internetsearch_menu_item_activate(GtkMenuItem *menuitem, cons
 		return;
 
 	const gchar *text = gpAppFrame->oTopWin.get_text();
-	if (text[0]) {		
+	if (text[0]) {
 	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
 	  show_url(url);
 		g_free(url);
 	} else
-	  show_url(weblist[1].c_str());	
+	  show_url(weblist[1].c_str());
 }
 
 void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
-{	
+{
 	const std::list<std::string> &search_website_list=
 		conf->get_strlist_at("main_window/search_website_list");
 	if (search_website_list.empty())
 		return;
 
-	std::vector<std::string> weblist = 
+	std::vector<std::string> weblist =
 		split(search_website_list.front(), '\t');
 
 	if (weblist.size()!=3)
@@ -1868,7 +1886,7 @@ void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
 		return;
 
 	const gchar *text = gpAppFrame->oTopWin.get_text();
-	if (text[0]) {		
+	if (text[0]) {
 	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
 	  show_url(url);
 		g_free(url);

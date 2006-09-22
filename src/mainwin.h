@@ -194,7 +194,7 @@ public:
 	void do_save();
 };
 
-class TextWin {
+class TextWin : public sigc::trackable {
 public:
   std::string queryWord;
   std::string pronounceWord;
@@ -220,24 +220,25 @@ public:
 	void ShowSearchPanel();
 
 private:
-  GtkButton *btClose;
-  GtkButton *btFind;
-  GtkWidget *hbSearchPanel;
+	GtkButton *btClose;
+	GtkButton *btFind;
+	GtkWidget *hbSearchPanel;
 	
 
 	void HideSearchPanel(void) 
-	{
-		gtk_widget_hide_all(hbSearchPanel);
-	}
+		{
+			gtk_widget_hide_all(hbSearchPanel);
+		}
 
 
-  static void SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin);
-  static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin);
-  static bool find_first_tag(gchar *str, gchar * & beg, gchar * & end);
+	static void SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin);
+	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin);
+	static bool find_first_tag(gchar *str, gchar * & beg, gchar * & end);
 	static void OnCloseSearchPanel(GtkWidget *widget, TextWin *oTextWin);
 	static gboolean OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
-																	 TextWin *oTextWin);
+					 TextWin *oTextWin);
 	static void OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin);
+	void on_open_url(const char *url);
 };
 
 class MidWin {

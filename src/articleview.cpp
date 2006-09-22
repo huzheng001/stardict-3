@@ -458,40 +458,81 @@ static std::string wiki2pango(const char *p, guint32 sec_size)
 	return res;
 }
 
-std::string ArticleView::xdxf2pango(const char *p)
+static size_t xml_strlen(const std::string& str)
+{
+	const char *q;
+	static const char* xml_entrs[] = { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };
+	static const int xml_ent_len[] = { 3,     3,     4,      5,       5 };
+	size_t cur_pos;
+	int i;
+
+	for (cur_pos = 0, q = str.c_str(); *q; ++cur_pos) {
+		if (*q == '&') {
+			for (i = 0; xml_entrs[i]; ++i)
+				if (strncmp(xml_entrs[i], q + 1,
+					    xml_ent_len[i]) == 0) {
+					q += xml_ent_len[i] + 1;
+					break;
+				}
+			if (xml_entrs[i] == NULL)
+				++q;
+		} else if (*q == '<') {
+			const char *p = strchr(q, '>');
+			if (p)
+				q = p + 1;
+			else
+				++q;
+			--cur_pos;
+		} else
+			q = g_utf8_next_char(q);
+	}
+
+	return cur_pos;
+}
+
+std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 {
   std::string res;
   const char *tag, *next;
   std::string name;
+  std::string::size_type cur_pos;
+  int i;
 
   struct ReplaceTag {
 	  const char *match_;
 	  int match_len_;
 	  const char *replace_;
+	  int char_len_;
   };
   static const ReplaceTag replace_arr[] = {
-	  { "abr>", 4, "<span foreground=\"green\" style=\"italic\">" },
-	  { "/abr>", 5, "</span>" },
-	  { "b>", 2, "<b>"  },
-	  { "/b>", 3, "</b>" },
-	  { "i>", 2, "<i>"  },
-	  { "/i>", 3, "</i>" },
-	  { "tr>", 3, "<b>[" },
-	  { "/tr>", 4, "]</b>" },
-	  { "ex>", 3, "<span foreground=\"violet\">" },
-	  { "/ex>", 4, "</span>" },
-	  { "/c>", 3, "</span>" },
+	  { "abr>", 4, "<span foreground=\"green\" style=\"italic\">", 0 },
+	  { "/abr>", 5, "</span>", 0 },
+	  { "b>", 2, "<b>", 0 },
+	  { "/b>", 3, "</b>", 0 },
+	  { "i>", 2, "<i>", 0  },
+	  { "/i>", 3, "</i>", 0 },
+	  { "tr>", 3, "<b>[", 1 },
+	  { "/tr>", 4, "]</b>", 1 },
+	  { "ex>", 3, "<span foreground=\"violet\">", 0 },
+	  { "/ex>", 4, "</span>", 0 },
+	  { "/c>", 3, "</span>", 0 },
 	  { NULL, 0, NULL },
   };
 
-  for (; *p && (tag = strchr(p, '<')) != NULL; ++p) {
-	  res.append(p, tag - p);
+
+  for (cur_pos = 0; *p && (tag = strchr(p, '<')) != NULL;) {
+//TODO: do not create chunk
+	  std::string chunk(p, tag - p);
+	  res += chunk;
+	  cur_pos += xml_strlen(chunk);
+
 	  p = tag;
-	  for (int i = 0; replace_arr[i].match_; ++i)
+	  for (i = 0; replace_arr[i].match_; ++i)
 		  if (strncmp(replace_arr[i].match_, p + 1,
 			      replace_arr[i].match_len_) == 0) {
 			  res += replace_arr[i].replace_;
-			  p += replace_arr[i].match_len_;
+			  p += 1 + replace_arr[i].match_len_;
+			  cur_pos += replace_arr[i].char_len_;
 			  goto cycle_end;
 		  }
 
@@ -500,15 +541,15 @@ std::string ArticleView::xdxf2pango(const char *p)
 		  if (next) {
 			  if (*(next + 4) == '\n')
 				  next++;
-			  next += 3;
-
-			  p = next;
+			  p = next + sizeof("</k>") - 1;
 		  } else
-			  p += 2;
+			  p += sizeof("<k>") - 1;
 	  } else if (*(p + 1) == 'c' && (*(p + 2) == ' ' || *(p + 2) == '>')) {
 		  next = strchr(p, '>');
-		  if (!next)
+		  if (!next) {
+			  ++p;
 			  continue;
+		  }
 		  name.assign(p + 1, next - p - 1);
 		  std::string::size_type pos = name.find("code");
 		  if (pos != std::string::npos) {
@@ -521,12 +562,26 @@ std::string ArticleView::xdxf2pango(const char *p)
 			  res += "<span foreground=\"" + color + "\">";
 		  } else
 			  res += "<span foreground=\"blue\">";
-		  p = next;
+		  p = next + 1;
+	  } else if (strncmp(p + 1, "kref>", 5) == 0) {
+		  p += sizeof("<kref>") - 1;
+		  next = strstr(p, "</kref>");
+		  if (!next)
+			  continue;
+
+		  res += "<span foreground=\"blue\" underline=\"single\">";
+		  std::string::size_type link_len = next - p;
+		  links_list.push_back(LinkDesc(cur_pos, link_len));
+		  std::string chunk(p, link_len);
+		  res += chunk;
+		  cur_pos += xml_strlen(chunk);
+		  res += "</span>";
+		  p = next + sizeof("</kref>") - 1;
 	  } else {
 		  next = strchr(p, '>');
 		  if (!next)
 			  continue;
-		  p = next;
+		  p = next + 1;
 	  }
   cycle_end:
 	  ;
@@ -574,8 +629,11 @@ void ArticleView::AppendData(gchar *data, const gchar *oword)
       p++;
       sec_size = strlen(p);
       if (sec_size) {
-	std::string res=xdxf2pango(p);
-	mark+=res;
+	      append_pango_text(mark.c_str());
+	      mark.clear();
+	      LinksPosList links_list;
+	      std::string res = xdxf2pango(p, links_list);
+	      pango_view_->append_pango_text_with_links(res, links_list);
       }
       sec_size++;
       break;
@@ -692,4 +750,10 @@ void ArticleView::AppendWord(const gchar *word)
 	g_free(m_str);
 	mark += for_float_win ? "</span>\n" : "</span></b>\n";
 	append_pango_text(mark.c_str());
+}
+
+void ArticleView::connect_on_link(const sigc::slot<void, const char *>& s)
+{
+	pango_view_->clear();
+	pango_view_->on_link_click_.connect(s);
 }

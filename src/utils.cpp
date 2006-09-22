@@ -1,7 +1,7 @@
 /* 
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
- * Copyright (C) 2005 Evgeniy <dushistov@mail.ru>
+ * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,59 +33,8 @@
 #  include <gdk/gdkwin32.h>
 #endif
 
-#include "conf.h"
-#include "stardict.h"
-
 #include "utils.h"
 
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE)
-static void spawn_command(const gchar *exe, const gchar *arg)
-{
-  gchar *cmd=g_strdup_printf("%s '%s'", exe, arg);
-  g_spawn_command_line_async(cmd, NULL);
-  g_free(cmd);
-}
-#endif
-
-void play_wav_file(const std::string& filename)
-{
-#ifdef _WIN32
-//TODO: more good solution?
-#if !defined(_MSC_VER)
-  PlaySound(filename.c_str(), 0, SND_ASYNC | SND_FILENAME);
-#endif
-#elif defined(CONFIG_GNOME)
-  gnome_sound_play(filename.c_str());
-#else
-	const std::string &playcmd=
-		conf->get_string_at("dictionary/play_command");
-  spawn_command(playcmd.c_str(), filename.c_str());
-#endif
-}
-
-void show_help(const gchar *section)
-{
-#ifdef _WIN32
-  gchar *filename = g_strdup_printf(_("%s\\help\\stardict.chm"), gStarDictDataDir.c_str());
-  ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", filename, NULL, NULL, SW_SHOWNORMAL);
-  g_free(filename);
-#elif defined(CONFIG_GNOME)
-  gnome_help_display ("stardict.xml", section, NULL);
-#endif
-}
-
-void show_url(const gchar *url)
-{
-#ifdef _WIN32
-	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", url, NULL, NULL, SW_SHOWNORMAL);
-#elif defined(CONFIG_GNOME)
-	gnome_url_show(url, NULL);
-#elif defined(CONFIG_GPE)
-	gchar *command = g_strdup_printf("gpe-mini-browser %s", url);
-	system(command);
-	g_free(command);
-#endif
-}
 
 void ProcessGtkEvent()
 {
@@ -186,8 +135,39 @@ GdkPixbuf *load_image_from_file(const std::string& filename)
 	return res;
 }
 
-void play_sound_on_event(const gchar *eventname)
+void xml_decode(const char *str, std::string& decoded)
 {
-	if (conf->get_bool_at("dictionary/enable_sound_event"))
-	  play_wav_file(gStarDictDataDir+ G_DIR_SEPARATOR_S "sounds" G_DIR_SEPARATOR_S +eventname+".wav");
+	static const char raw_entrs[] = { 
+		'<',   '>',   '&',    '\'',    '\"',    0 
+	};
+	static const char* xml_entrs[] = { 
+		"lt;", "gt;", "amp;", "apos;", "quot;", 0 
+	};
+	static const int xml_ent_len[] = { 
+		3,     3,     4,      5,       5 
+	};
+	int ient;
+        const char *amp = strchr(str, '&');
+
+        if (amp == NULL) {
+		decoded = str;
+                return;
+        }
+        decoded.assign(str, amp - str);
+        
+        while (*amp)
+                if (*amp == '&') {
+                        for (ient = 0; xml_entrs[ient] != 0; ++ient)
+                                if (strncmp(amp + 1, xml_entrs[ient],
+					    xml_ent_len[ient]) == 0) {
+                                        decoded += raw_entrs[ient];
+                                        amp += xml_ent_len[ient]+1;
+                                        break;
+                                }
+                        if (xml_entrs[ient] == 0)    // unrecognized sequence
+                                decoded += *amp++;
+
+                } else {
+                        decoded += *amp++;
+                }        
 }

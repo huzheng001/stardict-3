@@ -124,6 +124,7 @@ public:
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();
+	void on_link_click(const char *link);
 };
 
 #ifdef _WIN32

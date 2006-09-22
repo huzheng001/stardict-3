@@ -19,7 +19,7 @@
  */
 
 /*
- * Original code I get from gtk bugzilla:
+ * Original code I got from gtk bugzilla:
  * http://bugzilla.gnome.org/show_bug.cgi?id=59390
  * hope that this code will be in official version of gtk soon
  */

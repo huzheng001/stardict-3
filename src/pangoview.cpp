@@ -37,6 +37,8 @@ public:
 	void begin_update();
 	void end_update();
 	std::string get_text();
+	void append_pango_text_with_links(const std::string&,
+					  const LinksPosList&);
 protected:
 	void do_set_text(const char *str);
 	void do_append_text(const char *str);
@@ -45,7 +47,18 @@ protected:
 private:
 	GtkTextView *textview_;
 	std::list<GtkTextMark *> marklist_;
+	struct TextBufPos {
+		gint beg_;
+		gint end_;
+		TextBufPos(gint beg, gint end): beg_(beg), end_(end) {}
+	};
+	typedef std::vector<TextBufPos> TextBufLinks;
+
+	TextBufLinks tb_links_;
 	GtkTextIter iter_;
+
+	static gboolean on_mouse_move(GtkWidget *, GdkEventMotion *, gpointer);
+	static gboolean on_button_release(GtkWidget *, GdkEventButton *, gpointer);
 
 	void goto_begin();
 };
@@ -71,7 +84,6 @@ private:
 void PangoWidgetBase::begin_update()
 {
 	update_ = true;
-	cache_.clear();
 }
 
 void PangoWidgetBase::end_update()
@@ -97,6 +109,12 @@ void PangoWidgetBase::append_pango_text(const char *str)
 		cache_ += str;
 	else
 		do_append_pango_text(str);
+}
+
+void PangoWidgetBase::append_pango_text_with_links(const std::string& str,
+						   const LinksPosList&)
+{
+	append_pango_text(str.c_str());
 }
 
 void PangoWidgetBase::set_pango_text(const char *str)
@@ -132,7 +150,15 @@ TextPangoWidget::TextPangoWidget()
 	gtk_text_view_set_wrap_mode(textview_, GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(textview_, 5);
 	gtk_text_view_set_right_margin(textview_, 5);
-
+#if 0//not working when mouse moved in window
+	g_signal_connect(textview_, "motion-notify-event",
+			 G_CALLBACK(on_mouse_move), this);
+#endif
+	g_signal_connect(textview_, "button-release-event",
+			 G_CALLBACK(on_button_release), this);
+	
+	gtk_text_buffer_get_iter_at_offset(gtk_text_view_get_buffer(textview_),
+					   &iter_, 0);
 	scroll_win_ = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
 	gtk_widget_show(GTK_WIDGET(scroll_win_));
 	gtk_scrolled_window_set_policy(scroll_win_,
@@ -180,6 +206,7 @@ void TextPangoWidget::do_set_text(const char *text)
 	for (it = marklist_.begin(); it != marklist_.end(); ++it)
 		gtk_text_buffer_delete_mark(buffer, *it);
 	marklist_.clear();
+	tb_links_.clear();
 
 	gtk_text_buffer_set_text(buffer, text, -1);
 }
@@ -220,6 +247,7 @@ void LabelPangoWidget::do_append_text(const char *str)
 
 void TextPangoWidget::do_append_pango_text(const char *str)
 {
+
     gtk_text_buffer_insert_markup(gtk_text_view_get_buffer(textview_),
 				  &iter_, str);
 }
@@ -253,7 +281,7 @@ void TextPangoWidget::append_mark(const char *mark)
 	GtkTextBuffer *buffer=gtk_text_view_get_buffer(textview_);
 	if (update_) {
 		if (!cache_.empty()) {
-			gtk_text_buffer_insert_markup(buffer, &iter_, cache_.c_str());
+			do_append_pango_text(cache_.c_str());
 			cache_.clear();
 		}
 	}
@@ -270,6 +298,7 @@ void TextPangoWidget::clear()
 		gtk_text_buffer_delete_mark(buffer, *it);
 
 	marklist_.clear();
+	tb_links_.clear();
 
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(buffer, &start, &end);
@@ -306,4 +335,85 @@ std::string TextPangoWidget::get_text()
 std::string LabelPangoWidget::get_text()
 {
 	return gtk_label_get_text(label_);
+}
+
+
+void TextPangoWidget::append_pango_text_with_links(const std::string& str,
+						   const LinksPosList& links)
+{
+	if (links.empty()) {
+		append_pango_text(str.c_str());
+		return;
+	}
+
+	do_append_pango_text(cache_.c_str());
+	cache_.clear();
+
+	gint beg = gtk_text_iter_get_offset(&iter_);
+
+	for (LinksPosList::const_iterator it = links.begin();
+	     it != links.end(); ++it) {
+		tb_links_.push_back(TextBufPos(beg + it->pos_, beg + it->pos_ + it->len_));	
+	}
+
+	gtk_text_buffer_insert_markup(gtk_text_view_get_buffer(textview_),
+				      &iter_, str.c_str());
+}
+
+gboolean TextPangoWidget::on_mouse_move(GtkWidget *, GdkEventMotion *event,
+					gpointer userdata)
+{
+	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
+	GtkTextWindowType win_type =
+		gtk_text_view_get_window_type(tpw->textview_, event->window);
+	gint x, y;
+	gtk_text_view_window_to_buffer_coords(tpw->textview_, win_type, 
+					      gint(event->x), gint(event->y),
+					      &x, &y);
+	GtkTextIter iter;
+	gtk_text_view_get_iter_at_location(tpw->textview_, &iter, x, y);
+	gint pos = gtk_text_iter_get_offset(&iter);
+	for (TextBufLinks::const_iterator it = tpw->tb_links_.begin();
+	     it != tpw->tb_links_.end(); ++it) {
+		if (pos < it->beg_)
+			break;
+		if (it->beg_ <= pos && pos < it->end_) 
+			g_debug("gotcha!");
+	}
+	return FALSE;
+}
+
+gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
+					    gpointer userdata)
+{
+	if (event->button != 1)
+		return FALSE;
+	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
+	GtkTextWindowType win_type =
+		gtk_text_view_get_window_type(tpw->textview_, event->window);
+	gint x, y;
+	gtk_text_view_window_to_buffer_coords(tpw->textview_, win_type, 
+					      gint(event->x), gint(event->y),
+					      &x, &y);
+	GtkTextIter iter;
+	gtk_text_view_get_iter_at_location(tpw->textview_, &iter, x, y);
+	gint pos = gtk_text_iter_get_offset(&iter);
+	for (TextBufLinks::const_iterator it = tpw->tb_links_.begin();
+	     it != tpw->tb_links_.end(); ++it) {
+#if 1
+		if (pos < it->beg_)
+			break;
+#endif
+		if (it->beg_ <= pos && pos < it->end_) { 
+			GtkTextBuffer *buf = gtk_text_view_get_buffer(tpw->textview_);
+			GtkTextIter beg, end;
+			gtk_text_buffer_get_iter_at_offset(buf, &beg, it->beg_);
+			gtk_text_buffer_get_iter_at_offset(buf, &end, it->end_);
+			glib::CharStr str(gtk_text_buffer_get_text(buf, &beg, &end, TRUE));
+			std::string xml_enc;
+			xml_decode(get_impl(str), xml_enc);
+			tpw->on_link_click_.emit(xml_enc.c_str());
+		}
+	}
+	return FALSE;
 }

@@ -6,6 +6,7 @@
 #include <string>
 
 #include "conf.h"
+#include "desktop.hpp"
 #include "utils.h"
 
 #include "readword.h"

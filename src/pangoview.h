@@ -6,8 +6,24 @@
 #include <gtk/gtk.h>
 #include <memory>
 
+#include "sigc++/sigc++.h"
+
+struct LinkDesc {
+	std::string::size_type pos_;
+	std::string::size_type len_;
+	LinkDesc(std::string::size_type pos, std::string::size_type len):
+		pos_(pos), len_(len) {}
+};
+
+typedef std::list<LinkDesc> LinksPosList;
+
+/**
+ * Base class for classes which can show pango formated text
+ */
 class PangoWidgetBase {
 public:
+	sigc::signal<void, const char *> on_link_click_;//!< Emitted on link click
+
 	PangoWidgetBase(): update_(false) {}
 	virtual ~PangoWidgetBase() {}
 
@@ -17,9 +33,11 @@ public:
 	void set_text(const char *str);
 	void append_text(const char *str);
 	void append_pango_text(const char *str);
+	virtual void append_pango_text_with_links(const std::string&,
+						  const LinksPosList&);
 	void set_pango_text(const char *str);
 	virtual std::string get_text() = 0;
-		
+
 	virtual void clear() = 0;
 	virtual void append_mark(const char *mark) = 0;
 	virtual void begin_update();
@@ -32,7 +50,7 @@ public:
 	}
 	gint scroll_space() {
 		gint val;
-		gtk_widget_style_get(GTK_WIDGET(scroll_win_), 
+		gtk_widget_style_get(GTK_WIDGET(scroll_win_),
 			 "scrollbar_spacing", &val, NULL);
 		return val;
 	}
@@ -41,7 +59,7 @@ public:
 		gtk_adjustment_set_value(
 			gtk_scrolled_window_get_vadjustment(scroll_win_), val
 			);
-	}     
+	}
 	gdouble scroll_pos() {
 		return  gtk_adjustment_get_value(
 			gtk_scrolled_window_get_vadjustment(scroll_win_)
@@ -67,7 +85,7 @@ protected:
 	virtual void do_set_text(const char *str) = 0;
 	virtual void do_append_text(const char *str) = 0;
 	virtual void do_append_pango_text(const char *str) = 0;
-	virtual void do_set_pango_text(const char *str) = 0; 
+	virtual void do_set_pango_text(const char *str) = 0;
 private:
 	static PangoWidgetBase *create(bool autoresize);
 };
