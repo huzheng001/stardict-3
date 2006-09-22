@@ -7,7 +7,7 @@
 
 #include "articleview.h"
 
-int main()
+int main(int argc, char *argv[])
 {
 	const char *ar = "<k>nick</k> <k>name</k>\n"
 		"<tr>neim</tr>\n"
@@ -16,7 +16,7 @@ int main()
 		"<ex>My name is Vova.</ex> <c>the</c> rest\n"
 		"of article.";
 	const char *after =
-		"<b>[neim]</b>\n"
+		" <b>[neim]</b>\n"
 		"<span foreground=\"green\" style=\"italic\">noun.</span> "
 		"In the rest of article we used latinitsu\n"
 		"<b>nick</b>, <b>Imya</b>, <i>Italic</i>, <span foreground=\"green\">color</span>\n"
@@ -24,6 +24,9 @@ int main()
 		"<span foreground=\"blue\">the</span> rest\n"
 		"of article.";
 	std::string res = ArticleView::xdxf2pango(ar);
-	g_assert(res == after);
+	if (res != after) {
+		g_warning("%s: we got not what we expected: %s", argv[0], res.c_str());
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }
