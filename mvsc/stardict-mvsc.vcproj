@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16\MSVC_Net2003\Debug&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\pango&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0&quot;"
+				AdditionalLibraryDirectories="&quot;E:\evgeniy\projects\stardict-project\gtk\lib&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\pango&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\connection.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\lib\ctype-mb.cpp"
 				>
 			</File>
@@ -200,6 +204,10 @@
 			</File>
 			<File
 				RelativePath="..\src\lib\ctype-utf8.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\desktop.cpp"
 				>
 			</File>
 			<File
@@ -251,7 +259,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\signal.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\signal_base.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\src\skin.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\functors\slot.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\functors\slot_base.cc"
 				>
 			</File>
 			<File
@@ -260,6 +284,10 @@
 			</File>
 			<File
 				RelativePath="..\src\stardict.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\trackable.cc"
 				>
 			</File>
 			<File
@@ -357,7 +385,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\bind.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\bind_return.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\class_factory.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\class_slot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\compatibility.h"
 				>
 			</File>
 			<File
@@ -369,6 +413,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\connection.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\desktop.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\dictmanagedlg.h"
 				>
 			</File>
@@ -377,11 +429,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\functors\functor_trait.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\functors\functors.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\gtk_iskeyspressed.hpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\gtktextviewpango.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\hide.h"
 				>
 			</File>
 			<File
@@ -401,11 +465,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\limit_reference.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\mainwin.h"
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\functors\mem_fun.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\method_slot.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\win32\MinimizeToTray.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\object.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\object_slot.h"
 				>
 			</File>
 			<File
@@ -421,7 +505,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\functors\ptr_fun.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\readword.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\reference_wrapper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\retype.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\retype_return.h"
 				>
 			</File>
 			<File
@@ -429,7 +529,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\sigc++.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\signal.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\signal_base.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\skin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\functors\slot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\slot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\functors\slot_base.h"
 				>
 			</File>
 			<File
@@ -445,11 +569,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\trackable.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\tray.hpp"
 				>
 			</File>
 			<File
+				RelativePath="..\src\sigc++\type_traits.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\utils.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\sigc++\visit_each.h"
 				>
 			</File>
 			<Filter
