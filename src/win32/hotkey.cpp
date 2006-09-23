@@ -37,10 +37,12 @@ void Hotkey::ToggleScan()
 void Hotkey::ShowMainwindow()
 {
 	gpAppFrame->oDockLet->maximize_from_tray();
-	if (gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry))[0]) {
-		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->Widget()); //so user can input word directly.
+	if (gpAppFrame->oTopWin.get_text()[0]) {
+		 //so user can input word directly.
+		gtk_widget_grab_focus(gpAppFrame->oMidWin.oTextWin.view->widget());
 	} else {
-		gtk_widget_grab_focus(GTK_COMBO(gpAppFrame->oTopWin.WordCombo)->entry); //this won't change selection text.
+		 //this won't change selection text.
+		gpAppFrame->oTopWin.grab_focus();		
 	}
 }
 
