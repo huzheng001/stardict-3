@@ -304,11 +304,13 @@ void TextPangoWidget::clear()
 	gtk_text_buffer_get_bounds(buffer, &start, &end);
 	gtk_text_buffer_delete(buffer, &start, &end);
 	scroll_to(0);
+	cache_.clear();
 }
 
 void LabelPangoWidget::clear()
 {
 	do_set_text("");
+	cache_.clear();
 }
 
 void TextPangoWidget::goto_begin()
