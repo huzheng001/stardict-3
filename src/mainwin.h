@@ -85,7 +85,7 @@ public:
 	void InsertHisList(const gchar *word);
 	void InsertBackList(const gchar *word = NULL);
 	void do_back();
-	void do_previous();
+	void do_prev();
 	void do_next();
 	void do_menu();
 
@@ -116,12 +116,13 @@ private:
 	GtkListStore *list_model;
 	GtkTreeStore *tree_model;
 	bool nowIsList;
+
 	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, ListWin *oListWin);
 	static void on_selection_changed(GtkTreeSelection *selection, ListWin *oListWin);
 
 public:
 	ListWinListWordType list_word_type;
-	GtkWidget *treeview;
+	GtkTreeView *treeview_;
 
 	ListWin() {}
 	void Create(GtkWidget *notebook);
@@ -131,6 +132,9 @@ public:
 	void ReScroll();
 	void InsertLast(const gchar *word);
 	void SetTreeModel(std::vector<gchar *> *reslist);
+	bool treeview_has_focus() const {
+		return GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(treeview_));
+	}
 };
 
 class TreeWin {

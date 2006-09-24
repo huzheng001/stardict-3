@@ -377,7 +377,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	}
 	else if ((event->keyval==GDK_Up) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS)
-			oAppCore->oTopWin.do_previous();
+			oAppCore->oTopWin.do_prev();
 	}
 	else if ((event->keyval==GDK_Down) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS)
@@ -415,26 +415,32 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
                         oAppCore->oTopWin.SetText("");
 		}
 		oAppCore->oTopWin.grab_focus();
-	} else if (event->type==GDK_KEY_PRESS &&
-						 event->keyval == GDK_Return &&
-						 !oAppCore->oTopWin.has_focus() &&
-						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		if (GTK_WIDGET_HAS_FOCUS(oAppCore->oMidWin.oIndexWin.oListWin.treeview)) {
+	} else if (event->type == GDK_KEY_PRESS &&
+		   event->keyval == GDK_Return &&
+		   !oAppCore->oTopWin.has_focus() &&
+		   !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
+		if (oAppCore->oMidWin.oIndexWin.oListWin.treeview_has_focus()) {
 			GtkTreeModel *model;
 			GtkTreeIter iter;
 
-			GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oAppCore->oMidWin.oIndexWin.oListWin.treeview));
-			if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+			GtkTreeSelection *selection = 
+				gtk_tree_view_get_selection(oAppCore->oMidWin.oIndexWin.oListWin.treeview_);
+			if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
 				if (gtk_tree_model_iter_has_child(model, &iter)) {
 					GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
-					if (gtk_tree_view_row_expanded(GTK_TREE_VIEW (oAppCore->oMidWin.oIndexWin.oListWin.treeview), path))
-						gtk_tree_view_collapse_row(GTK_TREE_VIEW (oAppCore->oMidWin.oIndexWin.oListWin.treeview), path);
+					if (gtk_tree_view_row_expanded(
+						    oAppCore->oMidWin.oIndexWin.oListWin.treeview_,
+						    path))
+						gtk_tree_view_collapse_row(
+							oAppCore->oMidWin.oIndexWin.oListWin.treeview_, path);
 					else
-						gtk_tree_view_expand_row(GTK_TREE_VIEW (oAppCore->oMidWin.oIndexWin.oListWin.treeview), path, false);
+						gtk_tree_view_expand_row(
+							oAppCore->oMidWin.oIndexWin.oListWin.treeview_,
+							path, FALSE);
 					gtk_tree_path_free(path);
 				} else {
 					gchar *word;
-					gtk_tree_model_get (model, &iter, 0, &word, -1);
+					gtk_tree_model_get(model, &iter, 0, &word, -1);
 					oAppCore->ListClick(word);
 					g_free(word);
 				}
@@ -1153,7 +1159,8 @@ void AppCore::TopWinEnterWord(const gchar *text)
 		case TEXT_WIN_INFO:
 		case TEXT_WIN_TREEDICT:
 		{
-			GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview));
+			GtkTreeSelection *selection =
+				gtk_tree_view_get_selection(oMidWin.oIndexWin.oListWin.treeview_);
 			GtkTreeModel *model;
 			GtkTreeIter iter;
 			gboolean selected = gtk_tree_selection_get_selected(selection,&model,&iter);
@@ -1171,7 +1178,8 @@ void AppCore::TopWinEnterWord(const gchar *text)
 				GtkTreePath* path = gtk_tree_path_new_first();
 				gtk_tree_model_get_iter(model,&iter,path);
 				gtk_tree_selection_select_iter(selection,&iter);
-				gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview),path,NULL,false,0,0);
+				gtk_tree_view_scroll_to_cell(oMidWin.oIndexWin.oListWin.treeview_,
+							     path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
 			} else
 				SimpleLookupToTextWin(res.c_str(), iCurrentIndex, res.c_str(), false); //text 's index is already cached.
@@ -1181,12 +1189,15 @@ void AppCore::TopWinEnterWord(const gchar *text)
 			if (oMidWin.oTextWin.queryWord != res) {
 				//user have selected some other word in the list,now select the first word again.
 				GtkTreePath* path = gtk_tree_path_new_first();
-				GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview));
+				GtkTreeModel *model =
+					gtk_tree_view_get_model(oMidWin.oIndexWin.oListWin.treeview_);
 				GtkTreeIter iter;
 				gtk_tree_model_get_iter(model,&iter,path);
-				GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview));
+				GtkTreeSelection *selection =
+					gtk_tree_view_get_selection(oMidWin.oIndexWin.oListWin.treeview_);
 				gtk_tree_selection_select_iter(selection,&iter);
-				gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview),path,NULL,false,0,0);
+				gtk_tree_view_scroll_to_cell(
+					oMidWin.oIndexWin.oListWin.treeview_, path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
 			}
 			break;
