@@ -174,7 +174,11 @@ void AppCore::on_middle_button_click()
 
 void AppCore::on_link_click(const char *link)
 {
-	oTopWin.SetText(link);
+	if (link && *link) {
+		oTopWin.InsertHisList(oTopWin.get_text());
+		oTopWin.InsertBackList();
+		oTopWin.SetText(link);
+	}
 }
 
 void AppCore::Create(gchar *queryword)
