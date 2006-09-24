@@ -309,17 +309,19 @@ void TopWin::BackCallback(GtkWidget *widget, TopWin *oTopWin)
 	oTopWin->do_back();
 }
 
-void TopWin::do_previous()
+void TopWin::do_prev()
 {
-	if (gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_EMPTY)
+	MidWin &midwin = gpAppFrame->oMidWin;
+	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_EMPTY)
 		return;
-	GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(gpAppFrame->oMidWin.oIndexWin.oListWin.treeview));
+	GtkTreeSelection *selection =
+		gtk_tree_view_get_selection(midwin.oIndexWin.oListWin.treeview_);
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 
 	gboolean selected = gtk_tree_selection_get_selected(selection,&model,&iter);
-	if (gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {
-		if (!(selected && GTK_WIDGET_HAS_FOCUS(gpAppFrame->oMidWin.oIndexWin.oListWin.treeview))) {
+	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {
+		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
@@ -327,13 +329,15 @@ void TopWin::do_previous()
 		if (gtk_tree_path_prev(path)) {
 			gtk_tree_model_get_iter(model,&iter,path);
 			gtk_tree_selection_select_iter(selection,&iter);
-			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(gpAppFrame->oMidWin.oIndexWin.oListWin.treeview),path,NULL,false,0,0);
-		}
-		else {
+			gtk_tree_view_scroll_to_cell(
+				midwin.oIndexWin.oListWin.treeview_,
+				path, NULL, FALSE, 0, 0);
+		} else {
 			// user have selected the first row.
 			gchar *word;
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
-			CurrentIndex *iPreIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
+			CurrentIndex *iPreIndex =
+				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
 			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex);
 			if (preword) {
 				SetText(preword);
@@ -344,23 +348,21 @@ void TopWin::do_previous()
 			g_free(word);
 		}
 		gtk_tree_path_free(path);
-	}
-	else if (gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
-			gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_PATTERN_LIST||
-			gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
+	} else if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
+		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_PATTERN_LIST||
+		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
 		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 		if (gtk_tree_path_prev(path)) {
-			gtk_tree_model_get_iter(model,&iter,path);
-			gtk_tree_selection_select_iter(selection,&iter);
-			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(gpAppFrame->oMidWin.oIndexWin.oListWin.treeview),path,NULL,false,0,0);
-		}
-		else {
-			// user have selected the first row,no action is need.
-		}
+			gtk_tree_model_get_iter(model, &iter, path);
+			gtk_tree_selection_select_iter(selection, &iter);
+			gtk_tree_view_scroll_to_cell(
+				midwin.oIndexWin.oListWin.treeview_,
+				path, NULL, FALSE, 0, 0);
+		} //else  user have selected the first row,no action is need.		
 		gtk_tree_path_free(path);
 	}
 }
@@ -369,47 +371,36 @@ void TopWin::PreviousCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
 
-	oTopWin->do_previous();
+	oTopWin->do_prev();
 }
 
 void TopWin::do_next()
 {
-	MidWin &oMidWin = gpAppFrame->oMidWin;
-	if (oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_EMPTY)
+	MidWin &midwin = gpAppFrame->oMidWin;
+	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_EMPTY)
 		return;
 	GtkTreeSelection *selection =
-		gtk_tree_view_get_selection(GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview));
+		gtk_tree_view_get_selection(midwin.oIndexWin.oListWin.treeview_);
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 //make sure this will run,so model is set.
-	gboolean selected = gtk_tree_selection_get_selected(selection,&model,&iter); 
-	if (oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {
-		gboolean real_selected = 
-			(selected && GTK_WIDGET_HAS_FOCUS(oMidWin.oIndexWin.oListWin.treeview));
-		if (!real_selected) {
+	gboolean selected =
+		gtk_tree_selection_get_selected(selection, &model, &iter); 
+	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {		
+		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
 //if gtk_tree_model_iter_next fail,iter will be invalid,so save it.
 		GtkTreeIter new_iter = iter; 
 		gchar *word;
-		if (gtk_tree_model_iter_next(model,&iter)) {
-			if (!real_selected) {
-				gtk_tree_model_get(model, &iter, 0, &word, -1);
-				SetText(word);
-				gpAppFrame->SimpleLookupToTextWin(word, NULL);
-				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
-					select_region_in_text(0, -1);
-				g_free(word);
-			} else {
-				gtk_tree_selection_select_iter(selection,&iter);
-				GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
+		if (gtk_tree_model_iter_next(model, &iter)) {
+				gtk_tree_selection_select_iter(selection, &iter);
+				GtkTreePath* path = gtk_tree_model_get_path(model, &iter);
 				gtk_tree_view_scroll_to_cell(
-					GTK_TREE_VIEW(
-						oMidWin.oIndexWin.oListWin.treeview),
+					midwin.oIndexWin.oListWin.treeview_,
 					path, NULL, FALSE, 0, 0);
-				gtk_tree_path_free(path);
-			}
+				gtk_tree_path_free(path);			
 		} else {
 			// user have selected the last row.
 			gtk_tree_model_get(model, &new_iter, 0, &word, -1);
@@ -424,18 +415,18 @@ void TopWin::do_next()
 			g_free(iNextIndex);
 			g_free(word);
 		}
-	} else if (oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
-		   oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_PATTERN_LIST ||
-		   oMidWin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
+	} else if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
+		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_PATTERN_LIST ||
+		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
 		if (gtk_tree_model_iter_next(model,&iter)) {
-			gtk_tree_selection_select_iter(selection,&iter);
+			gtk_tree_selection_select_iter(selection, &iter);
 			GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 			gtk_tree_view_scroll_to_cell(
-				GTK_TREE_VIEW(oMidWin.oIndexWin.oListWin.treeview),
+				midwin.oIndexWin.oListWin.treeview_,
 				path, NULL, FALSE, 0, 0);
 			gtk_tree_path_free(path);
 		}//else  user have selected the last row,no action is need.		
@@ -576,7 +567,8 @@ void TopWin::SetText(const gchar *word, bool notify)
 	if (strcmp(word, get_text()) == 0)
 		return;
 	enable_change_cb = false;
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry),word); // this will emit "changed" signal twice, one for "", one for word. so disable it.
+// this will emit "changed" signal twice, one for "", one for word. so disable it.
+	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry), word); 
 	enable_change_cb = true;
 
 	if (!notify)
@@ -738,21 +730,23 @@ void ListWin::Create(GtkWidget *notebook)
 
 	list_model = gtk_list_store_new (1,G_TYPE_STRING);
 	tree_model = gtk_tree_store_new (1,G_TYPE_STRING);
-	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_model));
+	treeview_ = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_model)));
 	nowIsList = true;
-	gtk_widget_show(treeview);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
-	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
+	gtk_widget_show(GTK_WIDGET(treeview_));
+	gtk_tree_view_set_rules_hint(treeview_, TRUE);
+	gtk_tree_view_set_headers_visible(treeview_, FALSE);
 
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
 						     "text", 0, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+	gtk_tree_view_append_column(treeview_, column);
 
-	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+	GtkTreeSelection *selection =
+		gtk_tree_view_get_selection(treeview_);
 	g_signal_connect (G_OBJECT (selection), "changed", G_CALLBACK (on_selection_changed), this);
 
-	g_signal_connect (G_OBJECT (treeview), "button_press_event", G_CALLBACK (on_button_press), this);
+	g_signal_connect(G_OBJECT(treeview_), "button_press_event",
+			 G_CALLBACK(on_button_press), this);
 
 	GtkWidget *scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show(scrolledwindow);
@@ -761,7 +755,7 @@ void ListWin::Create(GtkWidget *notebook)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
+	gtk_container_add(GTK_CONTAINER(scrolledwindow), GTK_WIDGET(treeview_));
 
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
 }
@@ -770,13 +764,12 @@ void ListWin::SetModel(bool isListModel)
 {
 	if (isListModel) {
 		if (!nowIsList) {
-			gtk_tree_view_set_model(GTK_TREE_VIEW (treeview), GTK_TREE_MODEL(list_model));
+			gtk_tree_view_set_model(treeview_, GTK_TREE_MODEL(list_model));
 			nowIsList = true;
 		}
-	}
-	else {
+	} else {
 		if (nowIsList) {
-			gtk_tree_view_set_model(GTK_TREE_VIEW (treeview), GTK_TREE_MODEL(tree_model));
+			gtk_tree_view_set_model(treeview_, GTK_TREE_MODEL(tree_model));
 			nowIsList = false;
 		}
 	}
@@ -824,7 +817,7 @@ void ListWin::Prepend(const gchar *word)
 void ListWin::ReScroll()
 {
 	GtkTreePath *path = gtk_tree_path_new_from_string ("0");
-	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview),path,NULL,false,0,0);
+	gtk_tree_view_scroll_to_cell(treeview_, path, NULL, FALSE, 0, 0);
 	gtk_tree_path_free(path);
 	/*if (GTK_WIDGET_REALIZED(treeview))
 		gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(treeview),0,0);*/
@@ -854,7 +847,7 @@ void ListWin::SetTreeModel(std::vector<gchar *> *reslist)
 			}
 		}
 	}
-	gtk_tree_view_expand_all(GTK_TREE_VIEW(treeview));
+	gtk_tree_view_expand_all(treeview_);
 }
 
 gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, ListWin *oListWin)
@@ -864,19 +857,18 @@ gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Li
 		GtkTreeIter iter;
 
 		GtkTreeSelection *selection =
-			gtk_tree_view_get_selection(GTK_TREE_VIEW(oListWin->treeview));
+			gtk_tree_view_get_selection(oListWin->treeview_);
 		if (gtk_tree_selection_get_selected (selection, &model, &iter))	{
 			if (!oListWin->nowIsList) {
 				if (gtk_tree_model_iter_has_child(model, &iter)) {
                                 	GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
                                 	if (gtk_tree_view_row_expanded(
-						    GTK_TREE_VIEW(oListWin->treeview), path))
-                                        	gtk_tree_view_collapse_row(
-							GTK_TREE_VIEW(
-								oListWin->treeview), path);
+						    oListWin->treeview_, path))
+                                        	gtk_tree_view_collapse_row(				
+							oListWin->treeview_, path);
                                 	else
                                         	gtk_tree_view_expand_row(
-							GTK_TREE_VIEW(oListWin->treeview), path, FALSE);
+							oListWin->treeview_, path, FALSE);
                                 	gtk_tree_path_free(path);
 					return TRUE;
                         	}
