@@ -150,10 +150,7 @@ TextPangoWidget::TextPangoWidget()
 	gtk_text_view_set_wrap_mode(textview_, GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(textview_, 5);
 	gtk_text_view_set_right_margin(textview_, 5);
-#if 0//not working when mouse moved in window
-	g_signal_connect(textview_, "motion-notify-event",
-			 G_CALLBACK(on_mouse_move), this);
-#endif
+
 	g_signal_connect(textview_, "button-release-event",
 			 G_CALLBACK(on_button_release), this);
 	
@@ -161,6 +158,10 @@ TextPangoWidget::TextPangoWidget()
 					   &iter_, 0);
 	scroll_win_ = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
 	gtk_widget_show(GTK_WIDGET(scroll_win_));
+#if 0//not working when mouse moved in window
+	g_signal_connect(scroll_win_, "motion-notify-event",
+			 G_CALLBACK(on_mouse_move), this);
+#endif
 	gtk_scrolled_window_set_policy(scroll_win_,
 				       //altought textview's set_wrap_mode will cause
 				       //this can be GTK_POLICY_NEVER,but...
@@ -365,6 +366,7 @@ void TextPangoWidget::append_pango_text_with_links(const std::string& str,
 gboolean TextPangoWidget::on_mouse_move(GtkWidget *, GdkEventMotion *event,
 					gpointer userdata)
 {
+#if 0
 	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
 	GtkTextWindowType win_type =
 		gtk_text_view_get_window_type(tpw->textview_, event->window);
@@ -382,6 +384,9 @@ gboolean TextPangoWidget::on_mouse_move(GtkWidget *, GdkEventMotion *event,
 		if (it->beg_ <= pos && pos < it->end_) 
 			g_debug("gotcha!");
 	}
+#else
+	g_debug("mouse move");
+#endif
 	return FALSE;
 }
 

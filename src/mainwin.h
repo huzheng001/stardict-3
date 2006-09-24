@@ -111,8 +111,7 @@ public:
 	}
 };
 
-class ListWin
-{
+class ListWin {
 private:
 	GtkListStore *list_model;
 	GtkTreeStore *tree_model;
@@ -124,7 +123,7 @@ public:
 	ListWinListWordType list_word_type;
 	GtkWidget *treeview;
 
-	ListWin();
+	ListWin() {}
 	void Create(GtkWidget *notebook);
 	void SetModel(bool isListModel);
 	void Destroy();
