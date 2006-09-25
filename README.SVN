@@ -1,0 +1,3 @@
+To compile code from svn repository,
+first of all run autoreconf or ./autogen.sh
+and then read INSTALL for further instructions.
