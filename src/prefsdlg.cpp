@@ -37,18 +37,21 @@
 #include "prefsdlg.h"
 
 #ifndef CONFIG_GPE
-#define LOGO								0
-#define	DICTIONARY_SCAN_SETTINGS 					1
-#define	DICTIONARY_FONT_SETTINGS 					2
-#define DICTIONARY_CACHE_SETTINGS					3
-#define DICTIONARY_EXPORT_SETTINGS					4
-#define	DICTIONARY_SOUND_SETTINGS 					5
-#define	MAINWIN_INPUT_SETTINGS 						6
-#define	MAINWIN_OPTIONS_SETTINGS 					7
-#define MAINWIN_SEARCH_WEBSITE_SETTINGS					8
-#define NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS			9
-#define FLOATWIN_OPTIONS_SETTINGS					10
-#define FLOATWIN_SIZE_SETTINGS						11
+enum {
+	LOGO = 0,
+	DICTIONARY_SCAN_SETTINGS = 1,
+	DICTIONARY_FONT_SETTINGS = 2,
+	DICTIONARY_CACHE_SETTINGS = 3,
+	DICTIONARY_EXPORT_SETTINGS = 4,
+	DICTIONARY_SOUND_SETTINGS = 5,
+	DICIONARY_ARTICLE_RENDERING = 6,
+	MAINWIN_INPUT_SETTINGS = 7,
+	MAINWIN_OPTIONS_SETTINGS = 8,
+	MAINWIN_SEARCH_WEBSITE_SETTINGS = 9,
+	NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS = 10,
+	FLOATWIN_OPTIONS_SETTINGS = 11,
+	FLOATWIN_SIZE_SETTINGS	= 12,	
+};
 
 enum
 {
@@ -66,14 +69,13 @@ struct CategoriesTreeItem {
   gint			notebook_page;
 };
 
-static CategoriesTreeItem dictionary_behavior [] =
-{
+static CategoriesTreeItem dictionary_behavior [] = {
 	{N_("Scan Selection"), NULL, DICTIONARY_SCAN_SETTINGS},
 	{N_("Font"), NULL, DICTIONARY_FONT_SETTINGS},
 	{N_("Cache"), NULL, DICTIONARY_CACHE_SETTINGS},
 	{N_("Export"), NULL, DICTIONARY_EXPORT_SETTINGS},
 	{N_("Sound"), NULL, DICTIONARY_SOUND_SETTINGS},
-	
+	{N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING },
 	{ NULL }
 };
 
@@ -771,10 +773,63 @@ void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *butto
   conf->set_bool_at("dictionary/enable_sound_event",enable);
 }
 
+static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
+			       const gchar *stock_id)
+{
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
+#ifdef CONFIG_GPE
+        gtk_container_set_border_width(GTK_CONTAINER (vbox), 5);
+        GtkWidget *nb_label = gtk_label_new(caption);
+        gtk_notebook_append_page(notebook, vbox, nb_label);
+#else
+	gtk_notebook_append_page(notebook, vbox, NULL);
+#endif
+
+	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 6);
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
+	GtkWidget *image =
+		gtk_image_new_from_stock(stock_id,
+					 GTK_ICON_SIZE_LARGE_TOOLBAR);
+	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
+	GtkWidget *label = gtk_label_new(NULL);
+	glib::CharStr label_caption(
+		g_strdup_printf("<span weight=\"bold\" size=\"x-large\">%s</span>", caption));
+	gtk_label_set_markup(GTK_LABEL(label), get_impl(label_caption));
+	gtk_box_pack_start(GTK_BOX(hbox),label, FALSE, FALSE, 0);
+	GtkWidget *hseparator = gtk_hseparator_new();
+	gtk_box_pack_start(GTK_BOX(vbox1),hseparator,FALSE,FALSE,0);
+
+	return vbox;
+}
+
+void PrefsDlg::on_markup_search_word(GtkToggleButton *button, PrefsDlg *)
+{
+	conf->set_bool_at("dictionary/markup_search_word",
+			  gtk_toggle_button_get_active(button));
+}
+
+
+void PrefsDlg::setup_dict_article_rendering()
+{
+	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Article rendering"),
+				       GTK_STOCK_CONVERT);
+	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);	
+
+	GtkWidget *ck_btn =
+		gtk_check_button_new_with_mnemonic(_("_Highlight search term"));
+	gtk_box_pack_start(GTK_BOX(vbox1), ck_btn, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ck_btn),
+				     conf->get_bool_at("dictionary/markup_search_word"));
+	g_signal_connect(G_OBJECT(ck_btn), "toggled", 
+			 G_CALLBACK(on_markup_search_word), this);
+}
+
 void PrefsDlg::setup_dictionary_sound_page()
 {
-	GtkWidget *vbox;
-	vbox = gtk_vbox_new(false,12);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
 #ifdef CONFIG_GPE
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
         GtkWidget *nb_label = gtk_label_new(_("Sound"));
@@ -789,7 +844,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	hbox = gtk_hbox_new(false,6);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,false,false,0);
 	GtkWidget *image;
-	image = gtk_image_new_from_stock(GTK_STOCK_YES,GTK_ICON_SIZE_LARGE_TOOLBAR);
+	image = gtk_image_new_from_stock(GTK_STOCK_YES, GTK_ICON_SIZE_LARGE_TOOLBAR);
 	gtk_box_pack_start(GTK_BOX(hbox),image,false,false,0);
 	GtkWidget *label;
 	label = gtk_label_new(NULL);
@@ -845,56 +900,35 @@ void PrefsDlg::setup_dictionary_sound_page()
 void PrefsDlg::on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   conf->set_bool_at("main_window/search_while_typing", 
-								 gtk_toggle_button_get_active(button));
+		    gtk_toggle_button_get_active(button));
 }
 
 void PrefsDlg::on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   conf->set_bool_at("main_window/showfirst_when_notfound", 
-								 gtk_toggle_button_get_active(button));
+		    gtk_toggle_button_get_active(button));
 }
 
 void PrefsDlg::setup_mainwin_input_page()
 {
-	GtkWidget *vbox;
-	vbox = gtk_vbox_new(false,12);
-#ifdef CONFIG_GPE
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-        GtkWidget *nb_label = gtk_label_new(_("Input"));
-        gtk_notebook_append_page(GTK_NOTEBOOK(notebook),vbox, nb_label);
-#else
-	gtk_notebook_append_page(GTK_NOTEBOOK(notebook),vbox,NULL);
-#endif
-	GtkWidget *vbox1;
-	vbox1 = gtk_vbox_new(false,6);
-	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false,6);
-	GtkWidget *hbox;
-	hbox = gtk_hbox_new(false,6);
-	gtk_box_pack_start(GTK_BOX(vbox1),hbox,false,false,0);
-	GtkWidget *image;
-	image = gtk_image_new_from_stock(GTK_STOCK_EDIT,GTK_ICON_SIZE_LARGE_TOOLBAR);
-	gtk_box_pack_start(GTK_BOX(hbox),image,false,false,0);
-	GtkWidget *label;
-	label = gtk_label_new(NULL);
-	gtk_label_set_markup(GTK_LABEL(label), _("<span weight=\"bold\" size=\"x-large\">Input</span>"));
-	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
-	GtkWidget *hseparator;
-	hseparator = gtk_hseparator_new();
-	gtk_box_pack_start(GTK_BOX(vbox1),hseparator,false,false,0);
+	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Input"),
+				       GTK_STOCK_EDIT);
 
-	vbox1 = gtk_vbox_new(false, 6);
-	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);	
-	GtkWidget *check_button;
-	check_button = gtk_check_button_new_with_mnemonic(_("_Search while typing."));
+	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,FALSE,FALSE, 0);	
+
+	GtkWidget *check_button =
+		gtk_check_button_new_with_mnemonic(_("_Search while typing."));
 	gtk_box_pack_start(GTK_BOX(vbox1), check_button, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("main_window/search_while_typing"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button),
+				     conf->get_bool_at("main_window/search_while_typing"));
 	g_signal_connect(G_OBJECT(check_button), "toggled", 
-									 G_CALLBACK(on_setup_mainwin_searchWhileTyping_ckbutton_toggled), this);
+			 G_CALLBACK(on_setup_mainwin_searchWhileTyping_ckbutton_toggled), this);
 	check_button = gtk_check_button_new_with_mnemonic(_("Show the _first word when not found."));
-	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),check_button,FALSE,FALSE,0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("main_window/showfirst_when_notfound"));
 	g_signal_connect(G_OBJECT(check_button), "toggled", 
-									 G_CALLBACK(on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled), this);
+			 G_CALLBACK(on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled), this);
 }
 
 void PrefsDlg::on_setup_mainwin_startup_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -939,7 +973,7 @@ void PrefsDlg::on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggle
 void PrefsDlg::setup_mainwin_options_page()
 {
 	GtkWidget *vbox;
-	vbox = gtk_vbox_new(false,12);
+	vbox = gtk_vbox_new(FALSE,12);
 #ifdef CONFIG_GPE
         gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
         GtkWidget *nb_label = gtk_label_new(_("Main window"));
@@ -948,29 +982,29 @@ void PrefsDlg::setup_mainwin_options_page()
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook),vbox,NULL);
 #endif
 	GtkWidget *vbox1;
-	vbox1 = gtk_vbox_new(false,6);
-	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false,6);
+	vbox1 = gtk_vbox_new(FALSE,6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,FALSE,FALSE,6);
 	GtkWidget *hbox;
-	hbox = gtk_hbox_new(false,6);
-	gtk_box_pack_start(GTK_BOX(vbox1),hbox,false,false,0);
+	hbox = gtk_hbox_new(FALSE,6);
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE,0);
 	GtkWidget *image;
 	image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE,GTK_ICON_SIZE_LARGE_TOOLBAR);
-	gtk_box_pack_start(GTK_BOX(hbox),image,false,false,0);
+	gtk_box_pack_start(GTK_BOX(hbox),image,FALSE,FALSE,0);
 	GtkWidget *label;
 	label = gtk_label_new(NULL);
 	gtk_label_set_markup(GTK_LABEL(label), _("<span weight=\"bold\" size=\"x-large\">Options</span>"));
-	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
+	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE,0);
 	GtkWidget *hseparator;
 	hseparator = gtk_hseparator_new();
-	gtk_box_pack_start(GTK_BOX(vbox1),hseparator,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),hseparator,FALSE,FALSE,0);
 
-	vbox1 = gtk_vbox_new(false, 6);
-	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);	
+	vbox1 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,FALSE,FALSE, 0);	
 
 	GtkWidget *check_button;
 #ifdef _WIN32
 	check_button = gtk_check_button_new_with_mnemonic(_("_Auto run StarDict after boot."));
-	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),check_button,FALSE,FALSE,0);
 	gboolean autorun;
 
 	HKEY hKEY;
@@ -1597,6 +1631,7 @@ GtkWidget* PrefsDlg::create_notebook ()
 	setup_dictionary_cache_page ();
 	setup_dictionary_export_page ();
 	setup_dictionary_sound_page ();
+	setup_dict_article_rendering();
 	setup_mainwin_input_page ();
 	setup_mainwin_options_page ();
 	setup_mainwin_searchwebsite_page();

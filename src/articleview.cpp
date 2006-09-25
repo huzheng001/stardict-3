@@ -25,6 +25,9 @@
 #include <cstring>
 #include <gtk/gtk.h>
 
+#include "conf.h"
+#include "utils.h"
+
 #include "articleview.h"
 
 
@@ -590,7 +593,40 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
   return res;
 }
 
-void ArticleView::AppendData(gchar *data, const gchar *oword)
+void ArticleView::append_and_mark_orig_word(const std::string& mark,
+					    const gchar *origword,
+					    const LinksPosList& links)
+{	
+	if (conf->get_bool_at("dictionary/markup_search_word") &&
+	    origword && *origword) {
+		std::string res;
+		size_t olen = strlen(origword);
+		glib::CharStr markoword(g_markup_escape_text(origword, olen));
+		std::string::size_type pos, prev_pos = 0;
+//TODO: mark word even if it looks like w<b>o</b>rd, or contains special xml
+//characters, like &quote;
+		while ((pos = mark.find(origword, prev_pos)) != std::string::npos) {
+			res.append(mark, prev_pos, pos - prev_pos);
+			res.append("<span background=\"yellow\">");
+			res.append(get_impl(markoword));
+			res.append("</span>");
+			prev_pos = pos + olen;
+		}
+		res.append(mark, prev_pos, mark.length() - prev_pos);
+		if (links.empty())
+			append_pango_text(res.c_str());
+		else
+			pango_view_->append_pango_text_with_links(res, links);
+	} else {
+		if (links.empty())
+			append_pango_text(mark.c_str());
+		else
+			pango_view_->append_pango_text_with_links(mark, links);
+	}
+}
+
+void ArticleView::AppendData(gchar *data, const gchar *oword,
+			     const gchar *real_oword)
 {
   std::string mark;
 
@@ -629,11 +665,11 @@ void ArticleView::AppendData(gchar *data, const gchar *oword)
       p++;
       sec_size = strlen(p);
       if (sec_size) {
-	      append_pango_text(mark.c_str());
-	      mark.clear();
 	      LinksPosList links_list;
+	      append_and_mark_orig_word(mark, real_oword, links_list);
+	      mark.clear();
 	      std::string res = xdxf2pango(p, links_list);
-	      pango_view_->append_pango_text_with_links(res, links_list);
+	      append_and_mark_orig_word(res, real_oword, links_list);
       }
       sec_size++;
       break;
@@ -704,7 +740,8 @@ void ArticleView::AppendData(gchar *data, const gchar *oword)
     }
     p += sec_size;
   }
-  append_pango_text(mark.c_str());
+
+  append_and_mark_orig_word(mark, real_oword, LinksPosList());
 }
 
 void ArticleView::AppendNewline()

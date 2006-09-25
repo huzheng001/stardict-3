@@ -45,6 +45,7 @@ private:
   void setup_dictionary_cache_page();
   void setup_dictionary_export_page();
   void setup_dictionary_sound_page();
+  void setup_dict_article_rendering();
   void setup_mainwin_input_page();
   void setup_mainwin_options_page();
   void setup_mainwin_searchwebsite_page();
@@ -97,6 +98,7 @@ private:
 #ifndef CONFIG_GPE
   static void on_setup_floatwin_size_max_width_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_size_max_height_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg);
+  static void on_markup_search_word(GtkToggleButton *, PrefsDlg *);
 
   void resize_categories_tree(void);
 #endif

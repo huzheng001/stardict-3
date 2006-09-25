@@ -37,7 +37,11 @@ t_articleview_SOURCES = t_articleview.cpp \
 	$(top_builddir)/src/pangoview.cpp $(top_builddir)/src/pangoview.h \
 	$(top_builddir)/src/gtktextviewpango.cpp \
 	$(top_builddir)/src/gtktextviewpango.h \
-	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h
+	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h \
+	$(top_builddir)/src/config_file.hpp \
+	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp \
+	$(top_builddir)/src/conf.cpp $(top_builddir)/src/conf.h \
+	$(GCONF_MODULE_HPP) $(GCONF_MODULE_CPP)
 
 t_xml_SOURCES = t_xml.cpp \
 	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h

@@ -58,6 +58,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
+	add_entry("/apps/stardict/preferences/dictionary/markup_search_word", false);
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/scan_clipboard", false);
 	add_entry("/apps/stardict/preferences/dictionary/use_scan_hotkey", true);

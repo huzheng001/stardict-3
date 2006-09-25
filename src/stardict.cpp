@@ -197,8 +197,8 @@ void AppCore::Create(gchar *queryword)
 		if (!custom_font.empty())	{
 			gchar *aa =
 				g_strdup_printf("style \"custom-font\" { font_name= \"%s\" }\n"
-												"class \"GtkWidget\" style \"custom-font\"\n",
-												custom_font.c_str());
+						"class \"GtkWidget\" style \"custom-font\"\n",
+						custom_font.c_str());
 			gtk_rc_parse_string(aa);
 			g_free(aa);
 		}
@@ -946,12 +946,12 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 {
 	if (sWord[0] == '\0')
 		return;
-  change_cursor busy(window->window,
-		     get_impl(oAppSkin.watch_cursor),
-		     get_impl(oAppSkin.normal_cursor));
+	change_cursor busy(window->window,
+			   get_impl(oAppSkin.watch_cursor),
+			   get_impl(oAppSkin.normal_cursor));
 
 	gchar *fuzzy_reslist[MAX_FUZZY_MATCH_ITEM];
-  bool Found=
+	bool Found=
 		oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FUZZY_MATCH_ITEM);
 
 	// show
@@ -963,13 +963,13 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 		//SimpleLookupToTextWin(oFuzzystruct[0].pMatchWord,NULL);
 		SimpleLookupToTextWin(fuzzy_reslist[0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 
-    for (int i=0; i<MAX_FUZZY_MATCH_ITEM && fuzzy_reslist[i]; i++) {
+		for (int i=0; i<MAX_FUZZY_MATCH_ITEM && fuzzy_reslist[i]; i++) {
 			oMidWin.oIndexWin.oListWin.InsertLast(fuzzy_reslist[i]);
 			g_free(fuzzy_reslist[i]);
 			//printf("fuzzy %s,%d\n",oFuzzystruct[i].pMatchWord,oFuzzystruct[i].iMatchWordDistance);
 		}
 		oMidWin.oIndexWin.oListWin.ReScroll();
-  } else {
+	} else {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
 		ShowNotFoundToTextWin(sWord,_("There are too many spelling errors :-("), TEXT_WIN_FUZZY_NOT_FOUND);
 	}
@@ -1061,9 +1061,10 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 	g_free(ppMatchWord);
 }
 
-void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const gchar * sOriginWord, bool isShowFirst)
+void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
+				const gchar *sOriginWord, bool isShowFirst)
 {
-	oMidWin.oTextWin.Show(pppWord, ppppWordData);
+	oMidWin.oTextWin.Show(sOriginWord, pppWord, ppppWordData);
 	if (isShowFirst)
 		oMidWin.oTextWin.query_result = TEXT_WIN_SHOW_FIRST;
 	else
@@ -1202,7 +1203,7 @@ void AppCore::TopWinEnterWord(const gchar *text)
 			}
 			break;
 		default:
-			/*nothing*/;
+			/*nothing*/break;
 		}//switch (oMidWin.oTextWin.query_result) {
 	}
 
