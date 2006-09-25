@@ -36,6 +36,7 @@ const int WM_MY_SHOW_TRANSLATION = WM_USER + 300;
 void Mouseover::NeedSpyDll()
 {
 	if (fSpyDLL == 0) {
+		// Notice, the path must be absolute!
 		fSpyDLL = LoadLibrary((gStarDictDataDir+ G_DIR_SEPARATOR_S "TextOutSpy.dll").c_str());
 		if (fSpyDLL==0) {
 			fSpyDLL = (HINSTANCE)-1;
