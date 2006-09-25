@@ -6,6 +6,12 @@
 #define private public
 
 #include "articleview.h"
+#include "class_factory.hpp"
+
+void *PlatformFactory::create_class_by_name(const std::string& name, void *param)
+{
+	return NULL;
+}
 
 static const char *xml_topos(const char *str, size_t pos)
 {

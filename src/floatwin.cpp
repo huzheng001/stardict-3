@@ -187,7 +187,7 @@ void FloatWin::Create()
 	gtk_widget_hide(button_hbox); //show all will show hbox's children,now hide hbox only.	
 }
 
-void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOriginWord)
+void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginWord)
 {
 	QueryingWord = sOriginWord;
 	found_result = FLOAT_WIN_FOUND;
@@ -213,12 +213,14 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar * sOrigin
 					view->AppendNewline();
 					view->AppendWord(Word[i][j]);
 				}
-				view->AppendData(WordData[i][j][0], Word[i][j]);
+				view->AppendData(WordData[i][j][0], Word[i][j],
+						 sOriginWord);
 				k=1;
 				while (WordData[i][j][k]) {
 					view->AppendNewline();
 					view->AppendDataSeparate();
-					view->AppendData(WordData[i][j][k], Word[i][j]);
+					view->AppendData(WordData[i][j][k],
+							 Word[i][j], sOriginWord);
 					k++;
 				}
 				j++;
@@ -320,12 +322,14 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
 				view->AppendNewline();
 				view->AppendWord(ppppWord[j][i][m]);
 			}
-			view->AppendData(pppppWordData[j][i][m][0], ppppWord[j][i][m]);
+			view->AppendData(pppppWordData[j][i][m][0], ppppWord[j][i][m],
+					 sOriginWord);
 			n=1;
 			while (pppppWordData[j][i][m][n]) {
 				view->AppendNewline();
 				view->AppendDataSeparate();
-				view->AppendData(pppppWordData[j][i][m][n], ppppWord[j][i][m]);
+				view->AppendData(pppppWordData[j][i][m][n],
+						 ppppWord[j][i][m], sOriginWord);
 				n++;
 			}
 			m++;

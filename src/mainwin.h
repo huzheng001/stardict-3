@@ -215,7 +215,7 @@ public:
   void ShowInfo();
   void ShowInitFailed();
   void Show(const gchar *str);
-  void Show(gchar ***Word, gchar ****WordData);
+  void Show(const gchar *orig_word, gchar ***Word, gchar ****WordData);
   void ShowTreeDictData(gchar *data);
   gboolean Find (const gchar *text, gboolean start);
 	bool IsSearchPanelHasFocus() { return GTK_WIDGET_HAS_FOCUS(eSearch); } 

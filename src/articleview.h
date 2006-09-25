@@ -16,7 +16,7 @@ public:
 
 	void AppendHeader(const std::string& dict_name, size_t i);
 	void AppendWord(const gchar *word);
-	void AppendData(gchar *data, const gchar *oword);
+	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
 	void AppendNewline();
 	void AppendDataSeparate();
 
@@ -47,6 +47,9 @@ private:
 	bool for_float_win;
 
 	static std::string xdxf2pango(const char *p, LinksPosList& links_list);
+	void append_and_mark_orig_word(const std::string& mark,
+				       const gchar *origword,
+				       const LinksPosList& links);
 };
 
 

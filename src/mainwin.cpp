@@ -1553,7 +1553,7 @@ void TextWin::Show(const gchar *str)
   view->scroll_to(0);
 }
 
-void TextWin::Show(gchar ***Word, gchar ****WordData)
+void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 {
 	view->connect_on_link(sigc::mem_fun(gpAppFrame,
 					    &AppCore::on_link_click));
@@ -1568,12 +1568,14 @@ void TextWin::Show(gchar ***Word, gchar ****WordData)
 			j=0;
 			do {
 				view->AppendWord(Word[i][j]);
-				view->AppendData(WordData[i][j][0], Word[i][j]);
+				view->AppendData(WordData[i][j][0], Word[i][j],
+						 orig_word);
 				view->AppendNewline();
 				k=1;
 				while (WordData[i][j][k]) {
 					view->AppendDataSeparate();
-					view->AppendData(WordData[i][j][k], Word[i][j]);
+					view->AppendData(WordData[i][j][k],
+							 Word[i][j], orig_word);
 					view->AppendNewline();
 					k++;
 				}
@@ -1590,7 +1592,7 @@ void TextWin::ShowTreeDictData(gchar *data)
 	view->clear();
 	view->goto_begin();
 	if (data) {
-		view->AppendData(data, "");
+		view->AppendData(data, "", NULL);
 		view->AppendNewline();
 	}
 	view->end_update();
