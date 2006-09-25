@@ -26,7 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #ifdef _WIN32
-#define VERSION "2.4.8"
+#define VERSION "2.4.9"
 #  include <gdk/gdkwin32.h>
 #endif
 
@@ -124,7 +124,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go Back - Right button: history (Alt+Left)"),NULL);
 
 	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_BACK,GTK_ICON_SIZE_BUTTON));
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_UP,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
@@ -134,7 +134,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Previous word (Alt+Up)"),NULL);
 
 	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_FORWARD,GTK_ICON_SIZE_BUTTON));
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
@@ -481,7 +481,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 			      "version", VERSION,
 			      "website", "http://stardict.sourceforge.net",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
-			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2006 by Hu Zheng",
+			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy",
 			      "authors", (const char **)authors,
 			      "documenters", (const char **)documenters,
 			      "translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
