@@ -9,7 +9,7 @@
 #include <map>
 #include <memory>
 #include <string>
-
+#include <cstring>
 
 #include "config_file.hpp"
 
@@ -115,6 +115,17 @@ private:
 	std::auto_ptr<config_file> cf;
 	cache_t cache;
 
+ static void *memrchr(const void *mem, int c, size_t len) {
+	char *res;
+	char *cmem = (char *)mem;
+
+	if (!len)
+		return NULL;
+	res = cmem + len - 1;
+	while (res != cmem - 1 && *res != c)
+		--res;
+	return res == cmem - 1 ? NULL : res;
+}
 	template <typename T>
 	void set_value(const char *name, const T& val, bool abs = true) {
 		cache_t::iterator p;
@@ -129,6 +140,7 @@ private:
 		cfgval->val_ = val;
 
 		size_t len = strlen(name);
+		//TODO: do not user memrchr
 		const char *key = (char *)memrchr(name, '/', len);
 		if (!key)
 			key = name + len;
