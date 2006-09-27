@@ -24,6 +24,7 @@
 
 #include "gtktextviewpango.h"
 #include "utils.h"
+#include "skin.h"//for SkinCursor definition
 
 #include "pangoview.h"
 
@@ -56,11 +57,13 @@ private:
 
 	TextBufLinks tb_links_;
 	GtkTextIter iter_;
+	SkinCursor hand_cursor_, regular_cursor_;
 
 	static gboolean on_mouse_move(GtkWidget *, GdkEventMotion *, gpointer);
 	static gboolean on_button_release(GtkWidget *, GdkEventButton *, gpointer);
 
 	void goto_begin();
+	TextBufLinks::const_iterator find_link(gint x, gint y);
 };
 
 class LabelPangoWidget : public PangoWidgetBase {
@@ -143,6 +146,8 @@ void TextPangoWidget::end_update()
 
 TextPangoWidget::TextPangoWidget()
 {
+	hand_cursor_.reset(gdk_cursor_new(GDK_HAND2));
+	regular_cursor_.reset(gdk_cursor_new(GDK_XTERM));
 	textview_ = GTK_TEXT_VIEW(gtk_text_view_new());
 	gtk_widget_show(GTK_WIDGET(textview_));
 	gtk_text_view_set_editable(textview_, FALSE);
@@ -153,15 +158,15 @@ TextPangoWidget::TextPangoWidget()
 
 	g_signal_connect(textview_, "button-release-event",
 			 G_CALLBACK(on_button_release), this);
+	g_signal_connect(textview_, "motion-notify-event",
+			 G_CALLBACK(on_mouse_move), this);
 	
 	gtk_text_buffer_get_iter_at_offset(gtk_text_view_get_buffer(textview_),
 					   &iter_, 0);
 	scroll_win_ = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
 	gtk_widget_show(GTK_WIDGET(scroll_win_));
-#if 0//not working when mouse moved in window
-	g_signal_connect(scroll_win_, "motion-notify-event",
-			 G_CALLBACK(on_mouse_move), this);
-#endif
+
+
 	gtk_scrolled_window_set_policy(scroll_win_,
 				       //altought textview's set_wrap_mode will cause
 				       //this can be GTK_POLICY_NEVER,but...
@@ -363,10 +368,25 @@ void TextPangoWidget::append_pango_text_with_links(const std::string& str,
 				      &iter_, str.c_str());
 }
 
-gboolean TextPangoWidget::on_mouse_move(GtkWidget *, GdkEventMotion *event,
+TextPangoWidget::TextBufLinks::const_iterator TextPangoWidget::find_link(gint x,
+									 gint y)
+{
+	GtkTextIter iter;
+	gtk_text_view_get_iter_at_location(textview_, &iter, x, y);
+	gint pos = gtk_text_iter_get_offset(&iter);
+	TextBufLinks::const_iterator it;
+	for (it = tb_links_.begin(); it != tb_links_.end(); ++it) {
+		if (pos < it->beg_)
+			return tb_links_.end();
+		if (it->beg_ <= pos && pos < it->end_) 
+			break;
+	}
+	return it;
+}
+
+gboolean TextPangoWidget::on_mouse_move(GtkWidget *widget, GdkEventMotion *event,
 					gpointer userdata)
 {
-#if 0
 	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
 	GtkTextWindowType win_type =
 		gtk_text_view_get_window_type(tpw->textview_, event->window);
@@ -374,21 +394,26 @@ gboolean TextPangoWidget::on_mouse_move(GtkWidget *, GdkEventMotion *event,
 	gtk_text_view_window_to_buffer_coords(tpw->textview_, win_type, 
 					      gint(event->x), gint(event->y),
 					      &x, &y);
-	GtkTextIter iter;
-	gtk_text_view_get_iter_at_location(tpw->textview_, &iter, x, y);
-	gint pos = gtk_text_iter_get_offset(&iter);
-	for (TextBufLinks::const_iterator it = tpw->tb_links_.begin();
-	     it != tpw->tb_links_.end(); ++it) {
-		if (pos < it->beg_)
-			break;
-		if (it->beg_ <= pos && pos < it->end_) 
-			g_debug("gotcha!");
+
+	TextBufLinks::const_iterator it = tpw->find_link(x, y);
+	if (it != tpw->tb_links_.end()) {
+		gdk_window_set_cursor(
+			gtk_text_view_get_window(tpw->textview_,
+						 GTK_TEXT_WINDOW_TEXT),
+			get_impl(tpw->hand_cursor_));
+	} else {
+		gdk_window_set_cursor(
+			gtk_text_view_get_window(tpw->textview_,
+						 GTK_TEXT_WINDOW_TEXT),
+			get_impl(tpw->regular_cursor_));
 	}
-#else
-	g_debug("mouse move");
-#endif
+
+	gdk_window_get_pointer(widget->window, NULL, NULL, NULL);
+
 	return FALSE;
 }
+
+
 
 gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
 					    gpointer userdata)
@@ -402,25 +427,16 @@ gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
 	gtk_text_view_window_to_buffer_coords(tpw->textview_, win_type, 
 					      gint(event->x), gint(event->y),
 					      &x, &y);
-	GtkTextIter iter;
-	gtk_text_view_get_iter_at_location(tpw->textview_, &iter, x, y);
-	gint pos = gtk_text_iter_get_offset(&iter);
-	for (TextBufLinks::const_iterator it = tpw->tb_links_.begin();
-	     it != tpw->tb_links_.end(); ++it) {
-#if 1
-		if (pos < it->beg_)
-			break;
-#endif
-		if (it->beg_ <= pos && pos < it->end_) { 
-			GtkTextBuffer *buf = gtk_text_view_get_buffer(tpw->textview_);
-			GtkTextIter beg, end;
-			gtk_text_buffer_get_iter_at_offset(buf, &beg, it->beg_);
-			gtk_text_buffer_get_iter_at_offset(buf, &end, it->end_);
-			glib::CharStr str(gtk_text_buffer_get_text(buf, &beg, &end, TRUE));
-			std::string xml_enc;
-			xml_decode(get_impl(str), xml_enc);
-			tpw->on_link_click_.emit(xml_enc.c_str());
-		}
-	}
+	TextBufLinks::const_iterator it = tpw->find_link(x, y);
+	if (it != tpw->tb_links_.end()) {
+		GtkTextBuffer *buf = gtk_text_view_get_buffer(tpw->textview_);
+		GtkTextIter beg, end;
+		gtk_text_buffer_get_iter_at_offset(buf, &beg, it->beg_);
+		gtk_text_buffer_get_iter_at_offset(buf, &end, it->end_);
+		glib::CharStr str(gtk_text_buffer_get_text(buf, &beg, &end, TRUE));
+		std::string xml_enc;
+		xml_decode(get_impl(str), xml_enc);
+		tpw->on_link_click_.emit(xml_enc.c_str());
+	}	
 	return FALSE;
 }
