@@ -10,19 +10,6 @@
 #  define __attribute__(x) /**/
 #  define g_fopen my_g_fopen
 
-static inline void *memrchr(const void *mem, int c, size_t len)
-{
-	char *res;
-	char *cmem = (char *)mem;
-
-	if (!len)
-		return NULL;
-	res = cmem + len - 1;
-	while (res != cmem - 1 && *res != c)
-		--res;
-	return res == cmem - 1 ? NULL : res;
-}
-
 # include <math.h>
 static inline double round(double d)
 {

@@ -2,7 +2,9 @@
 #ifndef _SIGCXX_CONFIG_H
 #define _SIGCXX_CONFIG_H
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 
 // Detect common platforms
 #if defined(_WIN32)
@@ -15,7 +17,10 @@
     #define SIGC_CONFIGURE
   #elif defined(__MINGW32__)
     #define SIGC_WIN32
-    #define SIGC_CONFIGURE
+//    #define SIGC_CONFIGURE
+//TODO: better solution?
+    #define SIGC_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD
+    #define SIGC_HAVE_NAMESPACE_STD 1
   #else
     //The Tru64 compiler complains about this "unrecognized preprocessing directive", but it should never get this far anyway.
     //#warning "libsigc++ config: Unknown win32 architecture (send me gcc --dumpspecs or equiv)"
