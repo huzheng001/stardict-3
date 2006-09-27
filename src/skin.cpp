@@ -32,36 +32,36 @@
 void AppSkin::load()
 {		
 	watch_cursor.reset(gdk_cursor_new(GDK_WATCH));
-  std::string pixmaps_dir(gStarDictDataDir+ G_DIR_SEPARATOR_S "pixmaps" G_DIR_SEPARATOR_S);
-  std::string filename;
+	std::string pixmaps_dir(gStarDictDataDir+ G_DIR_SEPARATOR_S "pixmaps" G_DIR_SEPARATOR_S);
+	std::string filename;
 #ifdef _WIN32			
-  filename=pixmaps_dir+"stardict.png";
-  icon.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"stardict.png";
+	icon.reset(load_image_from_file(filename));
 #else
-  icon.reset(load_image_from_file(GNOME_ICONDIR"/stardict.png"));
+	icon.reset(load_image_from_file(GNOME_ICONDIR"/stardict.png"));
 #ifdef CONFIG_GPE
-  filename=pixmaps_dir+"docklet_gpe_normal.png";
+	filename=pixmaps_dir+"docklet_gpe_normal.png";
 #else
-  filename=pixmaps_dir+"docklet_normal.png";
+	filename=pixmaps_dir+"docklet_normal.png";
 #endif
-  docklet_normal_icon.reset(load_image_from_file(filename));
+	docklet_normal_icon.reset(load_image_from_file(filename));
 #ifdef CONFIG_GPE
-  filename=pixmaps_dir+"docklet_gpe_scan.png";
+	filename=pixmaps_dir+"docklet_gpe_scan.png";
 #else
-  filename=pixmaps_dir+"docklet_scan.png";
+	filename=pixmaps_dir+"docklet_scan.png";
 #endif
-  docklet_scan_icon.reset(load_image_from_file(filename));
+	docklet_scan_icon.reset(load_image_from_file(filename));
 #ifdef CONFIG_GPE
-  filename=pixmaps_dir+"docklet_gpe_stop.png";
+	filename=pixmaps_dir+"docklet_gpe_stop.png";
 #else
-  filename=pixmaps_dir+"docklet_stop.png";
+	filename=pixmaps_dir+"docklet_stop.png";
 #endif
-  docklet_stop_icon.reset(load_image_from_file(filename));
+	docklet_stop_icon.reset(load_image_from_file(filename));
 #endif
-  filename=pixmaps_dir+"index_wazard.png";
-  index_wazard.reset(load_image_from_file(filename));
-  filename=pixmaps_dir+"index_appendix.png";
-  index_appendix.reset(load_image_from_file(filename));
-  filename=pixmaps_dir+"index_dictlist.png";
-  index_dictlist.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"index_wazard.png";
+	index_wazard.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"index_appendix.png";
+	index_appendix.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"index_dictlist.png";
+	index_dictlist.reset(load_image_from_file(filename));
 }
