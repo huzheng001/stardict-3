@@ -90,6 +90,21 @@ int utf8_collate_init(CollateFunctions func)
 		return TRUE;
 }
 
+int utf8_collate_init_all()
+{
+	CHARSET_INFO *cs;
+	for (int func=0; func<COLLATE_FUNC_NUMS; func++) {
+		cs = get_cs((CollateFunctions)func);
+		if (cs) {
+			if ((cs->cset->init && cs->cset->init(cs, my_once_alloc)) ||
+        			(cs->coll->init && cs->coll->init(cs, my_once_alloc)))
+				return TRUE;
+		} else
+			return TRUE;
+	}
+	return FALSE;
+}
+
 int utf8_collate(const char *str1, const char *str2, CollateFunctions func)
 {
 	CHARSET_INFO *cs = get_cs(func);
