@@ -188,6 +188,7 @@ void AppCore::Create(gchar *queryword)
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
 		);
+    oLibs.SetDictMask(dictmask, NULL, -1);
 	oLibs.set_show_progress(&gtk_show_progress);
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -687,6 +688,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 
 void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
 {
+    int iRealLib = dictmask[iLib];
 	gint i, j;
 	gint count=0, syncount;
 	bool bLookupWord, bLookupSynonymWord;
@@ -694,62 +696,46 @@ void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gch
 	glong iWordIdx;
 	if (piIndexValidStr) {
 		if (iIndex[iLib].idx != INVALID_INDEX) {
-			if (oLibs.enable_coll())
-				bLookupWord = !strcmp(oLibs.poGetCltWord(iIndex[iLib].idx, iLib), piIndexValidStr);
-			else
-				bLookupWord = !strcmp(oLibs.poGetWord(iIndex[iLib].idx, iLib), piIndexValidStr);
+            bLookupWord = !strcmp(oLibs.poGetWord(iIndex[iLib].idx, iRealLib, 0), piIndexValidStr);
 		} else {
 			bLookupWord = false;
 		}
 		if (iIndex[iLib].synidx != UNSET_INDEX && iIndex[iLib].synidx != INVALID_INDEX) {
-			if (oLibs.enable_coll())
-				bLookupSynonymWord = !strcmp(oLibs.poGetCltSynonymWord(iIndex[iLib].synidx, iLib), piIndexValidStr);
-			else
-				bLookupSynonymWord = !strcmp(oLibs.poGetSynonymWord(iIndex[iLib].synidx, iLib), piIndexValidStr);
+            bLookupSynonymWord = !strcmp(oLibs.poGetSynonymWord(iIndex[iLib].synidx, iRealLib, 0), piIndexValidStr);
 		} else {
 			bLookupSynonymWord = false;
 		}
 	} else {
 		if (Method==0) {
-			if (oLibs.enable_coll()) {
-				bLookupWord = oLibs.LookupCltWord(sWord, iIndex[iLib].idx, iLib);
-				bLookupSynonymWord = oLibs.LookupCltSynonymWord(sWord, iIndex[iLib].synidx, iLib);
-			} else {
-				bLookupWord = oLibs.LookupWord(sWord, iIndex[iLib].idx, iLib);
-				bLookupSynonymWord = oLibs.LookupSynonymWord(sWord, iIndex[iLib].synidx, iLib);
-			}
+            bLookupWord = oLibs.LookupWord(sWord, iIndex[iLib].idx, iRealLib, 0);
+            bLookupSynonymWord = oLibs.LookupSynonymWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
 		} else if (Method==1) {
-			bLookupWord = oLibs.LookupSimilarWord(sWord, iIndex[iLib].idx, iLib);
-			bLookupSynonymWord = oLibs.LookupSynonymSimilarWord(sWord, iIndex[iLib].synidx, iLib);
+			bLookupWord = oLibs.LookupSimilarWord(sWord, iIndex[iLib].idx, iRealLib, 0);
+			bLookupSynonymWord = oLibs.LookupSynonymSimilarWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
 		} else {
-			bLookupWord = oLibs.SimpleLookupWord(sWord, iIndex[iLib].idx, iLib);
-			bLookupSynonymWord = oLibs.SimpleLookupSynonymWord(sWord, iIndex[iLib].synidx, iLib);
+			bLookupWord = oLibs.SimpleLookupWord(sWord, iIndex[iLib].idx, iRealLib, 0);
+			bLookupSynonymWord = oLibs.SimpleLookupSynonymWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
 		}
 	}
 	if (bLookupWord || bLookupSynonymWord) {
 		glong orig_idx, orig_synidx;
-		if (oLibs.enable_coll()) {
-			orig_idx = oLibs.CltIndexToOrig(iIndex[iLib].idx, iLib);
-			orig_synidx = oLibs.CltSynIndexToOrig(iIndex[iLib].synidx, iLib);
-		} else {
-			orig_idx = iIndex[iLib].idx;
-			orig_synidx = iIndex[iLib].synidx;
-		}
+        orig_idx = oLibs.CltIndexToOrig(iIndex[iLib].idx, iRealLib, 0);
+        orig_synidx = oLibs.CltSynIndexToOrig(iIndex[iLib].synidx, iRealLib, 0);
 		nWord=0;
 		if (bLookupWord)
 			nWord++;
 		if (bLookupSynonymWord) {
-			syncount = oLibs.GetWordCount(orig_synidx, iLib, false);
+			syncount = oLibs.GetOrigWordCount(orig_synidx, iRealLib, false);
 			nWord+=syncount;
 		}
 		pppWord[iLib] = (gchar **)g_malloc(sizeof(gchar *)*(nWord+1));
 		ppppWordData[iLib] = (gchar ***)g_malloc(sizeof(gchar **)*(nWord));
 		if (bLookupWord) {
-			pppWord[iLib][0] = g_strdup(oLibs.poGetWord(orig_idx, iLib));
-			count = oLibs.GetWordCount(orig_idx, iLib, true);
+			pppWord[iLib][0] = g_strdup(oLibs.poGetOrigWord(orig_idx, iRealLib));
+			count = oLibs.GetOrigWordCount(orig_idx, iRealLib, true);
 			ppppWordData[iLib][0] = (gchar **)g_malloc(sizeof(gchar *)*(count+1));
 			for (i=0;i<count;i++) {
-				ppppWordData[iLib][0][i] = stardict_datadup(oLibs.poGetWordData(orig_idx+i, iLib));
+				ppppWordData[iLib][0][i] = stardict_datadup(oLibs.poGetOrigWordData(orig_idx+i, iRealLib));
 			}
 			ppppWordData[iLib][0][count] = NULL;
 			i=1;
@@ -757,7 +743,7 @@ void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gch
 			i=0;
 		}
 		for (j=0;i<nWord;i++,j++) {
-			iWordIdx = oLibs.poGetSynonymWordIdx(orig_synidx+j, iLib);
+			iWordIdx = oLibs.poGetOrigSynonymWordIdx(orig_synidx+j, iRealLib);
 			if (bLookupWord) {
 				if (iWordIdx>=orig_idx && (iWordIdx<orig_idx+count)) {
 					nWord--;
@@ -765,9 +751,9 @@ void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gch
 					continue;
 				}
 			}
-			pppWord[iLib][i] = g_strdup(oLibs.poGetWord(iWordIdx, iLib));
+			pppWord[iLib][i] = g_strdup(oLibs.poGetOrigWord(iWordIdx, iRealLib));
 			ppppWordData[iLib][i] = (gchar **)g_malloc(sizeof(gchar *)*2);
-			ppppWordData[iLib][i][0] = stardict_datadup(oLibs.poGetWordData(iWordIdx, iLib));
+			ppppWordData[iLib][i][0] = stardict_datadup(oLibs.poGetOrigWordData(iWordIdx, iRealLib));
 			ppppWordData[iLib][i][1] = NULL;
 		}
 		pppWord[iLib][nWord] = NULL;
@@ -922,8 +908,8 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	gtk_widget_show_all(search_window);
 
 	//clock_t t=clock();
-	std::vector< std::vector<gchar *> > reslist(oLibs.ndicts());
-	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel)) {
+	std::vector< std::vector<gchar *> > reslist(dictmask.size());
+	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, dictmask)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
 		for (size_t i=0; i<oLibs.ndicts(); i++) {
 			if (!reslist[i].empty()) {
@@ -952,7 +938,7 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 
 	gchar *fuzzy_reslist[MAX_FUZZY_MATCH_ITEM];
 	bool Found=
-		oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FUZZY_MATCH_ITEM);
+		oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FUZZY_MATCH_ITEM, dictmask);
 
 	// show
 	oMidWin.oIndexWin.oListWin.Clear();
@@ -983,7 +969,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 	gchar *fuzzy_reslist[MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM];
-	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM);
+	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM, dictmask);
 	if (Found) {
 		int i, count=0;
 		for (i=0; i<MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM; i++) {
@@ -1038,7 +1024,7 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 			   get_impl(oAppSkin.normal_cursor));
 
 	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * oLibs.ndicts());
-	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord);
+	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
 	if (iMatchCount) {
@@ -1258,7 +1244,7 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 	oMidWin.oIndexWin.oListWin.SetModel(true);
 
 	int iWordCount=0;
-	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent);
+	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent, dictmask, 0);
 	if (poCurrentWord) {
 		if (showfirst) {
 			gchar *cword = g_strdup(poCurrentWord);
@@ -1271,7 +1257,7 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 		iWordCount++;
 
 		while (iWordCount<LIST_WIN_ROW_NUM &&
-					 (poCurrentWord=oLibs.poGetNextWord(NULL,iCurrent))) {
+					 (poCurrentWord=oLibs.poGetNextWord(NULL,iCurrent, dictmask, 0))) {
 			oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
 			iWordCount++;
 		}
@@ -1368,6 +1354,7 @@ void AppCore::reload_dicts()
 		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list"),
 		     conf->get_bool_at("dictionary/enable_collation"),
 		     conf->get_int_at("dictionary/collate_function"));
+    oLibs.SetDictMask(dictmask, NULL, -1);
 	g_free(iCurrentIndex);
 	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
 

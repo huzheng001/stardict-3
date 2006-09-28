@@ -94,6 +94,8 @@ public:
 	BonoboObject *stardict_app_server;
 #endif
 
+    std::vector<std::vector<Dict *>::size_type> dictmask;
+
 	AppCore();
 	~AppCore();
 	void Init(gchar *queryword);
