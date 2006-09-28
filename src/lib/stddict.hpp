@@ -304,7 +304,7 @@ private:
 			DictInfoDictItem *dict;
 		};
 	};
-	DictInfoItem root_info_item;
+	DictInfoItem *root_info_item;
 	std::map<std::string, DictInfoDictItem *> uidmap;
 	void LoadXMLDir(const char *dir, DictInfoItem *info_item);
 

@@ -1308,6 +1308,7 @@ show_progress_t Libs::default_show_progress;
 
 Libs::Libs(show_progress_t *sp, bool create, int enablelevel, int function)
 {
+    root_info_item = NULL;
 	set_show_progress(sp);
 	CreateCacheFile = create;
 	EnableCollationLevel = enablelevel;
@@ -1325,6 +1326,8 @@ Libs::Libs(show_progress_t *sp, bool create, int enablelevel, int function)
 
 Libs::~Libs()
 {
+    if (root_info_item)
+        delete root_info_item;
 	for (std::vector<Dict *>::iterator p=oLib.begin(); p!=oLib.end(); ++p)
 		delete *p;
 	if (EnableCollationLevel)
@@ -1346,10 +1349,11 @@ bool Libs::load_dict(const std::string& url, show_progress_t *sp)
 
 void Libs::LoadFromXML()
 {
-	root_info_item.isdir = true;
-	root_info_item.dir = new DictInfoDirItem();
-	root_info_item.dir->name='/';
-	LoadXMLDir("/usr/share/stardict/dic", &root_info_item);
+    root_info_item = new DictInfoItem();
+	root_info_item->isdir = true;
+	root_info_item->dir = new DictInfoDirItem();
+	root_info_item->dir->name='/';
+	LoadXMLDir("/usr/share/stardict/dic", root_info_item);
 }
 
 void Libs::func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
@@ -1460,7 +1464,7 @@ const std::string *Libs::get_dir_info(const char *path)
 {
 	if (path[0]!='/')
 		return NULL;
-	DictInfoItem *info_item = &root_info_item;
+	DictInfoItem *info_item = root_info_item;
 	std::string item;
 	const char *p = path+1;
 	const char *p1;
