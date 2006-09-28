@@ -61,31 +61,31 @@ static bool test_dict_lookup_success(Dict *d)
 	const char too_small[]={0x1, 0x1, 0x1, 0x0};
 	const char too_big[]={0xCF, 0xCF, 0xCF, 0x0};
 	glong i;
-	if (d->Lookup(too_small, i)) {
+	if (d->Lookup(too_small, i, 0, 0)) {
 		std::cerr<<"too_small test failed for: "<<d->dict_name()<<std::endl;
 		return false;
 	}
-	if (d->Lookup(too_big, i)) {
+	if (d->Lookup(too_big, i, 0, 0)) {
 		std::cerr<<"too_big test failed for: "<<d->dict_name()<<std::endl;
 		return false;
 	}
-	std::string first(d->get_key(0)), last(d->get_key(d->narticles()-1));
+	std::string first(d->idx_file->get_key(0)), last(d->idx_file->get_key(d->narticles()-1));
 	//if (!d->Lookup(first.c_str(), i) || i!=0) {
-	if (!d->Lookup(first.c_str(), i)) {
+	if (!d->Lookup(first.c_str(), i, 0, 0)) {
 		std::cerr<<"first word lookup failed: "<<d->dict_name()<<std::endl;
 		return false;
 	}
 	//if (!d->Lookup(last.c_str(), i) || i!=glong(d->narticles()-1)) {
-	if (!d->Lookup(last.c_str(), i)) {
+	if (!d->Lookup(last.c_str(), i, 0, 0)) {
 		std::cerr<<"last word lookup failed: "<<d->dict_name()<<std::endl;
 		return false;
 	}
 	srand(time(NULL));
 	for (int j=0; j<10000; ++j) {
 		glong idx=random(0, d->narticles()-1);
-		std::string word(d->get_key(idx));
+		std::string word(d->idx_file->get_key(idx));
 		//if (!d->Lookup(word.c_str(), i) || i!=idx) {
-		if (!d->Lookup(word.c_str(), i)) {
+		if (!d->Lookup(word.c_str(), i, 0, 0)) {
 			std::cerr<<"random word lookup failed: "<<d->dict_name()<<std::endl;
 			return false;
 		}

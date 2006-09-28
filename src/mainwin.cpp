@@ -338,7 +338,7 @@ void TopWin::do_prev()
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
 			CurrentIndex *iPreIndex =
 				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
-			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex);
+			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->dictmask, 0);
 			if (preword) {
 				SetText(preword);
 				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
@@ -406,7 +406,7 @@ void TopWin::do_next()
 			gtk_tree_model_get(model, &new_iter, 0, &word, -1);
 			CurrentIndex *iNextIndex =
 				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
-			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex);
+			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->dictmask, 0);
 			if (nextword) {
 				SetText(nextword);				
 				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
