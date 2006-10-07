@@ -200,10 +200,11 @@ public:
 	}
 	bool load_dict(const std::string& url, show_progress_t *sp);
 	void LoadFromXML();
-	void SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max);
+	void SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max, int level);
 	void LoadCollateFile(std::vector<std::vector<Dict *>::size_type> &dictmask, CollateFunctions cltfuc);
 	const std::string *get_dir_info(const char *path);
 	const std::string *get_dict_info(const char *uid, bool is_short);
+	int get_dict_level(const char *uid);
 	void load(const strlist_t& dicts_dirs, const strlist_t& order_list, const strlist_t& disable_list);
 	void reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
 		    const strlist_t& disable_list, int is_coll_enb, int collf);
@@ -289,31 +290,38 @@ private:
 		std::string info_string;
 		std::string short_info_string;
 		std::string uid;
+		unsigned int level;
 		unsigned int id;
 	};
 	struct DictInfoItem {
 		~DictInfoItem() {
-			if (isdir)
+			if (isdir == 1)
 				delete dir;
-			else
+			else if (isdir == 0)
 				delete dict;
 		}
-		bool isdir;
+		int isdir;
 		union {
 			DictInfoDirItem *dir;
 			DictInfoDictItem *dict;
+			std::string *linkuid;
 		};
 	};
 	DictInfoItem *root_info_item;
 	std::map<std::string, DictInfoDictItem *> uidmap;
 	void LoadXMLDir(const char *dir, DictInfoItem *info_item);
+	void GenLinkDict(DictInfoItem *info_item);
 
 	struct ParseUserData {
 		Libs *oLibs;
 		const char *dir;
 		DictInfoItem *info_item;
+		bool indict;
 		std::string path;
 		std::string uid;
+		std::string level;
+		bool inlinkdict;
+		std::string linkuid;
 	};
 	static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error);
 	static void func_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error);
