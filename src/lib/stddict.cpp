@@ -1349,19 +1349,50 @@ bool Libs::load_dict(const std::string& url, show_progress_t *sp)
 
 void Libs::LoadFromXML()
 {
-    root_info_item = new DictInfoItem();
-	root_info_item->isdir = true;
+	root_info_item = new DictInfoItem();
+	root_info_item->isdir = 1;
 	root_info_item->dir = new DictInfoDirItem();
 	root_info_item->dir->name='/';
 	LoadXMLDir("/usr/share/stardict/dic", root_info_item);
+	GenLinkDict(root_info_item);
+}
+
+void Libs::GenLinkDict(DictInfoItem *info_item)
+{
+	std::list<std::list<DictInfoItem *>::iterator> eraselist;
+	for (std::list<DictInfoItem *>::iterator i = info_item->dir->info_item_list.begin(); i!= info_item->dir->info_item_list.end(); ++i) {
+		if ((*i)->isdir == 1) {
+			GenLinkDict(*i);
+		} else if ((*i)->isdir == 2) {
+			std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
+			uid_iter = uidmap.find(*((*i)->linkuid));
+			if (uid_iter!=uidmap.end()) {
+				delete (*i)->linkuid;
+				(*i)->dict = uid_iter->second;
+			} else {
+				g_print("Error, linkdict uid not found! %s\n", (*i)->linkuid->c_str());
+				delete (*i)->linkuid;
+				eraselist.push_back(i);
+			}
+		}
+	}
+	for (std::list<std::list<DictInfoItem *>::iterator>::iterator i = eraselist.begin(); i!= eraselist.end(); ++i) {
+		info_item->dir->info_item_list.erase(*i);
+	}
 }
 
 void Libs::func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
 {
 	if (strcmp(element_name, "dict")==0) {
 		ParseUserData *Data = (ParseUserData *)user_data;
+		Data->indict = true;
 		Data->path.clear();
 		Data->uid.clear();
+		Data->level.clear();
+	} else if (strcmp(element_name, "linkdict")==0) {
+		ParseUserData *Data = (ParseUserData *)user_data;
+		Data->inlinkdict = true;
+		Data->linkuid.clear();
 	}
 }
 
@@ -1369,6 +1400,7 @@ void Libs::func_parse_end_element(GMarkupParseContext *context, const gchar *ele
 {
 	if (strcmp(element_name, "dict")==0) {
 		ParseUserData *Data = (ParseUserData *)user_data;
+		Data->indict = false;
 		if (!Data->path.empty() && !Data->uid.empty()) {
 			std::string url;
 			url = Data->dir;
@@ -1376,13 +1408,26 @@ void Libs::func_parse_end_element(GMarkupParseContext *context, const gchar *ele
 			url += Data->path;
 			if (Data->oLibs->load_dict(url, Data->oLibs->show_progress)) {
 				DictInfoItem *sub_info_item = new DictInfoItem();
-				sub_info_item->isdir = false;
+				sub_info_item->isdir = 0;
 				sub_info_item->dict = new DictInfoDictItem();
 				sub_info_item->dict->uid = Data->uid;
+				if (Data->level.empty())
+					sub_info_item->dict->level = 0;
+				else
+					sub_info_item->dict->level = atoi(Data->level.c_str());
 				sub_info_item->dict->id = Data->oLibs->oLib.size()-1;
 				Data->info_item->dir->info_item_list.push_back(sub_info_item);
 				Data->oLibs->uidmap[Data->uid] = sub_info_item->dict;
 			}
+		}
+	} else if (strcmp(element_name, "linkdict")==0) {
+		ParseUserData *Data = (ParseUserData *)user_data;
+		Data->inlinkdict = false;
+		if (!Data->linkuid.empty()) {
+			DictInfoItem *sub_info_item = new DictInfoItem();
+			sub_info_item->isdir = 2;
+			sub_info_item->linkuid = new std::string(Data->linkuid);
+			Data->info_item->dir->info_item_list.push_back(sub_info_item);
 		}
 	}
 }
@@ -1399,7 +1444,7 @@ void Libs::func_parse_text(GMarkupParseContext *context, const gchar *text, gsiz
 		subdir += G_DIR_SEPARATOR;
 		subdir.append(text, text_len);
 		DictInfoItem *sub_info_item = new DictInfoItem();
-		sub_info_item->isdir = true;
+		sub_info_item->isdir = 1;
 		sub_info_item->dir = new DictInfoDirItem();
 		sub_info_item->dir->name.assign(text, text_len);
 		Data->oLibs->LoadXMLDir(subdir.c_str(), sub_info_item);
@@ -1409,18 +1454,24 @@ void Libs::func_parse_text(GMarkupParseContext *context, const gchar *text, gsiz
 	} else if (strcmp(element, "path")==0) {
 		Data->path.assign(text, text_len);
 	} else if (strcmp(element, "uid")==0) {
-		std::string uid(text, text_len);
-		if (uid.find_first_of(' ')!=std::string::npos) {
-			g_print("Error: uid contains space! %s: %s\n", Data->dir, uid.c_str());
-		} else {
-			std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
-			uid_iter = Data->oLibs->uidmap.find(uid);
-			if (uid_iter!=Data->oLibs->uidmap.end()) {
-				g_print("Error: uid duplicated! %s: %s\n", Data->dir, uid.c_str());
+		if (Data->indict) {
+			std::string uid(text, text_len);
+			if (uid.find_first_of(' ')!=std::string::npos) {
+				g_print("Error: uid contains space! %s: %s\n", Data->dir, uid.c_str());
 			} else {
-				Data->uid = uid;
+				std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
+				uid_iter = Data->oLibs->uidmap.find(uid);
+				if (uid_iter!=Data->oLibs->uidmap.end()) {
+					g_print("Error: uid duplicated! %s: %s\n", Data->dir, uid.c_str());
+				} else {
+					Data->uid = uid;
+				}
 			}
+		} else if (Data->inlinkdict) {
+			Data->linkuid.assign(text, text_len);
 		}
+	} else if (strcmp(element, "level")==0) {
+		Data->level.assign(text, text_len);
 	}
 }
 
@@ -1439,6 +1490,8 @@ void Libs::LoadXMLDir(const char *dir, DictInfoItem *info_item)
 	Data.oLibs = this;
 	Data.dir = dir;
 	Data.info_item = info_item;
+	Data.indict = false;
+	Data.inlinkdict = false;
 	GMarkupParser parser;
 	parser.start_element = func_parse_start_element;
 	parser.end_element = func_parse_end_element;
@@ -1452,9 +1505,9 @@ void Libs::LoadXMLDir(const char *dir, DictInfoItem *info_item)
 	mf.close();
 	info_item->dir->dictcount = 0;
 	for (std::list<DictInfoItem *>::iterator i = info_item->dir->info_item_list.begin(); i!= info_item->dir->info_item_list.end(); ++i) {
-		if ((*i)->isdir) {
+		if ((*i)->isdir == 1) {
 			info_item->dir->dictcount += (*i)->dir->dictcount;
-		} else {
+		} else if ((*i)->isdir == 0) {
 			info_item->dir->dictcount++;
 		}
 	}
@@ -1476,7 +1529,7 @@ const std::string *Libs::get_dir_info(const char *path)
 			if (!item.empty()) {
 				found = false;
 				for (std::list<DictInfoItem *>::iterator i = info_item->dir->info_item_list.begin(); i!= info_item->dir->info_item_list.end(); ++i) {
-					if ((*i)->isdir) {
+					if ((*i)->isdir == 1) {
 						if ((*i)->dir->name == item) {
 							info_item = (*i);
 							found = true;
@@ -1497,8 +1550,9 @@ const std::string *Libs::get_dir_info(const char *path)
 		dir->info_string += "<parent>";
 		dir->info_string += path;
 		dir->info_string += "</parent>";
+		gchar *etext;
 		for (std::list<DictInfoItem *>::iterator i = info_item->dir->info_item_list.begin(); i!= info_item->dir->info_item_list.end(); ++i) {
-			if ((*i)->isdir) {
+			if ((*i)->isdir == 1) {
 				dir->info_string += "<dir><name>";
 				dir->info_string += (*i)->dir->name;
 				dir->info_string += "</name><dirname>";
@@ -1509,10 +1563,22 @@ const std::string *Libs::get_dir_info(const char *path)
 				g_free(dictcount);
 				dir->info_string += "</dictcount></dir>";
 			} else {
-				dir->info_string += "<dict><uid>";
+				dir->info_string += "<dict>";
+				if ((*i)->isdir == 2)
+					dir->info_string += "<islink>1</islink>";
+				if ((*i)->dict->level != 0) {
+					dir->info_string += "<level>";
+					gchar *level = g_strdup_printf("%u", (*i)->dict->level);
+					dir->info_string += level;
+					g_free(level);
+					dir->info_string += "</level>";
+				}
+				dir->info_string += "<uid>";
 				dir->info_string += (*i)->dict->uid;
 				dir->info_string += "</uid><bookname>";
-				dir->info_string += oLib[(*i)->dict->id]->dict_name();
+				etext = g_markup_escape_text(oLib[(*i)->dict->id]->dict_name().c_str(), -1);
+				dir->info_string += etext;
+				g_free(etext);
 				dir->info_string += "</bookname><wordcount>";
 				gchar *wc = g_strdup_printf("%ld", oLib[(*i)->dict->id]->narticles());
 				dir->info_string += wc;
@@ -1522,6 +1588,15 @@ const std::string *Libs::get_dir_info(const char *path)
 		}
 	}
 	return &(dir->info_string);
+}
+
+int Libs::get_dict_level(const char *uid)
+{
+	std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
+	uid_iter = uidmap.find(uid);
+	if (uid_iter==uidmap.end())
+		return -1;
+	return uid_iter->second->level;
 }
 
 const std::string *Libs::get_dict_info(const char *uid, bool is_short)
@@ -1534,10 +1609,13 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 	dict = uid_iter->second;
 	if (is_short) {
 		if (dict->short_info_string.empty()) {
+			gchar *etext;
 			dict->short_info_string += "<dict><uid>";
 			dict->short_info_string += uid;
 			dict->short_info_string += "</uid><bookname>";
-			dict->short_info_string += oLib[dict->id]->dict_name();
+			etext = g_markup_escape_text(oLib[dict->id]->dict_name().c_str(), -1);
+			dict->short_info_string += etext;
+			g_free(etext);
 			dict->short_info_string += "</bookname><wordcount>";
 			gchar *wc = g_strdup_printf("%ld", oLib[dict->id]->narticles());
 			dict->short_info_string += wc;
@@ -1547,11 +1625,14 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 		return &(dict->short_info_string);
 	} else {
 		if (dict->info_string.empty()) {
+			gchar *etext;
 			DictInfo dict_info;
 			if (!dict_info.load_from_ifo_file(oLib[dict->id]->ifofilename(), false))
 				return NULL;
 			dict->info_string += "<dictinfo><bookname>";
-			dict->info_string += dict_info.bookname;
+			etext = g_markup_escape_text(dict_info.bookname.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</bookname><wordcount>";
 			gchar *wc = g_strdup_printf("%u", dict_info.wordcount);
 			dict->info_string += wc;
@@ -1565,22 +1646,32 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 				dict->info_string += "</synwordcount>";
 			}
 			dict->info_string += "<author>";
-			dict->info_string += dict_info.author;
+			etext = g_markup_escape_text(dict_info.author.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</author><email>";
-			dict->info_string += dict_info.email;
+			etext = g_markup_escape_text(dict_info.email.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</email><website>";
-			dict->info_string += dict_info.website;
+			etext = g_markup_escape_text(dict_info.website.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</website><description>";
-			dict->info_string += dict_info.description;
+			etext = g_markup_escape_text(dict_info.description.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</description><date>";
-			dict->info_string += dict_info.date;
+			etext = g_markup_escape_text(dict_info.date.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
 			dict->info_string += "</date></dictinfo>";
 		}
 		return &(dict->info_string);
 	}
 }
 
-void Libs::SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max)
+void Libs::SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max, int userLevel)
 {
 	dictmask.clear();
 	if (dicts) {
@@ -1607,6 +1698,8 @@ void Libs::SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, co
 			if (uid_iter!=uidmap.end()) {
 				if (max>=0 && count >= max)
 					break;
+				if (userLevel>=0 && (unsigned int)userLevel< uid_iter->second->level)
+					continue;
 				dictmask.push_back(uid_iter->second->id);
 				count++;
 			}
