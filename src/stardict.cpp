@@ -1703,10 +1703,10 @@ static void set_data_dir()
 	HMODULE hmod;
 
 	if ((hmod = GetModuleHandle(NULL))==0)
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	char tmp_buf[256];
 	if (GetModuleFileName(hmod, tmp_buf, sizeof(tmp_buf))==0)
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 
 	gchar* buf = g_path_get_dirname(tmp_buf);
 	gStarDictDataDir=buf;
