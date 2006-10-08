@@ -22,6 +22,21 @@ DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on) :
 	create();
 }
 
+static bool is_windows_xp()
+{
+	if (!G_WIN32_IS_NT_BASED ())
+		return false;
+
+    OSVERSIONINFO version;
+
+    memset(&version, 0, sizeof(version));
+    version.dwOSVersionInfoSize = sizeof(version);
+    return GetVersionEx (&version)
+      && version.dwPlatformId == VER_PLATFORM_WIN32_NT
+      && (version.dwMajorVersion > 5
+          || (version.dwMajorVersion == 5 && version.dwMinorVersion >= 1));  
+}
+
 void DockLet::create()
 {
 	systray_hwnd = create_hiddenwin();
@@ -29,11 +44,19 @@ void DockLet::create()
                    reinterpret_cast<LONG_PTR>(this));
 
 	create_menu();
-
+	UINT fuLoad = 0;
+	if (!is_windows_xp())
+		fuLoad = LR_VGACOLOR;
 	/* Load icons, and init systray notify icon */
-	normal_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_NORMAL_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
-	scan_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_SCAN_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
-	stop_icon_ = (HICON)LoadImage(stardictexe_hInstance, MAKEINTRESOURCE(STARDICT_STOP_TRAY_ICON), IMAGE_ICON, 16, 16, 0);
+	normal_icon_ = (HICON)LoadImage(stardictexe_hInstance,
+		MAKEINTRESOURCE(STARDICT_NORMAL_TRAY_ICON),
+		IMAGE_ICON, 16, 16, fuLoad);
+	scan_icon_ = (HICON)LoadImage(stardictexe_hInstance,
+		MAKEINTRESOURCE(STARDICT_SCAN_TRAY_ICON),
+		IMAGE_ICON, 16, 16, fuLoad);
+	stop_icon_ = (HICON)LoadImage(stardictexe_hInstance,
+		MAKEINTRESOURCE(STARDICT_STOP_TRAY_ICON),
+		IMAGE_ICON, 16, 16, fuLoad);
 
 	/* Create icon in systray */
 	init_icon(systray_hwnd, normal_icon_);
