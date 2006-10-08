@@ -3,6 +3,8 @@
 
 #include <glib.h>
 
+#include "sigc++/sigc++.h"
+
 namespace STARDICT {
 	enum {
 		CMD_CLIENT,
@@ -41,11 +43,14 @@ namespace STARDICT {
 			} auth;
 		};
 		Cmd(int cmd, ...);
+        ~Cmd();
 	};
 };
 
 class StarDictClient {
 public:
+    static sigc::signal<void, const std::string&> on_error_;
+
 	StarDictClient(const char *host, int port = 2628);
 	~StarDictClient();
 
@@ -60,10 +65,14 @@ private:
 	int port_;
 	bool is_connected_;
 	std::list<STARDICT::Cmd *> cmdlist;
+    struct reply {
+            std::string daemonStamp;
+    } cmd_reply;
 
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
 	bool connect();
+    void write_str(const char *str, GError **err);
 };
 
 #endif

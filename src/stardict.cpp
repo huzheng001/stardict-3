@@ -188,7 +188,7 @@ void AppCore::Create(gchar *queryword)
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
 		);
-    oLibs.SetDictMask(dictmask, NULL, -1);
+    oLibs.SetDictMask(dictmask, NULL, -1, -1);
 	oLibs.set_show_progress(&gtk_show_progress);
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1354,7 +1354,7 @@ void AppCore::reload_dicts()
 		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list"),
 		     conf->get_bool_at("dictionary/enable_collation"),
 		     conf->get_int_at("dictionary/collate_function"));
-    oLibs.SetDictMask(dictmask, NULL, -1);
+    oLibs.SetDictMask(dictmask, NULL, -1, -1);
 	g_free(iCurrentIndex);
 	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
 
