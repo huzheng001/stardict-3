@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	Libs libs(NULL, false, false, 0);
 	libs.load(dirs, List(), List());
     std::vector<std::vector<Dict *>::size_type> dictmask;
-    libs.SetDictMask(dictmask, NULL, -1);
+    libs.SetDictMask(dictmask, NULL, -1, -1);
 	std::vector<gchar *> reslist[dictmask.size()];
 	if (libs.LookupData("letter", reslist, NULL, NULL, NULL, dictmask)) 
 		return EXIT_SUCCESS;
