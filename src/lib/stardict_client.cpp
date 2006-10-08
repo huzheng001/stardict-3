@@ -5,6 +5,7 @@
 #include <glib.h>
 
 #include "sockets.hpp"
+#include "md5.h"
 
 #include "stardict_client.hpp"
 
@@ -15,6 +16,25 @@
 #define CODE_SYNTAX_ERROR            500 /* syntax, command not recognized */
 #define CODE_DENIED                  521
 #define CODE_DICTMASK_NOTSET         522
+
+sigc::signal<void, const std::string&> StarDictClient::on_error_;
+
+static void arg_escape(std::string &earg, const char *arg)
+{
+    earg.clear();
+    while (*arg) {
+        if (*arg=='\\') {
+            earg+="\\\\";
+        } else if (*arg==' ') {
+            earg+="\\ ";
+        } else if (*arg=='\n') {
+            earg+="\\n";
+        } else {
+            earg+=*arg;
+        }
+        arg++;
+    }
+}
 
 STARDICT::Cmd::Cmd(int cmd, ...)
 {
@@ -34,60 +54,29 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	}
 	case CMD_REGISTER:
 	{
-		int need_md5 = va_arg( ap, int );
 		const char *user = va_arg( ap, const char * );
 		const char *passwd = va_arg( ap, const char * );
 		const char *email = va_arg( ap, const char * );
-		char hex[33];
-		if (need_md5) {
-			struct MD5Context ctx;
-			MD5Init(&ctx);
-			MD5Update(&ctx, (const unsigned char*)passwd, strlen(passwd));
-			unsigned char digest[16];
-			MD5Final(digest, &ctx);
-			for (int i = 0; i < 16; i++)
-				snprintf( hex+2*i, 3, "%02x", digest[i] );
-			hex[32] = '\0';
-		}
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
-		if (need_md5)
-			arg_escape(earg2, hex);
-		else
-			arg_escape(earg2, passwd);
+		arg_escape(earg2, passwd);
 		arg_escape(earg3, email);
 		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
 	case CMD_CHANGE_PASSWD:
 	{
-		int need_md5 = va_arg( ap, int );
 		const char *user = va_arg( ap, const char * );
 		const char *old_passwd = va_arg( ap, const char * );
 		const char *new_passwd = va_arg( ap, const char * );
-		char hex[33];
-		if (need_md5) {
-			struct MD5Context ctx;
-			MD5Init(&ctx);
-			MD5Update(&ctx, (const unsigned char*)new_passwd, strlen(new_passwd));
-			unsigned char digest[16];
-			MD5Final(digest, &ctx);
-			for (int i = 0; i < 16; i++)
-				snprintf( hex+2*i, 3, "%02x", digest[i] );
-			hex[32] = '\0';
-		}
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
 		arg_escape(earg2, old_passwd);
-		if (need_md5)
-			arg_escape(earg3, hex);
-		else
-			arg_escape(earg3, new_passwd);
+		arg_escape(earg3, new_passwd);
 		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
 	case CMD_AUTH:
-		this->auth.need_md5 = va_arg( ap, int );
 		this->auth.user = va_arg( ap, const char * );
 		this->auth.passwd = va_arg( ap, const char * );
 		break;
@@ -215,12 +204,12 @@ STARDICT::Cmd::~Cmd()
 		case CMD_AUTH:
 			break;
 		default:
-			g_free(c->data);
+			g_free(this->data);
 			break;
 	}
 }
 
-StarDictClient::StarDictClient()
+StarDictClient::StarDictClient(const char *host, int port)
 {
 }
 
@@ -233,29 +222,33 @@ void StarDictClient::append_command(STARDICT::Cmd *c)
 	cmdlist.push_back(c);
 }
 
+void StarDictClient::write_str(const char *str, GError **err)
+{
+    int len = strlen(str);
+    int left_byte = len;
+    GIOStatus res;
+    gsize bytes_written;
+    while (left_byte) {
+        res = g_io_channel_write_chars(channel_, str+(len - left_byte), left_byte, &bytes_written, err);
+        if (res != G_IO_STATUS_NORMAL) 
+            return;
+        left_byte -= bytes_written;
+    }
+    g_io_channel_flush(channel_, err);
+}
+
 bool StarDictClient::request_command(STARDICT::Cmd *c)
 {
 	switch (c->command) {
-		case CMD_AUTH:
+        case STARDICT::CMD_AUTH:
 		{
 			struct MD5Context ctx;
 			unsigned char digest[16];
 			char hex[33];
 			int i;
-			if (c->auth.need_md5) {
-				MD5Init(&ctx);
-				MD5Update(&ctx, (const unsigned char*)c->auth.passwd, strlen(c->auth.passwd));
-				MD5Final(digest, &ctx );
-				for (i = 0; i < 16; i++)
-					sprintf( hex+2*i, "%02x", digest[i] );
-				hex[32] = '\0';
-			}
 			MD5Init(&ctx);
 			MD5Update(&ctx, (const unsigned char*)cmd_reply.daemonStamp.c_str(), cmd_reply.daemonStamp.length());
-			if (c->auth.need_md5)
-				MD5Update(&ctx, (const unsigned char*)hex, 32);
-			else
-				MD5Update(&ctx, (const unsigned char*)(c->auth.passwd), strlen(c->auth.passwd));
+			MD5Update(&ctx, (const unsigned char*)(c->auth.passwd), strlen(c->auth.passwd));
 			MD5Final(digest, &ctx );
 			for (i = 0; i < 16; i++)
 				sprintf( hex+2*i, "%02x", digest[i] );
@@ -264,17 +257,27 @@ bool StarDictClient::request_command(STARDICT::Cmd *c)
 			arg_escape(earg1, c->auth.user);
 			arg_escape(earg2, hex);
 			char *data = g_strdup_printf("auth %s %s\n", earg1.c_str(), earg2.c_str());
-			if (net_write_str(data)) {
-				g_free(data);
+            GError *err = NULL;
+            write_str(data, &err);
+			g_free(data);
+			if (err) {
+                on_error_.emit(err->message);
+                g_error_free(err);
 				return true;
 			}
-			g_free(data);
 			break;
 		}
 		default:
-			if (net_write_str(c->data))
+        {
+            GError *err = NULL;
+            write_str(c->data, &err);
+			if (err) {
+                on_error_.emit(err->message);
+                g_error_free(err);
 				return true;
+            }
 			break;
+        }
 	}
 	return false;
 }
