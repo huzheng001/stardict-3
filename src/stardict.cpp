@@ -1696,31 +1696,35 @@ static void stardict_dummy_log_handler(const gchar *,
 }
 #endif
 
+static void set_data_dir()
+{
+	//set gStarDictDataDir;
+#ifdef _WIN32
+	HMODULE hmod;
+
+	if ((hmod = GetModuleHandle(NULL))==0)
+		return EXIT_FAILURE;
+	char tmp_buf[256];
+	if (GetModuleFileName(hmod, tmp_buf, sizeof(tmp_buf))==0)
+		return EXIT_FAILURE;
+
+	gchar* buf = g_path_get_dirname(tmp_buf);
+	gStarDictDataDir=buf;
+	g_free(buf);
+#else
+	gStarDictDataDir = STARDICT_DATA_DIR;
+#endif
+}
+
 #ifdef _WIN32
 int stardict_main(int argc,char **argv)
 #else
 int main(int argc,char **argv)
 #endif
 {
-  //set gStarDictDataDir;
+	set_data_dir();
 #ifdef _WIN32
-  HMODULE hmod;
-
-  if ((hmod = GetModuleHandle(NULL))==0)
-    return EXIT_FAILURE;
-  char tmp_buf[256];
-  if (GetModuleFileName(hmod, tmp_buf, sizeof(tmp_buf))==0)
-    return EXIT_FAILURE;
-
-  gchar* buf = g_path_get_dirname(tmp_buf);
-  gStarDictDataDir=buf;
-  g_free(buf);
-#else
-  gStarDictDataDir=STARDICT_DATA_DIR;
-#endif
-
-#ifdef _WIN32
-  bindtextdomain (GETTEXT_PACKAGE, (gStarDictDataDir + G_DIR_SEPARATOR_S "locale").c_str());
+	bindtextdomain (GETTEXT_PACKAGE, (gStarDictDataDir + G_DIR_SEPARATOR_S "locale").c_str());
 #else
 	bindtextdomain (GETTEXT_PACKAGE, STARDICT_LOCALEDIR);
 #endif
@@ -1745,48 +1749,56 @@ int main(int argc,char **argv)
 	}
 #endif
 #if defined(_WIN32) || defined(CONFIG_GTK)
-  gtk_set_locale();
-  gtk_init(&argc, &argv);
+	gtk_set_locale();
+	gtk_init(&argc, &argv);
 #endif
 #ifdef CONFIG_GPE
 	if (gpe_application_init (&argc, &argv) == FALSE)
 		exit (1);
 #endif
 #if defined(_WIN32)
-  g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("GModule", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("GLib-GObject", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_log_set_handler("GThread", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			   stardict_dummy_log_handler, NULL);
-  g_set_print_handler(stardict_dummy_print);
+	g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("GModule", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("GLib-GObject", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_log_set_handler("GThread", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_dummy_log_handler, NULL);
+	g_set_print_handler(stardict_dummy_print);
 #endif
 #ifndef CONFIG_GNOME
-	gchar *queryword = NULL;
-	for (int i = 1; i < argc; i++) {
-		if (argv[i][0] == '-') {
-			/* is an option */
-			if (strcmp(argv[i], "-h") == 0) {
-				hide_option = TRUE;
-			}
-    } else {
-			if (!queryword) {
-				if (g_utf8_validate (argv[i], -1, NULL)) {
-					queryword= g_strdup(argv[i]);
-				} else
-					queryword = g_locale_to_utf8(argv[i],-1,NULL,NULL,NULL);
-			}
-		}
-	}
+	static GOptionEntry entries[] = {
+		{ "hide", 'h', 0, G_OPTION_ARG_NONE, &hide_option,
+		  _("Do not show splash screen"), NULL },
+		{ NULL },
+	};
 
+	glib::OptionContext opt_cnt(g_option_context_new(_("word")));
+	g_option_context_add_main_entries(get_impl(opt_cnt), entries, NULL);
+	g_option_context_set_help_enabled(get_impl(opt_cnt), TRUE);
+	glib::Error err;
+	if (!g_option_context_parse(get_impl(opt_cnt), &argc, &argv, get_addr(err))) {
+		g_warning(_("Options parsing failed: %s\n"), err->message);
+		return EXIT_FAILURE;
+	}
+	gchar *queryword = NULL;
+
+	if (argc > 1)		
+		if (g_utf8_validate(argv[1], -1, NULL))
+			queryword= g_strdup(argv[1]);
+		else
+			queryword = g_locale_to_utf8(argv[1], -1, NULL, NULL,
+						     NULL);
+			
+			
+	
 #else
 	GnomeProgram *program;
 	program = gnome_program_init ("stardict", VERSION,
@@ -1847,7 +1859,7 @@ int main(int argc,char **argv)
 	gpAppFrame = &oAppCore;
 	oAppCore.Init(queryword);
 
-  return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 #ifdef _WIN32
