@@ -64,15 +64,29 @@ private:
 	std::string host_;
 	int port_;
 	bool is_connected_;
+    bool waiting_banner_;
 	std::list<STARDICT::Cmd *> cmdlist;
     struct reply {
             std::string daemonStamp;
     } cmd_reply;
+    enum ReadState {
+        READ_LINE,
+        READ_STRING,
+        READ_SIZE,
+    } reading_status_;
+    char *size_data;
+    gsize size_count;
+    gsize size_left;
 
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
 	bool connect();
     void write_str(const char *str, GError **err);
+    bool parse(gchar *line);
+    bool parse_banner(gchar *line);
+    bool parse_command_client(gchar *line);
+    bool parse_command_lookup(gchar *line);
+    bool parse_command_quit(gchar *line);
 };
 
 #endif
