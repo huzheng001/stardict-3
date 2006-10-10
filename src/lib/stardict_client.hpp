@@ -32,6 +32,22 @@ namespace STARDICT {
 		CMD_GET_USER_LEVEL,
 		CMD_QUIT,
 	};
+    struct DictResponse {
+        char *oword;
+        struct DictResult {
+            char *bookname;
+            struct WordResult {
+                char *word;
+                std::list<char *> datalist;
+            };
+            std::list<WordResult *> word_result_list;
+        };
+        std::list<DictResult *> dict_result_list;
+    };
+    struct LookupResponse {
+        struct DictResponse dict_response;
+        std::list<char *> wordlist;
+    };
 	class Cmd {
 	public:
 		int command;
@@ -42,6 +58,10 @@ namespace STARDICT {
 				const char *passwd;
 			} auth;
 		};
+        int reading_status;
+        union {
+            struct LookupResponse *lookup_response;
+        };
 		Cmd(int cmd, ...);
         ~Cmd();
 	};
@@ -85,8 +105,8 @@ private:
     bool parse(gchar *line);
     bool parse_banner(gchar *line);
     bool parse_command_client(gchar *line);
-    bool parse_command_lookup(gchar *line);
     bool parse_command_quit(gchar *line);
+    bool parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
 };
 
 #endif

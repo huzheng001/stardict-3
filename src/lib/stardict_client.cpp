@@ -438,7 +438,7 @@ bool StarDictClient::parse_banner(gchar *line)
         } else {
             //printf("Unexpected status code %d\n", status);
         }
-        return false;
+        return 0;
     }
     char *p;
     p = strrchr(line, ' ');
@@ -446,7 +446,7 @@ bool StarDictClient::parse_banner(gchar *line)
         p++;
         cmd_reply.daemonStamp = p;
     }
-    return true;
+    return 1;
 }
 
 bool StarDictClient::parse_command_client(gchar *line)
@@ -455,9 +455,9 @@ bool StarDictClient::parse_command_client(gchar *line)
     status = atoi(line);
     if (status != CODE_OK) {
         //printf("Process command \"client\" failed: %s\n", buf.c_str());
-        return false;
+        return 0;
     }
-    return true;
+    return 1;
 }
 
 bool StarDictClient::parse_command_quit(gchar *line)
@@ -465,24 +465,69 @@ bool StarDictClient::parse_command_quit(gchar *line)
     int status;
     status = atoi(line);
     if (status != CODE_GOODBYE) {
-        return false;
+        return 0;
     }
-    return true;
+    return 1;
 }
 
-bool StarDictClient::parse_command_lookup(gchar *line)
+bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 {
-    int status;
-    status = atoi(line);
-    if (status != CODE_OK) {
-        if (status == CODE_DICTMASK_NOTSET) {
-            //
-        } else {
+    if (cmd->reading_status == 0) { // Read code.
+        int status;
+        status = atoi(buf);
+        if (status != CODE_OK) {
+            if (status == CODE_DICTMASK_NOTSET) {
+                //
+            } else {
+            }
+            cmd->lookup_response = NULL;
+            return 0;
         }
-        return false;
+        cmd->lookup_response = new STARDICT::LookupResponse();
+        cmd->reading_status = 1;
+        reading_status_ = READ_STRING;
+    } else if (cmd->reading_status == 1) { // Read original word.
+        cmd->lookup_response->dict_response.oword = buf;
+        cmd->reading_status = 2;
+    } else if (cmd->reading_status == 2) { // Read book name.
+        if (*buf == '\0') {
+            if (cmd->command == STARDICT::CMD_DEFINE) {
+                return 1;
+            }
+            cmd->reading_status = 5;
+            reading_status_ = READ_STRING;
+        } else {
+            struct STARDICT::DictResponse::DictResult *dict_result = new STARDICT::DictResponse::DictResult();
+            dict_result->bookname = buf;
+            cmd->lookup_response->dict_response.dict_result_list.push_back(dict_result);
+            cmd->reading_status = 3;
+        }
+    } else if (cmd->reading_status == 3) { // Read word.
+        if (*buf == '\0') {
+            cmd->reading_status = 2;
+        } else {
+            struct STARDICT::DictResponse::DictResult::WordResult *word_result = new STARDICT::DictResponse::DictResult::WordResult();
+            word_result->word = buf;
+            cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.push_back(word_result);;
+            cmd->reading_status = 4;
+            reading_status_ = READ_SIZE;
+        }
+    } else if (cmd->reading_status == 4) {
+        if (*reinterpret_cast<guint32 *>(buf) == 0) {
+            cmd->reading_status = 3;
+            reading_status_ = READ_STRING;
+        } else {
+            cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.back()->datalist.push_back(buf);
+        }
+    } else if (cmd->reading_status == 5) {
+        if (*buf == '\0') {
+            //show result
+            return 1;
+        } else {
+            cmd->lookup_response->wordlist.push_back(buf);
+        }
     }
-    reading_status_ = READ_STRING;
-    return true;
+    return 2;
 }
 
 bool StarDictClient::parse(gchar *line)
@@ -498,17 +543,27 @@ bool StarDictClient::parse(gchar *line)
         return true;
     }
     STARDICT::Cmd* cmd = cmdlist.front();
+    int result;
     switch (cmd->command) {
         case STARDICT::CMD_CLIENT:
-            if (!parse_command_client(line))
-                return false;
+            result = parse_command_client(line);
+            break;
+        case STARDICT::CMD_DEFINE:
+        case STARDICT::CMD_LOOKUP:
+            result = parse_dict_result(cmd, line);
             break;
         case STARDICT::CMD_QUIT:
-            if (!parse_command_quit(line))
-                return false;
+            result = parse_command_quit(line);
+            break;
+        default:
+            result = 0;
             break;
     }
-    delete cmd;
-    cmdlist.pop_front();
+    if (result == 0)
+        return false;
+    if (result == 1) {
+        delete cmd;
+        cmdlist.pop_front();
+    }
     return true;
 }
