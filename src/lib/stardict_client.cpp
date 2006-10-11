@@ -209,10 +209,8 @@ STARDICT::Cmd::~Cmd()
 	}
 }
 
-StarDictClient::StarDictClient(const char *host, int port)
+StarDictClient::StarDictClient()
 {
-    host_ = host;
-    port_ = port;
     channel_ = NULL;
     source_id_ = 0;
     is_connected_ = false;
@@ -221,6 +219,37 @@ StarDictClient::StarDictClient(const char *host, int port)
 StarDictClient::~StarDictClient()
 {
     disconnect();
+}
+
+void StarDictClient::set_server(const char *host, int port)
+{
+    host_ = host;
+    port_ = port;
+}
+
+void StarDictClient::set_auth(const char *user, const char *md5passwd)
+{
+    user_ = user;
+    md5passwd_ = md5passwd;
+}
+
+void StarDictClient::prepare_command()
+{
+    clean_command();
+    STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_CLIENT, "0.1", "StarDict");
+    append_command(cmd);
+    if (!user_.empty() && !md5passwd.empty()) {
+        STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_AUTH, user_.c_str(), md5passwd_.c_str());
+        append_command(cmd);
+    }
+}
+
+void send_command()
+{
+    STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_QUIT);
+    append_command(cmd);
+    waiting_banner_ = true;
+    connect();
 }
 
 void StarDictClient::append_command(STARDICT::Cmd *c)
@@ -243,8 +272,9 @@ void StarDictClient::write_str(const char *str, GError **err)
     g_io_channel_flush(channel_, err);
 }
 
-bool StarDictClient::request_command(STARDICT::Cmd *c)
+void StarDictClient::request_command()
 {
+    STARDICT::Cmd *c = cmdlist.front();
 	switch (c->command) {
         case STARDICT::CMD_AUTH:
 		{
@@ -269,7 +299,7 @@ bool StarDictClient::request_command(STARDICT::Cmd *c)
 			if (err) {
                 on_error_.emit(err->message);
                 g_error_free(err);
-				return true;
+				return;
 			}
 			break;
 		}
@@ -280,12 +310,12 @@ bool StarDictClient::request_command(STARDICT::Cmd *c)
 			if (err) {
                 on_error_.emit(err->message);
                 g_error_free(err);
-				return true;
+				return;
             }
 			break;
         }
 	}
-	return false;
+	return;
 }
 
 void StarDictClient::clean_command()
@@ -415,10 +445,14 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
         if (!len)
             break;
 
-        //truncate the line terminator before parsing
-        line[term] = '\0';
-        bool res = stardict_client->parse(line);
-        g_free(line);
+        bool res;
+        if (stardict_client->reading_status_ == READ_SIZE) {
+            res = stardict_client->parse(stardict_client->size_data);
+        } else {
+            //truncate the line terminator before parsing
+            line[term] = '\0';
+            res = stardict_client->parse(line);
+        }
         if (!res) {
             stardict_client->disconnect();
             return FALSE;
@@ -475,6 +509,7 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     if (cmd->reading_status == 0) { // Read code.
         int status;
         status = atoi(buf);
+        g_free(buf);
         if (status != CODE_OK) {
             if (status == CODE_DICTMASK_NOTSET) {
                 //
@@ -532,10 +567,14 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 
 bool StarDictClient::parse(gchar *line)
 {
+    int result;
     if (waiting_banner_) {
         waiting_banner_ = false;
-        if (!parse_banner(line))
+        result = parse_banner(line);
+        g_free(line);
+        if (!result)
             return false;
+        request_command();
         return true;
     }
     if (cmdlist.empty()) {
@@ -543,10 +582,10 @@ bool StarDictClient::parse(gchar *line)
         return true;
     }
     STARDICT::Cmd* cmd = cmdlist.front();
-    int result;
     switch (cmd->command) {
         case STARDICT::CMD_CLIENT:
             result = parse_command_client(line);
+            g_free(line);
             break;
         case STARDICT::CMD_DEFINE:
         case STARDICT::CMD_LOOKUP:
@@ -554,9 +593,11 @@ bool StarDictClient::parse(gchar *line)
             break;
         case STARDICT::CMD_QUIT:
             result = parse_command_quit(line);
+            g_free(line);
             break;
         default:
             result = 0;
+            g_free(line);
             break;
     }
     if (result == 0)
@@ -564,6 +605,7 @@ bool StarDictClient::parse(gchar *line)
     if (result == 1) {
         delete cmd;
         cmdlist.pop_front();
+        request_command();
     }
     return true;
 }

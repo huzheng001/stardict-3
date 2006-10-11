@@ -71,18 +71,21 @@ class StarDictClient {
 public:
     static sigc::signal<void, const std::string&> on_error_;
 
-	StarDictClient(const char *host, int port = 2628);
+	StarDictClient();
 	~StarDictClient();
 
+    void set_server(const char *host, int port = 2628);
+    void set_auth(const char *user, const char *md5passwd);
+    void prepare_command();
 	void append_command(STARDICT::Cmd *c);
-	bool request_command(STARDICT::Cmd *c);
-	void process_command();
-	void clean_command();
+    void send_command();
 private:
 	GIOChannel *channel_;
 	guint source_id_;
 	std::string host_;
 	int port_;
+    std::string user_;
+    std::string md5passwd_;
 	bool is_connected_;
     bool waiting_banner_;
 	std::list<STARDICT::Cmd *> cmdlist;
@@ -98,6 +101,8 @@ private:
     gsize size_count;
     gsize size_left;
 
+	void clean_command();
+	void request_command();
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
 	bool connect();
