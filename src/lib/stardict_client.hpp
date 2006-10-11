@@ -12,7 +12,7 @@ namespace STARDICT {
 		CMD_LOOKUP,
 		CMD_PREVIOUS,
 		CMD_NEXT,
-		CMD_QUERY,
+		//CMD_QUERY,
 		CMD_SELECT_QUERY,
 		CMD_DEFINE,
 		CMD_REGISTER,
@@ -33,10 +33,16 @@ namespace STARDICT {
 		CMD_QUIT,
 	};
     struct DictResponse {
+	DictResponse();
+	~DictResponse();
         char *oword;
         struct DictResult {
+            DictResult();
+            ~DictResult();
             char *bookname;
             struct WordResult {
+                WordResult();
+                ~WordResult();
                 char *word;
                 std::list<char *> datalist;
             };
@@ -45,6 +51,7 @@ namespace STARDICT {
         std::list<DictResult *> dict_result_list;
     };
     struct LookupResponse {
+	~LookupResponse();
         struct DictResponse dict_response;
         std::list<char *> wordlist;
     };
@@ -92,11 +99,11 @@ private:
     struct reply {
             std::string daemonStamp;
     } cmd_reply;
-    enum ReadState {
+    enum ReadType {
         READ_LINE,
         READ_STRING,
         READ_SIZE,
-    } reading_status_;
+    } reading_type_;
     char *size_data;
     gsize size_count;
     gsize size_left;

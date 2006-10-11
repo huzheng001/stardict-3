@@ -172,7 +172,7 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 			fread(data+sizeof(guint32), idxitem_size, 1, dictfile);
 		else
 			dictdzfile->read(data+sizeof(guint32), idxitem_offset, idxitem_size);
-		*reinterpret_cast<guint32 *>(data)=idxitem_size+sizeof(guint32);
+		*reinterpret_cast<guint32 *>(data)=idxitem_size;
 	}
 	g_free(cache[cache_cur].data);
 
