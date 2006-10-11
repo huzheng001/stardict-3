@@ -38,6 +38,7 @@ static void arg_escape(std::string &earg, const char *arg)
 
 STARDICT::Cmd::Cmd(int cmd, ...)
 {
+	this->reading_status = 0;
 	this->command = cmd;
 	va_list    ap;
 	va_start( ap, cmd );
@@ -85,6 +86,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("lookup %s\n", earg.c_str());
+		this->lookup_response = NULL;
 		break;
 	}
 	case CMD_PREVIOUS:
@@ -101,18 +103,20 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		this->data = g_strdup_printf("next %s\n", earg.c_str());
 		break;
 	}
-	case CMD_QUERY:
+	/*case CMD_QUERY:
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("query %s\n", earg.c_str());
+		this->lookup_response = NULL;
 		break;
-	}
+	}*/
 	case CMD_SELECT_QUERY:
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("selectquery %s\n", earg.c_str());
+		this->lookup_response = NULL;
 		break;
 	}
 	case CMD_DEFINE:
@@ -120,6 +124,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("define %s\n", earg.c_str());
+		this->lookup_response = NULL;
 		break;
 	}
 	case CMD_SET_DICT_MASK:
@@ -198,14 +203,59 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	va_end( ap );
 }
 
+STARDICT::DictResponse::DictResponse()
+{
+	oword = NULL;
+}
+
+STARDICT::DictResponse::~DictResponse()
+{
+	g_free(oword);
+	for (std::list<DictResult *>::iterator i = dict_result_list.begin(); i != dict_result_list.end(); ++i) {
+		delete *i;
+	}
+}
+
+STARDICT::DictResponse::DictResult::DictResult()
+{
+	bookname = NULL;
+}
+
+STARDICT::DictResponse::DictResult::~DictResult()
+{
+	g_free(bookname);
+	for (std::list<WordResult *>::iterator i = word_result_list.begin(); i != word_result_list.end(); ++i) {
+		delete *i;
+	}
+}
+
+STARDICT::DictResponse::DictResult::WordResult::WordResult()
+{
+	word = NULL;
+}
+
+STARDICT::DictResponse::DictResult::WordResult::~WordResult()
+{
+	g_free(word);
+	for (std::list<char *>::iterator i = datalist.begin(); i != datalist.end(); ++i) {
+		g_free(*i);
+	}
+}
+
+STARDICT::LookupResponse::~LookupResponse()
+{
+	for (std::list<char *>::iterator i = wordlist.begin(); i!= wordlist.end(); ++i) {
+		g_free(*i);
+	}
+}
+
 STARDICT::Cmd::~Cmd()
 {
-	switch (this->command) {
-		case CMD_AUTH:
-			break;
-		default:
-			g_free(this->data);
-			break;
+	if (this->command != CMD_AUTH) {
+		g_free(this->data);
+	}
+	if (this->command == CMD_DEFINE || this->command == CMD_LOOKUP || this->command == CMD_SELECT_QUERY) {
+		delete this->lookup_response;
 	}
 }
 
@@ -236,17 +286,17 @@ void StarDictClient::set_auth(const char *user, const char *md5passwd)
 void StarDictClient::prepare_command()
 {
     clean_command();
-    STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_CLIENT, "0.1", "StarDict");
+    STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
     append_command(cmd);
-    if (!user_.empty() && !md5passwd.empty()) {
-        STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_AUTH, user_.c_str(), md5passwd_.c_str());
+    if (!user_.empty() && !md5passwd_.empty()) {
+        STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
         append_command(cmd);
     }
 }
 
-void send_command()
+void StarDictClient::send_command()
 {
-    STARDICT::Cmd *cmd = new STARDICT::Cmd(CMD_QUIT);
+    STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_QUIT);
     append_command(cmd);
     waiting_banner_ = true;
     connect();
@@ -274,6 +324,7 @@ void StarDictClient::write_str(const char *str, GError **err)
 
 void StarDictClient::request_command()
 {
+    reading_type_ = READ_LINE;
     STARDICT::Cmd *c = cmdlist.front();
 	switch (c->command) {
         case STARDICT::CMD_AUTH:
@@ -366,7 +417,7 @@ bool StarDictClient::connect()
     }
 
     waiting_banner_ = true;
-    reading_status_ = READ_LINE;
+    reading_type_ = READ_LINE;
     source_id_ = g_io_add_watch(channel_, GIOCondition(G_IO_IN | G_IO_ERR),
                    on_io_event, this);
 
@@ -414,7 +465,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
     for (;;) {
         if (!stardict_client->channel_)
             break;
-        if (stardict_client->reading_status_ == READ_SIZE) {
+        if (stardict_client->reading_type_ == READ_SIZE) {
             gsize bytes_read;
             res = g_io_channel_read_chars(stardict_client->channel_, stardict_client->size_data+(stardict_client->size_count-stardict_client->size_left), stardict_client->size_left, &bytes_read, &err);
             stardict_client->size_left -= bytes_read;
@@ -423,9 +474,9 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
             else
                 len = 0;
         } else {
-            if (stardict_client->reading_status_ == READ_LINE)
+            if (stardict_client->reading_type_ == READ_LINE)
                 g_io_channel_set_line_term(stardict_client->channel_, "\n", 1);
-            else if (stardict_client->reading_status_ == READ_STRING)
+            else if (stardict_client->reading_type_ == READ_STRING)
                 g_io_channel_set_line_term(stardict_client->channel_, "", 1);
 
             res = g_io_channel_read_line(stardict_client->channel_, &line,
@@ -446,7 +497,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
             break;
 
         bool res;
-        if (stardict_client->reading_status_ == READ_SIZE) {
+        if (stardict_client->reading_type_ == READ_SIZE) {
             res = stardict_client->parse(stardict_client->size_data);
         } else {
             //truncate the line terminator before parsing
@@ -515,22 +566,21 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
                 //
             } else {
             }
-            cmd->lookup_response = NULL;
             return 0;
         }
         cmd->lookup_response = new STARDICT::LookupResponse();
         cmd->reading_status = 1;
-        reading_status_ = READ_STRING;
+        reading_type_ = READ_STRING;
     } else if (cmd->reading_status == 1) { // Read original word.
         cmd->lookup_response->dict_response.oword = buf;
         cmd->reading_status = 2;
     } else if (cmd->reading_status == 2) { // Read book name.
         if (*buf == '\0') {
-            if (cmd->command == STARDICT::CMD_DEFINE) {
+            if (cmd->command == STARDICT::CMD_DEFINE || cmd->command == STARDICT::CMD_SELECT_QUERY) {
                 return 1;
             }
-            cmd->reading_status = 5;
-            reading_status_ = READ_STRING;
+            cmd->reading_status = 6;
+            reading_type_ = READ_STRING;
         } else {
             struct STARDICT::DictResponse::DictResult *dict_result = new STARDICT::DictResponse::DictResult();
             dict_result->bookname = buf;
@@ -545,16 +595,28 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             word_result->word = buf;
             cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.push_back(word_result);;
             cmd->reading_status = 4;
-            reading_status_ = READ_SIZE;
+            reading_type_ = READ_SIZE;
+	    size_data = (char *)g_malloc(sizeof(guint32));
+	    size_count = size_left = sizeof(guint32);
         }
     } else if (cmd->reading_status == 4) {
+	*reinterpret_cast<guint32 *>(buf) = g_ntohl(*reinterpret_cast<guint32 *>(buf));
         if (*reinterpret_cast<guint32 *>(buf) == 0) {
+	    g_free(buf);
             cmd->reading_status = 3;
-            reading_status_ = READ_STRING;
+            reading_type_ = READ_STRING;
         } else {
-            cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.back()->datalist.push_back(buf);
+	    cmd->reading_status = 5;
+	    size_data = (char *)g_realloc(buf, *reinterpret_cast<guint32 *>(buf) + sizeof(guint32));
+	    size_count = *reinterpret_cast<guint32 *>(buf) + sizeof(guint32);
+	    size_left = *reinterpret_cast<guint32 *>(buf);
         }
     } else if (cmd->reading_status == 5) {
+            cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.back()->datalist.push_back(buf);
+	    cmd->reading_status = 4;
+	    size_data = (char *)g_malloc(sizeof(guint32));
+	    size_count = size_left = sizeof(guint32);
+    } else if (cmd->reading_status == 6) {
         if (*buf == '\0') {
             //show result
             return 1;
@@ -577,10 +639,6 @@ bool StarDictClient::parse(gchar *line)
         request_command();
         return true;
     }
-    if (cmdlist.empty()) {
-        disconnect();
-        return true;
-    }
     STARDICT::Cmd* cmd = cmdlist.front();
     switch (cmd->command) {
         case STARDICT::CMD_CLIENT:
@@ -589,6 +647,7 @@ bool StarDictClient::parse(gchar *line)
             break;
         case STARDICT::CMD_DEFINE:
         case STARDICT::CMD_LOOKUP:
+	case STARDICT::CMD_SELECT_QUERY:
             result = parse_dict_result(cmd, line);
             break;
         case STARDICT::CMD_QUIT:
@@ -605,6 +664,10 @@ bool StarDictClient::parse(gchar *line)
     if (result == 1) {
         delete cmd;
         cmdlist.pop_front();
+        if (cmdlist.empty()) {
+            disconnect();
+            return true;
+        }
         request_command();
     }
     return true;
