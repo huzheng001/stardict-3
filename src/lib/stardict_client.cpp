@@ -1,3 +1,23 @@
+/*
+ * This file part of StarDict - A international dictionary for GNOME.
+ * http://stardict.sourceforge.net
+ * Copyright (C) 2006 Hu Zheng <huzheng_001@163.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -465,14 +485,23 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
     for (;;) {
         if (!stardict_client->channel_)
             break;
+        bool res;
         if (stardict_client->reading_type_ == READ_SIZE) {
             gsize bytes_read;
             res = g_io_channel_read_chars(stardict_client->channel_, stardict_client->size_data+(stardict_client->size_count-stardict_client->size_left), stardict_client->size_left, &bytes_read, &err);
+            if (res != G_IO_STATUS_NORMAL) {
+                if (err) {
+                    on_error_.emit("Error while reading reply from server: " +
+                               std::string(err->message));
+                    g_error_free(err);
+                }
+                stardict_client->disconnect();
+
+                return FALSE;
+            }
             stardict_client->size_left -= bytes_read;
             if (stardict_client->size_left == 0)
-                len = stardict_client->size_count;
-            else
-                len = 0;
+                res = stardict_client->parse(stardict_client->size_data);
         } else {
             if (stardict_client->reading_type_ == READ_LINE)
                 g_io_channel_set_line_term(stardict_client->channel_, "\n", 1);
@@ -481,25 +510,20 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 
             res = g_io_channel_read_line(stardict_client->channel_, &line,
                              &len, &term, &err);
-        }
-        if (res == G_IO_STATUS_ERROR) {
-            if (err) {
-                on_error_.emit("Error while reading reply from server: " +
-                           std::string(err->message));
-                g_error_free(err);
+            if (res != G_IO_STATUS_NORMAL) {
+                if (err) {
+                    on_error_.emit("Error while reading reply from server: " +
+                               std::string(err->message));
+                    g_error_free(err);
+                }
+                stardict_client->disconnect();
+
+                return FALSE;
             }
-            stardict_client->disconnect();
 
-            return FALSE;
-        }
+            if (!len)
+                break;
 
-        if (!len)
-            break;
-
-        bool res;
-        if (stardict_client->reading_type_ == READ_SIZE) {
-            res = stardict_client->parse(stardict_client->size_data);
-        } else {
             //truncate the line terminator before parsing
             line[term] = '\0';
             res = stardict_client->parse(line);
@@ -576,6 +600,7 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         cmd->reading_status = 2;
     } else if (cmd->reading_status == 2) { // Read book name.
         if (*buf == '\0') {
+            g_free(buf);
             if (cmd->command == STARDICT::CMD_DEFINE || cmd->command == STARDICT::CMD_SELECT_QUERY) {
                 return 1;
             }
@@ -589,6 +614,7 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         }
     } else if (cmd->reading_status == 3) { // Read word.
         if (*buf == '\0') {
+            g_free(buf);
             cmd->reading_status = 2;
         } else {
             struct STARDICT::DictResponse::DictResult::WordResult *word_result = new STARDICT::DictResponse::DictResult::WordResult();
@@ -618,6 +644,7 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 	    size_count = size_left = sizeof(guint32);
     } else if (cmd->reading_status == 6) {
         if (*buf == '\0') {
+            g_free(buf);
             //show result
             return 1;
         } else {
