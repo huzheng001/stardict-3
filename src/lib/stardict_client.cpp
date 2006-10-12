@@ -303,28 +303,28 @@ void StarDictClient::set_auth(const char *user, const char *md5passwd)
     md5passwd_ = md5passwd;
 }
 
-void StarDictClient::prepare_command()
+void StarDictClient::send_commands(int num, ...)
 {
-    clean_command();
-    STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
-    append_command(cmd);
-    if (!user_.empty() && !md5passwd_.empty()) {
-        STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
-        append_command(cmd);
+    STARDICT::Cmd *c;
+    if (!is_connected_) {
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
+        cmdlist.push_back(c);
+        if (!user_.empty() && !md5passwd_.empty()) {
+            c = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
+            cmdlist.push_back(c);
+        }
     }
-}
-
-void StarDictClient::send_command()
-{
-    STARDICT::Cmd *cmd = new STARDICT::Cmd(STARDICT::CMD_QUIT);
-    append_command(cmd);
-    waiting_banner_ = true;
-    connect();
-}
-
-void StarDictClient::append_command(STARDICT::Cmd *c)
-{
-	cmdlist.push_back(c);
+    va_list    ap;
+    va_start( ap, num);
+    for (int i = 0; i< num; i++) {
+        c = va_arg( ap, STARDICT::Cmd *);
+	    cmdlist.push_back(c);
+    }
+    va_end( ap );
+    if (!is_connected_) {
+        waiting_banner_ = true;
+        connect();
+    }
 }
 
 void StarDictClient::write_str(const char *str, GError **err)
@@ -335,11 +335,15 @@ void StarDictClient::write_str(const char *str, GError **err)
     gsize bytes_written;
     while (left_byte) {
         res = g_io_channel_write_chars(channel_, str+(len - left_byte), left_byte, &bytes_written, err);
-        if (res != G_IO_STATUS_NORMAL) 
+        if (res != G_IO_STATUS_NORMAL) {
+            disconnect();
             return;
+        }
         left_byte -= bytes_written;
     }
-    g_io_channel_flush(channel_, err);
+    res = g_io_channel_flush(channel_, err);
+    if (res != G_IO_STATUS_NORMAL)
+        disconnect();
 }
 
 void StarDictClient::request_command()
@@ -436,6 +440,7 @@ bool StarDictClient::connect()
         return false;
     }
 
+    is_connected_ = true;
     waiting_banner_ = true;
     reading_type_ = READ_LINE;
     source_id_ = g_io_add_watch(channel_, GIOCondition(G_IO_IN | G_IO_ERR),
@@ -475,6 +480,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
                     stardict_client->host_.c_str(), stardict_client->port_);
         on_error_.emit(mes);
         g_free(mes);
+        stardict_client->disconnect();
         return FALSE;
     }
     GError *err = NULL;
@@ -485,7 +491,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
     for (;;) {
         if (!stardict_client->channel_)
             break;
-        bool res;
+        bool result;
         if (stardict_client->reading_type_ == READ_SIZE) {
             gsize bytes_read;
             res = g_io_channel_read_chars(stardict_client->channel_, stardict_client->size_data+(stardict_client->size_count-stardict_client->size_left), stardict_client->size_left, &bytes_read, &err);
@@ -501,7 +507,9 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
             }
             stardict_client->size_left -= bytes_read;
             if (stardict_client->size_left == 0)
-                res = stardict_client->parse(stardict_client->size_data);
+                result = stardict_client->parse(stardict_client->size_data);
+            else
+                break;
         } else {
             if (stardict_client->reading_type_ == READ_LINE)
                 g_io_channel_set_line_term(stardict_client->channel_, "\n", 1);
@@ -526,9 +534,9 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 
             //truncate the line terminator before parsing
             line[term] = '\0';
-            res = stardict_client->parse(line);
+            result = stardict_client->parse(line);
         }
-        if (!res) {
+        if (!result) {
             stardict_client->disconnect();
             return FALSE;
         }
@@ -574,9 +582,8 @@ bool StarDictClient::parse_command_quit(gchar *line)
     int status;
     status = atoi(line);
     if (status != CODE_GOODBYE) {
-        return 0;
     }
-    return 1;
+    return 0;
 }
 
 bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
@@ -692,8 +699,7 @@ bool StarDictClient::parse(gchar *line)
         delete cmd;
         cmdlist.pop_front();
         if (cmdlist.empty()) {
-            disconnect();
-            return true;
+            cmdlist.push_back(new STARDICT::Cmd(STARDICT::CMD_QUIT));
         }
         request_command();
     }

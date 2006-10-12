@@ -83,9 +83,7 @@ public:
 
     void set_server(const char *host, int port = 2628);
     void set_auth(const char *user, const char *md5passwd);
-    void prepare_command();
-	void append_command(STARDICT::Cmd *c);
-    void send_command();
+	void send_commands(int num, ...);
 private:
 	GIOChannel *channel_;
 	guint source_id_;
