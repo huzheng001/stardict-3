@@ -38,6 +38,7 @@
 #define CODE_DICTMASK_NOTSET         522
 
 sigc::signal<void, const std::string&> StarDictClient::on_error_;
+sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -342,8 +343,9 @@ void StarDictClient::write_str(const char *str, GError **err)
         left_byte -= bytes_written;
     }
     res = g_io_channel_flush(channel_, err);
-    if (res != G_IO_STATUS_NORMAL)
+    if (res != G_IO_STATUS_NORMAL) {
         disconnect();
+    }
 }
 
 void StarDictClient::request_command()
@@ -495,7 +497,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
         if (stardict_client->reading_type_ == READ_SIZE) {
             gsize bytes_read;
             res = g_io_channel_read_chars(stardict_client->channel_, stardict_client->size_data+(stardict_client->size_count-stardict_client->size_left), stardict_client->size_left, &bytes_read, &err);
-            if (res != G_IO_STATUS_NORMAL) {
+            if (res == G_IO_STATUS_ERROR || res == G_IO_STATUS_EOF) {
                 if (err) {
                     on_error_.emit("Error while reading reply from server: " +
                                std::string(err->message));
@@ -518,7 +520,7 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
 
             res = g_io_channel_read_line(stardict_client->channel_, &line,
                              &len, &term, &err);
-            if (res != G_IO_STATUS_NORMAL) {
+            if (res == G_IO_STATUS_ERROR || res == G_IO_STATUS_EOF) {
                 if (err) {
                     on_error_.emit("Error while reading reply from server: " +
                                std::string(err->message));
@@ -545,15 +547,15 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
     return TRUE;
 }
 
-bool StarDictClient::parse_banner(gchar *line)
+int StarDictClient::parse_banner(gchar *line)
 {
     int status;
     status = atoi(line);
     if (status != CODE_HELLO) {
         if (status == CODE_TEMPORARILY_UNAVAILABLE) {
-            //printf("Server temporarily unavailable!\n");
+            printf("Server temporarily unavailable!\n");
         } else {
-            //printf("Unexpected status code %d\n", status);
+            printf("Unexpected status code %d\n", status);
         }
         return 0;
     }
@@ -566,7 +568,7 @@ bool StarDictClient::parse_banner(gchar *line)
     return 1;
 }
 
-bool StarDictClient::parse_command_client(gchar *line)
+int StarDictClient::parse_command_client(gchar *line)
 {
     int status;
     status = atoi(line);
@@ -577,7 +579,7 @@ bool StarDictClient::parse_command_client(gchar *line)
     return 1;
 }
 
-bool StarDictClient::parse_command_quit(gchar *line)
+int StarDictClient::parse_command_quit(gchar *line)
 {
     int status;
     status = atoi(line);
@@ -586,7 +588,7 @@ bool StarDictClient::parse_command_quit(gchar *line)
     return 0;
 }
 
-bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
+int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) { // Read code.
         int status;
@@ -633,16 +635,17 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 	    size_count = size_left = sizeof(guint32);
         }
     } else if (cmd->reading_status == 4) {
-	*reinterpret_cast<guint32 *>(buf) = g_ntohl(*reinterpret_cast<guint32 *>(buf));
-        if (*reinterpret_cast<guint32 *>(buf) == 0) {
+        *reinterpret_cast<guint32 *>(buf) = g_ntohl(*reinterpret_cast<guint32 *>(buf));
+        guint32 datasize = *reinterpret_cast<guint32 *>(buf);
+        if (datasize == 0) {
 	    g_free(buf);
             cmd->reading_status = 3;
             reading_type_ = READ_STRING;
         } else {
 	    cmd->reading_status = 5;
-	    size_data = (char *)g_realloc(buf, *reinterpret_cast<guint32 *>(buf) + sizeof(guint32));
-	    size_count = *reinterpret_cast<guint32 *>(buf) + sizeof(guint32);
-	    size_left = *reinterpret_cast<guint32 *>(buf);
+	    size_data = (char *)g_realloc(buf, datasize + sizeof(guint32));
+	    size_count = datasize + sizeof(guint32);
+	    size_left = datasize;
         }
     } else if (cmd->reading_status == 5) {
             cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.back()->datalist.push_back(buf);
@@ -652,7 +655,7 @@ bool StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     } else if (cmd->reading_status == 6) {
         if (*buf == '\0') {
             g_free(buf);
-            //show result
+            on_lookup_end_.emit(cmd->lookup_response);
             return 1;
         } else {
             cmd->lookup_response->wordlist.push_back(buf);

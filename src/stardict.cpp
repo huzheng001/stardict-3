@@ -190,6 +190,11 @@ void AppCore::Create(gchar *queryword)
 		);
     oLibs.SetDictMask(dictmask, NULL, -1, -1);
 	oLibs.set_show_progress(&gtk_show_progress);
+    
+    oStarDictClient.set_server("127.0.0.1", 2628);
+    oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
+    oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
+
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
@@ -1232,7 +1237,11 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 					       !showfirst);
 	app->ListWords(app->delayed_word_.c_str(), app->iCurrentIndex,
 		       !find && showfirst);
-	app->word_change_timeout_ = 0;//next line destroy timer
+
+    STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
+    app->oStarDictClient.send_commands(1, c);
+
+    app->word_change_timeout_ = 0;//next line destroy timer
 	return FALSE;
 }
 
@@ -1309,6 +1318,16 @@ void AppCore::ListClick(const gchar *word)
 	oTopWin.InsertHisList(word);
 	oTopWin.InsertBackList(word);
 	oTopWin.grab_focus();
+}
+
+void AppCore::on_stardict_client_error(const std::string&)
+{
+    printf("error\n");
+}
+
+void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
+{
+    printf("lookup end\n");
 }
 
 class reload_show_progress_t : public show_progress_t {
