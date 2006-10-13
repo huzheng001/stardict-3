@@ -17,6 +17,7 @@ class AppCore;
 
 #include "conf.h"
 #include "lib/lib.h"
+#include "lib/stardict_client.hpp"
 #include "skin.h"
 #include "mainwin.h"
 #ifdef _WIN32
@@ -86,6 +87,7 @@ public:
 
 	Libs oLibs;
 	TreeDicts oTreeDicts;
+    StarDictClient oStarDictClient;
 	std::auto_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
 	ReadWord oReadWord;
@@ -127,6 +129,9 @@ public:
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();
 	void on_link_click(const char *link);
+
+    void on_stardict_client_error(const std::string&);
+    void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response);
 };
 
 #ifdef _WIN32

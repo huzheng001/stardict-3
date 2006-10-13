@@ -77,6 +77,7 @@ namespace STARDICT {
 class StarDictClient {
 public:
     static sigc::signal<void, const std::string&> on_error_;
+    static sigc::signal<void, const struct STARDICT::LookupResponse *> on_lookup_end_;
 
 	StarDictClient();
 	~StarDictClient();
@@ -113,10 +114,10 @@ private:
 	bool connect();
     void write_str(const char *str, GError **err);
     bool parse(gchar *line);
-    bool parse_banner(gchar *line);
-    bool parse_command_client(gchar *line);
-    bool parse_command_quit(gchar *line);
-    bool parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
+    int parse_banner(gchar *line);
+    int parse_command_client(gchar *line);
+    int parse_command_quit(gchar *line);
+    int parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
 };
 
 #endif
