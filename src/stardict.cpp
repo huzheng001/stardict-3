@@ -1238,8 +1238,10 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 	app->ListWords(app->delayed_word_.c_str(), app->iCurrentIndex,
 		       !find && showfirst);
 
-    STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
-    app->oStarDictClient.send_commands(1, c);
+    if (conf->get_bool_at("network/enable_netdict")) {
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
+        app->oStarDictClient.send_commands(1, c);
+    }
 
     app->word_change_timeout_ = 0;//next line destroy timer
 	return FALSE;
@@ -1327,7 +1329,7 @@ void AppCore::on_stardict_client_error(const std::string&)
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
 {
-    printf("lookup end\n");
+    oMidWin.oTextWin.Show(lookup_response);
 }
 
 class reload_show_progress_t : public show_progress_t {

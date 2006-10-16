@@ -39,18 +39,19 @@
 #ifndef CONFIG_GPE
 enum {
 	LOGO = 0,
-	DICTIONARY_SCAN_SETTINGS = 1,
-	DICTIONARY_FONT_SETTINGS = 2,
-	DICTIONARY_CACHE_SETTINGS = 3,
-	DICTIONARY_EXPORT_SETTINGS = 4,
-	DICTIONARY_SOUND_SETTINGS = 5,
-	DICIONARY_ARTICLE_RENDERING = 6,
-	MAINWIN_INPUT_SETTINGS = 7,
-	MAINWIN_OPTIONS_SETTINGS = 8,
-	MAINWIN_SEARCH_WEBSITE_SETTINGS = 9,
-	NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS = 10,
-	FLOATWIN_OPTIONS_SETTINGS = 11,
-	FLOATWIN_SIZE_SETTINGS	= 12,	
+	DICTIONARY_SCAN_SETTINGS,
+	DICTIONARY_FONT_SETTINGS,
+	DICTIONARY_CACHE_SETTINGS,
+	DICTIONARY_EXPORT_SETTINGS,
+	DICTIONARY_SOUND_SETTINGS,
+	DICIONARY_ARTICLE_RENDERING,
+    NETWORK_NETDICT,
+	MAINWIN_INPUT_SETTINGS,
+	MAINWIN_OPTIONS_SETTINGS,
+	MAINWIN_SEARCH_WEBSITE_SETTINGS,
+	NOTIFICATION_AREA_ICON_OPITIONS_SETTINGS,
+	FLOATWIN_OPTIONS_SETTINGS,
+	FLOATWIN_SIZE_SETTINGS,	
 };
 
 enum
@@ -77,6 +78,11 @@ static CategoriesTreeItem dictionary_behavior [] = {
 	{N_("Sound"), NULL, DICTIONARY_SOUND_SETTINGS},
 	{N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING },
 	{ NULL }
+};
+
+static CategoriesTreeItem network_behavior [] = {
+    {N_("Net Dict"), NULL, NETWORK_NETDICT},
+    { NULL }
 };
 
 static CategoriesTreeItem mainwin_behavior [] =
@@ -106,6 +112,8 @@ static CategoriesTreeItem floatwin_behavior [] =
 static CategoriesTreeItem toplevel [] =
 {
 	{N_("Dictionary"), dictionary_behavior, LOGO},
+
+	{N_("Network"), network_behavior, LOGO},
 	
 	{N_("Main window"), mainwin_behavior, LOGO},
 	
@@ -897,6 +905,28 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
 }
 
+void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+	conf->set_bool_at("network/enable_netdict",
+			  gtk_toggle_button_get_active(button));
+}
+
+void PrefsDlg::setup_network_netdict()
+{
+	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Net Dict"),
+				       GTK_STOCK_NETWORK);
+	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);	
+
+	GtkWidget *ck_btn =
+		gtk_check_button_new_with_mnemonic(_("_Enable network dictionaries."));
+	gtk_box_pack_start(GTK_BOX(vbox1), ck_btn, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ck_btn),
+				     conf->get_bool_at("network/enable_netdict"));
+	g_signal_connect(G_OBJECT(ck_btn), "toggled", 
+			 G_CALLBACK(on_setup_network_netdict_ckbutton_toggled), this);
+}
+
 void PrefsDlg::on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   conf->set_bool_at("main_window/search_while_typing", 
@@ -1632,6 +1662,7 @@ GtkWidget* PrefsDlg::create_notebook ()
 	setup_dictionary_export_page ();
 	setup_dictionary_sound_page ();
 	setup_dict_article_rendering();
+    setup_network_netdict();
 	setup_mainwin_input_page ();
 	setup_mainwin_options_page ();
 	setup_mainwin_searchwebsite_page();

@@ -1586,6 +1586,26 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->end_update();
 }
 
+void TextWin::Show(const struct STARDICT::LookupResponse *lookup_response)
+{
+    view->begin_update();
+    for (std::list<struct STARDICT::DictResponse::DictResult *>::const_iterator i = lookup_response->dict_response.dict_result_list.begin(); i != lookup_response->dict_response.dict_result_list.end(); ++i) {
+        view->AppendHeader((*i)->bookname, 0);
+        for (std::list<struct STARDICT::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
+            view->AppendWord((*j)->word);
+            std::list<char *>::iterator k = (*j)->datalist.begin();
+            view->AppendData(*k, (*j)->word, lookup_response->dict_response.oword);
+            view->AppendNewline();
+            for (++k; k != (*j)->datalist.end(); ++k) {
+                view->AppendDataSeparate();
+                view->AppendData(*k, (*j)->word, lookup_response->dict_response.oword);
+                view->AppendNewline();
+            }
+        }
+    }
+    view->end_update();
+}
+
 void TextWin::ShowTreeDictData(gchar *data)
 {
 	view->begin_update();
