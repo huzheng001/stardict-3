@@ -46,6 +46,7 @@ private:
   void setup_dictionary_export_page();
   void setup_dictionary_sound_page();
   void setup_dict_article_rendering();
+  void setup_network_netdict();
   void setup_mainwin_input_page();
   void setup_mainwin_options_page();
   void setup_mainwin_searchwebsite_page();
@@ -80,6 +81,7 @@ private:
   static void on_setup_dictionary_export_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  static void on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_startup_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);

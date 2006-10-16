@@ -217,6 +217,7 @@ public:
   void Show(const gchar *str);
   void Show(const gchar *orig_word, gchar ***Word, gchar ****WordData);
   void ShowTreeDictData(gchar *data);
+  void Show(const struct STARDICT::LookupResponse *lookup_response);
   gboolean Find (const gchar *text, gboolean start);
 	bool IsSearchPanelHasFocus() { return GTK_WIDGET_HAS_FOCUS(eSearch); } 
 

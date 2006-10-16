@@ -5,6 +5,8 @@
 
 #include "sigc++/sigc++.h"
 
+#include <list>
+
 namespace STARDICT {
 	enum {
 		CMD_CLIENT,
@@ -46,9 +48,9 @@ namespace STARDICT {
                 char *word;
                 std::list<char *> datalist;
             };
-            std::list<WordResult *> word_result_list;
+            std::list<struct WordResult *> word_result_list;
         };
-        std::list<DictResult *> dict_result_list;
+        std::list<struct DictResult *> dict_result_list;
     };
     struct LookupResponse {
 	~LookupResponse();
