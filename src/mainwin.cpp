@@ -900,6 +900,10 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 		gchar *word;
 		gtk_tree_model_get (model, &iter, 0, &word, -1);
 		gpAppFrame->SimpleLookupToTextWin(word, NULL);
+        if (conf->get_bool_at("network/enable_netdict")) {
+            STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DEFINE, word);
+            gpAppFrame->oStarDictClient.send_commands(1, c);
+        }
 		g_free(word);
 	}
 }
@@ -1586,19 +1590,25 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->end_update();
 }
 
-void TextWin::Show(const struct STARDICT::LookupResponse *lookup_response)
+void TextWin::Show(const struct STARDICT::DictResponse *dict_response)
 {
+	view->connect_on_link(sigc::mem_fun(gpAppFrame,
+					    &AppCore::on_link_click));
     view->begin_update();
-    for (std::list<struct STARDICT::DictResponse::DictResult *>::const_iterator i = lookup_response->dict_response.dict_result_list.begin(); i != lookup_response->dict_response.dict_result_list.end(); ++i) {
-        view->AppendHeader((*i)->bookname, 0);
+	view->clear();
+	view->goto_begin();
+    int markindex = 0;
+    for (std::list<struct STARDICT::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+        view->AppendHeader((*i)->bookname, markindex);
+        markindex++;
         for (std::list<struct STARDICT::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
             view->AppendWord((*j)->word);
             std::list<char *>::iterator k = (*j)->datalist.begin();
-            view->AppendData(*k, (*j)->word, lookup_response->dict_response.oword);
+            view->AppendData(*k, (*j)->word, dict_response->oword);
             view->AppendNewline();
             for (++k; k != (*j)->datalist.end(); ++k) {
                 view->AppendDataSeparate();
-                view->AppendData(*k, (*j)->word, lookup_response->dict_response.oword);
+                view->AppendData(*k, (*j)->word, dict_response->oword);
                 view->AppendNewline();
             }
         }

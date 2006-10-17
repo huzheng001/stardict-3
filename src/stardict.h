@@ -132,6 +132,7 @@ public:
 
     void on_stardict_client_error(const std::string&);
     void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response);
+    void on_stardict_client_define_end(const struct STARDICT::DictResponse *dict_response);
 };
 
 #ifdef _WIN32

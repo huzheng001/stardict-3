@@ -60,16 +60,18 @@ namespace STARDICT {
 	class Cmd {
 	public:
 		int command;
+		struct AuthInfo {
+            std::string user;
+            std::string passwd;
+		};
 		union {
 			char *data;
-			struct {
-				const char *user;
-				const char *passwd;
-			} auth;
+            AuthInfo *auth;
 		};
         int reading_status;
         union {
             struct LookupResponse *lookup_response;
+            struct DictResponse *dict_response;
         };
 		Cmd(int cmd, ...);
         ~Cmd();
@@ -80,6 +82,7 @@ class StarDictClient {
 public:
     static sigc::signal<void, const std::string&> on_error_;
     static sigc::signal<void, const struct STARDICT::LookupResponse *> on_lookup_end_;
+    static sigc::signal<void, const struct STARDICT::DictResponse *> on_define_end_;
 
 	StarDictClient();
 	~StarDictClient();

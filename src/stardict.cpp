@@ -194,6 +194,7 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.set_server("127.0.0.1", 2628);
     oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
     oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
+    oStarDictClient.on_define_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_define_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1197,6 +1198,10 @@ void AppCore::TopWinEnterWord(const gchar *text)
 			/*nothing*/break;
 		}//switch (oMidWin.oTextWin.query_result) {
 	}
+    if (conf->get_bool_at("network/enable_netdict")) {
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
+        oStarDictClient.send_commands(1, c);
+    }
 
 	//when TEXT_WIN_TIPS,the text[0]=='\0',already returned.
 	oTopWin.select_region_in_text(0, -1);
@@ -1329,7 +1334,23 @@ void AppCore::on_stardict_client_error(const std::string&)
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
 {
-    oMidWin.oTextWin.Show(lookup_response);
+    oMidWin.oTextWin.Show(&(lookup_response->dict_response));
+    oMidWin.oIndexWin.oListWin.Clear();
+    oMidWin.oIndexWin.oListWin.SetModel(true);
+    if (!lookup_response->wordlist.empty()) {
+        for (std::list<char *>::const_iterator i = lookup_response->wordlist.begin(); i != lookup_response->wordlist.end(); ++i) {
+            oMidWin.oIndexWin.oListWin.InsertLast(*i);
+        }
+        oMidWin.oIndexWin.oListWin.ReScroll();
+        oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
+    } else {
+        oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
+    }
+}
+
+void AppCore::on_stardict_client_define_end(const struct STARDICT::DictResponse *dict_response)
+{
+    oMidWin.oTextWin.Show(dict_response);
 }
 
 class reload_show_progress_t : public show_progress_t {
