@@ -39,6 +39,7 @@
 
 sigc::signal<void, const std::string&> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
+sigc::signal<void, const struct STARDICT::DictResponse *> StarDictClient::on_define_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -99,8 +100,9 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		break;
 	}
 	case CMD_AUTH:
-		this->auth.user = va_arg( ap, const char * );
-		this->auth.passwd = va_arg( ap, const char * );
+        this->auth = new AuthInfo();
+		this->auth->user = va_arg( ap, const char * );
+		this->auth->passwd = va_arg( ap, const char * );
 		break;
 	case CMD_LOOKUP:
 	{
@@ -272,12 +274,16 @@ STARDICT::LookupResponse::~LookupResponse()
 
 STARDICT::Cmd::~Cmd()
 {
-	if (this->command != CMD_AUTH) {
+	if (this->command == CMD_AUTH) {
+        delete this->auth;
+    } else {
 		g_free(this->data);
 	}
-	if (this->command == CMD_DEFINE || this->command == CMD_LOOKUP || this->command == CMD_SELECT_QUERY) {
+	if (this->command == CMD_LOOKUP) {
 		delete this->lookup_response;
-	}
+	} else if (this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
+        delete this->dict_response;
+    }
 }
 
 StarDictClient::StarDictClient()
@@ -361,13 +367,13 @@ void StarDictClient::request_command()
 			int i;
 			MD5Init(&ctx);
 			MD5Update(&ctx, (const unsigned char*)cmd_reply.daemonStamp.c_str(), cmd_reply.daemonStamp.length());
-			MD5Update(&ctx, (const unsigned char*)(c->auth.passwd), strlen(c->auth.passwd));
+			MD5Update(&ctx, (const unsigned char*)(c->auth->passwd.c_str()), c->auth->passwd.length());
 			MD5Final(digest, &ctx );
 			for (i = 0; i < 16; i++)
 				sprintf( hex+2*i, "%02x", digest[i] );
 			hex[32] = '\0';
 			std::string earg1, earg2;
-			arg_escape(earg1, c->auth.user);
+			arg_escape(earg1, c->auth->user.c_str());
 			arg_escape(earg2, hex);
 			char *data = g_strdup_printf("auth %s %s\n", earg1.c_str(), earg2.c_str());
             GError *err = NULL;
@@ -601,7 +607,10 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             }
             return 0;
         }
-        cmd->lookup_response = new STARDICT::LookupResponse();
+        if (cmd->command == STARDICT::CMD_LOOKUP)
+            cmd->lookup_response = new STARDICT::LookupResponse();
+        else
+            cmd->dict_response = new STARDICT::DictResponse();
         cmd->reading_status = 1;
         reading_type_ = READ_STRING;
     } else if (cmd->reading_status == 1) { // Read original word.
@@ -610,7 +619,10 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     } else if (cmd->reading_status == 2) { // Read book name.
         if (*buf == '\0') {
             g_free(buf);
-            if (cmd->command == STARDICT::CMD_DEFINE || cmd->command == STARDICT::CMD_SELECT_QUERY) {
+            if (cmd->command == STARDICT::CMD_DEFINE) {
+                on_define_end_.emit(cmd->dict_response);
+                return 1;
+            } else if ( cmd->command == STARDICT::CMD_SELECT_QUERY) {
                 return 1;
             }
             cmd->reading_status = 6;
@@ -653,6 +665,13 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 	    size_data = (char *)g_malloc(sizeof(guint32));
 	    size_count = size_left = sizeof(guint32);
     } else if (cmd->reading_status == 6) {
+        if (strcmp(buf, "d") == 0) {
+            cmd->reading_status = 8;
+        } else {
+            cmd->reading_status = 7;
+        }
+        g_free(buf);
+    } else if (cmd->reading_status == 7) {
         if (*buf == '\0') {
             g_free(buf);
             on_lookup_end_.emit(cmd->lookup_response);
@@ -660,6 +679,8 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         } else {
             cmd->lookup_response->wordlist.push_back(buf);
         }
+    } else if (cmd->reading_status == 8) {
+        // TODO
     }
     return 2;
 }
