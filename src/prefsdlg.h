@@ -27,6 +27,9 @@ private:
   GdkPixbuf *stardict_logo;
 #endif
   GtkEntry *eExportFile;
+  GtkEntry *eStarDictServer;
+  GtkEntry *eStarDictServerPort;
+  GtkButton *bAccount;
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE)
   GtkEntry *ePlayCommand;
 #endif
@@ -82,6 +85,8 @@ private:
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  static void on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
+  static void on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_startup_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);

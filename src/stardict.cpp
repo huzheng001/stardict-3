@@ -191,10 +191,16 @@ void AppCore::Create(gchar *queryword)
     oLibs.SetDictMask(dictmask, NULL, -1, -1);
 	oLibs.set_show_progress(&gtk_show_progress);
     
-    oStarDictClient.set_server("127.0.0.1", 2628);
+    oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
+    const std::string &user = conf->get_string_at("network/user");
+    const std::string &md5passwd = conf->get_string_at("network/md5passwd");
+    if (!user.empty() && !md5passwd.empty()) {
+        oStarDictClient.set_auth(user.c_str(), md5passwd.c_str());
+    }
     oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
     oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
     oStarDictClient.on_define_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_define_end));
+    oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1327,9 +1333,32 @@ void AppCore::ListClick(const gchar *word)
 	oTopWin.grab_focus();
 }
 
-void AppCore::on_stardict_client_error(const std::string&)
+void AppCore::on_stardict_client_error(const char *error_msg)
 {
-    printf("error\n");
+    GtkWidget *message_dlg =
+        gtk_message_dialog_new(
+                GTK_WINDOW(window),
+                (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                error_msg);
+    gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+    gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+    gtk_dialog_run(GTK_DIALOG(message_dlg));
+    gtk_widget_destroy(message_dlg);
+}
+
+void AppCore::on_stardict_client_register_end(const char *msg)
+{
+    GtkWidget *message_dlg =
+        gtk_message_dialog_new(
+                GTK_WINDOW(window),
+                (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                msg);
+    gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+    gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+    gtk_dialog_run(GTK_DIALOG(message_dlg));
+    gtk_widget_destroy(message_dlg);
 }
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)

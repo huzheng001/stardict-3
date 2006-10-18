@@ -37,9 +37,10 @@
 #define CODE_DENIED                  521
 #define CODE_DICTMASK_NOTSET         522
 
-sigc::signal<void, const std::string&> StarDictClient::on_error_;
+sigc::signal<void, const char *> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
 sigc::signal<void, const struct STARDICT::DictResponse *> StarDictClient::on_define_end_;
+sigc::signal<void, const char *> StarDictClient::on_register_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -414,7 +415,8 @@ bool StarDictClient::connect()
     int sd = Socket::socket();
 
     if (sd == -1) {
-        on_error_.emit("Can not create socket: " + Socket::get_error_msg());
+        std::string str = "Can not create socket: " + Socket::get_error_msg();
+        on_error_.emit(str.c_str());
         return false;
     }
 
@@ -434,8 +436,9 @@ bool StarDictClient::connect()
     if (err) {
         g_io_channel_unref(channel_);
         channel_ = NULL;
-        on_error_.emit("Unable to set the channel as non-blocking: " +
-                   std::string(err->message));
+        gchar *str = g_strdup_printf("Unable to set the channel as non-blocking: %s", err->message);
+        on_error_.emit(str);
+        g_free(str);
         g_error_free(err);
         return false;
     }
@@ -505,8 +508,9 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
             res = g_io_channel_read_chars(stardict_client->channel_, stardict_client->size_data+(stardict_client->size_count-stardict_client->size_left), stardict_client->size_left, &bytes_read, &err);
             if (res == G_IO_STATUS_ERROR || res == G_IO_STATUS_EOF) {
                 if (err) {
-                    on_error_.emit("Error while reading reply from server: " +
-                               std::string(err->message));
+                    gchar *str = g_strdup_printf("Error while reading reply from server: %s", err->message);
+                    on_error_.emit(str);
+                    g_free(str);
                     g_error_free(err);
                 }
                 stardict_client->disconnect();
@@ -528,8 +532,9 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
                              &len, &term, &err);
             if (res == G_IO_STATUS_ERROR || res == G_IO_STATUS_EOF) {
                 if (err) {
-                    on_error_.emit("Error while reading reply from server: " +
-                               std::string(err->message));
+                    gchar *str = g_strdup_printf("Error while reading reply from server: %s", err->message);
+                    on_error_.emit(str);
+                    g_free(str);
                     g_error_free(err);
                 }
                 stardict_client->disconnect();
@@ -582,6 +587,33 @@ int StarDictClient::parse_command_client(gchar *line)
         //printf("Process command \"client\" failed: %s\n", buf.c_str());
         return 0;
     }
+    return 1;
+}
+
+int StarDictClient::parse_command_auth(gchar *line)
+{
+    int status;
+    status = atoi(line);
+    if (status != CODE_OK) {
+        gchar *str = g_strdup_printf("Auth denied: %s", line);
+        on_error_.emit(str);
+        g_free(str);
+        return 0;
+    }
+    return 1;
+}
+
+int StarDictClient::parse_command_register(gchar *line)
+{
+    int status;
+    status = atoi(line);
+    if (status != CODE_OK) {
+        gchar *str = g_strdup_printf("Register failed: %s", line);
+        on_error_.emit(str);
+        g_free(str);
+        return 0;
+    }
+    on_register_end_.emit("Register success!");
     return 1;
 }
 
@@ -703,9 +735,17 @@ bool StarDictClient::parse(gchar *line)
             result = parse_command_client(line);
             g_free(line);
             break;
+        case STARDICT::CMD_AUTH:
+            result = parse_command_auth(line);
+            g_free(line);
+            break;
+        case STARDICT::CMD_REGISTER:
+            result = parse_command_register(line);
+            g_free(line);
+            break;
         case STARDICT::CMD_DEFINE:
         case STARDICT::CMD_LOOKUP:
-	case STARDICT::CMD_SELECT_QUERY:
+        case STARDICT::CMD_SELECT_QUERY:
             result = parse_dict_result(cmd, line);
             break;
         case STARDICT::CMD_QUIT:
