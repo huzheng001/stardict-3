@@ -53,6 +53,10 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", false);
 #endif
 	add_entry("/apps/stardict/preferences/network/enable_netdict", true);
+	add_entry("/apps/stardict/preferences/network/server", std::string("dict.stardict.org"));
+	add_entry("/apps/stardict/preferences/network/port", 2628);
+	add_entry("/apps/stardict/preferences/network/user", std::string());
+	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/showfirst_when_notfound", true);

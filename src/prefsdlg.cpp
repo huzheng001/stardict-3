@@ -33,6 +33,7 @@
 #include "desktop.hpp"
 #include "utils.h"
 #include "iskeyspressed.hpp"
+#include "lib/md5.h"
 
 #include "prefsdlg.h"
 
@@ -911,6 +912,160 @@ void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button
 			  gtk_toggle_button_get_active(button));
 }
 
+void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+{
+    GtkWidget *account_dialog;
+    account_dialog =
+        gtk_dialog_new_with_buttons (_("Account"),
+                GTK_WINDOW (oPrefsDlg->window),
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_STOCK_CANCEL,
+                GTK_RESPONSE_CANCEL,
+                GTK_STOCK_OK,
+                GTK_RESPONSE_OK,
+                NULL);
+    GtkWidget *table = gtk_table_new(2, 2, FALSE);
+    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(account_dialog)->vbox), table);
+    gtk_container_set_border_width(GTK_CONTAINER(table), 6);
+    GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+    GtkWidget *user_entry = gtk_entry_new ();
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label), user_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), user_entry, 1, 2, 0, 1, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("_Password:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+    GtkWidget *passwd_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(passwd_entry), FALSE);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), passwd_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_dialog_set_default_response(GTK_DIALOG(account_dialog), GTK_RESPONSE_OK);
+    gtk_window_set_resizable(GTK_WINDOW(account_dialog), FALSE);
+    gtk_widget_show_all(GTK_WIDGET(account_dialog));
+    while (gtk_dialog_run(GTK_DIALOG(account_dialog))==GTK_RESPONSE_OK) {
+        const gchar *user = gtk_entry_get_text(GTK_ENTRY(user_entry));
+        if (!user[0]) {
+            conf->set_string_at("network/user", "");
+            conf->set_string_at("network/md5passwd", "");
+            gtk_button_set_label(oPrefsDlg->bAccount, "Guest");
+            gpAppFrame->oStarDictClient.set_auth("", "");
+            break;
+        }
+        gchar *error_msg = NULL;
+        const gchar *passwd = gtk_entry_get_text(GTK_ENTRY(passwd_entry));
+        if (!passwd[0])
+            error_msg = _("Please input the password.");
+        if (error_msg) {
+            GtkWidget *message_dlg =
+                gtk_message_dialog_new(
+                        GTK_WINDOW(account_dialog),
+                        (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                        GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                        error_msg);
+            gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+            gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+            gtk_dialog_run(GTK_DIALOG(message_dlg));
+            gtk_widget_destroy(message_dlg);
+            continue;
+        }
+        conf->set_string_at("network/user", user);
+        struct MD5Context ctx;
+        unsigned char digest[16];
+        MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)passwd, strlen(passwd));
+        MD5Final(digest, &ctx );
+        char hex[33];
+        for (int i = 0; i < 16; i++)
+            sprintf( hex+2*i, "%02x", digest[i] );
+        hex[32] = '\0';
+        conf->set_string_at("network/md5passwd", hex);
+        gtk_button_set_label(oPrefsDlg->bAccount, user);
+        gpAppFrame->oStarDictClient.set_auth(user, hex);
+        break;
+    }
+    gtk_widget_destroy(account_dialog);
+}
+
+void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+{
+    GtkWidget *register_dialog;
+    register_dialog =
+        gtk_dialog_new_with_buttons (_("Register"),
+                GTK_WINDOW (oPrefsDlg->window),
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_STOCK_CANCEL,
+                GTK_RESPONSE_CANCEL,
+                GTK_STOCK_OK,
+                GTK_RESPONSE_OK,
+                NULL);
+    GtkWidget *table = gtk_table_new(3, 2, FALSE);
+    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(register_dialog)->vbox), table);
+    gtk_container_set_border_width(GTK_CONTAINER(table), 6);
+    GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+    GtkWidget *user_entry = gtk_entry_new ();
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label), user_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), user_entry, 1, 2, 0, 1, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("_Password:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+    GtkWidget *passwd_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(passwd_entry), FALSE);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), passwd_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("_Email:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+    GtkWidget *email_entry = gtk_entry_new ();
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label), email_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), email_entry, 1, 2, 2, 3, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_dialog_set_default_response(GTK_DIALOG(register_dialog), GTK_RESPONSE_OK);
+    gtk_window_set_resizable(GTK_WINDOW(register_dialog), FALSE);
+    gtk_widget_show_all(GTK_WIDGET(register_dialog));
+    while (gtk_dialog_run(GTK_DIALOG(register_dialog))==GTK_RESPONSE_OK) {
+        gchar *error_msg = NULL;
+        const gchar *user = gtk_entry_get_text(GTK_ENTRY(user_entry));
+        const gchar *passwd = gtk_entry_get_text(GTK_ENTRY(passwd_entry));
+        const gchar *email = gtk_entry_get_text(GTK_ENTRY(email_entry));
+        if (!user[0])
+            error_msg = _("Please input the user name.");
+        else if (!passwd[0])
+            error_msg = _("Please input the password.");
+        else if (!email[0])
+            error_msg = _("Please input the email.");
+        else if (strchr(email, '@')==NULL)
+            error_msg = _("Please input a valid email.");
+        if (error_msg) {
+            GtkWidget *message_dlg =
+                gtk_message_dialog_new(
+                        GTK_WINDOW(register_dialog),
+                        (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                        GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                        error_msg);
+            gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+            gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+            gtk_dialog_run(GTK_DIALOG(message_dlg));
+            gtk_widget_destroy(message_dlg);
+            continue;
+        }
+        struct MD5Context ctx;
+        unsigned char digest[16];
+        MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)passwd, strlen(passwd));
+        MD5Final(digest, &ctx );
+        char hex[33];
+        for (int i = 0; i < 16; i++)
+            sprintf( hex+2*i, "%02x", digest[i] );
+        hex[32] = '\0';
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email);
+        gpAppFrame->oStarDictClient.send_commands(1, c);
+        break;
+    }
+    gtk_widget_destroy(register_dialog);
+}
+
 void PrefsDlg::setup_network_netdict()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Net Dict"),
@@ -919,12 +1074,50 @@ void PrefsDlg::setup_network_netdict()
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);	
 
 	GtkWidget *ck_btn =
-		gtk_check_button_new_with_mnemonic(_("_Enable network dictionaries."));
+		gtk_check_button_new_with_mnemonic(_("Enable _network dictionaries."));
 	gtk_box_pack_start(GTK_BOX(vbox1), ck_btn, FALSE, FALSE, 0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ck_btn),
 				     conf->get_bool_at("network/enable_netdict"));
 	g_signal_connect(G_OBJECT(ck_btn), "toggled", 
 			 G_CALLBACK(on_setup_network_netdict_ckbutton_toggled), this);
+
+    GtkWidget *table;
+    table = gtk_table_new(3, 2, FALSE);
+    gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+    gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+    gtk_box_pack_start(GTK_BOX(vbox1),table,false,false,0);
+    GtkWidget *label=gtk_label_new(_("StarDict server:"));
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+    GtkWidget *e = gtk_entry_new();
+    const std::string &server= conf->get_string_at("network/server");
+    gtk_entry_set_text(GTK_ENTRY(e), server.c_str());
+    gtk_table_attach(GTK_TABLE(table), e, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+    eStarDictServer=GTK_ENTRY(e);
+    label=gtk_label_new(_("Port:"));
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+    e = gtk_entry_new();
+    int port = conf->get_int_at("network/port");
+    gchar *str = g_strdup_printf("%d", port);
+    gtk_entry_set_text(GTK_ENTRY(e), str);
+    g_free(str);
+    gtk_table_attach(GTK_TABLE(table), e, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+    eStarDictServerPort=GTK_ENTRY(e);
+    label=gtk_label_new(_("Account:"));
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+    const std::string &user= conf->get_string_at("network/user");
+    GtkWidget *button;
+    if (user.empty())
+        button = gtk_button_new_with_label("Guest");
+    else
+        button = gtk_button_new_with_label(user.c_str());
+    g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_account_button_clicked), this);
+    gtk_table_attach(GTK_TABLE(table), button, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+    bAccount = GTK_BUTTON(button);
+    button = gtk_button_new_with_mnemonic(_("_Register a account"));
+    g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_register_button_clicked), this);
+    GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
+    gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
+    gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
 }
 
 void PrefsDlg::on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -1749,6 +1942,21 @@ bool PrefsDlg::ShowModal()
 		ch = gtk_entry_get_text(eExportFile);
 		if (ch[0])
 			conf->set_string_at("dictionary/export_file", ch);
+        const gchar *server;
+        ch = gtk_entry_get_text(eStarDictServer);
+        if (ch[0])
+            server = ch;
+        else
+            server = "dict.stardict.org";
+        conf->set_string_at("network/server", server);
+        int port;
+        ch = gtk_entry_get_text(eStarDictServerPort);
+        if (ch[0])
+            port = atoi(ch);
+        else
+            port = 2628;
+        conf->set_int_at("network/port", port);
+        gpAppFrame->oStarDictClient.set_server(server, port);
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE)
 		ch = gtk_entry_get_text(ePlayCommand);
 		if (ch[0])
