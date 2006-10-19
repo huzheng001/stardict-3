@@ -41,6 +41,7 @@ sigc::signal<void, const char *> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
 sigc::signal<void, const struct STARDICT::DictResponse *> StarDictClient::on_define_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
+sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -275,14 +276,14 @@ STARDICT::LookupResponse::~LookupResponse()
 
 STARDICT::Cmd::~Cmd()
 {
-	if (this->command == CMD_AUTH) {
+    if (this->command == CMD_AUTH) {
         delete this->auth;
     } else {
-		g_free(this->data);
-	}
-	if (this->command == CMD_LOOKUP) {
-		delete this->lookup_response;
-	} else if (this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
+        g_free(this->data);
+    }
+    if (this->command == CMD_LOOKUP) {
+        delete this->lookup_response;
+    } else if (this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
         delete this->dict_response;
     }
 }
@@ -626,6 +627,29 @@ int StarDictClient::parse_command_quit(gchar *line)
     return 0;
 }
 
+int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
+{
+    if (cmd->reading_status == 0) {
+        int status;
+        status = atoi(buf);
+        if (status != CODE_OK) {
+            gchar *str = g_strdup_printf("Get dict mask failed: %s", buf);
+	    g_free(buf);
+            on_error_.emit(str);
+            g_free(str);
+            return 0;
+        }
+	g_free(buf);
+	cmd->reading_status = 1;
+	reading_type_ = READ_STRING;
+    } else if (cmd->reading_status == 1) {
+        on_getdictmask_end_.emit(buf);
+	g_free(buf);
+	return 1;
+    }
+    return 2;
+}
+
 int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) { // Read code.
@@ -742,6 +766,9 @@ bool StarDictClient::parse(gchar *line)
         case STARDICT::CMD_REGISTER:
             result = parse_command_register(line);
             g_free(line);
+            break;
+        case STARDICT::CMD_GET_DICT_MASK:
+            result = parse_command_getdictmask(cmd, line);
             break;
         case STARDICT::CMD_DEFINE:
         case STARDICT::CMD_LOOKUP:

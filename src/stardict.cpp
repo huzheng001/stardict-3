@@ -201,6 +201,7 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
     oStarDictClient.on_define_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_define_end));
     oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
+    oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1359,6 +1360,12 @@ void AppCore::on_stardict_client_register_end(const char *msg)
     gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
     gtk_dialog_run(GTK_DIALOG(message_dlg));
     gtk_widget_destroy(message_dlg);
+}
+
+void AppCore::on_stardict_client_getdictmask_end(const char *msg)
+{
+	if (dict_manage_dlg)
+		dict_manage_dlg->network_getdictmask(msg);
 }
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
