@@ -8,6 +8,8 @@ private:
 	GtkWidget *wazard_button;
 	GtkWidget *appendix_button;
 	GtkWidget *notebook;
+	GtkWidget *button_notebook;
+	GtkWidget *info_label;
 	GtkWidget *dict_treeview;
 	GtkTreeModel *dict_tree_model;
 	GtkWidget *treedict_treeview;
@@ -22,6 +24,7 @@ private:
 	GtkWidget *create_dict_tree(int istreedict);
 		
 	GtkWidget *create_buttons();
+	GtkWidget *create_network_buttons();
 
 	void write_order_list(bool istreedict);
 
@@ -31,6 +34,8 @@ private:
 
 	static gboolean on_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static void response_handler (GtkDialog *dialog, gint res_id, DictManageDlg *oDictManageDlg);
+	static void on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_network_remove_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_move_top_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_move_bottom_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
