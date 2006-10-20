@@ -1087,6 +1087,7 @@ void IndexWin::Create(GtkWidget *hpaned)
 	gtk_widget_show(notebook);
 	gtk_box_pack_start(GTK_BOX(vbox),notebook, true, true, 0);
 	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
+    gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
 	oListWin.Create(notebook);
 	oResultWin.Create(notebook);
 

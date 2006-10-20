@@ -33,20 +33,29 @@ void DictManageDlg::response_handler (GtkDialog *dialog, gint res_id, DictManage
 
 void DictManageDlg::on_wazard_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
 {
-	if (gtk_toggle_button_get_active(button))
+	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
+        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Visit http://stardict.sourceforge.net to download dictionaries!"));
+    }
 }
 
 void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
 {
-	if (gtk_toggle_button_get_active(button))
+	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 1);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
+        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("These settings will take effect the next time you run StarDict."));
+    }
 }
 
 void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
 {
-	if (gtk_toggle_button_get_active(button))
+	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 2);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 1);
+        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("You can choose 5 dictionaries.")); //TODO
+    }
 }
 
 class GetInfo {
@@ -485,12 +494,20 @@ void DictManageDlg::on_move_bottom_button_clicked(GtkWidget *widget, DictManageD
 
 void DictManageDlg::on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
 {
-	gboolean istreedict = !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button));	
+    int istreedict;
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button)))
+        istreedict = 0;
+    else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->appendix_button)))
+        istreedict = 1;
+    else
+        istreedict = 2;
 	GtkWidget *now_treeview;
-	if (istreedict)
+	if (istreedict == 1)
 		now_treeview = oDictManageDlg->treedict_treeview;
-	else
+	else if (istreedict == 0)
 		now_treeview = oDictManageDlg->dict_treeview;
+    else
+        now_treeview = oDictManageDlg->network_treeview;
 
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
@@ -504,7 +521,8 @@ void DictManageDlg::on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *
 			gtk_list_store_swap(GTK_LIST_STORE(model), &iter, &prev);	
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
-			oDictManageDlg->write_order_list(istreedict);
+			if (istreedict != 2)
+                oDictManageDlg->write_order_list(istreedict);
 		}		
 		gtk_tree_path_free(path);		
 	}	
@@ -512,12 +530,20 @@ void DictManageDlg::on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *
 
 void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
 {
-	gboolean istreedict = !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button));	
+    int istreedict;
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button)))
+        istreedict = 0;
+    else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->appendix_button)))
+        istreedict = 1;
+    else
+        istreedict = 2;
 	GtkWidget *now_treeview;
-	if (istreedict)
+	if (istreedict == 1)
 		now_treeview = oDictManageDlg->treedict_treeview;
-	else
+	else if (istreedict == 0)
 		now_treeview = oDictManageDlg->dict_treeview;
+    else
+        now_treeview = oDictManageDlg->network_treeview;
 
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
@@ -531,10 +557,25 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 			gtk_list_store_swap(GTK_LIST_STORE(model), &iter, &next);	
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
-			oDictManageDlg->write_order_list(istreedict);
+            if (istreedict != 2)
+    			oDictManageDlg->write_order_list(istreedict);
 		}		
 		gtk_tree_path_free(path);		
 	}	
+}
+
+void DictManageDlg::on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+}
+
+void DictManageDlg::on_network_remove_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+	GtkTreeSelection *selection;
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oDictManageDlg->network_treeview));
+	GtkTreeIter iter;
+	if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
+        gtk_list_store_remove(GTK_LIST_STORE(oDictManageDlg->network_tree_model), &iter);
+    }
 }
 
 GtkWidget *DictManageDlg::create_buttons()
@@ -561,6 +602,34 @@ GtkWidget *DictManageDlg::create_buttons()
 	button = gtk_button_new_from_stock(GTK_STOCK_GOTO_BOTTOM);
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_bottom_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	return vbox;
+}
+
+GtkWidget *DictManageDlg::create_network_buttons()
+{
+	GtkWidget *vbox;
+#ifdef CONFIG_GPE
+	vbox = gtk_vbox_new(false,2);
+#else
+	vbox = gtk_vbox_new(false,6);
+#endif
+	GtkWidget *button;
+	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_add_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new_from_stock(GTK_STOCK_REMOVE);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_remove_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new_from_stock(GTK_STOCK_GO_UP);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_up_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new_from_stock(GTK_STOCK_GO_DOWN);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_down_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
 }
@@ -646,19 +715,25 @@ bool DictManageDlg::Show()
 		notebook = gtk_notebook_new();
 		gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
 		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
+        gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), false);
 		
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(0), NULL);
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(1), NULL);
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(2), NULL);
 		
 
-		GtkWidget *buttons = create_buttons ();
-		gtk_box_pack_start (GTK_BOX (hbox), buttons, false, false, 0);		
+        button_notebook = gtk_notebook_new();
+		gtk_box_pack_start (GTK_BOX (hbox), button_notebook, false, false, 0);
+        gtk_notebook_set_show_tabs(GTK_NOTEBOOK(button_notebook), false);
+        gtk_notebook_set_show_border(GTK_NOTEBOOK(button_notebook), false);
+        gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
+        gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
 		
-		label = gtk_label_new_with_mnemonic (_("These settings will take effect the next time you run StarDict."));
-		gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-		g_object_set (G_OBJECT (label), "xalign", 0.0, NULL);
-		gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+		info_label = gtk_label_new (_("Visit http://stardict.sourceforge.net to download dictionaries!"));
+        gtk_label_set_selectable(GTK_LABEL (info_label), TRUE);
+		gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
+		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
+		gtk_box_pack_start (GTK_BOX (vbox), info_label, FALSE, FALSE, 0);
 		
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox,
 												true, true, 0);
