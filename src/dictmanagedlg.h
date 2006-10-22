@@ -3,6 +3,16 @@
 
 #include <gtk/gtk.h>
 
+class NetworkAddDlg {
+private:
+	GtkTreeStore* model;
+	static void on_network_adddlg_add_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
+	static void on_network_adddlg_info_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
+public:
+	NetworkAddDlg();
+	void Show(GtkWindow *parent_win);
+};
+
 class DictManageDlg {
 private:	
 	GtkWidget *wazard_button;
@@ -19,6 +29,7 @@ private:
 	GtkWindow *parent_win;
 	GdkPixbuf *dicts_icon, *tree_dicts_icon;
 	GtkWidget *window;
+	NetworkAddDlg *network_add_dlg;
 
 	static GtkTreeModel* create_dict_tree_model(int istreedict);
 	GtkWidget *create_dict_tree(int istreedict);
