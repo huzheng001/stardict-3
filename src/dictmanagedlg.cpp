@@ -20,8 +20,72 @@
 
 #include "dictmanagedlg.h"
 
+NetworkAddDlg::NetworkAddDlg()
+{
+}
+
+void NetworkAddDlg::on_network_adddlg_add_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg)
+{
+}
+
+void NetworkAddDlg::on_network_adddlg_info_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg)
+{
+}
+
+void NetworkAddDlg::Show(GtkWindow *parent_win)
+{
+	GtkWidget *window = gtk_dialog_new();
+	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
+	gtk_dialog_add_button (GTK_DIALOG (window), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+	gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_CLOSE);
+	GtkWidget *hbox = gtk_hbox_new(false, 6);
+	GtkWidget *sw;
+	sw = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_widget_set_size_request (sw, 350, 230);
+	model = gtk_tree_store_new(3, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING);
+	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
+	g_object_unref (G_OBJECT (model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+	GtkTreeSelection *selection;
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "text", 0, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", 1, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
+	gtk_box_pack_start (GTK_BOX (hbox), sw, true, true, 0);
+	GtkWidget *vbox;
+	vbox = gtk_vbox_new(false,6);
+	GtkWidget *button;
+	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_add_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new_from_stock(GTK_STOCK_INFO);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_info_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, false, false, 0);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, true, true, 0);
+	gtk_widget_show_all(GTK_DIALOG (window)->vbox);
+	gtk_window_set_title(GTK_WINDOW (window), _("Browse Dictionaries"));
+	gtk_dialog_run(GTK_DIALOG(window));
+	gtk_widget_destroy(window);
+}
+
 DictManageDlg::DictManageDlg(GtkWindow *pw, GdkPixbuf *di,  GdkPixbuf *tdi) :
-	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), window(NULL)
+	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), window(NULL), network_add_dlg(NULL)
 {
 }
 
@@ -566,6 +630,12 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 
 void DictManageDlg::on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
 {
+	if (oDictManageDlg->network_add_dlg)
+		return;
+	oDictManageDlg->network_add_dlg = new NetworkAddDlg();
+	oDictManageDlg->network_add_dlg->Show(GTK_WINDOW(oDictManageDlg->window));
+	delete oDictManageDlg->network_add_dlg;
+	oDictManageDlg->network_add_dlg = NULL;
 }
 
 void DictManageDlg::on_network_remove_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
