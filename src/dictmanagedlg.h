@@ -8,9 +8,12 @@ private:
 	GtkTreeStore* model;
 	static void on_network_adddlg_add_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
 	static void on_network_adddlg_info_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
+    static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg);
+    static void on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg);
 public:
 	NetworkAddDlg();
 	void Show(GtkWindow *parent_win);
+	void network_getdirinfo(const char *xml);
 };
 
 class DictManageDlg {
@@ -61,6 +64,7 @@ public:
 	bool Show();
 	void Close();
 	void network_getdictmask(const char *xml);
+	void network_getdirinfo(const char *xml);
 };
 
 #endif

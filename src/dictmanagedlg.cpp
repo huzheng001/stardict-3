@@ -32,6 +32,32 @@ void NetworkAddDlg::on_network_adddlg_info_button_clicked(GtkWidget *widget, Net
 {
 }
 
+gboolean NetworkAddDlg::on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg)
+{
+    if (event->type==GDK_2BUTTON_PRESS) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void NetworkAddDlg::on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg)
+{
+    GtkTreeIter iter;
+    if (gtk_tree_model_iter_children(GTK_TREE_MODEL(oNetworkAddDlg->model), &iter, arg1) == FALSE)
+        return;
+    gchar *word;
+    gtk_tree_model_get (GTK_TREE_MODEL(oNetworkAddDlg->model), &iter, 0, &word, -1);
+    if (word[0] == '\0') {
+        gchar *path;
+        gtk_tree_model_get (GTK_TREE_MODEL(oNetworkAddDlg->model), arg1, 3, &path, -1);
+    	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DIR_INFO, path);
+	    gpAppFrame->oStarDictClient.send_commands(1, c);
+        g_free(path);
+    }
+    g_free(word);
+}
+
 void NetworkAddDlg::Show(GtkWindow *parent_win)
 {
 	GtkWidget *window = gtk_dialog_new();
@@ -44,7 +70,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_size_request (sw, 350, 230);
-	model = gtk_tree_store_new(3, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING);
+	model = gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_LONG, G_TYPE_STRING);
 	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	g_object_unref (G_OBJECT (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
@@ -60,9 +86,11 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
-	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", 1, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", 2, "visible", 1, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+    g_signal_connect (G_OBJECT (now_treeview), "button_press_event", G_CALLBACK (on_button_press), this);
+    g_signal_connect (G_OBJECT (now_treeview), "row-expanded", G_CALLBACK (on_row_expanded), this);
 	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
 	gtk_box_pack_start (GTK_BOX (hbox), sw, true, true, 0);
 	GtkWidget *vbox;
@@ -80,8 +108,154 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, true, true, 0);
 	gtk_widget_show_all(GTK_DIALOG (window)->vbox);
 	gtk_window_set_title(GTK_WINDOW (window), _("Browse Dictionaries"));
+	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DIR_INFO, "/");
+	gpAppFrame->oStarDictClient.send_commands(1, c);
 	gtk_dialog_run(GTK_DIALOG(window));
 	gtk_widget_destroy(window);
+}
+
+struct dirinfo_ParseUserData {
+    GtkTreeStore *model;
+    GtkTreeIter *iter;
+    std::string parent;
+    unsigned int userlevel;
+    bool in_dir;
+    std::string dir_name;
+    std::string dir_dirname;
+    std::string dir_dictcount;
+    bool in_dict;
+    std::string dict_islink;
+    std::string dict_level;
+    std::string dict_uid;
+    std::string dict_bookname;
+    std::string dict_wordcount;
+};
+
+static void dirinfo_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
+{
+    if (strcmp(element_name, "dir")==0) {
+        dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
+        Data->in_dir = true;
+        Data->dir_name.clear();
+        Data->dir_dirname.clear();
+        Data->dir_dictcount.clear();
+    } else if (strcmp(element_name, "dict")==0) {
+        dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
+        Data->in_dict = true;
+        Data->dict_islink.clear();
+        Data->dict_level.clear();
+        Data->dict_uid.clear();
+        Data->dict_bookname.clear();
+        Data->dict_wordcount.clear();
+    }
+}
+
+static void dirinfo_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error)
+{
+    if (strcmp(element_name, "dir")==0) {
+        dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
+        Data->in_dir = false;
+        GtkTreeIter iter;
+        gtk_tree_store_append(Data->model, &iter, Data->iter);
+        gtk_tree_store_set(Data->model, &iter, 0, (Data->dir_dirname + " (" + Data->dir_dictcount + ')').c_str(), 1, FALSE, 3, (Data->parent + Data->dir_name + '/').c_str(), -1);
+        GtkTreeIter iter1;
+        gtk_tree_store_append(Data->model, &iter1, &iter);
+        gtk_tree_store_set(Data->model, &iter1, 0, "", -1);
+    } else if (strcmp(element_name, "dict")==0) {
+        dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
+        Data->in_dict = false;
+        GtkTreeIter iter;
+        gtk_tree_store_append(Data->model, &iter, Data->iter);
+        gtk_tree_store_set(Data->model, &iter, 0, Data->dict_bookname.c_str(), 1, TRUE, 2, atol(Data->dict_wordcount.c_str()), 3, Data->dict_uid.c_str(), -1);
+    }
+}
+
+static gboolean find_iter(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+{
+    dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)data;
+    gboolean visible;
+    gtk_tree_model_get (model, iter, 1, &visible, -1);
+    if (visible == FALSE) {
+        gchar *path;
+        gtk_tree_model_get (model, iter, 3, &path, -1);
+        if (path && Data->parent == path) {
+            Data->iter = (GtkTreeIter *)g_malloc(sizeof(GtkTreeIter));
+            *(Data->iter) = *iter;
+            g_free(path);
+            return FALSE;
+        }
+        g_free(path);
+    }
+    return TRUE;
+}
+
+static void dirinfo_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
+{
+    const gchar *element = g_markup_parse_context_get_element(context);
+    if (!element)
+        return;
+    dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
+    if (strcmp(element, "parent")==0) {
+        Data->parent.assign(text, text_len);
+        if (Data->parent == "/") {
+            Data->iter = NULL;
+        } else {
+            gtk_tree_model_foreach(GTK_TREE_MODEL(Data->model), find_iter, Data);
+        }
+    } else if (strcmp(element, "userlevel")==0) {
+        std::string userlevel(text, text_len);
+        Data->userlevel = atoi(userlevel.c_str());
+    } else if (strcmp(element, "name")==0) {
+        if (Data->in_dir)
+            Data->dir_name.assign(text, text_len);
+    } else if (strcmp(element, "dirname")==0) {
+        if (Data->in_dir)
+            Data->dir_dirname.assign(text, text_len);
+    } else if (strcmp(element, "dictcount")==0) {
+        if (Data->in_dir)
+            Data->dir_dictcount.assign(text, text_len);
+    } else if (strcmp(element, "islink")==0) {
+        if (Data->in_dict)
+            Data->dict_islink.assign(text, text_len);
+    } else if (strcmp(element, "level")==0) {
+        if (Data->in_dict)
+            Data->dict_level.assign(text, text_len);
+    } else if (strcmp(element, "uid")==0) {
+        if (Data->in_dict)
+            Data->dict_uid.assign(text, text_len);
+    } else if (strcmp(element, "bookname")==0) {
+        if (Data->in_dict)
+            Data->dict_bookname.assign(text, text_len);
+    } else if (strcmp(element, "wordcount")==0) {
+        if (Data->in_dict)
+            Data->dict_wordcount.assign(text, text_len);
+    }
+}
+
+void NetworkAddDlg::network_getdirinfo(const char *xml)
+{
+    dirinfo_ParseUserData Data;
+    Data.model = this->model;
+    Data.iter = NULL;
+    Data.userlevel = 0;
+    Data.in_dir = false;
+    Data.in_dict = false;
+    GMarkupParser parser;
+    parser.start_element = dirinfo_parse_start_element;
+    parser.end_element = dirinfo_parse_end_element;
+    parser.text = dirinfo_parse_text;
+    parser.passthrough = NULL;
+    parser.error = NULL;
+    GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+    g_markup_parse_context_parse(context, xml, -1, NULL);
+    g_markup_parse_context_end_parse(context, NULL);
+    g_markup_parse_context_free(context);
+    if (Data.iter) {
+        GtkTreeIter iter;
+        if (gtk_tree_model_iter_children(GTK_TREE_MODEL(Data.model), &iter, Data.iter))
+            gtk_tree_store_remove(Data.model, &iter);
+        g_free(Data.iter);
+    }
 }
 
 DictManageDlg::DictManageDlg(GtkWindow *pw, GdkPixbuf *di,  GdkPixbuf *tdi) :
@@ -894,4 +1068,10 @@ void DictManageDlg::network_getdictmask(const char *xml)
 	g_markup_parse_context_parse(context, xml, -1, NULL);
 	g_markup_parse_context_end_parse(context, NULL);
 	g_markup_parse_context_free(context);
+}
+
+void DictManageDlg::network_getdirinfo(const char *xml)
+{
+    if (network_add_dlg)
+        network_add_dlg->network_getdirinfo(xml);
 }
