@@ -1,0 +1,999 @@
+# Turkish translation of StarDict 2.4.8
+# This file is distributed under the same license as the stardict package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Ozkan Yalcin <dvornikl@mailbox.hu>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: stardict 2.4.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-07-05 22:57+0800\n"
+"PO-Revision-Date: 2006-10-23 02:10+0200\n"
+"Last-Translator: Ozkan Yalcin<krangutan@yahoo.com>\n"
+"Language-Team: Turkish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/GNOME_Stardict.server.in.h:1
+msgid "stardict application"
+msgstr "stardict yazılımı"
+
+#: ../data/GNOME_Stardict.server.in.h:2
+msgid "stardict automation factory"
+msgstr "stardict otomasyon fabrikası"
+
+#: ../data/stardict.desktop.in.h:1
+msgid "Lookup words"
+msgstr "Kelime arama"
+
+#. gtk_widget_set_app_paintable(window, TRUE);
+#: ../data/stardict.desktop.in.h:2
+#: ../src/docklet.cpp:31
+#: ../src/docklet.cpp:71
+#: ../src/mainwin.cpp:483
+#: ../src/splash.cpp:78
+#: ../src/stardict.cpp:173
+#: ../src/stardict.cpp:1691
+#: ../src/win32/systray.cpp:196
+#: ../src/win32/systray.cpp:218
+msgid "StarDict"
+msgstr "Stardict"
+
+#: ../data/stardict.schemas.in.h:1
+msgid "A custom font that will be used in StarDict. This will only take effect if the \"Use Custom Font\" option is turned on."
+msgstr "Stardict'te kullanılacak özel fonttur. Eğer \"Özel Fontu Kullan\" seçeneği açıksa etkili olacaktır."
+
+#: ../data/stardict.schemas.in.h:2
+msgid "Custom Font"
+msgstr "Özel Font"
+
+#: ../data/stardict.schemas.in.h:3
+msgid "Dictionary order"
+msgstr "Sözlük düzeni"
+
+#: ../data/stardict.schemas.in.h:4
+msgid "Disabled dictionary list"
+msgstr "Sözlük listesini seçilmez kıl"
+
+#: ../data/stardict.schemas.in.h:5
+msgid "Disabled tree dictionary list"
+msgstr "Ağaç sözlük listesini seçilmez kıl"
+
+#: ../data/stardict.schemas.in.h:6
+msgid "Enable sound event"
+msgstr "Ses olayını seçilir kıl"
+
+#: ../data/stardict.schemas.in.h:7
+msgid "Hide floating window when modifier key is released"
+msgstr "Niteleyici tuş bırakıldığı zaman hareketli pencereyi gizle"
+
+#: ../data/stardict.schemas.in.h:8
+msgid "Hide floating window when modifier key is released. It only take effect when only_scan_while_modifier_key is turned on."
+msgstr "Niteleyici tuş bırakıldığı zaman hareketli pencereyi gizle. Sadece niteleyici anahtar açık olduğu zaman etkili olacaktır."
+
+#: ../data/stardict.schemas.in.h:9
+msgid "Hide the list"
+msgstr "Listeyi gizle"
+
+#: ../data/stardict.schemas.in.h:10
+msgid "Hide the window on startup"
+msgstr "Açılışta pencereyi gizle"
+
+#: ../data/stardict.schemas.in.h:11
+msgid "Hpaned 's position"
+msgstr "Hpaned'in pozisyonu"
+
+#: ../data/stardict.schemas.in.h:12
+msgid "List the dictionaries in order."
+msgstr "Sözlükleri düzenli şekilde listele."
+
+#: ../data/stardict.schemas.in.h:13
+msgid "List the dictionaries which are disabled."
+msgstr "Seçilmez kılınmış sözlükleri listele."
+
+#: ../data/stardict.schemas.in.h:14
+msgid "List the search websites."
+msgstr "Aranmış siteleri listele."
+
+#: ../data/stardict.schemas.in.h:15
+msgid "List the tree dictionaries in order."
+msgstr "Ağaç sözlükleri düzenli şekilde listele."
+
+#: ../data/stardict.schemas.in.h:16
+msgid "List the tree dictionaries which are disabled."
+msgstr "Seçilmez kılınmış ağaç sözlükleri listele."
+
+#: ../data/stardict.schemas.in.h:17
+msgid "Maximum window-height"
+msgstr "En yüksek pencere-yüksekliği"
+
+#: ../data/stardict.schemas.in.h:18
+msgid "Maximum window-width"
+msgstr "En yüksek pencere-genişliği"
+
+#: ../data/stardict.schemas.in.h:19
+msgid "Only scan while modifier key is being pressed"
+msgstr "Sadece niteleyici tuş basıldığı zaman tara."
+
+#: ../data/stardict.schemas.in.h:20
+msgid "Only scan while the modifier key is being pressed. The modifier key is set by \"scan_modifier_key\"."
+msgstr "Sadece niteleyici tuş basıldığı zaman tara. Niteleyici tuş \"niteleyici tuşla tara\" ile ayarlanır."
+
+#: ../data/stardict.schemas.in.h:21
+msgid "Only scan while this modifier key is being pressed. It can be Win(0), Shift(1), Alt(2) or Ctrl(3)."
+msgstr "Niteleyici tuş basıldığı zaman tara. Niteleyici tuş Win(0), Shift(1), Alt(2) ya da Ctrl(3) olabilir."
+
+#: ../data/stardict.schemas.in.h:22
+msgid "Pronounce the word when it pops up."
+msgstr "Kelime açıldığı zaman telafuz et."
+
+#: ../data/stardict.schemas.in.h:23
+msgid "Pronounce the word when the floating window pops up."
+msgstr "Hareketli pencere açıldığı zaman telafuz et."
+
+#: ../data/stardict.schemas.in.h:24
+msgid "Query in the floating window when middle mouse button is clicked"
+msgstr "Orta mouse tuşuna basıldığı zaman hareketli pencerede sorgula"
+
+#: ../data/stardict.schemas.in.h:25
+msgid "Scan modifier key"
+msgstr "Niteleyici tarama tuşu"
+
+#: ../data/stardict.schemas.in.h:26
+msgid "Scan the Selection"
+msgstr "Seçileni tara"
+
+#: ../data/stardict.schemas.in.h:27
+msgid "Search website list"
+msgstr "website listesini ara"
+
+#: ../data/stardict.schemas.in.h:28
+msgid "The height of the main stardict window."
+msgstr "Ana Stardict penceresininyüksekliği"
+
+#: ../data/stardict.schemas.in.h:29
+msgid "The hpaned's position, between the listview and the textview."
+msgstr "hypaned'in pozisyonu, metin görünüşü ile liste görünüşü arası."
+
+#: ../data/stardict.schemas.in.h:30
+msgid "The maximum height of the floating stardict window."
+msgstr "Hareketli stardict penceresinin en büyük yüksekliği."
+
+#: ../data/stardict.schemas.in.h:31
+msgid "The maximum width of the floating stardict window."
+msgstr "Hareketli stardict penceresinin en büyük genişliğii."
+
+#: ../data/stardict.schemas.in.h:32
+msgid "The width of the main stardict window."
+msgstr "Ana stardict penceresinin genişliği."
+
+#: ../data/stardict.schemas.in.h:33
+msgid "Tree Dictionary order"
+msgstr "Ağaç Sözlük düzeni"
+
+#: ../data/stardict.schemas.in.h:34
+msgid "Use Custom Font"
+msgstr "Özel font kullan"
+
+#: ../data/stardict.schemas.in.h:35
+msgid "Whether the main window is maximized or not."
+msgstr "Ana pencerenin büyütülüp büyütülmediği."
+
+#: ../data/stardict.schemas.in.h:36
+msgid "Whether the window is maximized or not"
+msgstr "Pencerenin büyütülüp büyültülmediği."
+
+#: ../data/stardict.schemas.in.h:37
+msgid "Whether to enable sound events or not. StarDict will play a sound event when a button is active or released, and when a menu pops up."
+msgstr "Sesin seçilir kılınıp kılınmadığı. Stardict bir düğme aktive edildiği ya da bırakıldığı ve menu açıldığı zaman ses çalar."
+
+#: ../data/stardict.schemas.in.h:38
+msgid "Whether to hide the main window on startup, or not."
+msgstr "Ana pencerenin açılışta saklanıp saklanmadığı."
+
+#: ../data/stardict.schemas.in.h:39
+msgid "Whether to hide the word-list view or not."
+msgstr "Kelime listesi görüntüsünün saklanıp saklanmadığı."
+
+#: ../data/stardict.schemas.in.h:40
+msgid "Whether to lock the floating window or not. While locked, the window will not disappear."
+msgstr "Hareketli pencerenin kitlenip kitlenmediği. Kitlendiği zaman pencere kaybolacak."
+
+#: ../data/stardict.schemas.in.h:41
+msgid "Whether to query in the floating window, or in the main window. Query is activated by the user clicking the middle mouse button on the notification area icon."
+msgstr "Hareketli pencerede ya da ana pencerede sorgulama. Sorgulama kullanıcı tarafından bildiri alanı ikonuna mouse'un orta tuşuna basılarak aktive edilir."
+
+#: ../data/stardict.schemas.in.h:42
+msgid "Whether to scan the selection or not. When the user selects text, stardict will popup a flat window showing the meaning of that text."
+msgstr "Seçilenin taranıp taranmadığı. Kullanıcı metini seçtiği zaman, stardict metinin anlamını içeren bir pencere açacaktır."
+
+#: ../data/stardict.schemas.in.h:43
+msgid "Whether to use a user-defined font in StarDict, instead of the default system font. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
+msgstr "Varsayılan sistem fontları yerine, kullanıcı tanımlı font kullanıldığında. Eğer bu seçenek seçilirse, sistem fontlarının yerine \"Özel Font\" seçeneğindeki font kullanılacaktır."
+
+#: ../data/stardict.schemas.in.h:44
+msgid "Window-height"
+msgstr "Pencere-yüksekliği"
+
+#: ../data/stardict.schemas.in.h:45
+msgid "Window-width"
+msgstr "Pencere-genişliği"
+
+#: ../data/stardict.schemas.in.h:46
+msgid "lock position (x)"
+msgstr "kilit pozisyonu (x)"
+
+#: ../data/stardict.schemas.in.h:47
+msgid "lock position (y)"
+msgstr "kilit pozisyonu (y)"
+
+#: ../data/stardict.schemas.in.h:48
+msgid "the window's x position while locked."
+msgstr "Kitlendiğinde pencerenin x pozisyonu."
+
+#: ../data/stardict.schemas.in.h:49
+msgid "the window's y position while locked."
+msgstr "Kitlndiğinde pencerenin y pozisyonu."
+
+#: ../data/stardict.schemas.in.h:50
+msgid "whether to lock the window or not"
+msgstr "pencerenin kitlenip kitlenmediği"
+
+#: ../src/conf.cpp:233
+#, c-format
+msgid ""
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference.com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"
+msgstr ""
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference.com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"
+
+#: ../src/conf.cpp:257
+msgid "win32_use_custom_font=0"
+msgstr "win32_use_custom_font=0"
+
+#: ../src/conf.cpp:268
+msgid "win32_custom_font="
+msgstr "win32_custom_font="
+
+#: ../src/dictmanagedlg.cpp:251
+#: ../src/dictmanagedlg.cpp:321
+msgid "Dictionary Name"
+msgstr "Sözlük Adı"
+
+#: ../src/dictmanagedlg.cpp:252
+#: ../src/dictmanagedlg.cpp:327
+msgid "Word count"
+msgstr "Kelime Sayısı"
+
+#: ../src/dictmanagedlg.cpp:253
+msgid "Author"
+msgstr "Yazar"
+
+#: ../src/dictmanagedlg.cpp:254
+msgid "Email"
+msgstr "E-posta"
+
+#: ../src/dictmanagedlg.cpp:255
+msgid "Website"
+msgstr "Website"
+
+#: ../src/dictmanagedlg.cpp:256
+msgid "Description"
+msgstr "Tanımlama"
+
+#: ../src/dictmanagedlg.cpp:257
+msgid "Date"
+msgstr "Tarih"
+
+#: ../src/dictmanagedlg.cpp:258
+msgid "File name"
+msgstr "Dosya Adı"
+
+#: ../src/dictmanagedlg.cpp:315
+msgid "Enable"
+msgstr "Seçilir kılma"
+
+#: ../src/dictmanagedlg.cpp:584
+msgid "D_ictionaries"
+msgstr "_Sözlükler"
+
+#: ../src/dictmanagedlg.cpp:599
+msgid "T_ree dictionaries"
+msgstr "_Agaç sözlükler"
+
+#: ../src/dictmanagedlg.cpp:623
+msgid "These settings will take effect the next time you run StarDict."
+msgstr "Bu ayarlar bir sonraki açılışta etkili olacak."
+
+#: ../src/dictmanagedlg.cpp:634
+msgid "Manage Dictionaries"
+msgstr "Sözlükleri Yönet"
+
+#: ../src/docklet.cpp:34
+#: ../src/docklet.cpp:63
+#: ../src/win32/systray.cpp:221
+msgid "StarDict - Scanning"
+msgstr "StarDict - Tarıyor"
+
+#: ../src/docklet.cpp:37
+#: ../src/docklet.cpp:67
+#: ../src/win32/systray.cpp:224
+msgid "StarDict - Stopped"
+msgstr "Stardict - Tarama durdu"
+
+#: ../src/docklet.cpp:122
+#: ../src/mainwin.cpp:1712
+msgid "_Scan"
+msgstr "_Tarama"
+
+#: ../src/docklet.cpp:130
+#: ../src/mainwin.cpp:551
+msgid "_Quit"
+msgstr "_Çıkış"
+
+#: ../src/floatwin.cpp:121
+msgid "Query in the main window"
+msgstr "Ana pencerede sorgula"
+
+#: ../src/floatwin.cpp:130
+msgid "Save to file"
+msgstr "Dosyaya kaydet"
+
+#: ../src/floatwin.cpp:138
+#: ../src/mainwin.cpp:1259
+msgid "Pronounce the word"
+msgstr "Kelimeyi telafuz et."
+
+#: ../src/floatwin.cpp:148
+msgid "Stop selection-scanning"
+msgstr "Seçmeyi durdur-Tarıyor"
+
+#: ../src/floatwin.cpp:160
+msgid "Help"
+msgstr "Yardım"
+
+#: ../src/floatwin.cpp:168
+#: ../src/mainwin.cpp:1745
+#: ../src/win32/systray.cpp:79
+msgid "Quit"
+msgstr "Çıkış"
+
+#: ../src/floatwin.cpp:182
+msgid "Lock floating window"
+msgstr "Hareketli pencereyi kitle"
+
+#: ../src/floatwin.cpp:267
+msgid "Fuzzy query"
+msgstr "Belirsiz sorgulama"
+
+#: ../src/floatwin.cpp:273
+msgid "has succeeded.\n"
+msgstr "başarılı.\n"
+
+#: ../src/floatwin.cpp:274
+msgid "Found "
+msgstr "Bulundu"
+
+#: ../src/floatwin.cpp:276
+msgid "1 word:\n"
+msgstr "1 kelime:\n"
+
+#: ../src/floatwin.cpp:281
+msgid " words:\n"
+msgstr "Kelimeler:\n"
+
+#: ../src/floatwin.cpp:730
+msgid "_Copy"
+msgstr "_Kopyala"
+
+#: ../src/floatwin.cpp:736
+msgid "_Save"
+msgstr "_Kaydet"
+
+#: ../src/floatwin.cpp:741
+msgid "_Query"
+msgstr "_Sorgula"
+
+#: ../src/floatwin.cpp:748
+msgid "_Play"
+msgstr "_Çal"
+
+#: ../src/floatwin.cpp:756
+msgid "_Fuzzy Query"
+msgstr "_Belirsiz Sorgulama"
+
+#: ../src/inifile.cpp:135
+#, c-format
+msgid "Can not open: %s - %s\n"
+msgstr "Açılamıyor: %s - %s\n"
+
+#: ../src/mainwin.cpp:85
+msgid "Clear the search box"
+msgstr "Arama kutusunu temizle"
+
+#: ../src/mainwin.cpp:111
+msgid "Fuzzy Query"
+msgstr "Belirsiz Sorgu"
+
+#: ../src/mainwin.cpp:123
+msgid "Go Back - Right button: history (Alt+Left)"
+msgstr "Geri git - Sağ düğme:geçmiş(Alt+Left)"
+
+#: ../src/mainwin.cpp:133
+msgid "Previous word (Alt+Up)"
+msgstr "Önceki Kelime(Alt+Up)"
+
+#: ../src/mainwin.cpp:143
+msgid "Next word (Alt+Down)"
+msgstr "Sonraki Kelime(Alt+Down)"
+
+#: ../src/mainwin.cpp:153
+msgid "Show the main menu (Alt+M)"
+msgstr "Ana menüyü göster(Alt+M)"
+
+#: ../src/mainwin.cpp:480
+msgid "translator_credits"
+msgstr "Çevirmen_hazırlayanlar"
+
+#: ../src/mainwin.cpp:486
+msgid "StarDict is an international dictionary for GNOME."
+msgstr "Stardict GNOME için uluslararası bir sözlüktür."
+
+#: ../src/mainwin.cpp:514
+msgid "Pr_eferences"
+msgstr "_Tercihler"
+
+#: ../src/mainwin.cpp:521
+msgid "Manage _Dict"
+msgstr "_Sözlük Yönet"
+
+#: ../src/mainwin.cpp:529
+msgid "_New Version"
+msgstr "_Yeni Versiyon"
+
+#: ../src/mainwin.cpp:537
+msgid "_Help"
+msgstr "_Yardım"
+
+#: ../src/mainwin.cpp:543
+msgid "_About"
+msgstr "_Hakkında"
+
+#: ../src/mainwin.cpp:1117
+msgid "_List"
+msgstr "_Liste"
+
+#: ../src/mainwin.cpp:1137
+msgid "_Result"
+msgstr "_Sonuç"
+
+#: ../src/mainwin.cpp:1157
+msgid "_Tree"
+msgstr "_Agaç"
+
+#: ../src/mainwin.cpp:1212
+msgid "Show the word list"
+msgstr "Kelime listesini göster"
+
+#: ../src/mainwin.cpp:1227
+msgid "Hide the word list"
+msgstr "Kelime listesini gizle"
+
+#: ../src/mainwin.cpp:1245
+msgid "Copy"
+msgstr "Kopyala"
+
+#: ../src/mainwin.cpp:1273
+msgid "Save to file(Alt+E)"
+msgstr "Dosyaya kaydet(Alt+E)"
+
+#: ../src/mainwin.cpp:1283
+msgid "Print"
+msgstr "Yazdır"
+
+#: ../src/mainwin.cpp:1298
+msgid "Search in the definition (Ctrl+F)"
+msgstr "Tanım içinde ara(Ctrl+F)"
+
+#: ../src/mainwin.cpp:1481
+msgid ""
+"Warning! No dictionary is loaded.\n"
+"Please go to StarDict's website and download some dictionaries:\n"
+"http://stardict.sourceforge.net"
+msgstr ""
+"Uyarı! Hiç sözlük yüklenmedi.\n"
+"Stardict'in websitesine git ve birkaç sözlük yükle:\n"
+"http://stardict.sourceforge.net"
+
+#: ../src/mainwin.cpp:1489
+msgid ""
+"        Welcome to StarDict!\n"
+"\n"
+"   Press Ctrl+Q to quit. Press Alt+Z to iconify the window or Alt+X to hide the window.\n"
+"   Press Alt+C or ESC to clear the input entry's text.\n"
+"   Press Space key to move focus to the input entry.\n"
+"   If the query word was not found, you can press Tab key to select the first word in the word list.\n"
+"   After selected some text, clicking the middle mouse button on the main window's Definition area or on the notification area icon will look up that word.\n"
+"   StarDict can match strings against patterns containing '*' (wildcard) and '?' (joker).\n"
+"   Input a word beginning with '/' to do a Fuzzy query.\n"
+"   When the floating window reports that a word was not found, double clicking will perform a fuzzy query.\n"
+msgstr ""
+"Stardict'e hoşgeldiniz!\n"
+"\n"
+"   Ctrl+Q e basarak çıkabilirsiniz.. Başlat çubuğuna idirmek için Alt+Z ya da gizlemek için Alt+X e basın.\n"
+"   Metin girme yerini temizlemek için Alt+C ya da ESC e basın.\n"
+"   Girise odaklanmak için ara tuşuna basınız.\n"
+"  Eğer sorgulanan kelime bulunmazsa, Tab tuşuna basarak kelime listesindeki ilk kelimeye bakabilirsin.\n"
+"   Birkaç kelime seçtikten sonra, kelimelere bak için ana pencerenin tanım alanında ya da bildiri alan ikonunda mouse'un orta tuşuna bas.\n"
+"   Stardict '*' ve '?' içeren şablonlara karşı dizileri karşılaştırabilir.\n"
+"   Belirsiz sorgulama yapmak için '/' ile başlayan bir girdi yap.\n"
+"   Hareketli pencere bir kelimenin bulunamadı diye bir rapor verirse, çift tıklama belirsiz sorgulamayı yerine getirecektir.\n"
+
+#: ../src/mainwin.cpp:1508
+msgid ""
+"       Welcome to StarDict\n"
+"StarDict is a Cross-Platform and international dictionary written in Gtk2. It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc.\n"
+"\n"
+"       Here is an introduction to using StarDict:\n"
+"\n"
+"       1. Glob-style pattern matching\n"
+"       You can input strings containing '*' (wildcard) and '?' (joker) as the pattern. '*' matches an arbitrary, possibly empty, string, and '?' matches an arbitrary character. After pressing Enter, the words that match this pattern will be shown in the list.\n"
+"       2. Fuzzy query\n"
+"       When you can't remember how to spell a word exactly, you can try StarDict's Fuzzy query. It uses \"Levenshtein Edit Distance\" to compute the similarity between two words, and gives the match results which are most similar to the word that you input. To create a fuzzy query, just input the word with a beginning \"/\", and then press Enter.\n"
+"       3. Full-text search\n"
+"       Full-text search searchs a word in the data. To create a Full-text search, just input the word with a beginning \"|\", and then press Enter. For example, \"|ab cd\" searchs data which contain both \"ab\" and \"cd\". If the words contain Space character, you can use \"\\ \", such as \"|apple\\ pie\", other escaping characters are \"\\\\\" for '\\', \"\\t\" for Tab and \"\\n"
+"\" for new line.\n"
+"       4. Special character search\n"
+"       If your words contain special characters, you can use '\\' to escape it, for example, \"a\\*b\\?\" searchs \"a*b?\", \"\\/abc\" searchs \"/abc\".\n"
+"       5. Scan selected word\n"
+"       Turn on the check button at the bottom-left corner of the StarDict window to activate this feature. When this feature is on, StarDict will automatically look up words, phrases, and Chinese characters in other applications. Just highlight a word or phrase with your mouse, and a floating window will pop up showing the definition of the selected word.\n"
+"       6. Dictionary management\n"
+"       Click the \"Manage dictionaries\" button at the bottom-right corner of the window to access the dictionary management dialog. From here, you can disable some dictionaries that you don't need, and set the dictionaries' querying order.\n"
+"\n"
+"\n"
+"       Statement: This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without the warranty that the word spelling, definition, and phonetic information are correct.\n"
+msgstr ""
+"Stardict'e hoşgeldiniz\n"
+"Stardict Gtk2 de yazılmış uluslararası arası bir sözlüktür. \"Belirsiz Sorgu\"\"Seçilen kelimeyi tarama\" gibi güçlü yetenekleri vardır.\n"
+"\n"
+"       Stardict'in sunumu aşağıdaki gibidir:\n"
+"\n"
+"       1. Glob-style şablon karşılaştırma\n"
+"       Şablon olarak '*' ve '/' içeren diziler girebilirsin. . '*' isteğe göre seçilmiş, belki boş dizileri eş alır ve '?' isteğe göre seçilmiş bir karakteri eş alır. Enter'e bastıktan sonra, bu şablona uygun kelimeler listede gösterilecektir..\n"
+"       2. Belirsiz sorgulama\n"
+"       Bir kelimenin tamamının nasıl yazıldığını hatırlayamadığın zaman, Stardict'in belirsiz sorgulamasını kullanabilirsin. Bu \"Levenshtein Edit Distance\" ı iki kelime arasındaki benzerliği hesaplamak ve girdiğin kelimeye en yakın kelimeleri sonuç halinde vermek için kullanılır. Belirsiz sorgulama yapmak için, sadece \"/\" ile başlayan bir girdi yazmak ve Enter basmak yeterli.\n"
+"       3. Full-text arama\n"
+"       Full-text arama veri içerisindeki kelimeleri arar. Full-text arama yaratmak için, sadece \"|\" ile başlayan bir kelime gir ve sonra Enter'e bas.Örneğin, \"|ab cd\" içinde \"ab\" ve \"cd\" olan verileri arar. Eğer kelime boşluk içeriyosa, \"\\ \"şeklinde kullanabilirsin, yani \"|apple\\ pie\" şeklinde, diğer kaçış karakterleri \"\\\\\" için '\\', \"\\t\" Tab için ve \"\\n"
+"\" yeni satır için.\n"
+"       4. Özel Karakter Arama\n"
+"       Eğer kelime özel karakter içeriyorsa, kurtulmak için  '\\' kullanabilirsin, Örneğin, \"a\\*b\\?\" arar \"a*b?\", \"\\/abc\" arar \"/abc\".\n"
+"       5. Seçili kelimeyi tara\n"
+"       Bu özelliği aktive etmek için Stardict'in sol alt köşesindeki butonu açmak gerekir. Bu özellik açılır durumda iken, Stardict otomatik olarak diğer uygulamalardaki kelimelere, deyimlere ve çince karakterlere göz atacaktır. Sadece bir kelime ve deyimi mouse'unla seç ve hareketli pencere kelimenin anlamını sana gösterecektir..\n"
+"       6. Sözlük yönetimi\n"
+"      Ekranın sağ alt köşesindeki \"Manage dictionaries\" butonuna tıklayarak sözlük yönetimi diyolog kutusunu açabilirsin. Burdan istediğin sözlükleri kapatabilir ve sözlükleri sıralayabilirsin.\n"
+"\n"
+"\n"
+"       Not:Bu yazılım yararlı olması umuduyla dagıtıldı, fakat GARANTİSİZ; garantisiz kelime yazımı, tanımlama ve  sesçil bilgiler doğrudur.\n"
+
+#: ../src/mainwin.cpp:1628
+#, c-format
+msgid "The text \"%s\" was not found."
+msgstr "\"%s\" bulunamadı."
+
+#: ../src/mainwin.cpp:1721
+msgid "Scan the selection"
+msgstr "Seçileni tara"
+
+#: ../src/mainwin.cpp:1735
+msgid "Show info"
+msgstr "Bilgi göster"
+
+#: ../src/mainwin.cpp:1758
+#: ../src/prefsdlg.cpp:1671
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: ../src/mainwin.cpp:1768
+msgid "Manage dictionaries"
+msgstr "Sözlükleri yönet"
+
+#: ../src/mainwin.cpp:1778
+msgid "Go to the StarDict website"
+msgstr "Stardict websitesine git"
+
+#: ../src/mainwin.cpp:1790
+msgid "Search an Internet dictionary - Right button: website list"
+msgstr "İnternet sözlüğü ara - Sağ düğme: website listesi"
+
+#: ../src/prefsdlg.cpp:70
+#: ../src/prefsdlg.cpp:328
+msgid "Scan Selection"
+msgstr "Seçimi tara"
+
+#: ../src/prefsdlg.cpp:71
+#: ../src/prefsdlg.cpp:473
+msgid "Font"
+msgstr "Yazı yüzü"
+
+#: ../src/prefsdlg.cpp:72
+#: ../src/prefsdlg.cpp:579
+msgid "Cache"
+msgstr "Ön bellek"
+
+#: ../src/prefsdlg.cpp:73
+#: ../src/prefsdlg.cpp:718
+msgid "Export"
+msgstr "Dışa Aktarım"
+
+#: ../src/prefsdlg.cpp:74
+#: ../src/prefsdlg.cpp:779
+msgid "Sound"
+msgstr "Ses"
+
+#: ../src/prefsdlg.cpp:81
+#: ../src/prefsdlg.cpp:862
+msgid "Input"
+msgstr "Girdi"
+
+#: ../src/prefsdlg.cpp:82
+#: ../src/prefsdlg.cpp:90
+#: ../src/prefsdlg.cpp:97
+msgid "Options"
+msgstr "Ayarlar"
+
+#: ../src/prefsdlg.cpp:83
+#: ../src/prefsdlg.cpp:1258
+msgid "Search website"
+msgstr "Website ara"
+
+#: ../src/prefsdlg.cpp:98
+msgid "Size"
+msgstr "Boyut"
+
+#: ../src/prefsdlg.cpp:105
+#: ../src/stardict.cpp:1751
+msgid "Dictionary"
+msgstr "Sözlük"
+
+#: ../src/prefsdlg.cpp:107
+#: ../src/prefsdlg.cpp:944
+msgid "Main window"
+msgstr "Ana pencere"
+
+#: ../src/prefsdlg.cpp:109
+#: ../src/prefsdlg.cpp:1410
+msgid "Notification area icon"
+msgstr "Bildiri alan ikonu"
+
+#: ../src/prefsdlg.cpp:111
+#: ../src/prefsdlg.cpp:1466
+msgid "Floating window"
+msgstr "Hareketli pencere"
+
+#: ../src/prefsdlg.cpp:248
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: ../src/prefsdlg.cpp:344
+msgid "<span weight=\"bold\" size=\"x-large\">Scan Selection</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Seçimi Tara</span>"
+
+#: ../src/prefsdlg.cpp:352
+msgid "_Only scan while the modifier key is being pressed."
+msgstr "_Sadece niteleyici tuş basıldığı zaman tara"
+
+#: ../src/prefsdlg.cpp:368
+msgid "H_ide floating window when modifier key released."
+msgstr "_Niteleyici tuş bırakıldığı zaman hareketli pencereyi sakla."
+
+#: ../src/prefsdlg.cpp:378
+msgid "Scan modifier _key:"
+msgstr "_Niteleyici tuş tara:"
+
+#: ../src/prefsdlg.cpp:402
+msgid "_Scan clipboard."
+msgstr "_Panoyu tara."
+
+#: ../src/prefsdlg.cpp:408
+msgid "_Use scan hotkey: Ctrl+Alt+F1."
+msgstr "_Tarama kısayolunu kullan: Ctrl+Alt+F1"
+
+#: ../src/prefsdlg.cpp:446
+msgid "Choose dictionary font"
+msgstr "Sözlük fontunu seç"
+
+#: ../src/prefsdlg.cpp:449
+#: ../src/prefsdlg.cpp:519
+msgid "Choose"
+msgstr "Seç"
+
+#: ../src/prefsdlg.cpp:451
+msgid "Dictionary font"
+msgstr "Sözlük fontu"
+
+#: ../src/prefsdlg.cpp:489
+msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Font</span>"
+
+#: ../src/prefsdlg.cpp:497
+msgid "_Use custom font."
+msgstr "_Özel fontu kullan"
+
+#: ../src/prefsdlg.cpp:509
+msgid "Dictionary _font:"
+msgstr "_Sözlük fontu:"
+
+#: ../src/prefsdlg.cpp:595
+msgid "<span weight=\"bold\" size=\"x-large\">Cache</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Ön bellek</span>"
+
+#: ../src/prefsdlg.cpp:604
+msgid "Create c_ache files to speed up loading."
+msgstr "_Yüklemeyi hızlandırmak için ön bellek dosyaları yarat."
+
+#: ../src/prefsdlg.cpp:609
+msgid "_Sort word list by collate function."
+msgstr "_Foksiyonları sıraya koyarak kelime listesini sırala."
+
+#: ../src/prefsdlg.cpp:618
+msgid "\tCollate _function:"
+msgstr "\t Fonksiyon _sırala:"
+
+#: ../src/prefsdlg.cpp:673
+msgid "After enabled collation, when load the dictionaries for the first time, it will take some time for sorting, please wait for a moment."
+msgstr "Sıralamayı etkin kıldıktan sonra, sözlükleri ilk kez yüklerken sıralama biraz vakit alabilir. Bir müddet bekleyiniz."
+
+#: ../src/prefsdlg.cpp:679
+msgid "C_lean all cache files"
+msgstr "_Tüm önbellek dosyalarını temizle"
+
+#: ../src/prefsdlg.cpp:696
+msgid "Open file..."
+msgstr "Dosya aç..."
+
+#: ../src/prefsdlg.cpp:734
+msgid "<span weight=\"bold\" size=\"x-large\">Export</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Dışa Aktarım</span>"
+
+#: ../src/prefsdlg.cpp:744
+msgid "_Only export word."
+msgstr "_Sadece kelimeleri aktar."
+
+#: ../src/prefsdlg.cpp:751
+msgid "File name:"
+msgstr "Dosya adı:"
+
+#: ../src/prefsdlg.cpp:760
+msgid "_Browse..."
+msgstr "_Göz atmak..."
+
+#: ../src/prefsdlg.cpp:795
+msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Ses</span>"
+
+#: ../src/prefsdlg.cpp:805
+msgid "_Enable sound event."
+msgstr "_Sesleri etkin kıl."
+
+#: ../src/prefsdlg.cpp:813
+msgid "Command for playing wav files:"
+msgstr "Wav dosyalarını çalmak için yetki:"
+
+#: ../src/prefsdlg.cpp:826
+msgid "RealPeopleTTS search path:"
+msgstr "RealPeopleTTS arama yolu:"
+
+#: ../src/prefsdlg.cpp:878
+msgid "<span weight=\"bold\" size=\"x-large\">Input</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Girdi</span>"
+
+#: ../src/prefsdlg.cpp:887
+msgid "_Search while typing."
+msgstr "_Yazarken arama."
+
+#: ../src/prefsdlg.cpp:892
+msgid "Show the _first word when not found."
+msgstr "_Bulunmadığı zaman ilk kelimeyi göster."
+
+#: ../src/prefsdlg.cpp:960
+#: ../src/prefsdlg.cpp:1426
+#: ../src/prefsdlg.cpp:1482
+msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Ayarlar</span>"
+
+#: ../src/prefsdlg.cpp:971
+msgid "_Auto run StarDict after boot."
+msgstr "_Önyüklemeden sonra Stardict'i çalıştır."
+
+#: ../src/prefsdlg.cpp:1001
+msgid "Hide main window when _starting StarDict."
+msgstr "_Stardict açılırken ana pencereyi sakla."
+
+#: ../src/prefsdlg.cpp:1011
+msgid "_Use open main window hotkey: Ctrl+Alt+Z."
+msgstr "_Ana pencereyi açma kısayolunu kullan: Ctrl+Alt+Z"
+
+#: ../src/prefsdlg.cpp:1089
+msgid "Add"
+msgstr "Ekle"
+
+#: ../src/prefsdlg.cpp:1102
+#: ../src/prefsdlg.cpp:1331
+msgid "Website Name"
+msgstr "Website Adı"
+
+#: ../src/prefsdlg.cpp:1114
+#: ../src/prefsdlg.cpp:1339
+msgid "Website link"
+msgstr "Website bağlantısı"
+
+#: ../src/prefsdlg.cpp:1125
+#: ../src/prefsdlg.cpp:1347
+msgid "Website search link"
+msgstr "Website arama bağlantısı"
+
+#: ../src/prefsdlg.cpp:1146
+msgid "Please input the website name."
+msgstr "Lütfen website adını gir."
+
+#: ../src/prefsdlg.cpp:1148
+msgid "Please input the website link."
+msgstr "Lütfen website bağlantısını gir."
+
+#: ../src/prefsdlg.cpp:1150
+msgid "Please input the website search link."
+msgstr "Lütfen website arama bağlantısını gir."
+
+#: ../src/prefsdlg.cpp:1152
+#, c-format
+msgid "The website search link should contains a \"%%s\" string for querying a word."
+msgstr "Website arama bağlantısı bir kelimeyi sorgulamak için \"%%s\" dizisini içermelidir."
+
+#: ../src/prefsdlg.cpp:1231
+#, c-format
+msgid "The website search link should contains a \"%%s\" string for quering word."
+msgstr "Website ara bağlantısı sorgulama için \"%%s\" dizisini içermelidir."
+
+#: ../src/prefsdlg.cpp:1275
+msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Website ara</span>"
+
+#: ../src/prefsdlg.cpp:1437
+msgid ""
+"_Query in the floating window when middle mouse\n"
+"button is clicked."
+msgstr "_Mouse'un orta düğmesine tıklandığı zaman hareketli pencerede sorgula."
+
+#: ../src/prefsdlg.cpp:1490
+msgid "_Pronouce the word when it pops up."
+msgstr "_Kelime açıldığı zaman telafuz et."
+
+#: ../src/prefsdlg.cpp:1499
+msgid "_Show floating window if word not found."
+msgstr "_Kelime bulunmadığı zaman hareketli pencereyi göster."
+
+#: ../src/prefsdlg.cpp:1534
+msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Max pencere boyutu</span>"
+
+#: ../src/prefsdlg.cpp:1556
+msgid "Max window _width:"
+msgstr "_Max pencere genişliği"
+
+#: ../src/prefsdlg.cpp:1566
+msgid "(default:320)"
+msgstr "(varsayılan:320)"
+
+#: ../src/prefsdlg.cpp:1570
+msgid "Max window hei_ght:"
+msgstr "_Max pencere yüksekliği:"
+
+#: ../src/prefsdlg.cpp:1578
+msgid "(default:240)"
+msgstr "(varsayılan:240)"
+
+#: ../src/prefsdlg.cpp:1649
+msgid "Cat_egories:"
+msgstr "_Kategoriler:"
+
+#: ../src/selection.cpp:194
+#: ../src/stardict.cpp:505
+#: ../src/stardict.cpp:634
+#: ../src/stardict.cpp:794
+#: ../src/stardict.cpp:806
+#: ../src/stardict.cpp:811
+#: ../src/stardict.cpp:816
+#: ../src/stardict.cpp:1209
+#: ../src/win32/clipboard.cpp:117
+msgid "<Not Found!>"
+msgstr "<Bulunamadı>"
+
+#: ../src/splash.cpp:64
+msgid "Loading"
+msgstr "Yükleniyor"
+
+#: ../src/stardict.cpp:82
+msgid "Turn on all debugging messages"
+msgstr "Tüm yanlış ayıklama mesajlarını aç"
+
+#: ../src/stardict.cpp:85
+msgid "Hide the main window"
+msgstr "Ana pencereyi gizle."
+
+#: ../src/stardict.cpp:88
+msgid "Quit an existing instance of stardict"
+msgstr "Stardict'in varolan örneğinden çık."
+
+#: ../src/stardict.cpp:862
+#: ../src/stardict.cpp:1173
+msgid "Full-text search..."
+msgstr "Tüm-metin arama..."
+
+#: ../src/stardict.cpp:889
+msgid "There are no dictionary's article with such word :-("
+msgstr "Sözlükte bu kelimeye karşılık gelen bir açıklama yok :-("
+
+#: ../src/stardict.cpp:925
+msgid "There are too many spelling errors :-("
+msgstr "Birçok yazım yanlışı var :-("
+
+#: ../src/stardict.cpp:980
+msgid "Fuzzy query failed, too :-("
+msgstr "Belirsiz sorgulama başarısız oldu :-("
+
+#: ../src/stardict.cpp:1006
+msgid "Found no words matching this pattern!"
+msgstr "bu kalıba uygun kelimeler bulunamadı!"
+
+#: ../src/stardict.cpp:1165
+msgid "Press Enter to list the words that match the pattern."
+msgstr "Kalıba uygun olan kelimeleri listelemek için Enter'a basın."
+
+#: ../src/stardict.cpp:1169
+msgid "Fuzzy query..."
+msgstr "Belirsiz sorgulama..."
+
+#: ../src/stardict.cpp:1584
+msgid "StarDict is already running. Using the running process."
+msgstr "StarDict zaten çalışıyor. Çalışan işlemi kullanın."
+
+#: ../src/utils.cpp:66
+#, c-format
+msgid "%s\\help\\stardict.chm"
+msgstr "%s\\help\\stardict.chm"
+
+#: ../src/utils.cpp:171
+#, c-format
+msgid "Can not load image. %s"
+msgstr "Resim yüklenemiyor. %s"
+
+#: ../src/lib/stddict.cpp:843
+msgid "Sorting, please wait..."
+msgstr "Sıralanıyor, lütfen bekleyin..."
+
+#: ../src/lib/stddict.cpp:999
+msgid "Loading..."
+msgstr "Yükleniyor..."
+
+#: ../src/win32/systray.cpp:75
+msgid "Scan"
+msgstr "Tara"
+
