@@ -6,6 +6,7 @@
 #include "sigc++/sigc++.h"
 
 #include <list>
+#include <vector>
 
 namespace STARDICT {
 	enum {
@@ -78,6 +79,16 @@ namespace STARDICT {
 	};
 };
 
+class StarDictCache {
+public:
+    ~StarDictCache();
+    char *get_str(const char *key);
+    void save_str(const char *key, char *str);
+private:
+    static const int str_pool_size = 30;
+    std::vector<char *> str_pool;
+};
+
 class StarDictClient {
 public:
     static sigc::signal<void, const char *> on_error_;
@@ -85,6 +96,7 @@ public:
     static sigc::signal<void, const struct STARDICT::DictResponse *> on_define_end_;
     static sigc::signal<void, const char *> on_register_end_;
     static sigc::signal<void, const char *> on_getdictmask_end_;
+    static sigc::signal<void, const char *> on_getdirinfo_end_;
 
 	StarDictClient();
 	~StarDictClient();
@@ -126,6 +138,7 @@ private:
     int parse_command_auth(gchar *line);
     int parse_command_register(gchar *line);
     int parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *line);
+    int parse_command_getdirinfo(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_quit(gchar *line);
     int parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
 };
