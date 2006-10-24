@@ -39,7 +39,7 @@
 
 sigc::signal<void, const char *> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
-sigc::signal<void, const struct STARDICT::DictResponse *> StarDictClient::on_define_end_;
+sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_define_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdirinfo_end_;
@@ -229,12 +229,12 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	va_end( ap );
 }
 
-STARDICT::DictResponse::DictResponse()
+STARDICT::LookupResponse::DictResponse::DictResponse()
 {
 	oword = NULL;
 }
 
-STARDICT::DictResponse::~DictResponse()
+STARDICT::LookupResponse::DictResponse::~DictResponse()
 {
 	g_free(oword);
 	for (std::list<DictResult *>::iterator i = dict_result_list.begin(); i != dict_result_list.end(); ++i) {
@@ -242,12 +242,12 @@ STARDICT::DictResponse::~DictResponse()
 	}
 }
 
-STARDICT::DictResponse::DictResult::DictResult()
+STARDICT::LookupResponse::DictResponse::DictResult::DictResult()
 {
 	bookname = NULL;
 }
 
-STARDICT::DictResponse::DictResult::~DictResult()
+STARDICT::LookupResponse::DictResponse::DictResult::~DictResult()
 {
 	g_free(bookname);
 	for (std::list<WordResult *>::iterator i = word_result_list.begin(); i != word_result_list.end(); ++i) {
@@ -255,12 +255,12 @@ STARDICT::DictResponse::DictResult::~DictResult()
 	}
 }
 
-STARDICT::DictResponse::DictResult::WordResult::WordResult()
+STARDICT::LookupResponse::DictResponse::DictResult::WordResult::WordResult()
 {
 	word = NULL;
 }
 
-STARDICT::DictResponse::DictResult::WordResult::~WordResult()
+STARDICT::LookupResponse::DictResponse::DictResult::WordResult::~WordResult()
 {
 	g_free(word);
 	for (std::list<char *>::iterator i = datalist.begin(); i != datalist.end(); ++i) {
@@ -270,9 +270,14 @@ STARDICT::DictResponse::DictResult::WordResult::~WordResult()
 
 STARDICT::LookupResponse::~LookupResponse()
 {
-	for (std::list<char *>::iterator i = wordlist.begin(); i!= wordlist.end(); ++i) {
-		g_free(*i);
-	}
+    if (listtype == ListType_List) {
+    	for (std::list<char *>::iterator i = wordlist->begin(); i!= wordlist->end(); ++i) {
+	    	g_free(*i);
+	    }
+        delete wordlist;
+    } else if (listtype == ListType_Tree) {
+        delete wordtree;
+    }
 }
 
 STARDICT::Cmd::~Cmd()
@@ -282,23 +287,116 @@ STARDICT::Cmd::~Cmd()
     } else {
         g_free(this->data);
     }
-    if (this->command == CMD_LOOKUP) {
+    if (this->command == CMD_LOOKUP || this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
         delete this->lookup_response;
-    } else if (this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
-        delete this->dict_response;
     }
+}
+
+StarDictCache::StarDictCache()
+{
+    str_pool.resize(str_pool_size);
+    for (size_t i = 0; i< str_pool_size; i++) {
+        str_pool[i] = NULL;
+    }
+    cur_str_pool_pos = 0;
+
+    lookup_response_pool.resize(lookup_response_pool_size);
+    for (size_t i = 0; i< lookup_response_pool_size; i++) {
+        lookup_response_pool[i] = NULL;
+    }
+    cur_lookup_response_pool_pos = 0;
 }
 
 StarDictCache::~StarDictCache()
 {
+    clean_all_cache();
 }
 
-char *StarDictCache::get_str(const char *key)
+void StarDictCache::clean_all_cache()
 {
+    for (std::vector<StrElement *>::iterator i = str_pool.begin(); i != str_pool.end(); ++i) {
+        if (*i) {
+            g_free((*i)->data);
+            delete *i;
+            *i = NULL;
+        }
+    }
+    clean_cache_lookup_response();
 }
 
-void StarDictCache::save_str(const char *key, char *str)
+void StarDictCache::clean_cache_lookup_response()
 {
+    for (std::vector<LookupResponseElement *>::iterator i = lookup_response_pool.begin(); i != lookup_response_pool.end(); ++i) {
+        if (*i) {
+            delete ((*i)->lookup_response);
+            delete *i;
+            *i = NULL;
+        }
+    }
+}
+
+char *StarDictCache::get_cache_str(const char *key_str)
+{
+    for (std::vector<StrElement *>::iterator i = str_pool.begin(); i != str_pool.end(); ++i) {
+        if (*i) {
+            if ((*i)->key == key_str)
+                return (*i)->data;
+        }
+    }
+    return NULL;
+}
+
+STARDICT::LookupResponse *StarDictCache::get_cache_lookup_response(const char *key_str)
+{
+    for (std::vector<LookupResponseElement *>::iterator i = lookup_response_pool.begin(); i != lookup_response_pool.end(); ++i) {
+        if (*i) {
+            if ((*i)->key == key_str)
+                return (*i)->lookup_response;
+        }
+    }
+    return NULL;
+}
+
+void StarDictCache::clean_cache_str(const char *key_str)
+{
+    for (std::vector<StrElement *>::iterator i = str_pool.begin(); i != str_pool.end(); ++i) {
+        if (*i) {
+            if ((*i)->key == key_str) {
+                g_free((*i)->data);
+                delete *i;
+                *i = NULL;
+                //return;
+            }
+        }
+    }
+}
+
+void StarDictCache::save_cache_str(const char *key_str, char *data)
+{
+    if (str_pool[cur_str_pool_pos]) {
+        g_free(str_pool[cur_str_pool_pos]->data);
+        delete str_pool[cur_str_pool_pos];
+    }
+    str_pool[cur_str_pool_pos] = new StrElement();
+    str_pool[cur_str_pool_pos]->key = key_str;
+    str_pool[cur_str_pool_pos]->data = data;
+    cur_str_pool_pos++;
+    if (cur_str_pool_pos == str_pool_size)
+        cur_str_pool_pos = 0;
+}
+
+void StarDictCache::save_cache_lookup_response(const char *key_str, STARDICT::LookupResponse *lookup_response)
+{
+    if (lookup_response_pool[cur_lookup_response_pool_pos]) {
+        delete lookup_response_pool[cur_lookup_response_pool_pos]->lookup_response;
+        delete lookup_response_pool[cur_lookup_response_pool_pos];
+    }
+    lookup_response_pool[cur_lookup_response_pool_pos] = new LookupResponseElement();
+    lookup_response_pool[cur_lookup_response_pool_pos]->key = key_str;
+    lookup_response_pool[cur_lookup_response_pool_pos]->lookup_response = lookup_response;
+    cur_lookup_response_pool_pos++;
+    if (cur_lookup_response_pool_pos == lookup_response_pool_size)
+        cur_lookup_response_pool_pos = 0;
 }
 
 StarDictClient::StarDictClient()
@@ -315,14 +413,52 @@ StarDictClient::~StarDictClient()
 
 void StarDictClient::set_server(const char *host, int port)
 {
-    host_ = host;
-    port_ = port;
+    if (host_ != host || port_ != port) {
+        host_ = host;
+        port_ = port;
+        clean_all_cache();
+    }
 }
 
 void StarDictClient::set_auth(const char *user, const char *md5passwd)
 {
-    user_ = user;
-    md5passwd_ = md5passwd;
+    if (user_ != user || md5passwd_ != md5passwd) {
+        user_ = user;
+        md5passwd_ = md5passwd;
+        clean_all_cache();
+    }
+}
+
+bool StarDictClient::try_cache(STARDICT::Cmd *c)
+{
+    if (c->command == STARDICT::CMD_LOOKUP || c->command == STARDICT::CMD_DEFINE || c->command == STARDICT::CMD_SELECT_QUERY) {
+        STARDICT::LookupResponse *res = get_cache_lookup_response(c->data);
+        if (res) {
+            if (c->command == STARDICT::CMD_LOOKUP)
+                on_lookup_end_.emit(res);
+            else if (c->command == STARDICT::CMD_DEFINE)
+                on_define_end_.emit(res);
+            delete c;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    char *data = get_cache_str(c->data);
+    if (data) {
+        switch (c->command) {
+            case STARDICT::CMD_DIR_INFO:
+                on_getdirinfo_end_.emit(data);
+                break;
+            case STARDICT::CMD_GET_DICT_MASK:
+                on_getdictmask_end_.emit(data);
+                break;
+        }
+        delete c;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void StarDictClient::send_commands(int num, ...)
@@ -640,6 +776,20 @@ int StarDictClient::parse_command_quit(gchar *line)
     return 0;
 }
 
+int StarDictClient::parse_command_setdictmask(gchar *line)
+{
+    int status;
+    status = atoi(line);
+    if (status != CODE_OK) {
+        gchar *str = g_strdup_printf("Set Dict Mask failed: %s", line);
+        on_error_.emit(str);
+        g_free(str);
+        return 0;
+    }
+    clean_cache_str("getdictmask");
+    return 1;
+}
+
 int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) {
@@ -657,8 +807,8 @@ int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
 	reading_type_ = READ_STRING;
     } else if (cmd->reading_status == 1) {
         on_getdictmask_end_.emit(buf);
-	g_free(buf);
-	return 1;
+        save_cache_str(cmd->data, buf);
+        return 1;
     }
     return 2;
 }
@@ -680,7 +830,7 @@ int StarDictClient::parse_command_getdirinfo(STARDICT::Cmd* cmd, gchar *buf)
         reading_type_ = READ_STRING;
     } else if (cmd->reading_status == 1) {
         on_getdirinfo_end_.emit(buf);
-        g_free(buf);
+        save_cache_str(cmd->data, buf);
         return 1;
     }
     return 2;
@@ -699,10 +849,8 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             }
             return 0;
         }
-        if (cmd->command == STARDICT::CMD_LOOKUP)
-            cmd->lookup_response = new STARDICT::LookupResponse();
-        else
-            cmd->dict_response = new STARDICT::DictResponse();
+        cmd->lookup_response = new STARDICT::LookupResponse();
+        cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_None;
         cmd->reading_status = 1;
         reading_type_ = READ_STRING;
     } else if (cmd->reading_status == 1) { // Read original word.
@@ -712,15 +860,19 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         if (*buf == '\0') {
             g_free(buf);
             if (cmd->command == STARDICT::CMD_DEFINE) {
-                on_define_end_.emit(cmd->dict_response);
+                on_define_end_.emit(cmd->lookup_response);
+                save_cache_lookup_response(cmd->data, cmd->lookup_response);
+                cmd->lookup_response = NULL;
                 return 1;
             } else if ( cmd->command == STARDICT::CMD_SELECT_QUERY) {
+                save_cache_lookup_response(cmd->data, cmd->lookup_response);
+                cmd->lookup_response = NULL;
                 return 1;
             }
             cmd->reading_status = 6;
             reading_type_ = READ_STRING;
         } else {
-            struct STARDICT::DictResponse::DictResult *dict_result = new STARDICT::DictResponse::DictResult();
+            struct STARDICT::LookupResponse::DictResponse::DictResult *dict_result = new STARDICT::LookupResponse::DictResponse::DictResult();
             dict_result->bookname = buf;
             cmd->lookup_response->dict_response.dict_result_list.push_back(dict_result);
             cmd->reading_status = 3;
@@ -730,7 +882,7 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             g_free(buf);
             cmd->reading_status = 2;
         } else {
-            struct STARDICT::DictResponse::DictResult::WordResult *word_result = new STARDICT::DictResponse::DictResult::WordResult();
+            struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *word_result = new STARDICT::LookupResponse::DictResponse::DictResult::WordResult();
             word_result->word = buf;
             cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.push_back(word_result);;
             cmd->reading_status = 4;
@@ -759,17 +911,23 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     } else if (cmd->reading_status == 6) {
         if (strcmp(buf, "d") == 0) {
             cmd->reading_status = 8;
+            cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_List;
+            cmd->lookup_response->wordlist = new std::list<char *>;
         } else {
             cmd->reading_status = 7;
+            cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Tree;
+            cmd->lookup_response->wordtree = new std::list<STARDICT::LookupResponse::WordTreeElement *>;
         }
         g_free(buf);
     } else if (cmd->reading_status == 7) {
         if (*buf == '\0') {
             g_free(buf);
             on_lookup_end_.emit(cmd->lookup_response);
+            save_cache_lookup_response(cmd->data, cmd->lookup_response);
+            cmd->lookup_response = NULL;
             return 1;
         } else {
-            cmd->lookup_response->wordlist.push_back(buf);
+            cmd->lookup_response->wordlist->push_back(buf);
         }
     } else if (cmd->reading_status == 8) {
         // TODO

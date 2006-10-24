@@ -52,7 +52,8 @@ void NetworkAddDlg::on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, Gt
         gchar *path;
         gtk_tree_model_get (GTK_TREE_MODEL(oNetworkAddDlg->model), arg1, 3, &path, -1);
     	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DIR_INFO, path);
-	    gpAppFrame->oStarDictClient.send_commands(1, c);
+        if (!gpAppFrame->oStarDictClient.try_cache(c))
+    	    gpAppFrame->oStarDictClient.send_commands(1, c);
         g_free(path);
     }
     g_free(word);
@@ -109,7 +110,8 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_widget_show_all(GTK_DIALOG (window)->vbox);
 	gtk_window_set_title(GTK_WINDOW (window), _("Browse Dictionaries"));
 	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DIR_INFO, "/");
-	gpAppFrame->oStarDictClient.send_commands(1, c);
+    if (!gpAppFrame->oStarDictClient.try_cache(c))
+    	gpAppFrame->oStarDictClient.send_commands(1, c);
 	gtk_dialog_run(GTK_DIALOG(window));
 	gtk_widget_destroy(window);
 }
@@ -988,7 +990,8 @@ bool DictManageDlg::Show()
 		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));	
 	}
 	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
-	gpAppFrame->oStarDictClient.send_commands(1, c);
+    if (!gpAppFrame->oStarDictClient.try_cache(c))
+	    gpAppFrame->oStarDictClient.send_commands(1, c);
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
 		;

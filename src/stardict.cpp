@@ -1208,7 +1208,8 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	}
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
-        oStarDictClient.send_commands(1, c);
+        if (!oStarDictClient.try_cache(c))
+            oStarDictClient.send_commands(1, c);
     }
 
 	//when TEXT_WIN_TIPS,the text[0]=='\0',already returned.
@@ -1253,7 +1254,8 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
-        app->oStarDictClient.send_commands(1, c);
+        if (!app->oStarDictClient.try_cache(c))
+            app->oStarDictClient.send_commands(1, c);
     }
 
     app->word_change_timeout_ = 0;//next line destroy timer
@@ -1380,8 +1382,8 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
     oMidWin.oTextWin.Show(&(lookup_response->dict_response));
     oMidWin.oIndexWin.oListWin.Clear();
     oMidWin.oIndexWin.oListWin.SetModel(true);
-    if (!lookup_response->wordlist.empty()) {
-        for (std::list<char *>::const_iterator i = lookup_response->wordlist.begin(); i != lookup_response->wordlist.end(); ++i) {
+    if (!lookup_response->wordlist->empty()) {
+        for (std::list<char *>::const_iterator i = lookup_response->wordlist->begin(); i != lookup_response->wordlist->end(); ++i) {
             oMidWin.oIndexWin.oListWin.InsertLast(*i);
         }
         oMidWin.oIndexWin.oListWin.ReScroll();
@@ -1391,9 +1393,9 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
     }
 }
 
-void AppCore::on_stardict_client_define_end(const struct STARDICT::DictResponse *dict_response)
+void AppCore::on_stardict_client_define_end(const struct STARDICT::LookupResponse *lookup_response)
 {
-    oMidWin.oTextWin.Show(dict_response);
+    oMidWin.oTextWin.Show(&(lookup_response->dict_response));
 }
 
 class reload_show_progress_t : public show_progress_t {
