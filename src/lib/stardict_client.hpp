@@ -118,14 +118,14 @@ private:
     std::vector<LookupResponseElement *> lookup_response_pool;
 };
 
-class StarDictClient : public StarDictCache {
+class StarDictClient : private StarDictCache {
 public:
     static sigc::signal<void, const char *> on_error_;
     static sigc::signal<void, const struct STARDICT::LookupResponse *> on_lookup_end_;
-    static sigc::signal<void, const struct STARDICT::LookupResponse *> on_define_end_;
     static sigc::signal<void, const char *> on_register_end_;
     static sigc::signal<void, const char *> on_getdictmask_end_;
-    static sigc::signal<void, const char *> on_getdirinfo_end_;
+    static sigc::signal<void, const char *> on_dirinfo_end_;
+    static sigc::signal<void, const char *> on_dictinfo_end_;
 
 	StarDictClient();
 	~StarDictClient();
@@ -169,7 +169,8 @@ private:
     int parse_command_register(gchar *line);
     int parse_command_setdictmask(gchar *line);
     int parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *line);
-    int parse_command_getdirinfo(STARDICT::Cmd* cmd, gchar *line);
+    int parse_command_dirinfo(STARDICT::Cmd* cmd, gchar *line);
+    int parse_command_dictinfo(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_quit(gchar *line);
     int parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
 };
