@@ -199,10 +199,10 @@ void AppCore::Create(gchar *queryword)
     }
     oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
     oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
-    oStarDictClient.on_define_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_define_end));
     oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
     oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
-    oStarDictClient.on_getdirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdirinfo_end));
+    oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
+    oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1371,31 +1371,44 @@ void AppCore::on_stardict_client_getdictmask_end(const char *msg)
 		dict_manage_dlg->network_getdictmask(msg);
 }
 
-void AppCore::on_stardict_client_getdirinfo_end(const char *msg)
+void AppCore::on_stardict_client_dirinfo_end(const char *msg)
 {
 	if (dict_manage_dlg)
-		dict_manage_dlg->network_getdirinfo(msg);
+		dict_manage_dlg->network_dirinfo(msg);
+}
+
+void AppCore::on_stardict_client_dictinfo_end(const char *msg)
+{
+	if (dict_manage_dlg)
+		dict_manage_dlg->network_dictinfo(msg);
 }
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
 {
     oMidWin.oTextWin.Show(&(lookup_response->dict_response));
-    oMidWin.oIndexWin.oListWin.Clear();
-    oMidWin.oIndexWin.oListWin.SetModel(true);
-    if (!lookup_response->wordlist->empty()) {
-        for (std::list<char *>::const_iterator i = lookup_response->wordlist->begin(); i != lookup_response->wordlist->end(); ++i) {
-            oMidWin.oIndexWin.oListWin.InsertLast(*i);
+    if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List) {
+        oMidWin.oIndexWin.oListWin.Clear();
+        oMidWin.oIndexWin.oListWin.SetModel(true);
+        if (!lookup_response->wordlist->empty()) {
+            for (std::list<char *>::const_iterator i = lookup_response->wordlist->begin(); i != lookup_response->wordlist->end(); ++i) {
+                oMidWin.oIndexWin.oListWin.InsertLast(*i);
+            }
+            oMidWin.oIndexWin.oListWin.ReScroll();
+            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
+        } else {
+            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
         }
-        oMidWin.oIndexWin.oListWin.ReScroll();
-        oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
-    } else {
-        oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
+    } else if (lookup_response->listtype == STARDICT::LookupResponse::ListType_Tree) {
+        oMidWin.oIndexWin.oListWin.Clear();
+        oMidWin.oIndexWin.oListWin.SetModel(false);
+        if (!lookup_response->wordtree->empty()) {
+            oMidWin.oIndexWin.oListWin.SetTreeModel(lookup_response->wordtree);
+            oMidWin.oIndexWin.oListWin.ReScroll();
+            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
+        } else {
+            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
+        }
     }
-}
-
-void AppCore::on_stardict_client_define_end(const struct STARDICT::LookupResponse *lookup_response)
-{
-    oMidWin.oTextWin.Show(&(lookup_response->dict_response));
 }
 
 class reload_show_progress_t : public show_progress_t {

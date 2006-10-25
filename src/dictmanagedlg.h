@@ -11,6 +11,7 @@ private:
     static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg);
     static void on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg);
 public:
+    GtkWidget *window;
 	NetworkAddDlg();
 	void Show(GtkWindow *parent_win);
 	void network_getdirinfo(const char *xml);
@@ -47,6 +48,7 @@ private:
 	static void on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 
 	static gboolean on_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
+	static gboolean on_network_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static void response_handler (GtkDialog *dialog, gint res_id, DictManageDlg *oDictManageDlg);
 	static void on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_network_remove_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
@@ -64,7 +66,8 @@ public:
 	bool Show();
 	void Close();
 	void network_getdictmask(const char *xml);
-	void network_getdirinfo(const char *xml);
+	void network_dirinfo(const char *xml);
+	void network_dictinfo(const char *xml);
 };
 
 #endif

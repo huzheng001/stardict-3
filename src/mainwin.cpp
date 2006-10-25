@@ -850,6 +850,21 @@ void ListWin::SetTreeModel(std::vector<gchar *> *reslist)
 	gtk_tree_view_expand_all(treeview_);
 }
 
+void ListWin::SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *> *wordtree)
+{
+    GtkTreeIter parent;
+    GtkTreeIter iter;
+    for (std::list<STARDICT::LookupResponse::WordTreeElement *>::iterator i = wordtree->begin(); i != wordtree->end(); ++i) {
+        gtk_tree_store_append(tree_model, &parent, NULL);
+        gtk_tree_store_set(tree_model, &parent, 0, (*i)->bookname, -1);
+        for (std::list<char *>::iterator j = (*i)->wordlist.begin(); j != (*i)->wordlist.end(); ++j) {
+            gtk_tree_store_append(tree_model, &iter, &parent);
+            gtk_tree_store_set (tree_model, &iter, 0, *j, -1);
+        }
+    }
+    gtk_tree_view_expand_all(treeview_);
+}
+
 gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, ListWin *oListWin)
 {
 	if (event->type==GDK_2BUTTON_PRESS) {
