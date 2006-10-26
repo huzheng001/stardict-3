@@ -186,22 +186,29 @@ void Selection::SelectionReceived(gchar* sToken)
         {
 			//if ( g_str_has_suffix(sToken,".pdf") || g_str_has_suffix(sToken,".txt") || g_str_has_suffix(sToken,".cpp") )
 				//return;
-			if ( gpAppFrame->SimpleLookupToFloat(sToken,false) )  //found
-				return;
-			a = GetPureEnglishAlpha(sToken);
-			if (*a) {
-				if (LastClipWord == a) {
-					gpAppFrame->ShowNotFoundToFloatWin(a, _("<Not Found!>"), false);
-        			gpAppFrame->oTopWin.InsertHisList(a); //really need?
-				}
-				else
-					gpAppFrame->SimpleLookupToFloat(a,true);
-			}
-			// else the string is too strange, don't show any thing.
+			if ( gpAppFrame->SimpleLookupToFloat(sToken,false) ) {
+                //found
+			} else {
+    			a = GetPureEnglishAlpha(sToken);
+	    		if (*a) {
+		    		if (LastClipWord == a) {
+			    		gpAppFrame->ShowNotFoundToFloatWin(a, _("<Not Found!>"), false);
+        		    	gpAppFrame->oTopWin.InsertHisList(a); //really need?
+    				}
+	    			else
+		    			gpAppFrame->SimpleLookupToFloat(a,true);
+			    }
+		    	// else the string is too strange, don't show any thing.
+            }
         }
 		else
 		{
 			gpAppFrame->SimpleLookupToFloat(sToken,true);
 		}
+        if (conf->get_bool_at("network/enable_netdict")) {
+            STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, LastClipWord.c_str());
+            if (!gpAppFrame->oStarDictClient.try_cache(c))
+                gpAppFrame->oStarDictClient.send_commands(1, c);
+        }
     }
 }

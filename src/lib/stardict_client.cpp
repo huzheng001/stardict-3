@@ -39,10 +39,12 @@
 
 sigc::signal<void, const char *> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
+sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_floatwin_lookup_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 sigc::signal<void, const char *> StarDictClient::on_dirinfo_end_;
 sigc::signal<void, const char *> StarDictClient::on_dictinfo_end_;
+sigc::signal<void, int> StarDictClient::on_maxdictcount_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -90,7 +92,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
-	case CMD_CHANGE_PASSWD:
+	/*case CMD_CHANGE_PASSWD:
 	{
 		const char *user = va_arg( ap, const char * );
 		const char *old_passwd = va_arg( ap, const char * );
@@ -101,7 +103,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg3, new_passwd);
 		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
-	}
+	}*/
 	case CMD_AUTH:
         this->auth = new AuthInfo();
 		this->auth->user = va_arg( ap, const char * );
@@ -163,7 +165,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	case CMD_GET_DICT_MASK:
 		this->data = g_strdup("getdictmask\n");
 		break;
-	case CMD_SET_COLLATE_FUNC:
+	/*case CMD_SET_COLLATE_FUNC:
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
@@ -192,7 +194,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	}
 	case CMD_GET_EMAIL:
 		this->data = g_strdup("getemail\n");
-		break;
+		break;*/
 	case CMD_GET_USER_LEVEL:
 		this->data = g_strdup("getuserlevel\n");
 		break;
@@ -213,7 +215,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		this->data = g_strdup_printf("dictinfo %s\n", earg.c_str());
 		break;
 	}
-	case CMD_USER_LEVEL:
+	/*case CMD_USER_LEVEL:
 	{
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, va_arg( ap, const char * ));
@@ -221,7 +223,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg3, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("userlevel %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
-	}
+	}*/
 	case CMD_QUIT:
 		this->data = g_strdup("quit\n");
 		break;
@@ -443,6 +445,8 @@ bool StarDictClient::try_cache(STARDICT::Cmd *c)
         if (res) {
             if (c->command == STARDICT::CMD_LOOKUP || c->command == STARDICT::CMD_DEFINE)
                 on_lookup_end_.emit(res);
+            else if (c->command == STARDICT::CMD_SELECT_QUERY)
+                on_floatwin_lookup_end_.emit(res);
             delete c;
             return true;
         } else {
@@ -460,6 +464,9 @@ bool StarDictClient::try_cache(STARDICT::Cmd *c)
                 break;
             case STARDICT::CMD_GET_DICT_MASK:
                 on_getdictmask_end_.emit(data);
+                break;
+            case STARDICT::CMD_MAX_DICT_COUNT:
+                on_maxdictcount_end_.emit(atoi(data));
                 break;
         }
         delete c;
@@ -487,6 +494,39 @@ void StarDictClient::send_commands(int num, ...)
 	    cmdlist.push_back(c);
     }
     va_end( ap );
+    if (!is_connected_) {
+        waiting_banner_ = true;
+        connect();
+    }
+}
+
+void StarDictClient::try_cache_or_send_commands(int num, ...)
+{
+    STARDICT::Cmd *c;
+    std::list<STARDICT::Cmd *> send_cmdlist;
+    va_list    ap;
+    va_start( ap, num);
+    for (int i = 0; i< num; i++) {
+        c = va_arg( ap, STARDICT::Cmd *);
+        if (!try_cache(c)) {
+            send_cmdlist.push_back(c);
+        }
+    }
+    va_end( ap );
+    if (send_cmdlist.empty())
+        return;
+
+    if (!is_connected_) {
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
+        cmdlist.push_back(c);
+        if (!user_.empty() && !md5passwd_.empty()) {
+            c = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
+            cmdlist.push_back(c);
+        }
+    }
+    for (std::list<STARDICT::Cmd *>::iterator i = send_cmdlist.begin(); i!= send_cmdlist.end(); ++i) {
+	    cmdlist.push_back(*i);
+    }
     if (!is_connected_) {
         waiting_banner_ = true;
         connect();
@@ -795,6 +835,7 @@ int StarDictClient::parse_command_setdictmask(gchar *line)
         return 0;
     }
     clean_cache_str("getdictmask");
+    clean_cache_lookup_response();
     return 1;
 }
 
@@ -867,6 +908,29 @@ int StarDictClient::parse_command_dictinfo(STARDICT::Cmd* cmd, gchar *buf)
     return 2;
 }
 
+int StarDictClient::parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *buf)
+{
+    if (cmd->reading_status == 0) {
+        int status;
+        status = atoi(buf);
+        if (status != CODE_OK) {
+            gchar *str = g_strdup_printf("Get max dict count failed: %s", buf);
+            g_free(buf);
+            on_error_.emit(str);
+            g_free(str);
+            return 0;
+        }
+        g_free(buf);
+        cmd->reading_status = 1;
+        reading_type_ = READ_STRING;
+    } else if (cmd->reading_status == 1) {
+        on_maxdictcount_end_.emit(atoi(buf));
+        save_cache_str(cmd->data, buf);
+        return 1;
+    }
+    return 2;
+}
+
 int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) { // Read code.
@@ -896,6 +960,7 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
                 cmd->lookup_response = NULL;
                 return 1;
             } else if ( cmd->command == STARDICT::CMD_SELECT_QUERY) {
+                on_floatwin_lookup_end_.emit(cmd->lookup_response);
                 save_cache_lookup_response(cmd->data, cmd->lookup_response);
                 cmd->lookup_response = NULL;
                 return 1;
@@ -1018,6 +1083,9 @@ bool StarDictClient::parse(gchar *line)
             break;
         case STARDICT::CMD_DICT_INFO:
             result = parse_command_dictinfo(cmd, line);
+            break;
+        case STARDICT::CMD_MAX_DICT_COUNT:
+            result = parse_command_maxdictcount(cmd, line);
             break;
         case STARDICT::CMD_DEFINE:
         case STARDICT::CMD_LOOKUP:

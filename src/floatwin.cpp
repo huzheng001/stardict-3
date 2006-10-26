@@ -256,6 +256,70 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 		gpAppFrame->oReadWord.read(PronounceWord.c_str());
 }
 
+void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response)
+{
+	QueryingWord = dict_response->oword;
+	found_result = FLOAT_WIN_FOUND;
+	view->begin_update();
+	view->clear();
+	std::string mark = "<b><span size=\"x-large\">";
+	gchar *m_str = g_markup_escape_text(dict_response->oword, -1);
+	mark += m_str;
+	g_free(m_str);
+	mark += "</span></b>";
+	view->append_pango_text(mark.c_str());
+    int markindex = 0;
+    for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+        view->AppendNewline();
+        view->AppendHeader((*i)->bookname, markindex);
+        markindex++;
+        for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
+            if (j == (*i)->word_result_list.begin()) {
+                if (strcmp((*j)->word, dict_response->oword))
+                    view->AppendWord((*j)->word);
+            } else {
+                view->AppendNewline();
+                view->AppendWord((*j)->word);
+            }
+            std::list<char *>::iterator k = (*j)->datalist.begin();
+            view->AppendData(*k, (*j)->word, dict_response->oword);
+            for (++k; k != (*j)->datalist.end(); ++k) {
+                view->AppendNewline();
+                view->AppendDataSeparate();
+                view->AppendData(*k, (*j)->word, dict_response->oword);
+            }
+        }
+    }
+	view->end_update();
+	gboolean pronounced = false;
+	gboolean canRead = gpAppFrame->oReadWord.canRead(dict_response->oword);
+	if (canRead) {
+		if (PronounceWord == dict_response->oword)
+			pronounced = true;
+		else
+			PronounceWord = dict_response->oword;
+	} else {
+        for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+            std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin();
+            if (j != (*i)->word_result_list.end() && strcmp((*j)->word, dict_response->oword)) {
+                if (gpAppFrame->oReadWord.canRead((*j)->word)) {
+                    canRead = TRUE;
+                    if (PronounceWord == (*j)->word)
+                        pronounced = true;
+                    else
+                        PronounceWord = (*j)->word;
+                }
+                break;
+            }
+        }
+	}
+	gtk_widget_set_sensitive(PronounceWordButton, canRead);
+
+	Popup(true);
+	if (canRead && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
+		gpAppFrame->oReadWord.read(PronounceWord.c_str());
+}
+
 void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gchar ** ppOriginWord, gint count, const gchar *sOriginWord)
 {
   QueryingWord = sOriginWord;

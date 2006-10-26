@@ -36,7 +36,7 @@ private:
 #ifndef CONFIG_GPE
   GtkWidget *categories_window;
 #endif
-	const std::list<std::string>& key_combs;
+  const std::list<std::string>& key_combs;
 
 #ifndef CONFIG_GPE
   GtkTreeModel* create_categories_tree_model ();		

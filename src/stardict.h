@@ -132,10 +132,12 @@ public:
 
     void on_stardict_client_error(const char *);
     void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response);
+    void on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response);
     void on_stardict_client_register_end(const char *);
     void on_stardict_client_getdictmask_end(const char *);
     void on_stardict_client_dirinfo_end(const char *);
     void on_stardict_client_dictinfo_end(const char *);
+    void on_stardict_client_maxdictcount_end(int);
 };
 
 #ifdef _WIN32
