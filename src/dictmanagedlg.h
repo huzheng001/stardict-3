@@ -3,16 +3,20 @@
 
 #include <gtk/gtk.h>
 
+class DictManageDlg;
+
 class NetworkAddDlg {
 private:
-	GtkTreeStore* model;
+    DictManageDlg *dictdlg;
+	GtkTreeStore *model;
+    GtkWidget *treeview;
 	static void on_network_adddlg_add_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
 	static void on_network_adddlg_info_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
     static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg);
     static void on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg);
 public:
     GtkWidget *window;
-	NetworkAddDlg();
+	NetworkAddDlg(DictManageDlg *dlg);
 	void Show(GtkWindow *parent_win);
 	void network_getdirinfo(const char *xml);
 };
@@ -34,6 +38,7 @@ private:
 	GdkPixbuf *dicts_icon, *tree_dicts_icon;
 	GtkWidget *window;
 	NetworkAddDlg *network_add_dlg;
+    int max_dict_count;
 
 	static GtkTreeModel* create_dict_tree_model(int istreedict);
 	GtkWidget *create_dict_tree(int istreedict);
@@ -68,6 +73,9 @@ public:
 	void network_getdictmask(const char *xml);
 	void network_dirinfo(const char *xml);
 	void network_dictinfo(const char *xml);
+	void network_maxdictcount(int count);
+
+    friend class NetworkAddDlg;
 };
 
 #endif

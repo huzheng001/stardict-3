@@ -19,19 +19,19 @@ namespace STARDICT {
 		CMD_SELECT_QUERY,
 		CMD_DEFINE,
 		CMD_REGISTER,
-		CMD_CHANGE_PASSWD,
+		//CMD_CHANGE_PASSWD,
 		CMD_SET_DICT_MASK,
 		CMD_GET_DICT_MASK,
-		CMD_SET_COLLATE_FUNC,
-		CMD_GET_COLLATE_FUNC,
-		CMD_SET_LANGUAGE,
-		CMD_GET_LANGUAGE,
-		CMD_SET_EMAIL,
-		CMD_GET_EMAIL,
+		//CMD_SET_COLLATE_FUNC,
+		//CMD_GET_COLLATE_FUNC,
+		//CMD_SET_LANGUAGE,
+		//CMD_GET_LANGUAGE,
+		//CMD_SET_EMAIL,
+		//CMD_GET_EMAIL,
 		CMD_MAX_DICT_COUNT,
 		CMD_DIR_INFO,
 		CMD_DICT_INFO,
-		CMD_USER_LEVEL,
+		//CMD_USER_LEVEL,
 		CMD_GET_USER_LEVEL,
 		CMD_QUIT,
 	};
@@ -122,10 +122,12 @@ class StarDictClient : private StarDictCache {
 public:
     static sigc::signal<void, const char *> on_error_;
     static sigc::signal<void, const struct STARDICT::LookupResponse *> on_lookup_end_;
+    static sigc::signal<void, const struct STARDICT::LookupResponse *> on_floatwin_lookup_end_;
     static sigc::signal<void, const char *> on_register_end_;
     static sigc::signal<void, const char *> on_getdictmask_end_;
     static sigc::signal<void, const char *> on_dirinfo_end_;
     static sigc::signal<void, const char *> on_dictinfo_end_;
+    static sigc::signal<void, int> on_maxdictcount_end_;
 
 	StarDictClient();
 	~StarDictClient();
@@ -134,6 +136,7 @@ public:
     void set_auth(const char *user, const char *md5passwd);
     bool try_cache(STARDICT::Cmd *c);
 	void send_commands(int num, ...);
+	void try_cache_or_send_commands(int num, ...);
 private:
 	GIOChannel *channel_;
 	guint source_id_;
@@ -171,6 +174,7 @@ private:
     int parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_dirinfo(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_dictinfo(STARDICT::Cmd* cmd, gchar *line);
+    int parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_quit(gchar *line);
     int parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
 };

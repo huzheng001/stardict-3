@@ -199,10 +199,12 @@ void AppCore::Create(gchar *queryword)
     }
     oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
     oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
+    oStarDictClient.on_floatwin_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_floatwin_lookup_end));
     oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
     oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
     oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
     oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
+    oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1383,6 +1385,12 @@ void AppCore::on_stardict_client_dictinfo_end(const char *msg)
 		dict_manage_dlg->network_dictinfo(msg);
 }
 
+void AppCore::on_stardict_client_maxdictcount_end(int count)
+{
+	if (dict_manage_dlg)
+		dict_manage_dlg->network_maxdictcount(count);
+}
+
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
 {
     oMidWin.oTextWin.Show(&(lookup_response->dict_response));
@@ -1409,6 +1417,11 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
             oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
         }
     }
+}
+
+void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
+{
+    oFloatWin.ShowText(&(lookup_response->dict_response));
 }
 
 class reload_show_progress_t : public show_progress_t {

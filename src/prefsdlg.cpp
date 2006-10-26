@@ -1113,7 +1113,7 @@ void PrefsDlg::setup_network_netdict()
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_account_button_clicked), this);
     gtk_table_attach(GTK_TABLE(table), button, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
     bAccount = GTK_BUTTON(button);
-    button = gtk_button_new_with_mnemonic(_("_Register a account"));
+    button = gtk_button_new_with_mnemonic(_("_Register an account"));
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_register_button_clicked), this);
     GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
     gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
