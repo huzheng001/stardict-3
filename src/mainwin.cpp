@@ -345,6 +345,11 @@ void TopWin::do_prev()
 					gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
 			}
 			g_free(iPreIndex);
+            if (conf->get_bool_at("network/enable_netdict")) {
+                STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_PREVIOUS, word);
+                if (!gpAppFrame->oStarDictClient.try_cache(c))
+                    gpAppFrame->oStarDictClient.send_commands(1, c);
+            }
 			g_free(word);
 		}
 		gtk_tree_path_free(path);
@@ -413,6 +418,11 @@ void TopWin::do_next()
 					select_region_in_text(0, -1);
 			}
 			g_free(iNextIndex);
+            if (conf->get_bool_at("network/enable_netdict")) {
+                STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_NEXT, word);
+                if (!gpAppFrame->oStarDictClient.try_cache(c))
+                    gpAppFrame->oStarDictClient.send_commands(1, c);
+            }
 			g_free(word);
 		}
 	} else if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
@@ -805,6 +815,7 @@ void ListWin::UnSelectAll()
 {
 	gtk_tree_selection_unselect_all(gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview)));
 }
+*/
 
 void ListWin::Prepend(const gchar *word)
 {
@@ -812,7 +823,6 @@ void ListWin::Prepend(const gchar *word)
 	gtk_list_store_prepend (list_model, &iter);
 	gtk_list_store_set (list_model, &iter, 0, word, -1);
 }
-*/
 
 void ListWin::ReScroll()
 {

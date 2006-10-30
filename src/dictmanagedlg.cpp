@@ -53,15 +53,37 @@ void NetworkAddDlg::on_network_adddlg_add_button_clicked(GtkWidget *widget, Netw
                 } while (gtk_tree_model_iter_next(oNetworkAddDlg->dictdlg->network_tree_model, &iter2) == TRUE);
             }
             if (!added) {
+                gchar *msg;
                 if (row_count < oNetworkAddDlg->dictdlg->max_dict_count) {
-                    gchar *bookname;
-                    glong wordcount;
-                    gtk_tree_model_get (model, &iter, 0, &bookname, 2, &wordcount, -1);
-                    gtk_list_store_append(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2);
-                    gtk_list_store_set(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2, 0, uid, 1, bookname, 2, wordcount, -1);
-                    g_free(bookname);
+                    int need_level;
+                    gtk_tree_model_get (model, &iter, 4, &need_level, -1);
+                    if (need_level > oNetworkAddDlg->dictdlg->user_level) {
+                        msg = g_strdup_printf(_("Only level %d user can choose this dictionary!"), need_level);
+                    } else {
+                        msg = NULL;
+                        gchar *bookname;
+                        glong wordcount;
+                        gtk_tree_model_get (model, &iter, 0, &bookname, 2, &wordcount, -1);
+                        gtk_list_store_append(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2);
+                        gtk_list_store_set(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2, 0, uid, 1, bookname, 2, wordcount, -1);
+                        g_free(bookname);
+                        oNetworkAddDlg->dictdlg->dictmask_changed = true;
+                    }
                 } else {
-                    //TODO
+                    msg = g_strdup_printf(_("You can only choose %d dictionaries."), oNetworkAddDlg->dictdlg->max_dict_count);
+                }
+                if (msg) {
+                    GtkWidget *message_dlg =
+                        gtk_message_dialog_new(
+                                GTK_WINDOW(oNetworkAddDlg->window),
+                                (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                                GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                                msg);
+                    g_free(msg);
+                    gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+                    gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+                    gtk_dialog_run(GTK_DIALOG(message_dlg));
+                    gtk_widget_destroy(message_dlg);
                 }
             }
             g_free(uid);
@@ -149,7 +171,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_size_request (sw, 350, 230);
-	model = gtk_tree_store_new(4, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_LONG, G_TYPE_STRING);
+	model = gtk_tree_store_new(5, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_INT);
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	g_object_unref (G_OBJECT (model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
@@ -246,7 +268,12 @@ static void dirinfo_parse_end_element(GMarkupParseContext *context, const gchar 
         Data->in_dict = false;
         GtkTreeIter iter;
         gtk_tree_store_append(Data->model, &iter, Data->iter);
-        gtk_tree_store_set(Data->model, &iter, 0, Data->dict_bookname.c_str(), 1, TRUE, 2, atol(Data->dict_wordcount.c_str()), 3, Data->dict_uid.c_str(), -1);
+        int need_level;
+        if (Data->dict_level.empty())
+            need_level = 0;
+        else
+            need_level = atoi(Data->dict_level.c_str());
+        gtk_tree_store_set(Data->model, &iter, 0, Data->dict_bookname.c_str(), 1, TRUE, 2, atol(Data->dict_wordcount.c_str()), 3, Data->dict_uid.c_str(), 4, need_level, -1);
     }
 }
 
@@ -336,6 +363,7 @@ void NetworkAddDlg::network_getdirinfo(const char *xml)
             gtk_tree_store_remove(Data.model, &iter);
         g_free(Data.iter);
     }
+    this->dictdlg->user_level = Data.userlevel;
 }
 
 DictManageDlg::DictManageDlg(GtkWindow *pw, GdkPixbuf *di,  GdkPixbuf *tdi) :
@@ -355,6 +383,7 @@ void DictManageDlg::on_wazard_button_toggled(GtkToggleButton *button, DictManage
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 0);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
         gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Visit http://stardict.sourceforge.net to download dictionaries!"));
+        gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
     }
 }
 
@@ -364,6 +393,7 @@ void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictMana
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 1);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
         gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("These settings will take effect the next time you run StarDict."));
+        gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
     }
 }
 
@@ -378,10 +408,11 @@ void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManag
             STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
             gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
         } else {
-            gchar *str = g_strdup_printf(_("You can choose %d dictionaries."), oDictManageDlg->max_dict_count);
+            gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), oDictManageDlg->max_dict_count);
             gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), str);
             g_free(str);
         }
+        gtk_widget_show(oDictManageDlg->upgrade_eventbox);
     }
 }
 
@@ -784,6 +815,26 @@ void DictManageDlg::write_order_list(bool istreedict)
 	  conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", order_list);
 }
 
+void DictManageDlg::ChangeDictMask()
+{
+    GtkTreeIter iter;
+    std::string dictmask;
+    if (gtk_tree_model_get_iter_first(network_tree_model, &iter)) {
+        gchar *uid;
+        gtk_tree_model_get (network_tree_model, &iter, 0, &uid, -1);
+        dictmask = uid;
+        g_free(uid);
+        while (gtk_tree_model_iter_next(network_tree_model, &iter)) {
+            gtk_tree_model_get (network_tree_model, &iter, 0, &uid, -1);
+            dictmask += ' ';
+            dictmask += uid;
+            g_free(uid);
+        }
+    }
+    STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SET_DICT_MASK, dictmask.c_str());
+    gpAppFrame->oStarDictClient.send_commands(1, c);
+}
+
 void DictManageDlg::on_move_top_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
 {
 	gboolean istreedict = !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button));	
@@ -873,7 +924,9 @@ void DictManageDlg::on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *
 			gtk_list_store_swap(GTK_LIST_STORE(model), &iter, &prev);	
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
-			if (istreedict != 2)
+			if (istreedict == 2)
+                oDictManageDlg->dictmask_changed = true;
+            else
                 oDictManageDlg->write_order_list(istreedict);
 		}		
 		gtk_tree_path_free(path);		
@@ -909,7 +962,9 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 			gtk_list_store_swap(GTK_LIST_STORE(model), &iter, &next);	
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
-            if (istreedict != 2)
+            if (istreedict == 2)
+                oDictManageDlg->dictmask_changed = true;
+            else
     			oDictManageDlg->write_order_list(istreedict);
 		}		
 		gtk_tree_path_free(path);		
@@ -933,6 +988,7 @@ void DictManageDlg::on_network_remove_button_clicked(GtkWidget *widget, DictMana
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
         gtk_list_store_remove(GTK_LIST_STORE(oDictManageDlg->network_tree_model), &iter);
+        oDictManageDlg->dictmask_changed = true;
     }
 }
 
@@ -990,6 +1046,11 @@ GtkWidget *DictManageDlg::create_network_buttons()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_down_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
+}
+
+void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+    show_url("http://www.stardict.org/finance.php");
 }
 
 bool DictManageDlg::Show()
@@ -1087,23 +1148,42 @@ bool DictManageDlg::Show()
         gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
         gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
 		
+		hbox = gtk_hbox_new (FALSE, 6);
+		gtk_box_pack_start (GTK_BOX (vbox), hbox, true, true, 0);
 		info_label = gtk_label_new (_("Visit http://stardict.sourceforge.net to download dictionaries!"));
         gtk_label_set_selectable(GTK_LABEL (info_label), TRUE);
 		gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
 		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
-		gtk_box_pack_start (GTK_BOX (vbox), info_label, FALSE, FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
+
+        label = gtk_label_new(NULL);
+        gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">Upgrade Now!</span>");
+        upgrade_eventbox = gtk_event_box_new();
+        g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
+        gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);
+        gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
 		
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox,
 												true, true, 0);
 		
 		
-		gtk_widget_show_all(GTK_DIALOG (window)->vbox);	
+		gtk_widget_show_all(GTK_DIALOG (window)->vbox);
+
+        gtk_widget_realize(upgrade_eventbox);
+        GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
+        gdk_window_set_cursor(upgrade_eventbox->window, cursor);
+        gdk_cursor_unref(cursor);
+        gtk_widget_hide(upgrade_eventbox);
 	
 		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));	
 	}
+    dictmask_changed = false;
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
 		;
+    if (dictmask_changed == true) {
+        ChangeDictMask();
+    }
 	if (result == GTK_RESPONSE_NONE) {
 		// Caused by gtk_widget_destroy(), quiting.
 		return true;
@@ -1286,7 +1366,7 @@ void DictManageDlg::network_maxdictcount(int count)
 {
     max_dict_count = count;
     if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 2) {
-        gchar *str = g_strdup_printf(_("You can choose %d dictionaries."), count);
+        gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), count);
         gtk_label_set_text(GTK_LABEL(this->info_label), str);
         g_free(str);
     }

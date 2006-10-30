@@ -130,6 +130,7 @@ public:
 	void Destroy();
 	void Clear();
 	void ReScroll();
+    void Prepend(const gchar *word);
 	void InsertLast(const gchar *word);
 	void SetTreeModel(std::vector<gchar *> *reslist);
 	void SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *> *wordtree);

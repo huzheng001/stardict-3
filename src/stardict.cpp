@@ -205,6 +205,8 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
     oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
     oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
+    oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
+    oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
 
@@ -1389,6 +1391,24 @@ void AppCore::on_stardict_client_maxdictcount_end(int count)
 {
 	if (dict_manage_dlg)
 		dict_manage_dlg->network_maxdictcount(count);
+}
+
+void AppCore::on_stardict_client_previous_end(std::list<char *> *wordlist_response)
+{
+    oMidWin.oIndexWin.oListWin.Clear();
+    oMidWin.oIndexWin.oListWin.SetModel(true);
+    for (std::list<char *>::iterator i = wordlist_response->begin(); i != wordlist_response->end(); ++i) {
+        oMidWin.oIndexWin.oListWin.Prepend(*i);
+    }
+}
+
+void AppCore::on_stardict_client_next_end(std::list<char *> *wordlist_response)
+{
+    oMidWin.oIndexWin.oListWin.Clear();
+    oMidWin.oIndexWin.oListWin.SetModel(true);
+    for (std::list<char *>::iterator i = wordlist_response->begin(); i != wordlist_response->end(); ++i) {
+        oMidWin.oIndexWin.oListWin.InsertLast(*i);
+    }
 }
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)

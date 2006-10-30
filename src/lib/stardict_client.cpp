@@ -45,6 +45,8 @@ sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 sigc::signal<void, const char *> StarDictClient::on_dirinfo_end_;
 sigc::signal<void, const char *> StarDictClient::on_dictinfo_end_;
 sigc::signal<void, int> StarDictClient::on_maxdictcount_end_;
+sigc::signal<void, std::list<char *> *> StarDictClient::on_previous_end_;
+sigc::signal<void, std::list<char *> *> StarDictClient::on_next_end_;
 
 static void arg_escape(std::string &earg, const char *arg)
 {
@@ -122,6 +124,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("previous %s\n", earg.c_str());
+        this->wordlist_response = NULL;
 		break;
 	}
 	case CMD_NEXT:
@@ -129,6 +132,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
 		this->data = g_strdup_printf("next %s\n", earg.c_str());
+        this->wordlist_response = NULL;
 		break;
 	}
 	/*case CMD_QUERY:
@@ -194,10 +198,10 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	}
 	case CMD_GET_EMAIL:
 		this->data = g_strdup("getemail\n");
-		break;*/
+		break;
 	case CMD_GET_USER_LEVEL:
 		this->data = g_strdup("getuserlevel\n");
-		break;
+		break;*/
 	case CMD_MAX_DICT_COUNT:
 		this->data = g_strdup("maxdictcount\n");
 		break;
@@ -298,6 +302,13 @@ STARDICT::Cmd::~Cmd()
     }
     if (this->command == CMD_LOOKUP || this->command == CMD_DEFINE || this->command == CMD_SELECT_QUERY) {
         delete this->lookup_response;
+    } else if (this->command == CMD_PREVIOUS || this->command == CMD_NEXT) {
+        if (this->wordlist_response) {
+            for (std::list<char *>::iterator i = this->wordlist_response->begin(); i != this->wordlist_response->end(); ++i) {
+                g_free(*i);
+            }
+            delete this->wordlist_response;
+        }
     }
 }
 
@@ -453,6 +464,10 @@ bool StarDictClient::try_cache(STARDICT::Cmd *c)
             return false;
         }
     }
+    if (c->command == STARDICT::CMD_PREVIOUS || c->command == STARDICT::CMD_NEXT) {
+        // Not implemented yet.
+        return false;
+    }
     char *data = get_cache_str(c->data);
     if (data) {
         switch (c->command) {
@@ -480,7 +495,11 @@ void StarDictClient::send_commands(int num, ...)
 {
     STARDICT::Cmd *c;
     if (!is_connected_) {
-        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
+#ifdef _WIN32
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict Windows");
+#else
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict Linux");
+#endif
         cmdlist.push_back(c);
         if (!user_.empty() && !md5passwd_.empty()) {
             c = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
@@ -931,6 +950,35 @@ int StarDictClient::parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *buf)
     return 2;
 }
 
+int StarDictClient::parse_wordlist(STARDICT::Cmd* cmd, gchar *buf)
+{
+    if (cmd->reading_status == 0) { // Read code.
+        int status;
+        status = atoi(buf);
+        g_free(buf);
+        if (status != CODE_OK) {
+            return 0;
+        }
+        cmd->wordlist_response = new std::list<char *>;
+        cmd->reading_status = 1;
+        reading_type_ = READ_STRING;
+    } else if (cmd->reading_status == 1) {
+        if (*buf == '\0') {
+            g_free(buf);
+            if (cmd->command == STARDICT::CMD_PREVIOUS) {
+                on_previous_end_.emit(cmd->wordlist_response);
+                return 1;
+            } else {
+                on_next_end_.emit(cmd->wordlist_response);
+                return 1;
+            }
+        } else {
+            cmd->wordlist_response->push_back(buf);
+        }
+    }
+    return 2;
+}
+
 int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) { // Read code.
@@ -1091,6 +1139,10 @@ bool StarDictClient::parse(gchar *line)
         case STARDICT::CMD_LOOKUP:
         case STARDICT::CMD_SELECT_QUERY:
             result = parse_dict_result(cmd, line);
+            break;
+        case STARDICT::CMD_PREVIOUS:
+        case STARDICT::CMD_NEXT:
+            result = parse_wordlist(cmd, line);
             break;
         case STARDICT::CMD_QUIT:
             result = parse_command_quit(line);

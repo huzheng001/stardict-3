@@ -138,6 +138,8 @@ public:
     void on_stardict_client_dirinfo_end(const char *);
     void on_stardict_client_dictinfo_end(const char *);
     void on_stardict_client_maxdictcount_end(int);
+    void on_stardict_client_previous_end(std::list<char *> *wordlist_response);
+    void on_stardict_client_next_end(std::list<char *> *wordlist_response);
 };
 
 #ifdef _WIN32
