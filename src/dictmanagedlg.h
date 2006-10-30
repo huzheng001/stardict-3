@@ -28,6 +28,7 @@ private:
 	GtkWidget *notebook;
 	GtkWidget *button_notebook;
 	GtkWidget *info_label;
+    GtkWidget *upgrade_eventbox;
 	GtkWidget *dict_treeview;
 	GtkTreeModel *dict_tree_model;
 	GtkWidget *treedict_treeview;
@@ -39,6 +40,8 @@ private:
 	GtkWidget *window;
 	NetworkAddDlg *network_add_dlg;
     int max_dict_count;
+    int user_level;
+    bool dictmask_changed;
 
 	static GtkTreeModel* create_dict_tree_model(int istreedict);
 	GtkWidget *create_dict_tree(int istreedict);
@@ -47,10 +50,12 @@ private:
 	GtkWidget *create_network_buttons();
 
 	void write_order_list(bool istreedict);
+    void ChangeDictMask();
 
 	static void on_wazard_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
+	static void on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 
 	static gboolean on_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static gboolean on_network_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);

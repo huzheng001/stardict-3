@@ -32,7 +32,7 @@ namespace STARDICT {
 		CMD_DIR_INFO,
 		CMD_DICT_INFO,
 		//CMD_USER_LEVEL,
-		CMD_GET_USER_LEVEL,
+		//CMD_GET_USER_LEVEL,
 		CMD_QUIT,
 	};
     struct LookupResponse {
@@ -83,7 +83,10 @@ namespace STARDICT {
             AuthInfo *auth;
 		};
         int reading_status;
-        struct LookupResponse *lookup_response;
+        union {
+            struct LookupResponse *lookup_response;
+            std::list<char *> *wordlist_response;
+        };
 		Cmd(int cmd, ...);
         ~Cmd();
 	};
@@ -128,6 +131,8 @@ public:
     static sigc::signal<void, const char *> on_dirinfo_end_;
     static sigc::signal<void, const char *> on_dictinfo_end_;
     static sigc::signal<void, int> on_maxdictcount_end_;
+    static sigc::signal<void, std::list<char *> *> on_previous_end_;
+    static sigc::signal<void, std::list<char *> *> on_next_end_;
 
 	StarDictClient();
 	~StarDictClient();
@@ -177,6 +182,7 @@ private:
     int parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *line);
     int parse_command_quit(gchar *line);
     int parse_dict_result(STARDICT::Cmd* cmd, gchar *buf);
+    int parse_wordlist(STARDICT::Cmd* cmd, gchar *buf);
 };
 
 #endif
