@@ -367,7 +367,7 @@ void NetworkAddDlg::network_getdirinfo(const char *xml)
 }
 
 DictManageDlg::DictManageDlg(GtkWindow *pw, GdkPixbuf *di,  GdkPixbuf *tdi) :
-	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), window(NULL), network_add_dlg(NULL), max_dict_count(-1)
+	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), network_add_dlg(NULL), max_dict_count(-1), window(NULL)
 {
 }
 
@@ -608,7 +608,9 @@ void DictManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx
 				default:
 					return;
 			}
-			if (model != oDictManageDlg->network_tree_model)
+			if (model == oDictManageDlg->network_tree_model)
+                oDictManageDlg->dictmask_changed = true;
+            else
 				oDictManageDlg->write_order_list(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button)));
 		}
 	}

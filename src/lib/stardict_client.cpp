@@ -23,6 +23,7 @@
 #endif
 
 #include <glib.h>
+#include <glib/gi18n.h>
 
 #include "sockets.hpp"
 #include "md5.h"
@@ -987,10 +988,11 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         g_free(buf);
         if (status != CODE_OK) {
             if (status == CODE_DICTMASK_NOTSET) {
-                //
+                on_error_.emit(_("You haven't choose any dictionries, please choose some by click \"Dict Manage\"->\"Network dictionaries\"->\"Add\"."));
+                return 1;
             } else {
+                return 0;
             }
-            return 0;
         }
         cmd->lookup_response = new STARDICT::LookupResponse();
         cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_None;
@@ -1125,6 +1127,9 @@ bool StarDictClient::parse(gchar *line)
             break;
         case STARDICT::CMD_GET_DICT_MASK:
             result = parse_command_getdictmask(cmd, line);
+            break;
+        case STARDICT::CMD_SET_DICT_MASK:
+            result = parse_command_setdictmask(line);
             break;
         case STARDICT::CMD_DIR_INFO:
             result = parse_command_dirinfo(cmd, line);

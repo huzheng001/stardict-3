@@ -10,7 +10,6 @@
 
 class PrefsDlg {
 private:
-  GtkWidget *window;
   GtkWidget *notebook;
 #ifndef CONFIG_GPE
   GtkWidget *categories_tree;
@@ -112,6 +111,7 @@ private:
 
   void change_font_for_all_widgets(const std::string& fontname);
 public:
+  GtkWidget *window;
   PrefsDlg(GtkWindow *parent, GdkPixbuf *logo, const std::list<std::string>& key_combs);
   bool ShowModal();
   void Close();

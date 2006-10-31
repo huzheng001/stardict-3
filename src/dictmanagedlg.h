@@ -37,7 +37,6 @@ private:
 	GtkTreeModel *network_tree_model;
 	GtkWindow *parent_win;
 	GdkPixbuf *dicts_icon, *tree_dicts_icon;
-	GtkWidget *window;
 	NetworkAddDlg *network_add_dlg;
     int max_dict_count;
     int user_level;
@@ -72,6 +71,8 @@ private:
 	static void drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg);
 	static void drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg);
 public:
+	GtkWidget *window;
+
 	DictManageDlg(GtkWindow *parent_win, GdkPixbuf *dicts_icon, GdkPixbuf *tree_dicts_icon);
 	bool Show();
 	void Close();

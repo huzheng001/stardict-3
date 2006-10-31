@@ -1351,22 +1351,27 @@ void AppCore::on_stardict_client_error(const char *error_msg)
                 error_msg);
     gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
     gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
-    gtk_dialog_run(GTK_DIALOG(message_dlg));
-    gtk_widget_destroy(message_dlg);
+    g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+    gtk_widget_show(message_dlg);
 }
 
 void AppCore::on_stardict_client_register_end(const char *msg)
 {
+    GtkWindow *parent;
+    if (prefs_dlg && prefs_dlg->window)
+        parent = GTK_WINDOW(prefs_dlg->window);
+    else
+        parent = GTK_WINDOW(window);
     GtkWidget *message_dlg =
         gtk_message_dialog_new(
-                GTK_WINDOW(window),
+                parent,
                 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                 GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
                 msg);
     gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
     gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
-    gtk_dialog_run(GTK_DIALOG(message_dlg));
-    gtk_widget_destroy(message_dlg);
+    g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+    gtk_widget_show(message_dlg);
 }
 
 void AppCore::on_stardict_client_getdictmask_end(const char *msg)
