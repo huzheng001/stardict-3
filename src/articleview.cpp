@@ -754,12 +754,13 @@ void ArticleView::AppendDataSeparate()
 	append_pango_text("\n");
 }
 
-void ArticleView::AppendHeader(const std::string& dict_name, size_t i)
+void ArticleView::AppendHeader(const std::string& dict_name)
 {
 	if (!for_float_win) {
-		gchar *mark = g_strdup_printf("%d", i);
+		gchar *mark = g_strdup_printf("%d", bookindex);
 		pango_view_->append_mark(mark);
 		g_free(mark);
+        bookindex++;
 	}
 	std::string mark= "<span foreground=\"blue\">";
 #ifdef CONFIG_GPE
@@ -791,6 +792,6 @@ void ArticleView::AppendWord(const gchar *word)
 
 void ArticleView::connect_on_link(const sigc::slot<void, const char *>& s)
 {
-	pango_view_->clear();
+	//pango_view_->clear();
 	pango_view_->on_link_click_.connect(s);
 }

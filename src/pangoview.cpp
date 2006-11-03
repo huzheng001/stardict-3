@@ -63,6 +63,7 @@ private:
 	static gboolean on_button_release(GtkWidget *, GdkEventButton *, gpointer);
 
 	void goto_begin();
+	void goto_end();
 	TextBufLinks::const_iterator find_link(gint x, gint y);
 };
 
@@ -324,6 +325,11 @@ void TextPangoWidget::goto_begin()
 	gtk_text_buffer_get_iter_at_offset(
 		gtk_text_view_get_buffer(textview_), &iter_, 0
 		);
+}
+
+void TextPangoWidget::goto_end()
+{
+    gtk_text_buffer_get_iter_at_offset(gtk_text_view_get_buffer(textview_), &iter_, -1);
 }
 
 std::string TextPangoWidget::get_text()

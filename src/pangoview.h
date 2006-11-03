@@ -43,6 +43,7 @@ public:
 	virtual void begin_update();
 	virtual void end_update();
 	virtual void goto_begin() {}
+	virtual void goto_end() {}
 
 	GtkWidget *vscroll_bar() { return scroll_win_->vscrollbar; }
 	void set_size(gint w, gint h) {

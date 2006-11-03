@@ -1076,9 +1076,11 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 	oMidWin.oTextWin.queryWord = sOriginWord;
 
 	oMidWin.oIndexWin.oResultWin.Clear();
+    int bookindex = 0;
 	for (size_t i=0; i < oLibs.ndicts(); i++) {
 		if (pppWord[i]) {
-			gchar *mark = g_strdup_printf("%d", i);
+			gchar *mark = g_strdup_printf("%d", bookindex);
+            bookindex++;
 			oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(i).c_str(), mark);
 			g_free(mark);
 		}
