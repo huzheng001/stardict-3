@@ -1595,7 +1595,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	int j,k;
 	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 		if (Word[i]) {
-			view->AppendHeader(gpAppFrame->oLibs.dict_name(i), i);
+			view->AppendHeader(gpAppFrame->oLibs.dict_name(i));
 			j=0;
 			do {
 				view->AppendWord(Word[i][j]);
@@ -1622,12 +1622,27 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 	view->connect_on_link(sigc::mem_fun(gpAppFrame,
 					    &AppCore::on_link_click));
     view->begin_update();
-	view->clear();
-	view->goto_begin();
-    int markindex = 0;
+    if (query_result == TEXT_WIN_FOUND) {
+        view->goto_end();
+    } else if (query_result == TEXT_WIN_SHOW_FIRST) {
+        view->goto_end();
+        if (dict_response->oword == queryWord)
+            query_result = TEXT_WIN_FOUND;
+    } else {
+        if (!dict_response->dict_result_list.empty()) {
+    	    view->clear();
+            if (dict_response->oword == queryWord)
+                query_result = TEXT_WIN_FOUND;
+            else
+                query_result = TEXT_WIN_SHOW_FIRST;
+        }
+	    view->goto_begin();
+    }
     for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-        view->AppendHeader((*i)->bookname, markindex);
-        markindex++;
+        gchar *mark = g_strdup_printf("%d", view->bookindex);
+        gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast((*i)->bookname, mark);
+        g_free(mark);
+        view->AppendHeader((*i)->bookname);
         for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
             view->AppendWord((*j)->word);
             std::list<char *>::iterator k = (*j)->datalist.begin();

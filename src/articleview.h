@@ -9,12 +9,13 @@
 //class which show dictionary's aritcles
 class ArticleView {
 public:
+    unsigned int bookindex;
 	ArticleView(GtkContainer *owner, bool floatw=false): 
-		pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
+		bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
 	ArticleView(GtkBox *owner, bool floatw=false)
 		: pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
 
-	void AppendHeader(const std::string& dict_name, size_t i);
+	void AppendHeader(const std::string& dict_name);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
 	void AppendNewline();
@@ -31,11 +32,12 @@ public:
 					  const LinksPosList& links) {
 		pango_view_->append_pango_text_with_links(str, links);
 	}
-	void clear() { pango_view_->clear(); }
+	void clear() { pango_view_->clear(); bookindex = 0;}
 	void append_mark(const char *mark) { pango_view_->append_mark(mark); }
 	void begin_update() { pango_view_->begin_update(); }
 	void end_update() { pango_view_->end_update(); }
 	void goto_begin() { pango_view_->goto_begin(); }
+	void goto_end() { pango_view_->goto_end(); }
 	GtkWidget *vscroll_bar() { return pango_view_->vscroll_bar(); }
 	void set_size(gint w, gint h) { pango_view_->set_size(w, h); }
 	gint scroll_space() { return pango_view_->scroll_space(); }

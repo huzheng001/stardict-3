@@ -203,7 +203,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 		if (Word[i]) {
 			view->AppendNewline();
-			view->AppendHeader(gpAppFrame->oLibs.dict_name(i), i);
+			view->AppendHeader(gpAppFrame->oLibs.dict_name(i));
 			j=0;
 			do {
 				if (j==0) {
@@ -268,11 +268,9 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
 	g_free(m_str);
 	mark += "</span></b>";
 	view->append_pango_text(mark.c_str());
-    int markindex = 0;
     for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
         view->AppendNewline();
-        view->AppendHeader((*i)->bookname, markindex);
-        markindex++;
+        view->AppendHeader((*i)->bookname);
         for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
             if (j == (*i)->word_result_list.begin()) {
                 if (strcmp((*j)->word, dict_response->oword))
@@ -376,7 +374,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
     for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
 	if (ppppWord[j][i]) {
 		view->AppendNewline();
-		view->AppendHeader(gpAppFrame->oLibs.dict_name(i), i);
+		view->AppendHeader(gpAppFrame->oLibs.dict_name(i));
 		m=0;
 		do {
 			if (m==0) {
