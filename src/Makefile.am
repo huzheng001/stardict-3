@@ -16,7 +16,11 @@ stardict_LDFLAGS =
 stardict_LDADD = $(STARDICT_LIBS) sigc++/libsigc.a lib/libstardict.a
 
 if !GNOME_SUPPORT
+if MAEMO_SUPPORT
+CONFIG_FILE_MODULE = gconf_file.cpp gconf_file.hpp
+else
 CONFIG_FILE_MODULE = inifile.cpp inifile.hpp
+endif
 else
 CONFIG_FILE_MODULE = gconf_file.cpp gconf_file.hpp
 IDL_FILE = GNOME_Stardict.idl

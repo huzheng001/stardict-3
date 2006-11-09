@@ -201,7 +201,11 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_add_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+#ifdef CONFIG_MAEMO
+	button = gtk_button_new_from_stock(GTK_STOCK_DIALOG_INFO);
+#else
 	button = gtk_button_new_from_stock(GTK_STOCK_INFO);
+#endif
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_info_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

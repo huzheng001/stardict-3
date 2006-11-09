@@ -50,6 +50,11 @@
 #  include <gpe/init.h>
 #endif
 
+#ifdef CONFIG_MAEMO
+#include "hildon-widgets/hildon-program.h"
+#include "hildon-widgets/hildon-window.h"
+#endif
+
 #ifdef _WIN32
 #  include <gdk/gdkwin32.h>
 #  include <windows.h>
@@ -223,7 +228,15 @@ void AppCore::Create(gchar *queryword)
 		}
 	}
 
+#ifdef CONFIG_MAEMO
+	HildonProgram *program;
+	program = HILDON_PROGRAM(hildon_program_get_instance());
+	g_set_application_name(_("StarDict"));
+	window = hildon_window_new();
+	hildon_program_add_window(program, HILDON_WINDOW(window));
+#else
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+#endif
 	gtk_container_set_border_width(GTK_CONTAINER(window),2);
 	bool maximized=conf->get_bool_at("main_window/maximized");
 
@@ -1888,7 +1901,7 @@ int main(int argc,char **argv)
                 return EXIT_SUCCESS;
 	}
 #endif
-#if defined(_WIN32) || defined(CONFIG_GTK)
+#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
 #endif
