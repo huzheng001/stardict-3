@@ -628,54 +628,58 @@ void StarDictClient::clean_command()
 	cmdlist.clear();
 }
 
-bool StarDictClient::connect()
+void StarDictClient::connect()
 {
+    Socket::resolve(host_, this, on_resolved);
+}
+
+void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
+{
+    StarDictClient *oStarDictClient = (StarDictClient *)data;
     int sd = Socket::socket();
 
     if (sd == -1) {
         std::string str = "Can not create socket: " + Socket::get_error_msg();
         on_error_.emit(str.c_str());
-        return false;
+        return;
     }
 
 #ifdef _WIN32
-    channel_ = g_io_channel_win32_new_socket(sd);
+    oStarDictClient->channel_ = g_io_channel_win32_new_socket(sd);
 #else
-    channel_ = g_io_channel_unix_new(sd);
+    oStarDictClient->channel_ = g_io_channel_unix_new(sd);
 #endif
 
-    g_io_channel_set_encoding(channel_, NULL, NULL);
+    g_io_channel_set_encoding(oStarDictClient->channel_, NULL, NULL);
 
     /* make sure that the channel is non-blocking */
-    int flags = g_io_channel_get_flags(channel_);
+    int flags = g_io_channel_get_flags(oStarDictClient->channel_);
     flags |= G_IO_FLAG_NONBLOCK;
     GError *err = NULL;
-    g_io_channel_set_flags(channel_, GIOFlags(flags), &err);
+    g_io_channel_set_flags(oStarDictClient->channel_, GIOFlags(flags), &err);
     if (err) {
-        g_io_channel_unref(channel_);
-        channel_ = NULL;
+        g_io_channel_unref(oStarDictClient->channel_);
+        oStarDictClient->channel_ = NULL;
         gchar *str = g_strdup_printf("Unable to set the channel as non-blocking: %s", err->message);
         on_error_.emit(str);
         g_free(str);
         g_error_free(err);
-        return false;
+        return;
     }
 
-    if (!Socket::connect(sd, host_, port_)) {
+    if (!Socket::connect(sd, ret, oStarDictClient->port_)) {
         gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
-                         host_.c_str(), Socket::get_error_msg().c_str());
+                         oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
         on_error_.emit(mes);
         g_free(mes);
-        return false;
+        return;
     }
 
-    is_connected_ = true;
-    waiting_banner_ = true;
-    reading_type_ = READ_LINE;
-    source_id_ = g_io_add_watch(channel_, GIOCondition(G_IO_IN | G_IO_ERR),
-                   on_io_event, this);
-
-    return true;
+    oStarDictClient->is_connected_ = true;
+    oStarDictClient->waiting_banner_ = true;
+    oStarDictClient->reading_type_ = READ_LINE;
+    oStarDictClient->source_id_ = g_io_add_watch(oStarDictClient->channel_, GIOCondition(G_IO_IN | G_IO_ERR),
+                   on_io_event, oStarDictClient);
 }
 
 void StarDictClient::disconnect()

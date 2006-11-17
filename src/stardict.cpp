@@ -1901,6 +1901,7 @@ int main(int argc,char **argv)
                 return EXIT_SUCCESS;
 	}
 #endif
+    g_thread_init (NULL);
 #if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);

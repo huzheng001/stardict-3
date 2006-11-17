@@ -68,7 +68,8 @@ private:
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
 	static int get_status_code(gchar *line);
-	bool connect();
+	void connect();
+    static void on_resolved(gpointer data, struct hostent *ret);
 	bool parse(gchar *line, int status_code);
 };
 

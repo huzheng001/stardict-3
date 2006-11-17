@@ -36,9 +36,11 @@ public:
 	//! Accept a client connection request
 	static int accept(int socket);
 
+    typedef void (*on_resolved_func)(gpointer data, struct hostent *ret);
+    static void resolve(std::string& host, gpointer data, on_resolved_func func);
 
 	//! Connect a socket to a server (from a client)
-	static bool connect(int socket, std::string& host, int port);
+	static bool connect(int socket, struct hostent *ret, int port);
 
 
 	//! Returns last errno
@@ -46,6 +48,13 @@ public:
 
 	//! Returns message corresponding to last error
 	static std::string get_error_msg();
+private:
+    struct DnsQueryData {
+            std::string host;
+            gpointer data;
+            on_resolved_func func;
+    };
+    static gpointer dns_thread(gpointer data);
 };
 
 
