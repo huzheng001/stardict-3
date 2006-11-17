@@ -704,15 +704,15 @@ gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
     StarDictClient *stardict_client = static_cast<StarDictClient *>(user_data);
 
     if (!stardict_client->channel_) {
-        g_warning("No channel available\n");
+        //g_warning("No channel available\n");
         return FALSE;
     }
     if (cond & G_IO_ERR) {
-        gchar *mes =
+        /*gchar *mes =
             g_strdup_printf("Connection failed to the dictionary server at %s:%d",
                     stardict_client->host_.c_str(), stardict_client->port_);
         on_error_.emit(mes);
-        g_free(mes);
+        g_free(mes);*/
         stardict_client->disconnect();
         return FALSE;
     }

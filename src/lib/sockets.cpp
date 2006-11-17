@@ -136,16 +136,29 @@ int Socket::accept(int fd)
   return (int) ::accept(fd, (struct sockaddr*)&addr, &addrlen);
 }
 
+gboolean Socket::dns_main_thread_cb(gpointer data)
+{
+    DnsQueryData *query_data = (DnsQueryData *)data;
+    if (query_data->resolved) {
+        query_data->func(query_data->data, &(query_data->hostinfo));
+    }
+    delete query_data;
+    return FALSE;
+}
+
 gpointer Socket::dns_thread(gpointer data)
 {
     DnsQueryData *query_data = (DnsQueryData *)data;
     char buf[1024];
-    struct  hostent hostinfo,*phost;
+    struct  hostent *phost;
     int ret;
-    if (!gethostbyname_r(query_data->host.c_str(), &hostinfo, buf, sizeof(buf), &phost, &ret)) {
-        query_data->func(query_data->data, &hostinfo);
+    if (!gethostbyname_r(query_data->host.c_str(), &(query_data->hostinfo), buf, sizeof(buf), &phost, &ret)) {
+        query_data->resolved = true;
+    } else {
+        query_data->resolved = false;
     }
-    delete query_data;
+    /* back to main thread */
+    g_idle_add(dns_main_thread_cb, query_data);
     return NULL;
 }
 
