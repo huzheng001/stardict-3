@@ -2,6 +2,7 @@
 #define _SOCKETS_HPP_
 
 #include <string>
+#include <netdb.h>
 
 //! A platform-independent socket API.
 class Socket {
@@ -53,8 +54,11 @@ private:
             std::string host;
             gpointer data;
             on_resolved_func func;
+            bool resolved;
+            struct  hostent hostinfo;
     };
     static gpointer dns_thread(gpointer data);
+    static gboolean dns_main_thread_cb(gpointer data);
 };
 
 
