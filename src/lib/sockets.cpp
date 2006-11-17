@@ -136,18 +136,35 @@ int Socket::accept(int fd)
   return (int) ::accept(fd, (struct sockaddr*)&addr, &addrlen);
 }
 
+gpointer Socket::dns_thread(gpointer data)
+{
+    DnsQueryData *query_data = (DnsQueryData *)data;
+    char buf[1024];
+    struct  hostent hostinfo,*phost;
+    int ret;
+    if (!gethostbyname_r(query_data->host.c_str(), &hostinfo, buf, sizeof(buf), &phost, &ret)) {
+        query_data->func(query_data->data, &hostinfo);
+    }
+    delete query_data;
+    return NULL;
+}
 
+void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
+{
+    DnsQueryData *query_data = new DnsQueryData();
+    query_data->host = host;
+    query_data->data = data;
+    query_data->func = func;
+    g_thread_create(dns_thread, query_data, FALSE, NULL);
+}
     
 // Connect a socket to a server (from a client)
 bool
-Socket::connect(int fd, std::string& host, int port)
+Socket::connect(int fd, struct hostent *hp, int port)
 {
   struct sockaddr_in saddr;
   memset(&saddr, 0, sizeof(saddr));
   saddr.sin_family = AF_INET;
-
-  struct hostent *hp = gethostbyname(host.c_str());
-  if (hp == 0) return false;
 
   saddr.sin_family = hp->h_addrtype;
   memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);

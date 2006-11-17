@@ -168,7 +168,8 @@ private:
 	void request_command();
 	void disconnect();
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
-	bool connect();
+    void connect();
+    static void on_resolved(gpointer data, struct hostent *ret);
     void write_str(const char *str, GError **err);
     bool parse(gchar *line);
     int parse_banner(gchar *line);
