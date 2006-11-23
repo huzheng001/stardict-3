@@ -79,6 +79,20 @@ gint stardict_casecmp(const gchar *s1, const gchar *s2, int EnableCollationLevel
 	return utf8_collate(s1, s2, (CollateFunctions)(servercollatefunc-1));
 }
 
+static inline gint prefix_match (const gchar *s1, const gchar *s2)
+{
+    gint ret=-1;
+    gunichar u1, u2;
+    do {
+        u1 = g_utf8_get_char(s1);
+        u2 = g_utf8_get_char(s2);
+        s1 = g_utf8_next_char(s1);
+        s2 = g_utf8_next_char(s2);
+        ret++;
+    } while (u1 && g_unichar_tolower(u1) == g_unichar_tolower(u2));
+    return ret;
+}
+
 static inline bool bIsVowel(gchar inputchar)
 {
   gchar ch = g_ascii_toupper(inputchar);
@@ -788,10 +802,22 @@ bool offset_index::lookup(const char *str, glong &idx)
 			}
 		}
 		idx*=ENTR_PER_PAGE;
-		if (!bFound)
+		if (!bFound) {
 			idx += iFrom;    //next
-		else
+            gint best, back;
+            best = prefix_match (str, page.entries[idx % ENTR_PER_PAGE].keystr);
+            for (;;) {
+                if ((iTo=idx-1) < 0) break;
+                if (idx % ENTR_PER_PAGE == 0)
+                    load_page(iTo / ENTR_PER_PAGE);
+                back = prefix_match (str, page.entries[iTo % ENTR_PER_PAGE].keystr);
+                if (!back || back < best) break;
+                best = back;
+                idx = iTo;
+            }
+        } else {
 			idx += iThisIndex;
+        }
 	} else {
 		idx*=ENTR_PER_PAGE;
 	}
@@ -895,10 +921,20 @@ bool wordlist_index::lookup(const char *str, glong &idx)
 				break;
 			}
 		}
-		if (!bFound)
+		if (!bFound) {
 			idx = iFrom;    //next
-		else
+            gint best, back;
+            best = prefix_match (str, get_key(idx));
+            for (;;) {
+                if ((iTo=idx-1) < 0) break;
+                back = prefix_match (str, get_key(iTo));
+                if (!back || back < best) break;
+                best = back;
+                idx = iTo;
+            }
+        } else {
 			idx = iThisIndex;
+        }
 	}
 	return bFound;
 }
@@ -1086,10 +1122,22 @@ bool synonym_file::lookup(const char *str, glong &idx)
 			}
 		}
 		idx*=ENTR_PER_PAGE;
-		if (!bFound)
+		if (!bFound) {
 			idx += iFrom;    //next
-		else
+            gint best, back;
+            best = prefix_match (str, page.entries[idx % ENTR_PER_PAGE].keystr);
+            for (;;) {
+                if ((iTo=idx-1) < 0) break;
+                if (idx % ENTR_PER_PAGE == 0)
+                    load_page(iTo / ENTR_PER_PAGE);
+                back = prefix_match (str, page.entries[iTo % ENTR_PER_PAGE].keystr);
+                if (!back || back < best) break;
+                best = back;
+                idx = iTo;
+            }
+        } else {
 			idx += iThisIndex;
+        }
 	} else {
 		idx*=ENTR_PER_PAGE;
 	}
