@@ -75,6 +75,8 @@ void show_help(const gchar *section)
 
 void show_url(const gchar *url)
 {
+	if (!url)
+		return;
 #ifdef _WIN32
 	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", url, NULL, NULL, SW_SHOWNORMAL);
 #elif defined(CONFIG_GNOME)
