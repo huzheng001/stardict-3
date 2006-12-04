@@ -858,7 +858,7 @@ int StarDictClient::parse_command_setdictmask(gchar *line)
         g_free(str);
         return 0;
     }
-    clean_cache_str("getdictmask");
+    clean_cache_str("getdictmask\n");
     clean_cache_lookup_response();
     return 1;
 }

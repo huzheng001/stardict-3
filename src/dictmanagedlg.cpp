@@ -371,7 +371,7 @@ void NetworkAddDlg::network_getdirinfo(const char *xml)
 }
 
 DictManageDlg::DictManageDlg(GtkWindow *pw, GdkPixbuf *di,  GdkPixbuf *tdi) :
-	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), network_add_dlg(NULL), max_dict_count(-1), window(NULL)
+	parent_win(pw), dicts_icon(di), tree_dicts_icon(tdi), network_add_dlg(NULL), window(NULL)
 {
 }
 
@@ -1183,6 +1183,12 @@ bool DictManageDlg::Show()
 	
 		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));	
 	}
+	max_dict_count = -1;
+    	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 2) {
+		STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
+		STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
+		gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
+	}
     dictmask_changed = false;
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
@@ -1284,6 +1290,7 @@ struct dictinfo_ParseUserData {
     std::string dictinfo_website;
     std::string dictinfo_description;
     std::string dictinfo_date;
+    std::string dictinfo_download;
 };
 
 static void dictinfo_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
@@ -1298,17 +1305,23 @@ static void dictinfo_parse_start_element(GMarkupParseContext *context, const gch
         Data->dictinfo_website.clear();
         Data->dictinfo_description.clear();
         Data->dictinfo_date.clear();
+        Data->dictinfo_download.clear();
     }
+}
+
+static void on_download_clicked(GtkWidget *widget, gpointer data)
+{
+	show_url((const gchar*)g_object_get_data(G_OBJECT(widget), "download"));
 }
 
 static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error)
 {
     if (strcmp(element_name, "dictinfo")==0) {
         dictinfo_ParseUserData *Data = (dictinfo_ParseUserData *)user_data;
-    	GtkWidget *dialog = gtk_message_dialog_new_with_markup (Data->parent,
-	    	GTK_DIALOG_DESTROY_WITH_PARENT,
-		    GTK_MESSAGE_INFO,
-    		GTK_BUTTONS_OK,
+	GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Dictionary Information"), Data->parent, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_OK, GTK_RESPONSE_NONE, NULL);
+	GtkWidget *label = gtk_label_new(NULL);
+	char *markup;
+	markup = g_markup_printf_escaped (
 	    	"<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s",
 		    _("Dictionary Name"), Data->dictinfo_bookname.c_str(),
     		_("Word count"), Data->dictinfo_wordcount.c_str(),
@@ -1318,9 +1331,22 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
     		_("Website"), Data->dictinfo_website.c_str(),
 	    	_("Description"), Data->dictinfo_description.c_str(),
 		    _("Date"), Data->dictinfo_date.c_str());
+	gtk_label_set_markup(GTK_LABEL(label), markup);
+	g_free (markup);
+	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),label,false,false,6);
+	if (!Data->dictinfo_download.empty()) {
+		GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
+		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,6);
+		GtkWidget *button = gtk_button_new_with_label("Download Now!");
+		g_object_set_data_full(G_OBJECT(button), "download", g_strdup(Data->dictinfo_download.c_str()), g_free);
+		g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_download_clicked), NULL);
+		gtk_box_pack_start(GTK_BOX(hbox),button,false,false,6);
+	}
+
         g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
         gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-        gtk_widget_show(dialog);
+        gtk_widget_show_all(dialog);
     }
 }
 
@@ -1346,6 +1372,8 @@ static void dictinfo_parse_text(GMarkupParseContext *context, const gchar *text,
         Data->dictinfo_description.assign(text, text_len);
     } else if (strcmp(element, "date")==0) {
         Data->dictinfo_date.assign(text, text_len);
+    } else if (strcmp(element, "download")==0) {
+        Data->dictinfo_download.assign(text, text_len);
     }
 }
 
