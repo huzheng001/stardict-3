@@ -84,12 +84,15 @@ namespace STARDICT {
             AuthInfo *auth;
 		};
         int reading_status;
+	unsigned int seq;
         union {
             struct LookupResponse *lookup_response;
             std::list<char *> *wordlist_response;
         };
 		Cmd(int cmd, ...);
         ~Cmd();
+	private:
+	    static unsigned int next_seq;
 	};
 };
 
@@ -125,8 +128,8 @@ private:
 class StarDictClient : private StarDictCache {
 public:
     static sigc::signal<void, const char *> on_error_;
-    static sigc::signal<void, const struct STARDICT::LookupResponse *> on_lookup_end_;
-    static sigc::signal<void, const struct STARDICT::LookupResponse *> on_floatwin_lookup_end_;
+    static sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> on_lookup_end_;
+    static sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> on_floatwin_lookup_end_;
     static sigc::signal<void, const char *> on_register_end_;
     static sigc::signal<void, const char *> on_getdictmask_end_;
     static sigc::signal<void, const char *> on_dirinfo_end_;

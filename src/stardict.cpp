@@ -1227,8 +1227,10 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	}
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
-        if (!oStarDictClient.try_cache(c))
+        if (!oStarDictClient.try_cache(c)) {
+	    waiting_mainwin_lookupcmd_seq = c->seq;
             oStarDictClient.send_commands(1, c);
+	}
     }
 
 	//when TEXT_WIN_TIPS,the text[0]=='\0',already returned.
@@ -1274,6 +1276,7 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
         if (!app->oStarDictClient.try_cache(c))
+    	    app->waiting_mainwin_lookupcmd_seq = c->seq;
             app->oStarDictClient.send_commands(1, c);
     }
 
@@ -1431,8 +1434,10 @@ void AppCore::on_stardict_client_next_end(std::list<char *> *wordlist_response)
     }
 }
 
-void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
+void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq)
 {
+    if (seq != 0 && waiting_mainwin_lookupcmd_seq != seq)
+        return;
     oMidWin.oTextWin.Show(&(lookup_response->dict_response));
     if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List) {
         oMidWin.oIndexWin.oListWin.Clear();
@@ -1459,8 +1464,10 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
     }
 }
 
-void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response)
+void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq)
 {
+    if (seq != 0 && waiting_floatwin_lookupcmd_seq != seq)
+	    return;
     oFloatWin.ShowText(&(lookup_response->dict_response));
 }
 

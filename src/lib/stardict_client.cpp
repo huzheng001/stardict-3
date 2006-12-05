@@ -38,9 +38,11 @@
 #define CODE_DENIED                  521
 #define CODE_DICTMASK_NOTSET         522
 
+unsigned int STARDICT::Cmd::next_seq = 1;
+
 sigc::signal<void, const char *> StarDictClient::on_error_;
-sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_lookup_end_;
-sigc::signal<void, const struct STARDICT::LookupResponse *> StarDictClient::on_floatwin_lookup_end_;
+sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDictClient::on_lookup_end_;
+sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDictClient::on_floatwin_lookup_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 sigc::signal<void, const char *> StarDictClient::on_dirinfo_end_;
@@ -68,6 +70,8 @@ static void arg_escape(std::string &earg, const char *arg)
 
 STARDICT::Cmd::Cmd(int cmd, ...)
 {
+	this->seq = this->next_seq;
+	this->next_seq++;
 	this->reading_status = 0;
 	this->command = cmd;
 	va_list    ap;
@@ -457,9 +461,9 @@ bool StarDictClient::try_cache(STARDICT::Cmd *c)
         STARDICT::LookupResponse *res = get_cache_lookup_response(c->data);
         if (res) {
             if (c->command == STARDICT::CMD_LOOKUP || c->command == STARDICT::CMD_DEFINE)
-                on_lookup_end_.emit(res);
+                on_lookup_end_.emit(res, 0);
             else if (c->command == STARDICT::CMD_SELECT_QUERY)
-                on_floatwin_lookup_end_.emit(res);
+                on_floatwin_lookup_end_.emit(res, 0);
             delete c;
             return true;
         } else {
@@ -1019,12 +1023,12 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         if (*buf == '\0') {
             g_free(buf);
             if (cmd->command == STARDICT::CMD_DEFINE) {
-                on_lookup_end_.emit(cmd->lookup_response);
+                on_lookup_end_.emit(cmd->lookup_response, cmd->seq);
                 save_cache_lookup_response(cmd->data, cmd->lookup_response);
                 cmd->lookup_response = NULL;
                 return 1;
             } else if ( cmd->command == STARDICT::CMD_SELECT_QUERY) {
-                on_floatwin_lookup_end_.emit(cmd->lookup_response);
+                on_floatwin_lookup_end_.emit(cmd->lookup_response, cmd->seq);
                 save_cache_lookup_response(cmd->data, cmd->lookup_response);
                 cmd->lookup_response = NULL;
                 return 1;
@@ -1082,7 +1086,7 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     } else if (cmd->reading_status == 7) {
         if (*buf == '\0') {
             g_free(buf);
-            on_lookup_end_.emit(cmd->lookup_response);
+            on_lookup_end_.emit(cmd->lookup_response, cmd->seq);
             save_cache_lookup_response(cmd->data, cmd->lookup_response);
             cmd->lookup_response = NULL;
             return 1;
@@ -1092,7 +1096,7 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
     } else if (cmd->reading_status == 8) {
         if (*buf == '\0') {
             g_free(buf);
-            on_lookup_end_.emit(cmd->lookup_response);
+            on_lookup_end_.emit(cmd->lookup_response, cmd->seq);
             save_cache_lookup_response(cmd->data, cmd->lookup_response);
             cmd->lookup_response = NULL;
             return 1;
