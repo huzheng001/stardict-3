@@ -2,6 +2,7 @@
 #define _STARDICT_CLIENT_HPP_
 
 #include <glib.h>
+#include <netdb.h>
 
 #include "sigc++/sigc++.h"
 
@@ -147,6 +148,8 @@ private:
 	guint source_id_;
 	std::string host_;
 	int port_;
+	bool host_resolved;
+	struct hostent host_ret;
     std::string user_;
     std::string md5passwd_;
 	bool is_connected_;

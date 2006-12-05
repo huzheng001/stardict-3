@@ -437,6 +437,7 @@ void StarDictClient::set_server(const char *host, int port)
     if (host_ != host || port_ != port) {
         host_ = host;
         port_ = port;
+	host_resolved = false;
         clean_all_cache();
     }
 }
@@ -630,12 +631,21 @@ void StarDictClient::clean_command()
 
 void StarDictClient::connect()
 {
-    Socket::resolve(host_, this, on_resolved);
+    if (host_resolved) {
+	    on_resolved(this, &host_ret);
+    } else {
+        Socket::resolve(host_, this, on_resolved);
+    }
 }
 
 void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
 {
     StarDictClient *oStarDictClient = (StarDictClient *)data;
+    if (oStarDictClient->host_resolved == false) {
+	    memcpy(&(oStarDictClient->host_ret), ret, sizeof(struct hostent));
+	    oStarDictClient->host_resolved = true;
+    }
+
     int sd = Socket::socket();
 
     if (sd == -1) {
