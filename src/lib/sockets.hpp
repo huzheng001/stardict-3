@@ -2,7 +2,11 @@
 #define _SOCKETS_HPP_
 
 #include <string>
-#include <netdb.h>
+#ifndef _WIN32
+#  include <netdb.h>
+#else
+#  include <WinSock.h>
+#endif
 
 //! A platform-independent socket API.
 class Socket {

@@ -2,7 +2,9 @@
 #define _STARDICT_CLIENT_HPP_
 
 #include <glib.h>
-#include <netdb.h>
+#ifndef _WIN32
+#  include <netdb.h>
+#endif
 
 #include "sigc++/sigc++.h"
 

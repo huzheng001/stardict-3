@@ -50,7 +50,8 @@ static void initWinSock()
 #endif // _WIN32
 
 
-// These errors are not considered fatal for an IO operation; the operation will be re-tried.
+// These errors are not considered fatal for an IO operation; the operation will be re-tried.
+
 static inline bool
 nonFatalError()
 {
@@ -152,7 +153,12 @@ gpointer Socket::dns_thread(gpointer data)
     char buf[1024];
     struct  hostent *phost;
     int ret;
-    if (!gethostbyname_r(query_data->host.c_str(), &(query_data->hostinfo), buf, sizeof(buf), &phost, &ret)) {
+#ifndef _WIN32    
+    if (!gethostbyname_r(query_data->host.c_str(), &query_data->hostinfo, buf,
+        sizeof(buf), &phost, &ret)) {
+#else
+     if (false) {//TODO: implement
+#endif                     
         query_data->resolved = true;
     } else {
         query_data->resolved = false;
@@ -207,7 +213,8 @@ bool Socket::nb_read(int fd, std::string& s, bool *eof)
     int n = read(fd, readBuf, READ_SIZE-1);
 #endif
     g_debug("Socket::nbRead: read/recv returned %d.", n);
-
+
+
     if (n > 0) {
       readBuf[n] = 0;
       s.append(readBuf, n);
@@ -266,10 +273,8 @@ int Socket::get_error_code()
 // Returns message corresponding to last errno
 std::string Socket::get_error_msg()
 {
-#ifndef _WIN32
+//Actually works on windows, but may be better use FormatMessage?
   return strerror(get_error_code());
-#else
-# error "implement me"
-#endif
+
 }
 
