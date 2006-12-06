@@ -1,11 +1,14 @@
 #include <gdk/gdkwin32.h>
-
 #include <glib/gi18n.h>
 #include "resource.h"
 #include "MinimizeToTray.h"
 
 #include "systray.h"
 
+#ifndef LR_VGACOLOR
+//if use gcc on windows this constant not defined
+#  define LR_VGACOLOR         0x0080
+#endif
 extern HINSTANCE stardictexe_hInstance;
 
 #define WM_TRAYMESSAGE WM_USER /* User defined WM Message */
