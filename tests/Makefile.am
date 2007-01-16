@@ -42,13 +42,14 @@ t_articleview_SOURCES = t_articleview.cpp \
 	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp \
 	$(top_builddir)/src/conf.cpp $(top_builddir)/src/conf.h \
 	$(GCONF_MODULE_HPP) $(GCONF_MODULE_CPP)
+t_articleview_DEPENDENCIES = $(top_builddir)/src/wiki/libwiki.a
 
 t_xml_SOURCES = t_xml.cpp \
 	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h
 
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
-	$(top_builddir)/src/sigc++/libsigc.a
-INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib
+	$(top_builddir)/src/sigc++/libsigc.a $(top_builddir)/src/wiki/libwiki.a
+INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib -I$(top_builddir)/src/wiki
 
 TESTS = \
 	t_config_file t_convert_old_ini t_dict t_query t_lookupdata \

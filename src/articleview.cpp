@@ -27,6 +27,7 @@
 
 #include "conf.h"
 #include "utils.h"
+#include "wiki/stardict_wiki2xml.h"
 
 #include "articleview.h"
 
@@ -455,10 +456,12 @@ static std::string powerword2pango(const char *p, guint32 sec_size, const gchar 
 
 static std::string wiki2pango(const char *p, guint32 sec_size)
 {
-	//Need more work!
-	//There should be a wiki2xml tool in the internet, but I haven't find it yet.
 	std::string res(p, sec_size);
-	return res;
+	std::string xml = wiki2xml(res);
+	gchar *text = g_markup_escape_text(xml.c_str(), xml.length());
+	std::string pango(text);
+	g_free(text);
+	return pango;
 }
 
 static size_t xml_strlen(const std::string& str)
