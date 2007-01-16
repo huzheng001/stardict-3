@@ -1,5 +1,5 @@
 ## Process this file with automake to produce Makefile.in
-SUBDIRS= sigc++ lib pixmaps sounds win32
+SUBDIRS= sigc++ lib wiki pixmaps sounds win32
 
 bin_PROGRAMS = stardict
 
@@ -11,9 +11,9 @@ INCLUDES =							                            \
 	-DSTARDICT_DATA_DIR=\""$(datadir)/stardict"\"
 
 
-stardict_DEPENDENCIES = sigc++/libsigc.a lib/libstardict.a
+stardict_DEPENDENCIES = sigc++/libsigc.a lib/libstardict.a wiki/libwiki.a
 stardict_LDFLAGS = 
-stardict_LDADD = $(STARDICT_LIBS) sigc++/libsigc.a lib/libstardict.a
+stardict_LDADD = $(STARDICT_LIBS) sigc++/libsigc.a lib/libstardict.a wiki/libwiki.a
 
 if !GNOME_SUPPORT
 if MAEMO_SUPPORT
