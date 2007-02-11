@@ -1,0 +1,44 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.59)
+AC_INIT(stardict-tools, 2.4.9, http://stardict.sourceforge.net)
+AC_CONFIG_SRCDIR([src/stardict-editor.cpp])
+AM_INIT_AUTOMAKE([dist-bzip2])
+AC_CONFIG_HEADER([config.h])
+
+AM_PROG_LIBTOOL
+
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([stdlib.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+DEP_MODULES="gtk+-2.0 >= 2.6"
+PKG_CHECK_MODULES(STARDICT, $DEP_MODULES)
+
+STARDICT_CFLAGS="-Wall $STARDICT_CFLAGS"
+
+dnl For src/dsl2dict.c
+PKG_CHECK_MODULES(DSL2DICT, libpcre)
+
+
+AC_OUTPUT([
+Makefile
+src/Makefile
+])
+
+echo "
+
+Type \"make\" to compile stardict-tools.
+
+"
+
