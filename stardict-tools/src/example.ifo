@@ -1,0 +1,11 @@
+StarDict's dict ifo file
+version=2.4.2
+wordcount=100
+idxfilesize=100
+bookname=example
+author=the author name
+email=author@email
+website=this dictionary's project websit link
+description=convert to StarDict by...
+date=2003.05.10
+sametypesequence=m
