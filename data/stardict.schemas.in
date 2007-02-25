@@ -87,6 +87,42 @@
       </locale>
     </schema>
 
+	<schema>
+      <key>/schemas/apps/stardict/preferences/dictionary/use_tts_program</key>
+      <applyto>/apps/stardict/preferences/dictionary/use_tts_program</applyto>
+      <owner>stardict</owner>
+      <type>bool</type>
+      <default>TRUE</default>
+      <locale name="C">
+	<short>Enable to use TTS program</short>
+	<long>Whether to enable startdict to use external TTS program to pronounce words.</long>
+      </locale>
+    </schema>
+
+	<schema>
+      <key>/schemas/apps/stardict/preferences/dictionary/use_tts_program_if_not_found</key>
+      <applyto>/apps/stardict/preferences/dictionary/use_tts_program_if_not_found</applyto>
+      <owner>stardict</owner>
+      <type>bool</type>
+      <default>TRUE</default>
+      <locale name="C">
+	<short>Enable to use TTS program when TTS sound file is not found</short>
+	<long>Whether to enable startdict to use external TTS program when it couldn't find TTS sound files.</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/stardict/preferences/dictionary/tts_program_cmdline</key>
+      <applyto>/apps/stardict/preferences/dictionary/tts_program_cmdline</applyto>
+      <owner>stardict</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+	<short>TTS program commandline</short>
+	<long>The commandline to use external TTS program to pronounce words. Use {WORD} to replace it with query word</long>
+      </locale>
+    </schema>
+    
     <schema>
       <key>/schemas/apps/stardict/preferences/main_window/hide_on_startup</key>
       <applyto>/apps/stardict/preferences/main_window/hide_on_startup</applyto>
