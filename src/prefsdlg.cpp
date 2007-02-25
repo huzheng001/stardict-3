@@ -782,6 +782,19 @@ void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *butto
   conf->set_bool_at("dictionary/enable_sound_event",enable);
 }
 
+void PrefsDlg::on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+	gboolean enable = gtk_toggle_button_get_active(button);
+	gtk_widget_set_sensitive(oPrefsDlg->use_tts_program_vbox,enable);
+	conf->set_bool("/apps/stardict/preferences/dictionary/use_tts_program",enable);
+}
+
+void PrefsDlg::on_setup_dictionary_use_tts_program_if_not_found_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+	gboolean enable = gtk_toggle_button_get_active(button);
+	conf->set_bool("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found",enable);
+}
+
 static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
 			       const gchar *stock_id)
 {
@@ -904,6 +917,34 @@ void PrefsDlg::setup_dictionary_sound_page()
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), tts_textview);
 	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
+	
+	check_button = gtk_check_button_new_with_mnemonic(_("_Use TTS program."));
+	enable = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
+	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_use_tts_program_ckbutton_toggled), (gpointer)this);
+	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
+	use_tts_program_vbox = gtk_vbox_new(false,6);
+	gtk_widget_set_sensitive(use_tts_program_vbox,enable);
+	check_button = gtk_check_button_new_with_mnemonic(_("Use only if _no correspoding TTS sound file found."));
+	enable = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
+	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_use_tts_program_if_not_found_ckbutton_toggled), (gpointer)this);
+	gtk_box_pack_start(GTK_BOX(use_tts_program_vbox),check_button,false,false,0);
+	GtkWidget *hbox3 = gtk_hbox_new(FALSE, 6);
+	label = gtk_label_new(_("Commandline:"));
+	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+	gtk_box_pack_start(GTK_BOX(hbox3),label,false,false,0);
+	GtkWidget* tts_commandline_entry = gtk_entry_new();
+	eTTSCommandline = GTK_ENTRY(tts_commandline_entry);
+	gtk_widget_set_size_request(tts_commandline_entry, 50, -1);
+	const std::string &tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
+	gtk_entry_set_text(GTK_ENTRY(tts_commandline_entry), tts_program_cmdline.c_str());
+	gtk_box_pack_start(GTK_BOX(hbox3),tts_commandline_entry,true,true,0);
+	gtk_box_pack_start(GTK_BOX(use_tts_program_vbox),hbox3,false,false,0);
+	label = gtk_label_new(_("NOTE: Use {WORD} to replace it with query word"));
+	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+	gtk_box_pack_start(GTK_BOX(use_tts_program_vbox),label,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),use_tts_program_vbox,false,false,0);	
 }
 
 void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -1933,15 +1974,17 @@ bool PrefsDlg::ShowModal()
 #ifndef CONFIG_GPE
   resize_categories_tree();
 #endif
-  
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
-		;
+		;		
 	if (result != GTK_RESPONSE_NONE) {
 		const gchar *ch;
 		ch = gtk_entry_get_text(eExportFile);
 		if (ch[0])
 			conf->set_string_at("dictionary/export_file", ch);
+		ch = gtk_entry_get_text(eTTSCommandline);
+		if (ch[0])
+			conf->set_string("/apps/stardict/preferences/dictionary/tts_program_cmdline", ch);
         const gchar *server;
         ch = gtk_entry_get_text(eStarDictServer);
         if (ch[0])

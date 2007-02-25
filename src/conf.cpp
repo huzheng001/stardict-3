@@ -61,6 +61,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/showfirst_when_notfound", true);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
+	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
+	add_entry("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found", true);
+	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string());	
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
 	add_entry("/apps/stardict/preferences/dictionary/markup_search_word", false);
