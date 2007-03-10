@@ -1,7 +1,8 @@
 
 2006.11.7
 StarDict-2.4.9 (network) released.
-http://www.StarDict.org on-line dictionries website is out in 9.25. We have developed the stardictd dictionary server for it.
+http://www.StarDict.org on-line dictionries website is out in 2006.9.25. We have developed the stardictd dictionary server for it.
+StarDict's total download count reached two million in 2007.3.8, although our development get delayed.
 Port to Maemo(http://www.maemo.org).
 Prefix match patch from Dave Coffin <dcoffin@cybercom.net>.
 Arabic translation, thanks M. Bashir Al-Noimi <bashir.storm@gmail.com>.
