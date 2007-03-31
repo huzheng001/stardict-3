@@ -3,7 +3,7 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder
 
 INCLUDES = $(STARDICT_CFLAGS) -I/usr/include/mysql
 
@@ -171,6 +171,10 @@ exc2i2e_LDFLAGS =
 exc2i2e_LDADD = $(STARDICT_LIBS)
 exc2i2e_SOURCES = exc2i2e.c
 
+dictbuilder_LDFLAGS = 
+dictbuilder_LDADD = $(STARDICT_LIBS)
+dictbuilder_SOURCES = dictbuilder.cpp dictbuilder-tree.h
+
 downloadwiki_LDFLAGS = 
 downloadwiki_LDADD = $(STARDICT_LIBS)
 downloadwiki_SOURCES = downloadwiki.cpp
@@ -183,4 +187,4 @@ stardict_editor_LDFLAGS =
 stardict_editor_LDADD = $(STARDICT_LIBS)
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp libstardictverify.h
 
-EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh
+EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh dictbuilder.readme dictbuilder.example
