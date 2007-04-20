@@ -182,6 +182,8 @@ src/win32/acrobat/Makefile
 src/win32/acrobat/sources/Makefile
 src/win32/acrobat/win32/Makefile
 src/win32/nsis/Makefile
+stardict-plugins/Makefile
+stardict-plugins/stardict-advertisement-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile
 help/Makefile

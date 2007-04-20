@@ -18,6 +18,7 @@ class AppCore;
 #include "conf.h"
 #include "lib/lib.h"
 #include "lib/stardict_client.hpp"
+#include "lib/pluginmanager.h"
 #include "skin.h"
 #include "mainwin.h"
 #ifdef _WIN32
@@ -89,7 +90,8 @@ public:
 
 	Libs oLibs;
 	TreeDicts oTreeDicts;
-    StarDictClient oStarDictClient;
+	StarDictClient oStarDictClient;
+	StarDictPlugins oStarDictPlugins;
 	std::auto_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
 	ReadWord oReadWord;

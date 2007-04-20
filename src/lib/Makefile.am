@@ -16,6 +16,9 @@ libstardict_a_SOURCES = \
 	md5.c md5.h	\
 	stardict_client.cpp stardict_client.hpp \
 	dict_client.cpp dict_client.hpp \
-	sockets.cpp sockets.hpp
+	sockets.cpp sockets.hpp \
+	plugin.cpp plugin.h \
+	virtualdictplugin.cpp virtualdictplugin.h \
+	pluginmanager.cpp pluginmanager.h
 
 INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src

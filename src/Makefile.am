@@ -8,7 +8,8 @@ INCLUDES =							                            \
 	-DDATADIR=\""$(datadir)"\"	\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps"\"	\
 	-DSTARDICT_LOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DSTARDICT_DATA_DIR=\""$(datadir)/stardict"\"
+	-DSTARDICT_DATA_DIR=\""$(datadir)/stardict"\"	\
+	-DSTARDICT_LIB_DIR=\""$(libdir)/stardict"\"
 
 
 stardict_DEPENDENCIES = sigc++/libsigc.a lib/libstardict.a wiki/libwiki.a
