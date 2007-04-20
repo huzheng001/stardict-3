@@ -118,7 +118,12 @@ AppCore::AppCore() :
 	oLibs(&gtk_show_progress,
 	      conf->get_bool_at("dictionary/create_cache_file"),
 	      conf->get_bool_at("dictionary/enable_collation"),
-	      conf->get_int_at("dictionary/collate_function"))
+	      conf->get_int_at("dictionary/collate_function")),
+#ifdef _WIN32
+	oStarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str())
+#else
+	oStarDictPlugins(STARDICT_LIB_DIR"/plugins")
+#endif
 {
 	word_change_timeout_ = 0;
 	window = NULL; //need by save_yourself_cb().
