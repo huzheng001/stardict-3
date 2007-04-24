@@ -9,6 +9,7 @@
 
 #include "data.hpp"
 #include "collation.h"
+#include "dictmask.h"
 
 const int MAX_FUZZY_DISTANCE= 3; // at most MAX_FUZZY_DISTANCE-1 differences allowed when find similar words
 const int MAX_MATCH_ITEM_PER_LIB=100;
@@ -200,8 +201,8 @@ public:
 	}
 	bool load_dict(const std::string& url, show_progress_t *sp);
 	void LoadFromXML();
-	void SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max, int level);
-	void LoadCollateFile(std::vector<std::vector<Dict *>::size_type> &dictmask, CollateFunctions cltfuc);
+	void SetDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int level);
+	void LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunctions cltfuc);
 	const std::string *get_dir_info(const char *path);
 	const std::string *get_dict_info(const char *uid, bool is_short);
 	int get_dict_level(const char *uid);
@@ -237,9 +238,9 @@ public:
 			return NULL;
 		return oLib[iLib]->get_data(iIndex);
 	}
-	const gchar *poGetCurrentWord(CurrentIndex *iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc);
-	const gchar *poGetNextWord(const gchar *word, CurrentIndex *iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc);
-	const gchar *poGetPreWord(const gchar *word, CurrentIndex *iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc);
+	const gchar *poGetCurrentWord(CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
+	const gchar *poGetNextWord(const gchar *word, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
+	const gchar *poGetPreWord(const gchar *word, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
 	bool LookupWord(const gchar* sWord, glong& iWordIndex, size_t iLib, int servercollatefunc) {
 		return oLib[iLib]->Lookup(sWord, iWordIndex, EnableCollationLevel, servercollatefunc);
 	}
@@ -260,11 +261,11 @@ public:
 		oLib[iLib]->GetWordNext(iWordIndex, isidx, EnableCollationLevel, servercollatefunc);
 	}
 
-	bool LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_size, std::vector<std::vector<Dict *>::size_type> &dictmask);
-	gint LookupWithRule(const gchar *sWord, gchar *reslist[], std::vector<std::vector<Dict *>::size_type> &dictmask);
+	bool LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_size, std::vector<InstantDictIndex> &dictmask);
+	gint LookupWithRule(const gchar *sWord, gchar *reslist[], std::vector<InstantDictIndex> &dictmask);
 
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
-	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<std::vector<Dict *>::size_type> &dictmask);
+	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);
 private:
 	std::vector<Dict *> oLib; // word Libs.
 	int iMaxFuzzyDistance;

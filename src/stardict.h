@@ -91,7 +91,7 @@ public:
 	Libs oLibs;
 	TreeDicts oTreeDicts;
 	StarDictClient oStarDictClient;
-	StarDictPlugins oStarDictPlugins;
+	StarDictPlugins *oStarDictPlugins;
 	std::auto_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
 	ReadWord oReadWord;
@@ -100,7 +100,7 @@ public:
 	BonoboObject *stardict_app_server;
 #endif
 
-    std::vector<std::vector<Dict *>::size_type> dictmask;
+	std::vector<InstantDictIndex> dictmask;
 
 	AppCore();
 	~AppCore();
@@ -134,16 +134,18 @@ public:
 	void PopupDictManageDlg();
 	void on_link_click(const char *link);
 
-    void on_stardict_client_error(const char *);
-    void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
-    void on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
-    void on_stardict_client_register_end(const char *);
-    void on_stardict_client_getdictmask_end(const char *);
-    void on_stardict_client_dirinfo_end(const char *);
-    void on_stardict_client_dictinfo_end(const char *);
-    void on_stardict_client_maxdictcount_end(int);
-    void on_stardict_client_previous_end(std::list<char *> *wordlist_response);
-    void on_stardict_client_next_end(std::list<char *> *wordlist_response);
+	void on_stardict_client_error(const char *);
+	void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
+	void on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
+	void on_stardict_client_register_end(const char *);
+	void on_stardict_client_getdictmask_end(const char *);
+	void on_stardict_client_dirinfo_end(const char *);
+	void on_stardict_client_dictinfo_end(const char *);
+	void on_stardict_client_maxdictcount_end(int);
+	void on_stardict_client_previous_end(std::list<char *> *wordlist_response);
+	void on_stardict_client_next_end(std::list<char *> *wordlist_response);
+
+	static void on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *);
 };
 
 #ifdef _WIN32

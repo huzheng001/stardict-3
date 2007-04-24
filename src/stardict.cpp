@@ -118,12 +118,7 @@ AppCore::AppCore() :
 	oLibs(&gtk_show_progress,
 	      conf->get_bool_at("dictionary/create_cache_file"),
 	      conf->get_bool_at("dictionary/enable_collation"),
-	      conf->get_int_at("dictionary/collate_function")),
-#ifdef _WIN32
-	oStarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str())
-#else
-	oStarDictPlugins(STARDICT_LIB_DIR"/plugins")
-#endif
+	      conf->get_int_at("dictionary/collate_function"))
 {
 	word_change_timeout_ = 0;
 	window = NULL; //need by save_yourself_cb().
@@ -142,6 +137,7 @@ AppCore::~AppCore()
 	delete dict_manage_dlg;
 	delete prefs_dlg;
 	g_free(iCurrentIndex);
+	delete oStarDictPlugins;
 }
 
 class load_show_progress_t : public show_progress_t {
@@ -193,12 +189,22 @@ void AppCore::on_link_click(const char *link)
 
 void AppCore::Create(gchar *queryword)
 {
+	oStarDictPluginInfo.datadir = gStarDictDataDir.c_str();
+	oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
+
+#ifdef _WIN32
+	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str());
+#else
+	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins");
+#endif
+
 	oLibs.set_show_progress(&load_show_progress);
 	oLibs.load(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
 		);
-    oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 	oLibs.set_show_progress(&gtk_show_progress);
     
     oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
@@ -724,7 +730,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 
 void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
 {
-    int iRealLib = dictmask[iLib];
+    int iRealLib = dictmask[iLib].index;
 	gint i, j;
 	gint count=0, syncount;
 	bool bLookupWord, bLookupSynonymWord;
@@ -890,6 +896,16 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 		g_free(iIndex);
 
 	FreeResultData(pppWord, ppppWordData);
+
+	for (std::vector<InstantDictIndex>::iterator i = dictmask.begin(); i != dictmask.end(); ++i) {
+		if ((*i).type == InstantDictType_VIRTUAL) {
+			if (isShowFirst)
+				oStarDictPlugins->VirtualDictPlugins.lookup(piIndexValidStr, (*i).index);
+			else
+				oStarDictPlugins->VirtualDictPlugins.lookup(sWord, (*i).index);
+		}
+	}
+
 	return bFound;
 }
 
@@ -1476,6 +1492,11 @@ void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::Look
     oFloatWin.ShowText(&(lookup_response->dict_response));
 }
 
+void AppCore::on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *response)
+{
+	g_print("Find: %s\n", response->word);
+}
+
 class reload_show_progress_t : public show_progress_t {
 public:
 	reload_show_progress_t(progress_win &pw_) : pw(pw_) {}
@@ -1519,7 +1540,10 @@ void AppCore::reload_dicts()
 		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list"),
 		     conf->get_bool_at("dictionary/enable_collation"),
 		     conf->get_int_at("dictionary/collate_function"));
-    oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	dictmask.clear();
+	oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+	
 	g_free(iCurrentIndex);
 	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
 
