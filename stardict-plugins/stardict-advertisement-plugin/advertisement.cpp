@@ -80,7 +80,7 @@ static bool load_dict(const char *filename)
 	int step = 0;
 	std::list<std::string> wordlist;
 	DictEntry dictentry;
-	char dict_type;
+	char dict_type = 'm';
 	while (true) {
 		p1 = strchr(p, '\n');
 		if (!p1)
@@ -171,6 +171,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	bool failed = load_dict(filename.c_str());
 	if (failed)
 		return true;
-	g_print("Advertisement plug-in loaded!\n");
+	g_print("Advertisement plug-in loaded.\n");
 	return false;
 }

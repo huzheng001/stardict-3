@@ -36,7 +36,7 @@
 
 static void fuzzy_lookup(Libs& libs, const gchar *s)
 {
-    std::vector<std::vector<Dict *>::size_type> dictmask;
+    std::vector<InstantDictIndex> dictmask;
     libs.SetDictMask(dictmask, NULL, -1, -1);
 	gchar *res[100];
 	const size_t res_size=sizeof(res)/sizeof(gchar *);
