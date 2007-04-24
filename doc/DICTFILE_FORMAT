@@ -2,10 +2,11 @@ Format for StarDict dictionary files
 ------------------------------------
 
 StarDict homepage: http://stardict.sourceforge.net
+StarDict on-line dictionary: http://www.stardict.org
 
 {0}. Number and Byte-order Conventions
 When you record the numbers that identify sizes, offsets, etc., you
-should use 32-bit numbers, such as you might represent with a glong.
+should use 32-bits numbers, such as you might represent with a glong.
 
 In order to make StarDict work on different platforms, these numbers
 must be in network byte order.  You can ensure the correct byte order
@@ -53,8 +54,9 @@ StarDict's dict ifo file
 version=2.4.2
 [options]
 
-Note that the current "version" string must be "2.4.2".  If it's not,
+Note that the current "version" string must be "2.4.2" or "3.0.0".  If it's not,
 then StarDict will refuse to read the file.
+If version is "3.0.0", StarDict will parse the "idxoffsetbits" option.
 
 [options]
 ---------
@@ -73,6 +75,7 @@ bookname=      // required
 wordcount=     // required
 synwordcount=  // required if ".syn" file exists.
 idxfilesize=   // required
+idxoffsetbits= // New in 3.0.0
 author=
 email=
 website=
@@ -89,6 +92,8 @@ must be right too. The .gz file don't contain its original size information,
 but knowing the original size can speed up the extraction to memory, as you 
 don't need to call realloc() for many times.
 
+idxoffsetbits can be 64 or 32. If "idxoffsetbits=64", the offset field of the 
+.idx file will be 64 bits.
 
 The "sametypesequence" option is described in further detail below.
 
@@ -111,7 +116,7 @@ Suppose that a dictionary records many .wav files, and so sets:
         sametypesequence=W
 In this case, each word's entry in the .dict file consists solely of a
 wav file.  In the .dict file, you would leave out the 'W' character
-before each entry, and you would also omit the 32-bit integer at the
+before each entry, and you would also omit the 32-bits integer at the
 front of each .wav entry that would normally give the entry's length.
 You can do this since the length is known from the information in the
 idx file.
@@ -130,7 +135,7 @@ entire word entry (listed in the .idx file).
 So for cases where the last data entry for each word normally requires
 a terminating '\0' character, you should omit this character in the
 dict file.  And for cases where the last data entry for each word
-normally requires an initial 32-bit number giving the length of the
+normally requires an initial 32-bits number giving the length of the
 field (such as WAV and PNG entries), you must omit this number in the
 dictionary.
 
@@ -160,8 +165,10 @@ StarDict-2.4.8 and newer.
 The length of "word_str" should be less than 256. In other words, 
 (strlen(word) < 256).
 
-word_data_offset and word_data_size should both be 32-bit unsigned numbers 
-in network byte order.
+If the version is "3.0.0" and "idxoffsetbits=64", word_data_offset will 
+be 64-bits unsigned number in network byte order. Otherwise it will be 
+32-bits.
+word_data_size should be 32-bits unsigned number in network byte order.
 
 It is possible the different word_str have the same word_data_offset and 
 word_data_size, so multiple word index point to the same definition.
@@ -208,7 +215,7 @@ When you input synonym_word, StarDict will search original_word;
 
 The length of "synonym_word" should be less than 256. In other 
 words, (strlen(word) < 256).
-original_word_index is a 32-bit unsigned number in network byte order.
+original_word_index is a 32-bits unsigned number in network byte order.
 Two or more items may have the same "synonym_word" with different 
 original_word_index.
 The items must be sorted by stardict_strcmp() with synonym_word.
@@ -218,7 +225,7 @@ The items must be sorted by stardict_strcmp() with synonym_word.
 StarDict-2.4.8 start to support cache files, this feature can speed up 
 loading and save memory as mmap() the cache file. The cache file names 
 are .idx.oft and .syn.oft, the format is:
-First a utf-8 string terminated by '\0', then many 32-bit numbers as 
+First a utf-8 string terminated by '\0', then many 32-bits numbers as 
 the wordoffset index, this index is sparse, and "ENTR_PER_PAGE=32", 
 they are not stored in network byte order.
 The string must begin with:
@@ -244,7 +251,7 @@ StarDict-2.4.8 start to support collation, that sort the word
 list by collate function. It will create collation file which 
 names .idx.clt and .syn.clt, the format is a little like offset 
 cache file:
-First a utf-8 string terminated by '\0', then many 32-bit numbers as
+First a utf-8 string terminated by '\0', then many 32-bits numbers as
 the index that sorted by the collate function, they are not stored 
 in network byte order.
 The string must begin with:
@@ -280,6 +287,7 @@ typedef enum {
 	UTF8_SPANISH2_CI,
 	UTF8_SWEDISH_CI,
 	UTF8_TURKISH_CI,
+	COLLATE_FUNC_NUMS
 } CollateFunctions;
 These UTF8_*_CI functions comes from MySQL in fact.
 
@@ -331,6 +339,13 @@ the type chars and of the last field's size information are the
 optimizations required by the "sametypesequence" option described
 above.
 
+If "idxoffsetbits=64", the file size of the .dict file will be bigger 
+than 4G. Because we often need to mmap this large file, and there is 
+a 4G maximum virtual memory space limit in a process on the 32 bits 
+computer, which will make we can get error, so "idxoffsetbits=64" 
+dictionary can't be loaded in 32 bits machine in fact, StarDict will 
+simply print a warning in this case when loading. 64-bits computers 
+should haven't this limit.
 
 Type identifiers
 ----------------
@@ -340,7 +355,7 @@ dict file itself if the "sametypesequence" option is not used.
 
 Lower-case characters signify that a field's size is determined by a
 terminating '\0', while upper-case characters indicate that the data
-begins with a 32-bit unsigned integer that gives the length of the data
+begins with a 32-bits unsigned integer that gives the length of the data
 field.
 
 'm'
@@ -384,21 +399,78 @@ It is in XML format.
 MediaWiki markup language.
 See http://meta.wikimedia.org/wiki/Help:Editing#The_wiki_markup
 
+'h'
+Html codes. Not supported yet.
+
+'r'
+Resource file link.
+The content can be:
+pic:pic/example.jpg	// Picture file
+snd:apple.wav		// Sound file
+vdo:film.avi		// Video file
+att:file.bin		// Attachment file
+StarDict will find the file in the Resource Storage.
+The picture will be shown, the sound file will have a play button.
+And you can "save as" the attachment file.
+
 'W'
 wav file.
 The data begins with a network byte-ordered guint32 to identify the wav
 file's size, immediately followed by the file's content.
 
 'P'
-png file.
-The data begins with a network byte-ordered guint32 to identify the png
+Picture file.
+The data begins with a network byte-ordered guint32 to identify the picture
 file's size, immediately followed by the file's content.
 
 'X'
 this type identifier is reserved for experimental extensions.
 
 
-{8}. Tree Dictionary
+
+{8}. Resource Storage
+Resource Storage store the external file in 'r' resource file link, the 
+image in html code, the image, media and other files in wiki tag.
+It have two forms:
+1. Direct directory and files in the "res" sub-directory.
+2. The res.rifo, res.ridx and res.rdic database.
+Direct files may have file name encoding problem, as Linux use UTF-8 and 
+Windows use local encoding, so you'd better just use ASCII file name, or 
+use databse to store UTF-8 file name.
+Databse may need to extract the file(such as .wav) file to a temporary 
+file, so not so efficient compare to direct files. But database have the 
+advantage of compressing.
+You can convert the res directory and the res database from each other by 
+the dir2resdatabse and resdatabase2dir tools.
+StarDict will try to load the storage database first, then try the direct 
+files form.
+
+The format of the res.rifo file:
+StarDict's storage ifo file
+version=3.0.0
+filecount=	// required.
+idxoffsetbits=	// optional.
+
+
+The format of the res.ridx file:
+filename;	// A string end with '\0'.
+offset;		// 32 or 64 bits unsigned number in network byte order.
+size;		// 32 bits unsigned number in network byte order.
+filename can include a path too, such as "pic/example.png". filename is 
+case sensitive, and there should have no two same filenames in all the 
+entries.
+if "idxoffsetbits=64", then offset is 64 bits.
+These three items are repeated as each entry.
+The entries are sorted by the strcmp() function with the filename field.
+It is possible that different filenames have the same offset and size.
+
+The format of the res.rdic file:
+It is just the join of each resource files.
+You can dictzip this file as res.rdic.dz
+
+
+
+{9}. Tree Dictionary
 The tree dictionary support is used for information viewing, etc.
 
 A tree dictionary contains three file: sometreedict.ifo, sometreedict.tdx.gz 
@@ -441,14 +513,14 @@ Subentry is immidiately followed by its parent entry. This make the order is
 just as when a tree list with all its nodes extended, then sort from top to 
 bottom.
 
-word_data_offset, word_data_size and word_subentry_count should be 32-bit
+word_data_offset, word_data_size and word_subentry_count should be 32-bits
 unsigned numbers in network byte order.
 
 The .dict file's format is the same as the normal dictionary.
 
 
 
-{9}. More information.
+{10}. More information.
 You can read "src/lib.cpp", "src/dictmanagedlg.cpp" and
 "src/tools/*.cpp" for more information.
 
@@ -462,4 +534,4 @@ English.
 
 Hu Zheng <huzheng_001@163.com>
 http://forlinux.yeah.net
-2006.6.15
+2007.4.24
