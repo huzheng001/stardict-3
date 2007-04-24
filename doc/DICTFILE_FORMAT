@@ -403,13 +403,14 @@ See http://meta.wikimedia.org/wiki/Help:Editing#The_wiki_markup
 Html codes. Not supported yet.
 
 'r'
-Resource file link.
+Resource file list.
 The content can be:
 pic:pic/example.jpg	// Picture file
 snd:apple.wav		// Sound file
 vdo:film.avi		// Video file
 att:file.bin		// Attachment file
-StarDict will find the file in the Resource Storage.
+More than one line is supported as a list of available files.
+StarDict will find the files in the Resource Storage.
 The picture will be shown, the sound file will have a play button.
 And you can "save as" the attachment file.
 
@@ -507,7 +508,7 @@ Each entry in the word list contains four fields, one after the other:
      word_str;  // a utf-8 string terminated by '\0'.
      word_data_offset;  // word data's offset in .dict file
      word_data_size;  // word data's total size in .dict file. it can be 0.
-     word_subentry_count; //have many sub word this entry has, 0 means none.
+     word_subentry_count; //how many sub word this entry has, 0 means none.
 
 Subentry is immidiately followed by its parent entry. This make the order is 
 just as when a tree list with all its nodes extended, then sort from top to 
