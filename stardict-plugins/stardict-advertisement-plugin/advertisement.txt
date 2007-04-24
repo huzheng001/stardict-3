@@ -1,0 +1,16 @@
+StarDict	星际译王
+m
+The best dictionary software in the Linux world! :)
+
+huzheng	Hu Zheng	胡正	Hungzeng
+m
+The author of StarDict.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: http://forlinux.yeah.net
+
+RedHat	红帽子
+m
+RedHat company: http://www.redhat.com
+
+MiniGUI	迷你龟
+m
+Feynman comany: http://www.minigui.com
+

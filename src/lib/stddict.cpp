@@ -1719,10 +1719,12 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 	}
 }
 
-void Libs::SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, const char *dicts, int max, int userLevel)
+void Libs::SetDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int userLevel)
 {
-	dictmask.clear();
+	InstantDictIndex instance_dict_index;
+	instance_dict_index.type = InstantDictType_LOCAL;
 	if (dicts) {
+		dictmask.clear();
 		std::list<std::string> uid_list;
 		std::string uid;
 		const char *p, *p1;
@@ -1748,24 +1750,28 @@ void Libs::SetDictMask(std::vector<std::vector<Dict *>::size_type> &dictmask, co
 					break;
 				if (userLevel>=0 && (unsigned int)userLevel< uid_iter->second->level)
 					continue;
-				dictmask.push_back(uid_iter->second->id);
+				instance_dict_index.index = uid_iter->second->id;
+				dictmask.push_back(instance_dict_index);
 				count++;
 			}
 		}
 	} else {
 		std::vector<Dict *>::size_type iLib;
 		for (iLib =0; iLib < oLib.size(); iLib++) {
-			dictmask.push_back(iLib);
+			instance_dict_index.index = iLib;
+			dictmask.push_back(instance_dict_index);
 		}
 	}
 }
 
-void Libs::LoadCollateFile(std::vector<std::vector<Dict *>::size_type> &dictmask, CollateFunctions cltfuc)
+void Libs::LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunctions cltfuc)
 {
-	for (std::vector<std::vector<Dict *>::size_type>::iterator i = dictmask.begin(); i!=dictmask.end(); ++i) {
-		oLib[*i]->idx_file->collate_load(cltfuc);
-		if (oLib[*i]->syn_file.get() != NULL)
-			oLib[*i]->syn_file->collate_load(cltfuc);
+	for (std::vector<InstantDictIndex>::iterator i = dictmask.begin(); i!=dictmask.end(); ++i) {
+		if ((*i).type == InstantDictType_LOCAL) {
+			oLib[(*i).index]->idx_file->collate_load(cltfuc);
+			if (oLib[(*i).index]->syn_file.get() != NULL)
+				oLib[(*i).index]->syn_file->collate_load(cltfuc);
+		}
 	}
 }
 
@@ -1876,14 +1882,16 @@ glong Libs::CltSynIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 	return oLib[iLib]->syn_file->clt_files[servercollatefunc-1]->GetOrigIndex(cltidx);
 }
 
-const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc)
+const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc)
 {
 	const gchar *poCurrentWord = NULL;
 	const gchar *word;
-	std::vector<std::vector<Dict *>::size_type>::size_type iLib;
+	std::vector<InstantDictIndex>::size_type iLib;
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (iCurrent[iLib].idx==INVALID_INDEX)
 			continue;
 		if ( iCurrent[iLib].idx>=narticles(iRealLib) || iCurrent[iLib].idx<0)
@@ -1899,7 +1907,9 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<std::ve
 		}
 	}
 	for (iLib=0; iLib<dictmask.size(); iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (iCurrent[iLib].synidx==UNSET_INDEX)
 			continue;
 		if (iCurrent[iLib].synidx==INVALID_INDEX)
@@ -1920,7 +1930,7 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<std::ve
 }
 
 const gchar *
-Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc)
+Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc)
 {
 	// the input can be:
 	// (word,iCurrent),read word,write iNext to iCurrent,and return next word. used by TopWin::NextCallback();
@@ -1930,10 +1940,12 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std:
 	bool isLib = false;
 	const gchar *word;
 
-	std::vector<std::vector<Dict *>::size_type>::size_type iLib;
+	std::vector<InstantDictIndex>::size_type iLib;
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, EnableCollationLevel, servercollatefunc);
 		}
@@ -1959,7 +1971,9 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std:
 		}
 	}
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, EnableCollationLevel, servercollatefunc);
 		}
@@ -1988,7 +2002,9 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std:
 	}
 	if (poCurrentWord) {
 		for (iLib=0; iLib < dictmask.size(); iLib++) {
-			iRealLib = dictmask[iLib];
+			if (dictmask[iLib].type != InstantDictType_LOCAL)
+				break;
+			iRealLib = dictmask[iLib].index;
 			if (isLib && (iLib == iCurrentLib))
 				continue;
 			if (iCurrent[iLib].idx==INVALID_INDEX)
@@ -2001,7 +2017,9 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std:
 			}
 		}
 		for (iLib=0; iLib < dictmask.size(); iLib++) {
-			iRealLib = dictmask[iLib];
+			if (dictmask[iLib].type != InstantDictType_LOCAL)
+				break;
+			iRealLib = dictmask[iLib].index;
 			if ((!isLib) && (iLib == iCurrentLib))
 				continue;
 			if (iCurrent[iLib].synidx==UNSET_INDEX)
@@ -2027,7 +2045,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<std:
 }
 
 const gchar *
-Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<std::vector<Dict *>::size_type> &dictmask, int servercollatefunc)
+Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc)
 {
 	// used by TopWin::PreviousCallback(); the iCurrent is cached by AppCore::TopWinWordChange();
 	const gchar *poCurrentWord = NULL;
@@ -2036,10 +2054,12 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<std::
 
 	const gchar *word;
 	glong pidx;
-	std::vector<std::vector<Dict *>::size_type>::size_type iLib;
+	std::vector<InstantDictIndex>::size_type iLib;
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0;iLib<dictmask.size();iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, EnableCollationLevel, servercollatefunc);
 		}
@@ -2069,7 +2089,9 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<std::
 		}
 	}
 	for (iLib=0;iLib<dictmask.size();iLib++) {
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, EnableCollationLevel, servercollatefunc);
 		}
@@ -2102,7 +2124,9 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<std::
 	}
 	if (poCurrentWord) {
 		for (iLib=0;iLib<dictmask.size();iLib++) {
-			iRealLib = dictmask[iLib];
+			if (dictmask[iLib].type != InstantDictType_LOCAL)
+				break;
+			iRealLib = dictmask[iLib].index;
 			if (isLib && (iLib == iCurrentLib))
 				continue;
 			if (iCurrent[iLib].idx!=INVALID_INDEX) {
@@ -2117,7 +2141,9 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<std::
 			}
 		}
 		for (iLib=0;iLib<dictmask.size();iLib++) {
-			iRealLib = dictmask[iLib];
+			if (dictmask[iLib].type != InstantDictType_LOCAL)
+				break;
+			iRealLib = dictmask[iLib].index;
 			if ((!isLib) && (iLib == iCurrentLib))
 				continue;
 			if (iCurrent[iLib].synidx==UNSET_INDEX)
@@ -2616,7 +2642,7 @@ static inline void unicode_strdown(gunichar *str)
 	}
 }
 
-bool Libs::LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_size, std::vector<std::vector<Dict *>::size_type> &dictmask)
+bool Libs::LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_size, std::vector<InstantDictIndex> &dictmask)
 {
 	if (sWord[0] == '\0')
 		return false;
@@ -2641,8 +2667,10 @@ bool Libs::LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_si
 	unicode_strdown(ucs4_str2);
 
 	std::vector<Dict *>::size_type iRealLib;
-	for (std::vector<std::vector<Dict *>::size_type>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
-		iRealLib = dictmask[iLib];
+	for (std::vector<InstantDictIndex>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		for (gint synLib=0; synLib<2; synLib++) {
 			if (synLib==1) {
 				if (oLib[iRealLib]->syn_file.get()==NULL)
@@ -2724,7 +2752,7 @@ inline bool less_for_compare(const char *lh, const char *rh) {
 	return stardict_strcmp(lh, rh)<0;
 }
 
-gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<std::vector<Dict *>::size_type> &dictmask)
+gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<InstantDictIndex> &dictmask)
 {
 	glong aiIndex[MAX_MATCH_ITEM_PER_LIB+1];
 	gint iMatchCount = 0;
@@ -2733,10 +2761,12 @@ gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<st
 	const gchar * sMatchWord;
 	bool bAlreadyInList;
 	std::vector<Dict *>::size_type iRealLib;
-	for (std::vector<std::vector<Dict *>::size_type>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
+	for (std::vector<InstantDictIndex>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
 		//if(oLibs.LookdupWordsWithRule(pspec,aiIndex,MAX_MATCH_ITEM_PER_LIB+1-iMatchCount,iLib))
 		// -iMatchCount,so save time,but may got less result and the word may repeat.
-		iRealLib = dictmask[iLib];
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[iLib].index;
 		if (oLib[iRealLib]->LookupWithRule(pspec, aiIndex, MAX_MATCH_ITEM_PER_LIB+1)) {
 			show_progress->notify_about_work();
 			for (int i=0; aiIndex[i]!=-1; i++) {
@@ -2775,7 +2805,7 @@ gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<st
 	return iMatchCount;
 }
 
-bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func search_func, gpointer search_data, bool *cancel, std::vector<std::vector<Dict *>::size_type> &dictmask)
+bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func search_func, gpointer search_data, bool *cancel, std::vector<InstantDictIndex> &dictmask)
 {
 	std::vector<std::string> SearchWords;
 	std::string SearchWord;
@@ -2819,16 +2849,19 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 	glong search_count=0;
 	glong total_count=0;
 	if (search_func) {
-		for (std::vector<Dict *>::size_type i=0; i<dictmask.size(); ++i) {
-			total_count += narticles(dictmask[i]);
+		for (std::vector<InstantDictIndex>::size_type i=0; i<dictmask.size(); ++i) {
+			if (dictmask[i].type == InstantDictType_LOCAL)
+				total_count += narticles(dictmask[i].index);
 		}
 	}
 
 	guint32 max_size =0;
 	gchar *origin_data = NULL;
-	std::vector<std::vector<Dict *>::size_type>::size_type iRealLib;
-	for (std::vector<Dict *>::size_type i=0; i<dictmask.size(); ++i) {
-		iRealLib = dictmask[i];
+	std::vector<InstantDictIndex>::size_type iRealLib;
+	for (std::vector<InstantDictIndex>::size_type i=0; i<dictmask.size(); ++i) {
+		if (dictmask[i].type != InstantDictType_LOCAL)
+			break;
+		iRealLib = dictmask[i].index;
 		if (!oLib[iRealLib]->containSearchData())
 			continue;
 		const gulong iwords = narticles(iRealLib);
@@ -2858,7 +2891,7 @@ search_out:
 	g_free(origin_data);
 	KMP_end();
 
-	std::vector<Dict *>::size_type i;
+	std::vector<InstantDictIndex>::size_type i;
 	for (i=0; i<dictmask.size(); ++i)
 		if (!reslist[i].empty())
 			break;

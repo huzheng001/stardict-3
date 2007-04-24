@@ -6,12 +6,14 @@
 #include <glib.h>
 #include <gmodule.h>
 #include <vector>
+#include "dictmask.h"
 
 class StarDictVirtualDictPlugin {
 public:
 	StarDictVirtualDictPlugin(GModule *module, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj);
 	~StarDictVirtualDictPlugin();
-	void lookup(char *word);
+	void lookup(const char *word);
+	bool is_instant();
 private:
 	GModule *module;
 	StarDictVirtualDictPlugInObject *obj;
@@ -22,8 +24,9 @@ public:
 	StarDictVirtualDictPlugins();
 	~StarDictVirtualDictPlugins();
 	void add(GModule *module, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj);
-	void lookup(gchar *word, size_t iPlugin);
+	void lookup(const gchar *word, size_t iPlugin);
 	size_t ndicts() { return oPlugins.size(); }
+	void SetDictMask(std::vector<InstantDictIndex> &dictmask);
 private:
 	std::vector<StarDictVirtualDictPlugin *> oPlugins;
 };

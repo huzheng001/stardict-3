@@ -19,6 +19,7 @@ libstardict_a_SOURCES = \
 	sockets.cpp sockets.hpp \
 	plugin.cpp plugin.h \
 	virtualdictplugin.cpp virtualdictplugin.h \
-	pluginmanager.cpp pluginmanager.h
+	pluginmanager.cpp pluginmanager.h	\
+	dictmask.h
 
 INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
