@@ -191,4 +191,4 @@ stardict_editor_LDFLAGS =
 stardict_editor_LDADD = $(STARDICT_LIBS)
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp libstardictverify.h
 
-EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh dictbuilder.readme dictbuilder.example
+EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py
