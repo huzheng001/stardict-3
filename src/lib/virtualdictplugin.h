@@ -4,9 +4,10 @@
 struct StarDictVirtualDictPlugInObject{
 	StarDictVirtualDictPlugInObject();
 
-	typedef void (*lookup_func_t)(const char *word);
+	typedef void (*lookup_func_t)(const char *word, char **return_word, char **return_data);
 	lookup_func_t lookup_func;
 	bool is_instant;
+	const char *dict_name;
 };
 
 #endif

@@ -757,7 +757,7 @@ void ArticleView::AppendDataSeparate()
 	append_pango_text("\n");
 }
 
-void ArticleView::AppendHeader(const std::string& dict_name)
+void ArticleView::AppendHeader(const char *dict_name)
 {
 	if (!for_float_win) {
 		gchar *mark = g_strdup_printf("%d", bookindex);
@@ -771,7 +771,7 @@ void ArticleView::AppendHeader(const std::string& dict_name)
 #else
 	mark+= "&lt;--- ";
 #endif
-	gchar *m_str = g_markup_escape_text(dict_name.c_str(), -1);
+	gchar *m_str = g_markup_escape_text(dict_name, -1);
 	mark += m_str;
 	g_free(m_str);
 #ifdef CONFIG_GPE

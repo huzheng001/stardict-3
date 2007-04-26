@@ -17,3 +17,4 @@ src/utils.cpp
 src/lib/stddict.cpp
 src/win32/clipboard.cpp
 src/win32/systray.cpp
+stardict-plugins/stardict-advertisement-plugin/advertisement.cpp

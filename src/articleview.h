@@ -15,7 +15,7 @@ public:
 	ArticleView(GtkBox *owner, bool floatw=false)
 		: pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
 
-	void AppendHeader(const std::string& dict_name);
+	void AppendHeader(const char *dict_name);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
 	void AppendNewline();

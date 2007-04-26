@@ -224,7 +224,7 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
     oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
-	iCurrentIndex=(CurrentIndex *)g_malloc0(oLibs.ndicts()*sizeof(CurrentIndex));
+	iCurrentIndex=(CurrentIndex *)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
 
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
 		const std::string &custom_font(conf->get_string_at("dictionary/custom_font"));
@@ -328,7 +328,7 @@ void AppCore::Create(gchar *queryword)
 		gdk_notify_startup_complete();
 	}
 
-	if (oLibs.ndicts()) {
+	if (oLibs.has_dict()) {
 		if (queryword) {
 			Query(queryword);
 			g_free(queryword);
@@ -551,9 +551,9 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 	*P2='\0';
 	EndPointer=SearchWord+strlen(SearchWord);
 
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * oLibs.ndicts());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * oLibs.ndicts());
-	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * oLibs.ndicts());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
+	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
 
 	//find the word use most biggest length
 	while (EndPointer>SearchWord) {
@@ -562,8 +562,10 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 			*EndPointer--='\0';
 
 		bool bFound = false;
-		for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
+		for (size_t iLib=0;iLib<dictmask.size();iLib++)
 			BuildResultData(SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
+			BuildVirtualDictData(SearchWord, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
@@ -617,15 +619,17 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 			P1 = g_utf8_prev_char(P1);
 	}
 
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * oLibs.ndicts());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * oLibs.ndicts());
-	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * oLibs.ndicts());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
+	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
 
 	int SearchTimes = 2;
 	while (SearchTimes) {
 		bool bFound = false;
-		for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
+		for (size_t iLib=0;iLib<dictmask.size();iLib++)
 			BuildResultData(P1, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
+			BuildVirtualDictData(P1, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, P1);
 			oTopWin.InsertHisList(P1);
@@ -728,9 +732,34 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 }
 #endif
 
+void AppCore::BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound)
+{
+	if (dictmask[iLib].type != InstantDictType_VIRTUAL)
+		return;
+
+	char *return_word;
+	char *return_data;
+	oStarDictPlugins->VirtualDictPlugins.lookup(dictmask[iLib].index, sWord, &return_word, &return_data);
+	if (return_word) {
+		pppWord[iLib] = (gchar **)g_malloc(sizeof(gchar *)*2);
+		pppWord[iLib][0] = return_word;
+		pppWord[iLib][1] = NULL;
+		ppppWordData[iLib] = (gchar ***)g_malloc(sizeof(gchar **));
+		ppppWordData[iLib][0] = (gchar **)g_malloc(sizeof(gchar *)*2);
+		ppppWordData[iLib][0][0] = return_data;
+		ppppWordData[iLib][0][1] = NULL;
+		bFound = true;
+	} else {
+		pppWord[iLib] = NULL;
+	}
+}
+
 void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
 {
-    int iRealLib = dictmask[iLib].index;
+	if (dictmask[iLib].type != InstantDictType_LOCAL)
+		return;
+
+	int iRealLib = dictmask[iLib].index;
 	gint i, j;
 	gint count=0, syncount;
 	bool bLookupWord, bLookupSynonymWord;
@@ -811,7 +840,7 @@ void AppCore::FreeResultData(gchar ***pppWord, gchar ****ppppWordData)
 		return;
 	int j, k;
 	size_t i;
-	for (i=0; i<oLibs.ndicts(); i++) {
+	for (i=0; i<dictmask.size(); i++) {
 		if (pppWord[i]) {
 			j=0;
 			while (pppWord[i][j]) {
@@ -842,20 +871,22 @@ void AppCore::FreeResultData(gchar ***pppWord, gchar ****ppppWordData)
 bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, const gchar *piIndexValidStr, bool bTryMoreIfNotFound, bool bShowNotfound, bool isShowFirst)
 {
 	bool bFound = false;
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * oLibs.ndicts());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * oLibs.ndicts());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
 	CurrentIndex *iIndex;
 	if (!piIndex)
-		iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * oLibs.ndicts());
+		iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
 	else
 		iIndex = piIndex;
 
-	for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
+	for (size_t iLib=0; iLib<dictmask.size(); iLib++)
 		BuildResultData(sWord, iIndex, piIndexValidStr, iLib, pppWord, ppppWordData, bFound, 0);
 	if (!bFound && !piIndexValidStr) {
-		for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
+		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
 			BuildResultData(sWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 	}
+	for (size_t iLib=0; iLib<dictmask.size(); iLib++)
+		BuildVirtualDictData(piIndexValidStr?piIndexValidStr:sWord, iLib, pppWord, ppppWordData, bFound);
 	if (bFound) {
 		ShowDataToTextWin(pppWord, ppppWordData, sWord, isShowFirst);
 	} else {
@@ -868,12 +899,14 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 					if (bShowNotfound)
 						ShowNotFoundToTextWin(sWord,_("<Not Found!>"), TEXT_WIN_NOT_FOUND);
 				} else {
-					for (size_t iLib=0;iLib<oLibs.ndicts();iLib++)
+					for (size_t iLib=0;iLib<dictmask.size();iLib++)
 						BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 0);
 					if (!bFound) {
-						for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
+						for (size_t iLib=0; iLib<dictmask.size(); iLib++)
 							BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 					}
+					for (size_t iLib=0; iLib<dictmask.size(); iLib++)
+						BuildVirtualDictData(hword, iLib, pppWord, ppppWordData, bFound);
 					if (bFound) {
 						ShowDataToTextWin(pppWord, ppppWordData, sWord, isShowFirst);
 					} else {
@@ -896,15 +929,6 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 		g_free(iIndex);
 
 	FreeResultData(pppWord, ppppWordData);
-
-	for (std::vector<InstantDictIndex>::iterator i = dictmask.begin(); i != dictmask.end(); ++i) {
-		if ((*i).type == InstantDictType_VIRTUAL) {
-			if (isShowFirst)
-				oStarDictPlugins->VirtualDictPlugins.lookup(piIndexValidStr, (*i).index);
-			else
-				oStarDictPlugins->VirtualDictPlugins.lookup(sWord, (*i).index);
-		}
-	}
 
 	return bFound;
 }
@@ -963,7 +987,7 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	std::vector< std::vector<gchar *> > reslist(dictmask.size());
 	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, dictmask)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
-		for (size_t i=0; i<oLibs.ndicts(); i++) {
+		for (size_t i=0; i<dictmask.size(); i++) {
 			if (!reslist[i].empty()) {
 				SimpleLookupToTextWin(reslist[i][0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 				break;
@@ -1033,18 +1057,20 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 		gchar ****ppppWord = (gchar ****)g_malloc(sizeof(gchar ***) * count);
 		gchar *****pppppWordData = (gchar *****)g_malloc(sizeof(gchar ****) * count);
 		const gchar **ppOriginWord = (const gchar **)g_malloc(sizeof(gchar *) * count);
-		CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * oLibs.ndicts());
+		CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
 
 		gchar ***pppWord;
 		gchar ****ppppWordData;
 		for (i=0;i<count;i++) {
 			bool bFound = false;
-			pppWord = (gchar ***)g_malloc(sizeof(gchar **) * oLibs.ndicts());
-			ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * oLibs.ndicts());
+			pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
+			ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
 
 			ppOriginWord[i] = fuzzy_reslist[i];
-			for (size_t iLib=0; iLib<oLibs.ndicts(); iLib++)
+			for (size_t iLib=0; iLib<dictmask.size(); iLib++)
 				BuildResultData(fuzzy_reslist[i], iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+			for (size_t iLib=0; iLib<dictmask.size(); iLib++)
+				BuildVirtualDictData(fuzzy_reslist[i], iLib, pppWord, ppppWordData, bFound);
 			if (bFound) {// it is certainly be true.
 				ppppWord[i]=pppWord;
 				pppppWordData[i]=ppppWordData;
@@ -1075,7 +1101,7 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 
-	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * oLibs.ndicts());
+	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * dictmask.size());
 	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
@@ -1110,12 +1136,15 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 	oMidWin.oTextWin.queryWord = sOriginWord;
 
 	oMidWin.oIndexWin.oResultWin.Clear();
-    int bookindex = 0;
-	for (size_t i=0; i < oLibs.ndicts(); i++) {
+	int bookindex = 0;
+	for (size_t i=0; i < dictmask.size(); i++) {
 		if (pppWord[i]) {
 			gchar *mark = g_strdup_printf("%d", bookindex);
-            bookindex++;
-			oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(i).c_str(), mark);
+			bookindex++;
+			if (dictmask[i].type == InstantDictType_LOCAL)
+				oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(dictmask[i].index).c_str(), mark);
+			else if (dictmask[i].type == InstantDictType_VIRTUAL)
+				oMidWin.oIndexWin.oResultWin.InsertLast(oStarDictPlugins->VirtualDictPlugins.dict_name(dictmask[i].index), mark);
 			g_free(mark);
 		}
 	}
@@ -1125,7 +1154,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 		oMidWin.oTextWin.pronounceWord = sOriginWord;
 	}
 	else {
-		for (size_t i=0;i< oLibs.ndicts(); i++) {
+		for (size_t i=0;i< dictmask.size(); i++) {
 			if (pppWord[i] && strcmp(pppWord[i][0], sOriginWord)) {
 				if (oReadWord.canRead(pppWord[i][0])) {
 					canRead = true;
@@ -1307,7 +1336,7 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 
 void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst)
 {
-	CurrentIndex *iCurrent = (CurrentIndex*)g_memdup(iIndex, sizeof(CurrentIndex)*oLibs.ndicts());
+	CurrentIndex *iCurrent = (CurrentIndex*)g_memdup(iIndex, sizeof(CurrentIndex)*dictmask.size());
 
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
@@ -1545,7 +1574,7 @@ void AppCore::reload_dicts()
 	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 	
 	g_free(iCurrentIndex);
-	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * oLibs.ndicts());
+	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
 
 	const gchar *sWord = oTopWin.get_text();
 

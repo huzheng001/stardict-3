@@ -110,6 +110,7 @@ public:
 	void End();
 	void Query(const gchar *word);
 	void BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
+	void BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
 	void FreeResultData(gchar ***pppWord, gchar ****ppppWordData);
 	bool SimpleLookupToFloat(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
