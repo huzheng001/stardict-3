@@ -1291,6 +1291,8 @@ void AppCore::TopWinEnterWord(const gchar *text)
 		oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str());
 }
 
+#define DEFAULT_WORD_CHANGE_TIMEOUT 300
+
 void AppCore::TopWinWordChange(const gchar* sWord)
 {
 	std::string res;
@@ -1309,7 +1311,7 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 	default:
 		stop_word_change_timer();
 		delayed_word_ = res;
-		word_change_timeout_ = g_timeout_add(100, on_word_change_timeout, this);
+		word_change_timeout_ = g_timeout_add(DEFAULT_WORD_CHANGE_TIMEOUT, on_word_change_timeout, this);
 	}
 }
 
