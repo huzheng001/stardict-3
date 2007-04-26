@@ -1,5 +1,6 @@
 #include "advertisement.h"
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <string>
 #include <map>
 #include <list>
@@ -130,16 +131,16 @@ static void unload_dict()
 	}
 }
 
-static void lookup(const char *word)
+static void lookup(const char *word, char **return_word, char **return_data)
 {
 	gchar *lower_str = g_utf8_strdown(word, -1);
 	std::map<std::string, DictEntry>::iterator iter = dict_map.find(lower_str);
-	if (iter != dict_map.end()) {
-		VirtualDictLookupResponse response;
-		response.bookname = "Advertisement";
-		response.word = iter->second.word.c_str();
-		response.datalist.push_back(iter->second.data);
-		vd_slots->on_lookup_end(&response);
+	if (iter == dict_map.end()) {
+		*return_word = NULL;
+	} else {
+		*return_word = g_strdup(iter->second.word.c_str());
+		char *mem = iter->second.data;
+		*return_data = (char *)g_memdup(mem, sizeof(guint32) + *reinterpret_cast<const guint32 *>(mem));
 	}
 	g_free(lower_str);
 }
@@ -166,6 +167,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->is_instant = true;
+	obj->dict_name = _("Advertisement");
 	std::string filename = plugin_info->datadir;
 	filename += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement.txt";
 	bool failed = load_dict(filename.c_str());

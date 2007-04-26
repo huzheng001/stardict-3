@@ -35,17 +35,62 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 	if (!g_file_get_contents(ifofilename.c_str(), &buffer, NULL, NULL))
 		return false;
 
-#define TREEDICT_MAGIC_DATA "StarDict's treedict ifo file\nversion=2.4.2\n"
-#define DICT_MAGIC_DATA "StarDict's dict ifo file\nversion=2.4.2\n"
+#define TREEDICT_MAGIC_DATA "StarDict's treedict ifo file\nversion="
+#define DICT_MAGIC_DATA "StarDict's dict ifo file\nversion="
 	const gchar *magic_data=istreedict ? TREEDICT_MAGIC_DATA : DICT_MAGIC_DATA;
 	if (!g_str_has_prefix(buffer, magic_data)) {
 		g_free(buffer);
 		return false;
 	}
 
-	gchar *p1,*p2,*p3;
+	bool is_dict_300 = false;
+	gchar *p1;
+	if (istreedict) {
+		p1 = buffer + sizeof(TREEDICT_MAGIC_DATA) -1;
+#define TREEDICT_VERSION_242 "2.4.2\n"
+		if (g_str_has_prefix(p1, TREEDICT_VERSION_242)) {
+			p1 += sizeof(TREEDICT_VERSION_242) -2;
+		} else {
+			g_print("Load %s failed: Unknown version.\n", ifofilename.c_str());
+			g_free(buffer);
+			return false;
+		}
+	} else {
+		p1 = buffer + sizeof(DICT_MAGIC_DATA) -1;
+#define DICT_VERSION_242 "2.4.2\n"
+#define DICT_VERSION_300 "3.0.0\n"
+		if (g_str_has_prefix(p1, DICT_VERSION_242)) {
+			p1 += sizeof(DICT_VERSION_242) -2;
+		} else if (g_str_has_prefix(p1, DICT_VERSION_300)) {
+			p1 += sizeof(DICT_VERSION_300) -2;
+			is_dict_300 = true;
+		} else {
+			g_print("Load %s failed: Unknown version.\n", ifofilename.c_str());
+			g_free(buffer);
+			return false;
+		}
+	}
 
-	p1 = buffer + strlen(magic_data)-1;
+	gchar *p2,*p3;
+
+	if (is_dict_300) {
+		p2 = strstr(p1,"\nidxoffsetbits=");
+		if (p2) {
+			p2 = p2 + sizeof("\nidxoffsetbits=") -1;
+			if (g_str_has_prefix(p2, "64\n")) {
+				if (sizeof(long) == 4) {
+					g_print("Load %s failed: 32-bits machine can't load this dictionary.\n", ifofilename.c_str());
+					g_free(buffer);
+					return false;
+				} else {
+					// 64-bits machine don't have the 4G virtual process memory limit, so mmap large file can work.
+					// TODO
+					g_free(buffer);
+					return false;
+				}
+			}
+		}
+	}
 
 	p2 = strstr(p1,"\nwordcount=");
 	if (!p2) {

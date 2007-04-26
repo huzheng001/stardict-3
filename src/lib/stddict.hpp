@@ -213,7 +213,7 @@ public:
 	glong narticles(size_t idict) { return oLib[idict]->narticles(); }
 	glong nsynarticles(size_t idict) { return oLib[idict]->nsynarticles(); }
 	const std::string& dict_name(size_t idict) { return oLib[idict]->dict_name(); }
-	size_t ndicts() { return oLib.size(); }
+	bool has_dict() { return !oLib.empty(); }
 
 	const gchar * poGetWord(glong iIndex,size_t iLib, int servercollatefunc) {
 		return oLib[iLib]->idx_file->getWord(iIndex, EnableCollationLevel, servercollatefunc);

@@ -337,7 +337,7 @@ void TopWin::do_prev()
 			gchar *word;
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
 			CurrentIndex *iPreIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
+				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->dictmask.size());
 			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->dictmask, 0);
 			if (preword) {
 				SetText(preword);
@@ -410,7 +410,7 @@ void TopWin::do_next()
 			// user have selected the last row.
 			gtk_tree_model_get(model, &new_iter, 0, &word, -1);
 			CurrentIndex *iNextIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->oLibs.ndicts());
+				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->dictmask.size());
 			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->dictmask, 0);
 			if (nextword) {
 				SetText(nextword);				
@@ -844,11 +844,15 @@ void ListWin::SetTreeModel(std::vector<gchar *> *reslist)
 {
 	GtkTreeIter parent;
 	GtkTreeIter iter;
-	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+	const char *bookname = "";
+	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
 		if (!reslist[i].empty()) {
 			gtk_tree_store_append(tree_model, &parent, NULL);
-			gtk_tree_store_set(tree_model, &parent, 0,
-					   gpAppFrame->oLibs.dict_name(i).c_str(), -1);
+			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
+				bookname = gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str();
+			else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
+				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index);
+			gtk_tree_store_set(tree_model, &parent, 0, bookname, -1);
 			for (std::vector<gchar *>::iterator p=reslist[i].begin();
 			     p != reslist[i].end(); ++p) {
 				gtk_tree_store_append(tree_model, &iter, &parent);
@@ -1593,9 +1597,12 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->goto_begin();
 
 	int j,k;
-	for (size_t i=0; i<gpAppFrame->oLibs.ndicts(); i++) {
+	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
 		if (Word[i]) {
-			view->AppendHeader(gpAppFrame->oLibs.dict_name(i));
+			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
+				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
+			else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index));
 			j=0;
 			do {
 				view->AppendWord(Word[i][j]);

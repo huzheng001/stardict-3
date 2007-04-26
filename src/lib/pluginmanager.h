@@ -12,8 +12,9 @@ class StarDictVirtualDictPlugin {
 public:
 	StarDictVirtualDictPlugin(GModule *module, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj);
 	~StarDictVirtualDictPlugin();
-	void lookup(const char *word);
+	void lookup(const char *word, char **return_word, char **return_data);
 	bool is_instant();
+	const char *dict_name();
 private:
 	GModule *module;
 	StarDictVirtualDictPlugInObject *obj;
@@ -24,8 +25,9 @@ public:
 	StarDictVirtualDictPlugins();
 	~StarDictVirtualDictPlugins();
 	void add(GModule *module, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj);
-	void lookup(const gchar *word, size_t iPlugin);
+	void lookup(size_t iPlugin, const gchar *word, char **return_word, char **return_data);
 	size_t ndicts() { return oPlugins.size(); }
+	const char *dict_name(size_t iPlugin);
 	void SetDictMask(std::vector<InstantDictIndex> &dictmask);
 private:
 	std::vector<StarDictVirtualDictPlugin *> oPlugins;
