@@ -7,7 +7,6 @@
 
 
 static const StarDictPluginInfo *plugin_info = NULL;
-static const StarDictVirtualDictPlugInSlots *vd_slots = NULL;
 
 struct DictEntry {
 	std::string word;
@@ -153,7 +152,6 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
 	plugin_info = obj->plugin_info;
-	vd_slots = obj->vd_slots;
 
 	return false;
 }
