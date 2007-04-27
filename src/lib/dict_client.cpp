@@ -98,8 +98,10 @@ void DICT::Cmd::send(GIOChannel *channel, GError *&err)
 class DefineCmd : public DICT::Cmd {
 public:
 	DefineCmd(const gchar *database, const gchar *word) {
-		query_ = std::string("DEFINE ") + database + " \"" + word +
-			"\"\r\n";
+		char *quote_word = g_shell_quote(word);
+		query_ = std::string("DEFINE ") + database + ' ' + quote_word +
+			"\r\n";
+		g_free(quote_word);
 	}
 	bool parse(gchar *str, int code);
 };
@@ -116,9 +118,10 @@ public:
 	const std::string& query() {
 		if (query_.empty()) {
 			handle_word();
-//TODO: what about word with '"'?
+			char *quote_word = g_shell_quote(word_.c_str());
 			query_ = "MATCH " + database_ + " " + strategy_ +
-				" \"" + word_ + "\"\r\n";
+				' ' + quote_word + "\r\n";
+			g_free(quote_word);
 		}
 		return DICT::Cmd::query();
 	}
