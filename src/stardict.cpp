@@ -737,21 +737,9 @@ void AppCore::BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord
 	if (dictmask[iLib].type != InstantDictType_VIRTUAL)
 		return;
 
-	char *return_word;
-	char *return_data;
-	oStarDictPlugins->VirtualDictPlugins.lookup(dictmask[iLib].index, sWord, &return_word, &return_data);
-	if (return_word) {
-		pppWord[iLib] = (gchar **)g_malloc(sizeof(gchar *)*2);
-		pppWord[iLib][0] = return_word;
-		pppWord[iLib][1] = NULL;
-		ppppWordData[iLib] = (gchar ***)g_malloc(sizeof(gchar **));
-		ppppWordData[iLib][0] = (gchar **)g_malloc(sizeof(gchar *)*2);
-		ppppWordData[iLib][0][0] = return_data;
-		ppppWordData[iLib][0][1] = NULL;
+	oStarDictPlugins->VirtualDictPlugins.lookup(dictmask[iLib].index, sWord, &(pppWord[iLib]), &(ppppWordData[iLib]));
+	if (pppWord[iLib])
 		bFound = true;
-	} else {
-		pppWord[iLib] = NULL;
-	}
 }
 
 void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)

@@ -106,9 +106,9 @@ void StarDictVirtualDictPlugins::add(GModule *module, StarDictVirtualDictPlugInO
 	oPlugins.push_back(plugin);
 }
 
-void StarDictVirtualDictPlugins::lookup(size_t iPlugin, const gchar *word, char **return_word, char **return_data)
+void StarDictVirtualDictPlugins::lookup(size_t iPlugin, const gchar *word, char ***pppWord, char ****ppppWordData)
 {
-	oPlugins[iPlugin]->lookup(word, return_word, return_data);
+	oPlugins[iPlugin]->lookup(word, pppWord, ppppWordData);
 }
 
 const char *StarDictVirtualDictPlugins::dict_name(size_t iPlugin)
@@ -154,9 +154,9 @@ StarDictVirtualDictPlugin::~StarDictVirtualDictPlugin()
 	delete obj;
 }
 
-void StarDictVirtualDictPlugin::lookup(const char *word, char **return_word, char **return_data)
+void StarDictVirtualDictPlugin::lookup(const char *word, char ***pppWord, char ****ppppWordData)
 {
-	obj->lookup_func(word, return_word, return_data);
+	obj->lookup_func(word, pppWord, ppppWordData);
 }
 
 bool StarDictVirtualDictPlugin::is_instant()
