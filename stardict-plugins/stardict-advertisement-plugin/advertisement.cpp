@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <vector>
 
 
 static const StarDictPluginInfo *plugin_info = NULL;
@@ -13,7 +14,7 @@ struct DictEntry {
 	char *data;
 };
 
-static std::map<std::string, DictEntry> dict_map;
+static std::multimap<std::string, DictEntry> dict_map;
 static std::list<char *> dictdata_list;
 
 static void my_strstrip(gchar *str)
@@ -112,7 +113,7 @@ static bool load_dict(const char *filename)
 			for (std::list<std::string>::iterator i = wordlist.begin(); i != wordlist.end(); ++i) {
 				dictentry.word = *i;
 				gchar *lower_str = g_utf8_strdown(dictentry.word.c_str(), dictentry.word.length());
-				dict_map[lower_str] = dictentry;
+				dict_map.insert(std::pair<std::string, DictEntry>(lower_str, dictentry));
 				g_free(lower_str);
 			}
 			step = 0;
@@ -130,16 +131,31 @@ static void unload_dict()
 	}
 }
 
-static void lookup(const char *word, char **return_word, char **return_data)
+static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
 {
 	gchar *lower_str = g_utf8_strdown(word, -1);
-	std::map<std::string, DictEntry>::iterator iter = dict_map.find(lower_str);
+	std::multimap<std::string, DictEntry>::iterator iter = dict_map.find(lower_str);
 	if (iter == dict_map.end()) {
-		*return_word = NULL;
+		*pppWord = NULL;
 	} else {
-		*return_word = g_strdup(iter->second.word.c_str());
-		char *mem = iter->second.data;
-		*return_data = (char *)g_memdup(mem, sizeof(guint32) + *reinterpret_cast<const guint32 *>(mem));
+		std::vector< std::pair<char *, char *> > result;
+		char *return_word, *return_data, *mem;
+		do {
+			return_word = g_strdup(iter->second.word.c_str());
+			mem = iter->second.data;
+			return_data = (char *)g_memdup(mem, sizeof(guint32) + *reinterpret_cast<const guint32 *>(mem));
+			result.push_back(std::pair<char *, char *>(return_word, return_data));
+			iter++;
+		} while (iter != dict_map.upper_bound(lower_str));
+		*pppWord = (gchar **)g_malloc(sizeof(gchar *)*(result.size()+1));
+		*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **)*result.size());
+		for (std::vector< std::pair<char *, char *> >::size_type i = 0; i< result.size(); i++) {
+			(*pppWord)[i] = result[i].first;
+			(*ppppWordData)[i] = (gchar **)g_malloc(sizeof(gchar *)*2);
+			(*ppppWordData)[i][0] = result[i].second;
+			(*ppppWordData)[i][1] = NULL;
+		}
+		(*pppWord)[result.size()] = NULL;
 	}
 	g_free(lower_str);
 }

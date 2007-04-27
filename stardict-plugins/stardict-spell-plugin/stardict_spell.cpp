@@ -22,12 +22,12 @@ static char *build_dictdata(char type, const char *definition)
 	return data;
 }
 
-static void lookup(const char *word, char **return_word, char **return_data)
+static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
 {
 	int return_val = enchant_dict_check(dict, word, -1);
 	char **suggestion;
 	if (return_val <= 0 || ((suggestion = enchant_dict_suggest(dict, word, -1, NULL))==NULL)) {
-		*return_word = NULL;
+		*pppWord = NULL;
 		return;
 	}
 	std::string definition;
@@ -41,8 +41,13 @@ static void lookup(const char *word, char **return_word, char **return_data)
 		definition += "</kref>";
 		i++;
 	}
-	*return_word = g_strdup(word);
-	*return_data = build_dictdata('x', definition.c_str());
+	*pppWord = (gchar **)g_malloc(sizeof(gchar *)*(2));
+	*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **));
+	(*pppWord)[0] = g_strdup(word);
+	(*pppWord)[1] = NULL;
+	(*ppppWordData)[0] = (gchar **)g_malloc(sizeof(gchar *)*2);
+	(*ppppWordData)[0][0] = build_dictdata('x', definition.c_str());
+	(*ppppWordData)[0][1] = NULL;
 }
 
 

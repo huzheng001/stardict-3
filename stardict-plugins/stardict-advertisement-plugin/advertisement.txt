@@ -14,3 +14,11 @@ MiniGUI	迷你龟
 m
 Feynman comany: http://www.minigui.com
 
+china
+m
+瓷器
+
+China
+m
+中国
+
