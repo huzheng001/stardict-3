@@ -70,7 +70,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->is_instant = true;
-	obj->dict_name = _("Spell suggestion");
+	obj->dict_name = _("Spell Suggestion");
 	broker = enchant_broker_init();
 	bool no_dict = false;
 	const gchar* const *languages = g_get_language_names();
