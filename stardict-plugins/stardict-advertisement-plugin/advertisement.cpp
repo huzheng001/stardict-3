@@ -187,6 +187,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	bool failed = load_dict(filename.c_str());
 	if (failed)
 		return true;
-	g_print("Advertisement plug-in loaded.\n");
+	g_print(_("Advertisement plug-in loaded.\n"));
 	return false;
 }

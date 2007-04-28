@@ -18,3 +18,4 @@ src/lib/stddict.cpp
 src/win32/clipboard.cpp
 src/win32/systray.cpp
 stardict-plugins/stardict-advertisement-plugin/advertisement.cpp
+stardict-plugins/stardict-spell-plugin/stardict_spell.cpp

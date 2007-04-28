@@ -2,10 +2,14 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <enchant.h>
+#include <pango/pango.h>
 #include <string>
+#include <vector>
 
+static const StarDictPluginInfo *plugin_info = NULL;
 static EnchantBroker *broker = NULL;
 static EnchantDict *dict = NULL;
+static PangoLayout *layout = NULL;
 
 static char *build_dictdata(char type, const char *definition)
 {
@@ -22,32 +26,153 @@ static char *build_dictdata(char type, const char *definition)
 	return data;
 }
 
-static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
+static void stardict_strsplit_utf8(const gchar *text, gchar ***set, gint **starts, gint **ends)
 {
-	int return_val = enchant_dict_check(dict, word, -1);
+	PangoLogAttr  *log_attrs;
+	gint           n_attrs, n_strings, i, j;
+
+	pango_layout_get_log_attrs(layout, &log_attrs, &n_attrs);
+
+	/* Find how many words we have */
+	n_strings = 0;
+	for (i = 0; i < n_attrs; i++)
+		if (log_attrs[i].is_word_start)
+			n_strings++;
+
+	*set    = g_new0(gchar *, n_strings + 1);
+	*starts = g_new0(gint, n_strings);
+	*ends   = g_new0(gint, n_strings);
+
+	/* Copy out strings */
+	for (i = 0, j = 0; i < n_attrs; i++) {
+		if (log_attrs[i].is_word_start) {
+			gint cend, bytes;
+			gchar *start;
+
+			/* Find the end of this string */
+			cend = i;
+			while (!(log_attrs[cend].is_word_end))
+				cend++;
+
+			/* Copy sub-string */
+			start = g_utf8_offset_to_pointer(text, i);
+			bytes = (gint) (g_utf8_offset_to_pointer(text, cend) - start);
+			(*set)[j]    = g_new0(gchar, bytes + 1);
+			(*starts)[j] = (gint) (start - text);
+			(*ends)[j]   = (gint) (start - text + bytes);
+			g_utf8_strncpy((*set)[j], start, cend - i);
+
+			/* Move on to the next word */
+			j++;
+		}
+	}
+
+	g_free (log_attrs);
+}
+
+static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
+{
+	size_t len = strlen(text);
+	pango_layout_set_text(layout, text, len);
+	gchar **words;
+	gint *word_starts;
+	gint *word_ends;
+	stardict_strsplit_utf8(text, &words, &word_starts, &word_ends);
+	std::list<std::string> misspelled_wordlist;
+	gchar *spellword;
+	int start, end;
+	bool misspelled;
+	int *insert_tags = (int *)g_malloc0(sizeof(int)*(len +1));
+	int n_words;
+	for (n_words = 0; words[n_words]; n_words++) {
+		if (words[n_words][0] == '\0')
+			continue;
+		start = word_starts[n_words];
+		end = word_ends[n_words];
+		if (start == end)
+			continue;
+		spellword = g_new0(gchar, end - start + 2);
+		g_strlcpy(spellword, text + start, end - start + 1);
+		if (g_unichar_isalpha(*spellword) == FALSE) {
+			/* We only want to check words */
+			misspelled = false;
+		} else {
+			if (enchant_dict_check(dict, spellword, strlen(spellword)) <= 0)
+				misspelled = false;
+			else
+				misspelled = true;
+		}
+		if (misspelled) {
+			misspelled_wordlist.push_back(spellword);
+			insert_tags[start] = 1;
+			insert_tags[end] = 2;
+		}
+		g_free(spellword);
+	}
+	std::string underline_str;
+	int n_misspelled = misspelled_wordlist.size();
+	if (n_misspelled !=0 && n_words != 1) {
+		underline_str += "<big>";
+		for (size_t i = 0; i < len; i++) {
+			if (insert_tags[i] == 1) {
+				underline_str += "<span underline=\"error\" underline_color=\"#FF0000\">";
+			} else if (insert_tags[i] == 2) {
+				underline_str += "</span>";
+			}
+			underline_str += text[i];
+		}
+		if (insert_tags[len] == 2)
+			underline_str += "</span>";
+		underline_str += "</big>";
+	}
+	g_free(insert_tags);
+	g_strfreev(words);
+	g_free(word_starts);
+	g_free(word_ends);
+
+	std::vector< std::pair<char *, char *> > result;
 	char **suggestion;
-	if (return_val <= 0 || ((suggestion = enchant_dict_suggest(dict, word, -1, NULL))==NULL)) {
-		*pppWord = NULL;
-		return;
-	}
-	std::string definition;
-	definition += "<kref>";
-	definition += suggestion[0];
-	definition += "</kref>";
-	int i = 1;
-	while (suggestion[i]) {
-		definition += "\t<kref>";
-		definition += suggestion[i];
+	for (std::list<std::string>::iterator iter = misspelled_wordlist.begin(); iter != misspelled_wordlist.end(); ++iter) {
+		suggestion = enchant_dict_suggest(dict, (*iter).c_str(), -1, NULL);
+		if (suggestion ==NULL)
+			continue;
+		std::string definition;
+		definition += "<kref>";
+		definition += suggestion[0];
 		definition += "</kref>";
-		i++;
+		int i = 1;
+		while (suggestion[i]) {
+			definition += "\t<kref>";
+			definition += suggestion[i];
+			definition += "</kref>";
+			i++;
+		}
+		result.push_back(std::pair<char *, char *>(g_strdup((*iter).c_str()), build_dictdata('x', definition.c_str())));
 	}
-	*pppWord = (gchar **)g_malloc(sizeof(gchar *)*(2));
-	*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **));
-	(*pppWord)[0] = g_strdup(word);
-	(*pppWord)[1] = NULL;
-	(*ppppWordData)[0] = (gchar **)g_malloc(sizeof(gchar *)*2);
-	(*ppppWordData)[0][0] = build_dictdata('x', definition.c_str());
-	(*ppppWordData)[0][1] = NULL;
+	if (result.empty()) {
+		*pppWord = NULL;
+	} else {
+		int head;
+		if (underline_str.empty())
+			head = 0;
+		else
+			head = 1;
+		*pppWord = (gchar **)g_malloc(sizeof(gchar *)*(result.size()+1+head));
+		*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **)*(result.size()+head));
+		if (head) {
+			(*pppWord)[0] = g_strdup(text);
+			(*ppppWordData)[0] = (gchar **)g_malloc(sizeof(gchar *)*2);
+			(*ppppWordData)[0][0] =  build_dictdata('g', underline_str.c_str());
+			(*ppppWordData)[0][1] = NULL;
+		}
+		for (std::vector< std::pair<char *, char *> >::size_type i = 0; i< result.size(); i++) {
+			(*pppWord)[i+head] = result[i].first;
+			(*ppppWordData)[i+head] = (gchar **)g_malloc(sizeof(gchar *)*2);
+			(*ppppWordData)[i+head][0] = result[i].second;
+			(*ppppWordData)[i+head][1] = NULL;
+		}
+		(*pppWord)[result.size()+head] = NULL;
+	}
 }
 
 
@@ -58,6 +183,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
+	plugin_info = obj->plugin_info;
 
 	return false;
 }
@@ -68,6 +194,9 @@ void stardict_plugin_exit(void)
 		if (dict)
 			enchant_broker_free_dict(broker, dict);
 		enchant_broker_free(broker);
+	}
+	if (layout) {
+		g_object_unref(layout);
 	}
 }
 
@@ -109,6 +238,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 		g_print("Error, no spell dictionary available!\n");
 		return true;
 	}
-	g_print("Spell plug-in loaded.\n");
+	layout = pango_layout_new(gtk_widget_get_pango_context(plugin_info->mainwin));
+	g_print(_("Spell plug-in loaded.\n"));
 	return false;
 }
