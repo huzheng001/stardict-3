@@ -1,6 +1,7 @@
 #ifndef _STARDICT_PLUGIN_H_
 #define _STARDICT_PLUGIN_H_
 
+#include <gtk/gtk.h>
 #include <list>
 
 
@@ -29,6 +30,7 @@ struct StarDictTtsPlugInSlots {
 
 struct StarDictPluginInfo {
 	const char *datadir;
+	GtkWidget *mainwin;
 };
 
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.

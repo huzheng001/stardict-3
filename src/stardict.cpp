@@ -189,22 +189,12 @@ void AppCore::on_link_click(const char *link)
 
 void AppCore::Create(gchar *queryword)
 {
-	oStarDictPluginInfo.datadir = gStarDictDataDir.c_str();
-	oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
-
-#ifdef _WIN32
-	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str());
-#else
-	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins");
-#endif
-
 	oLibs.set_show_progress(&load_show_progress);
 	oLibs.load(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
 		);
 	oLibs.SetDictMask(dictmask, NULL, -1, -1);
-	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 	oLibs.set_show_progress(&gtk_show_progress);
     
     oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
@@ -248,6 +238,18 @@ void AppCore::Create(gchar *queryword)
 #else
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 #endif
+
+// Init oStarDictPlugins after we get window.
+	oStarDictPluginInfo.datadir = gStarDictDataDir.c_str();
+	oStarDictPluginInfo.mainwin = window;
+	oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
+#ifdef _WIN32
+	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str());
+#else
+	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins");
+#endif
+	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+
 	gtk_container_set_border_width(GTK_CONTAINER(window),2);
 	bool maximized=conf->get_bool_at("main_window/maximized");
 
