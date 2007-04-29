@@ -517,6 +517,16 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 	  { "/b>", 3, "</b>", 0 },
 	  { "i>", 2, "<i>", 0  },
 	  { "/i>", 3, "</i>", 0 },
+	  { "sub>", 4, "<sub>", 0 },
+	  { "/sub>", 5, "</sub>", 0},
+	  { "sup>", 4, "<sup>", 0},
+	  { "/sup>", 5, "</sup>", 0},
+	  { "tt>", 3, "<tt>", 0},
+	  { "/tt>", 4, "</tt>", 0},
+	  { "big>", 4, "<big>", 0},
+	  { "/big>", 5, "</big>", 0},
+	  { "small>", 6, "<small>", 0},
+	  { "/small>", 7, "</small>", 0},
 	  { "tr>", 3, "<b>[", 1 },
 	  { "/tr>", 4, "]</b>", 1 },
 	  { "ex>", 3, "<span foreground=\"violet\">", 0 },
@@ -634,9 +644,9 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
   std::string mark;
 
   guint32 data_size,sec_size=0;
+  data_size=*reinterpret_cast<const guint32 *>(data);
+  data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
   const gchar *p=data;
-  data_size=*reinterpret_cast<const guint32 *>(p);
-  p+=sizeof(guint32);
   bool first_time = true;
   while (guint32(p - data)<data_size) {
     if (first_time)

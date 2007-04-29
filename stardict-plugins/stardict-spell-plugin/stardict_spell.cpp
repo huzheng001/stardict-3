@@ -113,13 +113,16 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	int n_misspelled = misspelled_wordlist.size();
 	if (n_misspelled !=0 && n_words != 1) {
 		underline_str += "<big>";
+		gchar *escape;
 		for (size_t i = 0; i < len; i++) {
 			if (insert_tags[i] == 1) {
 				underline_str += "<span underline=\"error\" underline_color=\"#FF0000\">";
 			} else if (insert_tags[i] == 2) {
 				underline_str += "</span>";
 			}
-			underline_str += text[i];
+			escape = g_markup_escape_text(&(text[i]), 1);
+			underline_str += escape;
+			g_free(escape);
 		}
 		if (insert_tags[len] == 2)
 			underline_str += "</span>";
@@ -175,11 +178,10 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	}
 }
 
-
 bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Aspell plugin version doesn't match!\n");
+		g_print("Error: Spell plugin version doesn't match!\n");
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;

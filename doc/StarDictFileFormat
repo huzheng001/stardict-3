@@ -355,8 +355,8 @@ dict file itself if the "sametypesequence" option is not used.
 
 Lower-case characters signify that a field's size is determined by a
 terminating '\0', while upper-case characters indicate that the data
-begins with a 32-bits unsigned integer that gives the length of the data
-field.
+begins with a network byte-ordered guint32 that gives the length of 
+the following data's size(NOT the whole size which is 4 bytes bigger).
 
 'm'
 Word's pure text meaning.
