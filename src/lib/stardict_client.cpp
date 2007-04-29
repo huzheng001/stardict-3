@@ -30,6 +30,8 @@
 
 #include "stardict_client.hpp"
 
+#define PROTOCOL_VERSION "0.3"
+
 #define CODE_HELLO                   220 /* text msg-id */
 #define CODE_GOODBYE                 221 /* Closing Connection */
 #define CODE_OK                      250 /* ok */
@@ -79,10 +81,9 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	switch (cmd) {
 	case CMD_CLIENT:
 	{
-		const char *protocol_version = va_arg( ap, const char * );
 		const char *client_name = va_arg( ap, const char * );
 		std::string earg1, earg2;
-		arg_escape(earg1, protocol_version);
+		arg_escape(earg1, PROTOCOL_VERSION);
 		arg_escape(earg2, client_name);
 		this->data = g_strdup_printf("client %s %s\n", earg1.c_str(), earg2.c_str());
 		break;
@@ -502,9 +503,9 @@ void StarDictClient::send_commands(int num, ...)
     STARDICT::Cmd *c;
     if (!is_connected_) {
 #ifdef _WIN32
-        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict Windows");
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "StarDict Windows");
 #else
-        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict Linux");
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "StarDict Linux");
 #endif
         cmdlist.push_back(c);
         if (!user_.empty() && !md5passwd_.empty()) {
@@ -542,7 +543,11 @@ void StarDictClient::try_cache_or_send_commands(int num, ...)
         return;
 
     if (!is_connected_) {
-        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "0.1", "StarDict");
+#ifdef _WIN32
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "StarDict Windows");
+#else
+        c = new STARDICT::Cmd(STARDICT::CMD_CLIENT, "StarDict Linux");
+#endif
         cmdlist.push_back(c);
         if (!user_.empty() && !md5passwd_.empty()) {
             c = new STARDICT::Cmd(STARDICT::CMD_AUTH, user_.c_str(), md5passwd_.c_str());
@@ -820,7 +825,9 @@ int StarDictClient::parse_command_client(gchar *line)
     int status;
     status = atoi(line);
     if (status != CODE_OK) {
-        //printf("Process command \"client\" failed: %s\n", buf.c_str());
+	gchar *str = g_strdup_printf("Client denied: %s", line);
+	on_error_.emit(str);
+	g_free(str);
         return 0;
     }
     return 1;

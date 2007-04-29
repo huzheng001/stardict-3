@@ -60,7 +60,8 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 		guint32 data_size;
 		gint sametypesequence_len = sametypesequence.length();
 		//there have sametypesequence_len char being omitted.
-		data_size = idxitem_size + sizeof(guint32) + sametypesequence_len;
+		data_size = idxitem_size + sametypesequence_len; //Here is a bug fix of 2.4.8, which don't add sizeof(guint32) anymore.
+
 		//if the last item's size is determined by the end up '\0',then +=sizeof(gchar);
 		//if the last item's size is determined by the head guint32 type data,then +=sizeof(guint32);
 		switch (sametypesequence[sametypesequence_len-1]) {
@@ -85,7 +86,7 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 				data_size += sizeof(gchar);
 			break;
 		}
-		data = (gchar *)g_malloc(data_size);
+		data = (gchar *)g_malloc(data_size + sizeof(guint32));
 		gchar *p1,*p2;
 		p1 = data + sizeof(guint32);
 		p2 = origin_data;
