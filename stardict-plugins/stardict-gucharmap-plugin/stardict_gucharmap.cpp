@@ -361,8 +361,12 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 		definition += unihan;
 	}
 	n = definition.length();
-	if (definition[n -1] == '\n') {
-		definition.erase(n-1, 1);
+	int l = n-1;
+	while (l >= 0 && definition[l] == '\n') {
+		l--;
+	}
+	if (l < n-1) {
+		definition.erase(l+1, n-1-l);
 	}
 	*pppWord = (gchar **)g_malloc(sizeof(gchar *)*2);
 	(*pppWord)[0] = g_strdup(text);

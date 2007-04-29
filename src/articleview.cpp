@@ -587,10 +587,11 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 
 		  res += "<span foreground=\"blue\" underline=\"single\">";
 		  std::string::size_type link_len = next - p;
-		  links_list.push_back(LinkDesc(cur_pos, link_len));
 		  std::string chunk(p, link_len);
+		  size_t xml_len = xml_strlen(chunk);
+		  links_list.push_back(LinkDesc(cur_pos, xml_len));
 		  res += chunk;
-		  cur_pos += xml_strlen(chunk);
+		  cur_pos += xml_len;
 		  res += "</span>";
 		  p = next + sizeof("</kref>") - 1;
 	  } else {
