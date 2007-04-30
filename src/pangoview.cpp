@@ -35,6 +35,7 @@ public:
 
 	void clear();
 	void append_mark(const char *mark);
+	void append_pixbuf(GdkPixbuf *pixbuf, const char *label);
 	void begin_update();
 	void end_update();
 	std::string get_text();
@@ -74,6 +75,7 @@ public:
 
 	void clear();
 	void append_mark(const char *mark) {}
+	void append_pixbuf(GdkPixbuf *pixbuf, const char *label);
 	std::string get_text();
 protected:
 	void do_set_text(const char *str);
@@ -232,6 +234,19 @@ void LabelPangoWidget::do_set_text(const char *text)
 	g_free(mstr);
 }
 
+void LabelPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
+{
+	if (label) {
+		std::string str;
+		str = "<span foreground=\"red\">[Image:";
+		str += label;
+		str += "]</span>";
+		append_pango_text(str.c_str());
+	} else {
+		append_pango_text("<span foreground=\"red\">[Image]</span>");
+	}
+}
+
 void PangoWidgetBase::set_text(const char *str)
 {
 	if (update_)
@@ -372,6 +387,13 @@ void TextPangoWidget::append_pango_text_with_links(const std::string& str,
 
 	gtk_text_buffer_insert_markup(gtk_text_view_get_buffer(textview_),
 				      &iter_, str.c_str());
+}
+
+void TextPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
+{
+	do_append_pango_text(cache_.c_str());
+	cache_.clear();
+	gtk_text_buffer_insert_pixbuf (gtk_text_view_get_buffer(textview_), &iter_, pixbuf);
 }
 
 TextPangoWidget::TextBufLinks::const_iterator TextPangoWidget::find_link(gint x,

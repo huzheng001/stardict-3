@@ -1,6 +1,7 @@
 #include "advertisement.h"
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include <string>
 #include <map>
 #include <list>
@@ -8,10 +9,11 @@
 
 
 static const StarDictPluginInfo *plugin_info = NULL;
+static std::string datapath;
 
 struct DictEntry {
 	std::string word;
-	char *data;
+	std::list<char *> datalist;
 };
 
 static std::multimap<std::string, DictEntry> dict_map;
@@ -55,17 +57,58 @@ static void my_strstrip(gchar *str)
 
 static char *build_dictdata(char type, const char *definition)
 {
-	size_t len = strlen(definition);
 	guint32 size;
-	size = sizeof(char) + len + 1;
-	char *data = (char *)g_malloc(sizeof(guint32) + size);
-	char *p = data;
-	*((guint32 *)p)= size;
-	p += sizeof(guint32);
-	*p = type;
-	p++;
-	memcpy(p, definition, len+1);
-	return data;
+	char *data;
+	if (g_ascii_isupper(type)) {
+		if (type == 'P') {
+			std::string filename;
+#ifdef _WIN32
+			if (definition[0] != '\0' && definition[1] == ':') {
+#else
+			if (definition[0] == '/') {
+#endif
+				filename = definition;
+			} else {
+				filename = datapath + G_DIR_SEPARATOR_S + definition;
+			}
+			struct stat stats;
+			FILE *file;
+			if (g_stat (filename.c_str(), &stats) == 0 && (file = g_fopen(filename.c_str(), "r"))!=NULL) {
+				size = sizeof(char) + sizeof(guint32) + stats.st_size;
+				data = (char *)g_malloc(sizeof(guint32) + size);
+				char *p = data;
+				*((guint32 *)p) = size;
+				p += sizeof(guint32);
+				*p = type;
+				p++;
+				*((guint32 *)p) = g_htonl(stats.st_size);
+				p += sizeof(guint32);
+				fread(p, 1, stats.st_size, file);
+				fclose(file);
+				return data;
+			}
+		}
+		size = sizeof(char) + sizeof(guint32) + 0;
+		data = (char *)g_malloc(sizeof(guint32) + size);
+		char *p = data;
+		*((guint32 *)p) = size;
+		p += sizeof(guint32);
+		*p = type;
+		p++;
+		*((guint32 *)p) = g_htonl(0);
+		return data;
+	} else {
+		size_t len = strlen(definition);
+		size = sizeof(char) + len + 1;
+		data = (char *)g_malloc(sizeof(guint32) + size);
+		char *p = data;
+		*((guint32 *)p) = size;
+		p += sizeof(guint32);
+		*p = type;
+		p++;
+		memcpy(p, definition, len+1);
+		return data;
+	}
 }
 
 static bool load_dict(const char *filename)
@@ -100,23 +143,30 @@ static bool load_dict(const char *filename)
 				p = p2 +1;
 			}
 			wordlist.push_back(p);
+			dictentry.datalist.clear();
 			step = 1;
 		} else if (step == 1) { // Type
 			dict_type = *p;
 			step = 2;
 		} else if (step == 2) { // Definition
 			my_strstrip(p);
-			dictentry.data = build_dictdata(dict_type, p);
-			dictdata_list.push_back(dictentry.data);
+			char *data = build_dictdata(dict_type, p);
+			dictentry.datalist.push_back(data);
+			dictdata_list.push_back(data);
 			step = 3;
-		} else { // New line.
-			for (std::list<std::string>::iterator i = wordlist.begin(); i != wordlist.end(); ++i) {
-				dictentry.word = *i;
-				gchar *lower_str = g_utf8_strdown(dictentry.word.c_str(), dictentry.word.length());
-				dict_map.insert(std::pair<std::string, DictEntry>(lower_str, dictentry));
-				g_free(lower_str);
+		} else {
+			if (*p == '\0') { // Blank line.
+				for (std::list<std::string>::iterator i = wordlist.begin(); i != wordlist.end(); ++i) {
+					dictentry.word = *i;
+					gchar *lower_str = g_utf8_strdown(dictentry.word.c_str(), dictentry.word.length());
+					dict_map.insert(std::pair<std::string, DictEntry>(lower_str, dictentry));
+					g_free(lower_str);
+				}
+				step = 0;
+			} else { // Same as step 1.
+				dict_type = *p;
+				step = 2;
 			}
-			step = 0;
 		}
 		p = p1 + 1;
 	}
@@ -138,22 +188,23 @@ static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
 	if (iter == dict_map.end()) {
 		*pppWord = NULL;
 	} else {
-		std::vector< std::pair<char *, char *> > result;
-		char *return_word, *return_data, *mem;
+		std::vector< std::pair<std::string, std::list<char *> > > result;
 		do {
-			return_word = g_strdup(iter->second.word.c_str());
-			mem = iter->second.data;
-			return_data = (char *)g_memdup(mem, sizeof(guint32) + *reinterpret_cast<const guint32 *>(mem));
-			result.push_back(std::pair<char *, char *>(return_word, return_data));
+			result.push_back(std::pair<std::string, std::list<char *> >(iter->second.word, iter->second.datalist));
 			iter++;
 		} while (iter != dict_map.upper_bound(lower_str));
 		*pppWord = (gchar **)g_malloc(sizeof(gchar *)*(result.size()+1));
 		*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **)*result.size());
-		for (std::vector< std::pair<char *, char *> >::size_type i = 0; i< result.size(); i++) {
-			(*pppWord)[i] = result[i].first;
-			(*ppppWordData)[i] = (gchar **)g_malloc(sizeof(gchar *)*2);
-			(*ppppWordData)[i][0] = result[i].second;
-			(*ppppWordData)[i][1] = NULL;
+		for (std::vector< std::pair<std::string, std::list<char *> > >::size_type i = 0; i< result.size(); i++) {
+			(*pppWord)[i] = g_strdup(result[i].first.c_str());
+			std::list<char *> &datalist = result[i].second;
+			(*ppppWordData)[i] = (gchar **)g_malloc(sizeof(gchar *)*(datalist.size()+1));
+			int j = 0;
+			for (std::list<char *>::iterator it = datalist.begin(); it != datalist.end(); ++it) {
+				(*ppppWordData)[i][j] = (char *)g_memdup(*it, sizeof(guint32) + *reinterpret_cast<const guint32 *>(*it));
+				j++;
+			}
+			(*ppppWordData)[i][j] = NULL;
 		}
 		(*pppWord)[result.size()] = NULL;
 	}
@@ -182,9 +233,9 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	obj->lookup_func = lookup;
 	obj->is_instant = true;
 	obj->dict_name = _("Advertisement");
-	std::string filename = plugin_info->datadir;
-	filename += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement.txt";
-	bool failed = load_dict(filename.c_str());
+	datapath = plugin_info->datadir;
+	datapath += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement";
+	bool failed = load_dict((datapath + G_DIR_SEPARATOR_S "advertisement.txt").c_str());
 	if (failed)
 		return true;
 	g_print(_("Advertisement plug-in loaded.\n"));
