@@ -248,6 +248,7 @@ src/win32/acrobat/win32/Makefile
 src/win32/nsis/Makefile
 stardict-plugins/Makefile
 stardict-plugins/stardict-advertisement-plugin/Makefile
+stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile
 tests/Makefile

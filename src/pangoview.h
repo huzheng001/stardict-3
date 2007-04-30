@@ -40,6 +40,7 @@ public:
 
 	virtual void clear() = 0;
 	virtual void append_mark(const char *mark) = 0;
+	virtual void append_pixbuf(GdkPixbuf *pixbuf, const char *label) = 0;
 	virtual void begin_update();
 	virtual void end_update();
 	virtual void goto_begin() {}

@@ -24,6 +24,7 @@
 
 #include <cstring>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 
 #include "conf.h"
 #include "utils.h"
@@ -642,120 +643,137 @@ void ArticleView::append_and_mark_orig_word(const std::string& mark,
 void ArticleView::AppendData(gchar *data, const gchar *oword,
 			     const gchar *real_oword)
 {
-  std::string mark;
+	std::string mark;
 
-  guint32 data_size,sec_size=0;
-  data_size=*reinterpret_cast<const guint32 *>(data);
-  data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
-  const gchar *p=data;
-  bool first_time = true;
-  while (guint32(p - data)<data_size) {
-    if (first_time)
-      first_time=false;
-    else
-      mark+= "\n";
-    switch (*p) {
-    case 'm':
-    case 'l'://need more work...
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-	gchar *m_str = g_markup_escape_text(p, sec_size);
-	mark+=m_str;
-	g_free(m_str);
-      }
-      sec_size++;
-      break;
-    case 'g':
-      p++;
-      sec_size=strlen(p);
-      if (sec_size) {
-	//AppendPangoText(p);
-	mark+=p;
-      }
-      sec_size++;
-      break;
-    case 'x':
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-	      LinksPosList links_list;
-	      append_and_mark_orig_word(mark, real_oword, links_list);
-	      mark.clear();
-	      std::string res = xdxf2pango(p, links_list);
-	      append_and_mark_orig_word(res, real_oword, links_list);
-      }
-      sec_size++;
-      break;
-    case 'k':
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-        std::string res=powerword2pango(p, sec_size, oword);
-        mark+=res;
-      }
-      sec_size++;
-      break;
-    case 'w':
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-        std::string res=wiki2pango(p, sec_size);
-        mark+=res;
-      }
-      sec_size++;
-      break;
-    case 't':
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-	mark += "[<span foreground=\"blue\">";
-	gchar *m_str = g_markup_escape_text(p, sec_size);
-	mark += m_str;
-	g_free(m_str);
-	mark += "</span>]";
-      }
-      sec_size++;
-      break;
-    case 'y':
-      p++;
-      sec_size = strlen(p);
-      if (sec_size) {
-	mark += "[<span foreground=\"red\">";
-	gchar *m_str = g_markup_escape_text(p, sec_size);
-	mark += m_str;
-	g_free(m_str);
-	mark += "</span>]";
-      }
-      sec_size++;
-      break;
-    case 'W':
-      p++;
-      sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
-      //enbale sound button.
-      sec_size += sizeof(guint32);
-      break;
-    case 'P':
-      p++;
-      sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
-      //show this picture.
-      sec_size += sizeof(guint32);
-      break;
-    default:
-      if (g_ascii_isupper(*p)) {
-        p++;
-        sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
-        sec_size += sizeof(guint32);
-      } else {
-        p++;
-        sec_size = strlen(p)+1;
-      }
-      break;
-    }
-    p += sec_size;
-  }
+	guint32 data_size,sec_size=0;
+	data_size=*reinterpret_cast<const guint32 *>(data);
+	data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
+	const gchar *p=data;
+	bool first_time = true;
+	while (guint32(p - data)<data_size) {
+		if (first_time)
+			first_time=false;
+		else
+			mark+= "\n";
+		switch (*p) {
+			case 'm':
+			case 'l'://need more work...
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					gchar *m_str = g_markup_escape_text(p, sec_size);
+					mark+=m_str;
+					g_free(m_str);
+				}
+				sec_size++;
+				break;
+			case 'g':
+				p++;
+				sec_size=strlen(p);
+				if (sec_size) {
+					//AppendPangoText(p);
+					mark+=p;
+				}
+				sec_size++;
+				break;
+			case 'x':
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					LinksPosList links_list;
+					append_and_mark_orig_word(mark, real_oword, links_list);
+					mark.clear();
+					std::string res = xdxf2pango(p, links_list);
+					append_and_mark_orig_word(res, real_oword, links_list);
+				}
+				sec_size++;
+				break;
+			case 'k':
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					std::string res=powerword2pango(p, sec_size, oword);
+					mark+=res;
+				}
+				sec_size++;
+				break;
+			case 'w':
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					std::string res=wiki2pango(p, sec_size);
+					mark+=res;
+				}
+				sec_size++;
+				break;
+			case 't':
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					mark += "[<span foreground=\"blue\">";
+					gchar *m_str = g_markup_escape_text(p, sec_size);
+					mark += m_str;
+					g_free(m_str);
+					mark += "</span>]";
+				}
+				sec_size++;
+				break;
+			case 'y':
+				p++;
+				sec_size = strlen(p);
+				if (sec_size) {
+					mark += "[<span foreground=\"red\">";
+					gchar *m_str = g_markup_escape_text(p, sec_size);
+					mark += m_str;
+					g_free(m_str);
+					mark += "</span>]";
+				}
+				sec_size++;
+				break;
+			case 'W':
+				p++;
+				sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+				//enbale sound button.
+				sec_size += sizeof(guint32);
+				break;
+			case 'P':
+				{
+				p++;
+				sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+				if (sec_size) {
+					GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+					gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
+					gdk_pixbuf_loader_close(loader, NULL);
+					GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+					if (pixbuf) {
+						append_pango_text(mark.c_str());
+						mark.clear();
+						append_pixbuf(pixbuf);
+					} else {
+						mark += _("<span foreground=\"red\">[Load image error!]</span>");
+					}
+					g_object_unref(loader);
+				} else {
+					mark += _("<span foreground=\"red\">[Missing Image]</span>");
+				}
+				sec_size += sizeof(guint32);
+				}
+				break;
+			default:
+				if (g_ascii_isupper(*p)) {
+					p++;
+					sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+					sec_size += sizeof(guint32);
+				} else {
+					p++;
+					sec_size = strlen(p)+1;
+				}
+				break;
+		}
+		p += sec_size;
+	}
 
-  append_and_mark_orig_word(mark, real_oword, LinksPosList());
+	append_and_mark_orig_word(mark, real_oword, LinksPosList());
 }
 
 void ArticleView::AppendNewline()

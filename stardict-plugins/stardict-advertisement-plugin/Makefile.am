@@ -1,9 +1,6 @@
+SUBDIRS = data
+
 EXTRA_DIST = advertisement.version-script
-
-adtxtdir = $(datadir)/stardict/data
-
-adtxt_DATA = advertisement.txt
-
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=advertisement.version-script"
 

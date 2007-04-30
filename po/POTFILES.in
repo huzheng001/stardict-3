@@ -3,6 +3,7 @@
 data/GNOME_Stardict.server.in
 data/stardict.desktop.in
 data/stardict.schemas.in
+src/articleview.cpp
 src/conf.cpp
 src/dictmanagedlg.cpp
 src/docklet.cpp
@@ -19,3 +20,4 @@ src/win32/clipboard.cpp
 src/win32/systray.cpp
 stardict-plugins/stardict-advertisement-plugin/advertisement.cpp
 stardict-plugins/stardict-spell-plugin/stardict_spell.cpp
+stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp
