@@ -178,12 +178,14 @@ void AppCore::on_middle_button_click()
 	}
 }
 
-void AppCore::on_link_click(const char *link)
+void AppCore::on_link_click(const std::string &link)
 {
-	if (link && *link) {
+	if (g_str_has_prefix(link.c_str(), "query://")) {
 		oTopWin.InsertHisList(oTopWin.get_text());
 		oTopWin.InsertBackList();
-		oTopWin.SetText(link);
+		oTopWin.SetText(link.c_str() + sizeof("query://") -1);
+	} else {
+		show_url(link.c_str());
 	}
 }
 

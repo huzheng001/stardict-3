@@ -3,7 +3,7 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan
 
 INCLUDES = $(STARDICT_CFLAGS) -I/usr/include/mysql
 
@@ -182,6 +182,14 @@ dictbuilder_SOURCES = dictbuilder.cpp dictbuilder-tree.h
 downloadwiki_LDFLAGS = 
 downloadwiki_LDADD = $(STARDICT_LIBS)
 downloadwiki_SOURCES = downloadwiki.cpp
+
+KangXi_LDFLAGS =
+KangXi_LDADD = $(STARDICT_LIBS)
+KangXi_SOURCES = KangXi.cpp
+
+Unihan_LDFLAGS =
+Unihan_LDADD = $(STARDICT_LIBS)
+Unihan_SOURCES = Unihan.cpp
 
 stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)

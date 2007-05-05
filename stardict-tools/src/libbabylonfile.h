@@ -3,7 +3,7 @@
 
 #include "libcommon.h"
 
-extern void convert_babylonfile(const char *filename, print_info_t print_info);
+extern void convert_babylonfile(const char *filename, print_info_t print_info, bool strip_html);
 
 #endif
 

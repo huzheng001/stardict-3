@@ -8,7 +8,7 @@ huzheng	Hu Zheng	胡正	Hungzeng
 P
 huzheng.png
 x
-The author of <c c="yellow">StarDict</c>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>
+The author of <iref i="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>
 
 RedHat	红帽子
 P
@@ -28,7 +28,7 @@ redhat_linux_logo.gif
 
 MiniGUI	迷你龟
 x
-Feynman comany: <iref>http://www.minigui.com</iref>
+<c c="yellow">Feynman</c> comany: <iref>http://www.minigui.com</iref>
 
 china
 m

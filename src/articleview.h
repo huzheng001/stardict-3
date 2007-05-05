@@ -44,7 +44,7 @@ public:
 	gint scroll_space() { return pango_view_->scroll_space(); }
 	GtkWidget *window() { return pango_view_->window(); }
 	gdouble scroll_pos() { return pango_view_->scroll_pos(); }
-	void connect_on_link(const sigc::slot<void, const char *>& s);
+	void connect_on_link(const sigc::slot<void, const std::string &>& s);
 private:
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;

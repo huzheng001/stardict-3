@@ -491,7 +491,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 			      "version", VERSION,
 			      "website", "http://stardict.sourceforge.net",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
-			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy",
+			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2007 by Hu Zheng, Evgeniy",
 			      "authors", (const char **)authors,
 			      "documenters", (const char **)documenters,
 			      "translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
@@ -1463,6 +1463,7 @@ void TextWin::Create(GtkWidget *vbox)
 {
   view.reset(new ArticleView(GTK_BOX(vbox)));
 
+  view->connect_on_link(sigc::mem_fun(gpAppFrame, &AppCore::on_link_click));
   g_signal_connect(G_OBJECT(view->widget()), "button_press_event",
 		   G_CALLBACK(on_button_press), this);
   g_signal_connect(G_OBJECT(view->widget()), "selection_received",
@@ -1499,11 +1500,6 @@ void TextWin::Create(GtkWidget *vbox)
 
 }
 
-void TextWin::on_open_url(const char *url)
-{
-	show_url(url);
-}
-
 void TextWin::ShowInitFailed()
 {
 	char *fmt = _("Warning! No dictionary is loaded.\n"
@@ -1512,7 +1508,7 @@ void TextWin::ShowInitFailed()
 	const char *link_pos = strstr(fmt, "%s%s%s");
 	LinksPosList links;
 	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
-				 sizeof("http://stardict.sourceforge.net") - 1));
+				 sizeof("http://stardict.sourceforge.net") - 1, "http://stardict.sourceforge.net"));
 	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
 	glib::CharStr mes(
 		g_strdup_printf(get_impl(esc_fmt),
@@ -1520,7 +1516,6 @@ void TextWin::ShowInitFailed()
 				"http://stardict.sourceforge.net",
 				"</span>",
 				(gStarDictDataDir + G_DIR_SEPARATOR_S "dic").c_str()));
-	view->connect_on_link(sigc::mem_fun(this, &TextWin::on_open_url));
 	view->clear();
 	view->append_pango_text_with_links(get_impl(mes), links);
 	view->scroll_to(0);
@@ -1590,8 +1585,6 @@ void TextWin::Show(const gchar *str)
 
 void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 {
-	view->connect_on_link(sigc::mem_fun(gpAppFrame,
-					    &AppCore::on_link_click));
 	view->begin_update();
 	view->clear();
 	view->goto_begin();
@@ -1626,8 +1619,6 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 
 void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_response)
 {
-	view->connect_on_link(sigc::mem_fun(gpAppFrame,
-					    &AppCore::on_link_click));
     view->begin_update();
     if (query_result == TEXT_WIN_FOUND) {
         view->goto_end();
