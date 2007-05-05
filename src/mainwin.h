@@ -244,7 +244,6 @@ private:
 	static gboolean OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
 					 TextWin *oTextWin);
 	static void OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin);
-	void on_open_url(const char *url);
 };
 
 class MidWin {

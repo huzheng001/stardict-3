@@ -46,7 +46,7 @@ void on_compile_page_build_button_clicked(GtkButton *button, gpointer data)
 	if (key == 0)
 		convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
 	else
-		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info);
+		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info, true);
 	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, "Done!\n", -1);
 }
 

@@ -11,8 +11,9 @@
 struct LinkDesc {
 	std::string::size_type pos_;
 	std::string::size_type len_;
-	LinkDesc(std::string::size_type pos, std::string::size_type len):
-		pos_(pos), len_(len) {}
+	std::string link_;
+	LinkDesc(std::string::size_type pos, std::string::size_type len, std::string link):
+		pos_(pos), len_(len), link_(link) {}
 };
 
 typedef std::list<LinkDesc> LinksPosList;
@@ -22,7 +23,7 @@ typedef std::list<LinkDesc> LinksPosList;
  */
 class PangoWidgetBase {
 public:
-	sigc::signal<void, const char *> on_link_click_;//!< Emitted on link click
+	sigc::signal<void, const std::string &> on_link_click_;//!< Emitted on link click
 
 	PangoWidgetBase(): update_(false) {}
 	virtual ~PangoWidgetBase() {}

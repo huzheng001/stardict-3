@@ -90,7 +90,46 @@ static void html_strstrip(char *str, gint linenum, print_info_t print_info)
 	*p2 = '\0';
 }
 
-void convert_babylonfile(const char *filename, print_info_t print_info)
+static void newline_strstrip(gchar *str, gint linenum, print_info_t print_info)
+{
+	char *p1, *p2;
+	p1=str;
+	p2=str;
+	while (*p1 != '\0') {
+		if (*p1 == '\\') {
+			p1++;
+			if (*p1 == 'n') {
+				*p2='\n';
+				p2++;
+				p1++;
+				continue;
+			} else if (*p1 == '\\') {
+				*p2='\\';
+				p2++;
+				p1++;
+				continue;
+			} else {
+				gchar *infostr = g_strdup_printf("Strip warning %d: %s\n", linenum, p1);
+				print_info(infostr);
+				g_free(infostr);
+				*p2='\\';
+				p2++;
+				*p2=*p1;
+				p2++;
+				p1++;
+				continue;
+			}
+		} else {
+			*p2 = *p1;
+			p2++;
+			p1++;
+			continue;
+		}
+	}
+	*p2 = '\0';
+}
+
+void convert_babylonfile(const char *filename, print_info_t print_info, bool strip_html)
 {			
 	struct stat stats;
 	if (g_stat (filename, &stats) == -1)
@@ -157,7 +196,10 @@ void convert_babylonfile(const char *filename, print_info_t print_info)
 		p3++;
 		linenum++;
 		
-		html_strstrip(p1, linenum-2, print_info);
+		if (strip_html)
+			html_strstrip(p1, linenum-2, print_info);
+		else
+			newline_strstrip(p1, linenum-2, print_info);
 		g_strstrip(p1);
 		if (!(*p1)) {
 			gchar *str = g_strdup_printf("%s-%d, bad definition!!!\n", basefilename, linenum-1);

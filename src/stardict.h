@@ -133,7 +133,7 @@ public:
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();
-	void on_link_click(const char *link);
+	void on_link_click(const std::string &link);
 
 	void on_stardict_client_error(const char *);
 	void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);

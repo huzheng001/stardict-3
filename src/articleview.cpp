@@ -568,33 +568,75 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 			  continue;
 		  }
 		  name.assign(p + 1, next - p - 1);
-		  std::string::size_type pos = name.find("code");
+		  std::string::size_type pos = name.find("c=\"");
 		  if (pos != std::string::npos) {
-			  pos += sizeof("code=\"") - 1;
+			  pos += sizeof("c=\"") - 1;
 			  std::string::size_type end_pos = name.find("\"", pos);
 			  if (end_pos == std::string::npos)
 				  end_pos = name.length();
 
 			  std::string color(name, pos, end_pos - pos);
-			  res += "<span foreground=\"" + color + "\">";
+			  if (pango_color_parse(NULL, color.c_str()))
+				  res += "<span foreground=\"" + color + "\">";
+			  else
+				  res += "<span>";
 		  } else
 			  res += "<span foreground=\"blue\">";
 		  p = next + 1;
-	  } else if (strncmp(p + 1, "kref>", 5) == 0) {
-		  p += sizeof("<kref>") - 1;
-		  next = strstr(p, "</kref>");
-		  if (!next)
-			  continue;
+	} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
+		bool is_k_or_i = (*(p + 1) == 'k');
+		next = strchr(p, '>');
+		if (!next) {
+			++p;
+			continue;
+		}
+		name.assign(p + 1, next - p - 1);
+		std::string key;
+		std::string::size_type pos;
+		if (is_k_or_i)
+			pos = name.find("k=\"");
+		else
+			pos = name.find("i=\"");
+		if (pos != std::string::npos) {
+			if (is_k_or_i)
+				pos += sizeof("k=\"") - 1;
+			else
+				pos += sizeof("i=\"") - 1;
+			std::string::size_type end_pos = name.find("\"", pos);
+			if (end_pos == std::string::npos)
+				end_pos = name.length();
+			key.assign(name, pos, end_pos - pos);
+		}
 
-		  res += "<span foreground=\"blue\" underline=\"single\">";
-		  std::string::size_type link_len = next - p;
-		  std::string chunk(p, link_len);
-		  size_t xml_len = xml_strlen(chunk);
-		  links_list.push_back(LinkDesc(cur_pos, xml_len));
-		  res += chunk;
-		  cur_pos += xml_len;
-		  res += "</span>";
-		  p = next + sizeof("</kref>") - 1;
+		p = next + 1;
+		if (is_k_or_i)
+			next = strstr(p, "</kref>");
+		else
+			next = strstr(p, "</iref>");
+		if (!next)
+			continue;
+
+		res += "<span foreground=\"blue\" underline=\"single\">";
+		std::string::size_type link_len = next - p;
+		std::string chunk(p, link_len);
+		size_t xml_len = xml_strlen(chunk);
+		std::string xml_enc;
+		if (key.empty())
+			xml_decode(chunk.c_str(), xml_enc);
+		else
+			xml_decode(key.c_str(), xml_enc);
+		std::string link;
+		if (is_k_or_i)
+			link = "query://";
+		link += xml_enc;
+		links_list.push_back(LinkDesc(cur_pos, xml_len, link));
+		res += chunk;
+		cur_pos += xml_len;
+		res += "</span>";
+		if (is_k_or_i)
+			p = next + sizeof("</kref>") - 1;
+		else
+			p = next + sizeof("</iref>") - 1;
 	  } else {
 		  next = strchr(p, '>');
 		  if (!next)
@@ -822,7 +864,7 @@ void ArticleView::AppendWord(const gchar *word)
 	append_pango_text(mark.c_str());
 }
 
-void ArticleView::connect_on_link(const sigc::slot<void, const char *>& s)
+void ArticleView::connect_on_link(const sigc::slot<void, const std::string &>& s)
 {
 	//pango_view_->clear();
 	pango_view_->on_link_click_.connect(s);

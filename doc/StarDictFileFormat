@@ -385,7 +385,12 @@ Here are some utf-8 phonetic characters:
 
 'x'
 A utf-8 string which is marked up with the xdxf language.
-See http://xdxf.sf.net
+See http://xdxf.sourceforge.net
+StarDict have these extention:
+<rref> can have "type" attribute, it can be "image", "sound", "video" 
+and "attach".
+<kref> can have "k" attribute.
+<iref> can have "i" attribute.
 
 'y'
 Chinese YinBiao or Japanese KANA.
@@ -405,14 +410,14 @@ Html codes. Not supported yet.
 'r'
 Resource file list.
 The content can be:
-pic:pic/example.jpg	// Picture file
+img:pic/example.jpg	// Image file
 snd:apple.wav		// Sound file
 vdo:film.avi		// Video file
 att:file.bin		// Attachment file
 More than one line is supported as a list of available files.
 StarDict will find the files in the Resource Storage.
-The picture will be shown, the sound file will have a play button.
-And you can "save as" the attachment file.
+The image will be shown, the sound file will have a play button.
+You can "save as" the attachment file and so on.
 
 'W'
 wav file.
@@ -430,7 +435,7 @@ this type identifier is reserved for experimental extensions.
 
 
 {8}. Resource Storage
-Resource Storage store the external file in 'r' resource file link, the 
+Resource Storage store the external file in 'r' resource file list, the 
 image in html code, the image, media and other files in wiki tag.
 It have two forms:
 1. Direct directory and files in the "res" sub-directory.

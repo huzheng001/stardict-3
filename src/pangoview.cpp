@@ -52,7 +52,8 @@ private:
 	struct TextBufPos {
 		gint beg_;
 		gint end_;
-		TextBufPos(gint beg, gint end): beg_(beg), end_(end) {}
+		std::string link_;
+		TextBufPos(gint beg, gint end, std::string link): beg_(beg), end_(end), link_(link) {}
 	};
 	typedef std::vector<TextBufPos> TextBufLinks;
 
@@ -382,7 +383,7 @@ void TextPangoWidget::append_pango_text_with_links(const std::string& str,
 
 	for (LinksPosList::const_iterator it = links.begin();
 	     it != links.end(); ++it) {
-		tb_links_.push_back(TextBufPos(beg + it->pos_, beg + it->pos_ + it->len_));	
+		tb_links_.push_back(TextBufPos(beg + it->pos_, beg + it->pos_ + it->len_, it->link_));	
 	}
 
 	gtk_text_buffer_insert_markup(gtk_text_view_get_buffer(textview_),
@@ -449,6 +450,12 @@ gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
 	if (event->button != 1)
 		return FALSE;
 	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
+	GtkTextBuffer *buf = gtk_text_view_get_buffer(tpw->textview_);
+	/* we shouldn't follow a link if the user has selected something */
+	GtkTextIter beg, end;
+	gtk_text_buffer_get_selection_bounds (buf, &beg, &end);
+	if (gtk_text_iter_get_offset (&beg) != gtk_text_iter_get_offset (&end))
+		return FALSE;
 	GtkTextWindowType win_type =
 		gtk_text_view_get_window_type(tpw->textview_, event->window);
 	gint x, y;
@@ -457,14 +464,7 @@ gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
 					      &x, &y);
 	TextBufLinks::const_iterator it = tpw->find_link(x, y);
 	if (it != tpw->tb_links_.end()) {
-		GtkTextBuffer *buf = gtk_text_view_get_buffer(tpw->textview_);
-		GtkTextIter beg, end;
-		gtk_text_buffer_get_iter_at_offset(buf, &beg, it->beg_);
-		gtk_text_buffer_get_iter_at_offset(buf, &end, it->end_);
-		glib::CharStr str(gtk_text_buffer_get_text(buf, &beg, &end, TRUE));
-		std::string xml_enc;
-		xml_decode(get_impl(str), xml_enc);
-		tpw->on_link_click_.emit(xml_enc.c_str());
+		tpw->on_link_click_.emit(it->link_);
 	}	
 	return FALSE;
 }
