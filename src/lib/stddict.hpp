@@ -10,6 +10,7 @@
 #include "data.hpp"
 #include "collation.h"
 #include "dictmask.h"
+#include "storage.h"
 
 const int MAX_FUZZY_DISTANCE= 3; // at most MAX_FUZZY_DISTANCE-1 differences allowed when find similar words
 const int MAX_MATCH_ITEM_PER_LIB=100;
@@ -149,8 +150,10 @@ private:
 public:
 	std::auto_ptr<index_file> idx_file;
 	std::auto_ptr<synonym_file> syn_file;
+	ResourceStorage *storage;
 
-	Dict() {}
+	Dict();
+	~Dict();
 	bool load(const std::string&, bool CreateCacheFile, int EnableCollationLevel, CollateFunctions,
 		  show_progress_t *);
 
@@ -266,6 +269,9 @@ public:
 
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
 	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);
+	int GetStorageType(size_t iLib);
+	const char *GetStorageFilePath(size_t iLib, const char *key);
+	const char *GetStorageFileContent(size_t iLib, const char *key);
 private:
 	std::vector<Dict *> oLib; // word Libs.
 	int iMaxFuzzyDistance;

@@ -29,6 +29,7 @@
 #include "conf.h"
 #include "utils.h"
 #include "wiki/stardict_wiki2xml.h"
+#include "stardict.h"
 
 #include "articleview.h"
 
@@ -497,7 +498,7 @@ static size_t xml_strlen(const std::string& str)
 	return cur_pos;
 }
 
-std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
+std::string ArticleView::xdxf2pango(const char *p, const gchar *real_oword, LinksPosList& links_list)
 {
   std::string res;
   const char *tag, *next;
@@ -536,7 +537,7 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 	  { NULL, 0, NULL },
   };
 
-
+  bool is_first_k = true;
   for (cur_pos = 0; *p && (tag = strchr(p, '<')) != NULL;) {
 //TODO: do not create chunk
 	  std::string chunk(p, tag - p);
@@ -556,8 +557,18 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 	  if (strncmp("k>", p + 1, 2) == 0) {
 		  next = strstr(p + 3, "</k>");
 		  if (next) {
-			  if (*(next + 4) == '\n')
-				  next++;
+			  if (is_first_k) {
+				  is_first_k = false;
+				  if (*(next + 4) == '\n')
+					  next++;
+			  } else {
+				  res += "<span foreground=\"blue\">";
+				  std::string chunk(p+3, next-(p+3));
+				  res += chunk;
+				  size_t xml_len = xml_strlen(chunk);
+				  cur_pos += xml_len;
+				  res += "</span>";
+			  }
 			  p = next + sizeof("</k>") - 1;
 		  } else
 			  p += sizeof("<k>") - 1;
@@ -583,6 +594,70 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 		  } else
 			  res += "<span foreground=\"blue\">";
 		  p = next + 1;
+	} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
+		next = strchr(p, '>');
+		if (!next) {
+			++p;
+			continue;
+		}
+		name.assign(p + 1, next - p - 1);
+		std::string type;
+		std::string::size_type pos = name.find("type=\"");
+		if (pos != std::string::npos) {
+			pos += sizeof("type=\"") - 1;
+			std::string::size_type end_pos = name.find("\"", pos);
+			if (end_pos == std::string::npos)
+				end_pos = name.length();
+			type.assign(name, pos, end_pos - pos);
+		}
+		p = next + 1;
+		next = strstr(p, "</rref>");
+		if (!next)
+			continue;
+		std::string chunk(p, next - p);
+		if (type.empty()) {
+			if (g_str_has_suffix(chunk.c_str(), ".jpg") || g_str_has_suffix(chunk.c_str(), ".png")) {
+				type = "image";
+			} else if (g_str_has_suffix(chunk.c_str(), ".wav") || g_str_has_suffix(chunk.c_str(), ".mp3") || g_str_has_suffix(chunk.c_str(), ".ogg")) {
+				type = "sound";
+			} else if (g_str_has_suffix(chunk.c_str(), ".avi") || g_str_has_suffix(chunk.c_str(), ".mpeg")) {
+				type = "video";
+			} else {
+				type = "attach";
+			}
+		}
+		bool loaded = false;
+		if (type == "image") {
+			GdkPixbuf* pixbuf = NULL;
+			if (dict_index.type == InstantDictType_LOCAL) {
+				int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+				if (type == 0) {
+				} else if (type == 1) {
+					const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, chunk.c_str());
+					if (filename) {
+						pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+					}
+				}
+			}
+			if (pixbuf) {
+				loaded = true;
+				append_and_mark_orig_word(res, real_oword, links_list);
+				res.clear();
+				links_list.clear();
+				append_pixbuf(pixbuf, chunk.c_str());
+				g_object_unref(pixbuf);
+			}
+		} else if (type == "sound") {
+		} else if (type == "video") {
+		} else {
+		}
+		if (!loaded) {
+			res += "<span foreground=\"red\">";
+			res += chunk;
+			res += "</span>";
+			cur_pos += xml_strlen(chunk);
+		}
+		p = next + sizeof("</rref>") - 1;
 	} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
 		bool is_k_or_i = (*(p + 1) == 'k');
 		next = strchr(p, '>');
@@ -596,12 +671,12 @@ std::string ArticleView::xdxf2pango(const char *p, LinksPosList& links_list)
 		if (is_k_or_i)
 			pos = name.find("k=\"");
 		else
-			pos = name.find("i=\"");
+			pos = name.find("href=\"");
 		if (pos != std::string::npos) {
 			if (is_k_or_i)
 				pos += sizeof("k=\"") - 1;
 			else
-				pos += sizeof("i=\"") - 1;
+				pos += sizeof("href=\"") - 1;
 			std::string::size_type end_pos = name.find("\"", pos);
 			if (end_pos == std::string::npos)
 				end_pos = name.length();
@@ -725,7 +800,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					LinksPosList links_list;
 					append_and_mark_orig_word(mark, real_oword, links_list);
 					mark.clear();
-					std::string res = xdxf2pango(p, links_list);
+					std::string res = xdxf2pango(p, real_oword, links_list);
 					append_and_mark_orig_word(res, real_oword, links_list);
 				}
 				sec_size++;
@@ -826,6 +901,11 @@ void ArticleView::AppendNewline()
 void ArticleView::AppendDataSeparate()
 {
 	append_pango_text("\n");
+}
+
+void ArticleView::SetDictIndex(InstantDictIndex index)
+{
+	dict_index = index;
 }
 
 void ArticleView::AppendHeader(const char *dict_name)

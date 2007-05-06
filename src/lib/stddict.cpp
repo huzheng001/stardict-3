@@ -1145,6 +1145,16 @@ bool synonym_file::lookup(const char *str, glong &idx)
 }
 
 //===================================================================
+Dict::Dict()
+{
+	storage = NULL;
+}
+
+Dict::~Dict()
+{
+	delete storage;
+}
+
 bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 		int EnableCollationLevel, CollateFunctions CollateFunction,
 		show_progress_t *sp)
@@ -1198,6 +1208,29 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 				return false;
 		}
 	}
+
+	bool has_res = false;
+	gchar *dirname = g_path_get_dirname(ifofilename.c_str());
+	fullfilename = dirname;
+	fullfilename += G_DIR_SEPARATOR_S "res";
+	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
+		has_res = true;
+	} else {
+		fullfilename = dirname;
+		fullfilename += G_DIR_SEPARATOR_S "res.rifo";
+		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
+			has_res = true;
+		}
+	}
+	if (has_res) {
+		storage = new ResourceStorage();
+		bool failed = storage->load(dirname);
+		if (failed) {
+			delete storage;
+			storage = NULL;
+		}
+	}
+	g_free(dirname);
 
 	g_print("bookname: %s , wordcount %lu\n", bookname.c_str(), wordcount);
 	return true;
@@ -2899,3 +2932,23 @@ search_out:
 	return i!=dictmask.size();
 }
 
+int Libs::GetStorageType(size_t iLib)
+{
+	if (oLib[iLib]->storage == NULL)
+		return -1;
+	return oLib[iLib]->storage->is_file_or_db;
+}
+
+const char *Libs::GetStorageFilePath(size_t iLib, const char *key)
+{
+	if (oLib[iLib]->storage == NULL)
+		return NULL;
+	return oLib[iLib]->storage->get_file_path(key);
+}
+
+const char *Libs::GetStorageFileContent(size_t iLib, const char *key)
+{
+	if (oLib[iLib]->storage == NULL)
+		return NULL;
+	return oLib[iLib]->storage->get_file_content(key);
+}

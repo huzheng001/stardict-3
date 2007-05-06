@@ -390,7 +390,6 @@ StarDict have these extention:
 <rref> can have "type" attribute, it can be "image", "sound", "video" 
 and "attach".
 <kref> can have "k" attribute.
-<iref> can have "i" attribute.
 
 'y'
 Chinese YinBiao or Japanese KANA.

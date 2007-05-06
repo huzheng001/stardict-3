@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 
 #include "pangoview.h" 
+#include "lib/dictmask.h"
 
 //class which show dictionary's aritcles
 class ArticleView {
@@ -15,6 +16,7 @@ public:
 	ArticleView(GtkBox *owner, bool floatw=false)
 		: pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
 
+	void SetDictIndex(InstantDictIndex index);
 	void AppendHeader(const char *dict_name);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
@@ -48,8 +50,9 @@ public:
 private:
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
+	InstantDictIndex dict_index;
 
-	static std::string xdxf2pango(const char *p, LinksPosList& links_list);
+	std::string xdxf2pango(const char *p, const gchar *oword, LinksPosList& links_list);
 	void append_and_mark_orig_word(const std::string& mark,
 				       const gchar *origword,
 				       const LinksPosList& links);

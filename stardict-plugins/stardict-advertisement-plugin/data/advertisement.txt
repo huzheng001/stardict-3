@@ -8,7 +8,7 @@ huzheng	Hu Zheng	胡正	Hungzeng
 P
 huzheng.png
 x
-The author of <iref i="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>
+The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>\nMM们<iref href="http://reciteword.cosoft.org.cn/yaoguang/seek.txt">注意</iref>啦！
 
 RedHat	红帽子
 P
