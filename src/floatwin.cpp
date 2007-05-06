@@ -203,6 +203,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
 		if (Word[i]) {
 			view->AppendNewline();
+			view->SetDictIndex(gpAppFrame->dictmask[i]);
 			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
 				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
 			else
@@ -271,6 +272,9 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
 	g_free(m_str);
 	mark += "</span></b>";
 	view->append_pango_text(mark.c_str());
+	InstantDictIndex dict_index;
+	dict_index.type = InstantDictType_UNKNOWN;
+	view->SetDictIndex(dict_index);
     for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
         view->AppendNewline();
         view->AppendHeader((*i)->bookname);
@@ -377,6 +381,7 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
     for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
 	if (ppppWord[j][i]) {
 		view->AppendNewline();
+		view->SetDictIndex(gpAppFrame->dictmask[i]);
 		if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
 			view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
 		else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)

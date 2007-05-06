@@ -1592,6 +1592,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	int j,k;
 	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
 		if (Word[i]) {
+			view->SetDictIndex(gpAppFrame->dictmask[i]);
 			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
 				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
 			else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
@@ -1636,6 +1637,9 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
         }
 	    view->goto_begin();
     }
+    InstantDictIndex dict_index;
+    dict_index.type = InstantDictType_UNKNOWN;
+    view->SetDictIndex(dict_index);
     for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
         gchar *mark = g_strdup_printf("%d", view->bookindex);
         gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast((*i)->bookname, mark);

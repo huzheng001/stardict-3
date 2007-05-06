@@ -11,6 +11,7 @@ libstardict_a_SOURCES = \
 	collation.cpp collation.h \
 	data.hpp data.cpp \
 	stddict.cpp stddict.hpp \
+	storage.cpp storage.h	\
 	treedict.cpp treedict.hpp	\
 	common.cpp common.hpp \
 	md5.c md5.h	\
