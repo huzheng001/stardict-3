@@ -18,6 +18,8 @@ libstardict_a_SOURCES = \
 	stardict_client.cpp stardict_client.hpp \
 	dict_client.cpp dict_client.hpp \
 	sockets.cpp sockets.hpp \
+	http_client.cpp http_client.h	\
+	httpmanager.cpp httpmanager.h	\
 	plugin.cpp plugin.h \
 	virtualdictplugin.cpp virtualdictplugin.h \
 	pluginmanager.cpp pluginmanager.h	\

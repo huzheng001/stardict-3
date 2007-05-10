@@ -23,6 +23,7 @@ public:
 	Skin_pixbuf_1 index_wazard;
 	Skin_pixbuf_1 index_appendix;
 	Skin_pixbuf_1 index_dictlist;
+	Skin_pixbuf_1 index_translate;
 
 	void load();
 };

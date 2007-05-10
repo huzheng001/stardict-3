@@ -216,6 +216,8 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
     oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
+    HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
+
 	iCurrentIndex=(CurrentIndex *)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
 
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
@@ -436,6 +438,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	}
 	else if ((event->keyval==GDK_v || event->keyval==GDK_V) && only_ctrl_pressed &&
 			!oAppCore->oTopWin.has_focus() &&
+			!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 			!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		if (event->type==GDK_KEY_PRESS) {
 			gtk_clipboard_request_text(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), oAppCore->oTopWin.ClipboardReceivedCallback, &(oAppCore->oTopWin));
@@ -446,6 +449,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 						 !(event->state & GDK_CONTROL_MASK) &&
 						 !(event->state & GDK_MOD1_MASK) &&
 						 !oAppCore->oTopWin.has_focus() &&
+						 !oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
@@ -455,6 +459,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		oAppCore->oTopWin.set_position_in_text(1);
 	} else if (event->type==GDK_KEY_PRESS && event->keyval == GDK_BackSpace &&
 			!oAppCore->oTopWin.has_focus() &&
+			!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 			!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		if (oAppCore->oTopWin.get_text()[0]) {
 			oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
@@ -465,6 +470,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	} else if (event->type == GDK_KEY_PRESS &&
 		   event->keyval == GDK_Return &&
 		   !oAppCore->oTopWin.has_focus() &&
+		   !oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 		   !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		if (oAppCore->oMidWin.oIndexWin.oListWin.treeview_has_focus()) {
 			GtkTreeModel *model;
@@ -500,6 +506,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	}	else if (event->type==GDK_KEY_PRESS &&
 						 event->keyval == 0x20 &&
 						 !oAppCore->oTopWin.has_focus() &&
+						 !oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
@@ -1692,11 +1699,13 @@ void AppCore::on_main_win_hide_list_changed(const baseconfval* hideval)
 	if (hide) {
 		gtk_widget_hide(oMidWin.oToolWin.HideListButton);
 		gtk_widget_show(oMidWin.oToolWin.ShowListButton);
-		gtk_widget_hide(oMidWin.oIndexWin.vbox);
+		gtk_widget_hide(oMidWin.oLeftWin.vbox);
+		gtk_widget_hide(oMidWin.oIndexWin.notebook);
 	} else {
 		gtk_widget_hide(oMidWin.oToolWin.ShowListButton);
 		gtk_widget_show(oMidWin.oToolWin.HideListButton);
-		gtk_widget_show(oMidWin.oIndexWin.vbox);
+		gtk_widget_show(oMidWin.oLeftWin.vbox);
+		gtk_widget_show(oMidWin.oIndexWin.notebook);
 	}
 }
 

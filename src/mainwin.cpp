@@ -123,25 +123,10 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go Back - Right button: history (Alt+Left)"),NULL);
 
-	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_UP,GTK_ICON_SIZE_BUTTON));
-	gtk_widget_show_all(button);
-	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
-	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreviousCallback),this);
-	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Previous word (Alt+Up)"),NULL);
-
-	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,GTK_ICON_SIZE_BUTTON));
-	gtk_widget_show_all(button);
-	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
-	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NextCallback),this);
-	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Next word (Alt+Down)"),NULL);
+	GtkWidget *label;
+	label = gtk_label_new("\t");
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_HOME,GTK_ICON_SIZE_BUTTON));
@@ -372,13 +357,6 @@ void TopWin::do_prev()
 	}
 }
 
-void TopWin::PreviousCallback(GtkWidget *widget, TopWin *oTopWin)
-{
-	play_sound_on_event("buttonactive");
-
-	oTopWin->do_prev();
-}
-
 void TopWin::do_next()
 {
 	MidWin &midwin = gpAppFrame->oMidWin;
@@ -441,12 +419,6 @@ void TopWin::do_next()
 			gtk_tree_path_free(path);
 		}//else  user have selected the last row,no action is need.		
 	}
-}
-
-void TopWin::NextCallback(GtkWidget *widget, TopWin *oTopWin)
-{
-	play_sound_on_event("buttonactive");
-	oTopWin->do_next();
 }
 
 void TopWin::on_main_menu_preferences_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
@@ -1101,108 +1073,144 @@ void ResultWin::on_selection_changed(GtkTreeSelection *selection, ResultWin *oRe
 }
 
 /**************************************************/
-IndexWin::IndexWin()
+LeftWin::LeftWin()
 {
 }
 
-void IndexWin::Create(GtkWidget *hpaned)
+void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 {
 	vbox = gtk_vbox_new(FALSE, 3);
-
 	if (!conf->get_bool_at("main_window/hide_list"))
 		gtk_widget_show(vbox);
-
-	gtk_paned_pack1(GTK_PANED(hpaned),vbox,true,true);
-	notebook = gtk_notebook_new();
-	gtk_widget_show(notebook);
-	gtk_box_pack_start(GTK_BOX(vbox),notebook, true, true, 0);
-	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
-    gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
-	oListWin.Create(notebook);
-	oResultWin.Create(notebook);
-
-	GtkWidget *table = gtk_table_new(2, 2, FALSE);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 3);
-	gtk_box_pack_start(GTK_BOX(vbox),table, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox),vbox, false, false, 0);
 
 	GtkWidget *wazard_button = gtk_radio_button_new(NULL);
 	GTK_WIDGET_UNSET_FLAGS (wazard_button, GTK_CAN_FOCUS);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(wazard_button), false);
-	gtk_table_attach(GTK_TABLE(table), wazard_button, 0, 1, 0, 1, (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), 0, 0);
-#ifdef CONFIG_GPE
-	GtkWidget *image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_wazard.get());
-	gtk_container_add (GTK_CONTAINER (wazard_button), image);
-#else
-	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
-	gtk_container_add (GTK_CONTAINER (wazard_button), hbox1);
+	gtk_box_pack_start(GTK_BOX(vbox),wazard_button, false, false, 0);
 	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_wazard));
-	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-	GtkWidget *label = gtk_label_new_with_mnemonic(_("_List"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_label_set_mnemonic_widget(GTK_LABEL(label), wazard_button);
-#endif
+	gtk_container_add (GTK_CONTAINER (wazard_button), image);
+	gtk_widget_show_all(wazard_button);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,wazard_button,_("List"),NULL);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(wazard_button), true);
 	g_signal_connect(G_OBJECT(wazard_button),"toggled", G_CALLBACK(on_wazard_button_toggled), this);
 
 	GtkWidget *result_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
 	GTK_WIDGET_UNSET_FLAGS (result_button, GTK_CAN_FOCUS);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(result_button), false);
-	gtk_table_attach(GTK_TABLE(table), result_button, 1, 2, 0, 1, (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), 0, 0);
-#ifdef CONFIG_GPE
-	image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_dictlist.get());
-	gtk_container_add (GTK_CONTAINER (result_button), image);
-#else
-	hbox1 = gtk_hbox_new(false, 2);
-	gtk_container_add (GTK_CONTAINER (result_button), hbox1);
+	gtk_box_pack_start(GTK_BOX(vbox),result_button, false, false, 0);
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_dictlist));
-	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-	label = gtk_label_new_with_mnemonic(_("_Result"));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-	gtk_label_set_mnemonic_widget(GTK_LABEL(label), result_button);
-#endif
+	gtk_container_add (GTK_CONTAINER (result_button), image);
+	gtk_widget_show_all(result_button);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,result_button,_("Result"),NULL);
 	g_signal_connect(G_OBJECT(result_button),"toggled", G_CALLBACK(on_result_button_toggled), this);
+	
+	GtkWidget *translate_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(result_button));
+	GTK_WIDGET_UNSET_FLAGS (translate_button, GTK_CAN_FOCUS);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(translate_button), false);
+	gtk_box_pack_start(GTK_BOX(vbox),translate_button, false, false, 0);
+	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
+	gtk_container_add (GTK_CONTAINER (translate_button), image);
+	gtk_widget_show_all(translate_button);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,translate_button,_("Translate"),NULL);
+	g_signal_connect(G_OBJECT(translate_button),"toggled", G_CALLBACK(on_translate_button_toggled), this);
 
-	if (oTreeWin.Create(notebook)) {
-		GtkWidget *appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
+	if (has_treedict) {
+		GtkWidget *appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(translate_button));
 		GTK_WIDGET_UNSET_FLAGS (appendix_button, GTK_CAN_FOCUS);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(appendix_button), false);
-		gtk_table_attach(GTK_TABLE(table), appendix_button, 0, 2, 1, 2, (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), 0, 0);
-#ifdef CONFIG_GPE
-		image = gtk_image_new_from_pixbuf(gpAppFrame->oAppSkin.index_appendix.get());
-		gtk_container_add (GTK_CONTAINER (appendix_button), image);
-#else
-		hbox1 = gtk_hbox_new(false, 2);
-		gtk_container_add (GTK_CONTAINER (appendix_button), hbox1);
+		gtk_box_pack_start(GTK_BOX(vbox),appendix_button, false, false, 0);
 		image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_appendix));
-		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-		label = gtk_label_new_with_mnemonic(_("_Tree"));
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), appendix_button);
-#endif
+		gtk_container_add (GTK_CONTAINER (appendix_button), image);
+		gtk_widget_show_all(appendix_button);
+		gtk_tooltips_set_tip(gpAppFrame->tooltips,appendix_button,_("Tree"),NULL);
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 	}
-	gtk_widget_show_all(table);
+
+	GtkWidget *button;
+	button=gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,GTK_ICON_SIZE_BUTTON));
+	gtk_widget_show_all(button);
+	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NextCallback),this);
+	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
+	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Next word (Alt+Down)"),NULL);
+
+	button=gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_UP,GTK_ICON_SIZE_BUTTON));
+	gtk_widget_show_all(button);
+	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreviousCallback),this);
+	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
+	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Previous word (Alt+Up)"),NULL);
 }
 
-void IndexWin::on_wazard_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin)
+void LeftWin::on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
 {
-	if (gtk_toggle_button_get_active(button))
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(oIndexWin->notebook), 0);
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.oIndexWin.notebook), 0);
+	}
 }
 
-void IndexWin::on_result_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin)
+void LeftWin::on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
 {
-	if (gtk_toggle_button_get_active(button))
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(oIndexWin->notebook), 1);
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.oIndexWin.notebook), 1);
+	}
 }
 
-void IndexWin::on_appendix_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin)
+void LeftWin::on_translate_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
 {
 	if (gtk_toggle_button_get_active(button))
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(oIndexWin->notebook), 2);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 1);
+}
+
+void LeftWin::on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
+{
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.oIndexWin.notebook), 2);
+	}
+}
+
+void LeftWin::PreviousCallback(GtkWidget *widget, LeftWin *oLeftWin)
+{
+	play_sound_on_event("buttonactive");
+
+	gpAppFrame->oTopWin.do_prev();
+}
+
+void LeftWin::NextCallback(GtkWidget *widget, LeftWin *oLeftWin)
+{
+	play_sound_on_event("buttonactive");
+	gpAppFrame->oTopWin.do_next();
+}
+
+/**************************************************/
+IndexWin::IndexWin()
+{
+}
+
+bool IndexWin::Create(GtkWidget *hpaned)
+{
+	notebook = gtk_notebook_new();
+	if (!conf->get_bool_at("main_window/hide_list"))
+		gtk_widget_show(notebook);
+
+	gtk_paned_pack1(GTK_PANED(hpaned),notebook,true,false);
+
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
+	oListWin.Create(notebook);
+	oResultWin.Create(notebook);
+
+	return oTreeWin.Create(notebook);
 }
 
 /************************************************/
@@ -1757,23 +1765,165 @@ void TextWin::SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_da
 }
 
 /*********************************************/
+TransWin::TransWin()
+{
+}
+
+void TransWin::Create(GtkWidget *notebook)
+{
+	GtkWidget *frame;
+	frame = gtk_frame_new(NULL);
+
+	GtkWidget *vbox;
+	vbox = gtk_vbox_new(false, 3);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox),8);
+	gtk_container_add(GTK_CONTAINER(frame), vbox);
+
+	GtkWidget *label = gtk_label_new(_("Full-Text Translation"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+
+	input_textview = gtk_text_view_new();
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(input_textview), GTK_WRAP_WORD_CHAR);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(input_textview), 5);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(input_textview), 5);
+	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_container_add(GTK_CONTAINER(scrolled_window), input_textview);
+	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
+
+	GtkWidget *hbox;
+	hbox = gtk_hbox_new(false, 3);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+	trans_button = gtk_button_new_with_label(_("Translate"));
+	g_signal_connect(G_OBJECT(trans_button),"clicked", G_CALLBACK(on_translate_button_clicked), this);
+	gtk_box_pack_start(GTK_BOX(hbox), trans_button, false, false, 0);
+
+	result_textview = gtk_text_view_new();
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(result_textview), FALSE);
+	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(result_textview), FALSE);
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(result_textview), GTK_WRAP_WORD_CHAR);
+	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(result_textview), 3);
+	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(result_textview), 3);
+	scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_container_add(GTK_CONTAINER(scrolled_window), result_textview);
+	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
+
+	gtk_widget_show_all(frame);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), frame, NULL);
+}
+
+static gchar * byte_to_hex(unsigned char nr) {
+	gchar *result = NULL;
+
+	result = g_strdup_printf("%%%x%x", nr / 0x10, nr % 0x10);
+	return result;
+}
+
+static gchar * common_encode_uri_string(gchar *string) {
+	gchar		*newURIString;
+	gchar		*hex, *tmp = NULL;
+	int		i, j, len, bytes;
+
+	/* the UTF-8 string is casted to ASCII to treat
+	   the characters bytewise and convert non-ASCII
+	   compatible chars to URI hexcodes */
+	newURIString = g_strdup("");
+	len = strlen(string);
+	for(i = 0; i < len; i++) {
+		if(g_ascii_isalnum(string[i]) || strchr("-_.!~*'()", (int)string[i]))
+		   	tmp = g_strdup_printf("%s%c", newURIString, string[i]);
+		else if(string[i] == ' ')
+			tmp = g_strdup_printf("%s%%20", newURIString);
+		else if((unsigned char)string[i] <= 127) {
+			tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex(string[i]));g_free(hex);
+		} else {
+			bytes = 0;
+			if(((unsigned char)string[i] >= 192) && ((unsigned char)string[i] <= 223))
+				bytes = 2;
+			else if(((unsigned char)string[i] > 223) && ((unsigned char)string[i] <= 239))
+				bytes = 3;
+			else if(((unsigned char)string[i] > 239) && ((unsigned char)string[i] <= 247))
+				bytes = 4;
+			else if(((unsigned char)string[i] > 247) && ((unsigned char)string[i] <= 251))
+				bytes = 5;
+			else if(((unsigned char)string[i] > 247) && ((unsigned char)string[i] <= 251))
+				bytes = 6;
+				
+			if(0 != bytes) {
+				if((i + (bytes - 1)) > len) {
+					g_warning(_("Unexpected end of character sequence or corrupt UTF-8 encoding! Some characters were dropped!"));
+					break;
+				}
+
+				for(j=0; j < (bytes - 1); j++) {
+					tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex((unsigned char)string[i++]));
+					g_free(hex);
+					g_free(newURIString);
+					newURIString = tmp;
+				}
+				tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex((unsigned char)string[i]));
+				g_free(hex);
+			} else {
+				/* sh..! */
+				g_error("Internal error while converting UTF-8 chars to HTTP URI!");
+			}
+		}
+		g_free(newURIString); 
+		newURIString = tmp;
+	}
+
+	return newURIString;
+}
+
+void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin)
+{
+	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->input_textview));
+	GtkTextIter start, end;
+	gtk_text_buffer_get_bounds(buffer, &start, &end);
+	gchar *text = gtk_text_buffer_get_text(buffer, &start, &end, false);
+	gchar *etext = common_encode_uri_string(text);
+	g_free(text);
+	std::string host = "translate.google.com";
+	std::string file = "/translate_t?ie=UTF8&langpair=en|zh-CN&text=";
+	file += etext;
+	g_free(etext);
+	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str());
+}
+
+/*********************************************/
 void MidWin::Create(GtkWidget *vbox)
 {
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 2);
+	gtk_widget_show(hbox);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE,0);
+
+	notebook = gtk_notebook_new();
+	gtk_widget_show(notebook);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
+
 	hpaned = gtk_hpaned_new();
 	gtk_widget_show(hpaned);
-	gtk_box_pack_start(GTK_BOX(vbox), hpaned, TRUE, TRUE,0);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hpaned, NULL);
 
-	oIndexWin.Create(hpaned);
+	bool has_treedict = oIndexWin.Create(hpaned);
+	oLeftWin.Create(hbox, has_treedict);
+	gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
 
 	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 0);
 	gtk_widget_show(vbox1);
-	gtk_paned_pack2(GTK_PANED(hpaned), vbox1, TRUE, FALSE);
 	oToolWin.Create(vbox1);
 	oTextWin.Create(vbox1);
+	gtk_paned_pack2(GTK_PANED(hpaned), vbox1, TRUE, FALSE);
 
 	int pos=conf->get_int_at("main_window/hpaned_pos");
-
 	gtk_paned_set_position(GTK_PANED(hpaned), pos);
+
+	oTransWin.Create(notebook);
 }
 
 

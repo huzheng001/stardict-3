@@ -1,7 +1,9 @@
 #ifndef _SOCKETS_HPP_
 #define _SOCKETS_HPP_
 
+#include <glib.h>
 #include <string>
+#include <map>
 #ifndef _WIN32
 #  include <netdb.h>
 #else
@@ -63,6 +65,10 @@ private:
     };
     static gpointer dns_thread(gpointer data);
     static gboolean dns_main_thread_cb(gpointer data);
+	struct ResolveInfo {
+		struct  hostent hostinfo;
+	};
+	static std::map<std::string, ResolveInfo> dns_map;
 };
 
 
