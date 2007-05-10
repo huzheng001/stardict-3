@@ -28,6 +28,7 @@ extern "C" {
 
 #include "sockets.hpp"
 
+std::map<std::string, Socket::ResolveInfo> Socket::dns_map;
 
 #if defined(_WIN32)
   
@@ -141,6 +142,10 @@ gboolean Socket::dns_main_thread_cb(gpointer data)
 {
     DnsQueryData *query_data = (DnsQueryData *)data;
     if (query_data->resolved) {
+	ResolveInfo info;
+	info.hostinfo = query_data->hostinfo;
+	dns_map[query_data->host] = info;
+
         query_data->func(query_data->data, &(query_data->hostinfo));
     }
     delete query_data;
@@ -150,19 +155,28 @@ gboolean Socket::dns_main_thread_cb(gpointer data)
 gpointer Socket::dns_thread(gpointer data)
 {
     DnsQueryData *query_data = (DnsQueryData *)data;
-    char buf[1024];
     struct  hostent *phost;
-    int ret;
 #ifndef _WIN32    
+    char buf[1024];
+    int ret;
     if (!gethostbyname_r(query_data->host.c_str(), &query_data->hostinfo, buf,
         sizeof(buf), &phost, &ret)) {
-#else
-     if (false) {//TODO: implement
-#endif                     
         query_data->resolved = true;
     } else {
         query_data->resolved = false;
     }
+#else
+	static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+	g_static_mutex_lock (&mutex);
+	phost = gethostbyname(query_data->host.c_str());
+	if (phost) {
+		query_data->hostinfo = *phost;
+		query_data->resolved = true;
+	} else {
+		query_data->resolved = false;
+	}
+	g_static_mutex_unlock (&mutex);
+#endif                     
     /* back to main thread */
     g_idle_add(dns_main_thread_cb, query_data);
     return NULL;
@@ -170,6 +184,12 @@ gpointer Socket::dns_thread(gpointer data)
 
 void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
 {
+	std::map<std::string, ResolveInfo>::iterator iter;
+	iter = dns_map.find(host);
+	if (iter != dns_map.end()) {
+		func(data, &(iter->second.hostinfo));
+		return;
+	}
     DnsQueryData *query_data = new DnsQueryData();
     query_data->host = host;
     query_data->data = data;

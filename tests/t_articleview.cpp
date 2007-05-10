@@ -7,6 +7,9 @@
 
 #include "articleview.h"
 #include "class_factory.hpp"
+#include "stardict.h"
+
+AppCore *gpAppFrame = NULL;
 
 void *PlatformFactory::create_class_by_name(const std::string& name, void *param)
 {
@@ -54,9 +57,13 @@ static bool check_xdxf2pango(const char *in, const char *out,
 			     const std::list<std::string>& links_list_std)
 {
 	LinksPosList links_list;
-	std::string res = ArticleView::xdxf2pango(in, links_list);
+	GtkWidget *box = gtk_vbox_new(false, 0);
+	ArticleView *articleview = new ArticleView(GTK_BOX(box), true);
+	std::string res = articleview->xdxf2pango(in, "", links_list);
+	delete articleview;
+	gtk_widget_destroy(box);
 	if (res != out) {
-		g_warning("we got not what we expected: %s", res.c_str());
+		g_warning("we got not what we expected:\n%s\n\n%s\n", res.c_str(), out);
 		return false;
 	}
 	
@@ -83,14 +90,15 @@ static bool check_xdxf2pango(const char *in, const char *out,
 
 int main(int argc, char *argv[])
 {
+	g_type_init ();
 	const char *ar1 = "<k>nick</k> <k>name</k>\n"
 		"<tr>neim</tr>\n"
 		"<abr>noun.</abr> <co>In the rest of article we used latinitsu</co>\n"
-		"<b>nick</b>, <b><kref>Imya</kref></b>, <i>Italic</i>, <c code=\"green\">color</c>\n"
+		"<b>nick</b>, <b><kref>Imya</kref></b>, <i>Italic</i>, <c c=\"green\">color</c>\n"
 		"<ex>My name is <kref>Vova</kref>.</ex> <c>the</c> rest\n"
 		"of article.";
 	const char *after1 =
-		" <b>[neim]</b>\n"
+		" <span foreground=\"blue\">name</span>\n<b>[neim]</b>\n"
 		"<span foreground=\"green\" style=\"italic\">noun.</span> "
 		"In the rest of article we used latinitsu\n"
 		"<b>nick</b>, <b><span foreground=\"blue\" underline=\"single\">Imya</span></b>, <i>Italic</i>, <span foreground=\"green\">color</span>\n"

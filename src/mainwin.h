@@ -53,8 +53,6 @@ private:
 	static void ClearCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void GoCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void BackCallback(GtkWidget *widget, TopWin *oTopWin);
-	static void PreviousCallback(GtkWidget *widget, TopWin *oTopWin);
-	static void NextCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void MenuCallback(GtkWidget *widget, TopWin *oTopWin);
 	static gboolean on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin);
 	static void on_back_menu_item_activate(GtkMenuItem *menuitem, gint index);
@@ -162,7 +160,6 @@ private:
 
 class IndexWin {
 public:
-	GtkWidget *vbox;
 	GtkWidget *notebook;
 
 	ListWin oListWin;
@@ -170,11 +167,22 @@ public:
 	TreeWin oTreeWin;
 
 	IndexWin();
-	void Create(GtkWidget *hpaned);
+	bool Create(GtkWidget *hpaned);
 private:
-	static void on_wazard_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin);
-	static void on_appendix_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin);
-	static void on_result_button_toggled(GtkToggleButton *button, IndexWin *oIndexWin);
+};
+
+class LeftWin {
+public:
+	GtkWidget *vbox;
+	LeftWin();
+	void Create(GtkWidget *hbox, bool has_treedict);
+private:
+	static void on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
+	static void on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
+	static void on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
+	static void on_translate_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
+	static void PreviousCallback(GtkWidget *widget, LeftWin *oLeftWin);
+	static void NextCallback(GtkWidget *widget, LeftWin *oLeftWin);
 };
 
 class ToolWin {
@@ -246,13 +254,28 @@ private:
 	static void OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin);
 };
 
+class TransWin {
+public:
+	TransWin();
+	void Create(GtkWidget *notebook);
+	bool IsInputViewHasFocus() { return GTK_WIDGET_HAS_FOCUS(input_textview); }
+private:
+	GtkWidget *input_textview;
+	GtkWidget *result_textview;
+	GtkWidget *trans_button;
+	static void on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin);
+};
+
 class MidWin {
 public:
 	GtkWidget* hpaned;
+	GtkWidget* notebook;
 
+	LeftWin oLeftWin;
 	IndexWin oIndexWin;
 	ToolWin oToolWin;
 	TextWin oTextWin;
+	TransWin oTransWin;
 
 	MidWin() {}
 	void Create(GtkWidget *vbox);
