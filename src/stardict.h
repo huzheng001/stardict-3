@@ -148,6 +148,9 @@ public:
 	void on_stardict_client_previous_end(std::list<char *> *wordlist_response);
 	void on_stardict_client_next_end(std::list<char *> *wordlist_response);
 
+	void on_http_client_error(HttpClient*, const char *);
+	void on_http_client_response(HttpClient*);
+
 	static void on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *);
 };
 

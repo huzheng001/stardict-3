@@ -1794,11 +1794,44 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
 	GtkWidget *hbox;
-	hbox = gtk_hbox_new(false, 3);
+	hbox = gtk_hbox_new(false, 5);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
-	trans_button = gtk_button_new_with_label(_("Translate"));
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	engine_optionmenu = gtk_option_menu_new();
+	menu = gtk_menu_new();
+	menuitem=gtk_menu_item_new_with_label("Google");
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(engine_optionmenu), menu);
+	gtk_box_pack_start(GTK_BOX(hbox), engine_optionmenu, false, false, 0);
+	label = gtk_label_new(":");
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	fromlang_optionmenu = gtk_option_menu_new();
+	menu = gtk_menu_new();
+	menuitem=gtk_menu_item_new_with_label("Arabic");
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	menuitem=gtk_menu_item_new_with_label("Chinese (Simplified)");
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(fromlang_optionmenu), menu);
+	gtk_box_pack_start(GTK_BOX(hbox), fromlang_optionmenu, false, false, 0);
+	label = gtk_label_new(_("To"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	tolang_optionmenu = gtk_option_menu_new();
+	menu = gtk_menu_new();
+	menuitem=gtk_menu_item_new_with_label("English");
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	gtk_option_menu_set_menu(GTK_OPTION_MENU(tolang_optionmenu), menu);
+	gtk_box_pack_start(GTK_BOX(hbox), tolang_optionmenu, false, false, 0);
+	trans_button = gtk_button_new();
+	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
+	gtk_container_add (GTK_CONTAINER (trans_button), hbox1);
+	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	label = gtk_label_new_with_mnemonic(_("_Translate"));
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), trans_button);
 	g_signal_connect(G_OBJECT(trans_button),"clicked", G_CALLBACK(on_translate_button_clicked), this);
-	gtk_box_pack_start(GTK_BOX(hbox), trans_button, false, false, 0);
+	gtk_box_pack_end(GTK_BOX(hbox), trans_button, false, false, 0);
 
 	result_textview = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(result_textview), FALSE);
@@ -1812,8 +1845,17 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_add(GTK_CONTAINER(scrolled_window), result_textview);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
+	label = gtk_label_new(_("Powered by -"));
+	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+
 	gtk_widget_show_all(frame);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), frame, NULL);
+}
+
+void TransWin::SetText(const char *text, size_t len)
+{
+	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
+	gtk_text_buffer_set_text(buffer, text, len);
 }
 
 static gchar * byte_to_hex(unsigned char nr) {
@@ -1885,12 +1927,29 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	GtkTextIter start, end;
 	gtk_text_buffer_get_bounds(buffer, &start, &end);
 	gchar *text = gtk_text_buffer_get_text(buffer, &start, &end, false);
+	if (text[0] == '\0') {
+		g_free(text);
+		GtkWidget *message_dlg = 
+			gtk_message_dialog_new(
+				GTK_WINDOW(gpAppFrame->window),
+				(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+				GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+				_("Please input some words to translate."));
+		gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+		gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+		g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+		gtk_widget_show(message_dlg);
+		return;
+	}
 	gchar *etext = common_encode_uri_string(text);
 	g_free(text);
 	std::string host = "translate.google.com";
 	std::string file = "/translate_t?ie=UTF8&langpair=en|zh-CN&text=";
 	file += etext;
 	g_free(etext);
+
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
+	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
 	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str());
 }
 
