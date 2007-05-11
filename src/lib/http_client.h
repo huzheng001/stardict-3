@@ -8,13 +8,14 @@
 
 class HttpClient {
 public:
-	static sigc::signal<void, const char *> on_error_;
-	static sigc::signal<void, const char *, size_t> on_response_;
+	static sigc::signal<void, HttpClient*, const char *> on_error_;
+	static sigc::signal<void, HttpClient *> on_response_;
 
 	HttpClient();
 	~HttpClient();
 	void SendHttpGetRequest(const char* shost, const char* sfile);
 	char *buffer;
+	size_t buffer_len;
 private:
 	std::string host_;
 	std::string file_;
@@ -27,7 +28,6 @@ private:
 	void disconnect();
 	void write_str(const char *str, GError **err);
 	bool SendGetRequest();
-	size_t buffer_len;
 };
 
 #endif

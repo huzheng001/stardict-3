@@ -258,10 +258,14 @@ class TransWin {
 public:
 	TransWin();
 	void Create(GtkWidget *notebook);
+	void SetText(const char *text, size_t len = -1);
 	bool IsInputViewHasFocus() { return GTK_WIDGET_HAS_FOCUS(input_textview); }
 private:
 	GtkWidget *input_textview;
 	GtkWidget *result_textview;
+	GtkWidget *engine_optionmenu;
+	GtkWidget *fromlang_optionmenu;
+	GtkWidget *tolang_optionmenu;
 	GtkWidget *trans_button;
 	static void on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin);
 };

@@ -216,7 +216,8 @@ void AppCore::Create(gchar *queryword)
     oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
     oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
-    HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
+    HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
+    HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
 
@@ -1520,6 +1521,67 @@ void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::Look
     if (seq != 0 && waiting_floatwin_lookupcmd_seq != seq)
 	    return;
     oFloatWin.ShowText(&(lookup_response->dict_response));
+}
+
+void AppCore::on_http_client_error(HttpClient *http_client, const char *error_msg)
+{
+	GtkWidget *message_dlg =
+		gtk_message_dialog_new(
+			GTK_WINDOW(window),
+			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+			GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+			error_msg);
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+	gtk_widget_show(message_dlg);
+	oHttpManager.Remove(http_client);
+}
+
+void AppCore::on_http_client_response(HttpClient *http_client)
+{
+	if (http_client->buffer == NULL) {
+		oMidWin.oTransWin.SetText(_("Not found!\n"));
+		oHttpManager.Remove(http_client);
+		return;
+	}
+	const char *buffer = http_client->buffer;
+	size_t buffer_len = http_client->buffer_len;
+#define GoogleTranslateStartMark "<div id=result_box dir=ltr>"
+
+	char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
+	bool found = false;
+	if (p) {
+		p += sizeof(GoogleTranslateStartMark) -1;
+		char *p2 = g_strstr_len(p, buffer_len - (p - buffer), "</div>");
+		if (p2) {
+			std::string charset;
+			char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
+			if (p3) {
+				p3 += sizeof("charset=") -1;
+				char *p4 = g_strstr_len(p3, buffer_len - (p3 - buffer), "\r\n");
+				if (p4) {
+					charset.assign(p3, p4-p3);
+				}
+			}
+			if (charset.empty()) {
+				oMidWin.oTransWin.SetText(p, p2-p);
+			} else {
+				gchar *text = g_convert(p, p2-p, "UTF-8", charset.c_str(), NULL, NULL, NULL);
+				if (text) {
+					oMidWin.oTransWin.SetText(text);
+					g_free(text);
+				} else {
+					oMidWin.oTransWin.SetText(_("Convert error!\n"));
+				}
+			}
+			found = true;
+		}
+	}
+	if (!found) {
+		oMidWin.oTransWin.SetText(_("Not found!\n"));
+	}
+	oHttpManager.Remove(http_client);
 }
 
 void AppCore::on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *response)
