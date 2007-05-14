@@ -60,6 +60,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/showfirst_when_notfound", true);
+	add_entry("/apps/stardict/preferences/translate/engine", 0);
+	add_entry("/apps/stardict/preferences/translate/fromlang", 0);
+	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found", true);

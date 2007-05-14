@@ -166,16 +166,22 @@ gpointer Socket::dns_thread(gpointer data)
         query_data->resolved = false;
     }
 #else
-	static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
-	g_static_mutex_lock (&mutex);
-	phost = gethostbyname(query_data->host.c_str());
+	//static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+	//g_static_mutex_lock (&mutex);
+	if (isalpha(query_data->host[0])) {
+		phost = gethostbyname(query_data->host.c_str());
+	} else {
+		unsigned int addr;
+		addr = inet_addr(query_data->host.c_str());
+		phost = gethostbyaddr((char *)&addr, 4, AF_INET);
+	}
 	if (phost) {
 		query_data->hostinfo = *phost;
 		query_data->resolved = true;
 	} else {
 		query_data->resolved = false;
 	}
-	g_static_mutex_unlock (&mutex);
+	//g_static_mutex_unlock (&mutex);
 #endif                     
     /* back to main thread */
     g_idle_add(dns_main_thread_cb, query_data);

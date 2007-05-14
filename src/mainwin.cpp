@@ -1769,6 +1769,109 @@ TransWin::TransWin()
 {
 }
 
+static const char *google_fromlangs[] = {N_("Arabic"), N_("Chinese"), N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("English"), N_("French"), N_("German"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
+static const char *google_arabic_tolangs[] = { N_("English"), NULL };
+static const char *google_arabic_code[] = { "ar|en" };
+static const char *google_chinese_tolangs[] = { N_("English"), NULL };
+static const char *google_chinese_code[] = { "zh|en" };
+static const char *google_chinese_simplified_tolangs[] = {N_("Chinese (Traditional)"), NULL };
+static const char *google_chinese_simplified_code[] = { "zh-CN|zh-TW" };
+static const char *google_chinese_traditional_tolangs[] = {N_("Chinese (Simplified)"), NULL };
+static const char *google_chinese_traditional_code[] = { "zh-TW|zh-CN" };
+static const char *google_english_tolangs[] = { N_("Arabic"), N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("French"), N_("German"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL };
+static const char *google_english_code[] = {"en|ar", "en|zh-CN", "en|zh-TW", "en|fr", "en|de", "en|it", "en|ja", "en|ko", "en|pt", "en|ru", "en|es"};
+static const char *google_french_tolangs[] = { N_("English"), N_("German"), NULL };
+static const char *google_french_code[] = { "fr|en", "fr|de" };
+static const char *google_german_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *google_german_code[] = { "de|en", "de|fr" };
+static const char *google_italian_tolangs[] = {N_("English"), NULL};
+static const char *google_italian_code[] = { "it|en" };
+static const char *google_japanese_tolangs[] = {N_("English"), NULL};
+static const char *google_japanese_code[] = { "ja|en" };
+static const char *google_korean_tolangs[] = {N_("English"), NULL};
+static const char *google_korean_code[] = { "ko|en" };
+static const char *google_portuguese_tolangs[] = {N_("English"), NULL};
+static const char *google_portuguese_code[] = { "pt|en" };
+static const char *google_russian_tolangs[] = {N_("English"), NULL};
+static const char *google_russian_code[] = { "ru|en" };
+static const char *google_spanish_tolangs[] = {N_("English"), NULL};
+static const char *google_spanish_code[] = { "es|en" };
+static const char **google_tolangs[] = {google_arabic_tolangs, google_chinese_tolangs, google_chinese_simplified_tolangs, google_chinese_traditional_tolangs, google_english_tolangs, google_french_tolangs, google_german_tolangs, google_italian_tolangs, google_japanese_tolangs, google_korean_tolangs, google_portuguese_tolangs, google_russian_tolangs, google_spanish_tolangs};
+static const char **google_code[] = {google_arabic_code, google_chinese_code, google_chinese_simplified_code, google_chinese_traditional_code, google_english_code, google_french_code, google_german_code, google_italian_code, google_japanese_code, google_korean_code, google_portuguese_code, google_russian_code, google_spanish_code};
+
+static const char *yahoo_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
+static const char *yahoo_chinese_simplified_tolangs[] = {N_("English"), NULL};
+static const char *yahoo_chinese_traditional_tolangs[] = {N_("English"), NULL};
+static const char *yahoo_dutch_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_english_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
+static const char *yahoo_french_tolangs[] = {N_("Dutch"), N_("English"), N_("German"), N_("Greek"), N_("Italian"), N_("Portuguese"), N_("Spanish"), NULL };
+static const char *yahoo_german_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_greek_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_italian_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_japanese_tolangs[] = {N_("English"), NULL};
+static const char *yahoo_korean_tolangs[] = {N_("English"), NULL};
+static const char *yahoo_portuguese_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_spanish_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char **yahoo_tolangs[] = {yahoo_chinese_simplified_tolangs, yahoo_chinese_traditional_tolangs, yahoo_dutch_tolangs, yahoo_english_tolangs, yahoo_french_tolangs, yahoo_german_tolangs, yahoo_greek_tolangs, yahoo_italian_tolangs, yahoo_japanese_tolangs, yahoo_korean_tolangs, yahoo_portuguese_tolangs, yahoo_spanish_tolangs};
+
+struct TranslateEngine {
+	const char * name;
+	const char ** fromlangs;
+	const char *** tolangs;
+	const char *** code;
+};
+static TranslateEngine trans_engines[] = { {N_("Google Translate"), google_fromlangs, google_tolangs, google_code}, { N_("Yahoo Translate"), yahoo_fromlangs, yahoo_tolangs, NULL } };
+
+void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index)
+{
+	if (engine_index!= -1) {
+		gtk_combo_box_set_active(GTK_COMBO_BOX(engine_combobox), engine_index);
+		const char ** fromlangs = trans_engines[engine_index].fromlangs;
+		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
+		GtkTreeIter iter;
+		size_t i = 0;
+		while (fromlangs[i]) {
+			gtk_list_store_append(list_store, &iter);
+			gtk_list_store_set(list_store, &iter, 0, gettext(fromlangs[i]), -1);
+			i++;
+		}
+		gtk_combo_box_set_model(GTK_COMBO_BOX(fromlang_combobox), GTK_TREE_MODEL(list_store));
+		g_object_unref (G_OBJECT(list_store));
+	}
+	if (engine_index!= -1 || fromlang_index != -1) {
+		gint real_engine_index;
+		if (engine_index == -1)
+			real_engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
+		else
+			real_engine_index = engine_index;
+		gint real_fromlang_index;
+		if (fromlang_index == -1)
+			real_fromlang_index = 0;
+		else
+			real_fromlang_index = fromlang_index;
+		gtk_combo_box_set_active(GTK_COMBO_BOX(fromlang_combobox), real_fromlang_index);
+		const char ** tolangs = trans_engines[real_engine_index].tolangs[real_fromlang_index];
+		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
+		GtkTreeIter iter;
+		size_t i = 0;
+		while (tolangs[i]) {
+			gtk_list_store_append(list_store, &iter);
+			gtk_list_store_set(list_store, &iter, 0, gettext(tolangs[i]), -1);
+			i++;
+		}
+		gtk_combo_box_set_model(GTK_COMBO_BOX(tolang_combobox), GTK_TREE_MODEL(list_store));
+		g_object_unref (G_OBJECT(list_store));
+	}
+	if (engine_index!= -1 || fromlang_index != -1 || tolang_index != -1) {
+		gint real_tolang_index;
+		if (tolang_index == -1)
+			real_tolang_index = 0;
+		else
+			real_tolang_index = tolang_index;
+		gtk_combo_box_set_active(GTK_COMBO_BOX(tolang_combobox), real_tolang_index);
+	}
+}
+
 void TransWin::Create(GtkWidget *notebook)
 {
 	GtkWidget *frame;
@@ -1783,6 +1886,49 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
 
+	GtkWidget *hbox;
+	hbox = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+
+	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
+	GtkTreeIter iter;
+	for (size_t i = 0; i < sizeof(trans_engines)/sizeof(trans_engines[0]); i++) {
+		const char *name = trans_engines[i].name;
+		gtk_list_store_append(list_store, &iter);
+		gtk_list_store_set(list_store, &iter, 0, name, -1);
+	}
+	engine_combobox = gtk_combo_box_new_with_model(GTK_TREE_MODEL(list_store));
+	g_object_unref (G_OBJECT(list_store));
+	GtkCellRenderer *renderer;
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (engine_combobox), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (engine_combobox), renderer, "text", 0, NULL);
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(engine_combobox), FALSE);
+	gtk_box_pack_start(GTK_BOX(hbox), engine_combobox, false, false, 0);
+	label = gtk_label_new(":");
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	fromlang_combobox = gtk_combo_box_new();
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (fromlang_combobox), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (fromlang_combobox), renderer, "text", 0, NULL);
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(fromlang_combobox), FALSE);
+	gtk_box_pack_start(GTK_BOX(hbox), fromlang_combobox, false, false, 0);
+	label = gtk_label_new(_("To"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	tolang_combobox = gtk_combo_box_new();
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (tolang_combobox), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (tolang_combobox), renderer, "text", 0, NULL);
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(tolang_combobox), FALSE);
+	gtk_box_pack_start(GTK_BOX(hbox), tolang_combobox, false, false, 0);
+	gint engine_index = conf->get_int_at("translate/engine");
+	gint fromlang_index = conf->get_int_at("translate/fromlang");
+	gint tolang_index = conf->get_int_at("translate/tolang");
+	SetComboBox(engine_index, fromlang_index, tolang_index);
+	g_signal_connect(G_OBJECT(engine_combobox),"changed", G_CALLBACK(on_engine_combobox_changed), this);
+	g_signal_connect(G_OBJECT(fromlang_combobox),"changed", G_CALLBACK(on_fromlang_combobox_changed), this);
+	g_signal_connect(G_OBJECT(tolang_combobox),"changed", G_CALLBACK(on_tolang_combobox_changed), this);
+
 	input_textview = gtk_text_view_new();
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(input_textview), GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(input_textview), 5);
@@ -1793,35 +1939,8 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_add(GTK_CONTAINER(scrolled_window), input_textview);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
-	GtkWidget *hbox;
 	hbox = gtk_hbox_new(false, 5);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-	engine_optionmenu = gtk_option_menu_new();
-	menu = gtk_menu_new();
-	menuitem=gtk_menu_item_new_with_label("Google");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(engine_optionmenu), menu);
-	gtk_box_pack_start(GTK_BOX(hbox), engine_optionmenu, false, false, 0);
-	label = gtk_label_new(":");
-	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
-	fromlang_optionmenu = gtk_option_menu_new();
-	menu = gtk_menu_new();
-	menuitem=gtk_menu_item_new_with_label("Arabic");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_label("Chinese (Simplified)");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(fromlang_optionmenu), menu);
-	gtk_box_pack_start(GTK_BOX(hbox), fromlang_optionmenu, false, false, 0);
-	label = gtk_label_new(_("To"));
-	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
-	tolang_optionmenu = gtk_option_menu_new();
-	menu = gtk_menu_new();
-	menuitem=gtk_menu_item_new_with_label("English");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(tolang_optionmenu), menu);
-	gtk_box_pack_start(GTK_BOX(hbox), tolang_optionmenu, false, false, 0);
 	trans_button = gtk_button_new();
 	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
 	gtk_container_add (GTK_CONTAINER (trans_button), hbox1);
@@ -1831,11 +1950,10 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), trans_button);
 	g_signal_connect(G_OBJECT(trans_button),"clicked", G_CALLBACK(on_translate_button_clicked), this);
-	gtk_box_pack_end(GTK_BOX(hbox), trans_button, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), trans_button, false, false, 0);
 
 	result_textview = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(result_textview), FALSE);
-	gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(result_textview), FALSE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(result_textview), GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(result_textview), 3);
 	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(result_textview), 3);
@@ -1850,6 +1968,26 @@ void TransWin::Create(GtkWidget *notebook)
 
 	gtk_widget_show_all(frame);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), frame, NULL);
+}
+
+void TransWin::on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	oTransWin->SetComboBox(index, -1, -1);
+	conf->set_int_at("translate/engine", index);
+}
+
+void TransWin::on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	oTransWin->SetComboBox(-1, index, -1);
+	conf->set_int_at("translate/fromlang", index);
+}
+
+void TransWin::on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	conf->set_int_at("translate/tolang", index);
 }
 
 void TransWin::SetText(const char *text, size_t len)
@@ -1921,6 +2059,21 @@ static gchar * common_encode_uri_string(gchar *string) {
 	return newURIString;
 }
 
+void TransWin::GetHostFile(std::string &host, std::string &file, const char *text)
+{
+	gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
+	if (engine_index != 0)
+		return;
+	host = "translate.google.com";
+	file = "/translate_t?ie=UTF8&langpair=";
+	gint fromlang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(fromlang_combobox));
+	gint tolang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(tolang_combobox));
+	const char *lang_code = trans_engines[engine_index].code[fromlang_index][tolang_index];
+	file += lang_code;
+	file += "&text=";
+	file += text;
+}
+
 void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin)
 {
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->input_textview));
@@ -1943,9 +2096,9 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	}
 	gchar *etext = common_encode_uri_string(text);
 	g_free(text);
-	std::string host = "translate.google.com";
-	std::string file = "/translate_t?ie=UTF8&langpair=en|zh-CN&text=";
-	file += etext;
+	std::string host;
+	std::string file;
+	oTransWin->GetHostFile(host, file, etext);
 	g_free(etext);
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
