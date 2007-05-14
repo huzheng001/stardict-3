@@ -209,6 +209,42 @@
     </schema>
 
     <schema>
+      <key>/schemas/apps/stardict/preferences/translate/engine</key>
+      <applyto>/apps/stardict/preferences/translate/engine</applyto>
+      <owner>stardict</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+	<short>Engine index</short>
+	<long>The index of the translate engine.</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/stardict/preferences/translate/fromlang</key>
+      <applyto>/apps/stardict/preferences/translate/fromlang</applyto>
+      <owner>stardict</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+	<short>From-language index</short>
+	<long>The index of the from-language for translating.</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/stardict/preferences/translate/tolang</key>
+      <applyto>/apps/stardict/preferences/translate/tolang</applyto>
+      <owner>stardict</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+	<short>To-language index</short>
+	<long>The index of the to-language for translating.</long>
+      </locale>
+    </schema>
+
+    <schema>
       <key>/schemas/apps/stardict/preferences/notification_area_icon/query_in_floatwin</key>
       <applyto>/apps/stardict/preferences/notification_area_icon/query_in_floatwin</applyto>
       <owner>stardict</owner>

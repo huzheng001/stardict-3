@@ -263,11 +263,16 @@ public:
 private:
 	GtkWidget *input_textview;
 	GtkWidget *result_textview;
-	GtkWidget *engine_optionmenu;
-	GtkWidget *fromlang_optionmenu;
-	GtkWidget *tolang_optionmenu;
+	GtkWidget *engine_combobox;
+	GtkWidget *fromlang_combobox;
+	GtkWidget *tolang_combobox;
 	GtkWidget *trans_button;
 	static void on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin);
+	static void on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
+	static void on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
+	static void on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
+	void SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index);
+	void GetHostFile(std::string &host, std::string &file, const char *text);
 };
 
 class MidWin {

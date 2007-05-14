@@ -1786,7 +1786,7 @@ void PrefsDlg::setup_floatwin_options_page()
 	
 	vbox1 = gtk_vbox_new(false, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
-	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Pronouce the word when it pops up."));
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Pronounce the word when it pops up."));
 	bool pronounce_when_popup=
 		conf->get_bool_at("floating_window/pronounce_when_popup");
 
