@@ -1353,7 +1353,7 @@ void ToolWin::PlayCallback(GtkWidget *widget, ToolWin *oToolWin)
 {
 	gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.get_text());
 	gpAppFrame->oTopWin.InsertBackList();
-	gpAppFrame->oReadWord.read(gpAppFrame->oMidWin.oTextWin.pronounceWord.c_str());
+	gpAppFrame->oReadWord.read(gpAppFrame->oMidWin.oTextWin.pronounceWord.c_str(), gpAppFrame->oMidWin.oTextWin.readwordtype);
 }
 
 void ToolWin::do_save()

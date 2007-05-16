@@ -5,14 +5,22 @@
 #include <list>
 #include <string>
 
+enum ReadWordType {
+	READWORD_CANNOT = 0,
+	READWORD_REALTTS,
+	READWORD_TTS,
+	READWORD_COMMAND,
+};
+
 class ReadWord {
 public:
 	ReadWord();
-	void loadpath(const gchar *path);
-	bool canRead(const gchar *word);
-	void read(const gchar *word);
+	void LoadRealTtsPath(const gchar *path);
+	ReadWordType canRead(const gchar *word);
+	void read(const gchar *word, ReadWordType type);
 private:
-	//! \todo why this is here, we should allow change preferences online
+	bool RealTts_canRead(const gchar *word);
+	void RealTts_read(const gchar *word);
 	std::list<std::string> ttspath;
 	bool use_tts;
 	bool use_tss_if_not_found;

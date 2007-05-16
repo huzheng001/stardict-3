@@ -3,6 +3,7 @@
 
 #include "plugin.h"
 #include "virtualdictplugin.h"
+#include "ttsplugin.h"
 #include <glib.h>
 #include <gmodule.h>
 #include <vector>
@@ -33,11 +34,33 @@ private:
 	std::vector<StarDictVirtualDictPlugin *> oPlugins;
 };
 
+class StarDictTtsPlugin {
+public:
+	StarDictTtsPlugin(GModule *module, StarDictTtsPlugInObject *tts_plugin_obj);
+	~StarDictTtsPlugin();
+	void saytext(const gchar *text);
+private:
+	GModule *module;
+	StarDictTtsPlugInObject *obj;
+};
+
+class StarDictTtsPlugins {
+public:
+	StarDictTtsPlugins();
+	~StarDictTtsPlugins();
+	void add(GModule *module, StarDictTtsPlugInObject *tts_plugin_obj);
+	void saytext(size_t iPlugin, const gchar *text);
+	size_t nplugins() { return oPlugins.size(); }
+private:
+	std::vector<StarDictTtsPlugin *> oPlugins;
+};
+
 class StarDictPlugins {
 public:
 	StarDictPlugins(const char *dirpath);
 	~StarDictPlugins();
 	StarDictVirtualDictPlugins VirtualDictPlugins;
+	StarDictTtsPlugins TtsPlugins;
 private:
 	void load(const char *dirpath);
 	void load_plugin(const char *filename);

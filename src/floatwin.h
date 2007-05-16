@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 #include <string>
 #include "articleview.h"
+#include "readword.h"
 
 const int FLOAT_TIMEOUT=300;		        // interval used by floating window.
 const int DISAPPEAR_DISTANCE=400; // it is the square of the distance.
@@ -51,6 +52,7 @@ private:
 public:
   std::string QueryingWord;
   std::string PronounceWord;
+  ReadWordType readwordtype;
   FloatWinQueryResult found_result;
   GtkWidget *FloatWindow, *lock_image, *button_hbox;
   GtkWidget *PronounceWordButton, *StopButton;
