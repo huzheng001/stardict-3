@@ -29,6 +29,7 @@ void StarDictPlugins::load(const char *dirpath)
 
 typedef bool (*stardict_plugin_init_func_t)(StarDictPlugInObject *obj);
 typedef bool (*stardict_virtualdict_plugin_init_func_t)(StarDictVirtualDictPlugInObject *obj);
+typedef bool (*stardict_tts_plugin_init_func_t)(StarDictTtsPlugInObject *obj);
 
 void StarDictPlugins::load_plugin(const char *filename)
 {
@@ -78,6 +79,26 @@ void StarDictPlugins::load_plugin(const char *filename)
 			return;
 		}
 		VirtualDictPlugins.add(module, virtualdict_plugin_obj);
+	} else if (ptype == StarDictPlugInType_TTS) {
+		union {
+			stardict_tts_plugin_init_func_t stardict_tts_plugin_init;
+			gpointer stardict_tts_plugin_init_avoid_warning;
+		} func2;
+		func2.stardict_tts_plugin_init = 0;
+		if (!g_module_symbol (module, "stardict_tts_plugin_init", (gpointer *)&(func2.stardict_tts_plugin_init_avoid_warning))) {
+			printf("Load %s failed: No stardict_tts_plugin_init func!\n", filename);
+			g_module_close (module);
+			return;
+		}
+		StarDictTtsPlugInObject *tts_plugin_obj = new StarDictTtsPlugInObject();
+		failed = func2.stardict_tts_plugin_init(tts_plugin_obj);
+		if (failed) {
+			g_print("Load %s failed!\n", filename);
+			g_module_close (module);
+			delete tts_plugin_obj;
+			return;
+		}
+		TtsPlugins.add(module, tts_plugin_obj);
 	} else {
 		g_print("Load %s failed: Unknow type plugin!\n", filename);
 		g_module_close (module);
@@ -167,4 +188,59 @@ bool StarDictVirtualDictPlugin::is_instant()
 const char *StarDictVirtualDictPlugin::dict_name()
 {
 	return obj->dict_name;
+}
+
+//
+// class StarDictTtsPlugins begin.
+//
+
+StarDictTtsPlugins::StarDictTtsPlugins()
+{
+}
+
+StarDictTtsPlugins::~StarDictTtsPlugins()
+{
+	for (std::vector<StarDictTtsPlugin *>::iterator i = oPlugins.begin(); i != oPlugins.end(); ++i) {
+		delete *i;
+	}
+}
+
+void StarDictTtsPlugins::add(GModule *module, StarDictTtsPlugInObject *tts_plugin_obj)
+{
+	StarDictTtsPlugin *plugin = new StarDictTtsPlugin(module, tts_plugin_obj);
+	oPlugins.push_back(plugin);
+}
+
+void StarDictTtsPlugins::saytext(size_t iPlugin, const gchar *text)
+{
+	oPlugins[iPlugin]->saytext(text);
+}
+
+//
+// class StarDictTtsPlugin begin.
+//
+
+StarDictTtsPlugin::StarDictTtsPlugin(GModule *module_, StarDictTtsPlugInObject *tts_plugin_obj)
+{
+	module = module_;
+	obj = tts_plugin_obj;
+}
+
+StarDictTtsPlugin::~StarDictTtsPlugin()
+{
+	union {
+		stardict_plugin_exit_func_t stardict_plugin_exit;
+		gpointer stardict_plugin_exit_avoid_warning;
+	} func;
+	func.stardict_plugin_exit = 0;
+	if (g_module_symbol (module, "stardict_plugin_exit", (gpointer *)&(func.stardict_plugin_exit_avoid_warning))) {
+		func.stardict_plugin_exit();
+	}
+	g_module_close (module);
+	delete obj;
+}
+
+void StarDictTtsPlugin::saytext(const char *text)
+{
+	obj->saytext_func(text);
 }

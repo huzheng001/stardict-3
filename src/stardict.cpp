@@ -247,7 +247,7 @@ void AppCore::Create(gchar *queryword)
 // Init oStarDictPlugins after we get window.
 	oStarDictPluginInfo.datadir = gStarDictDataDir.c_str();
 	oStarDictPluginInfo.mainwin = window;
-	oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
+	//oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str());
 #else
@@ -1149,22 +1149,22 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 		}
 	}
 
-	gboolean canRead = oReadWord.canRead(sOriginWord);
-	if (canRead) {
+	oMidWin.oTextWin.readwordtype = oReadWord.canRead(sOriginWord);
+	if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT) {
 		oMidWin.oTextWin.pronounceWord = sOriginWord;
 	}
 	else {
 		for (size_t i=0;i< dictmask.size(); i++) {
 			if (pppWord[i] && strcmp(pppWord[i][0], sOriginWord)) {
-				if (oReadWord.canRead(pppWord[i][0])) {
-					canRead = true;
+				oMidWin.oTextWin.readwordtype = oReadWord.canRead(pppWord[i][0]);
+				if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT) {
 					oMidWin.oTextWin.pronounceWord = pppWord[i][0];
 				}
 				break;
 			}
 		}
 	}
-	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, canRead);
+	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, (oMidWin.oTextWin.readwordtype != READWORD_CANNOT));
 }
 
 void AppCore::ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTreeDict)
@@ -1183,10 +1183,10 @@ void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextW
 
 	oMidWin.oIndexWin.oResultWin.Clear();
 
-	gboolean canRead = oReadWord.canRead(sWord);
-	if (canRead)
+	oMidWin.oTextWin.readwordtype = oReadWord.canRead(sWord);
+	if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT)
 		oMidWin.oTextWin.pronounceWord = sWord;
-	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, canRead);
+	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, oMidWin.oTextWin.readwordtype != READWORD_CANNOT);
 }
 
 void AppCore::ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboolean fuzzy)
@@ -1288,7 +1288,7 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	oTopWin.InsertHisList(text);
 	oTopWin.InsertBackList();
 	if (GTK_WIDGET_SENSITIVE(oMidWin.oToolWin.PronounceWordButton))
-		oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str());
+		oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 }
 
 #define DEFAULT_WORD_CHANGE_TIMEOUT 300
@@ -1584,10 +1584,10 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	oHttpManager.Remove(http_client);
 }
 
-void AppCore::on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *response)
+/*void AppCore::on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *response)
 {
 	g_print("Find: %s\n", response->word);
-}
+}*/
 
 class reload_show_progress_t : public show_progress_t {
 public:

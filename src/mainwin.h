@@ -5,6 +5,7 @@
 #include <string>
 
 #include "articleview.h"
+#include "readword.h"
 
 const guint MAX_HISTORY_WORD_ITEM_NUM=20;
 const guint MAX_BACK_WORD_ITEM_NUM=20;
@@ -211,6 +212,7 @@ class TextWin : public sigc::trackable {
 public:
   std::string queryWord;
   std::string pronounceWord;
+  ReadWordType readwordtype;
   TextWinQueryResult query_result;
   std::auto_ptr<ArticleView> view;
 	gboolean search_from_beginning;

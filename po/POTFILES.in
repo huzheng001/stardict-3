@@ -21,3 +21,4 @@ src/win32/systray.cpp
 stardict-plugins/stardict-advertisement-plugin/advertisement.cpp
 stardict-plugins/stardict-spell-plugin/stardict_spell.cpp
 stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp
+stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp

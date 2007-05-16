@@ -2012,7 +2012,7 @@ bool PrefsDlg::ShowModal()
 		gtk_text_buffer_get_end_iter(text_view_buffer, &end_iter);
 		gchar *text = gtk_text_buffer_get_text(text_view_buffer, &start_iter, &end_iter, FALSE);
 		conf->set_string_at("dictionary/tts_path", text);
-		gpAppFrame->oReadWord.loadpath(text);
+		gpAppFrame->oReadWord.LoadRealTtsPath(text);
 		g_free(text);
 		gtk_widget_destroy(GTK_WIDGET(window));
 		window = NULL;

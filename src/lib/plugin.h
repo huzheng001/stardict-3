@@ -14,15 +14,15 @@ enum StarDictPlugInType {
 };
 
 
-struct VirtualDictLookupResponse {
+/*struct VirtualDictLookupResponse {
 	const char *bookname;
 	const char *word;
 	std::list<char *> datalist;
-};
+};*/
 
 struct StarDictVirtualDictPlugInSlots {
-	typedef void (*on_stardict_virtual_dict_plugin_lookup_end_func_t)(const struct VirtualDictLookupResponse *);
-	on_stardict_virtual_dict_plugin_lookup_end_func_t on_lookup_end;
+	//typedef void (*on_stardict_virtual_dict_plugin_lookup_end_func_t)(const struct VirtualDictLookupResponse *);
+	//on_stardict_virtual_dict_plugin_lookup_end_func_t on_lookup_end;
 };
 
 struct StarDictTtsPlugInSlots {

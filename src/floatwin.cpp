@@ -233,8 +233,8 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 	}
 	view->end_update();
 	gboolean pronounced = false;
-	gboolean canRead = gpAppFrame->oReadWord.canRead(sOriginWord);
-	if (canRead) {
+	readwordtype = gpAppFrame->oReadWord.canRead(sOriginWord);
+	if (readwordtype != READWORD_CANNOT) {
 		if (PronounceWord == sOriginWord)
 			pronounced = true;
 		else
@@ -242,8 +242,8 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 	} else {
 		for (size_t i=0;i< gpAppFrame->dictmask.size(); i++) {
 			if (Word[i] && strcmp(Word[i][0], sOriginWord)) {
-				if (gpAppFrame->oReadWord.canRead(Word[i][0])) {
-					canRead = TRUE;
+				readwordtype = gpAppFrame->oReadWord.canRead(Word[i][0]);
+				if (readwordtype != READWORD_CANNOT) {
 					if (PronounceWord == Word[i][0])
 						pronounced = true;
 					else
@@ -253,11 +253,11 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 			}
 		}
 	}
-	gtk_widget_set_sensitive(PronounceWordButton, canRead);
+	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
 	Popup(true);
-	if (canRead && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
-		gpAppFrame->oReadWord.read(PronounceWord.c_str());
+	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
+		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
 void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response)
@@ -297,8 +297,8 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
     }
 	view->end_update();
 	gboolean pronounced = false;
-	gboolean canRead = gpAppFrame->oReadWord.canRead(dict_response->oword);
-	if (canRead) {
+	readwordtype = gpAppFrame->oReadWord.canRead(dict_response->oword);
+	if (readwordtype != READWORD_CANNOT) {
 		if (PronounceWord == dict_response->oword)
 			pronounced = true;
 		else
@@ -307,8 +307,8 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
         for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
             std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin();
             if (j != (*i)->word_result_list.end() && strcmp((*j)->word, dict_response->oword)) {
-                if (gpAppFrame->oReadWord.canRead((*j)->word)) {
-                    canRead = TRUE;
+		readwordtype = gpAppFrame->oReadWord.canRead((*j)->word);
+                if (readwordtype != READWORD_CANNOT) {
                     if (PronounceWord == (*j)->word)
                         pronounced = true;
                     else
@@ -318,11 +318,11 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
             }
         }
 	}
-	gtk_widget_set_sensitive(PronounceWordButton, canRead);
+	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
 	Popup(true);
-	if (canRead && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
-		gpAppFrame->oReadWord.read(PronounceWord.c_str());
+	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
+		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
 void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gchar ** ppOriginWord, gint count, const gchar *sOriginWord)
@@ -412,10 +412,10 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
   }	
   view->end_update();
 
-  gboolean canRead = gpAppFrame->oReadWord.canRead(sOriginWord);
-  if (canRead)
+  readwordtype = gpAppFrame->oReadWord.canRead(sOriginWord);
+  if (readwordtype != READWORD_CANNOT)
     PronounceWord = sOriginWord;
-  gtk_widget_set_sensitive(PronounceWordButton, canRead);
+  gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
  
   Popup(false);
@@ -445,14 +445,14 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 	view->set_pango_text(text);
 	
 	gboolean pronounced = false;
-	gboolean canRead = gpAppFrame->oReadWord.canRead(sWord);
-	if (canRead) {
+	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
+	if (readwordtype != READWORD_CANNOT) {
 		if (PronounceWord == sWord)
 			pronounced = true;
 		else
 			PronounceWord = sWord;
 	}
-	gtk_widget_set_sensitive(PronounceWordButton, canRead);
+	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
 	if (fuzzy)
 		Popup(false);
@@ -462,8 +462,8 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 	g_free(m_word);
 	g_free(m_reason);
 
-	if (canRead && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
-		gpAppFrame->oReadWord.read(PronounceWord.c_str());
+	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
+		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
 void FloatWin::Popup(gboolean updatePosition)
@@ -913,7 +913,7 @@ void FloatWin::on_save_click(GtkWidget *widget, FloatWin *oFloatWin)
 
 void FloatWin::on_play_click(GtkWidget *widget, FloatWin *oFloatWin)
 {
-	gpAppFrame->oReadWord.read(oFloatWin->PronounceWord.c_str());
+	gpAppFrame->oReadWord.read(oFloatWin->PronounceWord.c_str(), oFloatWin->readwordtype);
 }
 
 void FloatWin::on_stop_click(GtkWidget *widget, FloatWin *oFloatWin)

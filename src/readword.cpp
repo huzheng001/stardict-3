@@ -8,16 +8,38 @@
 #include "conf.h"
 #include "desktop.hpp"
 #include "utils.h"
+#include "stardict.h"
 
 #include "readword.h"
 
 ReadWord::ReadWord()
 {
 	const std::string &path = conf->get_string_at("dictionary/tts_path");
-	loadpath(path.c_str());
+	LoadRealTtsPath(path.c_str());
 }
 
-void ReadWord::loadpath(const gchar *path)
+ReadWordType ReadWord::canRead(const gchar *word)
+{
+	if (RealTts_canRead(word))
+		return READWORD_REALTTS;
+	if (gpAppFrame->oStarDictPlugins->TtsPlugins.nplugins() > 0)
+		return READWORD_TTS;
+	//TODO READWORD_COMMAND
+	return READWORD_CANNOT;
+}
+
+void ReadWord::read(const gchar *word, ReadWordType type)
+{
+	if (type == READWORD_REALTTS) {
+		RealTts_read(word);
+	} else if (type == READWORD_TTS) {
+		gpAppFrame->oStarDictPlugins->TtsPlugins.saytext(0, word);
+	} else if (type == READWORD_COMMAND) {
+		//TODO
+	}
+}
+
+void ReadWord::LoadRealTtsPath(const gchar *path)
 {
 	std::list<std::string> paths;
 	std::string str;
@@ -60,7 +82,7 @@ void ReadWord::loadpath(const gchar *path)
 	tts_program_cmdline = cmdline;
 }
 
-bool ReadWord::canRead(const gchar *word)
+bool ReadWord::RealTts_canRead(const gchar *word)
 {	
 	bool return_val = false;
 	
@@ -87,7 +109,7 @@ bool ReadWord::canRead(const gchar *word)
 	return return_val;
 }
 
-void ReadWord::read(const gchar *word)
+void ReadWord::RealTts_read(const gchar *word)
 {
 	bool tts_sound_file_exist = false;
 	

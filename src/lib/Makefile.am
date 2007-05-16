@@ -22,6 +22,7 @@ libstardict_a_SOURCES = \
 	httpmanager.cpp httpmanager.h	\
 	plugin.cpp plugin.h \
 	virtualdictplugin.cpp virtualdictplugin.h \
+	ttsplugin.cpp ttsplugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h
 

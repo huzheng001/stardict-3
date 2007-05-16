@@ -150,8 +150,6 @@ public:
 
 	void on_http_client_error(HttpClient*, const char *);
 	void on_http_client_response(HttpClient*);
-
-	static void on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *);
 };
 
 #ifdef _WIN32
