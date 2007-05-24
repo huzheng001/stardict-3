@@ -460,9 +460,7 @@ static std::string wiki2pango(const char *p, guint32 sec_size)
 {
 	std::string res(p, sec_size);
 	std::string xml = wiki2xml(res);
-	gchar *text = g_markup_escape_text(xml.c_str(), xml.length());
-	std::string pango(text);
-	g_free(text);
+	std::string pango =wikixml2pango(xml);
 	return pango;
 }
 

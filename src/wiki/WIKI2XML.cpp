@@ -1,4 +1,5 @@
 #include "WIKI2XML.h"
+#include <glib.h>
 
 TTableInfo::TTableInfo ()
 	{
@@ -45,7 +46,7 @@ string TTableInfo::new_cell ( string type )
 // *****************************************************************************
 // *****************************************************************************
 
-void WIKI2XML::parse_symmetric ( string &l , int &from , 
+void WIKI2XML::parse_symmetric ( string &l , size_t &from , 
          							string s1 , string s2 ,
          							string r1 , string r2 ,
                                     bool extend )
@@ -67,10 +68,10 @@ void WIKI2XML::parse_symmetric ( string &l , int &from ,
 		}    
 	}
      
-void WIKI2XML::parse_link ( string &l , int &from , char mode )
+void WIKI2XML::parse_link ( string &l , size_t &from , char mode )
 	{
     from += 1 ;
-    int a , cnt = 1 ;
+    size_t a , cnt = 1 ;
     chart par_open = '[' ; // mode 'L'
     chart par_close = ']' ; // mode 'L'
     if ( mode == 'T' ) { par_open = '{' ; par_close = '}' ; }
@@ -109,17 +110,26 @@ void WIKI2XML::parse_link ( string &l , int &from , char mode )
            explode ( '=' , p , subparts ) ;
            if ( subparts.size() == 1 )
               {
-              value = xml_embed ( p , "value" ) ;
+              char *str = g_markup_escape_text(p.c_str(), p.length());
+              value = xml_embed ( str , "value" ) ;
+              g_free(str);
               }
            else
               {
               key = xml_embed ( subparts[0] , "key" ) ;
               subparts.erase ( subparts.begin() ) ;
-              value = xml_embed ( implode ( "=" , subparts ) , "value" ) ;
+              string itmp = implode ( "=" , subparts );
+              char *str = g_markup_escape_text(itmp.c_str(), itmp.length());
+              value = xml_embed ( str , "value" ) ;
+              g_free(str);
               }
            p = key + value ;
            }
-        else p = xml_embed ( p , "value" ) ;
+        else {
+		char *str = g_markup_escape_text(p.c_str(), p.length());
+		p = xml_embed ( str , "value" ) ;
+		g_free(str);
+	}
 
    	    string param = "number=\"" + val ( a ) + "\"" ;
    	    if ( last ) param += " last=\"1\"" ;
@@ -173,7 +183,7 @@ string WIKI2XML::get_list_tag ( chart c , bool open )
         
 string WIKI2XML::fix_list ( string &l )
     {
-    int a , b ;
+    size_t a , b ;
     for ( a = 0 ; a < l.length() && is_list_char ( l[a] ) ; a++ ) ;
     string newlist , pre ;
     if ( a > 0 )
@@ -201,7 +211,7 @@ string WIKI2XML::fix_list ( string &l )
 
 void WIKI2XML::parse_line ( string &l )
     {
-    int a , b ;
+    size_t a;
     if ( debug ) cout << l << endl ;
     string pre ;
     string oldlist = list ;
@@ -248,7 +258,7 @@ void WIKI2XML::parse_line ( string &l )
             l = "" ;
             }    
     	}
-   	else if ( left ( l , 2 ) == "{|" || left ( l , 2 ) == "|}" ||
+   	else if ( left ( l , 2 ) == "{|" || (left ( l , 2 ) == "|}" && l[2] != '}' ) ||
    				( tables.size() > 0 && l != "" && ( l[0] == '|' || l[0] == '!' ) ) )
         {
         pre += table_markup ( l ) ;
@@ -269,9 +279,9 @@ bool WIKI2XML::is_external_link_protocol ( string protocol )
     return false ;
     }
     
-int WIKI2XML::scan_url ( string &l , int from )
+int WIKI2XML::scan_url ( string &l , size_t from )
     {
-    int a ;
+    size_t a ;
     for ( a = from ; a < l.length() ; a++ )
         {
         if ( l[a] == ':' || l[a] == '/' || l[a] == '.' ) continue ;
@@ -282,7 +292,7 @@ int WIKI2XML::scan_url ( string &l , int from )
     return a ;
     }
 	
-void WIKI2XML::parse_external_freelink ( string &l , int &from )
+void WIKI2XML::parse_external_freelink ( string &l , size_t &from )
 	{
 	int a ;
 	for ( a = from - 1 ; a >= 0 && is_text_char ( l[a] ) ; a-- ) ;
@@ -300,11 +310,11 @@ void WIKI2XML::parse_external_freelink ( string &l , int &from )
 	from = a + replacement.length() - 1 ;
 	}
 	
-void WIKI2XML::parse_external_link ( string &l , int &from )
+void WIKI2XML::parse_external_link ( string &l , size_t &from )
 	{
 	string protocol = upper ( before_first ( ':' , l.substr ( from + 1 , l.length() - from ) ) ) ;
 	if ( !is_external_link_protocol ( protocol ) ) return ;
-    int to ;
+    size_t to ;
     for ( to = from + 1 ; to < l.length() && l[to] != ']' ; to++ ) ;
     if ( to == l.length() ) return ;
     string url = l.substr ( from + 1 , to - from - 1 ) ;
@@ -322,7 +332,7 @@ void WIKI2XML::parse_external_link ( string &l , int &from )
 	
 void WIKI2XML::parse_line_sub ( string &l )
 	{
-	int a ;
+	size_t a ;
     for ( a = 0 ; a < l.length() ; a++ )
         {
         if ( l[a] == '[' && a+1 < l.length() && l[a+1] == '[' ) // [[Link]]
@@ -343,7 +353,7 @@ void WIKI2XML::parse_line_sub ( string &l )
      
 void WIKI2XML::parse_lines ( vector <string> &lines )
     {
-    int a ;
+    size_t a ;
     for ( a = 0 ; a < lines.size() ; a++ )
         {
         parse_line ( lines[a] ) ;
@@ -408,7 +418,7 @@ void WIKI2XML::init ( string s )
 	allowed_html.push_back ( "small" ) ;
 	allowed_html.push_back ( "center" ) ;
 //	allowed_html.push_back ( "" ) ;
-	int a ;
+	size_t a ;
 	for ( a = 0 ; a < allowed_html.size() ; a++ )
 		allowed_html[a] = upper ( allowed_html[a] ) ;
 	
@@ -422,28 +432,29 @@ void WIKI2XML::init ( string s )
 
 string WIKI2XML::get_xml ()
 	{
-	string xmlheader = "<?xml version='1.0' encoding='UTF-8'?>" ;
-	string ret = xmlheader + "<text>" + implode ( " " , lines ) + "</text>" ;
+	string ret = "<text>";
+	ret += implode ( "\n" , lines );
+	ret += "</text>";
 	
 	// Invalidating mdash
-	int a = ret.find ( "&mdash;" ) ;
+	/*size_t a = ret.find ( "&mdash;" ) ;
 	while ( a >= 0 && a < ret.length() )
 		{
 		ret[a] = '!' ;
 		a = ret.find ( "&mdash;" , a ) ;
-		}    
+		}*/
 		
 	return ret ;
 	}
 	
-void WIKI2XML::replace_part ( string &s , int from , int to , string with )
+void WIKI2XML::replace_part ( string &s , size_t from , size_t to , string with )
 	{
 	s = s.substr ( 0 , from ) + with + s.substr ( to + 1 , s.length() - to - 1 ) ;
 	}    
     
-void WIKI2XML::replace_part_sync ( string &s , int from , int to , string with , vector <TXML> &list )
+void WIKI2XML::replace_part_sync ( string &s , size_t from , size_t to , string with , vector <TXML> &list )
 	{
-	int a , b ;
+	size_t a , b ;
 	replace_part ( s , from , to , with ) ;
 	for ( a = 0 ; a < list.size() ; a++ )
 		{
@@ -456,7 +467,8 @@ void WIKI2XML::replace_part_sync ( string &s , int from , int to , string with ,
 void WIKI2XML::make_tag_list ( string &s , vector <TXML> &list )
 	{
 	list.clear () ;
-	int a , b ;
+	size_t a;
+	int b;
 	for ( a = 0 ; a < s.length() ; a++ )
 		{
 		if ( s[a] == '>' ) // Rouge >
@@ -480,7 +492,7 @@ void WIKI2XML::make_tag_list ( string &s , vector <TXML> &list )
  
 void WIKI2XML::remove_evil_html ( string &s , vector <TXML> &taglist )
 	{
-	int a , b ;
+	size_t a , b ;
 	for ( a = 0 ; a < taglist.size() ; a++ )
 		{
 		string tag = upper ( taglist[a].name ) ;
@@ -493,7 +505,7 @@ void WIKI2XML::remove_evil_html ( string &s , vector <TXML> &taglist )
 
 string WIKI2XML::table_markup ( string &l )
 	{
-	int a ;
+	size_t a ;
 	string ret ;
 	if ( left ( l , 2 ) == "{|" ) // Open table
 		{

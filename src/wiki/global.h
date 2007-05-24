@@ -17,7 +17,7 @@ using namespace std;
 typedef string::value_type chart ; // Char type
 
 string right ( string &s , int num ) ;
-string left ( string &s , int num ) ;
+string left ( string &s , size_t num ) ;
 string upper ( string s ) ;
 bool is_text_char ( chart ch ) ;
 void explode ( chart ch , string &l , vector <string> &parts ) ;

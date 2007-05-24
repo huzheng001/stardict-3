@@ -10,6 +10,12 @@ huzheng.png
 x
 The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>\nMM们<iref href="http://reciteword.cosoft.org.cn/yaoguang/seek.txt">注意</iref>啦！
 
+wenjing	Huang Wenjing	黄文静	猪能飞
+P
+wenjing.jpg
+x
+Blog: <iref href="http://officepig.blogcn.com">关于一群猪的幸福生活</iref>.\nPhoto: <iref href="http://reciteword.cosoft.org.cn/yaoguang/wenjing.php">照片魔方</iref>.
+
 RedHat	红帽子
 P
 redhat_logo.jpg

@@ -19,7 +19,7 @@ bool is_text_char ( chart ch )
 
 // These are not :
     	
-string left ( string &s , int num )
+string left ( string &s , size_t num )
 	{
 	if ( num <= 0 ) return "" ;
 	if ( num >= s.length() ) return s ;
@@ -38,7 +38,7 @@ string right ( string &s , int num )
 
 string upper ( string s ) // For internal purposes, will do...
 	{
-	int a ;
+	size_t a ;
 	for ( a = 0 ; a < s.length() ; a++ )
 		{
         if ( s[a] >= 'a' && s[a] <= 'z' ) s[a] = s[a] - 'a' + 'A' ;
@@ -49,7 +49,7 @@ string upper ( string s ) // For internal purposes, will do...
 void explode ( chart ch , string &l , vector <string> &parts )
 	{
     parts.clear () ;
-    int a , b ;
+    size_t a , b ;
     for ( a = b = 0 ; a < l.length() ; a++ )
     	{
 	    if ( l[a] == ch )
@@ -71,14 +71,14 @@ string implode ( string mid , vector <string> &parts )
     if ( parts.size() == 0 ) return "" ;
     if ( parts.size() == 1 ) return parts[0] ;
     string ret = parts[0] ;
-    for ( int a = 1 ; a < parts.size() ; a++ )
+    for ( size_t a = 1 ; a < parts.size() ; a++ )
     	ret += mid + parts[a] ;
    	return ret ;
 	}    
 
 string unquote ( chart quote , string &s )
 	{
-	int a ;
+	size_t a ;
 	for ( a = 0 ; a < s.length() ; a++ )
 		{
 		if ( s[a] == quote && ( a == 0 || ( a > 0 && s[a-1] != '\\' ) ) )
@@ -93,7 +93,7 @@ string unquote ( chart quote , string &s )
 bool submatch ( string &main , string &sub , int from )
 	{
 	if ( from + sub.length() > main.length() ) return false ;
-	int a ;
+	size_t a ;
 	for ( a = 0 ; a < sub.length() ; a++ )
 		{
 		if ( sub[a] != main[a+from] ) return false ;
@@ -103,7 +103,7 @@ bool submatch ( string &main , string &sub , int from )
      
 int find_first ( chart c , string &s )
 	{
-	int a ;
+	size_t a ;
 	for ( a = 0 ; a < s.length() && s[a] != c ; a++ ) ;
 	if ( a == s.length() ) return -1 ;
     return a ;
@@ -111,7 +111,8 @@ int find_first ( chart c , string &s )
      
 int find_last ( chart c , string &s )
 	{
-	int a , b = -1 ;
+	size_t a;
+	int b = -1 ;
 	for ( a = 0 ; a < s.length() ; a++ )
 		{
 		if ( s[a] == c ) b = a ;
@@ -151,7 +152,8 @@ string trim ( string &s )
 	{
 	if ( s.length() == 0 ) return s ;
 	if ( s[0] != ' ' && s[s.length()-1] != ' ' ) return s ;
-	int a , b ;
+	size_t a;
+	int b ;
 	for ( a = 0 ; a < s.length() && s[a] == ' ' ; a++ ) ;
 	for ( b = s.length()-1 ; b >= 0 && s[b] == ' ' ; b-- ) ;
 	return s.substr ( a , b - a + 1 ) ;
@@ -159,7 +161,7 @@ string trim ( string &s )
 
 int find_next_unquoted ( chart c , string &s , int start )
 	{
-	int a ;
+	size_t a ;
 	chart lastquote = ' ' ;
 	for ( a = start ; a < s.length() ; a++ )
 		{
