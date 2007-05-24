@@ -561,6 +561,9 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 		}
 	}
 	*P2='\0';
+	if (SearchWord[0]=='\0') {
+		strcpy(SearchWord, sWord);
+	}
 	EndPointer=SearchWord+strlen(SearchWord);
 
 	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
@@ -1269,6 +1272,9 @@ void AppCore::TopWinEnterWord(const gchar *text)
 				gtk_tree_view_scroll_to_cell(
 					oMidWin.oIndexWin.oListWin.treeview_, path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
+			} else {
+				if (GTK_WIDGET_SENSITIVE(oMidWin.oToolWin.PronounceWordButton))
+					oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 			}
 			break;
 		default:
@@ -1287,8 +1293,6 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	oTopWin.select_region_in_text(0, -1);
 	oTopWin.InsertHisList(text);
 	oTopWin.InsertBackList();
-	if (GTK_WIDGET_SENSITIVE(oMidWin.oToolWin.PronounceWordButton))
-		oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 }
 
 #define DEFAULT_WORD_CHANGE_TIMEOUT 300

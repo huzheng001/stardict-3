@@ -115,7 +115,7 @@ private:
 	std::auto_ptr<config_file> cf;
 	cache_t cache;
 
- static void *memrchr(const void *mem, int c, size_t len) {
+/* static void *memrchr(const void *mem, int c, size_t len) {
 	char *res;
 	char *cmem = (char *)mem;
 
@@ -125,7 +125,7 @@ private:
 	while (res != cmem - 1 && *res != c)
 		--res;
 	return res == cmem - 1 ? NULL : res;
-}
+}*/
 	template <typename T>
 	void set_value(const char *name, const T& val, bool abs = true) {
 		cache_t::iterator p;

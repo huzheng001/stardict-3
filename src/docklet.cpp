@@ -62,6 +62,8 @@ DockLet::~DockLet()
 					     gpointer(on_destroyed), this);
 	gtk_widget_destroy(GTK_WIDGET(docklet_));
 	g_object_unref(G_OBJECT(docklet_));	
+	if (menu_)
+		gtk_widget_destroy(get_impl(menu_));
 }
 
 void DockLet::on_destroyed(GtkWidget *widget, DockLet *oDockLet)

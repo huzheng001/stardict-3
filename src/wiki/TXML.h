@@ -7,6 +7,7 @@ class TXML
 	{
     public :
     TXML () {} ;
+    virtual ~TXML() {};
 	TXML ( int f , int t , string &s , bool fix_comments = true ) ;
 	virtual void remove_at ( int pos ) ;
 	virtual void insert_at ( int pos ) ;
