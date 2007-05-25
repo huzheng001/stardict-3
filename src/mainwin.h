@@ -63,6 +63,7 @@ private:
 	
 	static void on_main_menu_preferences_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_dictmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
+	static void on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin);

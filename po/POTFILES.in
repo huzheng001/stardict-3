@@ -6,6 +6,7 @@ data/stardict.schemas.in
 src/articleview.cpp
 src/conf.cpp
 src/dictmanagedlg.cpp
+src/pluginmanagedlg.cpp
 src/docklet.cpp
 src/floatwin.cpp
 src/inifile.cpp

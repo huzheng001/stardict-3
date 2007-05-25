@@ -18,6 +18,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 		return true;
 	}
 	obj->type = StarDictPlugInType_TTS;
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Festival"), _("Festival TTS."), _("Pronounce words by Festival TTS engine."));
 	return false;
 }
 

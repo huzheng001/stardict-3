@@ -2,6 +2,7 @@
 #define _STARDICT_PLUGIN_H_
 
 #include <gtk/gtk.h>
+#include <string>
 #include <list>
 
 
@@ -12,7 +13,6 @@ enum StarDictPlugInType {
 	StarDictPlugInType_VIRTUALDICT,
 	StarDictPlugInType_TTS,
 };
-
 
 /*struct VirtualDictLookupResponse {
 	const char *bookname;
@@ -28,23 +28,25 @@ struct StarDictVirtualDictPlugInSlots {
 struct StarDictTtsPlugInSlots {
 };
 
-struct StarDictPluginInfo {
+struct StarDictPluginSystemInfo {
 	const char *datadir;
 	GtkWidget *mainwin;
 };
 
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.
-extern StarDictPluginInfo oStarDictPluginInfo;
+extern StarDictPluginSystemInfo oStarDictPluginSystemInfo;
 extern StarDictVirtualDictPlugInSlots oStarDictVirtualDictPlugInSlots;
 extern StarDictTtsPlugInSlots oStarDictTtsPlugInSlots;
 
 struct StarDictPlugInObject {
 	StarDictPlugInObject();
+	~StarDictPlugInObject();
 
 	const char* version_str;
 	StarDictPlugInType type;
+	char* info_xml;
 
-	const StarDictPluginInfo *plugin_info;
+	const StarDictPluginSystemInfo *plugin_info;
 	const StarDictVirtualDictPlugInSlots *vd_slots;
 	const StarDictTtsPlugInSlots *tts_slots;
 };

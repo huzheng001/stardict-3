@@ -49,6 +49,7 @@ stardict_SOURCES = 			                \
 	skin.cpp skin.h	                        \
 	prefsdlg.cpp prefsdlg.h	                \
 	dictmanagedlg.cpp dictmanagedlg.h	    \
+	pluginmanagedlg.cpp pluginmanagedlg.h	\
 	floatwin.cpp floatwin.h	                \
 	readword.cpp readword.h	                \
 	selection.cpp selection.h	            \
