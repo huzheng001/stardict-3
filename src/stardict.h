@@ -31,8 +31,6 @@ class AppCore;
 #include "tray.hpp"
 #include "floatwin.h"
 #include "selection.h"
-#include "dictmanagedlg.h"
-#include "prefsdlg.h"
 #include "readword.h"
 #include "iskeyspressed.hpp"
 
@@ -45,10 +43,14 @@ const int MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM=5;
 
 const int LIST_WIN_ROW_NUM = 30; //how many words show in the list win.
 
+class DictManageDlg;
+class PluginManageDlg;
+class PrefsDlg;
 
 class AppCore : public sigc::trackable {
 private:
 	DictManageDlg *dict_manage_dlg;
+	PluginManageDlg *plugin_manage_dlg;
 	PrefsDlg *prefs_dlg;
 	guint word_change_timeout_;
 	std::string delayed_word_;
@@ -135,6 +137,7 @@ public:
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();
+	void PopupPluginManageDlg();
 	void on_link_click(const std::string &link);
 
 	void on_stardict_client_error(const char *);

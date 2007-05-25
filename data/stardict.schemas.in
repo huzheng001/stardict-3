@@ -380,5 +380,18 @@
       </locale>
     </schema>
 
+    <schema>
+      <key>/schemas/apps/stardict/manage_plugins/plugin_disable_list</key>
+      <applyto>/apps/stardict/manage_plugins/plugin_disable_list</applyto>
+      <owner>stardict</owner>
+      <type>list</type>
+	  <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+	<short>Disabled plug-in list</short>
+	<long>List the plugins which are disabled.</long>
+      </locale>
+    </schema>
+
   </schemalist>
 </gconfschemafile>

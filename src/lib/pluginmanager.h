@@ -7,6 +7,7 @@
 #include <glib.h>
 #include <gmodule.h>
 #include <vector>
+#include <list>
 #include "dictmask.h"
 
 class StarDictVirtualDictPlugin {
@@ -55,15 +56,26 @@ private:
 	std::vector<StarDictTtsPlugin *> oPlugins;
 };
 
+struct StarDictPluginInfo {
+	std::string filename;
+	std::string info_xml;
+};
+
 class StarDictPlugins {
 public:
-	StarDictPlugins(const char *dirpath);
+	StarDictPlugins(const char *dirpath, const std::list<std::string>& disable_list);
 	~StarDictPlugins();
+	void get_plugin_list(std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list);
+	bool get_loaded(const char *filename);
+	void load_plugin(const char *filename);
+	void unload_plugin(const char *filename);
 	StarDictVirtualDictPlugins VirtualDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
 private:
-	void load(const char *dirpath);
-	void load_plugin(const char *filename);
+	std::string plugindirpath;
+	std::list<std::string> loaded_plugin_list;
+	void load(const char *dirpath, const std::list<std::string>& disable_list);
+	void get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml);
 };
 
 #endif

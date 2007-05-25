@@ -431,6 +431,11 @@ void TopWin::on_main_menu_dictmanage_activate(GtkMenuItem *menuitem, TopWin *oTo
 	gpAppFrame->PopupDictManageDlg();
 }
 
+void TopWin::on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
+{
+	gpAppFrame->PopupPluginManageDlg();
+}
+
 void TopWin::on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
   show_url("http://stardict.sourceforge.net");
@@ -502,6 +507,13 @@ void TopWin::do_menu()
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_dictmanage_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
+
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _Plugins"));
+		image = gtk_image_new_from_stock(GTK_STOCK_DISCONNECT, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_pluginmanage_activate), NULL);
+		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
+
 		menuitem = gtk_separator_menu_item_new();
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 

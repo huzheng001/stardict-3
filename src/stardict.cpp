@@ -71,6 +71,9 @@ HINSTANCE stardictexe_hInstance;
 #include "iskeyspressed.hpp"
 #include "class_factory.hpp"
 #include "progresswin.hpp"
+#include "dictmanagedlg.h"
+#include "pluginmanagedlg.h"
+#include "prefsdlg.h"
 
 #include "stardict.h"
 
@@ -123,6 +126,7 @@ AppCore::AppCore() :
 	word_change_timeout_ = 0;
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
+	plugin_manage_dlg = NULL;
 	prefs_dlg = NULL;
 #ifdef CONFIG_GNOME
     gnome_sound_init(NULL);
@@ -135,6 +139,7 @@ AppCore::~AppCore()
 	gnome_sound_shutdown();
 #endif
 	delete dict_manage_dlg;
+	delete plugin_manage_dlg;
 	delete prefs_dlg;
 	g_free(iCurrentIndex);
 	delete oStarDictPlugins;
@@ -245,13 +250,13 @@ void AppCore::Create(gchar *queryword)
 #endif
 
 // Init oStarDictPlugins after we get window.
-	oStarDictPluginInfo.datadir = gStarDictDataDir.c_str();
-	oStarDictPluginInfo.mainwin = window;
+	oStarDictPluginSystemInfo.datadir = gStarDictDataDir.c_str();
+	oStarDictPluginSystemInfo.mainwin = window;
 	//oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
 #ifdef _WIN32
-	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str());
+	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else
-	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins");
+	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins", conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #endif
 	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 
@@ -1664,6 +1669,19 @@ void AppCore::PopupDictManageDlg()
 	oLibs.set_show_progress(&rsp);
 	reload_dicts();
 	oLibs.set_show_progress(&gtk_show_progress);
+}
+
+void AppCore::PopupPluginManageDlg()
+{
+	if (!plugin_manage_dlg) {
+		plugin_manage_dlg = new PluginManageDlg();
+		bool exiting = plugin_manage_dlg->ShowModal(GTK_WINDOW(window));
+		delete plugin_manage_dlg;
+		plugin_manage_dlg = NULL;
+		if (exiting)
+			return;
+		//TODO
+	}
 }
 
 void AppCore::stop_word_change_timer()

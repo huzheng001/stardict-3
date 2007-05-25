@@ -1,16 +1,17 @@
 #include "pluginmanager.h"
 #include <string>
 
-StarDictPlugins::StarDictPlugins(const char *dirpath)
+StarDictPlugins::StarDictPlugins(const char *dirpath, const std::list<std::string>& disable_list)
 {
-	load(dirpath);
+	plugindirpath = dirpath;
+	load(dirpath, disable_list);
 }
 
 StarDictPlugins::~StarDictPlugins()
 {
 }
 
-void StarDictPlugins::load(const char *dirpath)
+void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& disable_list)
 {
 	GDir *dir = g_dir_open(dirpath, 0, NULL);
 	if (dir) {
@@ -20,19 +21,125 @@ void StarDictPlugins::load(const char *dirpath)
 				std::string fullfilename = dirpath;
 				fullfilename += G_DIR_SEPARATOR;
 				fullfilename += filename;
-				load_plugin(fullfilename.c_str());
+				bool found = false;
+				for (std::list<std::string>::const_iterator iter = disable_list.begin(); iter != disable_list.end(); ++iter) {
+					if (*iter == fullfilename) {
+						found = true;
+						break;
+					}
+				}
+				if (!found)
+					load_plugin(fullfilename.c_str());
 			}
 		}
 		g_dir_close(dir);
 	}
 }
 
+bool StarDictPlugins::get_loaded(const char *filename)
+{
+	bool found = false;
+	for (std::list<std::string>::iterator iter = loaded_plugin_list.begin(); iter != loaded_plugin_list.end(); ++iter) {
+		if (*iter == filename) {
+			found = true;
+			break;
+		}
+	}
+	return found;
+}
+
+void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list)
+{
+	plugin_list.clear();
+	std::list<StarDictPluginInfo> virtualdict_pluginlist;
+	std::list<StarDictPluginInfo> tts_pluginlist;
+	GDir *dir = g_dir_open(plugindirpath.c_str(), 0, NULL);
+	if (dir) {
+		const gchar *filename;
+		while ((filename = g_dir_read_name(dir))!=NULL) {
+			if (g_str_has_suffix(filename, "."G_MODULE_SUFFIX)) {
+				std::string fullfilename = plugindirpath;
+				fullfilename += G_DIR_SEPARATOR;
+				fullfilename += filename;
+				StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
+				std::string info_xml;
+				get_plugin_info(fullfilename.c_str(), plugin_type, info_xml);
+				if (plugin_type != StarDictPlugInType_UNKNOWN && (!info_xml.empty())) {
+					StarDictPluginInfo plugin_info;
+					plugin_info.filename = fullfilename;
+					plugin_info.info_xml = info_xml;
+					switch (plugin_type) {
+						case StarDictPlugInType_VIRTUALDICT:
+							virtualdict_pluginlist.push_back(plugin_info);
+							break;
+						case StarDictPlugInType_TTS:
+							tts_pluginlist.push_back(plugin_info);
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+		g_dir_close(dir);
+	}
+	if (!virtualdict_pluginlist.empty()) {
+		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_VIRTUALDICT, virtualdict_pluginlist));
+	}
+	if (!tts_pluginlist.empty()) {
+		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_TTS, tts_pluginlist));
+	}
+}
+
 typedef bool (*stardict_plugin_init_func_t)(StarDictPlugInObject *obj);
+
+void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml)
+{
+	GModule *module;
+	module = g_module_open (filename, G_MODULE_BIND_LAZY);
+	if (!module) {
+		g_print("Load %s failed!\n", filename);
+		return;
+	}
+	union {
+		stardict_plugin_init_func_t stardict_plugin_init;
+		gpointer stardict_plugin_init_avoid_warning;
+	} func;
+	func.stardict_plugin_init = 0;
+	if (!g_module_symbol (module, "stardict_plugin_init", (gpointer *)&(func.stardict_plugin_init_avoid_warning))) {
+		g_print("Load %s failed: No stardict_plugin_init func!\n", filename);
+		g_module_close (module);
+		return;
+	}
+	StarDictPlugInObject *plugin_obj = new StarDictPlugInObject();
+	bool failed = func.stardict_plugin_init(plugin_obj);
+	if (failed) {
+		g_print("Load %s failed!\n", filename);
+		g_module_close (module);
+		delete plugin_obj;
+		return;
+	}
+	plugin_type = plugin_obj->type;
+	info_xml = plugin_obj->info_xml;
+	delete plugin_obj;
+	g_module_close (module);
+}
+
 typedef bool (*stardict_virtualdict_plugin_init_func_t)(StarDictVirtualDictPlugInObject *obj);
 typedef bool (*stardict_tts_plugin_init_func_t)(StarDictTtsPlugInObject *obj);
 
 void StarDictPlugins::load_plugin(const char *filename)
 {
+	bool found = false;
+	for (std::list<std::string>::iterator iter = loaded_plugin_list.begin(); iter != loaded_plugin_list.end(); ++iter) {
+		if (*iter == filename) {
+			found = true;
+			break;
+		}
+	}
+	if (found)
+		return;
+	loaded_plugin_list.push_back(filename);
 	GModule *module;
 	module = g_module_open (filename, G_MODULE_BIND_LAZY);
 	if (!module) {
@@ -103,6 +210,16 @@ void StarDictPlugins::load_plugin(const char *filename)
 		g_print("Load %s failed: Unknow type plugin!\n", filename);
 		g_module_close (module);
 		return;
+	}
+}
+
+void StarDictPlugins::unload_plugin(const char *filename)
+{
+	for (std::list<std::string>::iterator iter = loaded_plugin_list.begin(); iter != loaded_plugin_list.end(); ++iter) {
+		if (*iter == filename) {
+			loaded_plugin_list.erase(iter);
+			break;
+		}
 	}
 }
 
