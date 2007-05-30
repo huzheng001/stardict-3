@@ -25,9 +25,6 @@ struct StarDictVirtualDictPlugInSlots {
 	//on_stardict_virtual_dict_plugin_lookup_end_func_t on_lookup_end;
 };
 
-struct StarDictTtsPlugInSlots {
-};
-
 struct StarDictPluginSystemInfo {
 	const char *datadir;
 	GtkWidget *mainwin;
@@ -36,7 +33,8 @@ struct StarDictPluginSystemInfo {
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.
 extern StarDictPluginSystemInfo oStarDictPluginSystemInfo;
 extern StarDictVirtualDictPlugInSlots oStarDictVirtualDictPlugInSlots;
-extern StarDictTtsPlugInSlots oStarDictTtsPlugInSlots;
+
+typedef void (*plugin_configure_func_t)();
 
 struct StarDictPlugInObject {
 	StarDictPlugInObject();
@@ -45,10 +43,10 @@ struct StarDictPlugInObject {
 	const char* version_str;
 	StarDictPlugInType type;
 	char* info_xml;
+	plugin_configure_func_t configure_func;
 
 	const StarDictPluginSystemInfo *plugin_info;
 	const StarDictVirtualDictPlugInSlots *vd_slots;
-	const StarDictTtsPlugInSlots *tts_slots;
 };
 
 #endif

@@ -1675,12 +1675,24 @@ void AppCore::PopupPluginManageDlg()
 {
 	if (!plugin_manage_dlg) {
 		plugin_manage_dlg = new PluginManageDlg();
-		bool exiting = plugin_manage_dlg->ShowModal(GTK_WINDOW(window));
+		bool dict_changed;
+		bool exiting = plugin_manage_dlg->ShowModal(GTK_WINDOW(window), dict_changed);
 		delete plugin_manage_dlg;
 		plugin_manage_dlg = NULL;
 		if (exiting)
 			return;
-		//TODO
+		if (dict_changed) {
+			dictmask.clear();
+			oLibs.SetDictMask(dictmask, NULL, -1, -1);
+			oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+	
+			g_free(iCurrentIndex);
+			iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
+
+			const gchar *sWord = oTopWin.get_text();
+			if (sWord && sWord[0])
+				TopWinWordChange(sWord);
+		}
 	}
 }
 
