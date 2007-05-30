@@ -8,8 +8,25 @@
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static EnchantBroker *broker = NULL;
-static EnchantDict *dict = NULL;
+static std::list<EnchantDict *> dictlist;
 static PangoLayout *layout = NULL;
+static gboolean use_custom;
+static std::string custom_langs;
+
+static std::string get_cfg_filename()
+{
+#ifdef _WIN32
+	std::string res = g_get_user_config_dir();
+	res += G_DIR_SEPARATOR_S "StarDict" G_DIR_SEPARATOR_S "spell.cfg";
+#else
+	std::string res;
+	gchar *tmp = g_build_filename(g_get_home_dir(), ".stardict", NULL);
+	res=tmp;
+	g_free(tmp);
+	res += G_DIR_SEPARATOR_S "spell.cfg";
+#endif
+	return res;
+}
 
 static char *build_dictdata(char type, const char *definition)
 {
@@ -97,10 +114,14 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 			/* We only want to check words */
 			misspelled = false;
 		} else {
-			if (enchant_dict_check(dict, spellword, strlen(spellword)) <= 0)
-				misspelled = false;
-			else
-				misspelled = true;
+			misspelled = true;
+			size_t wordlen = strlen(spellword);
+			for (std::list<EnchantDict *>::iterator iter = dictlist.begin(); iter != dictlist.end(); ++iter) {
+				if (enchant_dict_check(*iter, spellword, wordlen) <= 0) {
+					misspelled = false;
+					break;
+				}
+			}
 		}
 		if (misspelled) {
 			misspelled_wordlist.push_back(spellword);
@@ -136,19 +157,30 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	std::vector< std::pair<char *, char *> > result;
 	char **suggestion;
 	for (std::list<std::string>::iterator iter = misspelled_wordlist.begin(); iter != misspelled_wordlist.end(); ++iter) {
-		suggestion = enchant_dict_suggest(dict, (*iter).c_str(), -1, NULL);
-		if (suggestion ==NULL)
+		std::list<char **> suggestions;
+		for (std::list<EnchantDict *>::iterator i = dictlist.begin(); i != dictlist.end(); ++i) {
+			suggestion = enchant_dict_suggest(*i, (*iter).c_str(), -1, NULL);
+			if (suggestion)
+				suggestions.push_back(suggestion);
+		}
+		if (suggestions.empty())
 			continue;
 		std::string definition;
-		definition += "<kref>";
-		definition += suggestion[0];
-		definition += "</kref>";
-		int i = 1;
-		while (suggestion[i]) {
-			definition += "\t<kref>";
-			definition += suggestion[i];
+		for (std::list<char **>::iterator it = suggestions.begin(); it != suggestions.end(); ++it) {
+			if (it != suggestions.begin()) {
+				definition += "\n\n";
+			}
+			suggestion = *it;
+			definition += "<kref>";
+			definition += suggestion[0];
 			definition += "</kref>";
-			i++;
+			int i = 1;
+			while (suggestion[i]) {
+				definition += "\t<kref>";
+				definition += suggestion[i];
+				definition += "</kref>";
+				i++;
+			}
 		}
 		result.push_back(std::pair<char *, char *>(g_strdup((*iter).c_str()), build_dictdata('x', definition.c_str())));
 	}
@@ -178,37 +210,51 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	}
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+static bool load_custom_langs()
 {
-	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Spell plugin version doesn't match!\n");
-		return true;
+	for (std::list<EnchantDict *>::iterator i = dictlist.begin(); i != dictlist.end(); ++i) {
+		enchant_broker_free_dict(broker, *i);
 	}
-	obj->type = StarDictPlugInType_VIRTUALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Spell Check"), _("Spell check virtual dictionary."), _("Spell check the input words and show the correct suggestion."));
-	plugin_info = obj->plugin_info;
-
-	return false;
-}
-
-void stardict_plugin_exit(void)
-{
-	if (broker) {
-		if (dict)
-			enchant_broker_free_dict(broker, dict);
+	dictlist.clear();
+	std::list<std::string> langlist;
+	std::string lang;
+	const gchar *p = custom_langs.c_str();
+	const gchar *p1;
+	while (true) {
+		p1 = strchr(p, ' ');
+		if (!p1)
+			break;
+		lang.assign(p, p1-p);
+		langlist.push_back(lang);
+		p = p1 + 1;
+	}
+	lang = p;
+	langlist.push_back(lang);
+	EnchantDict *dict;
+	for (std::list<std::string>::iterator i = langlist.begin(); i != langlist.end(); ++i) {
+		dict = enchant_broker_request_dict(broker, i->c_str());
+		if (dict) {
+			dictlist.push_back(dict);
+		} else {
+			g_print(_("Warning: %s language request spell dict failed!\n"), i->c_str());
+		}
+	}
+	if (dictlist.empty()) {
 		enchant_broker_free(broker);
-	}
-	if (layout) {
-		g_object_unref(layout);
+		broker = NULL;
+		g_print(_("Error, no spell dictionary available!\n"));
+		return true;
+	} else {
+		return false;
 	}
 }
 
-bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
+static bool load_auto_lang()
 {
-	obj->lookup_func = lookup;
-	obj->is_instant = true;
-	obj->dict_name = _("Spell Suggestion");
-	broker = enchant_broker_init();
+	for (std::list<EnchantDict *>::iterator i = dictlist.begin(); i != dictlist.end(); ++i) {
+		enchant_broker_free_dict(broker, *i);
+	}
+	dictlist.clear();
 	bool no_dict = false;
 	const gchar* const *languages = g_get_language_names();
 	int i = 0;
@@ -224,6 +270,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 		i++;
 	}
 	bool found;
+	EnchantDict *dict;
 	if (no_dict) {
 		if (enchant_broker_dict_exists(broker, "en_US") && ((dict = enchant_broker_request_dict(broker, "en_US"))!=NULL))
 			found = true;
@@ -238,10 +285,136 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	if (!found) {
 		enchant_broker_free(broker);
 		broker = NULL;
-		g_print("Error, no spell dictionary available!\n");
+		g_print(_("Error, no spell dictionary available!\n"));
+		return true;
+	} else {
+		dictlist.push_back(dict);
+		return false;
+	}
+}
+
+static void on_use_custom__ckbutton_toggled(GtkToggleButton *button, GtkWidget *hbox)
+{
+	gtk_widget_set_sensitive(hbox, gtk_toggle_button_get_active(button));
+}
+
+static void configure()
+{
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configure"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom languages."));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_custom);
+	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
+	GtkWidget *label = gtk_label_new(_("For example: \"en_US de\""));
+	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	gtk_widget_set_sensitive(hbox, use_custom);
+	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_use_custom__ckbutton_toggled), hbox);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+	label = gtk_label_new(_("Custom languages:"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(entry), custom_langs.c_str());
+	gtk_box_pack_start(GTK_BOX(hbox), entry, false, false, 0);
+	gtk_widget_show_all(vbox);
+	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gtk_dialog_run(GTK_DIALOG(window));
+	gboolean new_use_custom = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check_button));
+	bool cfgchanged = false;
+	if (new_use_custom != use_custom) {
+		cfgchanged = true;
+		use_custom = new_use_custom;
+		custom_langs = gtk_entry_get_text(GTK_ENTRY(entry));
+		if (use_custom) {
+			load_custom_langs();
+		} else {
+			load_auto_lang();
+		}
+	} else {
+		if (use_custom == true) {
+			const gchar *str = gtk_entry_get_text(GTK_ENTRY(entry));
+			if (custom_langs != str) {
+				cfgchanged = true;
+				custom_langs = str;
+				load_custom_langs();
+			}
+		}
+	}
+	if (cfgchanged) {
+		const char *tmp;
+		if (use_custom)
+			tmp = "true";
+		else
+			tmp = "false";
+		gchar *data = g_strdup_printf("[spell]\nuse_custom=%s\ncustom_langs=%s\n", tmp, custom_langs.c_str());
+		std::string res = get_cfg_filename();
+		g_file_set_contents(res.c_str(), data, -1, NULL);
+		g_free(data);
+	}
+	gtk_widget_destroy (window);
+}
+
+bool stardict_plugin_init(StarDictPlugInObject *obj)
+{
+	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
+		g_print("Error: Spell plugin version doesn't match!\n");
 		return true;
 	}
+	obj->type = StarDictPlugInType_VIRTUALDICT;
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Spell Check"), _("Spell check virtual dictionary."), _("Spell check the input words and show the correct suggestion."));
+	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
+
+	return false;
+}
+
+void stardict_plugin_exit(void)
+{
+	if (broker) {
+		for (std::list<EnchantDict *>::iterator i = dictlist.begin(); i != dictlist.end(); ++i) {
+			enchant_broker_free_dict(broker, *i);
+		}
+		enchant_broker_free(broker);
+	}
+	if (layout) {
+		g_object_unref(layout);
+	}
+}
+
+bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
+{
+	obj->lookup_func = lookup;
+	obj->is_instant = true;
+	obj->dict_name = _("Spell Suggestion");
+	broker = enchant_broker_init();
 	layout = pango_layout_new(gtk_widget_get_pango_context(plugin_info->mainwin));
+
+	std::string res = get_cfg_filename();
+	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
+		g_file_set_contents(res.c_str(), "[spell]\nuse_custom=false\ncustom_langs=\n", -1, NULL);
+	}
+	GKeyFile *keyfile = g_key_file_new();
+	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
+	GError *err = NULL;
+	use_custom = g_key_file_get_boolean(keyfile, "spell", "use_custom", &err);
+	if (err) {
+		g_error_free (err);
+		use_custom = false;
+	}
+	gchar *str = g_key_file_get_string(keyfile, "spell", "custom_langs", NULL);
+	if (str) {
+		custom_langs = str;
+		g_free(str);
+	}
+	g_key_file_free(keyfile);
+	bool failed;
+	if (use_custom && !custom_langs.empty()) {
+		failed = load_custom_langs();
+	} else {
+		failed = load_auto_lang();
+	}
+	if (failed)
+		return true;
 	g_print(_("Spell plug-in loaded.\n"));
 	return false;
 }

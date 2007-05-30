@@ -1,6 +1,42 @@
 #include "pluginmanager.h"
 #include <string>
 
+StarDictPluginBaseObject::StarDictPluginBaseObject(const char *filename, GModule *module_, plugin_configure_func_t configure_func_):
+	plugin_filename(filename), module(module_), configure_func(configure_func_)
+{
+}
+
+StarDictPluginBase::StarDictPluginBase(StarDictPluginBaseObject *baseobj_):
+	baseobj(baseobj_)
+{
+}
+
+typedef void (*stardict_plugin_exit_func_t)(void);
+
+StarDictPluginBase::~StarDictPluginBase()
+{
+	union {
+		stardict_plugin_exit_func_t stardict_plugin_exit;
+		gpointer stardict_plugin_exit_avoid_warning;
+	} func;
+	func.stardict_plugin_exit = 0;
+	if (g_module_symbol (baseobj->module, "stardict_plugin_exit", (gpointer *)&(func.stardict_plugin_exit_avoid_warning))) {
+		func.stardict_plugin_exit();
+	}
+	g_module_close (baseobj->module);
+}
+
+void StarDictPluginBase::configure()
+{
+	if (baseobj->configure_func != NULL)
+		baseobj->configure_func();
+}
+
+const char *StarDictPluginBase::get_filename()
+{
+	return baseobj->plugin_filename.c_str();
+}
+
 StarDictPlugins::StarDictPlugins(const char *dirpath, const std::list<std::string>& disable_list)
 {
 	plugindirpath = dirpath;
@@ -21,14 +57,14 @@ void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& di
 				std::string fullfilename = dirpath;
 				fullfilename += G_DIR_SEPARATOR;
 				fullfilename += filename;
-				bool found = false;
+				bool disable = false;
 				for (std::list<std::string>::const_iterator iter = disable_list.begin(); iter != disable_list.end(); ++iter) {
 					if (*iter == fullfilename) {
-						found = true;
+						disable = true;
 						break;
 					}
 				}
-				if (!found)
+				if (!disable)
 					load_plugin(fullfilename.c_str());
 			}
 		}
@@ -63,11 +99,14 @@ void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, st
 				fullfilename += filename;
 				StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
 				std::string info_xml;
-				get_plugin_info(fullfilename.c_str(), plugin_type, info_xml);
+				bool can_configure;
+				get_plugin_info(fullfilename.c_str(), plugin_type, info_xml, can_configure);
 				if (plugin_type != StarDictPlugInType_UNKNOWN && (!info_xml.empty())) {
 					StarDictPluginInfo plugin_info;
 					plugin_info.filename = fullfilename;
+					plugin_info.plugin_type = plugin_type;
 					plugin_info.info_xml = info_xml;
+					plugin_info.can_configure = can_configure;
 					switch (plugin_type) {
 						case StarDictPlugInType_VIRTUALDICT:
 							virtualdict_pluginlist.push_back(plugin_info);
@@ -93,7 +132,7 @@ void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, st
 
 typedef bool (*stardict_plugin_init_func_t)(StarDictPlugInObject *obj);
 
-void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml)
+void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml, bool &can_configure)
 {
 	GModule *module;
 	module = g_module_open (filename, G_MODULE_BIND_LAZY);
@@ -121,6 +160,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 	}
 	plugin_type = plugin_obj->type;
 	info_xml = plugin_obj->info_xml;
+	can_configure = (plugin_obj->configure_func != NULL);
 	delete plugin_obj;
 	g_module_close (module);
 }
@@ -165,6 +205,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		return;
 	}
 	StarDictPlugInType ptype = plugin_obj->type;
+	StarDictPluginBaseObject *baseobj = new StarDictPluginBaseObject(filename, module, plugin_obj->configure_func);
 	delete plugin_obj;
 	if (ptype == StarDictPlugInType_VIRTUALDICT) {
 		union {
@@ -175,6 +216,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		if (!g_module_symbol (module, "stardict_virtualdict_plugin_init", (gpointer *)&(func2.stardict_virtualdict_plugin_init_avoid_warning))) {
 			printf("Load %s failed: No stardict_virtualdict_plugin_init func!\n", filename);
 			g_module_close (module);
+			delete baseobj;
 			return;
 		}
 		StarDictVirtualDictPlugInObject *virtualdict_plugin_obj = new StarDictVirtualDictPlugInObject();
@@ -182,10 +224,11 @@ void StarDictPlugins::load_plugin(const char *filename)
 		if (failed) {
 			g_print("Load %s failed!\n", filename);
 			g_module_close (module);
+			delete baseobj;
 			delete virtualdict_plugin_obj;
 			return;
 		}
-		VirtualDictPlugins.add(module, virtualdict_plugin_obj);
+		VirtualDictPlugins.add(baseobj, virtualdict_plugin_obj);
 	} else if (ptype == StarDictPlugInType_TTS) {
 		union {
 			stardict_tts_plugin_init_func_t stardict_tts_plugin_init;
@@ -195,6 +238,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		if (!g_module_symbol (module, "stardict_tts_plugin_init", (gpointer *)&(func2.stardict_tts_plugin_init_avoid_warning))) {
 			printf("Load %s failed: No stardict_tts_plugin_init func!\n", filename);
 			g_module_close (module);
+			delete baseobj;
 			return;
 		}
 		StarDictTtsPlugInObject *tts_plugin_obj = new StarDictTtsPlugInObject();
@@ -202,24 +246,50 @@ void StarDictPlugins::load_plugin(const char *filename)
 		if (failed) {
 			g_print("Load %s failed!\n", filename);
 			g_module_close (module);
+			delete baseobj;
 			delete tts_plugin_obj;
 			return;
 		}
-		TtsPlugins.add(module, tts_plugin_obj);
+		TtsPlugins.add(baseobj, tts_plugin_obj);
 	} else {
 		g_print("Load %s failed: Unknow type plugin!\n", filename);
 		g_module_close (module);
+		delete baseobj;
 		return;
 	}
 }
 
-void StarDictPlugins::unload_plugin(const char *filename)
+void StarDictPlugins::unload_plugin(const char *filename, StarDictPlugInType plugin_type)
 {
 	for (std::list<std::string>::iterator iter = loaded_plugin_list.begin(); iter != loaded_plugin_list.end(); ++iter) {
 		if (*iter == filename) {
 			loaded_plugin_list.erase(iter);
 			break;
 		}
+	}
+	switch (plugin_type) {
+		case StarDictPlugInType_VIRTUALDICT:
+			VirtualDictPlugins.unload_plugin(filename);
+			break;
+		case StarDictPlugInType_TTS:
+			TtsPlugins.unload_plugin(filename);
+			break;
+		default:
+			break;
+	}
+}
+
+void StarDictPlugins::configure_plugin(const char *filename, StarDictPlugInType plugin_type)
+{
+	switch (plugin_type) {
+		case StarDictPlugInType_VIRTUALDICT:
+			VirtualDictPlugins.configure_plugin(filename);
+			break;
+		case StarDictPlugInType_TTS:
+			TtsPlugins.configure_plugin(filename);
+			break;
+		default:
+			break;
 	}
 }
 
@@ -238,10 +308,31 @@ StarDictVirtualDictPlugins::~StarDictVirtualDictPlugins()
 	}
 }
 
-void StarDictVirtualDictPlugins::add(GModule *module, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj)
+void StarDictVirtualDictPlugins::add(StarDictPluginBaseObject *baseobj, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj)
 {
-	StarDictVirtualDictPlugin *plugin = new StarDictVirtualDictPlugin(module, virtualdict_plugin_obj);
+	StarDictVirtualDictPlugin *plugin = new StarDictVirtualDictPlugin(baseobj, virtualdict_plugin_obj);
 	oPlugins.push_back(plugin);
+}
+
+void StarDictVirtualDictPlugins::unload_plugin(const char *filename)
+{
+	for (std::vector<StarDictVirtualDictPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			delete *iter;
+			oPlugins.erase(iter);
+			break;
+		}
+	}
+}
+
+void StarDictVirtualDictPlugins::configure_plugin(const char *filename)
+{
+	for (std::vector<StarDictVirtualDictPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			(*iter)->configure();
+			break;
+		}
+	}
 }
 
 void StarDictVirtualDictPlugins::lookup(size_t iPlugin, const gchar *word, char ***pppWord, char ****ppppWordData)
@@ -270,25 +361,14 @@ void StarDictVirtualDictPlugins::SetDictMask(std::vector<InstantDictIndex> &dict
 // class StarDictVirtualDictPlugin begin.
 //
 
-StarDictVirtualDictPlugin::StarDictVirtualDictPlugin(GModule *module_, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj)
+StarDictVirtualDictPlugin::StarDictVirtualDictPlugin(StarDictPluginBaseObject *baseobj_, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj):
+	StarDictPluginBase(baseobj_)
 {
-	module = module_;
 	obj = virtualdict_plugin_obj;
 }
 
-typedef void (*stardict_plugin_exit_func_t)(void);
-
 StarDictVirtualDictPlugin::~StarDictVirtualDictPlugin()
 {
-	union {
-		stardict_plugin_exit_func_t stardict_plugin_exit;
-		gpointer stardict_plugin_exit_avoid_warning;
-	} func;
-	func.stardict_plugin_exit = 0;
-	if (g_module_symbol (module, "stardict_plugin_exit", (gpointer *)&(func.stardict_plugin_exit_avoid_warning))) {
-		func.stardict_plugin_exit();
-	}
-	g_module_close (module);
 	delete obj;
 }
 
@@ -322,10 +402,31 @@ StarDictTtsPlugins::~StarDictTtsPlugins()
 	}
 }
 
-void StarDictTtsPlugins::add(GModule *module, StarDictTtsPlugInObject *tts_plugin_obj)
+void StarDictTtsPlugins::add(StarDictPluginBaseObject *baseobj, StarDictTtsPlugInObject *tts_plugin_obj)
 {
-	StarDictTtsPlugin *plugin = new StarDictTtsPlugin(module, tts_plugin_obj);
+	StarDictTtsPlugin *plugin = new StarDictTtsPlugin(baseobj, tts_plugin_obj);
 	oPlugins.push_back(plugin);
+}
+
+void StarDictTtsPlugins::unload_plugin(const char *filename)
+{
+	for (std::vector<StarDictTtsPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			delete *iter;
+			oPlugins.erase(iter);
+			break;
+		}
+	}
+}
+
+void StarDictTtsPlugins::configure_plugin(const char *filename)
+{
+	for (std::vector<StarDictTtsPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			(*iter)->configure();
+			break;
+		}
+	}
 }
 
 void StarDictTtsPlugins::saytext(size_t iPlugin, const gchar *text)
@@ -337,23 +438,14 @@ void StarDictTtsPlugins::saytext(size_t iPlugin, const gchar *text)
 // class StarDictTtsPlugin begin.
 //
 
-StarDictTtsPlugin::StarDictTtsPlugin(GModule *module_, StarDictTtsPlugInObject *tts_plugin_obj)
+StarDictTtsPlugin::StarDictTtsPlugin(StarDictPluginBaseObject *baseobj_, StarDictTtsPlugInObject *tts_plugin_obj):
+	StarDictPluginBase(baseobj_)
 {
-	module = module_;
 	obj = tts_plugin_obj;
 }
 
 StarDictTtsPlugin::~StarDictTtsPlugin()
 {
-	union {
-		stardict_plugin_exit_func_t stardict_plugin_exit;
-		gpointer stardict_plugin_exit_avoid_warning;
-	} func;
-	func.stardict_plugin_exit = 0;
-	if (g_module_symbol (module, "stardict_plugin_exit", (gpointer *)&(func.stardict_plugin_exit_avoid_warning))) {
-		func.stardict_plugin_exit();
-	}
-	g_module_close (module);
 	delete obj;
 }
 

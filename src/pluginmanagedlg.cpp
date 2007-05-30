@@ -20,6 +20,18 @@ void PluginManageDlg::response_handler (GtkDialog *dialog, gint res_id, PluginMa
 	if (res_id == GTK_RESPONSE_HELP) {
 		show_help("stardict-plugins");
 	} else if (res_id == STARDICT_RESPONSE_CONFIGURE) {
+		GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(oPluginManageDlg->treeview));
+		GtkTreeModel *model;
+		GtkTreeIter iter;
+		if (! gtk_tree_selection_get_selected (selection, &model, &iter))
+			return;
+		if (!gtk_tree_model_iter_has_child(model, &iter)) {
+			gchar *filename;
+			StarDictPlugInType plugin_type;
+			gtk_tree_model_get (model, &iter, 4, &filename, 5, &plugin_type, -1);
+			gpAppFrame->oStarDictPlugins->configure_plugin(filename, plugin_type);
+			g_free(filename);
+		}
 	}
 }
 
@@ -48,15 +60,24 @@ void PluginManageDlg::on_plugin_enable_toggled (GtkCellRendererToggle *cell, gch
 	gtk_tree_path_free (path);
 	gboolean enable;
 	gchar *filename;
-	gtk_tree_model_get (model, &iter, 1, &enable, 4, &filename, -1);
+	StarDictPlugInType plugin_type;
+	gboolean can_configure;
+	gtk_tree_model_get (model, &iter, 1, &enable, 4, &filename, 5, &plugin_type, 6, &can_configure, -1);
 	enable = !enable;
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 1, enable, -1);
 	if (enable) {
 		gpAppFrame->oStarDictPlugins->load_plugin(filename);
 	} else {
-		gpAppFrame->oStarDictPlugins->unload_plugin(filename);
+		gpAppFrame->oStarDictPlugins->unload_plugin(filename, plugin_type);
 	}
 	g_free(filename);
+	if (enable)
+		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, can_configure);
+	else
+		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, FALSE);
+	if (plugin_type == StarDictPlugInType_VIRTUALDICT) {
+		oPluginManageDlg->dict_changed_ = true;
+	}
 
 	std::list<std::string> disable_list;
 	gtk_tree_model_foreach(model, get_disable_list, &disable_list);
@@ -138,7 +159,7 @@ static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, std::li
 		g_markup_parse_context_free(context);
 		gtk_tree_store_append(tree_model, &iter, parent);
 		bool loaded = gpAppFrame->oStarDictPlugins->get_loaded(i->filename.c_str());
-		gtk_tree_store_set(tree_model, &iter, 0, true, 1, loaded, 2, Data.info_str, 3, Data.detail_str, 4, i->filename.c_str(), -1);
+		gtk_tree_store_set(tree_model, &iter, 0, true, 1, loaded, 2, Data.info_str, 3, Data.detail_str, 4, i->filename.c_str(), 5, i->plugin_type, 6, i->can_configure, -1);
 		g_free(Data.info_str);
 		g_free(Data.detail_str);
 	}
@@ -174,11 +195,29 @@ void PluginManageDlg::on_plugin_treeview_selection_changed(GtkTreeSelection *sel
 	if (! gtk_tree_selection_get_selected (selection, &model, &iter))
 		return;
 	if (gtk_tree_model_iter_has_child(model, &iter)) {
+		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, FALSE);
 	} else {
+		gboolean loaded;
 		gchar *detail;
-		gtk_tree_model_get (model, &iter, 3, &detail, -1);
+		gboolean can_configure;
+		gtk_tree_model_get (model, &iter, 1, &loaded, 3, &detail, 6, &can_configure, -1);
 		gtk_label_set_markup(GTK_LABEL(oPluginManageDlg->detail_label), detail);
 		g_free(detail);
+		if (loaded)
+			gtk_widget_set_sensitive(oPluginManageDlg->pref_button, can_configure);
+		else
+			gtk_widget_set_sensitive(oPluginManageDlg->pref_button, FALSE);
+	}
+}
+
+gboolean PluginManageDlg::on_treeview_button_press(GtkWidget * widget, GdkEventButton * event, PluginManageDlg *oPluginManageDlg)
+{
+	if (event->type==GDK_2BUTTON_PRESS) {
+		if (GTK_WIDGET_SENSITIVE(oPluginManageDlg->pref_button))
+			gtk_dialog_response(GTK_DIALOG(oPluginManageDlg->window), STARDICT_RESPONSE_CONFIGURE);
+		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -188,11 +227,12 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	sw = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	plugin_tree_model = gtk_tree_store_new(5, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	plugin_tree_model = gtk_tree_store_new(7, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT, G_TYPE_BOOLEAN);
 	init_tree_model(plugin_tree_model);
-	GtkWidget *treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(plugin_tree_model));
+	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(plugin_tree_model));
 	g_object_unref (G_OBJECT (plugin_tree_model));
 	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+	g_signal_connect (G_OBJECT (treeview), "button_press_event", G_CALLBACK (on_treeview_button_press), this);
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
@@ -216,7 +256,7 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	return sw;
 }
 
-bool PluginManageDlg::ShowModal(GtkWindow *parent_win)
+bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed)
 {
 	window = gtk_dialog_new();
 	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
@@ -243,6 +283,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win)
 	gtk_widget_show_all (GTK_DIALOG (window)->vbox);
 	gtk_window_set_title (GTK_WINDOW (window), _("Manage Plugins"));
 	gtk_window_set_default_size(GTK_WINDOW(window), 250, 350);
+	dict_changed_ = false;
 	gint result;
 	while (true) {
 		result = gtk_dialog_run(GTK_DIALOG(window));
@@ -252,6 +293,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win)
 		}
 	}
 	if (result != GTK_RESPONSE_NONE) {
+		dict_changed = dict_changed_;
 		gtk_widget_destroy(GTK_WIDGET(window));
 		return false;
 	} else {
