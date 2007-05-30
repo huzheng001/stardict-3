@@ -150,7 +150,8 @@ public:
 	void try_cache_or_send_commands(int num, ...);
 private:
 	GIOChannel *channel_;
-	guint source_id_;
+	guint in_source_id_;
+	guint out_source_id_;
 	std::string host_;
 	int port_;
 	bool host_resolved;
@@ -175,7 +176,8 @@ private:
 	void clean_command();
 	void request_command();
 	void disconnect();
-	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
+	static gboolean on_io_in_event(GIOChannel *, GIOCondition, gpointer);
+	static gboolean on_io_out_event(GIOChannel *, GIOCondition, gpointer);
     void connect();
     static void on_resolved(gpointer data, struct hostent *ret);
     void write_str(const char *str, GError **err);

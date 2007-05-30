@@ -428,7 +428,8 @@ void StarDictCache::save_cache_lookup_response(const char *key_str, STARDICT::Lo
 StarDictClient::StarDictClient()
 {
     channel_ = NULL;
-    source_id_ = 0;
+    in_source_id_ = 0;
+    out_source_id_ = 0;
     is_connected_ = false;
 }
 
@@ -571,21 +572,26 @@ void StarDictClient::write_str(const char *str, GError **err)
     gsize bytes_written;
     while (left_byte) {
         res = g_io_channel_write_chars(channel_, str+(len - left_byte), left_byte, &bytes_written, err);
-        if (res != G_IO_STATUS_NORMAL) {
+        if (res == G_IO_STATUS_ERROR) {
             disconnect();
             return;
         }
         left_byte -= bytes_written;
     }
     res = g_io_channel_flush(channel_, err);
-    if (res != G_IO_STATUS_NORMAL) {
+    if (res == G_IO_STATUS_ERROR) {
         disconnect();
     }
+	if (out_source_id_ == 0)
+		out_source_id_ = g_io_add_watch(channel_, GIOCondition(G_IO_OUT), on_io_out_event, this);
 }
 
 void StarDictClient::request_command()
 {
     reading_type_ = READ_LINE;
+    if (cmdlist.empty()) {
+        cmdlist.push_back(new STARDICT::Cmd(STARDICT::CMD_QUIT));
+    }
     STARDICT::Cmd *c = cmdlist.front();
 	switch (c->command) {
         case STARDICT::CMD_AUTH:
@@ -697,16 +703,20 @@ void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
     oStarDictClient->is_connected_ = true;
     oStarDictClient->waiting_banner_ = true;
     oStarDictClient->reading_type_ = READ_LINE;
-    oStarDictClient->source_id_ = g_io_add_watch(oStarDictClient->channel_, GIOCondition(G_IO_IN | G_IO_ERR),
-                   on_io_event, oStarDictClient);
+    oStarDictClient->out_source_id_ = g_io_add_watch(oStarDictClient->channel_, GIOCondition(G_IO_OUT), on_io_out_event, oStarDictClient);
+    oStarDictClient->in_source_id_ = g_io_add_watch(oStarDictClient->channel_, GIOCondition(G_IO_IN | G_IO_ERR), on_io_in_event, oStarDictClient);
 }
 
 void StarDictClient::disconnect()
 {
     clean_command();
-    if (source_id_) {
-        g_source_remove(source_id_);
-        source_id_ = 0;
+    if (in_source_id_) {
+        g_source_remove(in_source_id_);
+        in_source_id_ = 0;
+    }
+    if (out_source_id_) {
+        g_source_remove(out_source_id_);
+        out_source_id_ = 0;
     }
 
     if (channel_) {
@@ -717,7 +727,23 @@ void StarDictClient::disconnect()
     is_connected_ = false;
 }
 
-gboolean StarDictClient::on_io_event(GIOChannel *ch, GIOCondition cond,
+gboolean StarDictClient::on_io_out_event(GIOChannel *ch, GIOCondition cond,
+                 gpointer user_data)
+{
+	StarDictClient *stardict_client = static_cast<StarDictClient *>(user_data);
+	GError *err = NULL;
+	GIOStatus res = g_io_channel_flush(stardict_client->channel_, &err);
+	if (res == G_IO_STATUS_AGAIN) {
+		return TRUE;
+	} else if (err) {
+		on_error_.emit(err->message);
+		g_error_free(err);
+	}
+	stardict_client->out_source_id_ = 0;
+	return FALSE;
+}
+
+gboolean StarDictClient::on_io_in_event(GIOChannel *ch, GIOCondition cond,
                  gpointer user_data)
 {
     StarDictClient *stardict_client = static_cast<StarDictClient *>(user_data);

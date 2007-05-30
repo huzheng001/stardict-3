@@ -1336,9 +1336,10 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
-        if (!app->oStarDictClient.try_cache(c))
+        if (!app->oStarDictClient.try_cache(c)) {
     	    app->waiting_mainwin_lookupcmd_seq = c->seq;
             app->oStarDictClient.send_commands(1, c);
+        }
     }
 
     app->word_change_timeout_ = 0;//next line destroy timer
