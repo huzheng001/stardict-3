@@ -112,7 +112,7 @@ void convert(char *filename)
 	struct _worditem *pworditem;
 	gulong i=0;
 	glong thedatasize;
-	gchar *insert_word = "\n";
+	gchar *insert_word = "\n\n";
 	gboolean flag;
 	pworditem = &g_array_index(array, struct _worditem, i);
 	gint definition_len;
