@@ -59,8 +59,8 @@ ORBIT_ALIGNOF_CORBA_POINTER,
 ,
 NULL,
 CORBA_OBJECT_NIL,
-"Application",
-"IDL:GNOME/Stardict/Application:1.0",
+(char *)"Application",
+(char *)"IDL:GNOME/Stardict/Application:1.0",
 NULL,
 NULL,
 -1,
@@ -76,7 +76,7 @@ CORBA_unsigned_long GNOME_Stardict_Application__classid = 0;
 /* Interface type data */
 
 static ORBit_IArg GNOME_Stardict_Application_queryWord__arginfo [] = {
-	{ TC_CORBA_string,  ORBit_I_ARG_IN , "str" }
+	{ TC_CORBA_string,  ORBit_I_ARG_IN , (char *)"str" }
 };
 
 #ifdef ORBIT_IDL_C_IMODULE_GNOME_Stardict
@@ -87,33 +87,35 @@ ORBit_IMethod GNOME_Stardict_Application__imethods [] = {
 		{ 1, 1, GNOME_Stardict_Application_queryWord__arginfo, FALSE },
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
-TC_void, "queryWord", 9,
+TC_void, (char *)"queryWord", 9,
 		0 | ORBit_I_METHOD_1_WAY
 }
 , 	{
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
-TC_void, "grabFocus", 9,
+TC_void, (char *)"grabFocus", 9,
 		0 | ORBit_I_METHOD_1_WAY
 }
 , 	{
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
-TC_void, "hide", 4,
+TC_void, (char *)"hide", 4,
 		0 | ORBit_I_METHOD_1_WAY
 }
 , 	{
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
 		{ 0, 0, NULL, FALSE },
-TC_void, "quit", 4,
+TC_void, (char *)"quit", 4,
 		0 | ORBit_I_METHOD_1_WAY
 }
-};static CORBA_string GNOME_Stardict_Application__base_itypes[] = {
-"IDL:Bonobo/Unknown:1.0",
-"IDL:omg.org/CORBA/Object:1.0"
+};
+
+static CORBA_string GNOME_Stardict_Application__base_itypes[] = {
+(char *)"IDL:Bonobo/Unknown:1.0",
+(char *)"IDL:omg.org/CORBA/Object:1.0"
 };
 #ifdef ORBIT_IDL_C_IMODULE_GNOME_Stardict
 static

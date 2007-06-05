@@ -319,9 +319,9 @@ void PrefsDlg::on_setup_dictionary_use_scan_hotkey_ckbutton_toggled(GtkToggleBut
 }
 #endif
 
-void PrefsDlg::on_setup_dictionary_scan_optionmenu_changed(GtkOptionMenu *option_menu, PrefsDlg *oPrefsDlg)
+void PrefsDlg::on_setup_dictionary_scan_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
 {	
-  gint key = gtk_option_menu_get_history(option_menu);
+  gint key = gtk_combo_box_get_active(combobox);
   conf->set_int_at("dictionary/scan_modifier_key", key);
 }
 
@@ -390,25 +390,22 @@ void PrefsDlg::setup_dictionary_scan_page()
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Scan modifier _key:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);		
-	GtkWidget *option_menu = gtk_option_menu_new();
-	GtkWidget *menu = gtk_menu_new();
-
+	GtkWidget *combobox = gtk_combo_box_new_text();
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(combobox), FALSE);
 
 	for (std::list<std::string>::const_iterator p=key_combs.begin();
 	     p!=key_combs.end(); ++p) {
-	  GtkWidget *menuitem=gtk_menu_item_new_with_mnemonic(p->c_str());
-	  gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	  gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), p->c_str());
 	}
 
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
 	int scan_modifier_key=
 		conf->get_int_at("dictionary/scan_modifier_key");
 
-	gtk_option_menu_set_history(GTK_OPTION_MENU(option_menu), scan_modifier_key);
+	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), scan_modifier_key);
 	
-	gtk_label_set_mnemonic_widget(GTK_LABEL(label), option_menu);
-	gtk_box_pack_start(GTK_BOX(hbox), option_menu, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (option_menu), "changed", G_CALLBACK (on_setup_dictionary_scan_optionmenu_changed), this);	
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), combobox);
+	gtk_box_pack_start(GTK_BOX(hbox), combobox, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (combobox), "changed", G_CALLBACK (on_setup_dictionary_scan_combobox_changed), this);	
 
 #ifdef _WIN32
 	check_button = gtk_check_button_new_with_mnemonic(_("_Scan clipboard."));
@@ -548,9 +545,9 @@ void PrefsDlg::on_setup_dictionary_cache_EnableCollation_ckbutton_toggled(GtkTog
 	conf->set_bool_at("dictionary/enable_collation",enable);
 }
 
-void PrefsDlg::on_setup_dictionary_collation_optionmenu_changed(GtkOptionMenu *option_menu, PrefsDlg *oPrefsDlg)
+void PrefsDlg::on_setup_dictionary_collation_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
 {
-	gint key = gtk_option_menu_get_history(option_menu);
+	gint key = gtk_combo_box_get_active(combobox);
 	conf->set_int_at("dictionary/collate_function", key);
 }
 
@@ -629,57 +626,34 @@ void PrefsDlg::setup_dictionary_cache_page()
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("\tCollate _function:"));
 	gtk_box_pack_start(GTK_BOX(collation_hbox),label,false,false,0);
-	GtkWidget *option_menu = gtk_option_menu_new();
-	GtkWidget *menu = gtk_menu_new();
-	GtkWidget *menuitem;
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__general__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__unicode__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__bin");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__czech__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__danish__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__esperanto__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__estonian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__hungarian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__icelandic__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__latvian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__lithuanian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__persian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__polish__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__roman__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__romanian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__slovak__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__slovenian__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__spanish__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__spanish2__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__swedish__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("utf8__turkish__ci");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
+	GtkWidget *combobox = gtk_combo_box_new_text();
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(combobox), FALSE);
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_general_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_unicode_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_bin");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_czech_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_danish_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_esperanto_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_estonian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_hungarian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_icelandic_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_latvian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_lithuanian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_persian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_polish_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_roman_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_romanian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_slovak_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_slovenian_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_spanish_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_spanish2_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_swedish_ci");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_turkish_ci");
 	int collate_function = conf->get_int_at("dictionary/collate_function");
-	gtk_option_menu_set_history(GTK_OPTION_MENU(option_menu), collate_function);
-	gtk_label_set_mnemonic_widget(GTK_LABEL(label), option_menu);
-	gtk_box_pack_start(GTK_BOX(collation_hbox), option_menu, FALSE, FALSE, 0);
-	g_signal_connect (G_OBJECT (option_menu), "changed", G_CALLBACK (on_setup_dictionary_collation_optionmenu_changed), this);
+	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), collate_function);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), combobox);
+	gtk_box_pack_start(GTK_BOX(collation_hbox), combobox, FALSE, FALSE, 0);
+	g_signal_connect (G_OBJECT (combobox), "changed", G_CALLBACK (on_setup_dictionary_collation_combobox_changed), this);
 	gtk_widget_set_sensitive(collation_hbox, enable);
 
 	label = gtk_label_new(_("After enabled collation, when load the dictionaries for the first time, it will take some time for sorting, please wait for a moment."));

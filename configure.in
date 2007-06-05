@@ -131,7 +131,7 @@ if test "x$enable_festival" = "xyes" ; then
 	else
 		AC_MSG_RESULT(yes)
 		FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
-		FESTIVAL_CFLAGS="-ffriend-injection -Wno-deprecated"
+		FESTIVAL_CFLAGS="-I/usr/include/speech_tools -ffriend-injection -Wno-deprecated"
 		FESTIVAL_PLUGIN_DIR="stardict-festival-tts-plugin"
 	fi
 else
@@ -215,16 +215,17 @@ dnl stuff for the CORBA interface
 
 	BONOBO_ACTIVATION_IDL="`$PKG_CONFIG --variable=idldir bonobo-activation-2.0`"
 	AC_SUBST(BONOBO_ACTIVATION_IDL)
-
-dnl
-dnl Check popt
-dnl
-
-	AC_CHECK_LIB(popt, poptStrippedArgv,, AC_MSG_ERROR([popt 1.5 or newer is required to build
-stardict. You can download the latest version from ftp://people.redhat.com/sopwith/popt/]))
-
 fi
 
+
+AC_ARG_ENABLE([deprecations],
+	AS_HELP_STRING([--disable-deprecations],[Disable deprecated gtk functions (default: enabled)]),
+	[enable_deprecations=$enableval],
+	[enable_deprecations=yes])
+
+if test "x$enable_deprecations" = "xno" ; then
+	STARDICT_CFLAGS="$STARDICT_CFLAGS -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED"
+fi
 
 STARDICT_CFLAGS="-Wall $STARDICT_CFLAGS"
 

@@ -37,4 +37,4 @@ echo "Running autoconf ...."
 autoconf || exit;
 echo "Running automake ...."
 automake || exit;
-./configure --prefix=/usr --sysconfdir=/etc  --mandir=/usr/share/man $@
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-deprecations $@

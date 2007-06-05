@@ -89,7 +89,7 @@ CORBA_Environment *env)
   PortableServer_ServantBase__init (       ((PortableServer_ServantBase *)servant), env);
   POA_Bonobo_Unknown__init(servant, env);
    ORBit_skel_class_register (&class_info,
-   servant, POA_GNOME_Stardict_Application__fini,
+   (PortableServer_ServantBase *)servant, POA_GNOME_Stardict_Application__fini,
    ORBIT_VEPV_OFFSET (POA_GNOME_Stardict_Application__vepv, GNOME_Stardict_Application_epv),
 (CORBA_unsigned_long) Bonobo_Unknown__classid,
 ORBIT_VEPV_OFFSET (POA_GNOME_Stardict_Application__vepv, Bonobo_Unknown_epv),

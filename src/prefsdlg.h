@@ -76,11 +76,11 @@ private:
   static void on_setup_dictionary_scan_clipboard_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_use_scan_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
-  static void on_setup_dictionary_scan_optionmenu_changed(GtkOptionMenu *option_menu, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_scan_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_scan_hide_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_cache_CreateCacheFile_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_cache_EnableCollation_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
-  static void on_setup_dictionary_collation_optionmenu_changed(GtkOptionMenu *option_menu, PrefsDlg *oPrefsDlg);
+  static void on_setup_dictionary_collation_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_cache_cleanbutton_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_export_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);

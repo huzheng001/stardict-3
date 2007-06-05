@@ -80,25 +80,25 @@ HINSTANCE stardictexe_hInstance;
 AppCore *gpAppFrame;
 
 static gboolean hide_option = FALSE;
-
+static gboolean debug = FALSE;
 #ifdef CONFIG_GNOME
-static gint debug = 0;
 static gboolean quit_option = FALSE;
-
-static const struct poptOption options [] =
-{
-	{ "debug", 'g', POPT_ARG_NONE, &debug, 0,
-	  N_("Turn on all debugging messages"), NULL },
-
-	{ "hide", 'h', POPT_ARG_NONE, &hide_option, 1,
-	  N_("Hide the main window"), NULL },
-
-	{ "quit", 'q', POPT_ARG_NONE, &quit_option, 1,
-	  N_("Quit an existing instance of stardict"), NULL },
-
-	{NULL, '\0', 0, NULL, 0}
-};
 #endif
+static gchar **query_words = NULL;
+
+static const GOptionEntry options [] =
+{
+	{ "debug", 'g', 0, G_OPTION_ARG_NONE, &debug,
+	  N_("Turn on all debugging messages"), NULL },
+	{ "hide", 'h', 0, G_OPTION_ARG_NONE, &hide_option,
+	  N_("Hide the main window, do not show splash screen"), NULL },
+#ifdef CONFIG_GNOME
+	{ "quit", 'q', 0, G_OPTION_ARG_NONE, &quit_option,
+	  N_("Quit an existing instance of stardict"), NULL },
+#endif
+	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_STRING_ARRAY, &query_words, NULL, NULL },
+	{NULL}
+};
 
 
 /********************************************************************/
@@ -343,10 +343,9 @@ void AppCore::Create(gchar *queryword)
 	if (oLibs.has_dict()) {
 		if (queryword) {
 			Query(queryword);
-			g_free(queryword);
-			//don't set queryword to NULL here,need by DockLet::EmbeddedCallback().
-		}	else
+		} else {
 			oMidWin.oTextWin.ShowTips();
+		}
 	} else
 		oMidWin.oTextWin.ShowInitFailed();
 }
@@ -1929,7 +1928,6 @@ stardict_handle_automation_cmdline (gchar *queryword)
 	server = bonobo_activation_activate_from_id ("OAFIID:GNOME_Stardict_Application",
                                                      0, NULL, &env);
 	if (!server) {
-		g_free(queryword);
 		gdk_notify_startup_complete ();
 		return;
 	}
@@ -1944,8 +1942,7 @@ stardict_handle_automation_cmdline (gchar *queryword)
 		}
 		if (hide_option) {
 			GNOME_Stardict_Application_hide (server, &env);
-		}
-		else {
+		} else {
 			GNOME_Stardict_Application_grabFocus (server, &env);
 			g_message(_("StarDict is already running. Using the running process."));
 		}
@@ -1955,7 +1952,6 @@ stardict_handle_automation_cmdline (gchar *queryword)
 	bonobo_object_release_unref (server, &env);
 	CORBA_exception_free (&env);
 
-	g_free(queryword);
 
 	/* we never popup a window, so tell startup-notification that
 	 * we're done */
@@ -2092,65 +2088,37 @@ int main(int argc,char **argv)
 			  stardict_dummy_log_handler, NULL);
 	g_set_print_handler(stardict_dummy_print);
 #endif
+	GOptionContext *context;
+	context = g_option_context_new(_("- Lookup words"));
+	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
 #ifndef CONFIG_GNOME
-	static GOptionEntry entries[] = {
-		{ "hide", 'h', 0, G_OPTION_ARG_NONE, &hide_option,
-		  _("Do not show splash screen"), NULL },
-		{ NULL },
-	};
-
-	glib::OptionContext opt_cnt(g_option_context_new(_("word")));
-	g_option_context_add_main_entries(get_impl(opt_cnt), entries, NULL);
-	g_option_context_set_help_enabled(get_impl(opt_cnt), TRUE);
 	glib::Error err;
-	if (!g_option_context_parse(get_impl(opt_cnt), &argc, &argv, get_addr(err))) {
+	if (!g_option_context_parse(context, &argc, &argv, get_addr(err))) {
 		g_warning(_("Options parsing failed: %s\n"), err->message);
+		g_option_context_free(context);
 		return EXIT_FAILURE;
 	}
-	gchar *queryword = NULL;
-
-	if (argc > 1)		
-		if (g_utf8_validate(argv[1], -1, NULL))
-			queryword= g_strdup(argv[1]);
-		else
-			queryword = g_locale_to_utf8(argv[1], -1, NULL, NULL,
-						     NULL);
-			
-			
-	
+	g_option_context_free(context);
+	char *query_word;
+	if (query_words && query_words[0])
+		query_word = query_words[0];
+	else
+		query_word = NULL;
 #else
 	GnomeProgram *program;
 	program = gnome_program_init ("stardict", VERSION,
 			    LIBGNOMEUI_MODULE, argc, argv,
-			    GNOME_PARAM_POPT_TABLE, options,
+			    GNOME_PARAM_GOPTION_CONTEXT, context,
 			    GNOME_PARAM_HUMAN_READABLE_NAME,
 		            _("Dictionary"),
 			    GNOME_PARAM_APP_DATADIR, DATADIR,
 			    NULL);
 
-
-
-	GValue        value = { 0 };
-	poptContext   pctx;
-
-	g_object_get_property (G_OBJECT (program),
-			       GNOME_PARAM_POPT_CONTEXT,
-			       g_value_init (&value, G_TYPE_POINTER));
-	pctx = (poptContext) g_value_get_pointer (&value);
-	g_value_unset (&value);
-
-	char **args;
-	args = (char**) poptGetArgs(pctx);
-
-	gchar *queryword = NULL;
-  if (args && args[0]) {
-		//only look up the first word should OK.
-    if (g_utf8_validate (args[0], -1, NULL))
-			queryword= g_strdup(args[0]);
-		else
-			queryword = g_locale_to_utf8(args[0],-1,NULL,NULL,NULL);
-	}
-	poptFreeContext (pctx);
+	char *query_word;
+	if (query_words && query_words[0])
+		query_word = query_words[0];
+	else
+		query_word = NULL;
 
 	CORBA_Object factory;
 	factory = bonobo_activation_activate_from_id
@@ -2162,7 +2130,7 @@ int main(int argc,char **argv)
 		/* there is an instance already running, so send
 		 * commands to it if needed
 		 */
-                stardict_handle_automation_cmdline (queryword);
+                stardict_handle_automation_cmdline (query_word);
                 /* and we're done */
     return EXIT_SUCCESS;
 	}
@@ -2176,7 +2144,7 @@ int main(int argc,char **argv)
 	conf.reset(new AppConf);
 	AppCore oAppCore;
 	gpAppFrame = &oAppCore;
-	oAppCore.Init(queryword);
+	oAppCore.Init(query_word);
 
 	return EXIT_SUCCESS;
 }

@@ -51,8 +51,6 @@ public:
 
 namespace glib {
 	typedef ResourceWrapper<gchar, void, g_free> CharStr;
-	typedef ResourceWrapper<GOptionContext, GOptionContext,
-				g_option_context_free> OptionContext;
 	typedef ResourceWrapper<GError, GError, g_error_free> Error;
 }
 

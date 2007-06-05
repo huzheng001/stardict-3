@@ -98,6 +98,24 @@ static
 extern 
 #endif
 ORBit_IMethod GNOME_Stardict_Application__imethods[GNOME_Stardict_Application_IMETHODS_LEN];
+
+/** IMethods index */
+
+#ifndef __GNOME_Stardict_Application__imethods_index
+#define __GNOME_Stardict_Application__imethods_index
+typedef enum {
+	GNOME_Stardict_Application_queryWord__imethods_index,
+	GNOME_Stardict_Application_grabFocus__imethods_index,
+	GNOME_Stardict_Application_hide__imethods_index,
+	GNOME_Stardict_Application_quit__imethods_index
+} GNOME_Stardict_Application__imethods_index;
+#endif /* __GNOME_Stardict_Application__imethods_index */
+
+#ifndef __ORBIT_IMETHODS_INDEX
+#define __ORBIT_IMETHODS_INDEX
+#define ORBIT_IMETHODS_INDEX(m) (m ## __imethods_index)
+#endif /* __ORBIT_IMETHODS_INDEX */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

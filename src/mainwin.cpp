@@ -42,7 +42,6 @@
 TopWin::TopWin()
 {
 	WordCombo = NULL; //need by save_yourself_cb().
-	HisList = NULL;
 	BackList = NULL;
 	enable_change_cb = true;
 	MainMenu = NULL;
@@ -52,9 +51,6 @@ TopWin::TopWin()
 
 TopWin::~TopWin()
 {
-	g_list_foreach (HisList, (GFunc)g_free, NULL);
-	g_list_free(HisList);
-
 	GSList *list = BackList;
 	while (list) {
 		g_free(((BackListData *)(list->data))->word);
@@ -86,17 +82,17 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Clear the search box"),NULL);
 #endif
 
-	WordCombo = gtk_combo_new();
-	LoadHistory();
+	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
+	LoadHistory(list_store);
+	WordCombo = gtk_combo_box_entry_new_with_model(GTK_TREE_MODEL(list_store), 0);
+	g_object_unref (G_OBJECT(list_store));
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
-	gtk_combo_set_case_sensitive(GTK_COMBO(WordCombo),true);
-	gtk_combo_disable_activate(GTK_COMBO(WordCombo));
-	gtk_combo_set_use_arrows(GTK_COMBO(WordCombo), false);
-	gtk_entry_set_max_length(GTK_ENTRY(GTK_COMBO(WordCombo)->entry), 255);
-	g_signal_connect (G_OBJECT (GTK_COMBO(WordCombo)->entry), "changed",
+	gtk_entry_set_max_length(GTK_ENTRY(GTK_BIN(WordCombo)->child), 255);
+	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "changed",
 			  G_CALLBACK (on_entry_changed), this);
-	g_signal_connect (G_OBJECT (GTK_COMBO(WordCombo)->entry), "activate",
+	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "activate",
 			  G_CALLBACK (on_entry_activate), this);
 	gtk_box_pack_start(GTK_BOX(hbox),WordCombo,true,true,3);
 
@@ -180,7 +176,7 @@ gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event
 		gint index=0;
 		GSList *list;
 		list = oTopWin->BackList;
-		if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(oTopWin->WordCombo)->entry)))) {
+		if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(GTK_BIN(oTopWin->WordCombo)->child)))) {
 			list = g_slist_next(list);
 			index++;
 			if (!list)
@@ -269,15 +265,15 @@ void TopWin::do_back()
   if (!BackList)
     return;
   GSList *list = BackList;
-  if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry)))) {
+  if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(GTK_BIN(WordCombo)->child)))) {
     list = g_slist_next(list);
     if (!list)
       return;
   }
   InsertHisList(get_text());
   SetText(((BackListData *)(list->data))->word);
-  if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
-    gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
+  if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
+    gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
   if (((BackListData *)(list->data))->adjustment_value != -1) {
     ProcessGtkEvent(); // so all the definition text have been inserted.
     gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(list->data))->adjustment_value);
@@ -326,8 +322,8 @@ void TopWin::do_prev()
 			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->dictmask, 0);
 			if (preword) {
 				SetText(preword);
-				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
-					gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
+				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
+					gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
 			}
 			g_free(iPreIndex);
             if (conf->get_bool_at("network/enable_netdict")) {
@@ -392,7 +388,7 @@ void TopWin::do_next()
 			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->dictmask, 0);
 			if (nextword) {
 				SetText(nextword);				
-				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_COMBO(WordCombo)->entry)))
+				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
 					select_region_in_text(0, -1);
 			}
 			g_free(iNextIndex);
@@ -562,7 +558,7 @@ void TopWin::SetText(const gchar *word, bool notify)
 		return;
 	enable_change_cb = false;
 // this will emit "changed" signal twice, one for "", one for word. so disable it.
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry), word); 
+	gtk_entry_set_text(GTK_ENTRY(GTK_BIN(WordCombo)->child), word); 
 	enable_change_cb = true;
 
 	if (!notify)
@@ -579,18 +575,18 @@ void TopWin::SetText(const gchar *word, bool notify)
 /*void TopWin::SetText_without_notify(const gchar *word)
 {
 	enable_change_cb = false;
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry),word);
+	gtk_entry_set_text(GTK_ENTRY(GTK_BIN(WordCombo)->child),word);
 	enable_change_cb = true;
 }*/
 
 void TopWin::TextSelectAll()
 {
-	gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),0,-1);
+	gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
 }
 
 gboolean TopWin::TextSelected()
 {
-    return (gtk_editable_get_selection_bounds(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry),NULL,NULL));
+    return (gtk_editable_get_selection_bounds(GTK_EDITABLE(GTK_BIN(WordCombo)->child),NULL,NULL));
 }
 
 gint TopWin::HisCompareFunc(gconstpointer a,gconstpointer b)
@@ -608,32 +604,29 @@ void TopWin::InsertHisList(const gchar *word)
 	if (!word || word[0]=='\0')
 		return;
 
-	gchar *str = g_strdup(word);
-	GList *list = g_list_find_custom(HisList, str, HisCompareFunc);
-	if (list) {
-		g_free(list->data);
-		HisList = g_list_delete_link(HisList,list);
-		HisList = g_list_prepend(HisList,str);
-	}	else
-		HisList = g_list_prepend(HisList, str);
-
-	if (g_list_length(HisList)> MAX_HISTORY_WORD_ITEM_NUM) {
-		list = g_list_last(HisList);
-		g_free(list->data);
-		HisList = g_list_delete_link(HisList,list);
+	GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(WordCombo));
+	GtkTreeIter iter;
+	gboolean have_item = gtk_tree_model_get_iter_first(model, &iter);
+	gchar *str;
+	size_t count = 0;
+	GtkTreeIter iter_last;
+	while (have_item) {
+		count++;
+		iter_last = iter;
+		gtk_tree_model_get(model, &iter, 0, &str, -1);
+		if (strcmp(str, word)==0) {
+			gtk_list_store_move_after(GTK_LIST_STORE(model), &iter, NULL);
+			g_free(str);
+			return;
+		}
+		g_free(str);
+		have_item = gtk_tree_model_iter_next(model, &iter);
 	}
-
-	const gchar *text = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry));
-	// if the list's first item don't equal to entry's text,
-	//gtk_combo_set_popdown_strings will change the entry's text to it.
-	// so here make it always equal.
-	if (strcmp(text, word)) {
-		list = g_list_append(NULL, (gpointer)text);
-		list = g_list_concat(list, HisList);
-		gtk_combo_set_popdown_strings(GTK_COMBO(WordCombo), list);
-		HisList = g_list_delete_link(list,list);
-	}	else
-		gtk_combo_set_popdown_strings(GTK_COMBO(WordCombo),HisList);
+	if (count >= MAX_HISTORY_WORD_ITEM_NUM) {
+		gtk_list_store_remove(GTK_LIST_STORE(model), &iter_last);
+	}
+	gtk_list_store_prepend(GTK_LIST_STORE(model), &iter);
+	gtk_list_store_set(GTK_LIST_STORE(model), &iter, 0, word, -1);
 }
 
 void TopWin::SaveHistory()
@@ -641,15 +634,20 @@ void TopWin::SaveHistory()
 	FILE *f=g_fopen(conf->get_string_at("dictionary/history").c_str(), "w");
 	if (!f)
 		return;
-	GList *hist_list = HisList;
-	while (hist_list) {
-		fprintf(f, "%s\n", (char *)hist_list->data);
-		hist_list=g_list_next(hist_list);
+	GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(WordCombo));
+	GtkTreeIter iter;
+	gboolean have_item = gtk_tree_model_get_iter_first(model, &iter);
+	gchar *word;
+	while (have_item) {
+		gtk_tree_model_get(model, &iter, 0, &word, -1);
+		fprintf(f, "%s\n", word);
+		g_free(word);
+		have_item = gtk_tree_model_iter_next(model, &iter);
 	}
 	fclose(f);
 }
 
-void TopWin::LoadHistory()
+void TopWin::LoadHistory(GtkListStore* list_store)
 {
 	const gchar *filename = conf->get_string_at("dictionary/history").c_str();
 	struct stat stats;
@@ -665,19 +663,18 @@ void TopWin::LoadHistory()
 	buffer[readsize] = '\0';
 	gchar *p,*p1;
 	p=buffer;
-	HisList = g_list_append(HisList, (gpointer)"");
+	GtkTreeIter iter;
 	while (*p) {
 		p1=strchr(p, '\n');
 		if (p1) {
 			*p1='\0';
-			HisList = g_list_append(HisList, g_strdup(p));
+			gtk_list_store_append(list_store, &iter);
+			gtk_list_store_set(list_store, &iter, 0, p, -1);
 			p = p1+1;
 		} else {
 			break;
 		}
 	}
-	gtk_combo_set_popdown_strings(GTK_COMBO(WordCombo), HisList);
-	HisList = g_list_delete_link(HisList, HisList);
 	g_free(buffer);
 }
 
@@ -691,7 +688,7 @@ void TopWin::InsertBackList(const gchar *word)
     backlistdata->word = g_strdup(word);
     backlistdata->adjustment_value = -1;
   } else {
-    word = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry));
+    word = gtk_entry_get_text(GTK_ENTRY(GTK_BIN(WordCombo)->child));
     if (word[0] == '\0')
       return;
     backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
