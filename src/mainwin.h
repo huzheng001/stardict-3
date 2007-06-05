@@ -42,7 +42,6 @@ struct BackListData {
 class TopWin {
 private:
 	gboolean enable_change_cb;
-	GList *HisList;
 	GSList *BackList;
 	GtkWidget *HistoryMenu;
 	GtkWidget *BackMenu;
@@ -69,7 +68,7 @@ private:
 	static void on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_quit_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 
-	void LoadHistory(void);
+	void LoadHistory(GtkListStore* list_store);
 	void SaveHistory(void);
 public:
 	GtkWidget* MainMenu;
@@ -91,23 +90,23 @@ public:
 
 	gboolean TextSelected();
 	bool has_focus() {
-		return GTK_WIDGET_HAS_FOCUS(GTK_COMBO(WordCombo)->entry);
+		return GTK_WIDGET_HAS_FOCUS(GTK_BIN(WordCombo)->child);
 	}
 	static void ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *text, gpointer data);
 
 	void set_position_in_text(gint pos) {
-		gtk_editable_set_position(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry), pos);
+		gtk_editable_set_position(GTK_EDITABLE(GTK_BIN(WordCombo)->child), pos);
 	}
 	void select_region_in_text(gint beg, gint end) {
-		gtk_editable_select_region(GTK_EDITABLE(GTK_COMBO(WordCombo)->entry), beg, end);
+		gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child), beg, end);
 	}
 	const gchar *get_text() {
 		if (!WordCombo)
 			return "";
-		return gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(WordCombo)->entry));
+		return gtk_entry_get_text(GTK_ENTRY(GTK_BIN(WordCombo)->child));
 	}
 	void grab_focus() {
-		gtk_widget_grab_focus(GTK_COMBO(WordCombo)->entry);
+		gtk_widget_grab_focus(GTK_BIN(WordCombo)->child);
 	}
 };
 

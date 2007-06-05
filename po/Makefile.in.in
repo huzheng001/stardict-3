@@ -25,6 +25,7 @@ VPATH = @srcdir@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+datarootdir = @datarootdir@
 datadir = @datadir@
 libdir = @libdir@
 localedir = $(libdir)/locale
@@ -40,6 +41,7 @@ CC = @CC@
 GENCAT = @GENCAT@
 GMSGFMT = @GMSGFMT@
 MSGFMT = @MSGFMT@
+MSGFMT_OPTS = @MSGFMT_OPTS@
 XGETTEXT = @XGETTEXT@
 MSGMERGE = msgmerge
 
@@ -78,7 +80,7 @@ INSTOBJEXT = @INSTOBJEXT@
 
 .po.gmo:
 	file=$(srcdir)/`echo $* | sed 's,.*/,,'`.gmo \
-	  && rm -f $$file && $(GMSGFMT) -o $$file $<
+	  && rm -f $$file && $(GMSGFMT) $(MSGFMT_OPTS) -o $$file $<
 
 .po.cat:
 	sed -f ../intl/po2msg.sed < $< > $*.msg \
@@ -93,6 +95,21 @@ all-no:
 $(srcdir)/$(GETTEXT_PACKAGE).pot: $(POTFILES)
 	$(XGETTEXT) --default-domain=$(GETTEXT_PACKAGE) --directory=$(top_srcdir) \
 	  --add-comments --keyword=_ --keyword=N_ \
+          --flag=g_strdup_printf:1:c-format \
+          --flag=g_string_printf:2:c-format \
+          --flag=g_string_append_printf:2:c-format \
+          --flag=g_error_new:3:c-format \
+          --flag=g_set_error:4:c-format \
+          --flag=g_markup_printf_escaped:1:c-format \
+          --flag=g_log:3:c-format \
+          --flag=g_print:1:c-format \
+          --flag=g_printerr:1:c-format \
+          --flag=g_printf:1:c-format \
+          --flag=g_fprintf:2:c-format \
+          --flag=g_sprintf:2:c-format \
+          --flag=g_snprintf:3:c-format \
+          --flag=g_scanner_error:2:c-format \
+          --flag=g_scanner_warn:2:c-format \
 	  --files-from=$(srcdir)/POTFILES.in \
 	&& test ! -f $(GETTEXT_PACKAGE).po \
 	   || ( rm -f $(srcdir)/$(GETTEXT_PACKAGE).pot \
@@ -169,7 +186,9 @@ uninstall:
 	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT); \
 	  rm -f $(DESTDIR)$(gnulocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE)$(INSTOBJEXT).m; \
 	done
-	rm -f $(DESTDIR)$(gettextsrcdir)/po-Makefile.in.in
+	if test "$(PACKAGE)" = "glib"; then \
+	  rm -f $(DESTDIR)$(gettextsrcdir)/Makefile.in.in; \
+	fi
 
 check: all
 
@@ -199,19 +218,28 @@ dist distdir: update-po $(DISTFILES)
 
 update-po: Makefile
 	$(MAKE) $(GETTEXT_PACKAGE).pot
+	tmpdir=`pwd`; \
 	cd $(srcdir); \
 	catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed 's/\$(CATOBJEXT)$$//'`; \
-	  mv $$lang.po $$lang.old.po; \
 	  echo "$$lang:"; \
-	  if $(MSGMERGE) $$lang.old.po $(GETTEXT_PACKAGE).pot -o $$lang.po; then \
-	    rm -f $$lang.old.po; \
+	  if $(MSGMERGE) $$lang.po $(GETTEXT_PACKAGE).pot -o $$tmpdir/$$lang.new.po; then \
+	    if cmp $$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
+	      rm -f $$tmpdir/$$lang.new.po; \
+            else \
+	      if mv -f $$tmpdir/$$lang.new.po $$lang.po; then \
+	        :; \
+	      else \
+	        echo "msgmerge for $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
+	        rm -f $$tmpdir/$$lang.new.po; \
+	        exit 1; \
+	      fi; \
+	    fi; \
 	  else \
 	    echo "msgmerge for $$cat failed!"; \
-	    rm -f $$lang.po; \
-	    mv $$lang.old.po $$lang.po; \
+	    rm -f $$tmpdir/$$lang.new.po; \
 	  fi; \
 	done
 
