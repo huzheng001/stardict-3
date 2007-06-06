@@ -19,5 +19,4 @@ EXTRA_DIST = \
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in	\
-	stardictrc.rc \
-	sigc++config.h
+	stardictrc.rc

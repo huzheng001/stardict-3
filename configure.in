@@ -95,15 +95,6 @@ AC_SUBST(GUCHARMAP_CFLAGS)
 AC_SUBST(GUCHARMAP_LIBS)
 AC_SUBST(GUCHARMAP_PLUGIN_DIR)
 
-dnl ================================================================
-dnl festival tts plugin checks.
-dnl ================================================================
-
-AC_ARG_ENABLE([festival],
-	AS_HELP_STRING([--disable-festival],[Disable festival tts plugin (default: enabled)]),
-	[enable_festival=$enableval],
-	[enable_festival=yes])
-
 AC_DEFUN([AC_FIND_FILE], 
 [
 	$3=NO
@@ -120,6 +111,15 @@ AC_DEFUN([AC_FIND_FILE],
 	done
 ]
 )
+
+dnl ================================================================
+dnl festival tts plugin checks.
+dnl ================================================================
+
+AC_ARG_ENABLE([festival],
+	AS_HELP_STRING([--disable-festival],[Disable festival tts plugin (default: enabled)]),
+	[enable_festival=$enableval],
+	[enable_festival=yes])
 
 if test "x$enable_festival" = "xyes" ; then
 	AC_MSG_CHECKING([festival.h])
@@ -143,6 +143,38 @@ fi
 AC_SUBST(FESTIVAL_CFLAGS)
 AC_SUBST(FESTIVAL_LIBS)
 AC_SUBST(FESTIVAL_PLUGIN_DIR)
+
+dnl ================================================================
+dnl espeak tts plugin checks.
+dnl ================================================================
+
+AC_ARG_ENABLE([espeak],
+	AS_HELP_STRING([--disable-espeak],[Disable espeak tts plugin (default: enabled)]),
+	[enable_espeak=$enableval],
+	[enable_espeak=yes])
+
+if test "x$enable_espeak" = "xyes" ; then
+	AC_MSG_CHECKING([speak_lib.h])
+	AC_FIND_FILE("espeak/speak_lib.h", [/usr/include], espeakdir)
+	if test $espeakdir = NO
+	then
+		AC_MSG_RESULT(not found)
+		AC_MSG_ERROR([Espeak library not found. Use --disable-espeak to build without espeak plugin.])
+	else
+		AC_MSG_RESULT(yes)
+		ESPEAK_LIBS="-lespeak"
+		ESPEAK_CFLAGS=
+		ESPEAK_PLUGIN_DIR="stardict-espeak-tts-plugin"
+	fi
+else
+	ESPEAK_CFLAGS=
+	ESPEAK_LIBS=
+	ESPEAK_PLUGIN_DIR=
+fi
+
+AC_SUBST(ESPEAK_CFLAGS)
+AC_SUBST(ESPEAK_LIBS)
+AC_SUBST(ESPEAK_PLUGIN_DIR)
 
 dnl ================================================================
 dnl main program checks.
@@ -236,6 +268,35 @@ dnl
 AC_CHECK_LIB(z,zlibVersion,STARDICT_LIBS="$STARDICT_LIBS -lz",[AC_MSG_ERROR([zlib not found])])
 
 
+dnl ================================================================
+dnl libsigc++20 checks.
+dnl ================================================================
+
+PKG_CHECK_MODULES(SIGCPP, "sigc++-2.0", [use_system_sigcpp=yes], [use_system_sigcpp=no])
+AM_CONDITIONAL(USE_SYSTEM_SIGCPP, test "x${use_system_sigcpp}" = "xyes")
+if test "x${use_system_sigcpp}" = "xyes" ; then
+echo "Use system libsigc++20";
+STARDICT_CFLAGS="$SIGCPP_CFLAGS $STARDICT_CFLAGS"
+STARDICT_LIBS="$SIGCPP_LIBS $STARDICT_LIBS"
+else
+echo "Use local libsigc++20";
+SIGC_CXX_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
+SIGC_CXX_MSVC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
+SIGC_CXX_SELF_REFERENCE_IN_MEMBER_INITIALIZATION()
+SIGC_CXX_HAS_NAMESPACE_STD()
+SIGC_CXX_HAS_SUN_REVERSE_ITERATOR()
+
+if test "X$config_error" = "Xyes" ; then
+  AC_ERROR(
+[One or more of the required compiler features is missing.
+If you believe this is in error, please consult the config.log file
+for further details.
+])
+fi
+
+fi
+
+
 dnl ==========================================================================
 
 # Checks for header files. need by Solaris.
@@ -259,20 +320,6 @@ AC_CHECK_LIB([X11], [main], , [AC_MSG_ERROR([X11 lib not found])])
 AC_SUBST(STARDICT_LIBS)
 AC_SUBST(STARDICT_CFLAGS)
 
-SIGC_CXX_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
-SIGC_CXX_MSVC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD()
-SIGC_CXX_SELF_REFERENCE_IN_MEMBER_INITIALIZATION()
-SIGC_CXX_HAS_NAMESPACE_STD()
-SIGC_CXX_HAS_SUN_REVERSE_ITERATOR()
-
-if test "X$config_error" = "Xyes" ; then
-  AC_ERROR(
-[One or more of the required compiler features is missing.
-If you believe this is in error, please consult the config.log file
-for further details.
-])
-fi
-
 
 dnl ==========================================================================
 
@@ -286,6 +333,7 @@ po/Makefile.in
 m4/Makefile
 src/Makefile
 src/sigc++/Makefile
+src/sigc++config/Makefile
 src/lib/Makefile
 src/wiki/Makefile
 src/pixmaps/Makefile
@@ -301,6 +349,7 @@ stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile
 stardict-plugins/stardict-festival-tts-plugin/Makefile
+stardict-plugins/stardict-espeak-tts-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile
 help/Makefile

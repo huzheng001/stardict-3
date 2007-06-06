@@ -38,3 +38,23 @@ query_t analyse_query(const char *s, std::string& res)
 
 	return qtSIMPLE;
 }
+
+void stardict_input_escape(const char *text, std::string &res)
+{
+	res.clear();
+	const char *p = text;
+	if (*p == '/' || *p == '|') {
+		res = "\\";
+		res += *p;
+		p++;
+	}
+	while (*p) {
+		if (*p == '\\' || *p == '*' || *p == '?') {
+			res += '\\';
+			res += *p;
+		} else {
+			res += *p;
+		}
+		p++;
+	}
+}

@@ -479,8 +479,11 @@ void TopWin::on_main_menu_quit_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 
 void TopWin::ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *text, gpointer data)
 {
-	if (text)
-		gpAppFrame->Query(text);
+	if (text) {
+		std::string estr;
+		stardict_input_escape(text, estr);
+		gpAppFrame->Query(estr.c_str());
+	}
 }
 
 void TopWin::do_menu()
@@ -1485,6 +1488,8 @@ void TextWin::Create(GtkWidget *vbox)
 		   G_CALLBACK(on_button_press), this);
   g_signal_connect(G_OBJECT(view->widget()), "selection_received",
 		   G_CALLBACK(SelectionCallback), this);
+  g_signal_connect(G_OBJECT(view->widget()), "populate-popup",
+		   G_CALLBACK(on_populate_popup), this);
 
 	hbSearchPanel = gtk_hbox_new(FALSE, 0);
   btClose = GTK_BUTTON(gtk_button_new());
@@ -1751,6 +1756,36 @@ gboolean TextWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Te
 	return FALSE;
 }
 
+void TextWin::on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin)
+{
+	GtkTextIter start, end;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin->view->widget()));
+	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
+		gchar *str = gtk_text_buffer_get_text(buffer, &start, &end, false);
+		std::string estr;
+		stardict_input_escape(str, estr);
+		g_free(str);
+		gpAppFrame->Query(estr.c_str());
+	}
+}
+
+void TextWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *oTextWin)
+{
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
+	if (gtk_text_buffer_get_selection_bounds(buffer, NULL, NULL)) {
+		GtkWidget *menuitem;
+		menuitem = gtk_separator_menu_item_new();
+		gtk_widget_show(menuitem);
+		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Query"));
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_query_menu_item_activate), oTextWin);
+		GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_widget_show(menuitem);
+		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+	}
+}
+
 void TextWin::SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin)
 {
 	gchar *result;
@@ -1768,9 +1803,11 @@ void TextWin::SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_da
 			gtk_selection_convert (widget, GDK_SELECTION_PRIMARY, GDK_TARGET_STRING, GDK_CURRENT_TIME);
 		}
 		return;
-    }
-	gpAppFrame->Query(result);
-	g_free (result);
+	}
+	std::string estr;
+	stardict_input_escape(result, estr);
+	g_free(result);
+	gpAppFrame->Query(estr.c_str());
 }
 
 /*********************************************/
