@@ -249,6 +249,8 @@ private:
 
 	static void SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin);
 	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin);
+	static void on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin);
+	static void on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *oTextWin);
 	static bool find_first_tag(gchar *str, gchar * & beg, gchar * & end);
 	static void OnCloseSearchPanel(GtkWidget *widget, TextWin *oTextWin);
 	static gboolean OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,

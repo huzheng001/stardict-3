@@ -343,14 +343,12 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
   g_free(m_str);
   mark += "</span></b> ";
   mark += _("has succeeded.\n");
-  mark += _("Found ");
   if (count ==1)
-    mark+= _("1 word:\n");
+    mark+= _("Found 1 word:\n");
   else {
-    m_str=g_strdup_printf("%d",count);
+    m_str=g_strdup_printf(_("Found %d words:\n"),count);
     mark += m_str;
     g_free(m_str);
-    mark+= _(" words:\n");
   }
   
   int j;

@@ -26,4 +26,10 @@ libstardict_a_SOURCES = \
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+if USE_SYSTEM_SIGCPP
+LOCAL_SIGCPP_INCLUDE =
+else
+LOCAL_SIGCPP_INCLUDE = -I$(top_builddir)/src -I$(top_builddir)/src/sigc++config
+endif
+
+INCLUDES = @STARDICT_CFLAGS@ $(LOCAL_SIGCPP_INCLUDE)

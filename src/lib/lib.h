@@ -16,5 +16,6 @@ typedef enum {
 } query_t;
 	
 extern query_t analyse_query(const char *s, std::string& res); 
+extern void stardict_input_escape(const char *text, std::string &res);
 
 #endif//!__SD_LIB_H__

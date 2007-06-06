@@ -729,7 +729,7 @@ msgstr ""
 #: ../src/mainwin.cpp:1628
 #, c-format
 msgid "The text \"%s\" was not found."
-msgstr "Text „%“ nebyl nalezen."
+msgstr "Text „%s“ nebyl nalezen."
 
 #: ../src/mainwin.cpp:1721
 msgid "Scan the selection"
