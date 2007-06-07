@@ -68,6 +68,7 @@ public:
   void ShowNotFound(const char* sWord,const char* sReason, gboolean fuzzy);
   void Show();
   void Hide();
+  void set_bg(const GdkColor *color);
 };
 
 #endif

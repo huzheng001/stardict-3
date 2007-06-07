@@ -1147,6 +1147,13 @@ void PrefsDlg::on_setup_mainwin_showfirstWhenNotfound_ckbutton_toggled(GtkToggle
 		    gtk_toggle_button_get_active(button));
 }
 
+void PrefsDlg::on_setup_mainwin_input_timeout_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg)
+{
+	gint timeout = gtk_spin_button_get_value_as_int(button);
+	conf->set_int_at("main_window/word_change_timeout", timeout);
+	gpAppFrame->word_change_timeout = timeout;
+}
+
 void PrefsDlg::setup_mainwin_input_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Input"),
@@ -1162,6 +1169,20 @@ void PrefsDlg::setup_mainwin_input_page()
 				     conf->get_bool_at("main_window/search_while_typing"));
 	g_signal_connect(G_OBJECT(check_button), "toggled", 
 			 G_CALLBACK(on_setup_mainwin_searchWhileTyping_ckbutton_toggled), this);
+	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
+	GtkWidget *label=gtk_label_new(NULL);
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Word change _timeout:"));
+	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
+	GtkWidget *spin_button;
+	spin_button = gtk_spin_button_new_with_range(50,2000,50);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), spin_button);
+	gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin_button), GTK_UPDATE_IF_VALID);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button), conf->get_int_at("main_window/word_change_timeout"));
+	g_signal_connect(G_OBJECT(spin_button), "value-changed", G_CALLBACK(on_setup_mainwin_input_timeout_spinbutton_changed), this);
+	gtk_box_pack_start(GTK_BOX(hbox),spin_button,FALSE,FALSE, 0);
+	label=gtk_label_new(_("(default:300)"));
+	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
 	check_button = gtk_check_button_new_with_mnemonic(_("Show the _first word when not found."));
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,FALSE,FALSE,0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("main_window/showfirst_when_notfound"));
@@ -1788,6 +1809,33 @@ void PrefsDlg::on_setup_floatwin_size_max_height_spinbutton_changed(GtkSpinButto
   conf->set_int_at("floating_window/max_window_height", height);
 }
 
+void PrefsDlg::on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+	gboolean use = gtk_toggle_button_get_active(button);
+	conf->set_bool_at("floating_window/use_custom_bg", use);
+	if (use) {
+		GdkColor color;
+		color.red = conf->get_int_at("floating_window/bg_red");
+		color.green = conf->get_int_at("floating_window/bg_green");
+		color.blue = conf->get_int_at("floating_window/bg_blue");
+		gpAppFrame->oFloatWin.set_bg(&color);
+	} else {
+		gpAppFrame->oFloatWin.set_bg(NULL);
+	}
+}
+
+void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPrefsDlg)
+{
+	GdkColor color;
+	gtk_color_button_get_color(widget, &color);
+	conf->set_int_at("floating_window/bg_red", color.red);
+	conf->set_int_at("floating_window/bg_green", color.green);
+	conf->set_int_at("floating_window/bg_blue", color.blue);
+	if (conf->get_bool_at("floating_window/use_custom_bg")) {
+		gpAppFrame->oFloatWin.set_bg(&color);
+	}
+}
+
 void PrefsDlg::setup_floatwin_size_page()
 {
 	GtkWidget *vbox;
@@ -1850,6 +1898,20 @@ void PrefsDlg::setup_floatwin_size_page()
 	gtk_table_attach(GTK_TABLE(table), spin_button, 1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 	label=gtk_label_new(_("(default:240)"));
 	gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+
+	GtkWidget*hbox1 = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(vbox),hbox1,false,false,0);
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom background color:"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("floating_window/use_custom_bg"));
+	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_setup_floatwin_use_custom_bg_toggled), this);
+	gtk_box_pack_start(GTK_BOX(hbox1),check_button,false,false,0);
+	GdkColor color;
+	color.red = conf->get_int_at("floating_window/bg_red");
+	color.green = conf->get_int_at("floating_window/bg_green");
+	color.blue = conf->get_int_at("floating_window/bg_blue");
+	GtkWidget *colorbutton = gtk_color_button_new_with_color(&color);
+	g_signal_connect(G_OBJECT(colorbutton), "color-set", G_CALLBACK(on_setup_floatwin_color_set), this);
+	gtk_box_pack_start(GTK_BOX(hbox1),colorbutton,false,false,0);
 }
 #endif
 

@@ -90,5 +90,5 @@ build-subdirs-stamp:
 # Remove current directory from DEFAULT_INCLUDES because signal.h has
 # the same name as a standard header:
 DEFAULT_INCLUDES =
-AM_CPPFLAGS = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/src -I$(top_builddir)/src
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/sigc++config
 

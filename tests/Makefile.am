@@ -4,8 +4,10 @@ EXTRA_DIST = sample1.ifo sample1.idx sample1.dict
 
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_LIBFILE =
+LOCAL_SIGCPP_INCLUDE =
 else
 LOCAL_SIGCPP_LIBFILE = $(top_builddir)/src/sigc++/libsigc.a
+LOCAL_SIGCPP_INCLUDE = -I$(top_builddir)/src/sigc++config
 endif
 
 if GNOME_SUPPORT
@@ -55,7 +57,7 @@ t_xml_SOURCES = t_xml.cpp \
 
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
 	$(LOCAL_SIGCPP_LIBFILE) $(top_builddir)/src/wiki/libwiki.a
-INCLUDES = @STARDICT_CFLAGS@  -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib -I$(top_builddir)/src/wiki
+INCLUDES = @STARDICT_CFLAGS@ $(LOCAL_SIGCPP_INCLUDE) -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib -I$(top_builddir)/src/wiki
 
 TESTS = \
 	t_config_file t_convert_old_ini t_dict t_query t_lookupdata \

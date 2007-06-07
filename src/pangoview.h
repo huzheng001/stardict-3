@@ -46,6 +46,7 @@ public:
 	virtual void end_update();
 	virtual void goto_begin() {}
 	virtual void goto_end() {}
+	virtual void modify_bg(GtkStateType state, const GdkColor *color) {}
 
 	GtkWidget *vscroll_bar() { return scroll_win_->vscrollbar; }
 	void set_size(gint w, gint h) {

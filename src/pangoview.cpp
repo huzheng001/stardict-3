@@ -78,13 +78,15 @@ public:
 	void append_mark(const char *mark) {}
 	void append_pixbuf(GdkPixbuf *pixbuf, const char *label);
 	std::string get_text();
+	void modify_bg(GtkStateType state, const GdkColor *color);
 protected:
 	void do_set_text(const char *str);
 	void do_append_text(const char *str);
 	void do_append_pango_text(const char *str);
 	void do_set_pango_text(const char *str);
 private:
-    GtkLabel *label_;
+	GtkLabel *label_;
+	GtkWidget *viewport_;
 };
 
 
@@ -181,6 +183,11 @@ TextPangoWidget::TextPangoWidget()
 	gtk_scrolled_window_set_shadow_type(scroll_win_, GTK_SHADOW_IN);
 }
 
+void LabelPangoWidget::modify_bg(GtkStateType state, const GdkColor *color)
+{
+	gtk_widget_modify_bg(viewport_, state, color);
+}
+
 LabelPangoWidget::LabelPangoWidget()
 {
     label_ = GTK_LABEL(gtk_label_new(NULL));
@@ -190,14 +197,14 @@ LabelPangoWidget::LabelPangoWidget()
     gtk_scrolled_window_set_policy(scroll_win_, GTK_POLICY_NEVER,
 				   GTK_POLICY_AUTOMATIC);
 
-    GtkWidget *viewport =
+    viewport_ =
 	    gtk_viewport_new(gtk_scrolled_window_get_hadjustment(scroll_win_),
 			     gtk_scrolled_window_get_vadjustment(scroll_win_));
-    gtk_widget_add_events(viewport, GDK_BUTTON1_MOTION_MASK);
-    gtk_widget_add_events(viewport, GDK_BUTTON_RELEASE_MASK);
-    gtk_viewport_set_shadow_type(GTK_VIEWPORT(viewport), GTK_SHADOW_NONE);
-    gtk_container_add(GTK_CONTAINER(scroll_win_), viewport);
-    gtk_container_add(GTK_CONTAINER(viewport), GTK_WIDGET(label_));
+    gtk_widget_add_events(viewport_, GDK_BUTTON1_MOTION_MASK);
+    gtk_widget_add_events(viewport_, GDK_BUTTON_RELEASE_MASK);
+    gtk_viewport_set_shadow_type(GTK_VIEWPORT(viewport_), GTK_SHADOW_NONE);
+    gtk_container_add(GTK_CONTAINER(scroll_win_), viewport_);
+    gtk_container_add(GTK_CONTAINER(viewport_), GTK_WIDGET(label_));
 }
 
 PangoWidgetBase *PangoWidgetBase::create(bool autoresize)
