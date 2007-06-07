@@ -123,7 +123,7 @@ AppCore::AppCore() :
 	      conf->get_bool_at("dictionary/enable_collation"),
 	      conf->get_int_at("dictionary/collate_function"))
 {
-	word_change_timeout_ = 0;
+	word_change_timeout_id = 0;
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
 	plugin_manage_dlg = NULL;
@@ -135,6 +135,7 @@ AppCore::AppCore() :
 
 AppCore::~AppCore()
 {
+	stop_word_change_timer();
 #ifdef CONFIG_GNOME
 	gnome_sound_shutdown();
 #endif
@@ -225,6 +226,7 @@ void AppCore::Create(gchar *queryword)
     HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
 
 	iCurrentIndex=(CurrentIndex *)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
+	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
 
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
 		const std::string &custom_font(conf->get_string_at("dictionary/custom_font"));
@@ -1299,8 +1301,6 @@ void AppCore::TopWinEnterWord(const gchar *text)
 	oTopWin.InsertBackList();
 }
 
-#define DEFAULT_WORD_CHANGE_TIMEOUT 300
-
 void AppCore::TopWinWordChange(const gchar* sWord)
 {
 	std::string res;
@@ -1319,7 +1319,7 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 	default:
 		stop_word_change_timer();
 		delayed_word_ = res;
-		word_change_timeout_ = g_timeout_add(DEFAULT_WORD_CHANGE_TIMEOUT, on_word_change_timeout, this);
+		word_change_timeout_id = g_timeout_add(word_change_timeout, on_word_change_timeout, this);
 	}
 }
 
@@ -1341,7 +1341,7 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
         }
     }
 
-    app->word_change_timeout_ = 0;//next line destroy timer
+    app->word_change_timeout_id = 0;//next line destroy timer
 	return FALSE;
 }
 
@@ -1698,9 +1698,9 @@ void AppCore::PopupPluginManageDlg()
 
 void AppCore::stop_word_change_timer()
 {
-	if (word_change_timeout_) {
-		g_source_remove(word_change_timeout_);
-		word_change_timeout_ = 0;
+	if (word_change_timeout_id) {
+		g_source_remove(word_change_timeout_id);
+		word_change_timeout_id = 0;
 	}
 
 }

@@ -59,6 +59,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
+	add_entry("/apps/stardict/preferences/main_window/word_change_timeout", 300);
 	add_entry("/apps/stardict/preferences/main_window/showfirst_when_notfound", true);
 	add_entry("/apps/stardict/preferences/translate/engine", 0);
 	add_entry("/apps/stardict/preferences/translate/fromlang", 0);
@@ -81,6 +82,10 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/pronounce_when_popup", false);
 	add_entry("/apps/stardict/preferences/floating_window/lock", false);
 	add_entry("/apps/stardict/preferences/floating_window/show_if_not_found", true);
+	add_entry("/apps/stardict/preferences/floating_window/use_custom_bg", false);
+	add_entry("/apps/stardict/preferences/floating_window/bg_red", 65535);
+	add_entry("/apps/stardict/preferences/floating_window/bg_green", 65535);
+	add_entry("/apps/stardict/preferences/floating_window/bg_blue", 0);
 
 	add_entry("/apps/stardict/preferences/floating_window/lock_x", 0);
 	add_entry("/apps/stardict/preferences/floating_window/lock_y", 0);

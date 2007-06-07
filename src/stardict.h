@@ -52,7 +52,7 @@ private:
 	DictManageDlg *dict_manage_dlg;
 	PluginManageDlg *plugin_manage_dlg;
 	PrefsDlg *prefs_dlg;
-	guint word_change_timeout_;
+	guint word_change_timeout_id;
 	std::string delayed_word_;
 
 	static int MatchWordCompare(const void * s1, const void * s2);
@@ -105,6 +105,7 @@ public:
 #endif
 
 	std::vector<InstantDictIndex> dictmask;
+	guint word_change_timeout;
 
 	AppCore();
 	~AppCore();

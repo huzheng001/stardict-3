@@ -2,9 +2,11 @@
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_DIR =
 LOCAL_SIGCPP_LIBFILE =
+LOCAL_SIGCPP_INCLUDE =
 else
 LOCAL_SIGCPP_DIR = sigc++ sigc++config
 LOCAL_SIGCPP_LIBFILE = sigc++/libsigc.a
+LOCAL_SIGCPP_INCLUDE = -Isigc++config
 endif
 
 DIST_SUBDIRS = sigc++ sigc++config lib wiki pixmaps sounds win32
@@ -14,6 +16,7 @@ bin_PROGRAMS = stardict
 
 INCLUDES =							                            \
 	$(STARDICT_CFLAGS)						                    \
+	$(LOCAL_SIGCPP_INCLUDE)	\
 	-DDATADIR=\""$(datadir)"\"	\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps"\"	\
 	-DSTARDICT_LOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\

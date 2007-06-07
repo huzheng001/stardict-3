@@ -185,6 +185,20 @@ void FloatWin::Create()
 		
 	gtk_widget_show_all(frame);
 	gtk_widget_hide(button_hbox); //show all will show hbox's children,now hide hbox only.	
+
+	if (conf->get_bool_at("floating_window/use_custom_bg")) {
+		GdkColor color;
+		color.red = conf->get_int_at("floating_window/bg_red");
+		color.green = conf->get_int_at("floating_window/bg_green");
+		color.blue = conf->get_int_at("floating_window/bg_blue");
+		set_bg(&color);
+	}
+}
+
+void FloatWin::set_bg(const GdkColor *color)
+{
+	gtk_widget_modify_bg(FloatWindow, GTK_STATE_NORMAL, color);
+	view->modify_bg(GTK_STATE_NORMAL, color);
 }
 
 void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginWord)
