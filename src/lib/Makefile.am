@@ -24,7 +24,8 @@ libstardict_a_SOURCES = \
 	virtualdictplugin.cpp virtualdictplugin.h \
 	ttsplugin.cpp ttsplugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
-	dictmask.h
+	dictmask.h	\
+	stardict_libconfig.h
 
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_INCLUDE =

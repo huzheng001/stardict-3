@@ -239,6 +239,7 @@ private:
 	GtkButton *btClose;
 	GtkButton *btFind;
 	GtkWidget *hbSearchPanel;
+	ReadWordType selection_readwordtype;
 	
 
 	void HideSearchPanel(void) 
@@ -250,6 +251,7 @@ private:
 	static void SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin);
 	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin);
 	static void on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin);
+	static void on_pronounce_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin);
 	static void on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *oTextWin);
 	static bool find_first_tag(gchar *str, gchar * & beg, gchar * & end);
 	static void OnCloseSearchPanel(GtkWidget *widget, TextWin *oTextWin);
@@ -271,6 +273,10 @@ private:
 	GtkWidget *fromlang_combobox;
 	GtkWidget *tolang_combobox;
 	GtkWidget *trans_button;
+	std::string pronounceWord;
+	ReadWordType selection_readwordtype;
+	static void on_pronounce_menu_item_activate(GtkMenuItem *menuitem, TransWin *oTransWin);
+	static void on_populate_popup(GtkTextView *textview, GtkMenu *menu, TransWin *oTransWin);
 	static void on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin);
 	static void on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);

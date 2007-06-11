@@ -1756,6 +1756,17 @@ gboolean TextWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Te
 	return FALSE;
 }
 
+void TextWin::on_pronounce_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin)
+{
+	GtkTextIter start, end;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin->view->widget()));
+	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
+		gchar *str = gtk_text_buffer_get_text(buffer, &start, &end, false);
+		gpAppFrame->oReadWord.read(str, oTextWin->selection_readwordtype);
+		g_free(str);
+	}
+}
+
 void TextWin::on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin)
 {
 	GtkTextIter start, end;
@@ -1772,11 +1783,23 @@ void TextWin::on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextW
 void TextWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *oTextWin)
 {
 	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
-	if (gtk_text_buffer_get_selection_bounds(buffer, NULL, NULL)) {
+	GtkTextIter start, end;
+	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
 		GtkWidget *menuitem;
 		menuitem = gtk_separator_menu_item_new();
 		gtk_widget_show(menuitem);
 		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+		gchar *str = gtk_text_buffer_get_text(buffer, &start, &end, false);
+		oTextWin->selection_readwordtype = gpAppFrame->oReadWord.canRead(str);
+		if (oTextWin->selection_readwordtype != READWORD_CANNOT) {
+			menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Pronounce"));
+			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_pronounce_menu_item_activate), oTextWin);
+			GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+			gtk_widget_show(menuitem);
+			gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+		}
+		g_free(str);
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Query"));
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_query_menu_item_activate), oTextWin);
 		GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
@@ -1918,6 +1941,35 @@ void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_i
 	}
 }
 
+void TransWin::on_pronounce_menu_item_activate(GtkMenuItem *menuitem, TransWin *oTransWin)
+{
+	gpAppFrame->oReadWord.read(oTransWin->pronounceWord.c_str(), oTransWin->selection_readwordtype);
+}
+
+void TransWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TransWin *oTransWin)
+{
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
+	GtkTextIter start, end;
+	if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end)) {
+		gchar *str = gtk_text_buffer_get_text(buffer, &start, &end, false);
+		oTransWin->selection_readwordtype = gpAppFrame->oReadWord.canRead(str);
+		if (oTransWin->selection_readwordtype != READWORD_CANNOT) {
+			oTransWin->pronounceWord = str;
+			GtkWidget *menuitem;
+			menuitem = gtk_separator_menu_item_new();
+			gtk_widget_show(menuitem);
+			gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+			menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Pronounce"));
+			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_pronounce_menu_item_activate), oTransWin);
+			GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+			gtk_widget_show(menuitem);
+			gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
+		}
+		g_free(str);
+	}
+}
+
 void TransWin::Create(GtkWidget *notebook)
 {
 	GtkWidget *frame;
@@ -1979,6 +2031,7 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(input_textview), GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(input_textview), 5);
 	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(input_textview), 5);
+	g_signal_connect(G_OBJECT(input_textview), "populate-popup", G_CALLBACK(on_populate_popup), this);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -2003,6 +2056,7 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(result_textview), GTK_WRAP_WORD_CHAR);
 	gtk_text_view_set_left_margin(GTK_TEXT_VIEW(result_textview), 3);
 	gtk_text_view_set_right_margin(GTK_TEXT_VIEW(result_textview), 3);
+	g_signal_connect(G_OBJECT(result_textview), "populate-popup", G_CALLBACK(on_populate_popup), this);
 	scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);

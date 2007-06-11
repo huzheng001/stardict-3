@@ -16,6 +16,8 @@ ReadWord::ReadWord()
 {
 	const std::string &path = conf->get_string_at("dictionary/tts_path");
 	LoadRealTtsPath(path.c_str());
+	use_tts = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
+	tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
 }
 
 ReadWordType ReadWord::canRead(const gchar *word)
@@ -24,7 +26,8 @@ ReadWordType ReadWord::canRead(const gchar *word)
 		return READWORD_REALTTS;
 	if (gpAppFrame->oStarDictPlugins->TtsPlugins.nplugins() > 0)
 		return READWORD_TTS;
-	//TODO READWORD_COMMAND
+	if (use_tts && !tts_program_cmdline.empty())
+		return READWORD_COMMAND;
 	return READWORD_CANNOT;
 }
 
@@ -35,7 +38,7 @@ void ReadWord::read(const gchar *word, ReadWordType type)
 	} else if (type == READWORD_TTS) {
 		gpAppFrame->oStarDictPlugins->TtsPlugins.saytext(0, word);
 	} else if (type == READWORD_COMMAND) {
-		//TODO
+		Command_read(word);
 	}
 }
 
@@ -75,20 +78,11 @@ void ReadWord::LoadRealTtsPath(const gchar *path)
 			ttspath.push_back(*it);
 #endif
 	}
-	
-	use_tts = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
-	use_tss_if_not_found = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found");
-	const std::string &cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
-	tts_program_cmdline = cmdline;
 }
 
 bool ReadWord::RealTts_canRead(const gchar *word)
 {	
 	bool return_val = false;
-	
-	if (use_tts && !tts_program_cmdline.empty())
-		return true;
-	
 	if (!ttspath.empty() && word && g_ascii_isalpha(word[0])) {
 		std::string lowerword;
 		const gchar *p = word;
@@ -109,26 +103,17 @@ bool ReadWord::RealTts_canRead(const gchar *word)
 	return return_val;
 }
 
+void ReadWord::Command_read(const gchar *word)
+{
+	gchar *eword = g_shell_quote(word);
+	gchar *command = g_strdup_printf(tts_program_cmdline.c_str(), eword);
+	g_free(eword);
+	system(command);
+	g_free(command);
+}
+
 void ReadWord::RealTts_read(const gchar *word)
 {
-	bool tts_sound_file_exist = false;
-	
-	if (use_tts && !use_tss_if_not_found)
-	{
-		if (!tts_program_cmdline.empty())
-		{
-			std::string cmdline = tts_program_cmdline;
-			std::string placeholder("{WORD}");
-			std::string queryword(word);
-			if (cmdline.find(placeholder) != std::string::npos)
-				cmdline.replace(cmdline.find(placeholder), placeholder.size(), queryword);
-				
-			g_spawn_command_line_async (cmdline.c_str(), NULL);
-		}
-		
-		return ;
-	}
-
 	if (!ttspath.empty() && word && g_ascii_isalpha(word[0])) {
 		std::string lowerword;
 		const gchar *p = word;
@@ -143,24 +128,9 @@ void ReadWord::RealTts_read(const gchar *word)
 			filename = *it + G_DIR_SEPARATOR_S + lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav";
 			if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
 				play_wav_file(filename);
-				tts_sound_file_exist = true;
 				break;
 			}
 		}
 
 	}
-	
-	if (!tts_sound_file_exist && use_tts)
-	{
-		if (!tts_program_cmdline.empty())
-		{
-			std::string cmdline = tts_program_cmdline;
-			std::string placeholder("{WORD}");
-			std::string queryword(word);
-			if (cmdline.find(placeholder) != std::string::npos)
-				cmdline.replace(cmdline.find(placeholder), placeholder.size(), queryword);
-				
-			g_spawn_command_line_async (cmdline.c_str(), NULL);
-		}
-	}	
 }
