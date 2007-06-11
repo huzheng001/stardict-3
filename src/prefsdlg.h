@@ -20,7 +20,7 @@ private:
   GtkWidget *collation_hbox;
   GtkWidget *tts_textview;
   GtkWidget *searchwebsite_treeview;
-  GtkWidget *use_tts_program_vbox;
+  GtkWidget *use_tts_program_hbox;
  
   GtkWindow *parent_window;
 #ifndef CONFIG_GPE
@@ -36,7 +36,9 @@ private:
 #ifndef CONFIG_GPE
   GtkWidget *categories_window;
 #endif
+#ifndef _WIN32
   GtkEntry *eTTSCommandline;
+#endif
   const std::list<std::string>& key_combs;
 
 #ifndef CONFIG_GPE
@@ -85,8 +87,9 @@ private:
   static void on_setup_dictionary_export_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#ifndef _WIN32
   static void on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
-  static void on_setup_dictionary_use_tts_program_if_not_found_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);  
+#endif
   static void on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);

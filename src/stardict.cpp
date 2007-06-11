@@ -81,6 +81,9 @@ AppCore *gpAppFrame;
 
 static gboolean hide_option = FALSE;
 static gboolean debug = FALSE;
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+static gboolean newinstance_option = FALSE;
+#endif
 #ifdef CONFIG_GNOME
 static gboolean quit_option = FALSE;
 #endif
@@ -92,6 +95,10 @@ static const GOptionEntry options [] =
 	  N_("Turn on all debugging messages"), NULL },
 	{ "hide", 'h', 0, G_OPTION_ARG_NONE, &hide_option,
 	  N_("Hide the main window, do not show splash screen"), NULL },
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+	{ "new", 'n', 0, G_OPTION_ARG_NONE, &newinstance_option,
+	  N_("Start a new instance of stardict"), NULL },
+#endif
 #ifdef CONFIG_GNOME
 	{ "quit", 'q', 0, G_OPTION_ARG_NONE, &quit_option,
 	  N_("Quit an existing instance of stardict"), NULL },
@@ -202,7 +209,7 @@ void AppCore::Create(gchar *queryword)
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
 		);
-	oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	oLibs.SetClientDictMask(dictmask);
 	oLibs.set_show_progress(&gtk_show_progress);
     
     oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
@@ -1642,7 +1649,7 @@ void AppCore::reload_dicts()
 		     conf->get_bool_at("dictionary/enable_collation"),
 		     conf->get_int_at("dictionary/collate_function"));
 	dictmask.clear();
-	oLibs.SetDictMask(dictmask, NULL, -1, -1);
+	oLibs.SetClientDictMask(dictmask);
 	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 	
 	g_free(iCurrentIndex);
@@ -1683,7 +1690,7 @@ void AppCore::PopupPluginManageDlg()
 			return;
 		if (dict_changed) {
 			dictmask.clear();
-			oLibs.SetDictMask(dictmask, NULL, -1, -1);
+			oLibs.SetClientDictMask(dictmask);
 			oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 	
 			g_free(iCurrentIndex);
@@ -2050,18 +2057,6 @@ int main(int argc,char **argv)
 		if (g_mkdir(userdir.c_str(), S_IRWXU)==-1)
 			g_warning("Cannot create directory %s.", userdir.c_str());
 	}
-#ifdef _WIN32
-	gchar *title=g_locale_from_utf8(_("StarDict"), -1, NULL, NULL, NULL);
-	HWND ll_winhandle = FindWindowA(0, title);
-	g_free(title);
-	if (ll_winhandle > 0) {
-		if (IsIconic(ll_winhandle))
-                        ShowWindow(ll_winhandle,SW_RESTORE);
-                else
-                        SetForegroundWindow(ll_winhandle);
-                return EXIT_SUCCESS;
-	}
-#endif
     g_thread_init (NULL);
 #if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO)
 	gtk_set_locale();
@@ -2104,6 +2099,20 @@ int main(int argc,char **argv)
 		query_word = query_words[0];
 	else
 		query_word = NULL;
+#ifdef _WIN32
+	if (newinstance_option == FALSE) {
+		gchar *title=g_locale_from_utf8(_("StarDict"), -1, NULL, NULL, NULL);
+		HWND ll_winhandle = FindWindowA(0, title);
+		g_free(title);
+		if (ll_winhandle > 0) {
+			if (IsIconic(ll_winhandle))
+                        	ShowWindow(ll_winhandle,SW_RESTORE);
+	                else
+        	                SetForegroundWindow(ll_winhandle);
+                	return EXIT_SUCCESS;
+		}
+	}
+#endif
 #else
 	GnomeProgram *program;
 	program = gnome_program_init ("stardict", VERSION,
@@ -2120,19 +2129,20 @@ int main(int argc,char **argv)
 	else
 		query_word = NULL;
 
-	CORBA_Object factory;
-	factory = bonobo_activation_activate_from_id
-		("OAFIID:GNOME_Stardict_Factory",
-		Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
-		NULL, NULL);
+	if (newinstance_option == FALSE) {
+		CORBA_Object factory;
+		factory = bonobo_activation_activate_from_id("OAFIID:GNOME_Stardict_Factory",
+			Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
+			NULL, NULL);
 
-  if (factory != NULL) {
-		/* there is an instance already running, so send
-		 * commands to it if needed
-		 */
-                stardict_handle_automation_cmdline (query_word);
-                /* and we're done */
-    return EXIT_SUCCESS;
+		if (factory != NULL) {
+			/* there is an instance already running, so send
+			 * commands to it if needed
+			 */
+                	stardict_handle_automation_cmdline (query_word);
+	                /* and we're done */
+			return EXIT_SUCCESS;
+		}
 	}
 
 	GnomeClient *client;

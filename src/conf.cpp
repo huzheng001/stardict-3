@@ -66,7 +66,6 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
-	add_entry("/apps/stardict/preferences/dictionary/use_tts_program_if_not_found", true);
 	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string());	
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
@@ -129,6 +128,9 @@ AppConf::AppConf() :
 	std::list<std::string> dirs;
 	dirs.push_back(gStarDictDataDir + G_DIR_SEPARATOR_S "dic");
 #ifndef _WIN32
+	if (gStarDictDataDir != "/usr/share/stardict") {
+		dirs.push_back("/usr/share/stardict/dic");
+	}
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
 #endif
 	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);

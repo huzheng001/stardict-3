@@ -1,6 +1,8 @@
 #ifndef _STDDICT_HPP_
 #define _STDDICT_HPP_
 
+#include "stardict_libconfig.h"
+
 #include <glib.h>
 #include <string>
 #include <vector>
@@ -203,15 +205,20 @@ public:
 			show_progress = &default_show_progress;
 	}
 	bool load_dict(const std::string& url, show_progress_t *sp);
+#ifdef SD_SERVER_CODE
 	void LoadFromXML();
-	void SetDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int level);
+	void SetServerDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int level);
 	void LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunctions cltfuc);
 	const std::string *get_dir_info(const char *path);
 	const std::string *get_dict_info(const char *uid, bool is_short);
 	int get_dict_level(const char *uid);
+#endif
+#ifdef SD_CLIENT_CODE
+	void SetClientDictMask(std::vector<InstantDictIndex> &dictmask);
 	void load(const strlist_t& dicts_dirs, const strlist_t& order_list, const strlist_t& disable_list);
 	void reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
 		    const strlist_t& disable_list, int is_coll_enb, int collf);
+#endif
 
 	glong narticles(size_t idict) { return oLib[idict]->narticles(); }
 	glong nsynarticles(size_t idict) { return oLib[idict]->nsynarticles(); }
@@ -280,6 +287,7 @@ private:
 	int EnableCollationLevel;
 	CollateFunctions CollateFunction;
 
+#ifdef SD_SERVER_CODE
 	struct DictInfoItem;
 	struct DictInfoDirItem {
 		~DictInfoDirItem() {
@@ -333,6 +341,7 @@ private:
 	static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error);
 	static void func_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error);
 	static void func_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error);
+#endif
 
 	friend class DictLoader;
 	friend class DictReLoader;

@@ -1,10 +1,15 @@
 #ifndef __SD_LIB_H__
 #define __SD_LIB_H__
 
+#include "stardict_libconfig.h"
+
 #include "common.hpp"
 #include "data.hpp"
 #include "stddict.hpp"
+
+#ifdef SD_CLIENT_CODE
 #include "treedict.hpp"
+#endif
 
 static inline gchar* stardict_datadup(gconstpointer mem)
 {

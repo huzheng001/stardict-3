@@ -18,13 +18,13 @@ public:
 	void LoadRealTtsPath(const gchar *path);
 	ReadWordType canRead(const gchar *word);
 	void read(const gchar *word, ReadWordType type);
+	bool use_tts;
+	std::string tts_program_cmdline;	
 private:
 	bool RealTts_canRead(const gchar *word);
 	void RealTts_read(const gchar *word);
+	void Command_read(const gchar *word);
 	std::list<std::string> ttspath;
-	bool use_tts;
-	bool use_tss_if_not_found;
-	std::string tts_program_cmdline;	
 };
 
 #endif

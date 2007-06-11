@@ -1389,7 +1389,9 @@ show_progress_t Libs::default_show_progress;
 
 Libs::Libs(show_progress_t *sp, bool create, int enablelevel, int function)
 {
-    root_info_item = NULL;
+#ifdef SD_SERVER_CODE
+	root_info_item = NULL;
+#endif
 	set_show_progress(sp);
 	CreateCacheFile = create;
 	EnableCollationLevel = enablelevel;
@@ -1407,8 +1409,10 @@ Libs::Libs(show_progress_t *sp, bool create, int enablelevel, int function)
 
 Libs::~Libs()
 {
-    if (root_info_item)
-        delete root_info_item;
+#ifdef SD_SERVER_CODE
+	if (root_info_item)
+		delete root_info_item;
+#endif
 	for (std::vector<Dict *>::iterator p=oLib.begin(); p!=oLib.end(); ++p)
 		delete *p;
 	if (EnableCollationLevel)
@@ -1428,6 +1432,7 @@ bool Libs::load_dict(const std::string& url, show_progress_t *sp)
 	}
 }
 
+#ifdef SD_SERVER_CODE
 void Libs::LoadFromXML()
 {
 	root_info_item = new DictInfoItem();
@@ -1752,47 +1757,39 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 	}
 }
 
-void Libs::SetDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int userLevel)
+void Libs::SetServerDictMask(std::vector<InstantDictIndex> &dictmask, const char *dicts, int max, int userLevel)
 {
 	InstantDictIndex instance_dict_index;
 	instance_dict_index.type = InstantDictType_LOCAL;
-	if (dicts) {
-		dictmask.clear();
-		std::list<std::string> uid_list;
-		std::string uid;
-		const char *p, *p1;
-		p = dicts;
-		do {
-			p1 = strchr(p, ' ');
-			if (p1) {
-				uid.assign(p, p1-p);
-				if (!uid.empty())
-					uid_list.push_back(uid);
-				p = p1+1;
-			}
-		} while (p1);
-		uid = p;
-		if (!uid.empty())
-			uid_list.push_back(uid);
-		int count = 0;
-		std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
-		for (std::list<std::string>::iterator i = uid_list.begin(); i!= uid_list.end(); ++i) {
-			uid_iter = uidmap.find(*i);
-			if (uid_iter!=uidmap.end()) {
-				if (max>=0 && count >= max)
-					break;
-				if (userLevel>=0 && (unsigned int)userLevel< uid_iter->second->level)
-					continue;
-				instance_dict_index.index = uid_iter->second->id;
-				dictmask.push_back(instance_dict_index);
-				count++;
-			}
+	dictmask.clear();
+	std::list<std::string> uid_list;
+	std::string uid;
+	const char *p, *p1;
+	p = dicts;
+	do {
+		p1 = strchr(p, ' ');
+		if (p1) {
+			uid.assign(p, p1-p);
+			if (!uid.empty())
+				uid_list.push_back(uid);
+			p = p1+1;
 		}
-	} else {
-		std::vector<Dict *>::size_type iLib;
-		for (iLib =0; iLib < oLib.size(); iLib++) {
-			instance_dict_index.index = iLib;
+	} while (p1);
+	uid = p;
+	if (!uid.empty())
+		uid_list.push_back(uid);
+	int count = 0;
+	std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
+	for (std::list<std::string>::iterator i = uid_list.begin(); i!= uid_list.end(); ++i) {
+		uid_iter = uidmap.find(*i);
+		if (uid_iter!=uidmap.end()) {
+			if (max>=0 && count >= max)
+				break;
+			if (userLevel>=0 && (unsigned int)userLevel< uid_iter->second->level)
+				continue;
+			instance_dict_index.index = uid_iter->second->id;
 			dictmask.push_back(instance_dict_index);
+			count++;
 		}
 	}
 }
@@ -1805,6 +1802,20 @@ void Libs::LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunct
 			if (oLib[(*i).index]->syn_file.get() != NULL)
 				oLib[(*i).index]->syn_file->collate_load(cltfuc);
 		}
+	}
+}
+#endif
+
+#ifdef SD_CLIENT_CODE
+void Libs::SetClientDictMask(std::vector<InstantDictIndex> &dictmask)
+{
+	InstantDictIndex instance_dict_index;
+	instance_dict_index.type = InstantDictType_LOCAL;
+	dictmask.clear();
+	std::vector<Dict *>::size_type iLib;
+	for (iLib =0; iLib < oLib.size(); iLib++) {
+		instance_dict_index.index = iLib;
+		dictmask.push_back(instance_dict_index);
 	}
 }
 
@@ -1880,6 +1891,7 @@ void Libs::reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
 		load(dicts_dirs, order_list, disable_list);
 	}
 }
+#endif
 
 glong Libs::CltIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 {

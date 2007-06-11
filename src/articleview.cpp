@@ -883,6 +883,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					p++;
 					sec_size = strlen(p)+1;
 				}
+				mark += _("Unkown data type, please upgrade StarDict!");
 				break;
 		}
 		p += sec_size;
@@ -944,6 +945,5 @@ void ArticleView::AppendWord(const gchar *word)
 
 void ArticleView::connect_on_link(const sigc::slot<void, const std::string &>& s)
 {
-	//pango_view_->clear();
 	pango_view_->on_link_click_.connect(s);
 }
