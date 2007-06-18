@@ -274,6 +274,7 @@ DictClient::DictClient(const char *host, int port)
 {
 	host_ = host;
 	port_ = port;
+	sd_ = -1;
 	channel_ = NULL;
 	source_id_ = 0;
 	is_connected_ = false;
@@ -292,18 +293,18 @@ void DictClient::connect()
 
 void DictClient::on_resolved(gpointer data, struct hostent *ret)
 {
-    DictClient *oDictClient = (DictClient *)data;
-	int sd = Socket::socket();
+	DictClient *oDictClient = (DictClient *)data;
+	oDictClient->sd_ = Socket::socket();
 
-	if (sd == -1) {
+	if (oDictClient->sd_ == -1) {
 		on_error_.emit("Can not create socket: " + Socket::get_error_msg());
 		return;
 	}
 
 #ifdef _WIN32
-	oDictClient->channel_ = g_io_channel_win32_new_socket(sd);
+	oDictClient->channel_ = g_io_channel_win32_new_socket(oDictClient->sd_);
 #else
-	oDictClient->channel_ = g_io_channel_unix_new(sd);
+	oDictClient->channel_ = g_io_channel_unix_new(oDictClient->sd_);
 #endif
 
 /* RFC2229 mandates the usage of UTF-8, so we force this encoding */
@@ -325,7 +326,7 @@ void DictClient::on_resolved(gpointer data, struct hostent *ret)
 		return;
 	}
 
-	if (!Socket::connect(sd, ret, oDictClient->port_)) {
+	if (!Socket::connect(oDictClient->sd_, ret, oDictClient->port_)) {
 		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
 					     oDictClient->host_.c_str(), Socket::get_error_msg().c_str());
 		on_error_.emit(mes);
@@ -348,6 +349,10 @@ void DictClient::disconnect()
 		g_io_channel_shutdown(channel_, TRUE, NULL);
 		g_io_channel_unref(channel_);
 		channel_ = NULL;
+	}
+	if (sd_ != -1) {
+		Socket::close(sd_);
+		sd_ = -1;
 	}
 	is_connected_ = false;
 }

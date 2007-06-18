@@ -427,6 +427,7 @@ void StarDictCache::save_cache_lookup_response(const char *key_str, STARDICT::Lo
 
 StarDictClient::StarDictClient()
 {
+	sd_ = -1;
     channel_ = NULL;
     in_source_id_ = 0;
     out_source_id_ = 0;
@@ -661,18 +662,18 @@ void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
 	    oStarDictClient->host_resolved = true;
     }
 
-    int sd = Socket::socket();
+    oStarDictClient->sd_ = Socket::socket();
 
-    if (sd == -1) {
+    if (oStarDictClient->sd_ == -1) {
         std::string str = "Can not create socket: " + Socket::get_error_msg();
         on_error_.emit(str.c_str());
         return;
     }
 
 #ifdef _WIN32
-    oStarDictClient->channel_ = g_io_channel_win32_new_socket(sd);
+    oStarDictClient->channel_ = g_io_channel_win32_new_socket(oStarDictClient->sd_);
 #else
-    oStarDictClient->channel_ = g_io_channel_unix_new(sd);
+    oStarDictClient->channel_ = g_io_channel_unix_new(oStarDictClient->sd_);
 #endif
 
     g_io_channel_set_encoding(oStarDictClient->channel_, NULL, NULL);
@@ -692,7 +693,7 @@ void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
         return;
     }
 
-    if (!Socket::connect(sd, ret, oStarDictClient->port_)) {
+    if (!Socket::connect(oStarDictClient->sd_, ret, oStarDictClient->port_)) {
         gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
                          oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
         on_error_.emit(mes);
@@ -724,6 +725,10 @@ void StarDictClient::disconnect()
         g_io_channel_unref(channel_);
         channel_ = NULL;
     }
+	if (sd_ != -1) {
+		Socket::close(sd_);
+		sd_ = -1;
+	}
     is_connected_ = false;
 }
 

@@ -13,12 +13,14 @@ public:
 
 	HttpClient();
 	~HttpClient();
-	void SendHttpGetRequest(const char* shost, const char* sfile);
+	void SendHttpGetRequest(const char* shost, const char* sfile, gint data);
 	char *buffer;
 	size_t buffer_len;
+	gint userdata;
 private:
 	std::string host_;
 	std::string file_;
+	int sd_;
 	GIOChannel *channel_;
 	guint in_source_id_;
 	guint out_source_id_;
@@ -28,6 +30,7 @@ private:
 	void disconnect();
 	void write_str(const char *str, GError **err);
 	bool SendGetRequest();
+	//static std::map<std::string, std::map<std::string, std::string> > cookies_map;
 };
 
 #endif

@@ -11,11 +11,11 @@ HttpManager::~HttpManager()
 	}
 }
 
-void HttpManager::SendHttpGetRequest(const char* shost, const char* sfile)
+void HttpManager::SendHttpGetRequest(const char* shost, const char* sfile, gint userdata)
 {
 	HttpClient *client = new HttpClient();
 	client_list.push_back(client);
-	client->SendHttpGetRequest(shost, sfile);
+	client->SendHttpGetRequest(shost, sfile, userdata);
 }
 
 void HttpManager::Remove(HttpClient *http_client)

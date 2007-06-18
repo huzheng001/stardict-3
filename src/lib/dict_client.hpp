@@ -54,6 +54,7 @@ public:
 	const gchar *get_word(size_t index) const;
 	const gchar *get_word_data(size_t index) const;
 private:
+	int sd_;
 	GIOChannel *channel_;
 	guint source_id_;
 	std::string host_;

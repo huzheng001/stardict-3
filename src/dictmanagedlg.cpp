@@ -391,10 +391,20 @@ void DictManageDlg::on_wazard_button_toggled(GtkToggleButton *button, DictManage
     }
 }
 
-void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
+void DictManageDlg::on_manage_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
 {
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 1);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 1);
+		gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Visit http://stardict.sourceforge.net to download dictionaries!"));
+		gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
+    }
+}
+
+void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
+{
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 2);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
         gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("These settings will take effect the next time you run StarDict."));
         gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
@@ -404,8 +414,8 @@ void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictMana
 void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg)
 {
 	if (gtk_toggle_button_get_active(button)) {
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 2);
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 1);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 3);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 2);
         if (oDictManageDlg->max_dict_count == -1) {
             gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Loading..."));
     	    STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
@@ -461,6 +471,107 @@ static GtkTreeModel* __create_dict_tree_model(const std::list<std::string> &dirs
 	return GTK_TREE_MODEL(model);
 }
 
+struct config_ParseUserData {
+	GtkTreeStore *model;
+	GtkTreeIter group_iter;
+	GtkTreeIter type_iter;
+	GtkTreeIter dict_iter;
+};
+
+static void config_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
+{
+	config_ParseUserData *Data = (config_ParseUserData *)user_data;
+	if (strcmp(element_name, "dictgroup")==0) {
+		const char *name = NULL;
+		size_t i = 0;
+		while (attribute_names[i]) {
+			if (strcmp(attribute_names[i], "name")==0) {
+				name = attribute_values[i];
+				break;
+			}
+			i++;
+		}
+		if (name) {
+			gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", name);
+			gtk_tree_store_append(Data->model, &(Data->group_iter), NULL);
+			gtk_tree_store_set(Data->model, &(Data->group_iter), 1, markup, 3, name, 9, false, 10, 0, 11, TRUE, -1);
+			g_free(markup);
+		}
+	} else if (strcmp(element_name, "querydict")==0) {
+		gtk_tree_store_append(Data->model, &(Data->type_iter), &(Data->group_iter));
+		gtk_tree_store_set(Data->model, &(Data->type_iter), 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict",  9, false, 10, 1, 11, FALSE, -1);
+	} else if (strcmp(element_name, "scandict")==0) {
+		gtk_tree_store_append(Data->model, &(Data->type_iter), &(Data->group_iter));
+		gtk_tree_store_set(Data->model, &(Data->type_iter), 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
+	} else if (strcmp(element_name, "localdict")==0) {
+		bool enable = true;
+		const gchar *file = NULL;
+		size_t i = 0;
+		while (attribute_names[i]) {
+			if (strcmp(attribute_names[i], "enable")==0) {
+				if (strcmp(attribute_values[i], "false")==0) {
+					enable = false;
+				}
+			} else if (strcmp(attribute_names[i], "file")==0) {
+				file = attribute_values[i];
+			}
+			i++;
+		}
+		if (file) {
+			DictInfo dictinfo;
+			if (dictinfo.load_from_ifo_file(file, false)) {
+				gchar *markup = g_markup_escape_text(dictinfo.bookname.c_str(), dictinfo.bookname.length());
+				gtk_tree_store_append(Data->model, &(Data->dict_iter), &(Data->type_iter));
+				gtk_tree_store_set(Data->model, &(Data->dict_iter), 0, enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, file, 9, true, 10, 2, 11, FALSE, -1);
+				g_free(markup);
+			}
+		}
+	}
+}
+
+static void config_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error)
+{
+}
+
+static void config_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
+{
+	/*const gchar *element = g_markup_parse_context_get_element(context);
+	if (!element)
+		return;
+	config_ParseUserData *Data = (config_ParseUserData *)user_data;
+	if (strcmp(element, "localdict")==0) {
+	}*/
+}
+
+GtkTreeModel* DictManageDlg::create_dictmanage_tree_model()
+{
+	GtkTreeStore *model = gtk_tree_store_new(12, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_BOOLEAN);
+	const char *xmlstr;
+	const std::string &configxml = conf->get_string("/apps/stardict/manage_dictionaries/dict_config_xml");
+	std::string defaultxml;
+	if (configxml.empty()) {
+		defaultxml = "<dictgroup name=\"";
+		defaultxml += _("Default Group");
+		defaultxml += "\"><querydict></querydict><scandict></scandict></dictgroup>";
+		xmlstr = defaultxml.c_str();
+	} else {
+		xmlstr = configxml.c_str();
+	}
+	config_ParseUserData Data;
+	Data.model = model;
+	GMarkupParser parser;
+	parser.start_element = config_parse_start_element;
+	parser.end_element = config_parse_end_element;
+	parser.text = config_parse_text;
+	parser.passthrough = NULL;
+	parser.error = NULL;
+	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+	g_markup_parse_context_parse(context, xmlstr, -1, NULL);
+	g_markup_parse_context_end_parse(context, NULL);
+	g_markup_parse_context_free(context);
+	return GTK_TREE_MODEL(model);
+}
+
 GtkTreeModel* DictManageDlg::create_dict_tree_model(int istreedict)
 {
 	if (istreedict == 1) {
@@ -483,10 +594,24 @@ GtkTreeModel* DictManageDlg::create_dict_tree_model(int istreedict)
 	}
 }
 
+void DictManageDlg::on_dictmanage_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg)
+{
+	GtkTreeModel *model = oDictManageDlg->dictmanage_tree_model;
+	GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+	GtkTreeIter iter;
+	gtk_tree_model_get_iter (model, &iter, path);
+	gboolean enable;
+	gtk_tree_model_get (model, &iter, 0, &enable, -1);
+	enable = !enable;
+	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 0, enable, -1);
+	gtk_tree_path_free (path);
+	oDictManageDlg->dictmanage_config_changed = true;
+}
+
 void DictManageDlg::on_dict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg)
 {
 	GtkTreeModel *model = oDictManageDlg->dict_tree_model;
-	GtkTreeIter  iter;
+	GtkTreeIter iter;
 	GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
 	gboolean enable;
 
@@ -549,6 +674,10 @@ void DictManageDlg::on_treedict_enable_toggled (GtkCellRendererToggle *cell, gch
 	conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
 }
 
+void DictManageDlg::dictmanage_drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg)
+{
+}
+
 void DictManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg)
 {
 	if (data->target == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE)) {
@@ -573,6 +702,10 @@ void DictManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, Gtk
 
 		gtk_tree_path_free(source_row);
 	}
+}
+
+void DictManageDlg::dictmanage_drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg)
+{
 }
 
 void DictManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg)
@@ -640,41 +773,71 @@ gboolean DictManageDlg::on_network_treeview_button_press(GtkWidget * widget, Gdk
     }
 }
 
+void DictManageDlg::show_dict_info()
+{
+	GtkWidget *treeview;
+	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 0) {
+		treeview = dict_treeview;
+	} else if (gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook)) == 1) {
+		treeview = dictmanage_treeview;
+	} else {
+		treeview = treedict_treeview;
+	}
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		if (treeview == dictmanage_treeview) {
+			gint type;
+			gtk_tree_model_get (model, &iter, 10, &type, -1);
+			if (type == 0) {
+				GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("You can have multiple groups of dictionaries, such as \"Study English\", \"Learn German\", and switch them instantly."));
+				gtk_dialog_run (GTK_DIALOG (dialog));
+				gtk_widget_destroy (dialog);
+				return;
+			} else if (type == 1) {
+				GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("The Query Dict will show in the main window, the Scan Dict will show in the floating window."));
+				gtk_dialog_run (GTK_DIALOG (dialog));
+				gtk_widget_destroy (dialog);
+				return;
+			}
+		}
+		gchar *dictname, *author, *email, *website, *description, *date, *filename;
+		glong wordcount;
+		gtk_tree_model_get (model, &iter, 1, &dictname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &filename, -1);
+		GtkWidget *dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW(window),
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_MESSAGE_INFO,
+			GTK_BUTTONS_OK,
+			"<b>%s:</b> %s\n<b>%s:</b> %ld\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s",
+			_("Dictionary Name"), dictname,
+			_("Word count"), wordcount,
+			_("Author"), author,
+			_("Email"), email,
+			_("Website"), website,
+			_("Description"), description,
+			_("Date"), date,
+			_("File name"), filename);
+		g_free(dictname);
+		g_free(author);
+		g_free(email);
+		g_free(website);
+		g_free(description);
+		g_free(date);
+		g_free(filename);
+		if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_NONE)
+			gtk_widget_destroy (dialog);
+	}
+}
+
 gboolean DictManageDlg::on_treeview_button_press(GtkWidget * widget, GdkEventButton * event, DictManageDlg *oDictManageDlg)
 {
-	if (event->type==GDK_2BUTTON_PRESS) {
-		GtkTreeModel *model;
-		GtkTreeIter iter;
-
-		GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget));
-		if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-			gchar *dictname, *author, *email, *website, *description, *date, *filename;
-			glong wordcount;
-			gtk_tree_model_get (model, &iter, 1, &dictname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &filename, -1);
-			GtkWidget *dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW(oDictManageDlg->window),
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_INFO,
-				GTK_BUTTONS_OK,
-				"<b>%s:</b> %s\n<b>%s:</b> %ld\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s",
-				_("Dictionary Name"), dictname,
-				_("Word count"), wordcount,
-				_("Author"), author,
-				_("Email"), email,
-				_("Website"), website,
-				_("Description"), description,
-				_("Date"), date,
-				_("File name"), filename);
-			g_free(dictname);
-			g_free(author);
-			g_free(email);
-			g_free(website);
-			g_free(description);
-			g_free(date);
-			g_free(filename);
-			if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_NONE)
-				gtk_widget_destroy (dialog);
-		}
+	if (event->type==GDK_2BUTTON_PRESS && event->button == 1) {
+		oDictManageDlg->show_dict_info();
 		return true;
+	}else if (event->button == 3) {
+		gtk_menu_popup(GTK_MENU(oDictManageDlg->popup_menu), NULL, NULL, NULL, NULL, event->button, event->time);
+		return false; //So it can be selected.
 	} else {
 		return false;
 	}
@@ -747,42 +910,6 @@ GtkWidget *DictManageDlg::create_dict_tree(int istreedict)
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
   	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 
-	/*renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("Author"), renderer, "text", 3, "editable", 9, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
-
-	renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("Email"), renderer, "text", 4, "editable", 9, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
-
-	renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("Website"), renderer, "text", 5, "editable", 9, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
-
-	renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("Description"), renderer, "text", 6, "editable", 9, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
-
-	renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("Date"), renderer, "text", 7, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
-
-	renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
-	column = gtk_tree_view_column_new_with_attributes (_("File name"), renderer, "text", 8, NULL);
-	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);*/
-
 	GtkTargetEntry gte[] = {{"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
 	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(now_treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
 	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(now_treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
@@ -791,6 +918,79 @@ GtkWidget *DictManageDlg::create_dict_tree(int istreedict)
 	g_signal_connect(G_OBJECT(now_treeview), "drag-data-get", G_CALLBACK(drag_data_get_cb), this);
 
 	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
+	return sw;
+}
+
+void DictManageDlg::on_group_name_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, DictManageDlg *oDictManageDlg)
+{
+	if (*new_text) {
+		GtkTreeModel *model = oDictManageDlg->dictmanage_tree_model;
+		GtkTreePath *path = gtk_tree_path_new_from_string (path_string);
+		GtkTreeIter iter;
+		gtk_tree_model_get_iter (model, &iter, path);
+		gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", new_text);
+		gtk_tree_store_set(GTK_TREE_STORE(model), &iter, 1, markup, 3, new_text, -1);
+		g_free(markup);
+		gtk_tree_path_free (path);
+		oDictManageDlg->dictmanage_config_changed = true;
+	}
+}
+
+GtkWidget *DictManageDlg::create_dictmanage_tree()
+{	
+	GtkWidget *sw;	
+	sw = gtk_scrolled_window_new (NULL, NULL);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
+      	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
+				      GTK_POLICY_AUTOMATIC,
+				      GTK_POLICY_AUTOMATIC);
+	
+	gtk_widget_set_size_request (sw, 350, 230);
+
+	dictmanage_tree_model = create_dictmanage_tree_model ();
+
+	dictmanage_treeview = gtk_tree_view_new_with_model (dictmanage_tree_model);
+	g_signal_connect(G_OBJECT(dictmanage_treeview), "button_press_event",
+                   G_CALLBACK(on_treeview_button_press), this);
+	g_object_unref (G_OBJECT (dictmanage_tree_model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (dictmanage_treeview), TRUE);
+	
+	GtkTreeSelection *selection;
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dictmanage_treeview));
+
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+	
+	renderer = gtk_cell_renderer_toggle_new ();
+	g_signal_connect (renderer, "toggled", G_CALLBACK (on_dictmanage_enable_toggled), this);
+	column = gtk_tree_view_column_new_with_attributes (_("Enable"), renderer, "active", 0, "visible", 9, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(dictmanage_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	
+	renderer = gtk_cell_renderer_text_new ();
+  	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  	
+	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "markup", 1, "editable", 11, NULL);
+	g_signal_connect (renderer, "edited", G_CALLBACK (on_group_name_cell_edited), this);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(dictmanage_treeview), column);
+  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	renderer = gtk_cell_renderer_text_new ();
+  	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);  
+	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", 2, "visible", 9, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(dictmanage_treeview), column);
+  	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	GtkTargetEntry gte[] = {{"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
+	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(dictmanage_treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
+	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(dictmanage_treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+
+	g_signal_connect(G_OBJECT(dictmanage_treeview), "drag-data-received", G_CALLBACK(dictmanage_drag_data_received_cb), this);
+	g_signal_connect(G_OBJECT(dictmanage_treeview), "drag-data-get", G_CALLBACK(dictmanage_drag_data_get_cb), this);
+
+	gtk_tree_view_expand_all(GTK_TREE_VIEW (dictmanage_treeview));
+	gtk_container_add (GTK_CONTAINER (sw), dictmanage_treeview);
 	return sw;
 }
 
@@ -839,6 +1039,69 @@ void DictManageDlg::ChangeDictMask()
     }
     STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SET_DICT_MASK, dictmask.c_str());
     gpAppFrame->oStarDictClient.send_commands(1, c);
+}
+
+static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *parent_iter, std::string &configxml)
+{
+	GtkTreeIter iter;
+	gboolean have_next = gtk_tree_model_iter_children(model, &iter, parent_iter);
+	while (have_next) {
+		gboolean enable;
+		gchar *file;
+		gtk_tree_model_get (model, &iter, 0, &enable, 8, &file, -1);
+		configxml += "<localdict enable=\"";
+		if (enable)
+			configxml += "true";
+		else
+			configxml += "false";
+		gchar *estr = g_markup_escape_text(file, -1);
+		g_free(file);
+		configxml += "\" file=\"";
+		configxml += estr;
+		configxml += "\"/>";
+		g_free(estr);
+		have_next = gtk_tree_model_iter_next(model, &iter);
+	}
+}
+
+static void process_dictmanage_group_iter(GtkTreeModel *model, GtkTreeIter *parent_iter, std::string &configxml)
+{
+	GtkTreeIter iter;
+	gboolean have_next = gtk_tree_model_iter_children(model, &iter, parent_iter);
+	while (have_next) {
+		gchar *type_name;
+		gtk_tree_model_get (model, &iter, 3, &type_name, -1);
+		configxml += "<";
+		configxml += type_name;
+		configxml += ">";
+		process_dictmanage_type_iter(model, &iter, configxml);
+		configxml += "</";
+		configxml += type_name;
+		configxml += ">";
+		g_free(type_name);
+		have_next = gtk_tree_model_iter_next(model, &iter);
+	}
+}
+
+void DictManageDlg::SaveDictManageConfig()
+{
+	std::string configxml;
+	GtkTreeIter iter;
+	gboolean have_next = gtk_tree_model_get_iter_first(dictmanage_tree_model, &iter);
+	while (have_next) {
+		gchar *groupname;
+		gtk_tree_model_get (dictmanage_tree_model, &iter, 3, &groupname, -1);
+		gchar *estr = g_markup_escape_text(groupname, -1);
+		g_free(groupname);
+		configxml += "<dictgroup name=\"";
+		configxml += estr;
+		configxml += "\">";
+		g_free(estr);
+		process_dictmanage_group_iter(dictmanage_tree_model, &iter, configxml);
+		configxml += "</dictgroup>";
+		have_next = gtk_tree_model_iter_next(dictmanage_tree_model, &iter);
+	}
+	conf->set_string("/apps/stardict/manage_dictionaries/dict_config_xml", configxml);
 }
 
 void DictManageDlg::on_move_top_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
@@ -977,6 +1240,203 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 	}	
 }
 
+void DictManageDlg::show_delete_group_dialog(GtkTreeIter *iter)
+{
+	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _("Are you sure to delete this dict group?"));
+	gint response = gtk_dialog_run (GTK_DIALOG (dialog));
+	if (response == GTK_RESPONSE_YES) {
+		gtk_tree_store_remove(GTK_TREE_STORE(dictmanage_tree_model), iter);
+		dictmanage_config_changed = true;
+	}
+	gtk_widget_destroy (dialog);
+}
+
+void DictManageDlg::show_add_group_dialog(GtkTreeIter *sibling)
+{
+	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("New dict group"), GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,0);
+	GtkWidget *label = gtk_label_new(_("Group name:"));
+	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_box_pack_start(GTK_BOX(hbox),entry,false,false,0);
+	gtk_widget_show_all(hbox);
+	gtk_dialog_run(GTK_DIALOG(dialog));
+	const char *name = gtk_entry_get_text(GTK_ENTRY(entry));
+	if (name[0] != '\0') {
+		GtkTreeIter group_iter;
+		GtkTreeStore *model = GTK_TREE_STORE(dictmanage_tree_model);
+		gtk_tree_store_insert_after(model, &group_iter, NULL, sibling);
+		gtk_tree_store_set(model, &group_iter, 1, name, 9, false, 10, 0, 11, TRUE, -1);
+		GtkTreeIter type_iter;
+		gtk_tree_store_append(model, &type_iter, &group_iter);
+		gtk_tree_store_set(model, &type_iter, 1, _("Query Dict"), 3, "querydict", 9, false, 10, 1, 11, FALSE, -1);
+		gtk_tree_store_append(model, &type_iter, &group_iter);
+		gtk_tree_store_set(model, &type_iter, 1, _("Scan Dict"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
+		dictmanage_config_changed = true;
+	}
+	gtk_widget_destroy(dialog);
+}
+
+void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
+{
+	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("Add dictionary"), GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),vbox,false,false,0);
+	GtkWidget *sw;
+	sw = gtk_scrolled_window_new (NULL, NULL);
+	gtk_box_pack_start(GTK_BOX(vbox),sw,false,false,0);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_widget_set_size_request (sw, 350, 230);
+	GtkListStore *now_tree_model = gtk_list_store_new(9, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	std::list<std::string> added_dictlist;
+	GtkTreeIter iter;
+	gboolean have_next = gtk_tree_model_iter_children(dictmanage_tree_model, &iter, parent_iter);
+	while (have_next) {
+		gchar *file;
+		gtk_tree_model_get (dictmanage_tree_model, &iter, 8, &file, -1);
+		added_dictlist.push_back(file);
+		g_free(file);
+		have_next = gtk_tree_model_iter_next(dictmanage_tree_model, &iter);
+	}
+	have_next = gtk_tree_model_get_iter_first(dict_tree_model, &iter);
+	while (have_next) {
+		gchar *file;
+		gtk_tree_model_get (dict_tree_model, &iter, 8, &file, -1);
+		bool added = false;
+		for (std::list<std::string>::iterator i = added_dictlist.begin(); i != added_dictlist.end(); ++i) {
+			if (*i == file) {
+				added = true;
+				break;
+			}
+		}
+		if (!added) {
+			gchar *bookname, *author, *email, *website, *description, *date;
+			glong wordcount;
+			gtk_tree_model_get (dict_tree_model, &iter, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, -1);
+			GtkTreeIter new_iter;
+			gtk_list_store_append(now_tree_model, &new_iter);
+			gtk_list_store_set(now_tree_model, &new_iter, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, -1);
+			g_free(bookname);
+			g_free(author);
+			g_free(email);
+			g_free(website);
+			g_free(description);
+			g_free(date);
+		}
+		g_free(file);
+		have_next = gtk_tree_model_iter_next(dict_tree_model, &iter);
+	}
+	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(now_tree_model));
+	g_object_unref (G_OBJECT (now_tree_model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+	GtkTreeSelection *selection;
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "text", 1, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", 2, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
+	gtk_widget_show_all(vbox);
+	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		GList *selectlist = gtk_tree_selection_get_selected_rows(selection, NULL);
+		if (selectlist) {
+			GList *list = selectlist;
+			GtkTreeIter select_iter;
+			while (list) {
+				gtk_tree_model_get_iter(GTK_TREE_MODEL(now_tree_model), &select_iter, (GtkTreePath *)(list->data));
+				gchar *bookname, *author, *email, *website, *description, *date, *file;
+				glong wordcount; 
+				gtk_tree_model_get (GTK_TREE_MODEL(now_tree_model), &select_iter, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &file, -1);
+				GtkTreeIter new_iter;
+				gtk_tree_store_insert_before(GTK_TREE_STORE(dictmanage_tree_model), &new_iter, parent_iter, NULL);
+				gtk_tree_store_set(GTK_TREE_STORE(dictmanage_tree_model), &new_iter, 0, TRUE, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, 9, true, 10, 2, 11, FALSE, -1);
+				g_free(bookname);
+				g_free(author);
+				g_free(email);
+				g_free(website);
+				g_free(description);
+				g_free(date);
+				g_free(file);
+				list = list->next;
+			}
+			g_list_foreach (selectlist, (GFunc)gtk_tree_path_free, NULL);
+			g_list_free (selectlist);
+			dictmanage_config_changed = true;
+		}
+	}
+	gtk_widget_destroy(dialog);
+}
+
+void DictManageDlg::on_dictmanage_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oDictManageDlg->dictmanage_treeview));
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		gint type;
+		gtk_tree_model_get (oDictManageDlg->dictmanage_tree_model, &iter, 10, &type, -1);
+		if (type == 0) {
+			oDictManageDlg->show_add_group_dialog(&iter);
+		} else if (type == 1) {
+			oDictManageDlg->show_add_dict_dialog(&iter);
+		} else {
+			GtkTreeIter parent_iter;
+			if (gtk_tree_model_iter_parent(oDictManageDlg->dictmanage_tree_model, &parent_iter, &iter))
+				oDictManageDlg->show_add_dict_dialog(&parent_iter);
+		}
+	}
+}
+
+void DictManageDlg::on_dictmanage_delete_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+	GtkTreeSelection *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (oDictManageDlg->dictmanage_treeview));
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		gint type;
+		gtk_tree_model_get (oDictManageDlg->dictmanage_tree_model, &iter, 10, &type, -1);
+		if (type == 0) {
+			oDictManageDlg->show_delete_group_dialog(&iter);
+		} else if (type == 2) {
+			gtk_tree_store_remove(GTK_TREE_STORE(oDictManageDlg->dictmanage_tree_model), &iter);
+			oDictManageDlg->dictmanage_config_changed = true;
+		}
+	}
+}
+
+void DictManageDlg::on_dictmanage_info_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+	oDictManageDlg->show_dict_info();
+}
+
+void DictManageDlg::on_dictmanage_move_top_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+}
+
+void DictManageDlg::on_dictmanage_move_bottom_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+}
+
+void DictManageDlg::on_dictmanage_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{
+}
+
+void DictManageDlg::on_dictmanage_move_down_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+{  
+}
+
 void DictManageDlg::on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
 {
 	if (oDictManageDlg->network_add_dlg)
@@ -996,6 +1456,73 @@ void DictManageDlg::on_network_remove_button_clicked(GtkWidget *widget, DictMana
         gtk_list_store_remove(GTK_LIST_STORE(oDictManageDlg->network_tree_model), &iter);
         oDictManageDlg->dictmask_changed = true;
     }
+}
+
+void DictManageDlg::on_popup_menu_show_info_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg)
+{
+	oDictManageDlg->show_dict_info();
+}
+
+void DictManageDlg::on_popup_menu_select_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg)
+{
+	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook)) == 1) {
+		return;
+	}
+	bool istreedict;
+	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook)) == 0)
+		istreedict = false;
+	else
+		istreedict = true;
+	GtkTreeModel *model;
+	if (istreedict)
+		model = oDictManageDlg->treedict_tree_model;
+	else
+		model = oDictManageDlg->dict_tree_model;
+	gboolean have_iter;
+	GtkTreeIter iter;
+	have_iter = gtk_tree_model_get_iter_first(model, &iter);
+	while (have_iter) {
+		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, TRUE, -1);
+		have_iter = gtk_tree_model_iter_next(model, &iter);
+	}
+	std::list<std::string> disable_list;
+	if (istreedict)
+		conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
+	else
+		conf->set_strlist("/apps/stardict/manage_dictionaries/dict_disable_list", disable_list);
+}
+
+void DictManageDlg::on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg)
+{
+	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook)) == 1) {
+		return;
+	}
+	bool istreedict;
+	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook)) == 0)
+		istreedict = false;
+	else
+		istreedict = true;
+	GtkTreeModel *model;
+	if (istreedict)
+		model = oDictManageDlg->treedict_tree_model;
+	else
+		model = oDictManageDlg->dict_tree_model;
+	gboolean have_iter;
+	GtkTreeIter iter;
+	have_iter = gtk_tree_model_get_iter_first(model, &iter);
+	gchar *filename;
+	std::list<std::string> disable_list;
+	while (have_iter) {
+		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, FALSE, -1);
+		gtk_tree_model_get (model, &iter, 8, &filename, -1);
+		disable_list.push_back(filename);
+		g_free(filename);
+		have_iter = gtk_tree_model_iter_next(model, &iter);
+	}
+	if (istreedict)
+		conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
+	else
+		conf->set_strlist("/apps/stardict/manage_dictionaries/dict_disable_list", disable_list);
 }
 
 GtkWidget *DictManageDlg::create_buttons()
@@ -1024,6 +1551,69 @@ GtkWidget *DictManageDlg::create_buttons()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_bottom_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
+}
+
+GtkWidget *DictManageDlg::create_dictmanage_buttons()
+{
+	GtkWidget *hbox;
+	GtkWidget *vbox;
+	GtkWidget *button;
+	GtkWidget *image;
+	hbox = gtk_hbox_new(false, 6);
+	vbox = gtk_vbox_new(false,6);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Add"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_add_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_DELETE, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Delete"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_delete_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Information"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_info_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	vbox = gtk_vbox_new(false,6);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_TOP, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Move to top"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_top_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Move up"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_up_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Move down"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_down_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new();
+	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_BOTTOM, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image(GTK_BUTTON(button), image);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Move to bottom"),NULL);
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_bottom_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	return hbox;
 }
 
 GtkWidget *DictManageDlg::create_network_buttons()
@@ -1103,7 +1693,21 @@ bool DictManageDlg::Show()
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(wazard_button), true);
 		g_signal_connect(G_OBJECT(wazard_button),"toggled", G_CALLBACK(on_wazard_button_toggled), this);
 		
-		appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
+		manage_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
+		GTK_WIDGET_UNSET_FLAGS (manage_button, GTK_CAN_FOCUS);
+		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(manage_button), false);
+		gtk_box_pack_start (GTK_BOX (hbox), manage_button, false, false, 0);	
+		hbox1 = gtk_hbox_new(false, 2);
+		gtk_container_add (GTK_CONTAINER (manage_button), hbox1);
+		image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_SMALL_TOOLBAR);
+		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+		label = gtk_label_new_with_mnemonic(_("Manage _Dict"));
+		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+		gtk_label_set_mnemonic_widget(GTK_LABEL(label), manage_button);		
+		g_signal_connect(G_OBJECT(manage_button),"toggled", G_CALLBACK(on_manage_button_toggled), this);
+
+		appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(manage_button));
 		GTK_WIDGET_UNSET_FLAGS (appendix_button, GTK_CAN_FOCUS);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(appendix_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), appendix_button, false, false, 0);	
@@ -1140,24 +1744,46 @@ bool DictManageDlg::Show()
 		notebook = gtk_notebook_new();
 		gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
 		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
-        gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), false);
+		gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), false);
 		
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(0), NULL);
+		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dictmanage_tree(), NULL);
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(1), NULL);
 		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(2), NULL);
 		
+		popup_menu = gtk_menu_new();
+		GtkWidget *menuitem;
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
+		image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_show_info_activate), this);
+		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+		menuitem = gtk_separator_menu_item_new();
+		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Select _All"));
+		image = gtk_image_new_from_stock(GTK_STOCK_SELECT_ALL, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_select_all_activate), this);
+		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Unselect all"));
+		image = gtk_image_new_from_stock(GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_unselect_all_activate), this);
+		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+		gtk_widget_show_all(popup_menu);
 
-        button_notebook = gtk_notebook_new();
+		button_notebook = gtk_notebook_new();
 		gtk_box_pack_start (GTK_BOX (hbox), button_notebook, false, false, 0);
-        gtk_notebook_set_show_tabs(GTK_NOTEBOOK(button_notebook), false);
-        gtk_notebook_set_show_border(GTK_NOTEBOOK(button_notebook), false);
-        gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
-        gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(button_notebook), false);
+		gtk_notebook_set_show_border(GTK_NOTEBOOK(button_notebook), false);
+		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
+		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_dictmanage_buttons(), NULL);
+		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
 		
 		hbox = gtk_hbox_new (FALSE, 6);
-		gtk_box_pack_start (GTK_BOX (vbox), hbox, true, true, 0);
+		gtk_box_pack_start (GTK_BOX (vbox), hbox, false, false, 0);
 		info_label = gtk_label_new (_("Visit http://stardict.sourceforge.net to download dictionaries!"));
-        gtk_label_set_selectable(GTK_LABEL (info_label), TRUE);
+		gtk_label_set_selectable(GTK_LABEL (info_label), TRUE);
 		gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
 		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
 		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
@@ -1189,13 +1815,17 @@ bool DictManageDlg::Show()
 		STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
 		gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
 	}
-    dictmask_changed = false;
+	dictmask_changed = false;
+	dictmanage_config_changed = false;
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
 		;
-    if (dictmask_changed == true) {
-        ChangeDictMask();
-    }
+	if (dictmask_changed) {
+		ChangeDictMask();
+	}
+	if (dictmanage_config_changed) {
+		SaveDictManageConfig();
+	}
 	if (result == GTK_RESPONSE_NONE) {
 		// Caused by gtk_widget_destroy(), quiting.
 		return true;
@@ -1209,6 +1839,7 @@ void DictManageDlg::Close()
 {
 	if (window) {
 		gtk_widget_destroy (window);
+		gtk_widget_destroy(popup_menu);
 		window = NULL;
 	}
 }
