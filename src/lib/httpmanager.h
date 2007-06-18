@@ -7,7 +7,7 @@ class HttpManager {
 public:
 	HttpManager();
 	~HttpManager();
-	void SendHttpGetRequest(const char* shost, const char* sfile);
+	void SendHttpGetRequest(const char* shost, const char* sfile, gint userdata);
 	void Remove(HttpClient *http_client);
 private:
 	std::list<HttpClient *> client_list;

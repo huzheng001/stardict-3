@@ -10,6 +10,7 @@ sigc::signal<void, HttpClient *> HttpClient::on_response_;
 
 HttpClient::HttpClient()
 {
+	sd_ = -1;
 	channel_ = NULL;
 	in_source_id_ = 0;
 	out_source_id_ = 0;
@@ -38,29 +39,34 @@ void HttpClient::disconnect()
 		g_io_channel_unref(channel_);
 		channel_ = NULL;
 	}
+	if (sd_ != -1) {
+		Socket::close(sd_);
+		sd_ = -1;
+	}
 }
 
-void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile)
+void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile, gint data)
 {
 	host_ = shost;
 	file_ = sfile;
+	userdata = data;
 	Socket::resolve(host_, this, on_resolved);
 }
 
 void HttpClient::on_resolved(gpointer data, struct hostent *ret)
 {
 	HttpClient *oHttpClient = (HttpClient *)data;
-	int sd = Socket::socket();
-	if (sd == -1) {
+	oHttpClient->sd_ = Socket::socket();
+	if (oHttpClient->sd_ == -1) {
 		std::string str = "Can not create socket: " + Socket::get_error_msg();
 		on_error_.emit(oHttpClient, str.c_str());
 		return;
 	}
 
 #ifdef _WIN32
-	oHttpClient->channel_ = g_io_channel_win32_new_socket(sd);
+	oHttpClient->channel_ = g_io_channel_win32_new_socket(oHttpClient->sd_);
 #else
-	oHttpClient->channel_ = g_io_channel_unix_new(sd);
+	oHttpClient->channel_ = g_io_channel_unix_new(oHttpClient->sd_);
 #endif
 	g_io_channel_set_encoding(oHttpClient->channel_, NULL, NULL);
 	/* make sure that the channel is non-blocking */
@@ -75,7 +81,7 @@ void HttpClient::on_resolved(gpointer data, struct hostent *ret)
 		g_error_free(err);
 		return;
 	}
-	if (!Socket::connect(sd, ret, 80)) {
+	if (!Socket::connect(oHttpClient->sd_, ret, 80)) {
 		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
 			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
 		on_error_.emit(oHttpClient, mes);

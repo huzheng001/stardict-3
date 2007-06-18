@@ -149,6 +149,7 @@ public:
 	void send_commands(int num, ...);
 	void try_cache_or_send_commands(int num, ...);
 private:
+	int sd_;
 	GIOChannel *channel_;
 	guint in_source_id_;
 	guint out_source_id_;

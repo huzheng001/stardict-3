@@ -45,7 +45,6 @@ splash_screen::splash_screen()
 
 void splash_screen::display_action(const std::string& actname)
 {
-	g_print("%s\n", actname.c_str());
 	if ( NULL == text )
 		return;
 	gtk_label_set_text(text, actname.c_str());

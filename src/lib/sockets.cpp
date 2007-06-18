@@ -73,7 +73,6 @@ Socket::socket()
 void
 Socket::close(int fd)
 {
-  g_debug("Socket::close: fd %d.", fd);
 #if defined(_WIN32)
   closesocket(fd);
 #else
@@ -211,7 +210,6 @@ Socket::connect(int fd, struct hostent *hp, int port)
   memset(&saddr, 0, sizeof(saddr));
   saddr.sin_family = AF_INET;
 
-  saddr.sin_family = hp->h_addrtype;
   memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);
   saddr.sin_port = htons((u_short) port);
 

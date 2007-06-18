@@ -1563,37 +1563,88 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	}
 	const char *buffer = http_client->buffer;
 	size_t buffer_len = http_client->buffer_len;
-#define GoogleTranslateStartMark "<div id=result_box dir=ltr>"
+	gint engine_index = http_client->userdata;
 
-	char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
 	bool found = false;
-	if (p) {
-		p += sizeof(GoogleTranslateStartMark) -1;
-		char *p2 = g_strstr_len(p, buffer_len - (p - buffer), "</div>");
-		if (p2) {
-			std::string charset;
-			char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
-			if (p3) {
-				p3 += sizeof("charset=") -1;
-				char *p4 = g_strstr_len(p3, buffer_len - (p3 - buffer), "\r\n");
-				if (p4) {
-					charset.assign(p3, p4-p3);
-				}
+	if (engine_index == 4) {
+		#define ExicuteTranslateStartMark "<textarea cols=36 rows=15 name=\"after\" wrap=\"virtual\" style=\"width:320px;\">"
+		char *p_E = g_strstr_len(buffer, buffer_len, ExicuteTranslateStartMark);
+		if(p_E){
+			p_E += sizeof(ExicuteTranslateStartMark) -1;
+			char *p2_E = g_strstr_len(p_E, buffer_len - (p_E - buffer), "</textarea>");
+			if(p2_E){
+				oMidWin.oTransWin.SetText(p_E, p2_E-p_E);
+				found = true;
 			}
-			if (charset.empty()) {
-				oMidWin.oTransWin.SetText(p, p2-p);
-			} else {
-				gchar *text = g_convert(p, p2-p, "UTF-8", charset.c_str(), NULL, NULL, NULL);
-				if (text) {
-					oMidWin.oTransWin.SetText(text);
-					g_free(text);
+		}
+	} else if (engine_index == 3) {
+		#define SystranBoxTranslateStartMark "<textarea name=\"translation\" rows=\"10\" cols=\"3\" style=\"float:left; clear:none; background-color:#FFFFFF; color:#000000; border-color:#FFFFFF;\">"
+		char *p_S = g_strstr_len(buffer, buffer_len, SystranBoxTranslateStartMark);
+		if(p_S){
+			p_S += sizeof(SystranBoxTranslateStartMark) -1;
+			char *p2_S = g_strstr_len(p_S, buffer_len - (p_S - buffer), "</textarea>");
+			if(p2_S){
+				oMidWin.oTransWin.SetText(p_S, p2_S-p_S);
+				found = true;
+			}
+		}
+	} else if (engine_index == 2) {
+		#define AltaVistaTranslateStartMark "<td bgcolor=white class=s><div style=padding:10px;>"
+		char *p_A = g_strstr_len(buffer, buffer_len, AltaVistaTranslateStartMark);
+		if(p_A){
+			p_A += sizeof(AltaVistaTranslateStartMark) -1;
+			char *p2_A = g_strstr_len(p_A, buffer_len - (p_A - buffer), "</div>");
+			if(p2_A){
+				oMidWin.oTransWin.SetText(p_A, p2_A-p_A);
+				found = true;
+			}
+		}
+	} else if (engine_index == 1) {
+		#define YahooTranslateStartMark "<div class=\"result\">"
+		char *p_y = g_strstr_len(buffer, buffer_len, YahooTranslateStartMark);
+		if(p_y){
+			p_y += sizeof(YahooTranslateStartMark) -1;
+			char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
+			char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "<div class=\"pd\">");
+			if(p2_y && p3_y){
+				p3_y += sizeof("<div class=\"pd\">") -1;
+				oMidWin.oTransWin.SetText(p3_y, p2_y-p3_y);
+				found = true;
+			}
+		}
+	} else if (engine_index == 0) {
+		#define GoogleTranslateStartMark "<div id=result_box dir=ltr>"
+
+		char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
+		if (p) {
+			p += sizeof(GoogleTranslateStartMark) -1;
+			char *p2 = g_strstr_len(p, buffer_len - (p - buffer), "</div>");
+			if (p2) {
+				std::string charset;
+				char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
+				if (p3) {
+					p3 += sizeof("charset=") -1;
+					char *p4 = g_strstr_len(p3, buffer_len - (p3 - buffer), "\r\n");
+					if (p4) {
+						charset.assign(p3, p4-p3);
+					}
+				}
+				if (charset.empty()) {
+					oMidWin.oTransWin.SetText(p, p2-p);
 				} else {
-					oMidWin.oTransWin.SetText(_("Convert error!\n"));
+					gchar *text = g_convert(p, p2-p, "UTF-8", charset.c_str(), NULL, NULL, NULL);
+					if (text) {
+						oMidWin.oTransWin.SetText(text);
+						g_free(text);
+					} else {
+						oMidWin.oTransWin.SetText(_("Convert error!\n"));
+					}
 				}
+				found = true;
 			}
-			found = true;
 		}
 	}
+
 	if (!found) {
 		oMidWin.oTransWin.SetText(_("Not found!\n"));
 	}

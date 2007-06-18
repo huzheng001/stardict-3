@@ -24,13 +24,17 @@ public:
 class DictManageDlg {
 private:	
 	GtkWidget *wazard_button;
+	GtkWidget *manage_button;
 	GtkWidget *appendix_button;
 	GtkWidget *notebook;
 	GtkWidget *button_notebook;
 	GtkWidget *info_label;
-    GtkWidget *upgrade_eventbox;
+	GtkWidget *upgrade_eventbox;
+	GtkWidget *popup_menu;
 	GtkWidget *dict_treeview;
 	GtkTreeModel *dict_tree_model;
+	GtkWidget *dictmanage_treeview;
+	GtkTreeModel *dictmanage_tree_model;
 	GtkWidget *treedict_treeview;
 	GtkTreeModel *treedict_tree_model;
 	GtkWidget *network_treeview;
@@ -38,23 +42,38 @@ private:
 	GtkWindow *parent_win;
 	GdkPixbuf *dicts_icon, *tree_dicts_icon;
 	NetworkAddDlg *network_add_dlg;
-    int max_dict_count;
-    int user_level;
-    bool dictmask_changed;
+	int max_dict_count;
+	int user_level;
+	bool dictmask_changed;
+	bool dictmanage_config_changed;
 
 	static GtkTreeModel* create_dict_tree_model(int istreedict);
 	GtkWidget *create_dict_tree(int istreedict);
+	static GtkTreeModel* create_dictmanage_tree_model();
+	GtkWidget *create_dictmanage_tree();
 		
 	GtkWidget *create_buttons();
+	GtkWidget *create_dictmanage_buttons();
 	GtkWidget *create_network_buttons();
 
 	void write_order_list(bool istreedict);
-    void ChangeDictMask();
+	void ChangeDictMask();
+	void SaveDictManageConfig();
+	void show_dict_info();
+
+	void show_add_group_dialog(GtkTreeIter *iter);
+	void show_delete_group_dialog(GtkTreeIter *iter);
+	void show_add_dict_dialog(GtkTreeIter *iter);
 
 	static void on_wazard_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
+	static void on_manage_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+
+	static void on_popup_menu_show_info_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);
+	static void on_popup_menu_select_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);
+	static void on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);
 
 	static gboolean on_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static gboolean on_network_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
@@ -65,11 +84,22 @@ private:
 	static void on_move_bottom_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_move_down_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_delete_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_info_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_move_top_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_move_bottom_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_move_down_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_group_name_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, DictManageDlg *oDictManageDlg);
 	static void on_dict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
+	static void on_dictmanage_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 	static void on_treedict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 
 	static void drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg);
 	static void drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg);
+	static void dictmanage_drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg);
+	static void dictmanage_drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg);
 public:
 	GtkWidget *window;
 
