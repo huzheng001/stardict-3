@@ -130,6 +130,7 @@ bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 		festival_eval_command(command.c_str());
 	}
 	obj->saytext_func = saytext;
+	obj->tts_name = _("Festival TTS");
 	g_print(_("Festival plug-in loaded.\n"));
 	return false;
 }

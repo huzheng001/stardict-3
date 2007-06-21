@@ -196,14 +196,16 @@ private:
 	static void SaveCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void PrintCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void SearchCallback(GtkWidget *widget, ToolWin *oToolWin);
+	static void on_pronounce_menu_item_activate(GtkMenuItem *menuitem, int engine_index);
 public:
 	GtkWidget* ShowListButton;
 	GtkWidget* HideListButton;
-	GtkWidget* PronounceWordButton;
+	GtkToolItem* PronounceWordMenuButton;
 
-	ToolWin() {}
-	~ToolWin() {}
+	ToolWin(); 
+	~ToolWin();
 	void Create(GtkWidget *vbox);
+	void UpdatePronounceMenu();
 	void do_search();
 	void do_save();
 };

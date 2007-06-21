@@ -5,6 +5,8 @@
 #include <cstring>
 #include <string>
 
+#include <glib/gi18n.h>
+
 #include "conf.h"
 #include "desktop.hpp"
 #include "utils.h"
@@ -16,7 +18,7 @@ ReadWord::ReadWord()
 {
 	const std::string &path = conf->get_string_at("dictionary/tts_path");
 	LoadRealTtsPath(path.c_str());
-	use_tts = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
+	use_command_tts = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
 	tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
 }
 
@@ -26,7 +28,7 @@ ReadWordType ReadWord::canRead(const gchar *word)
 		return READWORD_REALTTS;
 	if (gpAppFrame->oStarDictPlugins->TtsPlugins.nplugins() > 0)
 		return READWORD_TTS;
-	if (use_tts && !tts_program_cmdline.empty())
+	if (use_command_tts && !tts_program_cmdline.empty())
 		return READWORD_COMMAND;
 	return READWORD_CANNOT;
 }
@@ -132,5 +134,36 @@ void ReadWord::RealTts_read(const gchar *word)
 			}
 		}
 
+	}
+}
+
+const int Engine_RealTTS = 0;
+const int Engine_Command = 1;
+const int Engine_VirtualTTS_Base = 2;
+
+std::list<std::pair<std::string, int> > ReadWord::GetEngineList()
+{
+	std::list<std::pair<std::string, int> > engine_list;
+	if (!ttspath.empty()) {
+		engine_list.push_back(std::pair<std::string, int>(_("Real People TTS"), Engine_RealTTS));
+	}
+	if (use_command_tts && !tts_program_cmdline.empty()) {
+		engine_list.push_back(std::pair<std::string, int>(_("Command TTS"), Engine_Command));
+	}
+	size_t n = gpAppFrame->oStarDictPlugins->TtsPlugins.nplugins();
+	for (size_t i = 0; i < n; i++) {
+		engine_list.push_back(std::pair<std::string, int>(gpAppFrame->oStarDictPlugins->TtsPlugins.tts_name(i), Engine_VirtualTTS_Base + i));
+	}
+	return engine_list;
+}
+
+void ReadWord::ReadByEngine(const gchar *word, int engine_index)
+{
+	if (engine_index == Engine_RealTTS) {
+		RealTts_read(word);
+	} else if (engine_index == Engine_Command) {
+		Command_read(word);
+	} else {
+		gpAppFrame->oStarDictPlugins->TtsPlugins.saytext(engine_index - Engine_VirtualTTS_Base, word);
 	}
 }

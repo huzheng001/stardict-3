@@ -103,6 +103,7 @@ bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 		espeak_SetVoiceByName(voice_engine.c_str());
 	}
 	obj->saytext_func = saytext;
+	obj->tts_name = _("Espeak TTS");
 	g_print(_("Espeak plug-in loaded.\n"));
 	return false;
 }

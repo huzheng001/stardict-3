@@ -715,7 +715,8 @@ void PrefsDlg::on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleBut
 	gboolean enable = gtk_toggle_button_get_active(button);
 	gtk_widget_set_sensitive(oPrefsDlg->use_tts_program_hbox,enable);
 	conf->set_bool("/apps/stardict/preferences/dictionary/use_tts_program", enable);
-	gpAppFrame->oReadWord.use_tts = enable;
+	gpAppFrame->oReadWord.use_command_tts = enable;
+	gpAppFrame->oMidWin.oToolWin.UpdatePronounceMenu();
 }
 #endif
 

@@ -1180,7 +1180,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 			}
 		}
 	}
-	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, (oMidWin.oTextWin.readwordtype != READWORD_CANNOT));
+	gtk_widget_set_sensitive(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton), (oMidWin.oTextWin.readwordtype != READWORD_CANNOT));
 }
 
 void AppCore::ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTreeDict)
@@ -1202,7 +1202,7 @@ void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextW
 	oMidWin.oTextWin.readwordtype = oReadWord.canRead(sWord);
 	if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT)
 		oMidWin.oTextWin.pronounceWord = sWord;
-	gtk_widget_set_sensitive(oMidWin.oToolWin.PronounceWordButton, oMidWin.oTextWin.readwordtype != READWORD_CANNOT);
+	gtk_widget_set_sensitive(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton), oMidWin.oTextWin.readwordtype != READWORD_CANNOT);
 }
 
 void AppCore::ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboolean fuzzy)
@@ -1286,7 +1286,7 @@ void AppCore::TopWinEnterWord(const gchar *text)
 					oMidWin.oIndexWin.oListWin.treeview_, path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
 			} else {
-				if (GTK_WIDGET_SENSITIVE(oMidWin.oToolWin.PronounceWordButton))
+				if (GTK_WIDGET_SENSITIVE(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton)))
 					oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 			}
 			break;
