@@ -77,6 +77,8 @@ void PluginManageDlg::on_plugin_enable_toggled (GtkCellRendererToggle *cell, gch
 		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, FALSE);
 	if (plugin_type == StarDictPlugInType_VIRTUALDICT) {
 		oPluginManageDlg->dict_changed_ = true;
+	} else if (plugin_type == StarDictPlugInType_TTS) {
+		gpAppFrame->oMidWin.oToolWin.UpdatePronounceMenu();
 	}
 
 	std::list<std::string> disable_list;

@@ -6,6 +6,7 @@ struct StarDictTtsPlugInObject{
 
 	typedef void (*saytext_func_t)(const char *text);
 	saytext_func_t saytext_func;
+	const char *tts_name;
 };
 
 #endif

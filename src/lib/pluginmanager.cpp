@@ -434,6 +434,11 @@ void StarDictTtsPlugins::saytext(size_t iPlugin, const gchar *text)
 	oPlugins[iPlugin]->saytext(text);
 }
 
+const char *StarDictTtsPlugins::tts_name(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->tts_name();
+}
+
 //
 // class StarDictTtsPlugin begin.
 //
@@ -452,4 +457,9 @@ StarDictTtsPlugin::~StarDictTtsPlugin()
 void StarDictTtsPlugin::saytext(const char *text)
 {
 	obj->saytext_func(text);
+}
+
+const char *StarDictTtsPlugin::tts_name()
+{
+	return obj->tts_name;
 }

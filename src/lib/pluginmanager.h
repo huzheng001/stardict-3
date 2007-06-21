@@ -59,6 +59,7 @@ public:
 	StarDictTtsPlugin(StarDictPluginBaseObject *baseobj, StarDictTtsPlugInObject *tts_plugin_obj);
 	~StarDictTtsPlugin();
 	void saytext(const gchar *text);
+	const char *tts_name();
 private:
 	StarDictTtsPlugInObject *obj;
 };
@@ -69,6 +70,7 @@ public:
 	~StarDictTtsPlugins();
 	void add(StarDictPluginBaseObject *baseobj, StarDictTtsPlugInObject *tts_plugin_obj);
 	void saytext(size_t iPlugin, const gchar *text);
+	const char* tts_name(size_t iPlugin);
 	size_t nplugins() { return oPlugins.size(); }
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);

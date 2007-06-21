@@ -1227,6 +1227,38 @@ bool IndexWin::Create(GtkWidget *hpaned)
 
 /************************************************/
 
+ToolWin::ToolWin()
+{
+}
+
+ToolWin::~ToolWin()
+{
+}
+
+void ToolWin::on_pronounce_menu_item_activate(GtkMenuItem *menuitem, int engine_index)
+{
+	gpAppFrame->oReadWord.ReadByEngine(gpAppFrame->oMidWin.oTextWin.pronounceWord.c_str(), engine_index);
+}
+
+void ToolWin::UpdatePronounceMenu()
+{
+	GtkWidget *PronounceWordMenu;
+	std::list<std::pair<std::string, int> > engine_list = gpAppFrame->oReadWord.GetEngineList();
+	if (engine_list.empty()) {
+		PronounceWordMenu = NULL;
+	} else {
+		PronounceWordMenu = gtk_menu_new();
+		GtkWidget *menuitem;
+		for (std::list<std::pair<std::string, int> >::iterator i = engine_list.begin(); i != engine_list.end(); ++i) {
+			menuitem = gtk_menu_item_new_with_label(i->first.c_str());
+			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_pronounce_menu_item_activate), GINT_TO_POINTER(i->second));
+			gtk_menu_shell_append(GTK_MENU_SHELL(PronounceWordMenu), menuitem);
+		}
+		gtk_widget_show_all(PronounceWordMenu);
+	}
+	gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(PronounceWordMenuButton), PronounceWordMenu);
+}
+
 void ToolWin::Create(GtkWidget *vbox)
 {
 	GtkWidget *hbox;
@@ -1288,19 +1320,18 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Copy"),NULL);
 #endif
 
-	PronounceWordButton=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(PronounceWordButton),gtk_image_new_from_stock(GTK_STOCK_EXECUTE,GTK_ICON_SIZE_SMALL_TOOLBAR));
-	gtk_widget_show_all(PronounceWordButton);
-	gtk_button_set_relief (GTK_BUTTON (PronounceWordButton), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (PronounceWordButton, GTK_CAN_FOCUS);
-	g_signal_connect(G_OBJECT(PronounceWordButton),"clicked", G_CALLBACK(PlayCallback),this);
+	PronounceWordMenuButton = gtk_menu_tool_button_new_from_stock(GTK_STOCK_EXECUTE);
+	UpdatePronounceMenu();
+	gtk_widget_show(GTK_WIDGET(PronounceWordMenuButton));
+	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET(PronounceWordMenuButton), GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(PronounceWordMenuButton),"clicked", G_CALLBACK(PlayCallback),this);
 #ifdef CONFIG_GPE
-	gtk_box_pack_start(GTK_BOX(hbox),PronounceWordButton,false,false,0);
+	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(PronounceWordMenuButton),false,false,0);
 #else
-	gtk_box_pack_start(GTK_BOX(hbox),PronounceWordButton,false,false,5);
+	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(PronounceWordMenuButton),false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,PronounceWordButton,_("Pronounce the word"),NULL);
-	gtk_widget_set_sensitive(PronounceWordButton, false);
+	gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(PronounceWordMenuButton), gpAppFrame->tooltips, _("Pronounce the word"),NULL);
+	gtk_widget_set_sensitive(GTK_WIDGET(PronounceWordMenuButton), false);
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_SAVE,GTK_ICON_SIZE_SMALL_TOOLBAR));
