@@ -263,7 +263,6 @@ msgid "whether to lock the window or not"
 msgstr "是否锁定窗口"
 
 #: ../src/conf.cpp:233
-#, c-format
 msgid ""
 "Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
 "com/search?q=%s\n"

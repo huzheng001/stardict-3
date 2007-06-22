@@ -219,6 +219,7 @@ std::string AppConf::get_default_export_filename()
 
 std::list<std::string> AppConf::get_default_search_website_list()
 {
+	/* xgettext: no-c-format */
 	gchar *default_website = _(
 		"Dictionary.com	http://dictionary.reference.com	http://dictionary.reference.com/search?q=%s\n"
 		"dict.leo.org	http://dict.leo.org	http://dict.leo.org/?search=%s&lang=en\n"
