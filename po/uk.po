@@ -277,7 +277,6 @@ msgid "whether to lock the window or not"
 msgstr "чи закріплювати вікно"
 
 #: ../src/conf.cpp:233
-#, c-format
 msgid ""
 "Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
 "com/search?q=%s\n"

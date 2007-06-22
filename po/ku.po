@@ -1,15 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) 2007 Erdal Ronahî <erdal.ronahi@gmail.com>
+# This file is distributed under the same license as the StarDict package.
+# Erdal Ronahî <erdal.ronahi@gmail.com>, 2007.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: stardict 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-05 22:57+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2007-06-21 22:57+0800\n"
 "Last-Translator: Erdal Ronahî <erdal.ronahi@gmail.com>\n"
 "Language-Team: KURDISH <ku@li.org>\n"
 "MIME-Version: 1.0\n"
