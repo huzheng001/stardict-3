@@ -98,7 +98,7 @@ void convert(const char *filename, print_info_t print_info)
 		p2++;
 		worditem.word = p;
 		worditem.definition = p2;
-		//my_strstrip(worditem.definition, linenum, print_info);
+		my_strstrip(worditem.definition, linenum, print_info);
 		g_strstrip(worditem.word);
 		g_strstrip(worditem.definition);
 		if (!worditem.word[0]) {
