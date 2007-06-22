@@ -177,7 +177,7 @@
       <applyto>/apps/stardict/preferences/main_window/hpaned_pos</applyto>
       <owner>stardict</owner>
       <type>int</type>
-      <default>149</default>
+      <default>115</default>
       <locale name="C">
 	<short>Hpaned 's position</short>
 	<long>The hpaned's position, between the listview and the textview.</long>

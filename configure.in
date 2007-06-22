@@ -338,6 +338,8 @@ src/lib/Makefile
 src/wiki/Makefile
 src/pixmaps/Makefile
 src/sounds/Makefile
+src/dic/Makefile
+src/treedict/Makefile
 src/win32/Makefile
 src/win32/acrobat/Makefile
 src/win32/acrobat/sources/Makefile
@@ -346,6 +348,7 @@ src/win32/nsis/Makefile
 stardict-plugins/Makefile
 stardict-plugins/stardict-advertisement-plugin/Makefile
 stardict-plugins/stardict-advertisement-plugin/data/Makefile
+stardict-plugins/stardict-update-info-plugin/Makefile
 stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile
 stardict-plugins/stardict-festival-tts-plugin/Makefile

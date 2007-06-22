@@ -147,12 +147,12 @@ std::list<std::pair<std::string, int> > ReadWord::GetEngineList()
 	if (!ttspath.empty()) {
 		engine_list.push_back(std::pair<std::string, int>(_("Real People TTS"), Engine_RealTTS));
 	}
-	if (use_command_tts && !tts_program_cmdline.empty()) {
-		engine_list.push_back(std::pair<std::string, int>(_("Command TTS"), Engine_Command));
-	}
 	size_t n = gpAppFrame->oStarDictPlugins->TtsPlugins.nplugins();
 	for (size_t i = 0; i < n; i++) {
 		engine_list.push_back(std::pair<std::string, int>(gpAppFrame->oStarDictPlugins->TtsPlugins.tts_name(i), Engine_VirtualTTS_Base + i));
+	}
+	if (use_command_tts && !tts_program_cmdline.empty()) {
+		engine_list.push_back(std::pair<std::string, int>(_("Command TTS"), Engine_Command));
 	}
 	return engine_list;
 }

@@ -12,6 +12,7 @@ enum StarDictPlugInType {
 	StarDictPlugInType_UNKNOWN,
 	StarDictPlugInType_VIRTUALDICT,
 	StarDictPlugInType_TTS,
+	StarDictPlugInType_MISC,
 };
 
 /*struct VirtualDictLookupResponse {
@@ -20,9 +21,12 @@ enum StarDictPlugInType {
 	std::list<char *> datalist;
 };*/
 
-struct StarDictVirtualDictPlugInSlots {
+struct StarDictPluginSystemService {
 	//typedef void (*on_stardict_virtual_dict_plugin_lookup_end_func_t)(const struct VirtualDictLookupResponse *);
 	//on_stardict_virtual_dict_plugin_lookup_end_func_t on_lookup_end;
+	typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, int userdata);
+	typedef void (*send_http_request_func_t)(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata);
+	send_http_request_func_t send_http_request;
 };
 
 struct StarDictPluginSystemInfo {
@@ -32,7 +36,7 @@ struct StarDictPluginSystemInfo {
 
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.
 extern StarDictPluginSystemInfo oStarDictPluginSystemInfo;
-extern StarDictVirtualDictPlugInSlots oStarDictVirtualDictPlugInSlots;
+extern StarDictPluginSystemService oStarDictSystemService;
 
 typedef void (*plugin_configure_func_t)();
 
@@ -46,7 +50,7 @@ struct StarDictPlugInObject {
 	plugin_configure_func_t configure_func;
 
 	const StarDictPluginSystemInfo *plugin_info;
-	const StarDictVirtualDictPlugInSlots *vd_slots;
+	const StarDictPluginSystemService *plugin_service;
 };
 
 #endif
