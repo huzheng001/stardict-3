@@ -78,6 +78,23 @@ private:
 	std::vector<StarDictTtsPlugin *> oPlugins;
 };
 
+class StarDictMiscPlugin : public StarDictPluginBase {
+public:
+	StarDictMiscPlugin(StarDictPluginBaseObject *baseobj);
+	~StarDictMiscPlugin();
+};
+
+class StarDictMiscPlugins {
+public:
+	StarDictMiscPlugins();
+	~StarDictMiscPlugins();
+	void add(StarDictPluginBaseObject *baseobj);
+	void unload_plugin(const char *filename);
+	void configure_plugin(const char *filename);
+private:
+	std::vector<StarDictMiscPlugin *> oPlugins;
+};
+
 struct StarDictPluginInfo {
 	std::string filename;
 	StarDictPlugInType plugin_type;
@@ -97,6 +114,7 @@ public:
 	StarDictVirtualDictPlugins VirtualDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
 private:
+	StarDictMiscPlugins MiscPlugins;
 	std::string plugindirpath;
 	std::list<std::string> loaded_plugin_list;
 	void load(const char *dirpath, const std::list<std::string>& disable_list);

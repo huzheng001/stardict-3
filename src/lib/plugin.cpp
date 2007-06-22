@@ -1,7 +1,7 @@
 #include "plugin.h"
 
 StarDictPluginSystemInfo oStarDictPluginSystemInfo;
-StarDictVirtualDictPlugInSlots oStarDictVirtualDictPlugInSlots;
+StarDictPluginSystemService oStarDictPluginSystemService;
 
 
 StarDictPlugInObject::StarDictPlugInObject()
@@ -11,7 +11,7 @@ StarDictPlugInObject::StarDictPlugInObject()
 	info_xml = NULL;
 	configure_func = NULL;
 	plugin_info = &oStarDictPluginSystemInfo;
-	vd_slots = &oStarDictVirtualDictPlugInSlots;
+	plugin_service = &oStarDictPluginSystemService;
 }
 
 StarDictPlugInObject::~StarDictPlugInObject()

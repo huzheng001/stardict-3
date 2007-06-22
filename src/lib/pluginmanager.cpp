@@ -89,6 +89,7 @@ void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, st
 	plugin_list.clear();
 	std::list<StarDictPluginInfo> virtualdict_pluginlist;
 	std::list<StarDictPluginInfo> tts_pluginlist;
+	std::list<StarDictPluginInfo> misc_pluginlist;
 	GDir *dir = g_dir_open(plugindirpath.c_str(), 0, NULL);
 	if (dir) {
 		const gchar *filename;
@@ -114,6 +115,9 @@ void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, st
 						case StarDictPlugInType_TTS:
 							tts_pluginlist.push_back(plugin_info);
 							break;
+						case StarDictPlugInType_MISC:
+							misc_pluginlist.push_back(plugin_info);
+							break;
 						default:
 							break;
 					}
@@ -127,6 +131,9 @@ void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, st
 	}
 	if (!tts_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_TTS, tts_pluginlist));
+	}
+	if (!misc_pluginlist.empty()) {
+		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_MISC, misc_pluginlist));
 	}
 }
 
@@ -167,6 +174,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 
 typedef bool (*stardict_virtualdict_plugin_init_func_t)(StarDictVirtualDictPlugInObject *obj);
 typedef bool (*stardict_tts_plugin_init_func_t)(StarDictTtsPlugInObject *obj);
+typedef bool (*stardict_misc_plugin_init_func_t)(void);
 
 void StarDictPlugins::load_plugin(const char *filename)
 {
@@ -251,6 +259,26 @@ void StarDictPlugins::load_plugin(const char *filename)
 			return;
 		}
 		TtsPlugins.add(baseobj, tts_plugin_obj);
+	} else if (ptype == StarDictPlugInType_MISC) {
+		union {
+			stardict_misc_plugin_init_func_t stardict_misc_plugin_init;
+			gpointer stardict_misc_plugin_init_avoid_warning;
+		} func3;
+		func3.stardict_misc_plugin_init = 0;
+		if (!g_module_symbol (module, "stardict_misc_plugin_init", (gpointer *)&(func3.stardict_misc_plugin_init_avoid_warning))) {
+			printf("Load %s failed: No stardict_misc_plugin_init func!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			return;
+		}
+		failed = func3.stardict_misc_plugin_init();
+		if (failed) {
+			g_print("Load %s failed!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			return;
+		}
+		MiscPlugins.add(baseobj);
 	} else {
 		g_print("Load %s failed: Unknow type plugin!\n", filename);
 		g_module_close (module);
@@ -274,6 +302,9 @@ void StarDictPlugins::unload_plugin(const char *filename, StarDictPlugInType plu
 		case StarDictPlugInType_TTS:
 			TtsPlugins.unload_plugin(filename);
 			break;
+		case StarDictPlugInType_MISC:
+			MiscPlugins.unload_plugin(filename);
+			break;
 		default:
 			break;
 	}
@@ -287,6 +318,9 @@ void StarDictPlugins::configure_plugin(const char *filename, StarDictPlugInType 
 			break;
 		case StarDictPlugInType_TTS:
 			TtsPlugins.configure_plugin(filename);
+			break;
+		case StarDictPlugInType_MISC:
+			MiscPlugins.configure_plugin(filename);
 			break;
 		default:
 			break;
@@ -462,4 +496,59 @@ void StarDictTtsPlugin::saytext(const char *text)
 const char *StarDictTtsPlugin::tts_name()
 {
 	return obj->tts_name;
+}
+
+//
+// class StarDictMiscPlugins begin.
+//
+
+StarDictMiscPlugins::StarDictMiscPlugins()
+{
+}
+
+StarDictMiscPlugins::~StarDictMiscPlugins()
+{
+	for (std::vector<StarDictMiscPlugin *>::iterator i = oPlugins.begin(); i != oPlugins.end(); ++i) {
+		delete *i;
+	}
+}
+
+void StarDictMiscPlugins::add(StarDictPluginBaseObject *baseobj)
+{
+	StarDictMiscPlugin *plugin = new StarDictMiscPlugin(baseobj);
+	oPlugins.push_back(plugin);
+}
+
+void StarDictMiscPlugins::unload_plugin(const char *filename)
+{
+	for (std::vector<StarDictMiscPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			delete *iter;
+			oPlugins.erase(iter);
+			break;
+		}
+	}
+}
+
+void StarDictMiscPlugins::configure_plugin(const char *filename)
+{
+	for (std::vector<StarDictMiscPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			(*iter)->configure();
+			break;
+		}
+	}
+}
+
+//
+// class StarDictMiscPlugin begin.
+//
+
+StarDictMiscPlugin::StarDictMiscPlugin(StarDictPluginBaseObject *baseobj_):
+	StarDictPluginBase(baseobj_)
+{
+}
+
+StarDictMiscPlugin::~StarDictMiscPlugin()
+{
 }

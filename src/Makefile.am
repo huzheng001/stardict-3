@@ -9,8 +9,8 @@ LOCAL_SIGCPP_LIBFILE = sigc++/libsigc.a
 LOCAL_SIGCPP_INCLUDE = -Isigc++config
 endif
 
-DIST_SUBDIRS = sigc++ sigc++config lib wiki pixmaps sounds win32
-SUBDIRS = $(LOCAL_SIGCPP_DIR) lib wiki pixmaps sounds win32
+DIST_SUBDIRS = sigc++ sigc++config lib wiki pixmaps sounds win32 dic treedict
+SUBDIRS = $(LOCAL_SIGCPP_DIR) lib wiki pixmaps sounds win32 dic treedict
 
 bin_PROGRAMS = stardict
 
