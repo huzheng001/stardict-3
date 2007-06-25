@@ -60,6 +60,12 @@ TopWin::~TopWin()
 	g_slist_free(BackList);
 }
 
+static void unfocus_combo_arrow(GtkWidget *widget, gpointer data)
+{
+	if (!GTK_IS_ENTRY(widget))
+		GTK_WIDGET_UNSET_FLAGS(widget, GTK_CAN_FOCUS);
+}
+
 void TopWin::Create(GtkWidget *vbox)
 {
 	GtkWidget *hbox = gtk_hbox_new(false,0);
@@ -87,6 +93,7 @@ void TopWin::Create(GtkWidget *vbox)
 	WordCombo = gtk_combo_box_entry_new_with_model(GTK_TREE_MODEL(list_store), 0);
 	g_object_unref (G_OBJECT(list_store));
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
 	gtk_entry_set_max_length(GTK_ENTRY(GTK_BIN(WordCombo)->child), 255);
@@ -1259,6 +1266,13 @@ void ToolWin::UpdatePronounceMenu()
 	gtk_menu_tool_button_set_menu(GTK_MENU_TOOL_BUTTON(PronounceWordMenuButton), PronounceWordMenu);
 }
 
+static void unfocus_menu_button(GtkWidget *widget, gpointer data)
+{
+	GTK_WIDGET_UNSET_FLAGS(widget, GTK_CAN_FOCUS);
+	if (GTK_IS_CONTAINER(widget))
+		gtk_container_forall(GTK_CONTAINER(widget), unfocus_menu_button, data);
+}
+
 void ToolWin::Create(GtkWidget *vbox)
 {
 	GtkWidget *hbox;
@@ -1324,6 +1338,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	UpdatePronounceMenu();
 	gtk_widget_show(GTK_WIDGET(PronounceWordMenuButton));
 	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET(PronounceWordMenuButton), GTK_CAN_FOCUS);
+	gtk_container_forall(GTK_CONTAINER(PronounceWordMenuButton), unfocus_menu_button, this);
 	g_signal_connect(G_OBJECT(PronounceWordMenuButton),"clicked", G_CALLBACK(PlayCallback),this);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(PronounceWordMenuButton),false,false,0);

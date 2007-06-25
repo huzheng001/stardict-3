@@ -228,6 +228,14 @@ gboolean PluginManageDlg::on_treeview_button_press(GtkWidget * widget, GdkEventB
 	}
 }
 
+void PluginManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, PluginManageDlg *oPluginManageDlg)
+{
+}
+
+void PluginManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, PluginManageDlg *oPluginManageDlg)
+{
+}
+
 GtkWidget *PluginManageDlg::create_plugin_list()
 {
 	GtkWidget *sw;
@@ -258,6 +266,13 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
 	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN (column), TRUE);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	GtkTargetEntry gte[] = {{"STARDICT_PLUGINMANAGE", GTK_TARGET_SAME_APP, 0}};
+	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
+	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
+	g_signal_connect(G_OBJECT(treeview), "drag-data-received", G_CALLBACK(drag_data_received_cb), this);
+	g_signal_connect(G_OBJECT(treeview), "drag-data-get", G_CALLBACK(drag_data_get_cb), this);
+
 	gtk_tree_view_expand_all(GTK_TREE_VIEW (treeview));
 	gtk_container_add (GTK_CONTAINER (sw), treeview);
 	return sw;
