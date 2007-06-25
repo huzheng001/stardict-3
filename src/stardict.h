@@ -154,6 +154,7 @@ public:
 
 	void on_http_client_error(HttpClient*, const char *);
 	void on_http_client_response(HttpClient*);
+	static void do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata);
 };
 
 #ifdef _WIN32

@@ -202,6 +202,11 @@ void AppCore::on_link_click(const std::string &link)
 	}
 }
 
+void AppCore::do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata)
+{
+	gpAppFrame->oHttpManager.SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
+}
+
 void AppCore::Create(gchar *queryword)
 {
 	oLibs.set_show_progress(&load_show_progress);
@@ -261,7 +266,8 @@ void AppCore::Create(gchar *queryword)
 // Init oStarDictPlugins after we get window.
 	oStarDictPluginSystemInfo.datadir = gStarDictDataDir.c_str();
 	oStarDictPluginSystemInfo.mainwin = window;
-	//oStarDictVirtualDictPlugInSlots.on_lookup_end = on_stardict_virtual_dict_plugin_lookup_end;
+	oStarDictPluginSystemService.send_http_request = do_send_http_request;
+	oStarDictPluginSystemService.show_url = show_url;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else
@@ -1556,6 +1562,11 @@ void AppCore::on_http_client_error(HttpClient *http_client, const char *error_ms
 
 void AppCore::on_http_client_response(HttpClient *http_client)
 {
+	if (http_client->callback_func_) {
+		http_client->callback_func_(http_client->buffer, http_client->buffer_len, http_client->userdata);
+		oHttpManager.Remove(http_client);
+		return;
+	}
 	if (http_client->buffer == NULL) {
 		oMidWin.oTransWin.SetText(_("Not found!\n"));
 		oHttpManager.Remove(http_client);

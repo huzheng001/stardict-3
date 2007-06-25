@@ -73,7 +73,7 @@ void show_help(const gchar *section)
 #endif
 }
 
-void show_url(const gchar *url)
+void show_url(const char *url)
 {
 	if (!url)
 		return;

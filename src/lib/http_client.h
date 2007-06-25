@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, int userdata);
+
 class HttpClient {
 public:
 	static sigc::signal<void, HttpClient*, const char *> on_error_;
@@ -14,9 +16,11 @@ public:
 	HttpClient();
 	~HttpClient();
 	void SendHttpGetRequest(const char* shost, const char* sfile, gint data);
+	void SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gint data);
 	char *buffer;
 	size_t buffer_len;
 	gint userdata;
+	get_http_response_func_t callback_func_;
 private:
 	std::string host_;
 	std::string file_;

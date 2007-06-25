@@ -27,6 +27,8 @@ struct StarDictPluginSystemService {
 	typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, int userdata);
 	typedef void (*send_http_request_func_t)(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata);
 	send_http_request_func_t send_http_request;
+	typedef void (*show_url_func_t)(const char *url);
+	show_url_func_t show_url;
 };
 
 struct StarDictPluginSystemInfo {
@@ -36,7 +38,7 @@ struct StarDictPluginSystemInfo {
 
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.
 extern StarDictPluginSystemInfo oStarDictPluginSystemInfo;
-extern StarDictPluginSystemService oStarDictSystemService;
+extern StarDictPluginSystemService oStarDictPluginSystemService;
 
 typedef void (*plugin_configure_func_t)();
 
