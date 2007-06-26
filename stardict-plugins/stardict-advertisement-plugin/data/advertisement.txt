@@ -13,6 +13,8 @@ The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEma
 wenjing	Huang Wenjing	黄文静	猪能飞
 P
 wenjing.jpg
+P
+wenjing2.jpg
 x
 Blog: <iref href="http://officepig.blogcn.com">关于一群猪的幸福生活</iref>.\nPhoto: <iref href="http://reciteword.cosoft.org.cn/yaoguang/wenjing.php">照片魔方</iref>.
 

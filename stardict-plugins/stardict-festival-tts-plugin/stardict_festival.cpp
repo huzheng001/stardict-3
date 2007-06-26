@@ -1,9 +1,5 @@
 #include "stardict_festival.h"
-#ifdef HAVE_CONFIG_H
-	#undef HAVE_CONFIG_H
-	#include <festival/festival.h>
-	#define HAVE_CONFIG_H
-#endif
+#include <festival/festival.h>
 #include <glib/gi18n.h>
 
 static std::string voice_engine;
