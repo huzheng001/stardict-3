@@ -131,7 +131,7 @@ if test "x$enable_festival" = "xyes" ; then
 	else
 		AC_MSG_RESULT(yes)
 		FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
-		FESTIVAL_CFLAGS="-I/usr/include/speech_tools -ffriend-injection -Wno-deprecated"
+		FESTIVAL_CFLAGS="-I/usr/include/speech-tools/EST -ffriend-injection -Wno-deprecated"
 		FESTIVAL_PLUGIN_DIR="stardict-festival-tts-plugin"
 	fi
 else
