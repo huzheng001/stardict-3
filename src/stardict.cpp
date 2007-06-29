@@ -269,9 +269,9 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.send_http_request = do_send_http_request;
 	oStarDictPluginSystemService.show_url = show_url;
 #ifdef _WIN32
-	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
+	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else
-	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins", conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
+	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins", conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #endif
 	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
 
@@ -1745,11 +1745,16 @@ void AppCore::PopupPluginManageDlg()
 	if (!plugin_manage_dlg) {
 		plugin_manage_dlg = new PluginManageDlg();
 		bool dict_changed;
-		bool exiting = plugin_manage_dlg->ShowModal(GTK_WINDOW(window), dict_changed);
+		bool order_changed;
+		bool exiting = plugin_manage_dlg->ShowModal(GTK_WINDOW(window), dict_changed, order_changed);
 		delete plugin_manage_dlg;
 		plugin_manage_dlg = NULL;
 		if (exiting)
 			return;
+		if (order_changed) {
+			oStarDictPlugins->VirtualDictPlugins.reorder(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"));
+			oMidWin.oToolWin.UpdatePronounceMenu();
+		}
 		if (dict_changed) {
 			dictmask.clear();
 			oLibs.SetClientDictMask(dictmask);

@@ -7,7 +7,7 @@ class PluginManageDlg {
 public:
 	PluginManageDlg();
 	~PluginManageDlg();
-	bool ShowModal(GtkWindow *parent_win, bool &dict_changed);
+	bool ShowModal(GtkWindow *parent_win, bool &dict_changed, bool &order_changed);
 private:
 	enum {
 		STARDICT_RESPONSE_CONFIGURE = 100,
@@ -18,7 +18,9 @@ private:
 	GtkWidget *pref_button;
 	GtkTreeStore *plugin_tree_model;
 	bool dict_changed_;
+	bool order_changed_;
 	GtkWidget *create_plugin_list();
+	void write_order_list();
 	static void response_handler (GtkDialog *dialog, gint res_id, PluginManageDlg *oPluginManageDlg);
 	static void on_plugin_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, PluginManageDlg *oPluginManageDlg);
 	static void on_plugin_treeview_selection_changed(GtkTreeSelection *selection, PluginManageDlg *oPluginManageDlg);

@@ -170,7 +170,7 @@ static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, std::li
 static void init_tree_model(GtkTreeStore *tree_model)
 {
 	std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > plugin_list;
-	gpAppFrame->oStarDictPlugins->get_plugin_list(plugin_list);
+	gpAppFrame->oStarDictPlugins->get_plugin_list(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), plugin_list);
 	GtkTreeIter iter;
 	for (std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > >::iterator i = plugin_list.begin(); i != plugin_list.end(); ++i) {
 		switch (i->first) {
@@ -228,12 +228,111 @@ gboolean PluginManageDlg::on_treeview_button_press(GtkWidget * widget, GdkEventB
 	}
 }
 
+static void add_order_list(std::list<std::string> &order_list, GtkTreeModel *now_tree_model, GtkTreeIter *parent)
+{
+	gboolean have_iter;
+	GtkTreeIter iter;
+	have_iter = gtk_tree_model_iter_children(now_tree_model, &iter, parent);
+	gchar *filename;
+	while (have_iter) {
+		gtk_tree_model_get (now_tree_model, &iter, 4, &filename, -1);
+		order_list.push_back(filename);
+		g_free(filename);
+		have_iter = gtk_tree_model_iter_next(now_tree_model, &iter);
+	}
+}
+
+void PluginManageDlg::write_order_list()
+{
+	std::list<std::string> order_list;
+	GtkTreeModel *now_tree_model = GTK_TREE_MODEL(plugin_tree_model);
+	gboolean have_iter;
+	GtkTreeIter iter;
+	have_iter = gtk_tree_model_get_iter_first(now_tree_model, &iter);
+	while (have_iter) {
+		if (gtk_tree_model_iter_has_child(now_tree_model, &iter)) {
+			add_order_list(order_list, now_tree_model, &iter);
+		}
+		have_iter = gtk_tree_model_iter_next(now_tree_model, &iter);
+	}
+	conf->set_strlist("/apps/stardict/manage_plugins/plugin_order_list", order_list);
+}
+
 void PluginManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, PluginManageDlg *oPluginManageDlg)
 {
+	if (data->target == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE)) {
+		GtkTreeRowReference *ref;
+		GtkTreePath *source_row;
+		ref = (GtkTreeRowReference *)g_object_get_data(G_OBJECT(ctx), "gtk-tree-view-source-row");
+		source_row = gtk_tree_row_reference_get_path(ref);
+		if (source_row == NULL)
+			return;
+		GtkTreeIter iter;
+		gtk_tree_model_get_iter(GTK_TREE_MODEL(oPluginManageDlg->plugin_tree_model), &iter, source_row);
+		gtk_selection_data_set(data, gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE), 8, (const guchar *)&iter, sizeof(iter));
+		gtk_tree_path_free(source_row);
+	}
 }
 
 void PluginManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, PluginManageDlg *oPluginManageDlg)
 {
+	if (sd->target == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE) && sd->data) {
+		GtkTreePath *path = NULL;
+		GtkTreeViewDropPosition position;
+		GtkTreeIter drag_iter;
+		memcpy(&drag_iter, sd->data, sizeof(drag_iter));
+		if (gtk_tree_view_get_dest_row_at_pos(GTK_TREE_VIEW(widget), x, y, &path, &position)) {
+			GtkTreeIter iter;
+			GtkTreeModel *model = GTK_TREE_MODEL(oPluginManageDlg->plugin_tree_model);
+			gtk_tree_model_get_iter(model, &iter, path);
+			if (gtk_tree_model_iter_has_child(model, &iter)) {
+				gtk_drag_finish (ctx, FALSE, FALSE, t);
+				return;
+			}
+			if (gtk_tree_model_iter_has_child(model, &drag_iter)) {
+				gtk_drag_finish (ctx, FALSE, FALSE, t);
+				return;
+			}
+			GtkTreeIter parent_iter;
+			if (!gtk_tree_model_iter_parent(model, &parent_iter, &iter)) {
+				gtk_drag_finish (ctx, FALSE, FALSE, t);
+				return;
+			}
+			GtkTreeIter drag_parent_iter;
+			if (!gtk_tree_model_iter_parent(model, &drag_parent_iter, &drag_iter)) {
+				gtk_drag_finish (ctx, FALSE, FALSE, t);
+				return;
+			}
+			char *iter_str, *drag_iter_str;
+			iter_str = gtk_tree_model_get_string_from_iter(model, &parent_iter);
+			drag_iter_str = gtk_tree_model_get_string_from_iter(model, &drag_parent_iter);
+			if (strcmp(iter_str, drag_iter_str) != 0) {
+				g_free(iter_str);
+				g_free(drag_iter_str);
+				gtk_drag_finish (ctx, FALSE, FALSE, t);
+				return;
+			}
+			g_free(iter_str);
+			g_free(drag_iter_str);
+			switch (position) {
+				case GTK_TREE_VIEW_DROP_AFTER:
+				case GTK_TREE_VIEW_DROP_INTO_OR_AFTER:
+					gtk_tree_store_move_after(GTK_TREE_STORE(model), &drag_iter, &iter);
+					break;
+				case GTK_TREE_VIEW_DROP_BEFORE:
+				case GTK_TREE_VIEW_DROP_INTO_OR_BEFORE:
+					gtk_tree_store_move_before(GTK_TREE_STORE(model), &drag_iter, &iter);
+					break;
+				default: {
+					gtk_drag_finish (ctx, FALSE, FALSE, t);
+					return;
+				}
+			}
+			oPluginManageDlg->write_order_list();
+			oPluginManageDlg->order_changed_ = true;
+			gtk_drag_finish (ctx, TRUE, FALSE, t);
+		}
+	}
 }
 
 GtkWidget *PluginManageDlg::create_plugin_list()
@@ -278,7 +377,7 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	return sw;
 }
 
-bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed)
+bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool &order_changed)
 {
 	window = gtk_dialog_new();
 	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
@@ -306,6 +405,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed)
 	gtk_window_set_title (GTK_WINDOW (window), _("Manage Plugins"));
 	gtk_window_set_default_size(GTK_WINDOW(window), 250, 350);
 	dict_changed_ = false;
+	order_changed_ = false;
 	gint result;
 	while (true) {
 		result = gtk_dialog_run(GTK_DIALOG(window));
@@ -316,6 +416,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed)
 	}
 	if (result != GTK_RESPONSE_NONE) {
 		dict_changed = dict_changed_;
+		order_changed = order_changed_;
 		gtk_widget_destroy(GTK_WIDGET(window));
 		return false;
 	} else {
