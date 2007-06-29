@@ -369,6 +369,19 @@
     </schema>
 
     <schema>
+      <key>/schemas/apps/stardict/manage_plugins/plugin_order_list</key>
+      <applyto>/apps/stardict/manage_plugins/plugin_order_list</applyto>
+      <owner>stardict</owner>
+      <type>list</type>
+	  <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+	<short>Plug-in order</short>
+	<long>List the plugins in order.</long>
+      </locale>
+    </schema>
+
+    <schema>
       <key>/schemas/apps/stardict/manage_plugins/plugin_disable_list</key>
       <applyto>/apps/stardict/manage_plugins/plugin_disable_list</applyto>
       <owner>stardict</owner>

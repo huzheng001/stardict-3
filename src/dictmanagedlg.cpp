@@ -740,15 +740,16 @@ void DictManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx
 				case GTK_TREE_VIEW_DROP_BEFORE:
 				case GTK_TREE_VIEW_DROP_INTO_OR_BEFORE:
 					gtk_list_store_move_before(GTK_LIST_STORE(model), &drag_iter, &iter);
-					//Bug: when move the entry to before the first item, it is moved to the end! But I think this is gtk's bug.
 					break;
 				default:
+					gtk_drag_finish (ctx, FALSE, FALSE, t);
 					return;
 			}
 			if (model == oDictManageDlg->network_tree_model)
-                oDictManageDlg->dictmask_changed = true;
-            else
+				oDictManageDlg->dictmask_changed = true;
+			else
 				oDictManageDlg->write_order_list(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oDictManageDlg->wazard_button)));
+			gtk_drag_finish (ctx, TRUE, FALSE, t);
 		}
 	}
 }

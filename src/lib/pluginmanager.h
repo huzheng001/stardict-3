@@ -50,6 +50,7 @@ public:
 	void SetDictMask(std::vector<InstantDictIndex> &dictmask);
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);
+	void reorder(const std::list<std::string>& order_list);
 private:
 	std::vector<StarDictVirtualDictPlugin *> oPlugins;
 };
@@ -74,6 +75,7 @@ public:
 	size_t nplugins() { return oPlugins.size(); }
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);
+	void reorder(const std::list<std::string>& order_list);
 private:
 	std::vector<StarDictTtsPlugin *> oPlugins;
 };
@@ -91,6 +93,7 @@ public:
 	void add(StarDictPluginBaseObject *baseobj);
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);
+	void reorder(const std::list<std::string>& order_list);
 private:
 	std::vector<StarDictMiscPlugin *> oPlugins;
 };
@@ -104,21 +107,24 @@ struct StarDictPluginInfo {
 
 class StarDictPlugins {
 public:
-	StarDictPlugins(const char *dirpath, const std::list<std::string>& disable_list);
+	StarDictPlugins(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list);
 	~StarDictPlugins();
-	void get_plugin_list(std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list);
+	void get_plugin_list(const std::list<std::string>& order_list, std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list);
 	bool get_loaded(const char *filename);
 	void load_plugin(const char *filename);
 	void configure_plugin(const char *filename, StarDictPlugInType plugin_type);
 	void unload_plugin(const char *filename, StarDictPlugInType plugin_type);
+	void reorder(const std::list<std::string>& order_list);
 	StarDictVirtualDictPlugins VirtualDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
 private:
 	StarDictMiscPlugins MiscPlugins;
 	std::string plugindirpath;
 	std::list<std::string> loaded_plugin_list;
-	void load(const char *dirpath, const std::list<std::string>& disable_list);
+	void load(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list);
 	void get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml, bool &can_configure);
+	friend class PluginLoader;
+	friend class PluginInfoLoader;
 };
 
 #endif

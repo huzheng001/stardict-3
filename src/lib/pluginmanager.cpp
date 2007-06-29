@@ -1,4 +1,5 @@
 #include "pluginmanager.h"
+#include "file.hpp"
 #include <string>
 
 StarDictPluginBaseObject::StarDictPluginBaseObject(const char *filename, GModule *module_, plugin_configure_func_t configure_func_):
@@ -37,39 +38,39 @@ const char *StarDictPluginBase::get_filename()
 	return baseobj->plugin_filename.c_str();
 }
 
-StarDictPlugins::StarDictPlugins(const char *dirpath, const std::list<std::string>& disable_list)
+StarDictPlugins::StarDictPlugins(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
 {
 	plugindirpath = dirpath;
-	load(dirpath, disable_list);
+	load(dirpath, order_list, disable_list);
 }
 
 StarDictPlugins::~StarDictPlugins()
 {
 }
 
-void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& disable_list)
-{
-	GDir *dir = g_dir_open(dirpath, 0, NULL);
-	if (dir) {
-		const gchar *filename;
-		while ((filename = g_dir_read_name(dir))!=NULL) {
-			if (g_str_has_suffix(filename, "."G_MODULE_SUFFIX)) {
-				std::string fullfilename = dirpath;
-				fullfilename += G_DIR_SEPARATOR;
-				fullfilename += filename;
-				bool disable = false;
-				for (std::list<std::string>::const_iterator iter = disable_list.begin(); iter != disable_list.end(); ++iter) {
-					if (*iter == fullfilename) {
-						disable = true;
-						break;
-					}
-				}
-				if (!disable)
-					load_plugin(fullfilename.c_str());
-			}
-		}
-		g_dir_close(dir);
+class PluginLoader {
+public:
+	PluginLoader(StarDictPlugins& plugins_): plugins(plugins_) {}
+	void operator()(const std::string& url, bool disable) {
+		if (!disable)
+			plugins.load_plugin(url.c_str());
 	}
+private:
+	StarDictPlugins& plugins;
+};
+
+void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
+{
+	std::list<std::string> plugins_dirs;
+	plugins_dirs.push_back(dirpath);
+	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginLoader(*this));
+}
+
+void StarDictPlugins::reorder(const std::list<std::string>& order_list)
+{
+	VirtualDictPlugins.reorder(order_list);
+	TtsPlugins.reorder(order_list);
+	MiscPlugins.reorder(order_list);
 }
 
 bool StarDictPlugins::get_loaded(const char *filename)
@@ -84,48 +85,56 @@ bool StarDictPlugins::get_loaded(const char *filename)
 	return found;
 }
 
-void StarDictPlugins::get_plugin_list(std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list)
+class PluginInfoLoader {
+public:
+	PluginInfoLoader(StarDictPlugins& plugins_, std::list<StarDictPluginInfo> &virtualdict_pluginlist_, std::list<StarDictPluginInfo> &tts_pluginlist_, std::list<StarDictPluginInfo> &misc_pluginlist_): plugins(plugins_), virtualdict_pluginlist(virtualdict_pluginlist_), tts_pluginlist(tts_pluginlist_), misc_pluginlist(misc_pluginlist_) {}
+	void operator()(const std::string& url, bool disable) {
+		if (!disable) {
+			StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
+			std::string info_xml;
+			bool can_configure;
+			plugins.get_plugin_info(url.c_str(), plugin_type, info_xml, can_configure);
+			if (plugin_type != StarDictPlugInType_UNKNOWN && (!info_xml.empty())) {
+				StarDictPluginInfo plugin_info;
+				plugin_info.filename = url;
+				plugin_info.plugin_type = plugin_type;
+				plugin_info.info_xml = info_xml;
+				plugin_info.can_configure = can_configure;
+				switch (plugin_type) {
+					case StarDictPlugInType_VIRTUALDICT:
+						virtualdict_pluginlist.push_back(plugin_info);
+						break;
+					case StarDictPlugInType_TTS:
+						tts_pluginlist.push_back(plugin_info);
+						break;
+					case StarDictPlugInType_MISC:
+						misc_pluginlist.push_back(plugin_info);
+						break;
+					default:
+						break;
+				}
+			}
+		}
+	}
+private:
+	StarDictPlugins& plugins;
+	std::list<StarDictPluginInfo> &virtualdict_pluginlist;
+	std::list<StarDictPluginInfo> &tts_pluginlist;
+	std::list<StarDictPluginInfo> &misc_pluginlist;
+};
+
+void StarDictPlugins::get_plugin_list(const std::list<std::string>& order_list, std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list)
 {
 	plugin_list.clear();
 	std::list<StarDictPluginInfo> virtualdict_pluginlist;
 	std::list<StarDictPluginInfo> tts_pluginlist;
 	std::list<StarDictPluginInfo> misc_pluginlist;
-	GDir *dir = g_dir_open(plugindirpath.c_str(), 0, NULL);
-	if (dir) {
-		const gchar *filename;
-		while ((filename = g_dir_read_name(dir))!=NULL) {
-			if (g_str_has_suffix(filename, "."G_MODULE_SUFFIX)) {
-				std::string fullfilename = plugindirpath;
-				fullfilename += G_DIR_SEPARATOR;
-				fullfilename += filename;
-				StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
-				std::string info_xml;
-				bool can_configure;
-				get_plugin_info(fullfilename.c_str(), plugin_type, info_xml, can_configure);
-				if (plugin_type != StarDictPlugInType_UNKNOWN && (!info_xml.empty())) {
-					StarDictPluginInfo plugin_info;
-					plugin_info.filename = fullfilename;
-					plugin_info.plugin_type = plugin_type;
-					plugin_info.info_xml = info_xml;
-					plugin_info.can_configure = can_configure;
-					switch (plugin_type) {
-						case StarDictPlugInType_VIRTUALDICT:
-							virtualdict_pluginlist.push_back(plugin_info);
-							break;
-						case StarDictPlugInType_TTS:
-							tts_pluginlist.push_back(plugin_info);
-							break;
-						case StarDictPlugInType_MISC:
-							misc_pluginlist.push_back(plugin_info);
-							break;
-						default:
-							break;
-					}
-				}
-			}
-		}
-		g_dir_close(dir);
-	}
+
+	std::list<std::string> plugins_dirs;
+	plugins_dirs.push_back(plugindirpath);
+	std::list<std::string> disable_list;
+	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginInfoLoader(*this, virtualdict_pluginlist, tts_pluginlist, misc_pluginlist));
+
 	if (!virtualdict_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_VIRTUALDICT, virtualdict_pluginlist));
 	}
@@ -551,4 +560,70 @@ StarDictMiscPlugin::StarDictMiscPlugin(StarDictPluginBaseObject *baseobj_):
 
 StarDictMiscPlugin::~StarDictMiscPlugin()
 {
+}
+
+void StarDictVirtualDictPlugins::reorder(const std::list<std::string>& order_list)
+{
+	std::vector<StarDictVirtualDictPlugin *> prev(oPlugins);
+	oPlugins.clear();
+	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
+		for (std::vector<StarDictVirtualDictPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
+			if (*i == (*j)->get_filename()) {
+				oPlugins.push_back(*j);
+			}
+		}
+	}
+	for (std::vector<StarDictVirtualDictPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
+		std::vector<StarDictVirtualDictPlugin *>::iterator j;
+		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
+			if (*j == *i)
+				break;
+		}
+		if (j == oPlugins.end())
+			delete *i;
+	}
+}
+
+void StarDictTtsPlugins::reorder(const std::list<std::string>& order_list)
+{
+	std::vector<StarDictTtsPlugin *> prev(oPlugins);
+	oPlugins.clear();
+	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
+		for (std::vector<StarDictTtsPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
+			if (*i == (*j)->get_filename()) {
+				oPlugins.push_back(*j);
+			}
+		}
+	}
+	for (std::vector<StarDictTtsPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
+		std::vector<StarDictTtsPlugin *>::iterator j;
+		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
+			if (*j == *i)
+				break;
+		}
+		if (j == oPlugins.end())
+			delete *i;
+	}
+}
+
+void StarDictMiscPlugins::reorder(const std::list<std::string>& order_list)
+{
+	std::vector<StarDictMiscPlugin *> prev(oPlugins);
+	oPlugins.clear();
+	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
+		for (std::vector<StarDictMiscPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
+			if (*i == (*j)->get_filename()) {
+				oPlugins.push_back(*j);
+			}
+		}
+	}
+	for (std::vector<StarDictMiscPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
+		std::vector<StarDictMiscPlugin *>::iterator j;
+		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
+			if (*j == *i)
+				break;
+		}
+		if (j == oPlugins.end())
+			delete *i;
+	}
 }
