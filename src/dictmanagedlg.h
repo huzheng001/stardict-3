@@ -7,15 +7,15 @@ class DictManageDlg;
 
 class NetworkAddDlg {
 private:
-    DictManageDlg *dictdlg;
+	DictManageDlg *dictdlg;
 	GtkTreeStore *model;
-    GtkWidget *treeview;
+	GtkWidget *treeview;
 	static void on_network_adddlg_add_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
 	static void on_network_adddlg_info_button_clicked(GtkWidget *widget, NetworkAddDlg *oNetworkAddDlg);
-    static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg);
-    static void on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg);
+	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, NetworkAddDlg *oNetworkAddDlg);
+	static void on_row_expanded(GtkTreeView *treeview, GtkTreeIter *arg1, GtkTreePath *arg2, NetworkAddDlg *oNetworkAddDlg);
 public:
-    GtkWidget *window;
+	GtkWidget *window;
 	NetworkAddDlg(DictManageDlg *dlg);
 	void Show(GtkWindow *parent_win);
 	void network_getdirinfo(const char *xml);
@@ -45,9 +45,10 @@ private:
 	int max_dict_count;
 	int user_level;
 	bool dictmask_changed;
+	bool dictmanage_list_changed;
 	bool dictmanage_config_changed;
 
-	static GtkTreeModel* create_dict_tree_model(int istreedict);
+	static GtkTreeModel* create_tree_model(int istreedict);
 	GtkWidget *create_dict_tree(int istreedict);
 	static GtkTreeModel* create_dictmanage_tree_model();
 	GtkWidget *create_dictmanage_tree();
@@ -56,8 +57,9 @@ private:
 	GtkWidget *create_dictmanage_buttons();
 	GtkWidget *create_network_buttons();
 
-	void write_order_list(bool istreedict);
+	void write_treedict_order_list();
 	void ChangeDictMask();
+	void SaveDictManageList();
 	void SaveDictManageConfig();
 	void show_dict_info();
 
@@ -92,7 +94,6 @@ private:
 	static void on_dictmanage_move_up_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_dictmanage_move_down_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
 	static void on_group_name_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, DictManageDlg *oDictManageDlg);
-	static void on_dict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 	static void on_dictmanage_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 	static void on_treedict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 

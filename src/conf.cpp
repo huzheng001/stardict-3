@@ -121,8 +121,6 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>());
 	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>());
 	add_entry("/apps/stardict/manage_dictionaries/dict_order_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/dict_disable_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/dict_order_xml", std::string());
 	add_entry("/apps/stardict/manage_dictionaries/dict_config_xml", std::string());
 
 	add_entry("/apps/stardict/manage_plugins/plugin_order_list", std::list<std::string>());

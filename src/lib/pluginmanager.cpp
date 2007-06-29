@@ -388,6 +388,22 @@ const char *StarDictVirtualDictPlugins::dict_name(size_t iPlugin)
 	return oPlugins[iPlugin]->dict_name();
 }
 
+const char *StarDictVirtualDictPlugins::dict_id(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->get_filename();
+}
+
+bool StarDictVirtualDictPlugins::find_dict_by_id(const char *id, size_t &iPlugin)
+{
+	for (std::vector<StarDictVirtualDictPlugin *>::size_type i = 0; i < oPlugins.size(); i++) {
+		if (strcmp(oPlugins[i]->get_filename(), id)==0) {
+			iPlugin = i;
+			return true;
+		}
+	}
+	return false;
+}
+
 void StarDictVirtualDictPlugins::SetDictMask(std::vector<InstantDictIndex> &dictmask)
 {
 	InstantDictIndex instance_dict_index;
