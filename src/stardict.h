@@ -33,6 +33,7 @@ class AppCore;
 #include "selection.h"
 #include "readword.h"
 #include "iskeyspressed.hpp"
+#include "dictmanage.h"
 
 extern AppCore *gpAppFrame;
 
@@ -104,7 +105,9 @@ public:
 	BonoboObject *stardict_app_server;
 #endif
 
-	std::vector<InstantDictIndex> dictmask;
+	DictManageInfo dictinfo;
+	std::vector<InstantDictIndex> query_dictmask;
+	std::vector<InstantDictIndex> scan_dictmask;
 	guint word_change_timeout;
 
 	AppCore();
@@ -114,9 +117,9 @@ public:
 	void Create(gchar *queryword);
 	void End();
 	void Query(const gchar *word);
-	void BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
-	void BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
-	void FreeResultData(gchar ***pppWord, gchar ****ppppWordData);
+	void BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
+	void BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
+	void FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***pppWord, gchar ****ppppWordData);
 	bool SimpleLookupToFloat(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
 	bool SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);

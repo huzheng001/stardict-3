@@ -176,14 +176,20 @@ class LeftWin {
 public:
 	GtkWidget *vbox;
 	LeftWin();
+	~LeftWin();
 	void Create(GtkWidget *hbox, bool has_treedict);
+	void UpdateChooseGroup();
 private:
+	GtkWidget *choosegroup_button;
+	GtkWidget *choosegroup_menu;
 	static void on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_translate_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void PreviousCallback(GtkWidget *widget, LeftWin *oLeftWin);
 	static void NextCallback(GtkWidget *widget, LeftWin *oLeftWin);
+	static void on_choose_group_button_clicked(GtkWidget *widget, LeftWin *oLeftWin);
+	static void on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin);
 };
 
 class ToolWin {

@@ -214,10 +214,9 @@ public:
 	int get_dict_level(const char *uid);
 #endif
 #ifdef SD_CLIENT_CODE
-	void SetClientDictMask(std::vector<InstantDictIndex> &dictmask);
-	void load(const strlist_t& dicts_dirs, const strlist_t& order_list, const strlist_t& disable_list);
-	void reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
-		    const strlist_t& disable_list, int is_coll_enb, int collf);
+	bool find_lib_by_filename(const char *filename, size_t &iLib);
+	void load(std::list<std::string> &load_list);
+	void reload(std::list<std::string> &load_list, int is_coll_enb, int collf);
 #endif
 
 	glong narticles(size_t idict) { return oLib[idict]->narticles(); }

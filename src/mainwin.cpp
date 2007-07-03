@@ -325,8 +325,8 @@ void TopWin::do_prev()
 			gchar *word;
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
 			CurrentIndex *iPreIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->dictmask.size());
-			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->dictmask, 0);
+				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->query_dictmask.size());
+			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->query_dictmask, 0);
 			if (preword) {
 				SetText(preword);
 				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
@@ -391,8 +391,8 @@ void TopWin::do_next()
 			// user have selected the last row.
 			gtk_tree_model_get(model, &new_iter, 0, &word, -1);
 			CurrentIndex *iNextIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->dictmask.size());
-			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->dictmask, 0);
+				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->query_dictmask.size());
+			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->query_dictmask, 0);
 			if (nextword) {
 				SetText(nextword);				
 				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
@@ -836,13 +836,13 @@ void ListWin::SetTreeModel(std::vector<gchar *> *reslist)
 	GtkTreeIter parent;
 	GtkTreeIter iter;
 	const char *bookname = "";
-	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
+	for (size_t i=0; i<gpAppFrame->query_dictmask.size(); i++) {
 		if (!reslist[i].empty()) {
 			gtk_tree_store_append(tree_model, &parent, NULL);
-			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
-				bookname = gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str();
-			else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
-				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index);
+			if (gpAppFrame->query_dictmask[i].type == InstantDictType_LOCAL)
+				bookname = gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str();
+			else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL)
+				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index);
 			gtk_tree_store_set(tree_model, &parent, 0, bookname, -1);
 			for (std::vector<gchar *>::iterator p=reslist[i].begin();
 			     p != reslist[i].end(); ++p) {
@@ -933,11 +933,9 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 bool TreeWin::Create(GtkWidget *notebook)
 {
   GtkTreeStore *model =
-		gpAppFrame->oTreeDicts.Load(
-																conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list"),
-																conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list"),
-																conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list")
-																);
+		gpAppFrame->oTreeDicts.Load(conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list"),
+					conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list"),
+					conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list"));
 	if (!model)
 		return false;
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
@@ -1096,6 +1094,12 @@ LeftWin::LeftWin()
 {
 }
 
+LeftWin::~LeftWin()
+{
+	if (choosegroup_menu)
+		gtk_widget_destroy(choosegroup_menu);
+}
+
 void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 {
 	vbox = gtk_vbox_new(FALSE, 3);
@@ -1145,6 +1149,17 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 		gtk_tooltips_set_tip(gpAppFrame->tooltips,appendix_button,_("Tree"),NULL);
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 	}
+
+	choosegroup_button=gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(choosegroup_button),gtk_image_new_from_stock(GTK_STOCK_CONVERT,GTK_ICON_SIZE_BUTTON));
+	gtk_widget_show_all(choosegroup_button);
+	gtk_button_set_relief (GTK_BUTTON (choosegroup_button), GTK_RELIEF_NONE);
+	GTK_WIDGET_UNSET_FLAGS (choosegroup_button, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(choosegroup_button),"clicked", G_CALLBACK(on_choose_group_button_clicked),this);
+	gtk_box_pack_start(GTK_BOX(vbox),choosegroup_button,false,false,0);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips, choosegroup_button, _("Choose dict group"),NULL);
+	choosegroup_menu = NULL;
+	UpdateChooseGroup();
 
 	GtkWidget *button;
 	button=gtk_button_new();
@@ -1209,6 +1224,56 @@ void LeftWin::NextCallback(GtkWidget *widget, LeftWin *oLeftWin)
 {
 	play_sound_on_event("buttonactive");
 	gpAppFrame->oTopWin.do_next();
+}
+
+void LeftWin::UpdateChooseGroup()
+{
+	std::list<std::string> group_list;
+	for (std::list<DictManageGroup>::iterator i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
+		group_list.push_back(i->name);
+	}
+	if (group_list.size() > 1) {
+		gtk_widget_show(choosegroup_button);
+		if (choosegroup_menu)
+			gtk_widget_destroy(choosegroup_menu);
+		choosegroup_menu = gtk_menu_new();
+		GtkWidget *menuitem;
+		GSList *group = NULL;
+		for (std::list<std::string>::iterator i = group_list.begin(); i != group_list.end(); ++i) {
+			menuitem = gtk_radio_menu_item_new_with_label(group, i->c_str());
+			g_object_set_data_full(G_OBJECT(menuitem), "stardict_dict_group", g_strdup(i->c_str()), g_free);
+			g_signal_connect(G_OBJECT(menuitem), "toggled", G_CALLBACK(on_choose_group_menuitem_toggled), this);
+			gtk_menu_shell_append(GTK_MENU_SHELL(choosegroup_menu), menuitem);
+			group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menuitem));
+			if (*i == gpAppFrame->dictinfo.active_group) {
+				gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem), TRUE);
+			}
+		}
+		gtk_widget_show_all(choosegroup_menu);
+	} else {
+		gtk_widget_hide(choosegroup_button);
+	}
+}
+
+void LeftWin::on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin)
+{
+	if (gtk_check_menu_item_get_active(menuitem)) {
+		const char *group = (const char *)g_object_get_data(G_OBJECT(menuitem), "stardict_dict_group");
+		gpAppFrame->dictinfo.active_group = group;
+		UpdateDictMask();
+
+		const gchar *sWord = gpAppFrame->oTopWin.get_text();
+		if (sWord && sWord[0])
+			gpAppFrame->TopWinWordChange(sWord);
+	}
+}
+
+void LeftWin::on_choose_group_button_clicked(GtkWidget *widget, LeftWin *oLeftWin)
+{
+	if (oLeftWin->choosegroup_menu) {
+		play_sound_on_event("menushow");
+		gtk_menu_popup(GTK_MENU(oLeftWin->choosegroup_menu), NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time());
+	}
 }
 
 /**************************************************/
@@ -1658,13 +1723,13 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->goto_begin();
 
 	int j,k;
-	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
+	for (size_t i=0; i<gpAppFrame->query_dictmask.size(); i++) {
 		if (Word[i]) {
-			view->SetDictIndex(gpAppFrame->dictmask[i]);
-			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
-				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
-			else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
-				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index));
+			view->SetDictIndex(gpAppFrame->query_dictmask[i]);
+			if (gpAppFrame->query_dictmask[i].type == InstantDictType_LOCAL)
+				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str());
+			else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL)
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
 			j=0;
 			do {
 				view->AppendWord(Word[i][j]);
@@ -2384,7 +2449,6 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
 	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
 	gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
-g_print("%s\n%s\n", host.c_str(), file.c_str());
 	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str(), engine_index);
 }
 

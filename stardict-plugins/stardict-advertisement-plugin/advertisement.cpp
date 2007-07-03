@@ -238,7 +238,6 @@ void stardict_plugin_exit(void)
 bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->is_instant = true;
 	obj->dict_name = _("Advertisement");
 	datapath = plugin_info->datadir;
 	datapath += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement";

@@ -214,14 +214,14 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 	mark += "</span></b>";
 	view->append_pango_text(mark.c_str());
 	int j,k;
-	for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
+	for (size_t i=0; i<gpAppFrame->scan_dictmask.size(); i++) {
 		if (Word[i]) {
 			view->AppendNewline();
-			view->SetDictIndex(gpAppFrame->dictmask[i]);
-			if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
-				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
+			view->SetDictIndex(gpAppFrame->scan_dictmask[i]);
+			if (gpAppFrame->scan_dictmask[i].type == InstantDictType_LOCAL)
+				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->scan_dictmask[i].index).c_str());
 			else
-				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index));
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
 			j=0;
 			do {
 				if (j==0) {
@@ -254,7 +254,7 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 		else
 			PronounceWord = sOriginWord;
 	} else {
-		for (size_t i=0;i< gpAppFrame->dictmask.size(); i++) {
+		for (size_t i=0;i< gpAppFrame->scan_dictmask.size(); i++) {
 			if (Word[i] && strcmp(Word[i][0], sOriginWord)) {
 				readwordtype = gpAppFrame->oReadWord.canRead(Word[i][0]);
 				if (readwordtype != READWORD_CANNOT) {
@@ -390,14 +390,14 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
     g_free(m_str);
     mark += "</span></b>";
     view->append_pango_text(mark.c_str());
-    for (size_t i=0; i<gpAppFrame->dictmask.size(); i++) {
+    for (size_t i=0; i<gpAppFrame->scan_dictmask.size(); i++) {
 	if (ppppWord[j][i]) {
 		view->AppendNewline();
-		view->SetDictIndex(gpAppFrame->dictmask[i]);
-		if (gpAppFrame->dictmask[i].type == InstantDictType_LOCAL)
-			view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->dictmask[i].index).c_str());
-		else if (gpAppFrame->dictmask[i].type == InstantDictType_VIRTUAL)
-			view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->dictmask[i].index));
+		view->SetDictIndex(gpAppFrame->scan_dictmask[i]);
+		if (gpAppFrame->scan_dictmask[i].type == InstantDictType_LOCAL)
+			view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->scan_dictmask[i].index).c_str());
+		else if (gpAppFrame->scan_dictmask[i].type == InstantDictType_VIRTUAL)
+			view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
 		m=0;
 		do {
 			if (m==0) {

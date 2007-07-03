@@ -77,6 +77,7 @@ stardict_SOURCES = 			                \
 	gtk_iskeyspressed.cpp gtk_iskeyspressed.hpp \
 	progresswin.cpp progresswin.hpp \
 	tray.cpp tray.hpp \
+	dictmanage.cpp dictmanage.h	\
 	desktop.cpp desktop.hpp
 
 if GNOME_SUPPORT

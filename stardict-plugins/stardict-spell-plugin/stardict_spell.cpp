@@ -384,7 +384,6 @@ void stardict_plugin_exit(void)
 bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->is_instant = true;
 	obj->dict_name = _("Spell Suggestion");
 	broker = enchant_broker_init();
 	layout = pango_layout_new(gtk_widget_get_pango_context(plugin_info->mainwin));

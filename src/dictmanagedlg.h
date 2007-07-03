@@ -44,7 +44,7 @@ private:
 	NetworkAddDlg *network_add_dlg;
 	int max_dict_count;
 	int user_level;
-	bool dictmask_changed;
+	bool network_dictmask_changed;
 	bool dictmanage_list_changed;
 	bool dictmanage_config_changed;
 
@@ -58,7 +58,7 @@ private:
 	GtkWidget *create_network_buttons();
 
 	void write_treedict_order_list();
-	void ChangeDictMask();
+	void ChangeNetworkDictMask();
 	void SaveDictManageList();
 	void SaveDictManageConfig();
 	void show_dict_info();
@@ -105,7 +105,7 @@ public:
 	GtkWidget *window;
 
 	DictManageDlg(GtkWindow *parent_win, GdkPixbuf *dicts_icon, GdkPixbuf *tree_dicts_icon);
-	bool Show();
+	bool Show(bool &dictmanage_config_changed_);
 	void Close();
 	void network_getdictmask(const char *xml);
 	void network_dirinfo(const char *xml);

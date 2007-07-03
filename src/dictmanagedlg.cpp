@@ -17,6 +17,7 @@
 #include "lib/common.hpp"
 #include "utils.h"
 #include "lib/file.hpp"
+#include "dictmanage.h"
 
 #include "dictmanagedlg.h"
 
@@ -67,7 +68,7 @@ void NetworkAddDlg::on_network_adddlg_add_button_clicked(GtkWidget *widget, Netw
                         gtk_list_store_append(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2);
                         gtk_list_store_set(GTK_LIST_STORE(oNetworkAddDlg->dictdlg->network_tree_model), &iter2, 0, uid, 1, bookname, 2, wordcount, -1);
                         g_free(bookname);
-                        oNetworkAddDlg->dictdlg->dictmask_changed = true;
+                        oNetworkAddDlg->dictdlg->network_dictmask_changed = true;
                     }
                 } else {
                     msg = g_strdup_printf(_("You can only choose %d dictionaries."), oNetworkAddDlg->dictdlg->max_dict_count);
@@ -430,81 +431,31 @@ void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManag
     }
 }
 
-struct config_ParseUserData {
-	GtkTreeStore *model;
-	GtkTreeIter group_iter;
-	GtkTreeIter type_iter;
-	GtkTreeIter dict_iter;
-};
-
-static void config_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
+static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter, std::list<DictManageItem> &dictitem, bool is_query)
 {
-	config_ParseUserData *Data = (config_ParseUserData *)user_data;
-	if (strcmp(element_name, "dictgroup")==0) {
-		const char *name = NULL;
-		size_t i = 0;
-		while (attribute_names[i]) {
-			if (strcmp(attribute_names[i], "name")==0) {
-				name = attribute_values[i];
-				break;
-			}
-			i++;
-		}
-		if (name) {
-			gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", name);
-			gtk_tree_store_append(Data->model, &(Data->group_iter), NULL);
-			gtk_tree_store_set(Data->model, &(Data->group_iter), 1, markup, 3, name, 9, false, 10, 0, 11, TRUE, -1);
-			g_free(markup);
-		}
-	} else if (strcmp(element_name, "querydict")==0) {
-		gtk_tree_store_append(Data->model, &(Data->type_iter), &(Data->group_iter));
-		gtk_tree_store_set(Data->model, &(Data->type_iter), 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict",  9, false, 10, 1, 11, FALSE, -1);
-	} else if (strcmp(element_name, "scandict")==0) {
-		gtk_tree_store_append(Data->model, &(Data->type_iter), &(Data->group_iter));
-		gtk_tree_store_set(Data->model, &(Data->type_iter), 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
-	} else if (strcmp(element_name, "localdict")==0) {
-		bool enable = true;
-		const gchar *file = NULL;
-		size_t i = 0;
-		while (attribute_names[i]) {
-			if (strcmp(attribute_names[i], "enable")==0) {
-				if (strcmp(attribute_values[i], "false")==0) {
-					enable = false;
-				}
-			} else if (strcmp(attribute_names[i], "file")==0) {
-				file = attribute_values[i];
-			}
-			i++;
-		}
-		if (file) {
+	GtkTreeIter type_iter;
+	gtk_tree_store_append(model, &type_iter, group_iter);
+	if (is_query) {
+		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict",  9, false, 10, 1, 11, FALSE, -1);
+	} else {
+		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
+	}
+	GtkTreeIter dict_iter;
+	for (std::list<DictManageItem>::iterator i = dictitem.begin(); i != dictitem.end(); ++i) {
+		if (i->type == LOCAL_DICT) {
 			DictInfo dictinfo;
-			if (dictinfo.load_from_ifo_file(file, false)) {
+			if (dictinfo.load_from_ifo_file(i->file_or_id.c_str(), false)) {
 				gchar *markup = g_markup_escape_text(dictinfo.bookname.c_str(), dictinfo.bookname.length());
-				gtk_tree_store_append(Data->model, &(Data->dict_iter), &(Data->type_iter));
-				gtk_tree_store_set(Data->model, &(Data->dict_iter), 0, enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, file, 9, true, 10, 2, 11, FALSE, 12, TRUE, -1);
+				gtk_tree_store_append(model, &dict_iter, &type_iter);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, TRUE, -1);
 				g_free(markup);
 			}
-		}
-	} else if (strcmp(element_name, "virtualdict")==0) {
-		bool enable = true;
-		const gchar *id = NULL;
-		size_t i = 0;
-		while (attribute_names[i]) {
-			if (strcmp(attribute_names[i], "enable")==0) {
-				if (strcmp(attribute_values[i], "false")==0) {
-					enable = false;
-				}
-			} else if (strcmp(attribute_names[i], "id")==0) {
-				id = attribute_values[i];
-			}
-			i++;
-		}
-		if (id) {
+		} else {
 			size_t iPlugin;
-			if (gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(id, iPlugin)) {
+			if (gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
 				const char *dictname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(iPlugin);
-				gtk_tree_store_append(Data->model, &(Data->dict_iter), &(Data->type_iter));
-				gtk_tree_store_set(Data->model, &(Data->dict_iter), 0, enable, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, id, 9, true, 10, 2, 11, FALSE, 12, FALSE, -1);
+				gtk_tree_store_append(model, &dict_iter, &type_iter);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, FALSE, -1);
 			}
 		}
 	}
@@ -513,29 +464,16 @@ static void config_parse_start_element(GMarkupParseContext *context, const gchar
 GtkTreeModel* DictManageDlg::create_dictmanage_tree_model()
 {
 	GtkTreeStore *model = gtk_tree_store_new(13, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
-	const char *xmlstr;
-	const std::string &configxml = conf->get_string("/apps/stardict/manage_dictionaries/dict_config_xml");
-	std::string defaultxml;
-	if (configxml.empty()) {
-		defaultxml = "<dictgroup name=\"";
-		defaultxml += _("Default Group");
-		defaultxml += "\"><querydict></querydict><scandict></scandict></dictgroup>";
-		xmlstr = defaultxml.c_str();
-	} else {
-		xmlstr = configxml.c_str();
+	GtkTreeIter group_iter;
+	gchar *markup;
+	for (std::list<DictManageGroup>::iterator i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
+		markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", i->name.c_str());
+		gtk_tree_store_append(model, &group_iter, NULL);
+		gtk_tree_store_set(model, &group_iter, 1, markup, 3, i->name.c_str(), 9, false, 10, 0, 11, TRUE, -1);
+		g_free(markup);
+		create_dict_item_model(model, &group_iter, i->querydict, true);
+		create_dict_item_model(model, &group_iter, i->scandict, false);
 	}
-	config_ParseUserData Data;
-	Data.model = model;
-	GMarkupParser parser;
-	parser.start_element = config_parse_start_element;
-	parser.end_element = NULL;
-	parser.text = NULL;
-	parser.passthrough = NULL;
-	parser.error = NULL;
-	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-	g_markup_parse_context_parse(context, xmlstr, -1, NULL);
-	g_markup_parse_context_end_parse(context, NULL);
-	g_markup_parse_context_free(context);
 	return GTK_TREE_MODEL(model);
 }
 
@@ -721,7 +659,7 @@ void DictManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx
 			if (model == oDictManageDlg->dict_tree_model)
 				oDictManageDlg->dictmanage_list_changed = true;
 			else if (model == oDictManageDlg->network_tree_model)
-				oDictManageDlg->dictmask_changed = true;
+				oDictManageDlg->network_dictmask_changed = true;
 			else
 				oDictManageDlg->write_treedict_order_list();
 			gtk_drag_finish (ctx, TRUE, FALSE, t);
@@ -985,7 +923,7 @@ void DictManageDlg::write_treedict_order_list()
 	conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_order_list", order_list);
 }
 
-void DictManageDlg::ChangeDictMask()
+void DictManageDlg::ChangeNetworkDictMask()
 {
     GtkTreeIter iter;
     std::string dictmask;
@@ -1080,6 +1018,7 @@ void DictManageDlg::SaveDictManageConfig()
 		have_next = gtk_tree_model_iter_next(dictmanage_tree_model, &iter);
 	}
 	conf->set_string("/apps/stardict/manage_dictionaries/dict_config_xml", configxml);
+	DictConfigXmlToInfo(configxml.c_str(), gpAppFrame->dictinfo);
 }
 
 void DictManageDlg::SaveDictManageList()
@@ -1200,7 +1139,7 @@ void DictManageDlg::on_move_up_button_clicked(GtkWidget *widget, DictManageDlg *
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
 			if (istreedict == 2)
-				oDictManageDlg->dictmask_changed = true;
+				oDictManageDlg->network_dictmask_changed = true;
 			else if (istreedict == 0)
 				oDictManageDlg->dictmanage_list_changed = true;
 			else
@@ -1240,7 +1179,7 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 			gtk_tree_selection_select_path(selection, path);
 			gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW (now_treeview), path, NULL, false, 0, 0);
 			if (istreedict == 2)
-				oDictManageDlg->dictmask_changed = true;
+				oDictManageDlg->network_dictmask_changed = true;
 			else if (istreedict == 0)
 				oDictManageDlg->dictmanage_list_changed = true;
 			else
@@ -1277,12 +1216,14 @@ void DictManageDlg::show_add_group_dialog(GtkTreeIter *sibling)
 		GtkTreeIter group_iter;
 		GtkTreeStore *model = GTK_TREE_STORE(dictmanage_tree_model);
 		gtk_tree_store_insert_after(model, &group_iter, NULL, sibling);
-		gtk_tree_store_set(model, &group_iter, 1, name, 9, false, 10, 0, 11, TRUE, -1);
+		gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", name);
+		gtk_tree_store_set(model, &group_iter, 1, markup, 3, name, 9, false, 10, 0, 11, TRUE, -1);
+		g_free(markup);
 		GtkTreeIter type_iter;
 		gtk_tree_store_append(model, &type_iter, &group_iter);
-		gtk_tree_store_set(model, &type_iter, 1, _("Query Dict"), 3, "querydict", 9, false, 10, 1, 11, FALSE, -1);
+		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict", 9, false, 10, 1, 11, FALSE, -1);
 		gtk_tree_store_append(model, &type_iter, &group_iter);
-		gtk_tree_store_set(model, &type_iter, 1, _("Scan Dict"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
+		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
 		dictmanage_config_changed = true;
 	}
 	gtk_widget_destroy(dialog);
@@ -1418,11 +1359,12 @@ void DictManageDlg::on_dictmanage_delete_button_clicked(GtkWidget *widget, DictM
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
 		gint type;
-		gtk_tree_model_get (oDictManageDlg->dictmanage_tree_model, &iter, 10, &type, -1);
+		gtk_tree_model_get (model, &iter, 10, &type, -1);
 		if (type == 0) {
-			oDictManageDlg->show_delete_group_dialog(&iter);
+			if (gtk_tree_model_iter_n_children(model, NULL) > 1)
+				oDictManageDlg->show_delete_group_dialog(&iter);
 		} else if (type == 2) {
-			gtk_tree_store_remove(GTK_TREE_STORE(oDictManageDlg->dictmanage_tree_model), &iter);
+			gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 			oDictManageDlg->dictmanage_config_changed = true;
 		}
 	}
@@ -1466,7 +1408,7 @@ void DictManageDlg::on_network_remove_button_clicked(GtkWidget *widget, DictMana
 	GtkTreeIter iter;
 	if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
         gtk_list_store_remove(GTK_LIST_STORE(oDictManageDlg->network_tree_model), &iter);
-        oDictManageDlg->dictmask_changed = true;
+        oDictManageDlg->network_dictmask_changed = true;
     }
 }
 
@@ -1497,11 +1439,12 @@ void DictManageDlg::on_popup_menu_select_all_activate(GtkMenuItem *menuitem, Dic
 		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, TRUE, -1);
 		have_iter = gtk_tree_model_iter_next(model, &iter);
 	}
-	std::list<std::string> disable_list;
-	if (istreedict)
+	if (istreedict) {
+		std::list<std::string> disable_list;
 		conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
-	else
-		conf->set_strlist("/apps/stardict/manage_dictionaries/dict_disable_list", disable_list);
+	} else {
+		oDictManageDlg->dictmanage_config_changed = true;
+	}
 }
 
 void DictManageDlg::on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg)
@@ -1527,14 +1470,16 @@ void DictManageDlg::on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, D
 	while (have_iter) {
 		gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, FALSE, -1);
 		gtk_tree_model_get (model, &iter, 8, &filename, -1);
-		disable_list.push_back(filename);
+		if (istreedict)
+			disable_list.push_back(filename);
 		g_free(filename);
 		have_iter = gtk_tree_model_iter_next(model, &iter);
 	}
-	if (istreedict)
+	if (istreedict) {
 		conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
-	else
-		conf->set_strlist("/apps/stardict/manage_dictionaries/dict_disable_list", disable_list);
+	} else {
+		oDictManageDlg->dictmanage_config_changed = true;
+	}
 }
 
 GtkWidget *DictManageDlg::create_buttons()
@@ -1661,7 +1606,7 @@ void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg
     show_url("http://www.stardict.org/finance.php");
 }
 
-bool DictManageDlg::Show()
+bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 {
 	if (!window) {	
 		window = gtk_dialog_new();
@@ -1827,14 +1772,14 @@ bool DictManageDlg::Show()
 		STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
 		gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
 	}
-	dictmask_changed = false;
+	network_dictmask_changed = false;
 	dictmanage_list_changed = false;
 	dictmanage_config_changed = false;
 	gint result;
 	while ((result = gtk_dialog_run(GTK_DIALOG(window)))==GTK_RESPONSE_HELP)
 		;
-	if (dictmask_changed) {
-		ChangeDictMask();
+	if (network_dictmask_changed) {
+		ChangeNetworkDictMask();
 	}
 	if (dictmanage_list_changed) {
 		SaveDictManageList();
@@ -1842,6 +1787,7 @@ bool DictManageDlg::Show()
 	if (dictmanage_config_changed) {
 		SaveDictManageConfig();
 	}
+	dictmanage_config_changed_ = dictmanage_config_changed;
 	if (result == GTK_RESPONSE_NONE) {
 		// Caused by gtk_widget_destroy(), quiting.
 		return true;
@@ -1958,7 +1904,7 @@ static void dictinfo_parse_start_element(GMarkupParseContext *context, const gch
 
 static void on_download_clicked(GtkWidget *widget, gpointer data)
 {
-	show_url((const gchar*)g_object_get_data(G_OBJECT(widget), "download"));
+	show_url((const gchar*)g_object_get_data(G_OBJECT(widget), "stardict_download"));
 }
 
 static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error)
@@ -1986,7 +1932,7 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
 		GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
 		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,6);
 		GtkWidget *button = gtk_button_new_with_label("Download Now!");
-		g_object_set_data_full(G_OBJECT(button), "download", g_strdup(Data->dictinfo_download.c_str()), g_free);
+		g_object_set_data_full(G_OBJECT(button), "stardict_download", g_strdup(Data->dictinfo_download.c_str()), g_free);
 		g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_download_clicked), NULL);
 		gtk_box_pack_start(GTK_BOX(hbox),button,false,false,6);
 	}

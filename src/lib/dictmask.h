@@ -2,7 +2,7 @@
 #define _STARDICT_DICTMASK_H_
 
 enum InstantDictType {
-	InstantDictType_UNKNOWN,
+	InstantDictType_UNKNOWN = 0,
 	InstantDictType_LOCAL,
 	InstantDictType_VIRTUAL,
 };
