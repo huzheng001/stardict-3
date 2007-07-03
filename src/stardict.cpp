@@ -129,13 +129,14 @@ AppCore::AppCore() :
 	      conf->get_bool_at("dictionary/enable_collation"),
 	      conf->get_int_at("dictionary/collate_function"))
 {
+	iCurrentIndex = NULL;
 	word_change_timeout_id = 0;
 	window = NULL; //need by save_yourself_cb().
 	dict_manage_dlg = NULL;
 	plugin_manage_dlg = NULL;
 	prefs_dlg = NULL;
 #ifdef CONFIG_GNOME
-    gnome_sound_init(NULL);
+	gnome_sound_init(NULL);
 #endif
 }
 
@@ -208,35 +209,6 @@ void AppCore::do_send_http_request(const char* shost, const char* sfile, get_htt
 
 void AppCore::Create(gchar *queryword)
 {
-	oLibs.set_show_progress(&load_show_progress);
-	oLibs.load(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"),
-		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
-		   conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list")
-		);
-	oLibs.SetClientDictMask(dictmask);
-	oLibs.set_show_progress(&gtk_show_progress);
-    
-    oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
-    const std::string &user = conf->get_string_at("network/user");
-    const std::string &md5passwd = conf->get_string_at("network/md5passwd");
-    if (!user.empty() && !md5passwd.empty()) {
-        oStarDictClient.set_auth(user.c_str(), md5passwd.c_str());
-    }
-    oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
-    oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
-    oStarDictClient.on_floatwin_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_floatwin_lookup_end));
-    oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
-    oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
-    oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
-    oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
-    oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
-    oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
-    oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
-
-    HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
-    HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
-
-	iCurrentIndex=(CurrentIndex *)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
 
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
@@ -272,7 +244,34 @@ void AppCore::Create(gchar *queryword)
 #else
 	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins", conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #endif
-	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+	oLibs.set_show_progress(&load_show_progress);
+	LoadDictInfo(); // Need to run after plugins are loaded.
+	std::list<std::string> load_list;
+	GetDictList(load_list);
+	oLibs.load(load_list);
+	oLibs.set_show_progress(&gtk_show_progress);
+    
+	oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
+	const std::string &user = conf->get_string_at("network/user");
+	const std::string &md5passwd = conf->get_string_at("network/md5passwd");
+	if (!user.empty() && !md5passwd.empty()) {
+		oStarDictClient.set_auth(user.c_str(), md5passwd.c_str());
+	}
+	oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
+	oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
+	oStarDictClient.on_floatwin_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_floatwin_lookup_end));
+	oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
+	oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
+	oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
+	oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
+	oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
+	oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
+	oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
+
+	HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
+	HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
+
+	UpdateDictMask();
 
 	gtk_container_set_border_width(GTK_CONTAINER(window),2);
 	bool maximized=conf->get_bool_at("main_window/maximized");
@@ -584,9 +583,9 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 	}
 	EndPointer=SearchWord+strlen(SearchWord);
 
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
-	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * scan_dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * scan_dictmask.size());
+	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * scan_dictmask.size());
 
 	//find the word use most biggest length
 	while (EndPointer>SearchWord) {
@@ -595,14 +594,14 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 			*EndPointer--='\0';
 
 		bool bFound = false;
-		for (size_t iLib=0;iLib<dictmask.size();iLib++)
-			BuildResultData(SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
-		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-			BuildVirtualDictData(SearchWord, iLib, pppWord, ppppWordData, bFound);
+		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
+			BuildResultData(scan_dictmask, SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
+			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
-			FreeResultData(pppWord, ppppWordData);
+			FreeResultData(scan_dictmask, pppWord, ppppWordData);
 			g_free(iIndex);
 			g_free(SearchWord);
 			return true;
@@ -621,7 +620,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 				EndPointer = SearchWord-1; // so < SearchWord
 		}
 	}
-	FreeResultData(pppWord, ppppWordData);
+	FreeResultData(scan_dictmask, pppWord, ppppWordData);
 	g_free(iIndex);
 
 	// not found
@@ -652,17 +651,17 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 			P1 = g_utf8_prev_char(P1);
 	}
 
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
-	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * scan_dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * scan_dictmask.size());
+	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * scan_dictmask.size());
 
 	int SearchTimes = 2;
 	while (SearchTimes) {
 		bool bFound = false;
-		for (size_t iLib=0;iLib<dictmask.size();iLib++)
-			BuildResultData(P1, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
-		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-			BuildVirtualDictData(P1, iLib, pppWord, ppppWordData, bFound);
+		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
+			BuildResultData(scan_dictmask, P1, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
+			BuildVirtualDictData(scan_dictmask, P1, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, P1);
 			oTopWin.InsertHisList(P1);
@@ -752,7 +751,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 			}
 		}
 	}
-	FreeResultData(pppWord, ppppWordData);
+	FreeResultData(scan_dictmask, pppWord, ppppWordData);
 	g_free(iIndex);
 
 	// not found
@@ -765,7 +764,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 }
 #endif
 
-void AppCore::BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound)
+void AppCore::BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound)
 {
 	if (dictmask[iLib].type != InstantDictType_VIRTUAL)
 		return;
@@ -775,7 +774,7 @@ void AppCore::BuildVirtualDictData(const char* sWord, int iLib, gchar ***pppWord
 		bFound = true;
 }
 
-void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
+void AppCore::BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
 {
 	if (dictmask[iLib].type != InstantDictType_LOCAL)
 		return;
@@ -855,7 +854,7 @@ void AppCore::BuildResultData(const char* sWord, CurrentIndex *iIndex, const gch
 	}
 }
 
-void AppCore::FreeResultData(gchar ***pppWord, gchar ****ppppWordData)
+void AppCore::FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***pppWord, gchar ****ppppWordData)
 {
 	if (!pppWord)
 		return;
@@ -892,22 +891,22 @@ void AppCore::FreeResultData(gchar ***pppWord, gchar ****ppppWordData)
 bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, const gchar *piIndexValidStr, bool bTryMoreIfNotFound, bool bShowNotfound, bool isShowFirst)
 {
 	bool bFound = false;
-	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
-	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * query_dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * query_dictmask.size());
 	CurrentIndex *iIndex;
 	if (!piIndex)
-		iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
+		iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * query_dictmask.size());
 	else
 		iIndex = piIndex;
 
-	for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-		BuildResultData(sWord, iIndex, piIndexValidStr, iLib, pppWord, ppppWordData, bFound, 0);
+	for (size_t iLib=0; iLib<query_dictmask.size(); iLib++)
+		BuildResultData(query_dictmask, sWord, iIndex, piIndexValidStr, iLib, pppWord, ppppWordData, bFound, 0);
 	if (!bFound && !piIndexValidStr) {
-		for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-			BuildResultData(sWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
+		for (size_t iLib=0; iLib<query_dictmask.size(); iLib++)
+			BuildResultData(query_dictmask, sWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 	}
-	for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-		BuildVirtualDictData(piIndexValidStr?piIndexValidStr:sWord, iLib, pppWord, ppppWordData, bFound);
+	for (size_t iLib=0; iLib<query_dictmask.size(); iLib++)
+		BuildVirtualDictData(query_dictmask, piIndexValidStr?piIndexValidStr:sWord, iLib, pppWord, ppppWordData, bFound);
 	if (bFound) {
 		ShowDataToTextWin(pppWord, ppppWordData, sWord, isShowFirst);
 	} else {
@@ -920,14 +919,14 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 					if (bShowNotfound)
 						ShowNotFoundToTextWin(sWord,_("<Not Found!>"), TEXT_WIN_NOT_FOUND);
 				} else {
-					for (size_t iLib=0;iLib<dictmask.size();iLib++)
-						BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 0);
+					for (size_t iLib=0;iLib<query_dictmask.size();iLib++)
+						BuildResultData(query_dictmask, hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 0);
 					if (!bFound) {
-						for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-							BuildResultData(hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
+						for (size_t iLib=0; iLib<query_dictmask.size(); iLib++)
+							BuildResultData(query_dictmask, hword, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 1);
 					}
-					for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-						BuildVirtualDictData(hword, iLib, pppWord, ppppWordData, bFound);
+					for (size_t iLib=0; iLib<query_dictmask.size(); iLib++)
+						BuildVirtualDictData(query_dictmask, hword, iLib, pppWord, ppppWordData, bFound);
 					if (bFound) {
 						ShowDataToTextWin(pppWord, ppppWordData, sWord, isShowFirst);
 					} else {
@@ -949,7 +948,7 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 	if (!piIndex)
 		g_free(iIndex);
 
-	FreeResultData(pppWord, ppppWordData);
+	FreeResultData(query_dictmask, pppWord, ppppWordData);
 
 	return bFound;
 }
@@ -1005,10 +1004,10 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	gtk_widget_show_all(search_window);
 
 	//clock_t t=clock();
-	std::vector< std::vector<gchar *> > reslist(dictmask.size());
-	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, dictmask)) {
+	std::vector< std::vector<gchar *> > reslist(query_dictmask.size());
+	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, query_dictmask)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
-		for (size_t i=0; i<dictmask.size(); i++) {
+		for (size_t i=0; i<query_dictmask.size(); i++) {
 			if (!reslist[i].empty()) {
 				SimpleLookupToTextWin(reslist[i][0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 				break;
@@ -1035,7 +1034,7 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 
 	gchar *fuzzy_reslist[MAX_FUZZY_MATCH_ITEM];
 	bool Found=
-		oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FUZZY_MATCH_ITEM, dictmask);
+		oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FUZZY_MATCH_ITEM, query_dictmask);
 
 	// show
 	oMidWin.oIndexWin.oListWin.Clear();
@@ -1066,7 +1065,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 	gchar *fuzzy_reslist[MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM];
-	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM, dictmask);
+	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM, scan_dictmask);
 	if (Found) {
 		int i, count=0;
 		for (i=0; i<MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM; i++) {
@@ -1078,32 +1077,32 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 		gchar ****ppppWord = (gchar ****)g_malloc(sizeof(gchar ***) * count);
 		gchar *****pppppWordData = (gchar *****)g_malloc(sizeof(gchar ****) * count);
 		const gchar **ppOriginWord = (const gchar **)g_malloc(sizeof(gchar *) * count);
-		CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
+		CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * scan_dictmask.size());
 
 		gchar ***pppWord;
 		gchar ****ppppWordData;
 		for (i=0;i<count;i++) {
 			bool bFound = false;
-			pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
-			ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
+			pppWord = (gchar ***)g_malloc(sizeof(gchar **) * scan_dictmask.size());
+			ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * scan_dictmask.size());
 
 			ppOriginWord[i] = fuzzy_reslist[i];
-			for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-				BuildResultData(fuzzy_reslist[i], iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
-			for (size_t iLib=0; iLib<dictmask.size(); iLib++)
-				BuildVirtualDictData(fuzzy_reslist[i], iLib, pppWord, ppppWordData, bFound);
+			for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
+				BuildResultData(scan_dictmask, fuzzy_reslist[i], iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+			for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
+				BuildVirtualDictData(scan_dictmask, fuzzy_reslist[i], iLib, pppWord, ppppWordData, bFound);
 			if (bFound) {// it is certainly be true.
 				ppppWord[i]=pppWord;
 				pppppWordData[i]=ppppWordData;
 			} else {
-				FreeResultData(pppWord, ppppWordData);
+				FreeResultData(scan_dictmask, pppWord, ppppWordData);
 				ppppWord[i]=NULL;
 			}
 		}
 		oFloatWin.ShowText(ppppWord, pppppWordData, ppOriginWord, count, sWord);
 		for (i=0; i<count; i++) {
 			if (ppppWord[i])
-				FreeResultData(ppppWord[i], pppppWordData[i]);
+				FreeResultData(scan_dictmask, ppppWord[i], pppppWordData[i]);
 		}
 		g_free(ppppWord);
 		g_free(pppppWordData);
@@ -1122,8 +1121,8 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 
-	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * dictmask.size());
-	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, dictmask);
+	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * query_dictmask.size());
+	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, query_dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
 	if (iMatchCount) {
@@ -1158,14 +1157,14 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 
 	oMidWin.oIndexWin.oResultWin.Clear();
 	int bookindex = 0;
-	for (size_t i=0; i < dictmask.size(); i++) {
+	for (size_t i=0; i < query_dictmask.size(); i++) {
 		if (pppWord[i]) {
 			gchar *mark = g_strdup_printf("%d", bookindex);
 			bookindex++;
-			if (dictmask[i].type == InstantDictType_LOCAL)
-				oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(dictmask[i].index).c_str(), mark);
-			else if (dictmask[i].type == InstantDictType_VIRTUAL)
-				oMidWin.oIndexWin.oResultWin.InsertLast(oStarDictPlugins->VirtualDictPlugins.dict_name(dictmask[i].index), mark);
+			if (query_dictmask[i].type == InstantDictType_LOCAL)
+				oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(query_dictmask[i].index).c_str(), mark);
+			else if (query_dictmask[i].type == InstantDictType_VIRTUAL)
+				oMidWin.oIndexWin.oResultWin.InsertLast(oStarDictPlugins->VirtualDictPlugins.dict_name(query_dictmask[i].index), mark);
 			g_free(mark);
 		}
 	}
@@ -1175,7 +1174,7 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 		oMidWin.oTextWin.pronounceWord = sOriginWord;
 	}
 	else {
-		for (size_t i=0;i< dictmask.size(); i++) {
+		for (size_t i=0;i< query_dictmask.size(); i++) {
 			if (pppWord[i] && strcmp(pppWord[i][0], sOriginWord)) {
 				oMidWin.oTextWin.readwordtype = oReadWord.canRead(pppWord[i][0]);
 				if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT) {
@@ -1359,13 +1358,13 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 
 void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst)
 {
-	CurrentIndex *iCurrent = (CurrentIndex*)g_memdup(iIndex, sizeof(CurrentIndex)*dictmask.size());
+	CurrentIndex *iCurrent = (CurrentIndex*)g_memdup(iIndex, sizeof(CurrentIndex)*query_dictmask.size());
 
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
 
 	int iWordCount=0;
-	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent, dictmask, 0);
+	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent, query_dictmask, 0);
 	if (poCurrentWord) {
 		if (showfirst) {
 			gchar *cword = g_strdup(poCurrentWord);
@@ -1378,7 +1377,7 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 		iWordCount++;
 
 		while (iWordCount<LIST_WIN_ROW_NUM &&
-					 (poCurrentWord=oLibs.poGetNextWord(NULL,iCurrent, dictmask, 0))) {
+					 (poCurrentWord=oLibs.poGetNextWord(NULL,iCurrent, query_dictmask, 0))) {
 			oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
 			iWordCount++;
 		}
@@ -1704,18 +1703,11 @@ void AppCore::PopupPrefsDlg()
 
 void AppCore::reload_dicts()
 {
-	oLibs.reload(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"),
-		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
-		     conf->get_strlist("/apps/stardict/manage_dictionaries/dict_disable_list"),
-		     conf->get_bool_at("dictionary/enable_collation"),
-		     conf->get_int_at("dictionary/collate_function"));
-	dictmask.clear();
-	oLibs.SetClientDictMask(dictmask);
-	oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+	std::list<std::string> load_list;
+	GetDictList(load_list);
+	oLibs.reload(load_list, conf->get_bool_at("dictionary/enable_collation"), conf->get_int_at("dictionary/collate_function"));
+	UpdateDictMask();
 	
-	g_free(iCurrentIndex);
-	iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
-
 	const gchar *sWord = oTopWin.get_text();
 
 	if (sWord && sWord[0])
@@ -1726,17 +1718,18 @@ void AppCore::PopupDictManageDlg()
 {
 
 	if (!dict_manage_dlg)
-		dict_manage_dlg =
-			new DictManageDlg(GTK_WINDOW(window),
-					  get_impl(oAppSkin.index_wazard),
-					  get_impl(oAppSkin.index_appendix));
-	if (dict_manage_dlg->Show())
+		dict_manage_dlg = new DictManageDlg(GTK_WINDOW(window), get_impl(oAppSkin.index_wazard), get_impl(oAppSkin.index_appendix));
+	bool dictmanage_config_changed;
+	if (dict_manage_dlg->Show(dictmanage_config_changed))
 		return;
-	progress_win pw;
-	reload_show_progress_t rsp(pw);
-	oLibs.set_show_progress(&rsp);
-	reload_dicts();
-	oLibs.set_show_progress(&gtk_show_progress);
+	if (dictmanage_config_changed) {
+		progress_win pw;
+		reload_show_progress_t rsp(pw);
+		oLibs.set_show_progress(&rsp);
+		reload_dicts();
+		oLibs.set_show_progress(&gtk_show_progress);
+		oMidWin.oLeftWin.UpdateChooseGroup();
+	}
 }
 
 void AppCore::PopupPluginManageDlg()
@@ -1755,13 +1748,8 @@ void AppCore::PopupPluginManageDlg()
 			oMidWin.oToolWin.UpdatePronounceMenu();
 		}
 		if (dict_changed) {
-			dictmask.clear();
-			oLibs.SetClientDictMask(dictmask);
-			oStarDictPlugins->VirtualDictPlugins.SetDictMask(dictmask);
+			UpdateDictMask();
 	
-			g_free(iCurrentIndex);
-			iCurrentIndex = (CurrentIndex*)g_malloc0(sizeof(CurrentIndex) * dictmask.size());
-
 			const gchar *sWord = oTopWin.get_text();
 			if (sWord && sWord[0])
 				TopWinWordChange(sWord);

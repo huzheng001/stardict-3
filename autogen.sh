@@ -1,5 +1,12 @@
 #!/bin/sh
 
+(intltoolize --version) < /dev/null > /dev/null 2>&1 || {
+	echo;
+	echo "You must have intltool installed to compile Stardict";
+	echo;
+	exit;
+}
+
 (libtoolize --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
 	echo "You must have libtool installed to compile Stardict";
@@ -23,6 +30,9 @@
 
 echo "Generating configuration files for Stardict, please wait...."
 echo;
+
+echo "Running intltoolize ...."
+intltoolize --force --copy || exit;
 
 echo "Running libtoolize, please ignore non-fatal messages...."
 echo n | libtoolize --copy --force || exit;

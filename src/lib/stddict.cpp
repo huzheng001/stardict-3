@@ -33,7 +33,6 @@
 
 #include "common.hpp"
 #include "distance.h"
-#include "file.hpp"
 #include "kmp.h"
 #include "mapfile.hpp"
 
@@ -1807,88 +1806,53 @@ void Libs::LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunct
 #endif
 
 #ifdef SD_CLIENT_CODE
-void Libs::SetClientDictMask(std::vector<InstantDictIndex> &dictmask)
+bool Libs::find_lib_by_filename(const char *filename, size_t &iLib)
 {
-	InstantDictIndex instance_dict_index;
-	instance_dict_index.type = InstantDictType_LOCAL;
-	dictmask.clear();
-	std::vector<Dict *>::size_type iLib;
-	for (iLib =0; iLib < oLib.size(); iLib++) {
-		instance_dict_index.index = iLib;
-		dictmask.push_back(instance_dict_index);
+	for (std::vector<Dict *>::size_type i =0; i < oLib.size(); i++) {
+		if (oLib[i]->ifofilename() == filename) {
+			iLib = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+void Libs::load(std::list<std::string> &load_list)
+{
+	for (std::list<std::string>::iterator i = load_list.begin(); i != load_list.end(); ++i) {
+		load_dict(*i, show_progress);
 	}
 }
 
-class DictLoader {
-public:
-	DictLoader(Libs& lib_): lib(lib_) {}
-	void operator()(const std::string& url, bool disable) {
-		if (!disable)
-			lib.load_dict(url, lib.show_progress);
-	}
-private:
-	Libs& lib;
-};
-
-void Libs::load(const strlist_t& dicts_dirs,
-		const strlist_t& order_list,
-		const strlist_t& disable_list)
-{
-	for_each_file(dicts_dirs, ".ifo", order_list, disable_list,
-		      DictLoader(*this));
-}
-
-class DictReLoader {
-public:
-	DictReLoader(std::vector<Dict *> &p, std::vector<Dict *> &f,
-		     Libs& lib_) : prev(p), future(f), lib(lib_)
-		{
-		}
-	void operator()(const std::string& url, bool disable) {
-		if (!disable) {
-			Dict *dict=find(url);
-			if (dict)
-				future.push_back(dict);
-			else
-				lib.load_dict(url, lib.show_progress);
-		}
-	}
-private:
-	std::vector<Dict *> &prev;
-	std::vector<Dict *> &future;
-	Libs& lib;
-
-	Dict *find(const std::string& url) {
-		std::vector<Dict *>::iterator it;
-		for (it=prev.begin(); it!=prev.end(); ++it)
-			if ((*it)->ifofilename()==url)
-				break;
-		if (it!=prev.end()) {
-			Dict *res=*it;
-			prev.erase(it);
-			return res;
-		}
-		return NULL;
-	}
-};
-
-void Libs::reload(const strlist_t& dicts_dirs, const strlist_t& order_list,
-		  const strlist_t& disable_list, int is_coll_enb, int collf)
+void Libs::reload(std::list<std::string> &load_list, int is_coll_enb, int collf)
 {
 	if (is_coll_enb == EnableCollationLevel && collf == CollateFunction) {
 		std::vector<Dict *> prev(oLib);
 		oLib.clear();
-		for_each_file(dicts_dirs, ".ifo", order_list, disable_list, DictReLoader(prev, oLib, *this));
-		for (std::vector<Dict *>::iterator it=prev.begin(); it!=prev.end(); ++it)
+		for (std::list<std::string>::iterator i = load_list.begin(); i != load_list.end(); ++i) {
+			std::vector<Dict *>::iterator it;
+			for (it=prev.begin(); it!=prev.end(); ++it) {
+				if ((*it)->ifofilename()==*i)
+					break;
+			}
+			if (it==prev.end()) {
+				load_dict(*i, show_progress);
+			} else {
+				Dict *res=*it;
+				prev.erase(it);
+				oLib.push_back(res);
+			}
+		}
+		for (std::vector<Dict *>::iterator it=prev.begin(); it!=prev.end(); ++it) {
 			delete *it;
+		}
 	} else {
-		for (std::vector<Dict *>::iterator it = oLib.begin();
-		     it != oLib.end(); ++it)
+		for (std::vector<Dict *>::iterator it = oLib.begin(); it != oLib.end(); ++it)
 			delete *it;
 		oLib.clear();
 		EnableCollationLevel = is_coll_enb;
 		CollateFunction = CollateFunctions(collf);
-		load(dicts_dirs, order_list, disable_list);
+		load(load_list);
 	}
 }
 #endif
@@ -1935,7 +1899,7 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<Instant
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (iCurrent[iLib].idx==INVALID_INDEX)
 			continue;
@@ -1953,7 +1917,7 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<Instant
 	}
 	for (iLib=0; iLib<dictmask.size(); iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (iCurrent[iLib].synidx==UNSET_INDEX)
 			continue;
@@ -1989,7 +1953,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, EnableCollationLevel, servercollatefunc);
@@ -2017,7 +1981,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 	}
 	for (iLib=0; iLib < dictmask.size(); iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, EnableCollationLevel, servercollatefunc);
@@ -2048,7 +2012,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 	if (poCurrentWord) {
 		for (iLib=0; iLib < dictmask.size(); iLib++) {
 			if (dictmask[iLib].type != InstantDictType_LOCAL)
-				break;
+				continue;
 			iRealLib = dictmask[iLib].index;
 			if (isLib && (iLib == iCurrentLib))
 				continue;
@@ -2063,7 +2027,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 		}
 		for (iLib=0; iLib < dictmask.size(); iLib++) {
 			if (dictmask[iLib].type != InstantDictType_LOCAL)
-				break;
+				continue;
 			iRealLib = dictmask[iLib].index;
 			if ((!isLib) && (iLib == iCurrentLib))
 				continue;
@@ -2103,7 +2067,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 	std::vector<Dict *>::size_type iRealLib;
 	for (iLib=0;iLib<dictmask.size();iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, EnableCollationLevel, servercollatefunc);
@@ -2135,7 +2099,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 	}
 	for (iLib=0;iLib<dictmask.size();iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
 			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, EnableCollationLevel, servercollatefunc);
@@ -2170,7 +2134,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 	if (poCurrentWord) {
 		for (iLib=0;iLib<dictmask.size();iLib++) {
 			if (dictmask[iLib].type != InstantDictType_LOCAL)
-				break;
+				continue;
 			iRealLib = dictmask[iLib].index;
 			if (isLib && (iLib == iCurrentLib))
 				continue;
@@ -2187,7 +2151,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 		}
 		for (iLib=0;iLib<dictmask.size();iLib++) {
 			if (dictmask[iLib].type != InstantDictType_LOCAL)
-				break;
+				continue;
 			iRealLib = dictmask[iLib].index;
 			if ((!isLib) && (iLib == iCurrentLib))
 				continue;
@@ -2714,7 +2678,7 @@ bool Libs::LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_si
 	std::vector<Dict *>::size_type iRealLib;
 	for (std::vector<InstantDictIndex>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		for (gint synLib=0; synLib<2; synLib++) {
 			if (synLib==1) {
@@ -2810,7 +2774,7 @@ gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<In
 		//if(oLibs.LookdupWordsWithRule(pspec,aiIndex,MAX_MATCH_ITEM_PER_LIB+1-iMatchCount,iLib))
 		// -iMatchCount,so save time,but may got less result and the word may repeat.
 		if (dictmask[iLib].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[iLib].index;
 		if (oLib[iRealLib]->LookupWithRule(pspec, aiIndex, MAX_MATCH_ITEM_PER_LIB+1)) {
 			show_progress->notify_about_work();
@@ -2905,7 +2869,7 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 	std::vector<InstantDictIndex>::size_type iRealLib;
 	for (std::vector<InstantDictIndex>::size_type i=0; i<dictmask.size(); ++i) {
 		if (dictmask[i].type != InstantDictType_LOCAL)
-			break;
+			continue;
 		iRealLib = dictmask[i].index;
 		if (!oLib[iRealLib]->containSearchData())
 			continue;

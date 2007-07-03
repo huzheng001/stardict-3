@@ -6,7 +6,6 @@ struct StarDictVirtualDictPlugInObject{
 
 	typedef void (*lookup_func_t)(const char *text, char ***pppWord, char ****ppppWordData);
 	lookup_func_t lookup_func;
-	bool is_instant;
 	const char *dict_name;
 };
 

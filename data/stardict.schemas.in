@@ -330,15 +330,14 @@
     </schema>
 
     <schema>
-      <key>/schemas/apps/stardict/manage_dictionaries/dict_disable_list</key>
-      <applyto>/apps/stardict/manage_dictionaries/dict_disable_list</applyto>
+      <key>/schemas/apps/stardict/manage_dictionaries/dict_config_xml</key>
+      <applyto>/apps/stardict/manage_dictionaries/dict_config_xml</applyto>
       <owner>stardict</owner>
-      <type>list</type>
-	  <list_type>string</list_type>
-      <default>[]</default>
+      <type>string</type>
+      <default></default>
       <locale name="C">
-	<short>Disabled dictionary list</short>
-	<long>List the dictionaries which are disabled.</long>
+	<short>Dictionary configure xml</short>
+	<long>Save the dictionary manage configure.</long>
       </locale>
     </schema>
 

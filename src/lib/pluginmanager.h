@@ -33,7 +33,6 @@ public:
 	StarDictVirtualDictPlugin(StarDictPluginBaseObject *baseobj, StarDictVirtualDictPlugInObject *virtualdict_plugin_obj);
 	~StarDictVirtualDictPlugin();
 	void lookup(const char *word, char ***pppWord, char ****ppppWordData);
-	bool is_instant();
 	const char *dict_name();
 	const char *dict_id();
 private:
@@ -50,7 +49,6 @@ public:
 	const char *dict_name(size_t iPlugin);
 	const char *dict_id(size_t iPlugin);
 	bool find_dict_by_id(const char *id, size_t &iPlugin);
-	void SetDictMask(std::vector<InstantDictIndex> &dictmask);
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);
 	void reorder(const std::list<std::string>& order_list);

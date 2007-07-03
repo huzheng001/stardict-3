@@ -404,18 +404,6 @@ bool StarDictVirtualDictPlugins::find_dict_by_id(const char *id, size_t &iPlugin
 	return false;
 }
 
-void StarDictVirtualDictPlugins::SetDictMask(std::vector<InstantDictIndex> &dictmask)
-{
-	InstantDictIndex instance_dict_index;
-	instance_dict_index.type = InstantDictType_VIRTUAL;
-	for (std::vector<StarDictVirtualDictPlugin *>::size_type i = 0; i < oPlugins.size(); i++) {
-		if (oPlugins[i]->is_instant()) {
-			instance_dict_index.index = i;
-			dictmask.push_back(instance_dict_index);
-		}
-	}
-}
-
 //
 // class StarDictVirtualDictPlugin begin.
 //
@@ -434,11 +422,6 @@ StarDictVirtualDictPlugin::~StarDictVirtualDictPlugin()
 void StarDictVirtualDictPlugin::lookup(const char *word, char ***pppWord, char ****ppppWordData)
 {
 	obj->lookup_func(word, pppWord, ppppWordData);
-}
-
-bool StarDictVirtualDictPlugin::is_instant()
-{
-	return obj->is_instant;
 }
 
 const char *StarDictVirtualDictPlugin::dict_name()

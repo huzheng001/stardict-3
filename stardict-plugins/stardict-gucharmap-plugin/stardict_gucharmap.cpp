@@ -402,7 +402,6 @@ void stardict_plugin_exit(void)
 bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->is_instant = true;
 	obj->dict_name = _("Gucharmap");
 	g_print(_("Gucharmap plug-in loaded.\n"));
 	return false;
