@@ -36,8 +36,7 @@
 
 static void fuzzy_lookup(Libs& libs, const gchar *s)
 {
-    std::vector<InstantDictIndex> dictmask;
-    libs.SetClientDictMask(dictmask);
+	std::vector<InstantDictIndex> dictmask;
 	gchar *res[100];
 	const size_t res_size=sizeof(res)/sizeof(gchar *);
 	libs.LookupWithFuzzy(s, res, res_size, dictmask);
@@ -63,15 +62,11 @@ static double average_time(std::vector<double> &time_arr)
 
 int main(int argc, char *argv[])
 {
-	List dirs;
 	gtk_init(&argc, &argv);
 	
-#if !defined(_WIN32)
-	dirs.push_back("/usr/share/stardict/dic");
-	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
-#endif
 	Libs libs(NULL, false, false, 0);
-	libs.load(dirs, List(), List());
+	List dict_list;
+	libs.load(dict_list);
 	std::vector<double> times;
 
 	for (int i=0; i<10; ++i) {

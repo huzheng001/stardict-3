@@ -11,15 +11,12 @@
 
 int main(int argc, char *argv[])
 {
-	List dirs;
 	gtk_init(&argc, &argv);
 	
-	dirs.push_back("./");
-	
 	Libs libs(NULL, false, false, 0);
-	libs.load(dirs, List(), List());
+	List dict_list;
+	libs.load(dict_list);
 	std::vector<InstantDictIndex> dictmask;
-	libs.SetClientDictMask(dictmask);
 	std::vector<gchar *> reslist[dictmask.size()];
 	if (libs.LookupData("letter", reslist, NULL, NULL, NULL, dictmask)) 
 		return EXIT_SUCCESS;
