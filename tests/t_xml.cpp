@@ -2,9 +2,47 @@
 #  include "config.h"
 #endif
 
+#include <glib.h>
 #include <cstdlib>
+#include <string>
 
-#include "utils.h"
+
+static void xml_decode(const char *str, std::string& decoded)
+{
+	static const char raw_entrs[] = { 
+		'<',   '>',   '&',    '\'',    '\"',    0 
+	};
+	static const char* xml_entrs[] = { 
+		"lt;", "gt;", "amp;", "apos;", "quot;", 0 
+	};
+	static const int xml_ent_len[] = { 
+		3,     3,     4,      5,       5 
+	};
+	int ient;
+        const char *amp = strchr(str, '&');
+
+        if (amp == NULL) {
+		decoded = str;
+                return;
+        }
+        decoded.assign(str, amp - str);
+        
+        while (*amp)
+                if (*amp == '&') {
+                        for (ient = 0; xml_entrs[ient] != 0; ++ient)
+                                if (strncmp(amp + 1, xml_entrs[ient],
+					    xml_ent_len[ient]) == 0) {
+                                        decoded += raw_entrs[ient];
+                                        amp += xml_ent_len[ient]+1;
+                                        break;
+                                }
+                        if (xml_entrs[ient] == 0)    // unrecognized sequence
+                                decoded += *amp++;
+
+                } else {
+                        decoded += *amp++;
+                }        
+}
 
 static bool decode(const char *probe, const char *exp)
 {

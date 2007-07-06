@@ -40,24 +40,13 @@ t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 	$(top_builddir)/src/config_file.hpp \
 	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp
 
-t_articleview_SOURCES = t_articleview.cpp \
-	$(top_builddir)/src/articleview.cpp $(top_builddir)/src/articleview.h \
-	$(top_builddir)/src/pangoview.cpp $(top_builddir)/src/pangoview.h \
-	$(top_builddir)/src/gtktextviewpango.cpp \
-	$(top_builddir)/src/gtktextviewpango.h \
-	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h \
-	$(top_builddir)/src/config_file.hpp \
-	$(top_builddir)/src/inifile.hpp $(top_builddir)/src/inifile.cpp \
-	$(top_builddir)/src/conf.cpp $(top_builddir)/src/conf.h \
-	$(GCONF_MODULE_HPP) $(GCONF_MODULE_CPP)
-t_articleview_DEPENDENCIES = $(top_builddir)/src/wiki/libwiki.a
+t_articleview_SOURCES = t_articleview.cpp
 
-t_xml_SOURCES = t_xml.cpp \
-	$(top_builddir)/src/utils.cpp $(top_builddir)/src/utils.h
+t_xml_SOURCES = t_xml.cpp
 
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
-	$(LOCAL_SIGCPP_LIBFILE) $(top_builddir)/src/wiki/libwiki.a
-INCLUDES = @STARDICT_CFLAGS@ $(LOCAL_SIGCPP_INCLUDE) -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib -I$(top_builddir)/src/wiki
+	$(LOCAL_SIGCPP_LIBFILE)
+INCLUDES = @STARDICT_CFLAGS@ $(LOCAL_SIGCPP_INCLUDE) -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/lib
 
 TESTS = \
 	t_config_file t_convert_old_ini t_dict t_query t_lookupdata \

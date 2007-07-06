@@ -2,19 +2,12 @@
 #  include "config.h"
 #endif
 
+#include <glib.h>
 #include <cstdlib>
-#define private public
-
-#include "articleview.h"
-#include "class_factory.hpp"
-#include "stardict.h"
-
-AppCore *gpAppFrame = NULL;
-
-void *PlatformFactory::create_class_by_name(const std::string& name, void *param)
-{
-	return NULL;
-}
+#include <cstring>
+#include <list>
+#include <string>
+#include "lib/parsedata_plugin.h"
 
 static const char *xml_topos(const char *str, size_t pos)
 {
@@ -57,11 +50,8 @@ static bool check_xdxf2pango(const char *in, const char *out,
 			     const std::list<std::string>& links_list_std)
 {
 	LinksPosList links_list;
-	GtkWidget *box = gtk_vbox_new(false, 0);
-	ArticleView *articleview = new ArticleView(GTK_BOX(box), true);
-	std::string res = articleview->xdxf2pango(in, "", links_list);
-	delete articleview;
-	gtk_widget_destroy(box);
+	//std::string res = articleview->xdxf2pango(in, "", links_list);
+	std::string res;
 	if (res != out) {
 		g_warning("we got not what we expected:\n%s\n\n%s\n", res.c_str(), out);
 		return false;
@@ -90,7 +80,6 @@ static bool check_xdxf2pango(const char *in, const char *out,
 
 int main(int argc, char *argv[])
 {
-	g_type_init ();
 	const char *ar1 = "<k>nick</k> <k>name</k>\n"
 		"<tr>neim</tr>\n"
 		"<abr>noun.</abr> <co>In the rest of article we used latinitsu</co>\n"

@@ -7,16 +7,7 @@
 #include <memory>
 
 #include "sigc++/sigc++.h"
-
-struct LinkDesc {
-	std::string::size_type pos_;
-	std::string::size_type len_;
-	std::string link_;
-	LinkDesc(std::string::size_type pos, std::string::size_type len, std::string link):
-		pos_(pos), len_(len), link_(link) {}
-};
-
-typedef std::list<LinkDesc> LinksPosList;
+#include "lib/parsedata_plugin.h"
 
 /**
  * Base class for classes which can show pango formated text

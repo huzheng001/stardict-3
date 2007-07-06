@@ -335,7 +335,6 @@ src/Makefile
 src/sigc++/Makefile
 src/sigc++config/Makefile
 src/lib/Makefile
-src/wiki/Makefile
 src/pixmaps/Makefile
 src/sounds/Makefile
 src/dic/Makefile
@@ -353,6 +352,9 @@ stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile
 stardict-plugins/stardict-festival-tts-plugin/Makefile
 stardict-plugins/stardict-espeak-tts-plugin/Makefile
+stardict-plugins/stardict-wiki-parsedata-plugin/Makefile
+stardict-plugins/stardict-powerword-parsedata-plugin/Makefile
+stardict-plugins/stardict-xdxf-parsedata-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile
 help/Makefile

@@ -1660,11 +1660,6 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	oHttpManager.Remove(http_client);
 }
 
-/*void AppCore::on_stardict_virtual_dict_plugin_lookup_end(const struct VirtualDictLookupResponse *response)
-{
-	g_print("Find: %s\n", response->word);
-}*/
-
 class reload_show_progress_t : public show_progress_t {
 public:
 	reload_show_progress_t(progress_win &pw_) : pw(pw_) {}
