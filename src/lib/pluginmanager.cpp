@@ -70,6 +70,7 @@ void StarDictPlugins::reorder(const std::list<std::string>& order_list)
 {
 	VirtualDictPlugins.reorder(order_list);
 	TtsPlugins.reorder(order_list);
+	ParseDataPlugins.reorder(order_list);
 	MiscPlugins.reorder(order_list);
 }
 
@@ -87,7 +88,7 @@ bool StarDictPlugins::get_loaded(const char *filename)
 
 class PluginInfoLoader {
 public:
-	PluginInfoLoader(StarDictPlugins& plugins_, std::list<StarDictPluginInfo> &virtualdict_pluginlist_, std::list<StarDictPluginInfo> &tts_pluginlist_, std::list<StarDictPluginInfo> &misc_pluginlist_): plugins(plugins_), virtualdict_pluginlist(virtualdict_pluginlist_), tts_pluginlist(tts_pluginlist_), misc_pluginlist(misc_pluginlist_) {}
+	PluginInfoLoader(StarDictPlugins& plugins_, std::list<StarDictPluginInfo> &virtualdict_pluginlist_, std::list<StarDictPluginInfo> &tts_pluginlist_, std::list<StarDictPluginInfo> &parsedata_pluginlist_, std::list<StarDictPluginInfo> &misc_pluginlist_): plugins(plugins_), virtualdict_pluginlist(virtualdict_pluginlist_), tts_pluginlist(tts_pluginlist_), parsedata_pluginlist(parsedata_pluginlist_), misc_pluginlist(misc_pluginlist_) {}
 	void operator()(const std::string& url, bool disable) {
 		if (!disable) {
 			StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
@@ -107,6 +108,9 @@ public:
 					case StarDictPlugInType_TTS:
 						tts_pluginlist.push_back(plugin_info);
 						break;
+					case StarDictPlugInType_PARSEDATA:
+						parsedata_pluginlist.push_back(plugin_info);
+						break;
 					case StarDictPlugInType_MISC:
 						misc_pluginlist.push_back(plugin_info);
 						break;
@@ -120,6 +124,7 @@ private:
 	StarDictPlugins& plugins;
 	std::list<StarDictPluginInfo> &virtualdict_pluginlist;
 	std::list<StarDictPluginInfo> &tts_pluginlist;
+	std::list<StarDictPluginInfo> &parsedata_pluginlist;
 	std::list<StarDictPluginInfo> &misc_pluginlist;
 };
 
@@ -128,18 +133,22 @@ void StarDictPlugins::get_plugin_list(const std::list<std::string>& order_list, 
 	plugin_list.clear();
 	std::list<StarDictPluginInfo> virtualdict_pluginlist;
 	std::list<StarDictPluginInfo> tts_pluginlist;
+	std::list<StarDictPluginInfo> parsedata_pluginlist;
 	std::list<StarDictPluginInfo> misc_pluginlist;
 
 	std::list<std::string> plugins_dirs;
 	plugins_dirs.push_back(plugindirpath);
 	std::list<std::string> disable_list;
-	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginInfoLoader(*this, virtualdict_pluginlist, tts_pluginlist, misc_pluginlist));
+	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginInfoLoader(*this, virtualdict_pluginlist, tts_pluginlist, parsedata_pluginlist, misc_pluginlist));
 
 	if (!virtualdict_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_VIRTUALDICT, virtualdict_pluginlist));
 	}
 	if (!tts_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_TTS, tts_pluginlist));
+	}
+	if (!parsedata_pluginlist.empty()) {
+		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_PARSEDATA, parsedata_pluginlist));
 	}
 	if (!misc_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_MISC, misc_pluginlist));
@@ -183,6 +192,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 
 typedef bool (*stardict_virtualdict_plugin_init_func_t)(StarDictVirtualDictPlugInObject *obj);
 typedef bool (*stardict_tts_plugin_init_func_t)(StarDictTtsPlugInObject *obj);
+typedef bool (*stardict_parsedata_plugin_init_func_t)(StarDictParseDataPlugInObject *obj);
 typedef bool (*stardict_misc_plugin_init_func_t)(void);
 
 void StarDictPlugins::load_plugin(const char *filename)
@@ -268,19 +278,41 @@ void StarDictPlugins::load_plugin(const char *filename)
 			return;
 		}
 		TtsPlugins.add(baseobj, tts_plugin_obj);
+	} else if (ptype == StarDictPlugInType_PARSEDATA) {
+		union {
+			stardict_parsedata_plugin_init_func_t stardict_parsedata_plugin_init;
+			gpointer stardict_parsedata_plugin_init_avoid_warning;
+		} func3;
+		func3.stardict_parsedata_plugin_init = 0;
+		if (!g_module_symbol (module, "stardict_parsedata_plugin_init", (gpointer *)&(func3.stardict_parsedata_plugin_init_avoid_warning))) {
+			printf("Load %s failed: No stardict_parsedata_plugin_init func!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			return;
+		}
+		StarDictParseDataPlugInObject *parsedata_plugin_obj = new StarDictParseDataPlugInObject();
+		failed = func3.stardict_parsedata_plugin_init(parsedata_plugin_obj);
+		if (failed) {
+			g_print("Load %s failed!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			delete parsedata_plugin_obj;
+			return;
+		}
+		ParseDataPlugins.add(baseobj, parsedata_plugin_obj);
 	} else if (ptype == StarDictPlugInType_MISC) {
 		union {
 			stardict_misc_plugin_init_func_t stardict_misc_plugin_init;
 			gpointer stardict_misc_plugin_init_avoid_warning;
-		} func3;
-		func3.stardict_misc_plugin_init = 0;
-		if (!g_module_symbol (module, "stardict_misc_plugin_init", (gpointer *)&(func3.stardict_misc_plugin_init_avoid_warning))) {
+		} func4;
+		func4.stardict_misc_plugin_init = 0;
+		if (!g_module_symbol (module, "stardict_misc_plugin_init", (gpointer *)&(func4.stardict_misc_plugin_init_avoid_warning))) {
 			printf("Load %s failed: No stardict_misc_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
 		}
-		failed = func3.stardict_misc_plugin_init();
+		failed = func4.stardict_misc_plugin_init();
 		if (failed) {
 			g_print("Load %s failed!\n", filename);
 			g_module_close (module);
@@ -311,6 +343,9 @@ void StarDictPlugins::unload_plugin(const char *filename, StarDictPlugInType plu
 		case StarDictPlugInType_TTS:
 			TtsPlugins.unload_plugin(filename);
 			break;
+		case StarDictPlugInType_PARSEDATA:
+			ParseDataPlugins.unload_plugin(filename);
+			break;
 		case StarDictPlugInType_MISC:
 			MiscPlugins.unload_plugin(filename);
 			break;
@@ -327,6 +362,9 @@ void StarDictPlugins::configure_plugin(const char *filename, StarDictPlugInType 
 			break;
 		case StarDictPlugInType_TTS:
 			TtsPlugins.configure_plugin(filename);
+			break;
+		case StarDictPlugInType_PARSEDATA:
+			ParseDataPlugins.configure_plugin(filename);
 			break;
 		case StarDictPlugInType_MISC:
 			MiscPlugins.configure_plugin(filename);
@@ -507,6 +545,73 @@ const char *StarDictTtsPlugin::tts_name()
 }
 
 //
+// class StarDictParseDataPlugins begin.
+//
+
+StarDictParseDataPlugins::StarDictParseDataPlugins()
+{
+}
+
+StarDictParseDataPlugins::~StarDictParseDataPlugins()
+{
+	for (std::vector<StarDictParseDataPlugin *>::iterator i = oPlugins.begin(); i != oPlugins.end(); ++i) {
+		delete *i;
+	}
+}
+
+void StarDictParseDataPlugins::add(StarDictPluginBaseObject *baseobj, StarDictParseDataPlugInObject *tts_plugin_obj)
+{
+	StarDictParseDataPlugin *plugin = new StarDictParseDataPlugin(baseobj, tts_plugin_obj);
+	oPlugins.push_back(plugin);
+}
+
+void StarDictParseDataPlugins::unload_plugin(const char *filename)
+{
+	for (std::vector<StarDictParseDataPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			delete *iter;
+			oPlugins.erase(iter);
+			break;
+		}
+	}
+}
+
+void StarDictParseDataPlugins::configure_plugin(const char *filename)
+{
+	for (std::vector<StarDictParseDataPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			(*iter)->configure();
+			break;
+		}
+	}
+}
+
+bool StarDictParseDataPlugins::parse(size_t iPlugin, const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
+{
+	return oPlugins[iPlugin]->parse(p, parsed_size, result, oword);
+}
+
+//
+// class StarDictParseDataPlugin begin.
+//
+
+StarDictParseDataPlugin::StarDictParseDataPlugin(StarDictPluginBaseObject *baseobj_, StarDictParseDataPlugInObject *parsedata_plugin_obj):
+	StarDictPluginBase(baseobj_)
+{
+	obj = parsedata_plugin_obj;
+}
+
+StarDictParseDataPlugin::~StarDictParseDataPlugin()
+{
+	delete obj;
+}
+
+bool StarDictParseDataPlugin::parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
+{
+	return obj->parse_func(p, parsed_size, result, oword);
+}
+
+//
 // class StarDictMiscPlugins begin.
 //
 
@@ -596,6 +701,28 @@ void StarDictTtsPlugins::reorder(const std::list<std::string>& order_list)
 	}
 	for (std::vector<StarDictTtsPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
 		std::vector<StarDictTtsPlugin *>::iterator j;
+		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
+			if (*j == *i)
+				break;
+		}
+		if (j == oPlugins.end())
+			delete *i;
+	}
+}
+
+void StarDictParseDataPlugins::reorder(const std::list<std::string>& order_list)
+{
+	std::vector<StarDictParseDataPlugin *> prev(oPlugins);
+	oPlugins.clear();
+	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
+		for (std::vector<StarDictParseDataPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
+			if (*i == (*j)->get_filename()) {
+				oPlugins.push_back(*j);
+			}
+		}
+	}
+	for (std::vector<StarDictParseDataPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
+		std::vector<StarDictParseDataPlugin *>::iterator j;
 		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
 			if (*j == *i)
 				break;

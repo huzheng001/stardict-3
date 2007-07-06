@@ -23,6 +23,7 @@ libstardict_a_SOURCES = \
 	plugin.cpp plugin.h \
 	virtualdictplugin.cpp virtualdictplugin.h \
 	ttsplugin.cpp ttsplugin.h	\
+	parsedata_plugin.cpp parsedata_plugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h	\
 	stardict_libconfig.h

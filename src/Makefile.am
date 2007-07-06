@@ -9,8 +9,8 @@ LOCAL_SIGCPP_LIBFILE = sigc++/libsigc.a
 LOCAL_SIGCPP_INCLUDE = -Isigc++config
 endif
 
-DIST_SUBDIRS = sigc++ sigc++config lib wiki pixmaps sounds win32 dic treedict
-SUBDIRS = $(LOCAL_SIGCPP_DIR) lib wiki pixmaps sounds win32 dic treedict
+DIST_SUBDIRS = sigc++ sigc++config lib pixmaps sounds win32 dic treedict
+SUBDIRS = $(LOCAL_SIGCPP_DIR) lib pixmaps sounds win32 dic treedict
 
 bin_PROGRAMS = stardict
 
@@ -24,9 +24,9 @@ INCLUDES =							                            \
 	-DSTARDICT_LIB_DIR=\""$(libdir)/stardict"\"
 
 
-stardict_DEPENDENCIES = $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a wiki/libwiki.a
+stardict_DEPENDENCIES = $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a
 stardict_LDFLAGS = 
-stardict_LDADD = $(STARDICT_LIBS) $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a wiki/libwiki.a
+stardict_LDADD = $(STARDICT_LIBS) $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a
 
 if !GNOME_SUPPORT
 if MAEMO_SUPPORT

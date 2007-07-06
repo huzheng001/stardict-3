@@ -4,6 +4,7 @@
 #include "plugin.h"
 #include "virtualdictplugin.h"
 #include "ttsplugin.h"
+#include "parsedata_plugin.h"
 #include <glib.h>
 #include <gmodule.h>
 #include <string>
@@ -81,6 +82,29 @@ private:
 	std::vector<StarDictTtsPlugin *> oPlugins;
 };
 
+class StarDictParseDataPlugin : public StarDictPluginBase {
+public:
+	StarDictParseDataPlugin(StarDictPluginBaseObject *baseobj, StarDictParseDataPlugInObject *parsedata_plugin_obj);
+	~StarDictParseDataPlugin();
+	bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword);
+private:
+	StarDictParseDataPlugInObject *obj;
+};
+
+class StarDictParseDataPlugins {
+public:
+	StarDictParseDataPlugins();
+	~StarDictParseDataPlugins();
+	void add(StarDictPluginBaseObject *baseobj, StarDictParseDataPlugInObject *parsedata_plugin_obj);
+	bool parse(size_t iPlugin, const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword);
+	size_t nplugins() { return oPlugins.size(); }
+	void unload_plugin(const char *filename);
+	void configure_plugin(const char *filename);
+	void reorder(const std::list<std::string>& order_list);
+private:
+	std::vector<StarDictParseDataPlugin *> oPlugins;
+};
+
 class StarDictMiscPlugin : public StarDictPluginBase {
 public:
 	StarDictMiscPlugin(StarDictPluginBaseObject *baseobj);
@@ -118,6 +142,7 @@ public:
 	void reorder(const std::list<std::string>& order_list);
 	StarDictVirtualDictPlugins VirtualDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
+	StarDictParseDataPlugins ParseDataPlugins;
 private:
 	StarDictMiscPlugins MiscPlugins;
 	std::string plugindirpath;

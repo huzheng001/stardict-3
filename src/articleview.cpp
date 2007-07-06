@@ -28,700 +28,10 @@
 
 #include "conf.h"
 #include "utils.h"
-#include "wiki/stardict_wiki2xml.h"
 #include "stardict.h"
 
 #include "articleview.h"
 
-
-static gchar* toUtfPhonetic(const gchar *text, gsize len)
-{
-	std::string p;
-	gsize i;
-	for (i=0;i<len;i++) {
-		switch (text[i]) {
-			case 'A':
-				p+="æ"; break;
-			case 'B':
-				p+="ɑ"; break;
-			case 'C':
-				p+="ɔ"; break;
-			case 'Q':
-				p+="ʌ"; break;
-			case 'E':
-				p+="ә"; break;
-			case 'Z':
-				p+="є"; break;
-			case 'N':
-				p+="ŋ"; break;
-			case 'W':
-				p+="θ"; break;
-			case 'T':
-				p+="ð"; break;
-			case 'F':
-				p+="ʃ"; break;
-			case 'V':
-				p+="ʒ"; break;
-			case 'L':
-				p+="ɚ"; break;
-			case 'I':
-				p+="i"; break;
-			case '^':
-				p+="ɡ"; break;
-			case '9':
-				p+="ˏ"; break;
-			case '5':
-				p+="'"; break;
-			default:
-				p+=text[i];
-				break;
-		}
-	}
-	return g_markup_escape_text(p.c_str(), -1);
-}
-
-static gchar *powerword_markup_escape_text(const gchar *text, gssize length)
-{
-	const gchar *p;
-	const gchar *end;
-	p = text;
-	end = text + length;
-
-	GString *str;
-	str = g_string_sized_new (length);
-
-	const gchar *n;
-	bool find;
-	bool previous_islink = false;
-	std::string marktags;
-	guint currentmarktag = 0;
-	while (p != end) {
-		const gchar *next;
-		next = g_utf8_next_char (p);
-		switch (*p) {
-			case '}':
-				if (currentmarktag==0) {
-					g_string_append (str, "}");
-					previous_islink = false;
-				}
-				else {
-					currentmarktag--;
-					switch (marktags[currentmarktag]) {
-						case 'b':
-						case 'B':
-							g_string_append (str, "</b>");
-							previous_islink = false;
-							break;
-						case 'I':
-							g_string_append (str, "</i>");
-							previous_islink = false;
-							break;
-						case '+':
-							g_string_append (str, "</sup>");
-							previous_islink = false;
-							break;
-						case '-':
-							g_string_append (str, "</sub>");
-							previous_islink = false;
-							break;
-						case 'x':
-							g_string_append (str, "</span>");
-							previous_islink = false;
-							break;
-						case 'l':
-						case 'D':
-						case 'L':
-						case 'U':
-							g_string_append (str, "</span>");
-							previous_islink = true;
-							break;
-						default:
-							previous_islink = false;
-							break;
-					}
-				}
-				break;
-			case '&':
-				find = false;
-				if (next!=end) {
-					n = g_utf8_next_char(next);
-					if (n!=end && *n == '{') {
-						find=true;
-						currentmarktag++;
-						if (marktags.length()<currentmarktag)
-							marktags+=*next;
-						else
-							marktags[currentmarktag-1]=*next;
-						switch (*next) {
-							case 'b':
-							case 'B':
-								g_string_append (str, "<b>");
-								next = n+1;
-								break;
-							case 'I':
-								g_string_append (str, "<i>");
-								next = n+1;
-								break;
-							case '+':
-								g_string_append (str, "<sup>");
-								next = n+1;
-								break;
-							case '-':
-								g_string_append (str, "<sub>");
-								next = n+1;
-								break;
-							case 'x':
-								g_string_append (str, "<span foreground=\"blue\" underline=\"single\">");
-								next = n+1;
-								break;
-							case 'X':
-								{
-								const gchar *tag_end = n+1;
-								while (tag_end!=end) {
-									if (*tag_end=='}')
-										break;
-									else
-										tag_end++;
-								}
-								g_string_append (str, "<span foreground=\"blue\">");
-								gchar *tag_str = toUtfPhonetic(n+1, tag_end - (n+1));
-								g_string_append (str, tag_str);
-								g_free(tag_str);
-								g_string_append (str, "</span>");
-								currentmarktag--;
-								if (tag_end!=end)
-									next = tag_end+1;
-								else
-									next = end;
-								previous_islink = false;
-								break;
-								}
-							case 'l':
-							case 'D':
-								if (previous_islink)
-									g_string_append (str, "\t");
-								g_string_append (str, "<span foreground=\"blue\" underline=\"single\">");
-								next = n+1;
-								break;
-							case 'L':
-							case 'U':
-								if (previous_islink)
-									g_string_append (str, "\t");
-								g_string_append (str, "<span foreground=\"#008080\" underline=\"single\">");
-								next = n+1;
-								break;
-							case '2':
-								// Phonetic. Need more work...
-								next = n+1;
-								break;
-							/*case ' ':
-							case '9':
-							case 'S':*/
-							default:
-								next = n+1;
-								break;
-						}
-					}
-				}
-				if (!find) {
-					previous_islink = false;
-					g_string_append (str, "&amp;");
-				}
-				break;
-			case '<':
-				previous_islink = false;
-				g_string_append (str, "&lt;");
-				break;
-			case '>':
-				previous_islink = false;
-				g_string_append (str, "&gt;");
-				break;
-			case '\'':
-				previous_islink = false;
-				g_string_append (str, "&apos;");
-				break;
-			case '"':
-				previous_islink = false;
-				g_string_append (str, "&quot;");
-				break;
-			default:
-				previous_islink = false;
-				g_string_append_len (str, p, next - p);
-				break;
-		}
-		p = next;
-	}
-	if (currentmarktag>0) {
-		do {
-			currentmarktag--;
-			switch (marktags[currentmarktag]) {
-				case 'b':
-				case 'B':
-					g_string_append (str, "</b>");
-					break;
-				case 'I':
-					g_string_append (str, "</i>");
-					break;
-				case '+':
-					g_string_append (str, "</sup>");
-					break;
-				case '-':
-					g_string_append (str, "</sub>");
-					break;
-				case 'x':
-				case 'l':
-				case 'D':
-				case 'L':
-				case 'U':
-					g_string_append (str, "</span>");
-					break;
-				default:
-					break;
-			}
-		} while (currentmarktag>0);
-	}
-	return g_string_free (str, FALSE);
-}
-
-typedef struct _PwUserData {
-	std::string *res;
-	const gchar *oword;
-	bool first_jbcy;
-} PwUserData;
-
-static void func_parse_passthrough(GMarkupParseContext *context, const gchar *passthrough_text, gsize text_len, gpointer user_data, GError **error)
-{
-	if (!g_str_has_prefix(passthrough_text, "<![CDATA["))
-		return;
-	const gchar *element = g_markup_parse_context_get_element(context);
-	if (!element)
-		return;
-	const gchar *text = passthrough_text+9;
-	gsize len = text_len-9-3;
-	while (g_ascii_isspace(*text)) {
-		text++;
-		len--;
-	}
-	while (len>0 && g_ascii_isspace(*(text+len-1))) {
-		len--;
-	}
-	if (len==0)
-		return;
-	std::string *res = ((PwUserData*)user_data)->res;
-	if (strcmp(element, "词典音标")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="[<span foreground=\"blue\">";
-		gchar *str = toUtfPhonetic(text, len);
-		*res+=str;
-		g_free(str);
-		*res+="</span>]";
-	} else if (strcmp(element, "单词原型")==0) {
-		const gchar *oword = ((PwUserData*)user_data)->oword;
-		if (strncmp(oword, text, len)) {
-			if (!res->empty())
-				*res+='\n';
-			*res+="<b>";
-			gchar *str = g_markup_escape_text(text, len);
-			res->append(str);
-			g_free(str);
-			*res+="</b>";
-		}
-	} else if (strcmp(element, "单词词性")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<i>";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</i>";
-	} else if (strcmp(element, "汉语拼音")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"blue\" underline=\"single\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
-	} else if (strcmp(element, "例句原型")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"#008080\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
-	} else if (strcmp(element, "例句解释")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"#01259A\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
-	/*} else if (strcmp(element, "相关词")==0) {
-		if (!res->empty())
-			*res+='\n';
-		std::string tabstr;
-		tabstr+=text[0];
-		for (gsize i=1;i<len;i++) {
-			if (text[i]=='&')
-				tabstr+="\t&";
-			else
-				tabstr+=text[i];
-		}
-		gchar *str = powerword_markup_escape_text(tabstr.c_str(), tabstr.length());
-		res->append(str);
-		g_free(str);*/
-	} else
-	/*} else if (
-	strcmp(element, "解释项")==0 ||
-	strcmp(element, "跟随解释")==0 ||
-	strcmp(element, "相关词")==0 ||
-	strcmp(element, "预解释")==0 ||
-	strcmp(element, "繁体写法")==0 ||
-	strcmp(element, "台湾音标")==0 ||
-	strcmp(element, "图片名称")==0 ||
-	strcmp(element, "跟随注释")==0 ||
-	strcmp(element, "音节分段")==0 ||
-	strcmp(element, "AHD音标")==0 ||
-	strcmp(element, "国际音标")==0 ||
-	strcmp(element, "美国音标")==0 ||
-	strcmp(element, "子解释项")==0 ||
-	strcmp(element, "同义词")==0 ||
-	strcmp(element, "日文发音")==0 ||
-	strcmp(element, "惯用型原型")==0 ||
-	strcmp(element, "惯用型解释")==0 ||
-	strcmp(element, "另见")==0
-	) {*/
-	{
-		if (!res->empty())
-			*res+='\n';
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-	}
-}
-
-static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
-{
-	std::string *res = ((PwUserData*)user_data)->res;
-	if (strcmp(element_name, "基本词义")==0) {
-		if (((PwUserData*)user_data)->first_jbcy) {
-			((PwUserData*)user_data)->first_jbcy = false;
-		} else {
-			*res+="\n<span foreground=\"blue\">&lt;基本词义&gt;</span>";
-		}
-	} else if (strcmp(element_name, "继承用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;继承用法&gt;</span>";
-	} else if (strcmp(element_name, "习惯用语")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;习惯用语&gt;</span>";
-	} else if (strcmp(element_name, "词性变化")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;词性变化&gt;</span>";
-	} else if (strcmp(element_name, "特殊用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;特殊用法&gt;</span>";
-	} else if (strcmp(element_name, "参考词汇")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;参考词汇&gt;</span>";
-	} else if (strcmp(element_name, "常用词组")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;常用词组&gt;</span>";
-	} else if (strcmp(element_name, "语源")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;语源&gt;</span>";
-	} else if (strcmp(element_name, "派生")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;派生&gt;</span>";
-	} else if (strcmp(element_name, "用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;用法&gt;</span>";
-	} else if (strcmp(element_name, "注释")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;注释&gt;</span>";
-	}
-}
-
-static std::string powerword2pango(const char *p, guint32 sec_size, const gchar *oword)
-{
-	std::string res;
-	PwUserData Data;
-	Data.res = &res;
-	Data.oword = oword;
-	Data.first_jbcy = true;
-
-	GMarkupParser parser;
-	parser.start_element = func_parse_start_element;
-	parser.end_element = NULL;
-	parser.text = NULL;
-	parser.passthrough = func_parse_passthrough;
-	parser.error = NULL;
-	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-	g_markup_parse_context_parse(context, p, sec_size, NULL);
-	g_markup_parse_context_end_parse(context, NULL);
-	g_markup_parse_context_free(context);
-	return res;
-}
-
-static std::string wiki2pango(const char *p, guint32 sec_size)
-{
-	std::string res(p, sec_size);
-	std::string xml = wiki2xml(res);
-	std::string pango =wikixml2pango(xml);
-	return pango;
-}
-
-static size_t xml_strlen(const std::string& str)
-{
-	const char *q;
-	static const char* xml_entrs[] = { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };
-	static const int xml_ent_len[] = { 3,     3,     4,      5,       5 };
-	size_t cur_pos;
-	int i;
-
-	for (cur_pos = 0, q = str.c_str(); *q; ++cur_pos) {
-		if (*q == '&') {
-			for (i = 0; xml_entrs[i]; ++i)
-				if (strncmp(xml_entrs[i], q + 1,
-					    xml_ent_len[i]) == 0) {
-					q += xml_ent_len[i] + 1;
-					break;
-				}
-			if (xml_entrs[i] == NULL)
-				++q;
-		} else if (*q == '<') {
-			const char *p = strchr(q, '>');
-			if (p)
-				q = p + 1;
-			else
-				++q;
-			--cur_pos;
-		} else
-			q = g_utf8_next_char(q);
-	}
-
-	return cur_pos;
-}
-
-std::string ArticleView::xdxf2pango(const char *p, const gchar *real_oword, LinksPosList& links_list)
-{
-  std::string res;
-  const char *tag, *next;
-  std::string name;
-  std::string::size_type cur_pos;
-  int i;
-
-  struct ReplaceTag {
-	  const char *match_;
-	  int match_len_;
-	  const char *replace_;
-	  int char_len_;
-  };
-  static const ReplaceTag replace_arr[] = {
-	  { "abr>", 4, "<span foreground=\"green\" style=\"italic\">", 0 },
-	  { "/abr>", 5, "</span>", 0 },
-	  { "b>", 2, "<b>", 0 },
-	  { "/b>", 3, "</b>", 0 },
-	  { "i>", 2, "<i>", 0  },
-	  { "/i>", 3, "</i>", 0 },
-	  { "sub>", 4, "<sub>", 0 },
-	  { "/sub>", 5, "</sub>", 0},
-	  { "sup>", 4, "<sup>", 0},
-	  { "/sup>", 5, "</sup>", 0},
-	  { "tt>", 3, "<tt>", 0},
-	  { "/tt>", 4, "</tt>", 0},
-	  { "big>", 4, "<big>", 0},
-	  { "/big>", 5, "</big>", 0},
-	  { "small>", 6, "<small>", 0},
-	  { "/small>", 7, "</small>", 0},
-	  { "tr>", 3, "<b>[", 1 },
-	  { "/tr>", 4, "]</b>", 1 },
-	  { "ex>", 3, "<span foreground=\"violet\">", 0 },
-	  { "/ex>", 4, "</span>", 0 },
-	  { "/c>", 3, "</span>", 0 },
-	  { NULL, 0, NULL },
-  };
-
-  bool is_first_k = true;
-  for (cur_pos = 0; *p && (tag = strchr(p, '<')) != NULL;) {
-//TODO: do not create chunk
-	  std::string chunk(p, tag - p);
-	  res += chunk;
-	  cur_pos += xml_strlen(chunk);
-
-	  p = tag;
-	  for (i = 0; replace_arr[i].match_; ++i)
-		  if (strncmp(replace_arr[i].match_, p + 1,
-			      replace_arr[i].match_len_) == 0) {
-			  res += replace_arr[i].replace_;
-			  p += 1 + replace_arr[i].match_len_;
-			  cur_pos += replace_arr[i].char_len_;
-			  goto cycle_end;
-		  }
-
-	  if (strncmp("k>", p + 1, 2) == 0) {
-		  next = strstr(p + 3, "</k>");
-		  if (next) {
-			  if (is_first_k) {
-				  is_first_k = false;
-				  if (*(next + 4) == '\n')
-					  next++;
-			  } else {
-				  res += "<span foreground=\"blue\">";
-				  std::string chunk(p+3, next-(p+3));
-				  res += chunk;
-				  size_t xml_len = xml_strlen(chunk);
-				  cur_pos += xml_len;
-				  res += "</span>";
-			  }
-			  p = next + sizeof("</k>") - 1;
-		  } else
-			  p += sizeof("<k>") - 1;
-	  } else if (*(p + 1) == 'c' && (*(p + 2) == ' ' || *(p + 2) == '>')) {
-		  next = strchr(p, '>');
-		  if (!next) {
-			  ++p;
-			  continue;
-		  }
-		  name.assign(p + 1, next - p - 1);
-		  std::string::size_type pos = name.find("c=\"");
-		  if (pos != std::string::npos) {
-			  pos += sizeof("c=\"") - 1;
-			  std::string::size_type end_pos = name.find("\"", pos);
-			  if (end_pos == std::string::npos)
-				  end_pos = name.length();
-
-			  std::string color(name, pos, end_pos - pos);
-			  if (pango_color_parse(NULL, color.c_str()))
-				  res += "<span foreground=\"" + color + "\">";
-			  else
-				  res += "<span>";
-		  } else
-			  res += "<span foreground=\"blue\">";
-		  p = next + 1;
-	} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
-		next = strchr(p, '>');
-		if (!next) {
-			++p;
-			continue;
-		}
-		name.assign(p + 1, next - p - 1);
-		std::string type;
-		std::string::size_type pos = name.find("type=\"");
-		if (pos != std::string::npos) {
-			pos += sizeof("type=\"") - 1;
-			std::string::size_type end_pos = name.find("\"", pos);
-			if (end_pos == std::string::npos)
-				end_pos = name.length();
-			type.assign(name, pos, end_pos - pos);
-		}
-		p = next + 1;
-		next = strstr(p, "</rref>");
-		if (!next)
-			continue;
-		std::string chunk(p, next - p);
-		if (type.empty()) {
-			if (g_str_has_suffix(chunk.c_str(), ".jpg") || g_str_has_suffix(chunk.c_str(), ".png")) {
-				type = "image";
-			} else if (g_str_has_suffix(chunk.c_str(), ".wav") || g_str_has_suffix(chunk.c_str(), ".mp3") || g_str_has_suffix(chunk.c_str(), ".ogg")) {
-				type = "sound";
-			} else if (g_str_has_suffix(chunk.c_str(), ".avi") || g_str_has_suffix(chunk.c_str(), ".mpeg")) {
-				type = "video";
-			} else {
-				type = "attach";
-			}
-		}
-		bool loaded = false;
-		if (type == "image") {
-			GdkPixbuf* pixbuf = NULL;
-			if (dict_index.type == InstantDictType_LOCAL) {
-				int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-				if (type == 0) {
-				} else if (type == 1) {
-					const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, chunk.c_str());
-					if (filename) {
-						pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-					}
-				}
-			}
-			if (pixbuf) {
-				loaded = true;
-				append_and_mark_orig_word(res, real_oword, links_list);
-				res.clear();
-				links_list.clear();
-				append_pixbuf(pixbuf, chunk.c_str());
-				g_object_unref(pixbuf);
-			}
-		} else if (type == "sound") {
-		} else if (type == "video") {
-		} else {
-		}
-		if (!loaded) {
-			res += "<span foreground=\"red\">";
-			res += chunk;
-			res += "</span>";
-			cur_pos += xml_strlen(chunk);
-		}
-		p = next + sizeof("</rref>") - 1;
-	} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
-		bool is_k_or_i = (*(p + 1) == 'k');
-		next = strchr(p, '>');
-		if (!next) {
-			++p;
-			continue;
-		}
-		name.assign(p + 1, next - p - 1);
-		std::string key;
-		std::string::size_type pos;
-		if (is_k_or_i)
-			pos = name.find("k=\"");
-		else
-			pos = name.find("href=\"");
-		if (pos != std::string::npos) {
-			if (is_k_or_i)
-				pos += sizeof("k=\"") - 1;
-			else
-				pos += sizeof("href=\"") - 1;
-			std::string::size_type end_pos = name.find("\"", pos);
-			if (end_pos == std::string::npos)
-				end_pos = name.length();
-			key.assign(name, pos, end_pos - pos);
-		}
-
-		p = next + 1;
-		if (is_k_or_i)
-			next = strstr(p, "</kref>");
-		else
-			next = strstr(p, "</iref>");
-		if (!next)
-			continue;
-
-		res += "<span foreground=\"blue\" underline=\"single\">";
-		std::string::size_type link_len = next - p;
-		std::string chunk(p, link_len);
-		size_t xml_len = xml_strlen(chunk);
-		std::string xml_enc;
-		if (key.empty())
-			xml_decode(chunk.c_str(), xml_enc);
-		else
-			xml_decode(key.c_str(), xml_enc);
-		std::string link;
-		if (is_k_or_i)
-			link = "query://";
-		link += xml_enc;
-		links_list.push_back(LinkDesc(cur_pos, xml_len, link));
-		res += chunk;
-		cur_pos += xml_len;
-		res += "</span>";
-		if (is_k_or_i)
-			p = next + sizeof("</kref>") - 1;
-		else
-			p = next + sizeof("</iref>") - 1;
-	  } else {
-		  next = strchr(p, '>');
-		  if (!next)
-			  continue;
-		  p = next + 1;
-	  }
-  cycle_end:
-	  ;
-  }
-  res += p;
-  return res;
-}
 
 void ArticleView::append_and_mark_orig_word(const std::string& mark,
 					    const gchar *origword,
@@ -765,11 +75,75 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 	data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
 	const gchar *p=data;
 	bool first_time = true;
+	size_t iPlugin;
+	size_t nPlugins = gpAppFrame->oStarDictPlugins->ParseDataPlugins.nplugins();
+	unsigned int parsed_size;
+	ParseResult parse_result;
 	while (guint32(p - data)<data_size) {
 		if (first_time)
 			first_time=false;
 		else
 			mark+= "\n";
+		for (iPlugin = 0; iPlugin < nPlugins; iPlugin++) {
+			parse_result.item_list.clear();
+			if (gpAppFrame->oStarDictPlugins->ParseDataPlugins.parse(iPlugin, p, &parsed_size, parse_result, oword)) {
+				p += parsed_size;
+				break;
+			}
+		}
+		if (iPlugin != nPlugins) {
+			for (std::list<ParseResultItem>::iterator it = parse_result.item_list.begin(); it != parse_result.item_list.end(); ++it) {
+				switch (it->type) {
+					case ParseResultItemType_mark:
+						mark += it->mark->pango;
+						break;
+					case ParseResultItemType_link:
+					{
+						append_and_mark_orig_word(mark, real_oword, LinksPosList());
+						mark.clear();
+						append_and_mark_orig_word(it->link->pango, real_oword, it->link->links_list);
+						break;
+					}
+					case ParseResultItemType_res:
+					{
+						bool loaded = false;
+						if (it->res->type == "image") {
+							GdkPixbuf* pixbuf = NULL;
+							if (dict_index.type == InstantDictType_LOCAL) {
+								int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+								if (type == 0) {
+								} else if (type == 1) {
+									const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, it->res->key.c_str());
+									if (filename) {
+										pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+									}
+								}
+							}
+							if (pixbuf) {
+								loaded = true;
+								append_and_mark_orig_word(mark, real_oword, LinksPosList());
+								mark.clear();
+								append_pixbuf(pixbuf, it->res->key.c_str());
+								g_object_unref(pixbuf);
+							}
+						} else if (it->res->type == "sound") {
+						} else if (it->res->type == "video") {
+						} else {
+						}
+						if (!loaded) {
+							mark += "<span foreground=\"red\">";
+							mark += it->res->key;
+							mark += "</span>";
+						}
+						break;
+					}
+					default:
+						break;
+				}
+			}
+			parse_result.item_list.clear();
+			continue;
+		}
 		switch (*p) {
 			case 'm':
 			case 'l'://need more work...
@@ -786,40 +160,24 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				p++;
 				sec_size=strlen(p);
 				if (sec_size) {
-					//AppendPangoText(p);
 					mark+=p;
 				}
 				sec_size++;
 				break;
 			case 'x':
 				p++;
-				sec_size = strlen(p);
-				if (sec_size) {
-					LinksPosList links_list;
-					append_and_mark_orig_word(mark, real_oword, links_list);
-					mark.clear();
-					std::string res = xdxf2pango(p, real_oword, links_list);
-					append_and_mark_orig_word(res, real_oword, links_list);
-				}
-				sec_size++;
+				sec_size = strlen(p) + 1;
+				mark+= _("XDXF data parse plug-in is not found!");
 				break;
 			case 'k':
 				p++;
-				sec_size = strlen(p);
-				if (sec_size) {
-					std::string res=powerword2pango(p, sec_size, oword);
-					mark+=res;
-				}
-				sec_size++;
+				sec_size = strlen(p) + 1;
+				mark+= _("PowerWord data parse plug-in is not found!");
 				break;
 			case 'w':
 				p++;
-				sec_size = strlen(p);
-				if (sec_size) {
-					std::string res=wiki2pango(p, sec_size);
-					mark+=res;
-				}
-				sec_size++;
+				sec_size = strlen(p) + 1;
+				mark+= _("Wiki data parse plug-in is not found!");
 				break;
 			case 't':
 				p++;
@@ -861,7 +219,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					gdk_pixbuf_loader_close(loader, NULL);
 					GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
 					if (pixbuf) {
-						append_pango_text(mark.c_str());
+						append_and_mark_orig_word(mark, real_oword, LinksPosList());
 						mark.clear();
 						append_pixbuf(pixbuf);
 					} else {
