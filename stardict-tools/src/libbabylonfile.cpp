@@ -160,6 +160,57 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	struct _worditem worditem;
 	struct _synworditem synworditem;
 	gint linenum=1;
+	int stripmethod;
+	if (strip_html)
+		stripmethod = 0;
+	else
+		stripmethod = 1;
+	std::string sametypesequence = "m";
+	std::string bookname;
+	std::string author;
+	std::string email;
+	std::string website;
+	std::string description;
+	while (1) {
+		if (*p != '#')
+			break;
+		p++;
+		p1 = strchr(p, '\n');
+		if (!p1) {
+			return;
+		}
+		*p1 = '\0';
+		p1++;
+		linenum++;
+		if (g_str_has_prefix(p, "stripmethod=")) {
+			p += sizeof("stripmethod=") -1;
+			if (strcmp(p, "striphtml")==0)
+				stripmethod = 0;
+			else if (strcmp(p, "stripnewline")==0)
+				stripmethod = 1;
+			else if (strcmp(p, "keep")==0)
+				stripmethod = 2;
+		} else if (g_str_has_prefix(p, "sametypesequence=")) {
+			p += sizeof("sametypesequence=") -1;
+			sametypesequence = p;
+		} else if (g_str_has_prefix(p, "bookname=")) {
+			p += sizeof("bookname=") -1;
+			bookname = p;
+		} else if (g_str_has_prefix(p, "author=")) {
+			p += sizeof("author=") -1;
+			author = p;
+		} else if (g_str_has_prefix(p, "email=")) {
+			p += sizeof("email=") -1;
+			email = p;
+		} else if (g_str_has_prefix(p, "website=")) {
+			p += sizeof("website=") -1;
+			website = p;
+		} else if (g_str_has_prefix(p, "description=")) {
+			p += sizeof("description=") -1;
+			description = p;
+		}
+		p = p1;
+	}
 	while (1) {
 		if (*p == '\0') {
                         print_info("Over\n");
@@ -196,10 +247,12 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 		p3++;
 		linenum++;
 		
-		if (strip_html)
+		if (stripmethod == 0) {
 			html_strstrip(p1, linenum-2, print_info);
-		else
+		} else if (stripmethod == 1) {
 			newline_strstrip(p1, linenum-2, print_info);
+		} else if (stripmethod == 2) {
+		}
 		g_strstrip(p1);
 		if (!(*p1)) {
 			gchar *str = g_strdup_printf("%s-%d, bad definition!!!\n", basefilename, linenum-1);
@@ -415,7 +468,20 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 		synwordcount = g_strdup("");
 	}
 	g_stat(idxfilename, &stats);
-        fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n%sidxfilesize=%ld\nbookname=%s\nsametypesequence=m\n", array->len, synwordcount, stats.st_size, basefilename);
+        fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n%sidxfilesize=%ld\n", array->len, synwordcount, stats.st_size);
+	if (bookname.empty())
+		fprintf(ifofile, "bookname=%s\n", basefilename);
+	else
+		fprintf(ifofile, "bookname=%s\n", bookname.c_str());
+	if (!author.empty())
+		fprintf(ifofile, "author=%s\n", author.c_str());
+	if (!email.empty())
+		fprintf(ifofile, "email=%s\n", email.c_str());
+	if (!website.empty())
+		fprintf(ifofile, "website=%s\n", website.c_str());
+	if (!description.empty())
+		fprintf(ifofile, "description=%s\n", description.c_str());
+	fprintf(ifofile, "sametypesequence=%s\n", sametypesequence.c_str());
         fclose(ifofile);
 	g_free(synwordcount);
 
