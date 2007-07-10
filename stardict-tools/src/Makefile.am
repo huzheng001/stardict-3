@@ -3,7 +3,7 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt
 
 INCLUDES = $(STARDICT_CFLAGS) -I/usr/include/mysql4/mysql
 
@@ -198,6 +198,11 @@ xiaoxuetang_ja_SOURCES = xiaoxuetang-ja.cpp
 wubi_LDFLAGS =
 wubi_LDADD = $(STARDICT_LIBS)
 wubi_SOURCES = wubi.cpp
+
+
+bgl2txt_LDFLAGS =
+bgl2txt_LDADD = $(STARDICT_LIBS) -lz
+bgl2txt_SOURCES = bgl2txt.cpp bgl_babylon.h bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h bgl_babylonreader.cpp bgl_stardictbuilder.h bgl_stardictbuilder.cpp
 
 stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)

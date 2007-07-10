@@ -134,16 +134,31 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	int n_misspelled = misspelled_wordlist.size();
 	if (n_misspelled !=0 && n_words != 1) {
 		underline_str += "<big>";
-		gchar *escape;
 		for (size_t i = 0; i < len; i++) {
 			if (insert_tags[i] == 1) {
 				underline_str += "<span underline=\"error\" underline_color=\"#FF0000\">";
 			} else if (insert_tags[i] == 2) {
 				underline_str += "</span>";
 			}
-			escape = g_markup_escape_text(&(text[i]), 1);
-			underline_str += escape;
-			g_free(escape);
+			switch (text[i]) {
+				case '&':
+					underline_str += "&amp;";
+					break;
+				case '<':
+					underline_str += "&lt;";
+					break;
+				case '>':
+					underline_str += "&gt;";
+					break;
+				case '\'':
+					underline_str += "&apos;";
+					break;
+				case '"':
+					underline_str += "&quot;";
+					break;
+				default:
+					underline_str += text[i];
+			}
 		}
 		if (insert_tags[len] == 2)
 			underline_str += "</span>";
