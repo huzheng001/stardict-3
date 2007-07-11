@@ -20,7 +20,7 @@ static size_t xml_strlen(const std::string& str)
 			if (xml_entrs[i] == NULL)
 				++q;
 		} else if (*q == '<') {
-			const char *p = strchr(q, '>');
+			const char *p = strchr(q+1, '>');
 			if (p)
 				q = p + 1;
 			else
@@ -270,9 +270,13 @@ static void xdxf2result(const char *p, ParseResult &result)
 			else
 				p = next + sizeof("</iref>") - 1;
 		} else {
-			next = strchr(p, '>');
-			if (!next)
+			next = strchr(p+1, '>');
+			if (!next) {
+				p++;
+				res += "&lt;";
+				cur_pos++;
 				continue;
+			}
 			p = next + 1;
 		}
 cycle_end:

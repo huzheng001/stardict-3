@@ -36,7 +36,7 @@ class BabylonReader : public DictReader
   public:
     BabylonReader( std::string filename, DictBuilder *builder );
     //~BabylonReader();
-    bool convert();
+    bool convert(std::string &source_charset, std::string &target_charset);
     inline DictBuilder* product() const { return m_builder; };
     inline std::string filename() const { return m_babylon->filename(); };
 

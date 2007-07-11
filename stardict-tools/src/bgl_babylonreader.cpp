@@ -31,7 +31,7 @@ BabylonReader::BabylonReader( std::string filename, DictBuilder *builder )
 }
 
 
-bool BabylonReader::convert()
+bool BabylonReader::convert(std::string &source_charset, std::string &target_charset)
 {
   if( !m_babylon->open() )
   {
@@ -39,7 +39,7 @@ bool BabylonReader::convert()
     return false;
   }
 
-  if( !m_babylon->read() )
+  if( !m_babylon->read(source_charset, target_charset) )
   {
     printf( "Error reading %s\n", m_babylon->filename().c_str() );
     return false;

@@ -1,3 +1,3 @@
-DIST_SUBDIRS = stardict-advertisement-plugin stardict-update-info-plugin stardict-xdxf-parsedata-plugin stardict-powerword-parsedata-plugin stardict-wiki-parsedata-plugin stardict-spell-plugin stardict-gucharmap-plugin stardict-festival-tts-plugin stardict-espeak-tts-plugin
+DIST_SUBDIRS = stardict-advertisement-plugin stardict-update-info-plugin stardict-html-parsedata-plugin stardict-xdxf-parsedata-plugin stardict-powerword-parsedata-plugin stardict-wiki-parsedata-plugin stardict-spell-plugin stardict-gucharmap-plugin stardict-festival-tts-plugin stardict-espeak-tts-plugin
 
-SUBDIRS = stardict-advertisement-plugin stardict-update-info-plugin stardict-xdxf-parsedata-plugin stardict-powerword-parsedata-plugin stardict-wiki-parsedata-plugin $(SPELL_PLUGIN_DIR) $(GUCHARMAP_PLUGIN_DIR) $(FESTIVAL_PLUGIN_DIR) $(ESPEAK_PLUGIN_DIR)
+SUBDIRS = stardict-advertisement-plugin stardict-update-info-plugin stardict-html-parsedata-plugin stardict-xdxf-parsedata-plugin stardict-powerword-parsedata-plugin stardict-wiki-parsedata-plugin $(SPELL_PLUGIN_DIR) $(GUCHARMAP_PLUGIN_DIR) $(FESTIVAL_PLUGIN_DIR) $(ESPEAK_PLUGIN_DIR)
