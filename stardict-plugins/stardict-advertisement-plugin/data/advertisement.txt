@@ -30,7 +30,7 @@ linux_logo.jpg
 m
 The best OS!
 
-RedHat Linux	RHEL
+RedHat Linux	RHEL	Fedora
 P
 redhat_linux_logo.gif
 

@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_gucharmap.version-script
+EXTRA_DIST = stardict_gucharmap.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_gucharmap.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_gucharmap.v"
 
 noinst_HEADERS = stardict_gucharmap.h
 
