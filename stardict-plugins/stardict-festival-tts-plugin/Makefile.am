@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_festival.version-script
+EXTRA_DIST = stardict_festival.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_festival.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_festival.v"
 
 noinst_HEADERS = stardict_festival.h
 

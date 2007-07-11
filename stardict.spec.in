@@ -20,6 +20,15 @@ BuildRequires: libgnomeui-devel >= 2.2.0, scrollkeeper, gettext, perl-XML-Parser
 Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
+Requires: gucharmap
+BuildRequires: gucharmap-devel
+Requires: espeak
+BuildRequires: espeak-devel
+Requires: enchant
+BuildRequires: enchant-devel
+Requires: festival, speech-tools
+BuildRequires: festival-devel, speech-tools-devel
+
 %description
 StarDict is a Cross-Platform and international dictionary written in Gtk2.
 It has powerful features such as "Glob-style pattern matching,"
@@ -36,6 +45,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
+/bin/rm -f `find $RPM_BUILD_ROOT%{_libdir}/stardict/plugins -name "*.la"`
 %find_lang %{name}
 
 %clean
@@ -47,6 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/stardict
 %{_datadir}/applications/stardict.desktop
 %{_datadir}/stardict
+%{_libdir}/stardict
 %{_datadir}/idl/*
 %{_libdir}/bonobo/servers/*.server
 %{_datadir}/pixmaps/stardict.png

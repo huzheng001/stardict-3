@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_espeak.version-script
+EXTRA_DIST = stardict_espeak.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_espeak.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_espeak.v"
 
 noinst_HEADERS = stardict_espeak.h
 

@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_update_info.version-script
+EXTRA_DIST = stardict_update_info.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_update_info.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_update_info.v"
 
 noinst_HEADERS = stardict_update_info.h
 

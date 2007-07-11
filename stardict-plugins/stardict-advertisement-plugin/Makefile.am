@@ -1,8 +1,8 @@
 SUBDIRS = data
 
-EXTRA_DIST = advertisement.version-script
+EXTRA_DIST = advertisement.v
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=advertisement.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=advertisement.v"
 
 noinst_HEADERS = advertisement.h
 

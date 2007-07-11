@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_html_parsedata.version-script
+EXTRA_DIST = stardict_html_parsedata.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_html_parsedata.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_html_parsedata.v"
 
 noinst_HEADERS = stardict_html_parsedata.h
 

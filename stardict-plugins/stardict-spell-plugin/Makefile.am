@@ -1,7 +1,7 @@
-EXTRA_DIST = stardict_spell.version-script
+EXTRA_DIST = stardict_spell.v
 
 
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_spell.version-script"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_spell.v"
 
 noinst_HEADERS = stardict_spell.h
 
