@@ -257,7 +257,7 @@ void ArticleView::AppendNewline()
 
 void ArticleView::AppendDataSeparate()
 {
-	append_pango_text("\n");
+	append_pango_text("<span foreground=\"gray\"><s>     </s></span>\n");
 }
 
 void ArticleView::SetDictIndex(InstantDictIndex index)

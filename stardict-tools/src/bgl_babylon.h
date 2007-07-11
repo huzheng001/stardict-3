@@ -156,7 +156,7 @@ public:
     bool open();
     void close();
     bool readBlock( bgl_block& );
-    bool read();
+    bool read(std::string &source_charset, std::string &target_charset);
     bgl_entry readEntry();
 
     inline std::string title() const { return m_title; };

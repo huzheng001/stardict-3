@@ -1,11 +1,20 @@
 StarDict frequently asked questions!
 -----------------------------------
 
+Q) In Windows, I have installed the somedict.tar.bz2 file at dic/, but StarDict didn't load it.
+A) You need to use WinRAR to uncompress this file.
+
+Q) StarDict is freezed when I am using it.
+A) This seems to be esound's bug, try this command:"killall esd". Another case is pango's bug, try to drag the hpaned to resize the textview.
+
 Q) How to mouse over get word in Adobe Reader win32?
 A) We have developed a plug-in for Adobe Reader, but only Acrobat Professional edition will load this plug-in, if we want to register the plug-in for Adobe Reader that make it load the StarDict plug-in, we need to pay $2500, which have not be done yet. So you can change to Acrobat Professional edition or just use scan clipboard feature in Adobe Reader.
 
 Q) I get some problem when install StarDict from the source code tarball.
 A) Read INSTALL.
+
+Q) How the show the correct phonetics in some babylon dictionaries?
+A) Download http://stardict.sourceforge.net/files/ksphonet.ttf and install it. In linux, you can put it into ~/.fonts/ directory.
 
 Q) How to compile StarDict on Windows?
 A) read README.win32.

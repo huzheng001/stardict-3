@@ -120,7 +120,7 @@ unsigned int Babylon::bgl_readnum( int bytes )
 }
 
 
-bool Babylon::read()
+bool Babylon::read(std::string &source_charset, std::string &target_charset)
 {
   if( file == NULL ) return false;
 
@@ -130,6 +130,8 @@ bool Babylon::read()
   std::string headword;
   std::string definition;
 
+  m_sourceCharset = source_charset;
+  m_targetCharset = target_charset;
   m_numEntries = 0;
   while( readBlock( block ) )
   {
@@ -194,12 +196,14 @@ bool Babylon::read()
           case 26:
             type = (uint)block.data[2];
             if( type > 64 ) type -= 65;
-            m_sourceCharset = bgl_charset[type];
+            if (m_sourceCharset.empty())
+              m_sourceCharset = bgl_charset[type];
             break;
           case 27:
             type = (uint)block.data[2];
             if( type > 64 ) type -= 65;
-            m_targetCharset = bgl_charset[type];
+            if (m_targetCharset.empty())
+              m_targetCharset = bgl_charset[type];
             break;
           default:
             break;
@@ -216,7 +220,7 @@ bool Babylon::read()
   convertToUtf8( m_author, DEFAULT_CHARSET );
   convertToUtf8( m_email, DEFAULT_CHARSET );
   convertToUtf8( m_copyright, DEFAULT_CHARSET );
-  convertToUtf8( m_description, DEFAULT_CHARSET );
+  convertToUtf8( m_description, TARGET_CHARSET );
   printf("Default charset: %s\nSource Charset: %s\nTargetCharset: %s\n", m_defaultCharset.c_str(), m_sourceCharset.c_str(), m_targetCharset.c_str());
   return true;
 }

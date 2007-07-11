@@ -30,7 +30,7 @@ class DictBuilder;
 class DictReader
 {
   public:
-    virtual bool convert(){return false;};
+    virtual bool convert(std::string &source_charset, std::string &target_charset){return false;};
     inline virtual DictBuilder* product() const { return m_builder; };
 
   protected:

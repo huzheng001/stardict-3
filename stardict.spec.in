@@ -1,38 +1,32 @@
-%define release 1
-%define prefix  /usr
 %define name	@PACKAGE@
 %define version @VERSION@
 
 
-Summary: 	StarDict dictionary
 Name:		%{name}
-Version:    %{version}
-Release:	%{release}
-License: 	GPL
-Vendor:		GNOME
-URL: 		http://stardict.sourceforge.net
+Summary: 	A powerful dictionary platform written in GTK+2
+Version:	%{version}
+Release:	1%{?dist}
 Group: 		Applications/System
-Source0:	%{name}-%{version}.tar.bz2
-Packager:       Hu Zheng <huzheng_001@163.com>
-BuildRoot:	%{_builddir}/%{name}-%{version}-root
-
-BuildRequires: libgnomeui-devel >= 2.2.0
-
+License: 	GPL
+URL: 		http://stardict.sourceforge.net
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: libgnome >= 2.2.0
 Requires: libgnomeui >= 2.2.0
 Requires: libbonobo >= 2.2.0
 Requires: bonobo-activation >= 2.2.0
-
-Docdir:         %{prefix}/share/doc
+BuildRequires: libgnomeui-devel >= 2.2.0, scrollkeeper, gettext, perl-XML-Parser
+Requires(post): GConf2, scrollkeeper
+Requires(postun): scrollkeeper
 
 %description
 StarDict is a Cross-Platform and international dictionary written in Gtk2.
-It has powerful features such as "Glob-style pattern matching," "Scan
-seletion word," "Fuzzy search," etc.
+It has powerful features such as "Glob-style pattern matching,"
+"Scan selection word," "Fuzzy query," etc.
 
 %prep
-%setup
+%setup -q
 
 %build
 
@@ -42,23 +36,23 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 
-%files
+%files -f %{name}.lang
 %defattr(-, root, root)
 %{_bindir}/stardict
 %{_datadir}/applications/stardict.desktop
 %{_datadir}/stardict
-%{_datadir}/locale/*/LC_MESSAGES/stardict.mo
-%{_datadir}/idl
+%{_datadir}/idl/*
 %{_libdir}/bonobo/servers/*.server
 %{_datadir}/pixmaps/stardict.png
 %{_sysconfdir}/gconf/schemas/*.schemas
-%{_datadir}/omf
-%doc %{_datadir}/man/man1/stardict.1*
+%{_datadir}/omf/*
+%{_mandir}/man1/*
 %doc %{_datadir}/gnome/help/stardict
 
 

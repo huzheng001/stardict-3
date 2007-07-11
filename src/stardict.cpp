@@ -197,6 +197,10 @@ void AppCore::on_link_click(const std::string &link)
 		oTopWin.InsertHisList(oTopWin.get_text());
 		oTopWin.InsertBackList();
 		oTopWin.SetText(link.c_str() + sizeof("query://") -1);
+	} else if (g_str_has_prefix(link.c_str(), "bword://")) {
+		oTopWin.InsertHisList(oTopWin.get_text());
+		oTopWin.InsertBackList();
+		oTopWin.SetText(link.c_str() + sizeof("bword://") -1);
 	} else {
 		show_url(link.c_str());
 	}

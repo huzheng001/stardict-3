@@ -404,7 +404,7 @@ MediaWiki markup language.
 See http://meta.wikimedia.org/wiki/Help:Editing#The_wiki_markup
 
 'h'
-Html codes. Not supported yet.
+Html codes.
 
 'r'
 Resource file list.
