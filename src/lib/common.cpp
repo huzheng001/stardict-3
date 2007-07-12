@@ -26,6 +26,26 @@
 
 #include "common.hpp"
 
+static void parse_description(const char *p, long len, std::string &description)
+{
+	description.clear();
+	const char *p1 = p;
+	while (p1 - p < len) {
+		if (*p1 == '<') {
+			p1++;
+			if ((*p1 == 'b' || *p1 == 'B') && (*(p1+1)=='r' || *(p1+1)=='R') && *(p1+2)=='>') {
+				description += '\n';
+				p1+=3;
+			} else {
+				description += '<';
+			}
+		} else {
+			description += *p1;
+			p1++;
+		}
+	}
+}
+
 //looks not optimal, TODO: refactor
 bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 				  bool istreedict)
@@ -184,7 +204,7 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 	if (p2) {
 		p2 = p2 + sizeof("\ndescription=")-1;
 		p3 = strchr(p2, '\n');
-		description.assign(p2, p3-p2);
+		parse_description(p2, p3-p2, description);
 	}
 
 	p2 = strstr(p1,"\nsametypesequence=");
