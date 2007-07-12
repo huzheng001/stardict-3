@@ -179,6 +179,11 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				sec_size = strlen(p) + 1;
 				mark+= _("Wiki data parse plug-in is not found!");
 				break;
+			case 'h':
+				p++;
+				sec_size = strlen(p) + 1;
+				mark+= _("HTML data parse plug-in is not found!");
+				break;
 			case 't':
 				p++;
 				sec_size = strlen(p);

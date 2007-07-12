@@ -79,7 +79,7 @@ idxoffsetbits= // New in 3.0.0
 author=
 email=
 website=
-description=
+description=	// You can use <br> for new line.
 date=
 sametypesequence= // very important.
 
