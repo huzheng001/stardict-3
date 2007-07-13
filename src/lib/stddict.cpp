@@ -577,12 +577,12 @@ struct sort_collation_index_user_data {
 static gint sort_collation_index(gconstpointer a, gconstpointer b, gpointer user_data)
 {
 	sort_collation_index_user_data *data = (sort_collation_index_user_data*)user_data;
-	gchar *str1 = g_strdup(data->idx_file->get_key(*((glong *)a)));
-	const gchar *str2 = data->idx_file->get_key(*((glong *)b));
+	gchar *str1 = g_strdup(data->idx_file->get_key(*((guint32 *)a)));
+	const gchar *str2 = data->idx_file->get_key(*((guint32 *)b));
 	gint x = stardict_collate(str1, str2, data->cltfunc);
 	g_free(str1);
 	if (x==0)
-		return *((glong *)a) - *((glong *)b);
+		return *((guint32 *)a) - *((guint32 *)b);
 	else
 		return x;
 }

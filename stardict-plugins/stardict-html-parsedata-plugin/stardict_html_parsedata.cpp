@@ -269,14 +269,9 @@ static void html2result(const char *p, ParseResult &result)
 			res += "</span>";
 			p = next + sizeof("</ref>") - 1;
 		} else {
-			next = strchr(p+1, '>');
-			if (!next) {
-				p++;
-				res += "&lt;";
-				cur_pos++;
-				continue;
-			}
-			p = next + 1;
+			p++;
+			res += "&lt;";
+			cur_pos++;
 		}
 cycle_end:
 		;

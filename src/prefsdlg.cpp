@@ -1342,8 +1342,8 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 	GtkTreePath *path = gtk_tree_path_new_from_string (path_string);
 	GtkTreeIter iter;
 
-	gint column;
-	column = GPOINTER_TO_INT(g_object_get_data (G_OBJECT (cell), "column"));
+	glong column;
+	column = (glong)(g_object_get_data (G_OBJECT (cell), "column"));
 	gtk_tree_model_get_iter (model, &iter, path);
 
 	switch (column) {
