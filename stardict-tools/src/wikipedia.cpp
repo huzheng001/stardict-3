@@ -101,14 +101,11 @@ void convert(char *filename, char *wikiname, char *wikidate)
                 return;
         }
 	int mmap_fd;
-	if ((mmap_fd = open(filename, O_RDONLY)) < 0) {
+	if ((mmap_fd = open(filename, O_RDONLY | O_LARGEFILE)) < 0) {
+		printf("open file failed!\n");
 		return;
 	}
 	char *data;
-	data = (gchar *)mmap( NULL, stats.st_size, PROT_READ, MAP_SHARED, mmap_fd, 0);
-	if ((void *)data == (void *)(-1)) {
-		return;
-	}
 	GArray *array = g_array_sized_new(FALSE,FALSE, sizeof(struct _worditem),20000);
 	ParseUserData Data;
 	Data.inpage=false;
@@ -120,12 +117,34 @@ void convert(char *filename, char *wikiname, char *wikidate)
 	parser.passthrough = NULL;
 	parser.error = NULL;
 	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-	g_markup_parse_context_parse(context, data, stats.st_size, NULL);
+	size_t length;
+	for (size_t offset = 0; offset < stats.st_size; offset += 10240000) {
+		if (offset + 10240000 > stats.st_size) {
+			length = stats.st_size - offset;
+		} else {
+			length = 10240000;
+		}
+		data = (char *)mmap( NULL, length, PROT_READ, MAP_SHARED, mmap_fd, offset);
+		if (data == MAP_FAILED) {
+			printf("mmap failed!\n");
+			return;
+		}
+		if (g_markup_parse_context_parse(context, data, length, NULL) == FALSE) {
+			if (!g_utf8_validate(data, length, NULL))
+				g_print("invalide UTF-8.\n");
+			g_print("Parse error!\n");
+			g_file_set_contents("error.xml", data, length, NULL);
+			return;
+		}
+		munmap(data, length);
+		g_print(".");
+		fflush(stdout);
+	}
 	g_markup_parse_context_end_parse(context, NULL);
 	g_markup_parse_context_free(context);
-	munmap(data, stats.st_size);
 	close(mmap_fd);
 
+	g_print("Parse over!\n");
 	g_array_sort(array,comparefunc);
 	gchar idxfilename[256];
         gchar dicfilename[256];
