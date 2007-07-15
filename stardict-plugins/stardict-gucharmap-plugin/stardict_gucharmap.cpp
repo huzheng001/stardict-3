@@ -69,10 +69,13 @@ static std::string get_string_link_codepoints(const gchar *str)
 	std::string definition;
 	const gchar *p1, *p2;
 	p1 = str;
+	char *mark;
 	for (;;) {
 		p2 = find_codepoint (p1);
 		if (p2 != NULL) {
-			definition.append(p1, p2 - p1);
+			mark = g_markup_escape_text(p1, p2 - p1);
+			definition.append(mark);
+			g_free(mark);
 			gunichar uc;
 			uc = strtoul (p2, (gchar **) &p1, 16);
 			definition += get_codepoint(uc);

@@ -171,45 +171,52 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	std::string email;
 	std::string website;
 	std::string description;
-	while (1) {
-		if (*p != '#')
-			break;
+	if (*p == '\n') {
 		p++;
-		p1 = strchr(p, '\n');
-		if (!p1) {
-			return;
-		}
-		*p1 = '\0';
-		p1++;
 		linenum++;
-		if (g_str_has_prefix(p, "stripmethod=")) {
-			p += sizeof("stripmethod=") -1;
-			if (strcmp(p, "striphtml")==0)
-				stripmethod = 0;
-			else if (strcmp(p, "stripnewline")==0)
-				stripmethod = 1;
-			else if (strcmp(p, "keep")==0)
-				stripmethod = 2;
-		} else if (g_str_has_prefix(p, "sametypesequence=")) {
-			p += sizeof("sametypesequence=") -1;
-			sametypesequence = p;
-		} else if (g_str_has_prefix(p, "bookname=")) {
-			p += sizeof("bookname=") -1;
-			bookname = p;
-		} else if (g_str_has_prefix(p, "author=")) {
-			p += sizeof("author=") -1;
-			author = p;
-		} else if (g_str_has_prefix(p, "email=")) {
-			p += sizeof("email=") -1;
-			email = p;
-		} else if (g_str_has_prefix(p, "website=")) {
-			p += sizeof("website=") -1;
-			website = p;
-		} else if (g_str_has_prefix(p, "description=")) {
-			p += sizeof("description=") -1;
-			description = p;
+		while (1) {
+			if (*p == '\n') {
+				p++;
+				linenum++;
+				break;
+			}
+			p++;
+			p1 = strchr(p, '\n');
+			if (!p1) {
+				return;
+			}
+			*p1 = '\0';
+			p1++;
+			linenum++;
+			if (g_str_has_prefix(p, "stripmethod=")) {
+				p += sizeof("stripmethod=") -1;
+				if (strcmp(p, "striphtml")==0)
+					stripmethod = 0;
+				else if (strcmp(p, "stripnewline")==0)
+					stripmethod = 1;
+				else if (strcmp(p, "keep")==0)
+					stripmethod = 2;
+			} else if (g_str_has_prefix(p, "sametypesequence=")) {
+				p += sizeof("sametypesequence=") -1;
+				sametypesequence = p;
+			} else if (g_str_has_prefix(p, "bookname=")) {
+				p += sizeof("bookname=") -1;
+				bookname = p;
+			} else if (g_str_has_prefix(p, "author=")) {
+				p += sizeof("author=") -1;
+				author = p;
+			} else if (g_str_has_prefix(p, "email=")) {
+				p += sizeof("email=") -1;
+				email = p;
+			} else if (g_str_has_prefix(p, "website=")) {
+				p += sizeof("website=") -1;
+				website = p;
+			} else if (g_str_has_prefix(p, "description=")) {
+				p += sizeof("description=") -1;
+				description = p;
+			}
+			p = p1;
 		}
-		p = p1;
 	}
 	while (1) {
 		if (*p == '\0') {

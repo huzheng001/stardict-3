@@ -3,9 +3,9 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict
 
-INCLUDES = $(STARDICT_CFLAGS) -I/usr/include/mysql4/mysql $(LFS_CFLAGS)
+INCLUDES = $(STARDICT_CFLAGS)
 
 pydict2dic_LDFLAGS = 
 pydict2dic_LDADD = $(STARDICT_LIBS)
@@ -127,10 +127,12 @@ kingsoft_LDFLAGS =
 kingsoft_LDADD = $(STARDICT_LIBS)
 kingsoft_SOURCES = kingsoft.cpp
 
+wikipedia_CPPFLAGS = $(LFS_CFLAGS)
 wikipedia_LDFLAGS = $(LFS_LDFLAGS)
 wikipedia_LDADD = $(STARDICT_LIBS) $(LFS_LIBS)
 wikipedia_SOURCES = wikipedia.cpp
 
+wikipediaImage_CPPFLAGS = -I/usr/include/mysql4/mysql
 wikipediaImage_LDFLAGS = -L/usr/lib/mysql4/mysql
 wikipediaImage_LDADD = $(STARDICT_LIBS) -lmysqlclient
 wikipediaImage_SOURCES = wikipediaImage.cpp
@@ -199,6 +201,9 @@ wubi_LDFLAGS =
 wubi_LDADD = $(STARDICT_LIBS)
 wubi_SOURCES = wubi.cpp
 
+ydp2dict_LDFLAGS =
+ydp2dict_LDADD = $(STARDICT_LIBS)
+ydp2dict_SOURCES = ydp2dict.c
 
 bgl2txt_LDFLAGS =
 bgl2txt_LDADD = $(STARDICT_LIBS) -lz

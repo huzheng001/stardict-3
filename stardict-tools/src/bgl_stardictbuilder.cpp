@@ -37,6 +37,7 @@ StarDictBuilder::~StarDictBuilder()
 bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vector<std::string> alternates )
 {
   if (m_entriescount == 0) {
+    file.write("\n", 1);
     std::string line;
     line = "#stripmethod=keep\n#sametypesequence=h\n";
     file.write(line.data(), line.length());
@@ -70,6 +71,7 @@ bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vecto
       line += '\n';
       file.write(line.data(), line.length());
     }
+    file.write("\n", 1);
   }
   m_entriescount++;
   std::string lines;
