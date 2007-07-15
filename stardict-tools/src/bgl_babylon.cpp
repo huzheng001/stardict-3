@@ -190,7 +190,15 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
             break;
           case 9:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) headword += block.data[pos++];
+            for(uint a=0;a<block.length-2;a++) {
+              if (block.data[pos] == '\r') {
+              } else if (block.data[pos] == '\n') {
+                headword += "<br>";
+              } else {
+                headword += block.data[pos];
+              }
+              pos++;
+            }
             m_description = headword;
             break;
           case 26:
