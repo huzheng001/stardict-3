@@ -24,7 +24,12 @@
 
 StarDictBuilder::StarDictBuilder( std::string filename )
 {
-  m_babylonfilename = filename + ".babylon";
+  const char *p = strrchr(filename.c_str(), '/');
+  if (p)
+    m_babylonfilename = p+1;
+  else
+    m_babylonfilename = filename;
+  m_babylonfilename += ".babylon";
   file.open( m_babylonfilename.c_str() );
   m_entriescount = 0;
 }

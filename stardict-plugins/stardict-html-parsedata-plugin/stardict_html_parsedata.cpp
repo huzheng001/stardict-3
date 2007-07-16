@@ -132,6 +132,7 @@ static void html2result(const char *p, ParseResult &result)
 		{ "u>", 2, "<u>", 0  },
 		{ "/u>", 3, "</u>", 0 },
 		{ "br>", 3, "\n", 1 },
+		{ "nl>", 3, "", 0 },
 		{ "hr>", 3, "\n<span foreground=\"gray\"><s>     </s></span>\n", 7 },
 		{ "/font>", 6, "</span>", 0 },
 		{ NULL, 0, NULL },
@@ -268,6 +269,52 @@ static void html2result(const char *p, ParseResult &result)
 			cur_pos += pango_len;
 			res += "</span>";
 			p = next + sizeof("</ref>") - 1;
+		} else if (strncasecmp(p+1, "img ", 4)==0) {
+			next = strchr(p+5, '>');
+			if (!next) {
+				p++;
+				continue;
+			}
+			name.assign(p+5, next - (p+5));
+			p = next + 1;
+			const char *p1 = strcasestr(name.c_str(), "src=");
+			std::string src;
+			if (p1) {
+				p1 += sizeof("src=") -1 +1;
+				const char *p2 = p1;
+				while (true) {
+					if (*p2 == '\0') {
+						p2 = NULL;
+						break;
+					}
+					if (*p2 == '\'' || *p2 == '"')
+						break;
+					p2++;
+				}
+				if (p2) {
+					src.assign(p1, p2-p1);
+				}
+			}
+			if (!src.empty()) {
+				int n = src.length();
+				if (src[0]==0x1e && src[n-1]==0x1f) {
+					ParseResultItem item;
+					item.type = ParseResultItemType_link;
+					item.link = new ParseResultLinkItem;
+					item.link->pango = res;
+					item.link->links_list = links_list;
+					result.item_list.push_back(item);
+					res.clear();
+					cur_pos = 0;
+					links_list.clear();
+					item.type = ParseResultItemType_res;
+					item.res = new ParseResultResItem;
+					item.res->type = "image";
+					item.res->key.assign(src.c_str()+1, n-2);
+					result.item_list.push_back(item);
+					item.type = ParseResultItemType_unknown;
+				}
+			}
 		} else {
 			p++;
 			res += "&lt;";
