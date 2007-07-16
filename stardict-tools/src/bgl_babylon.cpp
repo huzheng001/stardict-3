@@ -256,6 +256,18 @@ bgl_entry Babylon::readEntry()
   {
     switch( block.type )
     {
+      case 2:
+      {
+        pos = 0;
+	len = (unsigned char)block.data[pos++];
+        std::string filename = "res/";
+        filename.append(block.data+pos, len);
+	pos += len;
+        FILE *ifile = fopen(filename.c_str(), "w");
+        fwrite(block.data + pos, 1, block.length -pos, ifile);
+        fclose(ifile);
+        break;
+      }
       case 1:
       case 10:
         alternate.clear();
@@ -285,10 +297,16 @@ bgl_entry Babylon::readEntry()
             pos++;
           }else if( (unsigned char)block.data[pos] < 0x20 )
           {
-            if( a < len - 3 && block.data[pos] == 0x14 && block.data[pos+1] == 0x02 )
-              definition = partOfSpeech[(unsigned char)block.data[pos+2] - 0x30] + " " + definition;
-            pos += len - a;
-            break;
+            if( a <= len - 3 && block.data[pos] == 0x14 && block.data[pos+1] == 0x02 ) {
+              int index = (unsigned char)block.data[pos+2] - 0x30;
+              if (index <= 10) {
+                definition = "<font color=\"blue\">" + partOfSpeech[index] + "</font> " + definition;
+              }
+              pos += len - a;
+              break;
+            } else {
+              definition += block.data[pos++];
+            }
           }else definition += block.data[pos++];
         }
         convertToUtf8( definition, TARGET_CHARSET );

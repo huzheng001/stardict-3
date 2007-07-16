@@ -212,6 +212,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 			case 'x':
 			case 'k':
 			case 'w':
+			case 'h':
 				for (j=0; j<nWord; j++)
 					// KMP() is faster than strstr() in theory. Really? Always be true?
 					//if (!WordFind[j] && strstr(p, SearchWords[j].c_str())) {
@@ -244,6 +245,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 		case 'x':
 		case 'k':
 		case 'w':
+		case 'h':
 			sec_size = idxitem_size - (p-origin_data);
 			for (j=0; j<nWord; j++)
 				//if (!WordFind[j] && g_strstr_len(p, sec_size, SearchWords[j].c_str())) {
@@ -267,6 +269,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 			case 'x':
 			case 'k':
 			case 'w':
+			case 'h':
 				for (j=0; j<nWord; j++)
 					if (!WordFind[j] && strstr(p, SearchWords[j].c_str())) {
 						WordFind[j] = true;

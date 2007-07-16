@@ -53,6 +53,7 @@ bool BabylonReader::convert(std::string &source_charset, std::string &target_cha
   m_builder->setDestLang( m_babylon->targetLang() );
   m_builder->setDescription( m_babylon->description() );
 
+  system("rm -rf res;mkdir res");
   bgl_entry entry;
   entry = m_babylon->readEntry();
 

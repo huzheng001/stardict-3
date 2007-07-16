@@ -29,7 +29,7 @@ public:
 		if (sametypesequence.empty())
 			return true;
 
-		return sametypesequence.find_first_of("mlgxtykw") !=
+		return sametypesequence.find_first_of("mlgxtykwh") !=
 			std::string::npos;
 	}
 	bool SearchData(std::vector<std::string> &SearchWords, guint32 idxitem_offset, guint32 idxitem_size, gchar *origin_data);
