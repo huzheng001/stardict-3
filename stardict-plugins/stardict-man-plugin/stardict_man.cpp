@@ -50,9 +50,11 @@ static void terminal2pango(const char *t, std::string &pango)
 			} else if (prev_char == "_") {
 				t++;
 				p1 = g_utf8_next_char(t);
+				char *mark = g_markup_escape_text(t, p1 -t);
 				pango += "<u>";
-				pango.append(t, p1 -t);
+				pango += mark;
 				pango += "</u>";
+				g_free(mark);
 			}
 			prev_str.clear();
 		} else {

@@ -21,7 +21,7 @@ def main():
 		os.system("mv "+dictname+".syn "+dirname);
 		os.system("rmdir res;mv res "+dirname);
 		os.system("chown -R root.root "+dirname);
-		os.system("chmod 644 "+dirname+"/*");
+		os.system("chmod 644 "+dirname+"/*.*");
 		os.system("chmod 755 "+dirname+"/res");
 		os.system("chmod 644 "+dirname+"/res/*");
 		os.system("tar -cjvf "+dirname+".tar.bz2 "+dirname);
