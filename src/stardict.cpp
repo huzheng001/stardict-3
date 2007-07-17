@@ -980,7 +980,107 @@ static gboolean on_fulltext_search_window_delete_event(GtkWidget * window, GdkEv
 	return true;
 }
 
+class LookupDataDialog {
+public:
+	LookupDataDialog(const char *sWord);
+	void show();
+private:
+	std::string word;
+	GtkListStore *now_tree_model;
+	static void on_fulltext_search_dict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, LookupDataDialog *oLookupDataDialog);
+};
+
+LookupDataDialog::LookupDataDialog(const char *sWord)
+{
+	word = sWord;
+}
+
+void LookupDataDialog::on_fulltext_search_dict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, LookupDataDialog *oLookupDataDialog)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(oLookupDataDialog->now_tree_model);
+	GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+	GtkTreeIter iter;
+	gtk_tree_model_get_iter (model, &iter, path);
+	gboolean enable;
+	gtk_tree_model_get (model, &iter, 0, &enable, -1);
+	enable = !enable;
+	gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, enable, -1);
+	gtk_tree_path_free (path);
+}
+
+void LookupDataDialog::show()
+{
+	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("Full-text Search"), GTK_WINDOW(gpAppFrame->window), (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_NO_SEPARATOR), NULL);
+	GtkWidget *button = gtk_dialog_add_button(GTK_DIALOG (dialog), GTK_STOCK_OK, GTK_RESPONSE_ACCEPT);
+	gtk_dialog_add_button(GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
+	gtk_widget_grab_focus(button);
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),vbox,true,true,0);
+	GtkWidget *sw = gtk_scrolled_window_new (NULL, NULL);
+	gtk_box_pack_start(GTK_BOX(vbox),sw,true,true,0);
+	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	gtk_widget_set_size_request (sw, 300, 200);
+	now_tree_model = gtk_list_store_new(3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG);
+	for (std::vector<InstantDictIndex>::iterator i = gpAppFrame->query_dictmask.begin(); i != gpAppFrame->query_dictmask.end(); ++i) {
+		if (i->type == InstantDictType_LOCAL) {
+			GtkTreeIter new_iter;
+			gtk_list_store_append(now_tree_model, &new_iter);
+			gtk_list_store_set(now_tree_model, &new_iter, 0, TRUE, 1, gpAppFrame->oLibs.dict_name(i->index).c_str(), 2, i->index, -1);
+		}
+	}
+	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(now_tree_model));
+	g_object_unref (G_OBJECT (now_tree_model));
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+	renderer = gtk_cell_renderer_toggle_new ();
+	g_signal_connect (renderer, "toggled", G_CALLBACK (on_fulltext_search_dict_enable_toggled), this);
+	column = gtk_tree_view_column_new_with_attributes (_("Search"), renderer, "active", 0, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "text", 1, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
+	gtk_widget_show_all(vbox);
+	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		std::vector<InstantDictIndex> dictmask;
+		GtkTreeIter iter;
+		GtkTreeModel *model = GTK_TREE_MODEL(now_tree_model);
+		gboolean have_next = gtk_tree_model_get_iter_first(model, &iter);
+		while (have_next) {
+			gboolean enable;
+			gtk_tree_model_get (model, &iter, 0, &enable, -1);
+			if (enable) {
+				glong index;
+				gtk_tree_model_get (model, &iter, 2, &index, -1);
+				InstantDictIndex dictindex;
+				dictindex.type = InstantDictType_LOCAL;
+				dictindex.index = index;
+				dictmask.push_back(dictindex);
+			}
+			have_next = gtk_tree_model_iter_next(model, &iter);
+		}
+		gtk_widget_destroy(dialog);
+		gpAppFrame->LookupDataWithDictMask(word.c_str(), dictmask);
+	} else {
+		gtk_widget_destroy(dialog);
+	}
+}
+
 void AppCore::LookupDataToMainWin(const gchar *sWord)
+{
+	LookupDataDialog *dialog = new LookupDataDialog(sWord);
+	dialog->show();
+	delete dialog;
+}
+
+void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDictIndex> &dictmask)
 {
 	if (!sWord || !*sWord)
 		return;
@@ -1008,16 +1108,16 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 	gtk_widget_show_all(search_window);
 
 	//clock_t t=clock();
-	std::vector< std::vector<gchar *> > reslist(query_dictmask.size());
-	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, query_dictmask)) {
+	std::vector< std::vector<gchar *> > reslist(dictmask.size());
+	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, dictmask)) {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
-		for (size_t i=0; i<query_dictmask.size(); i++) {
+		for (size_t i=0; i<dictmask.size(); i++) {
 			if (!reslist[i].empty()) {
 				SimpleLookupToTextWin(reslist[i][0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 				break;
 			}
 		}
-		oMidWin.oIndexWin.oListWin.SetTreeModel(&reslist[0]);
+		oMidWin.oIndexWin.oListWin.SetTreeModel(&reslist[0], dictmask);
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
 		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
@@ -1413,8 +1513,8 @@ void AppCore::Query(const gchar *word)
 		LookupWithRuleToMainWin(res.c_str());
 		break;
 	case qtDATA:
-                LookupDataToMainWin(res.c_str());
-                break;
+		LookupDataToMainWin(res.c_str());
+		break;
 	default:
 		/*nothing?*/;
 	}

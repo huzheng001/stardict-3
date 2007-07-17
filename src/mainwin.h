@@ -131,7 +131,7 @@ public:
 	void ReScroll();
     void Prepend(const gchar *word);
 	void InsertLast(const gchar *word);
-	void SetTreeModel(std::vector<gchar *> *reslist);
+	void SetTreeModel(std::vector<gchar *> *reslist, std::vector<InstantDictIndex> &dictmask);
 	void SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *> *wordtree);
 	bool treeview_has_focus() const {
 		return GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(treeview_));

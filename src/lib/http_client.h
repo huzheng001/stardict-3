@@ -34,7 +34,6 @@ private:
 	void disconnect();
 	void write_str(const char *str, GError **err);
 	bool SendGetRequest();
-	//static std::map<std::string, std::map<std::string, std::string> > cookies_map;
 };
 
 #endif

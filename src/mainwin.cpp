@@ -831,18 +831,18 @@ void ListWin::InsertLast(const gchar *word)
 	gtk_list_store_set (list_model, &iter, 0, word, -1);
 }
 
-void ListWin::SetTreeModel(std::vector<gchar *> *reslist)
+void ListWin::SetTreeModel(std::vector<gchar *> *reslist, std::vector<InstantDictIndex> &dictmask)
 {
 	GtkTreeIter parent;
 	GtkTreeIter iter;
 	const char *bookname = "";
-	for (size_t i=0; i<gpAppFrame->query_dictmask.size(); i++) {
+	for (size_t i=0; i<dictmask.size(); i++) {
 		if (!reslist[i].empty()) {
 			gtk_tree_store_append(tree_model, &parent, NULL);
-			if (gpAppFrame->query_dictmask[i].type == InstantDictType_LOCAL)
-				bookname = gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str();
-			else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL)
-				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index);
+			if (dictmask[i].type == InstantDictType_LOCAL)
+				bookname = gpAppFrame->oLibs.dict_name(dictmask[i].index).c_str();
+			else if (dictmask[i].type == InstantDictType_VIRTUAL)
+				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(dictmask[i].index);
 			gtk_tree_store_set(tree_model, &parent, 0, bookname, -1);
 			for (std::vector<gchar *>::iterator p=reslist[i].begin();
 			     p != reslist[i].end(); ++p) {

@@ -126,6 +126,7 @@ public:
 #endif
 	bool SimpleLookupToTextWin(const gchar* sWord, CurrentIndex* piIndex, const gchar *piIndexValidStr = NULL, bool bTryMoreIfNotFound = false, bool bShowNotfound = true, bool isShowFirst = false);
 	void LookupDataToMainWin(const gchar *sWord);
+	void LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDictIndex> &dictmask);
 	void LookupWithFuzzyToMainWin(const gchar* word);
 	void LookupWithFuzzyToFloatWin(const gchar * word);
 	void LookupWithRuleToMainWin(const gchar* word);
