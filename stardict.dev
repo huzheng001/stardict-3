@@ -1,38 +1,38 @@
 [Project]
 FileName=stardict.dev
 Name=stardict
-UnitCount=123
+UnitCount=143
 Type=0
 Ver=1
 ObjFiles=
-Includes=E:\evgeniy\projects\stardict-project\stardict\trunk\src;E:\evgeniy\projects\stardict-project\stardict\trunk
-Libs=E:\evgeniy\projects\stardict-project\gtk\lib
+Includes=src;src\sigc++config
+Libs=
 PrivateResource=stardict_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=-I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall -DSIGC_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD="template operator()"_@@_
-CppCompiler=-I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall_@@_
-Linker=-lgtk-win32-2.0 -lgdk-win32-2.0 -limm32 -lshell32 -lole32 -luuid -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangowin32-1.0 -lgdi32 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lgthread-2.0 -lintl -lzdll -lwinmm -mno-cygwin -mwindows -mms-bitfields -lws2_32_@@_
+Compiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall -DSIGC_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD="template operator()"_@@_
+CppCompiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall_@@_
+Linker=-lcairo -lgtk-win32-2.0 -lgdk-win32-2.0 -limm32 -lshell32 -lole32 -luuid -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangowin32-1.0 -lgdi32 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lgthread-2.0 -lintl -lzdll -lwinmm -mno-cygwin -mwindows -mms-bitfields -lws2_32_@@_
 IsCpp=1
 Icon=stardict.ico
-ExeOutput=E:\evgeniy\projects\stardict-project\stardict\trunk\src
+ExeOutput=src
 ObjectOutput=
 OverrideOutput=0
 OverrideOutputName=stardict.exe
 HostApplication=
-Folders=lib,win32
+Folders=lib,libsigcpp,main,win32
 CommandLine=
 IncludeVersionInfo=1
 SupportXPThemes=0
 CompilerSet=0
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000000000000000100
 UseCustomMakefile=0
 CustomMakefile=
 
 [Unit1]
 FileName=src\stardict.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -42,7 +42,7 @@ BuildCmd=
 [Unit2]
 FileName=src\dictmanagedlg.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -52,7 +52,7 @@ BuildCmd=
 [Unit3]
 FileName=src\mainwin.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -62,7 +62,7 @@ BuildCmd=
 [Unit4]
 FileName=src\mainwin.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -72,7 +72,7 @@ BuildCmd=
 [Unit5]
 FileName=src\prefsdlg.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -82,7 +82,7 @@ BuildCmd=
 [Unit6]
 FileName=src\prefsdlg.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -92,7 +92,7 @@ BuildCmd=
 [Unit7]
 FileName=src\readword.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -102,7 +102,7 @@ BuildCmd=
 [Unit8]
 FileName=src\readword.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -112,7 +112,7 @@ BuildCmd=
 [Unit9]
 FileName=src\skin.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -122,7 +122,7 @@ BuildCmd=
 [Unit10]
 FileName=src\skin.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -132,7 +132,7 @@ BuildCmd=
 [Unit11]
 FileName=src\splash.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -142,7 +142,7 @@ BuildCmd=
 [Unit12]
 FileName=src\splash.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -152,7 +152,7 @@ BuildCmd=
 [Unit13]
 FileName=src\stardict.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -162,7 +162,7 @@ BuildCmd=
 [Unit14]
 FileName=src\dictmanagedlg.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -172,7 +172,7 @@ BuildCmd=
 [Unit15]
 FileName=src\floatwin.h
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -182,7 +182,7 @@ BuildCmd=
 [Unit16]
 FileName=src\floatwin.cpp
 CompileCpp=1
-Folder=
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -192,7 +192,7 @@ BuildCmd=
 [Unit17]
 FileName=src\selection.cpp
 CompileCpp=1
-Folder=
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -202,7 +202,7 @@ BuildCmd=
 [Unit18]
 FileName=src\selection.h
 CompileCpp=1
-Folder=
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -230,21 +230,21 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [VersionInfo]
-Major=2
-Minor=4
-Release=8
+Major=3
+Minor=0
+Release=0
 Build=1
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://stardict.sourceforge.net
-FileVersion=2.4.8
+FileVersion=3.0.0
 FileDescription=StarDict
 InternalName=
 LegalCopyright=Hu Zheng <huzheng_001@163.com>
 LegalTrademarks=
 OriginalFilename=stardict.exe
 ProductName=StarDict
-ProductVersion=2.4.8
+ProductVersion=3.0.0
 AutoIncBuildNr=0
 
 [Unit21]
@@ -300,7 +300,7 @@ BuildCmd=
 [Unit29]
 FileName=src\conf.h
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -310,7 +310,7 @@ BuildCmd=
 [Unit28]
 FileName=src\conf.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -320,7 +320,7 @@ BuildCmd=
 [Unit26]
 FileName=src\utils.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -330,7 +330,7 @@ BuildCmd=
 [Unit27]
 FileName=src\utils.h
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -340,7 +340,7 @@ BuildCmd=
 [Unit34]
 FileName=src\class_factory.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -350,7 +350,7 @@ BuildCmd=
 [Unit30]
 FileName=src\pangoview.h
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -359,7 +359,7 @@ BuildCmd=
 
 [Unit33]
 FileName=src\class_factory.cpp
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -370,7 +370,7 @@ CompileCpp=1
 [Unit35]
 FileName=src\config_file.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -380,7 +380,7 @@ BuildCmd=
 [Unit36]
 FileName=src\gtktextviewpango.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -390,7 +390,7 @@ BuildCmd=
 [Unit37]
 FileName=src\gtktextviewpango.h
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -400,7 +400,7 @@ BuildCmd=
 [Unit38]
 FileName=src\inifile.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -410,7 +410,7 @@ BuildCmd=
 [Unit39]
 FileName=src\inifile.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -420,7 +420,7 @@ BuildCmd=
 [Unit40]
 FileName=src\iskeyspressed.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -430,7 +430,7 @@ BuildCmd=
 [Unit41]
 FileName=src\pangoview.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -620,7 +620,7 @@ BuildCmd=
 [Unit31]
 FileName=src\articleview.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -630,7 +630,7 @@ BuildCmd=
 [Unit32]
 FileName=src\articleview.h
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -770,7 +770,7 @@ BuildCmd=
 [Unit73]
 FileName=src\progresswin.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -780,7 +780,7 @@ BuildCmd=
 [Unit74]
 FileName=src\progresswin.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -790,7 +790,7 @@ BuildCmd=
 [Unit75]
 FileName=src\sigc++\visit_each.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -800,7 +800,7 @@ BuildCmd=
 [Unit76]
 FileName=src\sigc++\bind_return.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -810,7 +810,7 @@ BuildCmd=
 [Unit77]
 FileName=src\sigc++\class_slot.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -820,7 +820,7 @@ BuildCmd=
 [Unit78]
 FileName=src\sigc++\compatibility.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -830,7 +830,7 @@ BuildCmd=
 [Unit79]
 FileName=src\sigc++\connection.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -840,7 +840,7 @@ BuildCmd=
 [Unit80]
 FileName=src\sigc++\connection.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -850,7 +850,7 @@ BuildCmd=
 [Unit81]
 FileName=src\sigc++\hide.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -860,7 +860,7 @@ BuildCmd=
 [Unit82]
 FileName=src\sigc++\limit_reference.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -870,7 +870,7 @@ BuildCmd=
 [Unit83]
 FileName=src\sigc++\method_slot.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -880,7 +880,7 @@ BuildCmd=
 [Unit84]
 FileName=src\sigc++\object.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -890,7 +890,7 @@ BuildCmd=
 [Unit85]
 FileName=src\sigc++\object_slot.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -900,7 +900,7 @@ BuildCmd=
 [Unit86]
 FileName=src\sigc++\reference_wrapper.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -910,7 +910,7 @@ BuildCmd=
 [Unit87]
 FileName=src\sigc++\retype.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -920,7 +920,7 @@ BuildCmd=
 [Unit88]
 FileName=src\sigc++\retype_return.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -930,7 +930,7 @@ BuildCmd=
 [Unit89]
 FileName=src\sigc++\sigc++.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -940,7 +940,7 @@ BuildCmd=
 [Unit90]
 FileName=src\sigc++\signal.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -950,7 +950,7 @@ BuildCmd=
 [Unit91]
 FileName=src\sigc++\signal.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -960,7 +960,7 @@ BuildCmd=
 [Unit92]
 FileName=src\sigc++\signal_base.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -970,7 +970,7 @@ BuildCmd=
 [Unit93]
 FileName=src\sigc++\signal_base.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -980,7 +980,7 @@ BuildCmd=
 [Unit94]
 FileName=src\sigc++\slot.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -990,7 +990,7 @@ BuildCmd=
 [Unit95]
 FileName=src\sigc++\trackable.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1000,7 +1000,7 @@ BuildCmd=
 [Unit96]
 FileName=src\sigc++\trackable.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1010,7 +1010,7 @@ BuildCmd=
 [Unit97]
 FileName=src\sigc++\type_traits.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1020,7 +1020,7 @@ BuildCmd=
 [Unit98]
 FileName=src\sigc++\bind.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1028,9 +1028,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit99]
-FileName=sigc++config.h
+FileName=src\sigc++\functors\slot_base.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1038,9 +1038,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit100]
-FileName=src\sigc++\functors\slot_base.h
+FileName=src\sigc++\functors\functors.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1048,9 +1048,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit101]
-FileName=src\sigc++\functors\functors.h
+FileName=src\sigc++\functors\mem_fun.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1058,9 +1058,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit102]
-FileName=src\sigc++\functors\mem_fun.h
+FileName=src\sigc++\functors\ptr_fun.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1068,9 +1068,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit103]
-FileName=src\sigc++\functors\ptr_fun.h
+FileName=src\sigc++\functors\slot.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1078,9 +1078,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit104]
-FileName=src\sigc++\functors\slot.cc
+FileName=src\sigc++\functors\slot.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1088,9 +1088,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit105]
-FileName=src\sigc++\functors\slot.h
+FileName=src\sigc++\functors\slot_base.cc
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1098,9 +1098,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit106]
-FileName=src\sigc++\functors\slot_base.cc
+FileName=src\sigc++\functors\functor_trait.h
 CompileCpp=1
-Folder=stardict
+Folder=libsigcpp
 Compile=1
 Link=1
 Priority=1000
@@ -1108,9 +1108,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit107]
-FileName=src\sigc++\functors\functor_trait.h
+FileName=src\desktop.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -1118,9 +1118,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit108]
-FileName=src\desktop.cpp
+FileName=src\desktop.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -1128,9 +1128,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit109]
-FileName=src\desktop.hpp
+FileName=src\tray.hpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -1138,9 +1138,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit110]
-FileName=src\tray.hpp
+FileName=src\tray.cpp
 CompileCpp=1
-Folder=stardict
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -1148,16 +1148,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit111]
-FileName=src\tray.cpp
-CompileCpp=1
-Folder=stardict
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit112]
 FileName=src\lib\kmp.cpp
 CompileCpp=1
 Folder=lib
@@ -1167,7 +1157,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit113]
+[Unit112]
 FileName=src\lib\ctype-uca.cpp
 CompileCpp=1
 Folder=lib
@@ -1177,7 +1167,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit114]
+[Unit113]
 FileName=src\lib\ctype-utf8.cpp
 CompileCpp=1
 Folder=lib
@@ -1187,7 +1177,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit115]
+[Unit114]
 FileName=src\lib\ctype-mb.cpp
 CompileCpp=1
 Folder=lib
@@ -1197,7 +1187,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit116]
+[Unit115]
 FileName=src\lib\collation.cpp
 CompileCpp=1
 Folder=lib
@@ -1207,8 +1197,9 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit117]
+[Unit116]
 FileName=stardictrc.rc
+CompileCpp=1
 Folder=lib
 Compile=1
 Link=0
@@ -1216,17 +1207,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit118]
+[Unit117]
 FileName=src\lib\stardict_client.hpp
-CompileCpp=1
 Folder=lib
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=1
 
-[Unit119]
+[Unit118]
 FileName=src\lib\stardict_client.cpp
 CompileCpp=1
 Folder=lib
@@ -1236,7 +1227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit120]
+[Unit119]
 FileName=src\lib\md5.h
 CompileCpp=1
 Folder=lib
@@ -1246,7 +1237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit121]
+[Unit120]
 FileName=src\lib\md5.c
 CompileCpp=1
 Folder=lib
@@ -1256,7 +1247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit122]
+[Unit121]
 FileName=src\lib\sockets.hpp
 CompileCpp=1
 Folder=lib
@@ -1266,8 +1257,218 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit123]
+[Unit122]
 FileName=src\lib\sockets.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit123]
+FileName=src\sigc++config\sigc++config.h
+CompileCpp=1
+Folder=libsigcpp
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit124]
+FileName=src\lib\plugin.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit125]
+FileName=src\lib\plugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit126]
+FileName=src\lib\pluginmanager.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit127]
+FileName=src\lib\pluginmanager.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit128]
+FileName=src\lib\storage.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit129]
+FileName=src\lib\storage.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit130]
+FileName=src\lib\ttsplugin.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit131]
+FileName=src\lib\ttsplugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit132]
+FileName=src\lib\virtualdictplugin.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit133]
+FileName=src\lib\virtualdictplugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit134]
+FileName=src\lib\parsedata_plugin.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit135]
+FileName=src\lib\parsedata_plugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit136]
+FileName=src\pluginmanagedlg.h
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit137]
+FileName=src\dictmanage.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit138]
+FileName=src\dictmanage.h
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit139]
+FileName=src\pluginmanagedlg.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit140]
+FileName=src\lib\http_client.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit141]
+FileName=src\lib\http_client.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit142]
+FileName=src\lib\httpmanager.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit143]
+FileName=src\lib\httpmanager.h
 CompileCpp=1
 Folder=lib
 Compile=1

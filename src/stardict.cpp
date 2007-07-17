@@ -669,7 +669,7 @@ bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, P1);
 			oTopWin.InsertHisList(P1);
-			FreeResultData(pppWord, ppppWordData);
+			FreeResultData(scan_dictmask, pppWord, ppppWordData);
 			g_free(iIndex);
 			g_free(SearchWord);
 			return true;
