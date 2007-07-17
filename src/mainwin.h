@@ -272,7 +272,7 @@ class TransWin {
 public:
 	TransWin();
 	void Create(GtkWidget *notebook);
-	void SetText(const char *text, size_t len = -1);
+	void SetText(const char *text, int len = -1);
 	bool IsInputViewHasFocus() { return GTK_WIDGET_HAS_FOCUS(input_textview); }
 private:
 	GtkWidget *input_textview;

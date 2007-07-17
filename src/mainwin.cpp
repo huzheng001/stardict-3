@@ -2297,7 +2297,7 @@ void TransWin::on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin
 	conf->set_int_at("translate/tolang", index);
 }
 
-void TransWin::SetText(const char *text, size_t len)
+void TransWin::SetText(const char *text, int len)
 {
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
 	gtk_text_buffer_set_text(buffer, text, len);
