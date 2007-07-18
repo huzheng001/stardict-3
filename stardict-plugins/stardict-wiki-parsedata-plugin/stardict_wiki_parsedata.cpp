@@ -2,6 +2,10 @@
 #include "stardict_wiki2xml.h"
 #include <glib/gi18n.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
 {
 	if (*p != 'w')
@@ -16,7 +20,6 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 		std::string xml = wiki2xml(res);
 		item.mark->pango = wikixml2pango(xml);
 		result.item_list.push_back(item);
-		item.type = ParseResultItemType_unknown; // So item.mark is not deleted.
 	}
 	*parsed_size = 1 + len + 1;
 	return true;
@@ -26,7 +29,7 @@ static void configure()
 {
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Wiki data parse plugin version doesn't match!\n");
@@ -38,13 +41,38 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	return false;
 }
 
-void stardict_plugin_exit(void)
+DLLIMPORT void stardict_plugin_exit(void)
 {
 }
 
-bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
+DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
 	obj->parse_func = parse;
 	g_print(_("Wiki data parse plug-in loaded.\n"));
 	return false;
 }
+
+#ifdef _WIN32
+BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
+                       DWORD reason        /* Reason this function is being called. */ ,
+                       LPVOID reserved     /* Not used. */ )
+{
+    switch (reason)
+    {
+      case DLL_PROCESS_ATTACH:
+        break;
+
+      case DLL_PROCESS_DETACH:
+        break;
+
+      case DLL_THREAD_ATTACH:
+        break;
+
+      case DLL_THREAD_DETACH:
+        break;
+    }
+
+    /* Returns TRUE on success, FALSE on failure */
+    return TRUE;
+}
+#endif

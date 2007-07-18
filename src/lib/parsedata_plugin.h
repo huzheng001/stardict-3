@@ -5,7 +5,6 @@
 #include <list>
 
 enum ParseResultItemType {
-	ParseResultItemType_unknown,
 	ParseResultItemType_mark,
 	ParseResultItemType_link,
 	ParseResultItemType_res,
@@ -36,8 +35,6 @@ struct ParseResultResItem {
 };
 
 struct ParseResultItem {
-	ParseResultItem();
-	~ParseResultItem();
 	ParseResultItemType type;
 	union {
 		ParseResultMarkItem *mark;
@@ -47,6 +44,8 @@ struct ParseResultItem {
 };
 
 struct ParseResult {
+	~ParseResult();
+	void clear();
 	std::list<ParseResultItem> item_list;
 };
 

@@ -549,7 +549,7 @@ string WIKI2XML::table_markup ( string &l )
  			   {
  			   sublines.push_back ( left ( l , a ) ) ;
  			   l = l.substr ( a + 2 , l.length() - a ) ;
- 			   a = -1 ;
+ 			   a = (size_t)(-1) ;
  			   }    
 			}    
 		if ( l != "" ) sublines.push_back ( l ) ;

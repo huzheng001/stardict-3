@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_update_info.v
+EXTRA_DIST = stardict_update_info.v stardict_update_info.dev
 
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_update_info.v"

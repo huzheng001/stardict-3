@@ -1,6 +1,10 @@
 #include "stardict_xdxf_parsedata.h"
 #include <glib/gi18n.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 static size_t xml_strlen(const std::string& str)
 {
 	const char *q;
@@ -214,7 +218,6 @@ static void xdxf2result(const char *p, ParseResult &result)
 			item.res->type = type;
 			item.res->key = chunk;
 			result.item_list.push_back(item);
-			item.type = ParseResultItemType_unknown;
 		} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
 			bool is_k_or_i = (*(p + 1) == 'k');
 			next = strchr(p, '>');
@@ -289,7 +292,6 @@ cycle_end:
 	item.link->pango = res;
 	item.link->links_list = links_list;
 	result.item_list.push_back(item);
-	item.type = ParseResultItemType_unknown;
 }
 
 static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
@@ -309,7 +311,7 @@ static void configure()
 {
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: XDXF data parse plugin version doesn't match!\n");
@@ -321,13 +323,38 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	return false;
 }
 
-void stardict_plugin_exit(void)
+DLLIMPORT void stardict_plugin_exit(void)
 {
 }
 
-bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
+DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
 	obj->parse_func = parse;
 	g_print(_("XDXF data parse plug-in loaded.\n"));
 	return false;
 }
+
+#ifdef _WIN32
+BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
+                       DWORD reason        /* Reason this function is being called. */ ,
+                       LPVOID reserved     /* Not used. */ )
+{
+    switch (reason)
+    {
+      case DLL_PROCESS_ATTACH:
+        break;
+
+      case DLL_PROCESS_DETACH:
+        break;
+
+      case DLL_THREAD_ATTACH:
+        break;
+
+      case DLL_THREAD_DETACH:
+        break;
+    }
+
+    /* Returns TRUE on success, FALSE on failure */
+    return TRUE;
+}
+#endif

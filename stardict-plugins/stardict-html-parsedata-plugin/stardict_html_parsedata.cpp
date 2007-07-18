@@ -1,6 +1,88 @@
 #include "stardict_html_parsedata.h"
 #include <glib/gi18n.h>
 
+#ifdef _WIN32
+#include <windows.h>
+
+static char *strcasestr (const char *phaystack, const char *pneedle)
+{
+	register const unsigned char *haystack, *needle;
+	register char b, c;
+
+	haystack = (const unsigned char *) phaystack;
+	needle = (const unsigned char *) pneedle;
+
+	b = tolower(*needle);
+	if (b != '\0') {
+		haystack--;             /* possible ANSI violation */
+		do {
+			c = *++haystack;
+			if (c == '\0')
+				goto ret0;
+		} while (tolower(c) != (int) b);
+
+		c = tolower(*++needle);
+		if (c == '\0')
+			goto foundneedle;
+		++needle;
+		goto jin;
+
+		for (;;) {
+			register char a;
+			register const unsigned char *rhaystack, *rneedle;
+
+			do {
+				a = *++haystack;
+				if (a == '\0')
+					goto ret0;
+				if (tolower(a) == (int) b)
+					break;
+				a = *++haystack;
+				if (a == '\0')
+					goto ret0;
+			shloop:
+				;
+			}
+			while (tolower(a) != (int) b);
+
+		jin:      a = *++haystack;
+			if (a == '\0')
+				goto ret0;
+
+			if (tolower(a) != (int) c)
+				goto shloop;
+
+			rhaystack = haystack-- + 1;
+			rneedle = needle;
+			a = tolower(*rneedle);
+
+			if (tolower(*rhaystack) == (int) a)
+				do {
+					if (a == '\0')
+						goto foundneedle;
+					++rhaystack;
+					a = tolower(*++needle);
+					if (tolower(*rhaystack) != (int) a)
+						break;
+					if (a == '\0')
+						goto foundneedle;
+					++rhaystack;
+					a = tolower(*++needle);
+				} while (tolower (*rhaystack) == (int) a);
+
+			needle = rneedle;             /* took the register-poor approach */
+
+			if (a == '\0')
+				break;
+		}
+	}
+ foundneedle:
+	return (char*) haystack;
+ ret0:
+	return 0;
+}
+#endif
+
 static void html_topango(const std::string& str, std::string &pango, size_t &pango_len)
 {
 	const char *q, *p;
@@ -312,7 +394,6 @@ static void html2result(const char *p, ParseResult &result)
 					item.res->type = "image";
 					item.res->key.assign(src.c_str()+1, n-2);
 					result.item_list.push_back(item);
-					item.type = ParseResultItemType_unknown;
 				}
 			}
 		} else {
@@ -330,7 +411,6 @@ cycle_end:
 	item.link->pango = res;
 	item.link->links_list = links_list;
 	result.item_list.push_back(item);
-	item.type = ParseResultItemType_unknown;
 }
 
 static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
@@ -350,7 +430,7 @@ static void configure()
 {
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: HTML data parse plugin version doesn't match!\n");
@@ -362,13 +442,38 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	return false;
 }
 
-void stardict_plugin_exit(void)
+DLLIMPORT void stardict_plugin_exit(void)
 {
 }
 
-bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
+DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
 	obj->parse_func = parse;
 	g_print(_("HTML data parse plug-in loaded.\n"));
 	return false;
 }
+
+#ifdef _WIN32
+BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
+                       DWORD reason        /* Reason this function is being called. */ ,
+                       LPVOID reserved     /* Not used. */ )
+{
+    switch (reason)
+    {
+      case DLL_PROCESS_ATTACH:
+        break;
+
+      case DLL_PROCESS_DETACH:
+        break;
+
+      case DLL_THREAD_ATTACH:
+        break;
+
+      case DLL_THREAD_DETACH:
+        break;
+    }
+
+    /* Returns TRUE on success, FALSE on failure */
+    return TRUE;
+}
+#endif

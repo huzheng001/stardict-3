@@ -1,6 +1,10 @@
 #include "stardict_update_info.h"
 #include <glib/gi18n.h>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 const int my_version_num = 30000000; // As 3,00,00,000, so the version is 3.0.0.0
 static int latest_version_num;
 static std::string version_msg_title;
@@ -49,7 +53,7 @@ static void configure()
 	gtk_widget_destroy (dialog);
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Update info plugin version doesn't match!\n");
@@ -62,7 +66,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	return false;
 }
 
-void stardict_plugin_exit(void)
+DLLIMPORT void stardict_plugin_exit(void)
 {
 }
 
@@ -190,7 +194,7 @@ static gboolean get_update_info(gpointer data)
 	return FALSE;
 }
 
-bool stardict_misc_plugin_init(void)
+DLLIMPORT bool stardict_misc_plugin_init(void)
 {
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
@@ -226,3 +230,28 @@ bool stardict_misc_plugin_init(void)
 	g_print(_("Update info plug-in loaded.\n"));
 	return false;
 }
+
+#ifdef _WIN32
+BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
+                       DWORD reason        /* Reason this function is being called. */ ,
+                       LPVOID reserved     /* Not used. */ )
+{
+    switch (reason)
+    {
+      case DLL_PROCESS_ATTACH:
+        break;
+
+      case DLL_PROCESS_DETACH:
+        break;
+
+      case DLL_THREAD_ATTACH:
+        break;
+
+      case DLL_THREAD_DETACH:
+        break;
+    }
+
+    /* Returns TRUE on success, FALSE on failure */
+    return TRUE;
+}
+#endif

@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_xdxf_parsedata.v
+EXTRA_DIST = stardict_xdxf_parsedata.v stardict_xdxf_parsedata.dev
 
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_xdxf_parsedata.v"
