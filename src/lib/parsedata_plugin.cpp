@@ -1,19 +1,22 @@
 #include "parsedata_plugin.h"
 
-ParseResultItem::ParseResultItem()
+ParseResult::~ParseResult()
 {
-	type = ParseResultItemType_unknown;
+	clear();
 }
 
-ParseResultItem::~ParseResultItem()
+void ParseResult::clear()
 {
-	if (type == ParseResultItemType_mark) {
-		delete mark;
-	} else if (type == ParseResultItemType_link) {
-		delete link;
-	} else if (type == ParseResultItemType_res) {
-		delete res;
+	for (std::list<ParseResultItem>::iterator i = item_list.begin(); i != item_list.end(); ++i) {
+		if (i->type == ParseResultItemType_mark) {
+			delete i->mark;
+		} else if (i->type == ParseResultItemType_link) {
+			delete i->link;
+		} else if (i->type == ParseResultItemType_res) {
+			delete i->res;
+		}
 	}
+	item_list.clear();
 }
 
 StarDictParseDataPlugInObject::StarDictParseDataPlugInObject()

@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_html_parsedata.v
+EXTRA_DIST = stardict_html_parsedata.v stardict_html_parsedata.dev
 
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_html_parsedata.v"

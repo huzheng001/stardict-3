@@ -1,6 +1,6 @@
 SUBDIRS = data
 
-EXTRA_DIST = advertisement.v
+EXTRA_DIST = advertisement.v advertisement.dev
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=advertisement.v"
 

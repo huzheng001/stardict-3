@@ -221,6 +221,7 @@ std::list<std::string> AppConf::get_default_search_website_list()
 {
 	/* xgettext: no-c-format */
 	gchar *default_website = _(
+		"StarDict.org	http://www.stardict.org	http://www.stardict.org/query.php?q=%s\n"
 		"Dictionary.com	http://dictionary.reference.com	http://dictionary.reference.com/search?q=%s\n"
 		"dict.leo.org	http://dict.leo.org	http://dict.leo.org/?search=%s&lang=en\n"
 		"H2G2	http://www.h2g2.com	http://www.h2g2.com/Search?searchstring=%s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"

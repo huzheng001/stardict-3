@@ -7,6 +7,9 @@
 #include <list>
 #include <vector>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static std::string datapath;
@@ -216,7 +219,7 @@ static void configure()
 	g_print("Advertisement configure.\n");
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Advertisement plugin version doesn't match!\n");
@@ -230,12 +233,12 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	return false;
 }
 
-void stardict_plugin_exit(void)
+DLLIMPORT void stardict_plugin_exit(void)
 {
 	unload_dict();
 }
 
-bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
+DLLIMPORT bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Advertisement");
@@ -247,3 +250,28 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	g_print(_("Advertisement plug-in loaded.\n"));
 	return false;
 }
+
+#ifdef _WIN32
+BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
+                       DWORD reason        /* Reason this function is being called. */ ,
+                       LPVOID reserved     /* Not used. */ )
+{
+    switch (reason)
+    {
+      case DLL_PROCESS_ATTACH:
+        break;
+
+      case DLL_PROCESS_DETACH:
+        break;
+
+      case DLL_THREAD_ATTACH:
+        break;
+
+      case DLL_THREAD_DETACH:
+        break;
+    }
+
+    /* Returns TRUE on success, FALSE on failure */
+    return TRUE;
+}
+#endif

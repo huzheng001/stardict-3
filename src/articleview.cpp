@@ -85,7 +85,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 		else
 			mark+= "\n";
 		for (iPlugin = 0; iPlugin < nPlugins; iPlugin++) {
-			parse_result.item_list.clear();
+			parse_result.clear();
 			if (gpAppFrame->oStarDictPlugins->ParseDataPlugins.parse(iPlugin, p, &parsed_size, parse_result, oword)) {
 				p += parsed_size;
 				break;
@@ -141,7 +141,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 						break;
 				}
 			}
-			parse_result.item_list.clear();
+			parse_result.clear();
 			continue;
 		}
 		switch (*p) {
