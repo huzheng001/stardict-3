@@ -22,6 +22,8 @@ struct StarDictPluginSystemService {
 	send_http_request_func_t send_http_request;
 	typedef void (*show_url_func_t)(const char *url);
 	show_url_func_t show_url;
+	typedef void (*set_news_func_t)(const char *news);
+	set_news_func_t set_news;
 };
 
 struct StarDictPluginSystemInfo {

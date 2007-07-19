@@ -2489,6 +2489,16 @@ void MidWin::Create(GtkWidget *vbox)
 BottomWin::BottomWin()
 {
 	SearchWebsiteMenu = NULL;
+	news_timeout_id = 0;
+	need_resume_news = false;
+}
+
+BottomWin::~BottomWin()
+{
+	if (news_timeout_id != 0) {
+		g_source_remove(news_timeout_id);
+		news_timeout_id = 0;
+	}
 }
 
 void BottomWin::Create(GtkWidget *vbox)
@@ -2536,6 +2546,15 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Quit"), NULL);
 
+	GtkWidget *event_box = gtk_event_box_new();
+	g_signal_connect (G_OBJECT (event_box), "enter_notify_event", G_CALLBACK (vEnterNotifyCallback), this);
+	g_signal_connect (G_OBJECT (event_box), "leave_notify_event", G_CALLBACK (vLeaveNotifyCallback), this);
+	gtk_widget_show(event_box);
+	gtk_box_pack_start(GTK_BOX(hbox),event_box,true,true,0);
+	news_label = gtk_label_new(NULL);
+	gtk_container_add(GTK_CONTAINER(event_box), news_label);
+	gtk_misc_set_alignment (GTK_MISC (news_label), 0.0, 0.5);
+	gtk_widget_show(news_label);
 
 	// the next buttons will be pack from right to left.
 #ifndef CONFIG_GPE
@@ -2580,6 +2599,76 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search an Internet dictionary - Right button: website list"),NULL);
+}
+
+gboolean BottomWin::vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, BottomWin *oBottomWin)
+{
+	if (oBottomWin->news_timeout_id != 0) {
+		g_source_remove(oBottomWin->news_timeout_id);
+		oBottomWin->news_timeout_id = 0;
+		oBottomWin->need_resume_news = true;
+	}
+	return TRUE;
+}
+
+gboolean BottomWin::vLeaveNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, BottomWin *oBottomWin)
+{
+	if (oBottomWin->need_resume_news) {
+		oBottomWin->news_timeout_id = g_timeout_add(300, move_news, oBottomWin);
+		oBottomWin->need_resume_news = false;
+	}
+	return TRUE;
+}
+
+gboolean BottomWin::move_news(gpointer data)
+{
+	BottomWin *oBottomWin = static_cast<BottomWin *>(data);
+	const char *p = oBottomWin->news_text.c_str();
+	size_t i;
+	for (i = 0; i < oBottomWin->news_move_index; i++) {
+		if (*p) {
+			p = g_utf8_next_char(p);
+		} else {
+			break;
+		}
+	}
+	if (*p) {
+		oBottomWin->news_move_index++;
+	} else {
+		p = oBottomWin->news_text.c_str();
+		oBottomWin->news_move_index = 0;
+	}
+	const char *p1 = p;
+	for (i=0; i < 20; i++) {
+		if (*p1) {
+			p1 = g_utf8_next_char(p1);
+		} else {
+			break;
+		}
+	}
+	std::string text;
+	text = "\t";
+	text.append(p, p1-p);
+	gtk_label_set_text(GTK_LABEL(oBottomWin->news_label), text.c_str());
+	return TRUE;
+}
+
+void BottomWin::set_news(const char *news)
+{
+	if (news) {
+		news_text = news;
+		if (news_timeout_id == 0) {
+			news_move_index = 0;
+			news_timeout_id = g_timeout_add(300, move_news, this);
+		}
+	} else {
+		news_text.clear();
+		if (news_timeout_id != 0) {
+			g_source_remove(news_timeout_id);
+			news_timeout_id = 0;
+		}
+		gtk_label_set_text(GTK_LABEL(news_label), "");
+	}
 }
 
 void BottomWin::ScanCallback(GtkToggleButton *button, gpointer data)

@@ -169,11 +169,6 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 	if (Data.latest_news != latest_news) {
 		updated = true;
 		latest_news = Data.latest_news;
-
-		GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, latest_news.c_str());
-		gtk_window_set_title (GTK_WINDOW (dialog), _("Latest News!"));
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
 	}
 	if (updated) {
 		GKeyFile *keyfile = g_key_file_new();
@@ -186,6 +181,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 		std::string res = get_cfg_filename();
 		g_file_set_contents(res.c_str(), content, length, NULL);
 	}
+	plugin_service->set_news(latest_news.c_str());
 }
 
 static gboolean get_update_info(gpointer data)
