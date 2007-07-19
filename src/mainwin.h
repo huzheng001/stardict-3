@@ -310,6 +310,11 @@ public:
 
 class BottomWin {
 private:
+	GtkWidget *news_label;
+	int news_timeout_id;
+	size_t news_move_index;
+	bool need_resume_news;
+	std::string news_text;
 	static void ScanCallback(GtkToggleButton *button, gpointer data);
 	static void AboutCallback(GtkButton *button, gpointer data);
 	static void QuitCallback(GtkButton *button, gpointer data);
@@ -319,13 +324,17 @@ private:
 	static void PreferenceCallback(GtkButton *button, BottomWin *oBottomWin);
 	static gboolean on_internetsearch_button_press(GtkWidget * widget, GdkEventButton * event , BottomWin *oBottomWin);
 	static void on_internetsearch_menu_item_activate(GtkMenuItem *menuitem, const gchar *website);
-
+	static gboolean move_news(gpointer data);
+	static gboolean vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, BottomWin *oBottomWin);
+	static gboolean vLeaveNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, BottomWin *oBottomWin);
 public:
 	GtkWidget* ScanSelectionCheckButton;
 	GtkWidget* SearchWebsiteMenu;
 
 	BottomWin();
+	~BottomWin();
 	void Create(GtkWidget *vbox);
+	void set_news(const char *news);
 };
 
 #endif

@@ -211,6 +211,11 @@ void AppCore::do_send_http_request(const char* shost, const char* sfile, get_htt
 	gpAppFrame->oHttpManager.SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
 }
 
+void AppCore::set_news(const char *news)
+{
+	gpAppFrame->oBottomWin.set_news(news);
+}
+
 void AppCore::Create(gchar *queryword)
 {
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
@@ -243,6 +248,7 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemInfo.mainwin = window;
 	oStarDictPluginSystemService.send_http_request = do_send_http_request;
 	oStarDictPluginSystemService.show_url = show_url;
+	oStarDictPluginSystemService.set_news = set_news;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else

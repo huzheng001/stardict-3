@@ -189,17 +189,18 @@ gpointer Socket::dns_thread(gpointer data)
 
 void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
 {
+	initWinSock();
 	std::map<std::string, ResolveInfo>::iterator iter;
 	iter = dns_map.find(host);
 	if (iter != dns_map.end()) {
 		func(data, &(iter->second.hostinfo));
 		return;
 	}
-    DnsQueryData *query_data = new DnsQueryData();
-    query_data->host = host;
-    query_data->data = data;
-    query_data->func = func;
-    g_thread_create(dns_thread, query_data, FALSE, NULL);
+	DnsQueryData *query_data = new DnsQueryData();
+	query_data->host = host;
+	query_data->data = data;
+	query_data->func = func;
+	g_thread_create(dns_thread, query_data, FALSE, NULL);
 }
     
 // Connect a socket to a server (from a client)

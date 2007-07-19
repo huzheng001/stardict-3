@@ -748,7 +748,6 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 #endif
 
-#ifndef _WIN32
 	GtkWidget *label = gtk_label_new(_("RealPeopleTTS search path:"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(vbox1),label,false,false,0);
@@ -766,6 +765,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_container_add(GTK_CONTAINER(scrolled_window), tts_textview);
 	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
 	
+#ifndef _WIN32
 	check_button = gtk_check_button_new_with_mnemonic(_("_Use TTS program."));
 	enable = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
