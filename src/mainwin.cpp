@@ -2076,13 +2076,14 @@ static const char *excite_korean_code[] = { "KOJA" };
 static const char **excite_tolangs[] = {excite_chinese_simplified_tolangs, excite_chinese_traditional_tolangs, excite_english_tolangs,  excite_japanese_tolangs, excite_korean_tolangs};
 static const char **excite_code[] = {excite_chinese_simplified_code,excite_chinese_traditional_code,excite_english_code, excite_japanese_code, excite_korean_code};
 
+/*
 static const char *kingsoft_fromlangs[] = {N_("English"), N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Japanese"), NULL };
 static const char *kingsoft_english_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"),NULL};
 static const char *kingsoft_chinese_simplified_tolangs[] = {N_("English"), NULL};
 static const char *kingsoft_chinese_traditional_tolangs[] = {N_("English"), NULL};
 static const char *kingsoft_japanese_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"),NULL};
 static const char **kingsoft_tolangs[] = {kingsoft_english_tolangs, kingsoft_chinese_simplified_tolangs, kingsoft_chinese_traditional_tolangs, kingsoft_japanese_tolangs};
-
+*/
 
 struct TranslateEngine {
 	const char * name;
@@ -2094,8 +2095,9 @@ static TranslateEngine trans_engines[] = { {N_("Google Translate"), google_froml
 	{ N_("Yahoo Translate"), yahoo_fromlangs, yahoo_tolangs, yahoo_code }, 
 	{ N_("Altavista Translate"), altavista_fromlangs, altavista_tolangs, altavista_code },
 	{ N_("SystranBox Translate"), systranbox_fromlangs, systranbox_tolangs, systranbox_code },
-	{ N_("Excite Japan Translate"), excite_fromlangs, excite_tolangs, excite_code },
-	{ N_("KingSoft Translate"), kingsoft_fromlangs, kingsoft_tolangs, NULL} };
+	{ N_("Excite Japan Translate"), excite_fromlangs, excite_tolangs, excite_code }
+	//{ N_("KingSoft Translate"), kingsoft_fromlangs, kingsoft_tolangs, NULL}
+};
 
 
 void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index)
@@ -2342,7 +2344,7 @@ static gchar * common_encode_uri_string(gchar *string) {
 				
 			if(0 != bytes) {
 				if((i + (bytes - 1)) > len) {
-					g_warning(_("Unexpected end of character sequence or corrupt UTF-8 encoding! Some characters were dropped!"));
+					g_warning(("Unexpected end of character sequence or corrupt UTF-8 encoding! Some characters were dropped!"));
 					break;
 				}
 

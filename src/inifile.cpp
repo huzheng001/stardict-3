@@ -52,7 +52,7 @@ void inifile::convert_from_old_version()
 	FILE *f = g_fopen(fname_.c_str(), "r+b");
 
 	if (!f) {
-		g_error(_(" can not open %s\n"), fname_.c_str());
+		g_error(("Can not open %s\n"), fname_.c_str());
 		exit(EXIT_FAILURE);
 	}
 	int ch;
@@ -61,7 +61,7 @@ void inifile::convert_from_old_version()
 			ch = NEW_STRING_SEP;
 		fseek(f, -1, SEEK_CUR);
 		if (fputc(ch, f) == EOF) {
-			g_error(_("can not write to %s\n"),
+			g_error(("can not write to %s\n"),
 				fname_.c_str());
 			exit(EXIT_FAILURE);
 		}
@@ -78,7 +78,7 @@ void inifile::convert_from_locale_enc()
 
 	if (!g_file_get_contents(fname_.c_str(), get_addr(data), NULL,
 				 get_addr(err))) {
-		g_error(_("Can not read %s, reason %s\n"), fname_.c_str(),
+		g_error(("Can not read %s, reason %s\n"), fname_.c_str(),
 			err->message);		
 		exit(EXIT_SUCCESS);
 	}
@@ -86,7 +86,7 @@ void inifile::convert_from_locale_enc()
 	glib::CharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
 					  NULL));
 	if (!utfdata) {
-		g_error(_("Can not convert ini file content to current locale\n"));
+		g_error(("Can not convert ini file content to current locale\n"));
 		exit(EXIT_SUCCESS);
 	}
 
@@ -122,7 +122,7 @@ inifile::inifile(const std::string& path)
 				convert_from_locale_enc();
 				continue;
 			}
-			g_error(_("Can not open config file: %s, reason: %s\n"),
+			g_error(("Can not open config file: %s, reason: %s\n"),
 				path.c_str(), err->message);
 			exit(EXIT_FAILURE);//just in case
 		}
@@ -132,7 +132,7 @@ inifile::inifile(const std::string& path)
 		if (err) {
 			if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
 			    err->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
-				g_error(_("internal error, reason: %s\n"),
+				g_error(("internal error, reason: %s\n"),
 					err->message);
 				exit(EXIT_FAILURE);//just in case
 			}
@@ -141,7 +141,7 @@ inifile::inifile(const std::string& path)
 			continue;
 		}
 		if (strcmp(get_impl(version), myversion)) {
-			g_error(_("unsupported ini file format\n"));
+			g_error(("unsupported ini file format\n"));
 			exit(EXIT_FAILURE);
 		}
 		done = true;
@@ -157,20 +157,20 @@ void inifile::save()
 		g_key_file_to_data(gkeyfile_, &len, get_addr(err)));
 
 	if (err) {
-		g_warning(_("internal error, reason: %s\n"),
+		g_warning(("internal error, reason: %s\n"),
 			  err->message);
 		return;
 	}
 	FILE *f = g_fopen(fname_.c_str(), "w");
 	if (!f) {
-		g_warning(_("can not open file: %s\n"),
+		g_warning(("can not open file: %s\n"),
 			  fname_.c_str());
 		return;
 	}
 	size_t writeb = fwrite(get_impl(data), 1, len, f);
 	fclose(f);
 	if (writeb < len)
-		g_warning(_("write to %s failed, instead of %lu,"
+		g_warning(("write to %s failed, instead of %lu,"
 			    " we wrote %lu\n"), fname_.c_str(), gulong(len), gulong(writeb));
 }
 

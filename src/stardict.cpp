@@ -1685,15 +1685,19 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	gint engine_index = http_client->userdata;
 
 	bool found = false;
+	std::string result_text;
 	if (engine_index == 4) {
-		#define ExicuteTranslateStartMark "<textarea cols=36 rows=15 name=\"after\" wrap=\"virtual\" style=\"width:320px;\">"
+		#define ExicuteTranslateStartMark "name=\"after\""
 		char *p_E = g_strstr_len(buffer, buffer_len, ExicuteTranslateStartMark);
 		if(p_E){
-			p_E += sizeof(ExicuteTranslateStartMark) -1;
-			char *p2_E = g_strstr_len(p_E, buffer_len - (p_E - buffer), "</textarea>");
-			if(p2_E){
-				oMidWin.oTransWin.SetText(p_E, p2_E-p_E);
-				found = true;
+			p_E = strchr(p_E, '>');
+			if (p_E) {
+				p_E++;
+				char *p2_E = g_strstr_len(p_E, buffer_len - (p_E - buffer), "</textarea>");
+				if(p2_E){
+					result_text.assign(p_E, p2_E-p_E);
+					found = true;
+				}
 			}
 		}
 	} else if (engine_index == 3) {
@@ -1703,7 +1707,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			p_S += sizeof(SystranBoxTranslateStartMark) -1;
 			char *p2_S = g_strstr_len(p_S, buffer_len - (p_S - buffer), "</textarea>");
 			if(p2_S){
-				oMidWin.oTransWin.SetText(p_S, p2_S-p_S);
+				result_text.assign(p_S, p2_S-p_S);
 				found = true;
 			}
 		}
@@ -1714,7 +1718,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			p_A += sizeof(AltaVistaTranslateStartMark) -1;
 			char *p2_A = g_strstr_len(p_A, buffer_len - (p_A - buffer), "</div>");
 			if(p2_A){
-				oMidWin.oTransWin.SetText(p_A, p2_A-p_A);
+				result_text.assign(p_A, p2_A-p_A);
 				found = true;
 			}
 		}
@@ -1727,7 +1731,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "<div class=\"pd\">");
 			if(p2_y && p3_y){
 				p3_y += sizeof("<div class=\"pd\">") -1;
-				oMidWin.oTransWin.SetText(p3_y, p2_y-p3_y);
+				result_text.assign(p3_y, p2_y-p3_y);
 				found = true;
 			}
 		}
@@ -1739,32 +1743,44 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			p += sizeof(GoogleTranslateStartMark) -1;
 			char *p2 = g_strstr_len(p, buffer_len - (p - buffer), "</div>");
 			if (p2) {
-				std::string charset;
-				char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
-				if (p3) {
-					p3 += sizeof("charset=") -1;
-					char *p4 = g_strstr_len(p3, buffer_len - (p3 - buffer), "\r\n");
-					if (p4) {
-						charset.assign(p3, p4-p3);
-					}
-				}
-				if (charset.empty()) {
-					oMidWin.oTransWin.SetText(p, p2-p);
-				} else {
-					gchar *text = g_convert(p, p2-p, "UTF-8", charset.c_str(), NULL, NULL, NULL);
-					if (text) {
-						oMidWin.oTransWin.SetText(text);
-						g_free(text);
-					} else {
-						oMidWin.oTransWin.SetText(_("Convert error!\n"));
-					}
-				}
+				result_text.assign(p, p2-p);
 				found = true;
 			}
 		}
 	}
 
-	if (!found) {
+	if (found) {
+		std::string charset;
+		char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
+		if (p3) {
+			p3 += sizeof("charset=") -1;
+			char *p4 = p3;
+			int len = buffer_len - (p3 - buffer);
+			while (true) {
+				if (p4 - p3 > len) {
+					p4 = NULL;
+					break;
+				}
+				if (*p4 == '"' || *p4 == '\r')
+					break;
+				p4++;
+			}
+			if (p4) {
+				charset.assign(p3, p4-p3);
+			}
+		}
+		if (charset.empty()) {
+			oMidWin.oTransWin.SetText(result_text.c_str());
+		} else {
+			gchar *text = g_convert(result_text.c_str(), result_text.length(), "UTF-8", charset.c_str(), NULL, NULL, NULL);
+			if (text) {
+				oMidWin.oTransWin.SetText(text);
+				g_free(text);
+			} else {
+				oMidWin.oTransWin.SetText(_("Convert error!\n"));
+			}
+		}
+	} else {
 		oMidWin.oTransWin.SetText(_("Not found!\n"));
 	}
 	oHttpManager.Remove(http_client);
