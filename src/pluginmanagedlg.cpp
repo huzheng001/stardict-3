@@ -398,7 +398,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 	GtkWidget *pluginlist = create_plugin_list();
 	gtk_box_pack_start (GTK_BOX (vbox), pluginlist, true, true, 0);
-	GtkWidget *expander = gtk_expander_new ("<b>Plug-in Details</b>");
+	GtkWidget *expander = gtk_expander_new (_("<b>Plug-in Details</b>"));
 	gtk_expander_set_use_markup(GTK_EXPANDER(expander), TRUE);
 	gtk_box_pack_start (GTK_BOX (vbox), expander, false, false, 0);
 	detail_label = gtk_label_new (NULL);
