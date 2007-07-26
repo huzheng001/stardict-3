@@ -71,7 +71,7 @@ private:
 	static void on_manage_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
-	static void on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
+	static void on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 
 	static void on_popup_menu_show_info_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);
 	static void on_popup_menu_select_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);

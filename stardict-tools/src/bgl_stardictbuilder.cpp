@@ -79,8 +79,17 @@ bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vecto
     file.write("\n", 1);
   }
   m_entriescount++;
+  std::string headword;
+  int len = word.length();
+  if (word[len-1]=='$') {
+    const char *p = word.c_str();
+    const char *p1 = strchr(p, '$');
+    headword.assign(p, p1-p);
+  } else {
+    headword = word;
+  }
   std::string lines;
-  lines = word;
+  lines = headword;
   for (std::vector<std::string>::iterator i = alternates.begin(); i != alternates.end(); ++i) {
     lines += '|';
     lines += *i;

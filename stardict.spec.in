@@ -20,6 +20,9 @@ BuildRequires: libgnomeui-devel >= 2.2.0, scrollkeeper, gettext, perl-XML-Parser
 Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
+Requires: libsigc++20 >= 2.0.17
+BuildRequires: libsigc++20-devel
+
 Requires: gucharmap
 BuildRequires: gucharmap-devel
 Requires: espeak

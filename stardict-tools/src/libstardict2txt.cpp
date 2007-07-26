@@ -98,7 +98,7 @@ void convert_stardict2txt(const char *ifofilename, print_info_t print_info)
 {
 	gchar *buffer;
 	g_file_get_contents(ifofilename, &buffer, NULL, NULL);
-	if (!g_str_has_prefix(buffer, "StarDict's dict ifo file\nversion=2.4.2\n")) {
+	if (!g_str_has_prefix(buffer, "StarDict's dict ifo file\nversion=")) {
 		print_info("Error, file version is not 2.4.2\n");
 		g_free(buffer);
 		return;
@@ -113,7 +113,7 @@ void convert_stardict2txt(const char *ifofilename, print_info_t print_info)
 		return;
 	}
 	p2 += sizeof("\nsametypesequence=") -1;
-	if (*p2=='m' && *(p2+1)=='\n') {
+	if (g_ascii_islower(*p2) && *(p2+1)=='\n') {
 		convert2tabfile(ifofilename, print_info);
 	} else {
 		print_info("Error, sametypesequence is not m\n");

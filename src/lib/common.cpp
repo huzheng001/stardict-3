@@ -98,16 +98,10 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 		if (p2) {
 			p2 = p2 + sizeof("\nidxoffsetbits=") -1;
 			if (g_str_has_prefix(p2, "64\n")) {
-				if (sizeof(long) == 4) {
-					g_print("Load %s failed: 32-bits machine can't load this dictionary.\n", ifofilename.c_str());
-					g_free(buffer);
-					return false;
-				} else {
-					// 64-bits machine don't have the 4G virtual process memory limit, so mmap large file can work.
-					// TODO
-					g_free(buffer);
-					return false;
-				}
+				// TODO
+				g_print("Load %s failed: not supported presently.\n", ifofilename.c_str());
+				g_free(buffer);
+				return false;
 			}
 		}
 	}

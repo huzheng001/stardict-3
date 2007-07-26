@@ -2,15 +2,20 @@ StarDict can be compiled and run in windows.
 
 Please install Dev-C++,they can be found in http://www.bloodshed.net/dev/
 
-Then install developer packages, they can be found in http://www.gimp.org/~tml/gimp/win32/downloads.html
+Then install developer packages, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
+These packages are needed:
+glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zip cairo-dev-1.4.8.zip gettext-dev-0.14.5.zip  Zlib 1.2.3
+Just extract them into X:\Dev-Cpp\ is OK.
 Notice, for Zlib, you should put the zlib1.dll in top\bin folder.
 
 Here is a stardict.dev
-use Dev-C++ to open it, then compile it. Becase the compile command is too long,it can't be compile in win98,please use win2000 or XP.
+use Dev-C++ to open it, then compile it. Becase the compile command is too long,it can't be compile in win98, please use win2000 or XP.
 
 my environment: Windows XP, Dev-Cpp 4.9.9.2
 
 After compiled, you will find stardict.exe at src/.
+
+You can find plug-in projects at stardict-plugins/.
 
 You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/TextOutHook.dev.
 
@@ -18,12 +23,12 @@ You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/Tex
 To build the installer.
 
 Grab and install NSIS: http://www.nullsoft.com/free/nsis
-I was using the 2.08 version.
+I was using the 2.29 version.
 
-i use linux commmand to illustrate the steps, but you cann't do it in this way :)
+I use linux commmand to illustrate the steps, but you cann't do it in this way :)
 
 ===============
-cd stardict-2.4.6
+cd stardict-3.0.0
 mkdir win32-install-dir
 
 cp src/stardict.exe win32-install-dir
@@ -54,9 +59,10 @@ replace "ghelp:stardict.xml" to "./stardict.html#id2772190"  //id2772190 is "<b>
 replace "file://./figures/" to "./figures/"
 And build the chm file by Visual CHM.
 
+Download gtk-runtime-*.exe from pidgin project and put it into gtk_installer/.
+
 Double click the stardict-installer.nsi :) NSIS will build the installer.
 
-This installer don't contains the gtk2-runtime, download it at: http://gaim.sourceforge.net/win32/index.php
 
 For debug, use these codes:
 =====
@@ -71,4 +77,4 @@ StarDict's win32 port got many experience from ReciteWord(my another project, ht
 Note: when use fopen(), use "rb", never "r".
 
 Hu Zheng <huzheng_001@163.com> http://forlinux.yeah.net
-2006.1.18
+2007.7.26
