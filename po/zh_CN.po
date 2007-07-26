@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-25 10:01+0800\n"
+"POT-Creation-Date: 2007-07-26 11:17+0800\n"
 "PO-Revision-Date: 2003-03-14 16:44+0800\n"
 "Last-Translator: Hu Zheng <huzheng_001@163.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -594,7 +594,7 @@ msgstr "星际译王 | 正在取词"
 msgid "StarDict - Stopped"
 msgstr "星际译王 | 暂停取词"
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2516
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2549
 msgid "_Scan"
 msgstr "取词(_S)"
 
@@ -622,7 +622,7 @@ msgstr "停止选中区取词"
 msgid "Help"
 msgstr "帮助"
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2549
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2582
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr "退出"
@@ -890,7 +890,7 @@ msgstr ""
 msgid "The text \"%s\" was not found."
 msgstr "文本\"%s\"未找到。"
 
-#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2171
+#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2173
 msgid "_Pronounce"
 msgstr "朗读(_P)"
 
@@ -1012,71 +1012,71 @@ msgstr "希腊语"
 msgid "Swedish"
 msgstr "瑞典语"
 
-#: ../src/mainwin.cpp:2094
+#: ../src/mainwin.cpp:2096
 msgid "Google Translate"
 msgstr "谷歌翻译"
 
-#: ../src/mainwin.cpp:2095
+#: ../src/mainwin.cpp:2097
 msgid "Yahoo Translate"
 msgstr "雅虎翻译"
 
-#: ../src/mainwin.cpp:2096
+#: ../src/mainwin.cpp:2098
 msgid "Altavista Translate"
 msgstr "Altavista翻译"
 
-#: ../src/mainwin.cpp:2097
+#: ../src/mainwin.cpp:2099
 msgid "SystranBox Translate"
 msgstr "SystranBox翻译"
 
-#: ../src/mainwin.cpp:2098
+#: ../src/mainwin.cpp:2100
 msgid "Excite Japan Translate"
 msgstr "Excite Japan翻译"
 
-#: ../src/mainwin.cpp:2192
-msgid "Full-Text Translation"
-msgstr "全文翻译"
+#: ../src/mainwin.cpp:2195
+msgid "<b>Full-Text Translation</b>"
+msgstr "<b>全文翻译</b>"
 
-#: ../src/mainwin.cpp:2223
+#: ../src/mainwin.cpp:2226
 msgid "To"
 msgstr "到"
 
-#: ../src/mainwin.cpp:2257
+#: ../src/mainwin.cpp:2259
 msgid "_Translate"
 msgstr "翻译(_T)"
 
-#: ../src/mainwin.cpp:2275
+#: ../src/mainwin.cpp:2281
 msgid "Powered by -"
 msgstr "来源 -"
 
-#: ../src/mainwin.cpp:2437
+#: ../src/mainwin.cpp:2470
 msgid "Please input some words to translate."
 msgstr "请输入一些文字来翻译。"
 
-#: ../src/mainwin.cpp:2452
+#: ../src/mainwin.cpp:2485
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: ../src/mainwin.cpp:2525
+#: ../src/mainwin.cpp:2558
 msgid "Scan the selection"
 msgstr "选中区取词"
 
-#: ../src/mainwin.cpp:2539
+#: ../src/mainwin.cpp:2572
 msgid "Show info"
 msgstr "显示信息"
 
-#: ../src/mainwin.cpp:2571 ../src/prefsdlg.cpp:1755
+#: ../src/mainwin.cpp:2604 ../src/prefsdlg.cpp:1755
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../src/mainwin.cpp:2581
+#: ../src/mainwin.cpp:2614
 msgid "Manage dictionaries"
 msgstr "词典管理"
 
-#: ../src/mainwin.cpp:2591
+#: ../src/mainwin.cpp:2624
 msgid "Go to the StarDict website"
 msgstr "访问星际译王的项目主页"
 
-#: ../src/mainwin.cpp:2603
+#: ../src/mainwin.cpp:2636
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "在 Internet 中搜索单词 - 右键：网站列表"
 

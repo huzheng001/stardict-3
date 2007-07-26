@@ -1808,7 +1808,7 @@ GtkWidget *DictManageDlg::create_network_buttons()
 	return vbox;
 }
 
-void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg)
+void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
     show_url("http://www.stardict.org/finance.php");
 }

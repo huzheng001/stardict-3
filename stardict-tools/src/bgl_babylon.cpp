@@ -260,12 +260,14 @@ bgl_entry Babylon::readEntry()
       {
         pos = 0;
 	len = (unsigned char)block.data[pos++];
-        std::string filename = "res/";
-        filename.append(block.data+pos, len);
-	pos += len;
-        FILE *ifile = fopen(filename.c_str(), "w");
-        fwrite(block.data + pos, 1, block.length -pos, ifile);
-        fclose(ifile);
+        std::string filename(block.data+pos, len);
+	if (filename != "8EAF66FD.bmp" && filename != "C2EEF3F6.html") {
+		filename = "res/" + filename;
+		pos += len;
+	        FILE *ifile = fopen(filename.c_str(), "w");
+        	fwrite(block.data + pos, 1, block.length -pos, ifile);
+	        fclose(ifile);
+	}
         break;
       }
       case 1:
@@ -304,6 +306,8 @@ bgl_entry Babylon::readEntry()
               }
               pos += len - a;
               break;
+            } else if (block.data[pos] == 0x14) {
+              pos++;
             } else {
               definition += block.data[pos++];
             }

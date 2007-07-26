@@ -584,6 +584,9 @@ void FloatWin::Popup(gboolean updatePosition)
 void FloatWin::Show()
 {
 	gtk_widget_show(FloatWindow);
+#ifdef _WIN32
+	gtk_window_present(GTK_WINDOW(FloatWindow));
+#endif
 	if (!timeout)
 		timeout = g_timeout_add(FLOAT_TIMEOUT,vTimeOutCallback,this);
 }

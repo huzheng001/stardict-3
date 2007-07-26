@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-25 10:01+0800\n"
+"POT-Creation-Date: 2007-07-26 11:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -567,7 +567,7 @@ msgstr ""
 msgid "StarDict - Stopped"
 msgstr ""
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2516
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2549
 msgid "_Scan"
 msgstr ""
 
@@ -595,7 +595,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2549
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2582
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr ""
@@ -819,7 +819,7 @@ msgstr ""
 msgid "The text \"%s\" was not found."
 msgstr ""
 
-#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2171
+#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2173
 msgid "_Pronounce"
 msgstr ""
 
@@ -941,71 +941,71 @@ msgstr ""
 msgid "Swedish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2094
+#: ../src/mainwin.cpp:2096
 msgid "Google Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2095
+#: ../src/mainwin.cpp:2097
 msgid "Yahoo Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2096
+#: ../src/mainwin.cpp:2098
 msgid "Altavista Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2097
+#: ../src/mainwin.cpp:2099
 msgid "SystranBox Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2098
+#: ../src/mainwin.cpp:2100
 msgid "Excite Japan Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2192
-msgid "Full-Text Translation"
+#: ../src/mainwin.cpp:2195
+msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2223
+#: ../src/mainwin.cpp:2226
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2257
+#: ../src/mainwin.cpp:2259
 msgid "_Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2275
+#: ../src/mainwin.cpp:2281
 msgid "Powered by -"
 msgstr ""
 
-#: ../src/mainwin.cpp:2437
+#: ../src/mainwin.cpp:2470
 msgid "Please input some words to translate."
 msgstr ""
 
-#: ../src/mainwin.cpp:2452
+#: ../src/mainwin.cpp:2485
 msgid "Connecting..."
 msgstr ""
 
-#: ../src/mainwin.cpp:2525
+#: ../src/mainwin.cpp:2558
 msgid "Scan the selection"
 msgstr ""
 
-#: ../src/mainwin.cpp:2539
+#: ../src/mainwin.cpp:2572
 msgid "Show info"
 msgstr ""
 
-#: ../src/mainwin.cpp:2571 ../src/prefsdlg.cpp:1755
+#: ../src/mainwin.cpp:2604 ../src/prefsdlg.cpp:1755
 msgid "Preferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:2581
+#: ../src/mainwin.cpp:2614
 msgid "Manage dictionaries"
 msgstr ""
 
-#: ../src/mainwin.cpp:2591
+#: ../src/mainwin.cpp:2624
 msgid "Go to the StarDict website"
 msgstr ""
 
-#: ../src/mainwin.cpp:2603
+#: ../src/mainwin.cpp:2636
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr ""
 

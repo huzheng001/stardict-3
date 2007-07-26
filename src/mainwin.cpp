@@ -333,11 +333,11 @@ void TopWin::do_prev()
 					gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
 			}
 			g_free(iPreIndex);
-            if (conf->get_bool_at("network/enable_netdict")) {
-                STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_PREVIOUS, word);
-                if (!gpAppFrame->oStarDictClient.try_cache(c))
-                    gpAppFrame->oStarDictClient.send_commands(1, c);
-            }
+			if (conf->get_bool_at("network/enable_netdict")) {
+				STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_PREVIOUS, word);
+				if (!gpAppFrame->oStarDictClient.try_cache(c))
+					gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
 			g_free(word);
 		}
 		gtk_tree_path_free(path);
@@ -369,15 +369,14 @@ void TopWin::do_next()
 		gtk_tree_view_get_selection(midwin.oIndexWin.oListWin.treeview_);
 	GtkTreeModel *model;
 	GtkTreeIter iter;
-//make sure this will run,so model is set.
-	gboolean selected =
-		gtk_tree_selection_get_selected(selection, &model, &iter); 
+	//make sure this will run,so model is set.
+	gboolean selected = gtk_tree_selection_get_selected(selection, &model, &iter); 
 	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {		
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
 				return; //this should never happen.
 		}
-//if gtk_tree_model_iter_next fail,iter will be invalid,so save it.
+		//if gtk_tree_model_iter_next fail,iter will be invalid,so save it.
 		GtkTreeIter new_iter = iter; 
 		gchar *word;
 		if (gtk_tree_model_iter_next(model, &iter)) {
@@ -399,11 +398,11 @@ void TopWin::do_next()
 					select_region_in_text(0, -1);
 			}
 			g_free(iNextIndex);
-            if (conf->get_bool_at("network/enable_netdict")) {
-                STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_NEXT, word);
-                if (!gpAppFrame->oStarDictClient.try_cache(c))
-                    gpAppFrame->oStarDictClient.send_commands(1, c);
-            }
+			if (conf->get_bool_at("network/enable_netdict")) {
+				STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_NEXT, word);
+				if (!gpAppFrame->oStarDictClient.try_cache(c))
+					gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
 			g_free(word);
 		}
 	} else if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_FUZZY_LIST ||
@@ -2090,12 +2089,14 @@ struct TranslateEngine {
 	const char ** fromlangs;
 	const char *** tolangs;
 	const char *** code;
+	const char * website_name;
+	const char * website;
 };
-static TranslateEngine trans_engines[] = { {N_("Google Translate"), google_fromlangs, google_tolangs, google_code}, 
-	{ N_("Yahoo Translate"), yahoo_fromlangs, yahoo_tolangs, yahoo_code }, 
-	{ N_("Altavista Translate"), altavista_fromlangs, altavista_tolangs, altavista_code },
-	{ N_("SystranBox Translate"), systranbox_fromlangs, systranbox_tolangs, systranbox_code },
-	{ N_("Excite Japan Translate"), excite_fromlangs, excite_tolangs, excite_code }
+static TranslateEngine trans_engines[] = { {N_("Google Translate"), google_fromlangs, google_tolangs, google_code, "Google", "http://translate.google.com"}, 
+	{ N_("Yahoo Translate"), yahoo_fromlangs, yahoo_tolangs, yahoo_code, "Yahoo", "http://fanyi.cn.yahoo.com"}, 
+	{ N_("Altavista Translate"), altavista_fromlangs, altavista_tolangs, altavista_code, "Altavista", "http://babelfish.altavista.com"},
+	{ N_("SystranBox Translate"), systranbox_fromlangs, systranbox_tolangs, systranbox_code, "SystranBox", "http://www.systranbox.com"},
+	{ N_("Excite Japan Translate"), excite_fromlangs, excite_tolangs, excite_code, "Excite Japan", "http://www.excite.co.jp"}
 	//{ N_("KingSoft Translate"), kingsoft_fromlangs, kingsoft_tolangs, NULL}
 };
 
@@ -2189,7 +2190,8 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),8);
 	gtk_container_add(GTK_CONTAINER(frame), vbox);
 
-	GtkWidget *label = gtk_label_new(_("Full-Text Translation"));
+	GtkWidget *label = gtk_label_new(NULL);
+	gtk_label_set_markup(GTK_LABEL(label), _("<b>Full-Text Translation</b>"));
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
 
@@ -2200,7 +2202,7 @@ void TransWin::Create(GtkWidget *notebook)
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 	GtkTreeIter iter;
 	for (size_t i = 0; i < sizeof(trans_engines)/sizeof(trans_engines[0]); i++) {
-		const char *name = trans_engines[i].name;
+		const char *name = gettext(trans_engines[i].name);
 		gtk_list_store_append(list_store, &iter);
 		gtk_list_store_set(list_store, &iter, 0, name, -1);
 	}
@@ -2231,7 +2233,6 @@ void TransWin::Create(GtkWidget *notebook)
 	gint engine_index = conf->get_int_at("translate/engine");
 	gint fromlang_index = conf->get_int_at("translate/fromlang");
 	gint tolang_index = conf->get_int_at("translate/tolang");
-	SetComboBox(engine_index, fromlang_index, tolang_index);
 	g_signal_connect(G_OBJECT(engine_combobox),"changed", G_CALLBACK(on_engine_combobox_changed), this);
 	g_signal_connect(G_OBJECT(fromlang_combobox),"changed", G_CALLBACK(on_fromlang_combobox_changed), this);
 	g_signal_connect(G_OBJECT(tolang_combobox),"changed", G_CALLBACK(on_tolang_combobox_changed), this);
@@ -2272,16 +2273,47 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_add(GTK_CONTAINER(scrolled_window), result_textview);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
+	hbox = gtk_hbox_new(false, 8);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+	label = gtk_label_new(NULL);
+	gtk_box_pack_start(GTK_BOX(hbox), label, true, true, 0);
 	label = gtk_label_new(_("Powered by -"));
-	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
+	link_label = gtk_label_new(NULL);
+	GtkWidget *link_eventbox = gtk_event_box_new();
+	g_signal_connect(G_OBJECT(link_eventbox),"button-release-event", G_CALLBACK(on_link_eventbox_clicked), this);
+	gtk_container_add(GTK_CONTAINER(link_eventbox), link_label);
+	gtk_box_pack_start (GTK_BOX (hbox), link_eventbox, FALSE, FALSE, 0);
+	label = gtk_label_new(NULL);
+	gtk_box_pack_end(GTK_BOX(hbox), label, true, true, 0);
 
 	gtk_widget_show_all(frame);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), frame, NULL);
+	gtk_widget_realize(link_eventbox);
+	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
+	gdk_window_set_cursor(link_eventbox->window, cursor);
+	gdk_cursor_unref(cursor);
+	SetComboBox(engine_index, fromlang_index, tolang_index);
+}
+
+void TransWin::SetLink(const char *linkname)
+{
+	std::string markup = "<span foreground=\"blue\" underline=\"single\">";
+	markup += linkname;
+	markup += "</span>";
+	gtk_label_set_markup(GTK_LABEL(link_label), markup.c_str());
+}
+
+void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
+	show_url(trans_engines[index].website);
 }
 
 void TransWin::on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
 	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	oTransWin->SetLink(trans_engines[index].website_name);
 	oTransWin->SetComboBox(index, -1, -1);
 	conf->set_int_at("translate/engine", index);
 }

@@ -1,3 +1,5 @@
+EXTRA_DIST = dict_client.cpp dict_client.hpp
+
 noinst_LIBRARIES = libstardict.a
 
 libstardict_a_SOURCES = \
@@ -16,7 +18,6 @@ libstardict_a_SOURCES = \
 	common.cpp common.hpp \
 	md5.c md5.h	\
 	stardict_client.cpp stardict_client.hpp \
-	dict_client.cpp dict_client.hpp \
 	sockets.cpp sockets.hpp \
 	http_client.cpp http_client.h	\
 	httpmanager.cpp httpmanager.h	\
