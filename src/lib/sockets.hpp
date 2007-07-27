@@ -8,6 +8,7 @@
 #  include <netdb.h>
 #else
 #  include <WinSock.h>
+typedef unsigned long in_addr_t;
 #endif
 
 //! A platform-independent socket API.
@@ -43,11 +44,12 @@ public:
 	//! Accept a client connection request
 	static int accept(int socket);
 
-    typedef void (*on_resolved_func)(gpointer data, struct hostent *ret);
-    static void resolve(std::string& host, gpointer data, on_resolved_func func);
+	typedef void (*on_resolved_func)(gpointer data, bool resolved, in_addr_t sa);
+	static void resolve(std::string& host, gpointer data, on_resolved_func func);
 
 	//! Connect a socket to a server (from a client)
-	static bool connect(int socket, struct hostent *ret, int port);
+	typedef void (*on_connected_func)(gpointer data, bool succeeded);
+	static void connect(int socket, in_addr_t sa, int port, gpointer data, on_connected_func func);
 
 
 	//! Returns last errno
@@ -56,19 +58,26 @@ public:
 	//! Returns message corresponding to last error
 	static std::string get_error_msg();
 private:
-    struct DnsQueryData {
-            std::string host;
-            gpointer data;
-            on_resolved_func func;
-            bool resolved;
-            struct  hostent hostinfo;
+	struct DnsQueryData {
+		std::string host;
+		gpointer data;
+		on_resolved_func func;
+		bool resolved;
+		in_addr_t sa;
     };
     static gpointer dns_thread(gpointer data);
     static gboolean dns_main_thread_cb(gpointer data);
-	struct ResolveInfo {
-		struct  hostent hostinfo;
-	};
-	static std::map<std::string, ResolveInfo> dns_map;
+	static std::map<std::string, in_addr_t> dns_map;
+	struct ConnectData {
+		int sd;
+		in_addr_t sa;
+		int port;
+		gpointer data;
+		on_connected_func func;
+		bool succeeded;
+    };
+    static gpointer connect_thread(gpointer data);
+    static gboolean connect_main_thread_cb(gpointer data);
 };
 
 

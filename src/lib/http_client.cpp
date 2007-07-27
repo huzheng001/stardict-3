@@ -60,16 +60,36 @@ void HttpClient::SendHttpGetRequestWithCallback(const char* shost, const char* s
 	SendHttpGetRequest(shost, sfile, data);
 }
 
-void HttpClient::on_resolved(gpointer data, struct hostent *ret)
+void HttpClient::on_resolved(gpointer data, bool resolved, in_addr_t sa)
 {
 	HttpClient *oHttpClient = (HttpClient *)data;
+	if (!resolved) {
+		gchar *mes = g_strdup_printf("Can not resolve %s: %s\n",
+			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
+		on_error_.emit(oHttpClient, mes);
+		g_free(mes);
+		return;
+	}
+
 	oHttpClient->sd_ = Socket::socket();
 	if (oHttpClient->sd_ == -1) {
 		std::string str = "Can not create socket: " + Socket::get_error_msg();
 		on_error_.emit(oHttpClient, str.c_str());
 		return;
 	}
+	Socket::connect(oHttpClient->sd_, sa, 80, oHttpClient, on_connected);
+}
 
+void HttpClient::on_connected(gpointer data, bool succeeded)
+{
+	HttpClient *oHttpClient = (HttpClient *)data;
+	if (!succeeded) {
+		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
+			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
+		on_error_.emit(oHttpClient, mes);
+		g_free(mes);
+		return;
+	}
 #ifdef _WIN32
 	oHttpClient->channel_ = g_io_channel_win32_new_socket(oHttpClient->sd_);
 #else
@@ -86,13 +106,6 @@ void HttpClient::on_resolved(gpointer data, struct hostent *ret)
 		on_error_.emit(oHttpClient, str);
 		g_free(str);
 		g_error_free(err);
-		return;
-	}
-	if (!Socket::connect(oHttpClient->sd_, ret, 80)) {
-		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
-			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
-		on_error_.emit(oHttpClient, mes);
-		g_free(mes);
 		return;
 	}
 	if (oHttpClient->SendGetRequest())

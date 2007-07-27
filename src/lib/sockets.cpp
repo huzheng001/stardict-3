@@ -28,7 +28,7 @@ extern "C" {
 
 #include "sockets.hpp"
 
-std::map<std::string, Socket::ResolveInfo> Socket::dns_map;
+std::map<std::string, in_addr_t> Socket::dns_map;
 
 #if defined(_WIN32)
   
@@ -141,12 +141,9 @@ gboolean Socket::dns_main_thread_cb(gpointer data)
 {
     DnsQueryData *query_data = (DnsQueryData *)data;
     if (query_data->resolved) {
-	ResolveInfo info;
-	info.hostinfo = query_data->hostinfo;
-	dns_map[query_data->host] = info;
-
-        query_data->func(query_data->data, &(query_data->hostinfo));
-    }
+		dns_map[query_data->host] = query_data->sa;
+	}
+    query_data->func(query_data->data, query_data->resolved, query_data->sa);
     delete query_data;
     return FALSE;
 }
@@ -156,10 +153,12 @@ gpointer Socket::dns_thread(gpointer data)
     DnsQueryData *query_data = (DnsQueryData *)data;
     struct  hostent *phost;
 #ifndef _WIN32    
+    struct  hostent hostinfo;
     char buf[1024];
     int ret;
-    if (!gethostbyname_r(query_data->host.c_str(), &query_data->hostinfo, buf,
+    if (!gethostbyname_r(query_data->host.c_str(), &hostinfo, buf,
         sizeof(buf), &phost, &ret)) {
+	query_data->sa = ((in_addr*)(hostinfo.h_addr))->s_addr;
         query_data->resolved = true;
     } else {
         query_data->resolved = false;
@@ -175,7 +174,7 @@ gpointer Socket::dns_thread(gpointer data)
 		phost = gethostbyaddr((char *)&addr, 4, AF_INET);
 	}
 	if (phost) {
-		query_data->hostinfo = *phost;
+		query_data->sa = ((in_addr*)(phost->h_addr))->s_addr;
 		query_data->resolved = true;
 	} else {
 		query_data->resolved = false;
@@ -190,10 +189,10 @@ gpointer Socket::dns_thread(gpointer data)
 void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
 {
 	initWinSock();
-	std::map<std::string, ResolveInfo>::iterator iter;
+	std::map<std::string, in_addr_t>::iterator iter;
 	iter = dns_map.find(host);
 	if (iter != dns_map.end()) {
-		func(data, &(iter->second.hostinfo));
+		func(data, true, iter->second);
 		return;
 	}
 	DnsQueryData *query_data = new DnsQueryData();
@@ -202,26 +201,45 @@ void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
 	query_data->func = func;
 	g_thread_create(dns_thread, query_data, FALSE, NULL);
 }
-    
-// Connect a socket to a server (from a client)
-bool
-Socket::connect(int fd, struct hostent *hp, int port)
+
+void Socket::connect(int socket, in_addr_t sa, int port, gpointer data, on_connected_func func)
 {
-  struct sockaddr_in saddr;
-  memset(&saddr, 0, sizeof(saddr));
-  saddr.sin_family = AF_INET;
-
-  memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);
-  saddr.sin_port = htons((u_short) port);
-
-  // For asynch operation, this will return EWOULDBLOCK (windows) or
-  // EINPROGRESS (linux) and we just need to wait for the socket to be writable...
-  int result = ::connect(fd, (struct sockaddr *)&saddr, sizeof(saddr));
-  return result == 0 || nonFatalError();
+	ConnectData *connect_data = new ConnectData();
+	connect_data->sd = socket;
+	connect_data->sa = sa;
+	connect_data->port = port;
+	connect_data->data = data;
+	connect_data->func = func;
+	g_thread_create(connect_thread, connect_data, FALSE, NULL);
 }
 
+gpointer Socket::connect_thread(gpointer data)
+{
+    ConnectData *connect_data = (ConnectData *)data;
+	struct sockaddr_in saddr;
+	memset(&saddr, 0, sizeof(saddr));
+	saddr.sin_family = AF_INET;
+	saddr.sin_addr.s_addr = connect_data->sa;
+	saddr.sin_port = htons((u_short) connect_data->port);
 
+	// For asynch operation, this will return EWOULDBLOCK (windows) or
+	// EINPROGRESS (linux) and we just need to wait for the socket to be writable...
+	int result = ::connect(connect_data->sd, (struct sockaddr *)&saddr, sizeof(saddr));
+	connect_data->succeeded = (result == 0);
 
+    /* back to main thread */
+    g_idle_add(connect_main_thread_cb, connect_data);
+    return NULL;
+}
+
+gboolean Socket::connect_main_thread_cb(gpointer data)
+{
+    ConnectData *connect_data = (ConnectData *)data;
+	connect_data->func(connect_data->data, connect_data->succeeded);
+    delete connect_data;
+    return FALSE;
+}
+    
 // Read available text from the specified socket. Returns false on error.
 bool Socket::nb_read(int fd, std::string& s, bool *eof)
 {

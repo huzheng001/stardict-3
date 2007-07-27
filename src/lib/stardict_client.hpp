@@ -4,6 +4,8 @@
 #include <glib.h>
 #ifndef _WIN32
 #  include <netdb.h>
+#else
+typedef unsigned long in_addr_t;
 #endif
 
 #include "sigc++/sigc++.h"
@@ -156,7 +158,7 @@ private:
 	std::string host_;
 	int port_;
 	bool host_resolved;
-	struct hostent host_ret;
+	in_addr_t sa;
     std::string user_;
     std::string md5passwd_;
 	bool is_connected_;
@@ -180,7 +182,8 @@ private:
 	static gboolean on_io_in_event(GIOChannel *, GIOCondition, gpointer);
 	static gboolean on_io_out_event(GIOChannel *, GIOCondition, gpointer);
     void connect();
-    static void on_resolved(gpointer data, struct hostent *ret);
+    static void on_resolved(gpointer data, bool resolved, in_addr_t sa);
+	static void on_connected(gpointer data, bool succeeded);
     void write_str(const char *str, GError **err);
     bool parse(gchar *line);
     int parse_banner(gchar *line);

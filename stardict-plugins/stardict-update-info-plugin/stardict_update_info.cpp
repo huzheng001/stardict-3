@@ -126,7 +126,8 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 	p += 4;
 	updateinfo_ParseUserData Data;
 	Data.latest_version_num = 0;
-	const char *locale = g_getenv("LANG");
+	const gchar* const *languages = g_get_language_names();
+	const char *locale = languages[0];
 	if (locale && locale[0] != '\0') {
 		const char *p = strchr(locale, '.');
 		if (p) {
