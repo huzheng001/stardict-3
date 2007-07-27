@@ -6,6 +6,13 @@
 #include <string>
 #include <vector>
 
+#ifndef _WIN32
+#  include <netdb.h>
+#else
+typedef unsigned long in_addr_t;
+#endif
+
+
 typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, int userdata);
 
 class HttpClient {
@@ -28,7 +35,8 @@ private:
 	GIOChannel *channel_;
 	guint in_source_id_;
 	guint out_source_id_;
-	static void on_resolved(gpointer data, struct hostent *ret);
+	static void on_resolved(gpointer data, bool resolved, in_addr_t sa);
+	static void on_connected(gpointer data, bool succeeded);
 	static gboolean on_io_in_event(GIOChannel *, GIOCondition, gpointer);
 	static gboolean on_io_out_event(GIOChannel *, GIOCondition, gpointer);
 	void disconnect();

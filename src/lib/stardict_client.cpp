@@ -648,17 +648,25 @@ void StarDictClient::clean_command()
 void StarDictClient::connect()
 {
     if (host_resolved) {
-	    on_resolved(this, &host_ret);
+	    on_resolved(this, true, sa);
     } else {
         Socket::resolve(host_, this, on_resolved);
     }
 }
 
-void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
+void StarDictClient::on_resolved(gpointer data, bool resolved, in_addr_t sa_)
 {
     StarDictClient *oStarDictClient = (StarDictClient *)data;
+    if (!resolved) {
+        gchar *mes = g_strdup_printf("Can not reslove %s: %s\n",
+                         oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
+        on_error_.emit(mes);
+        g_free(mes);
+        return;
+    }
+
     if (oStarDictClient->host_resolved == false) {
-	    memcpy(&(oStarDictClient->host_ret), ret, sizeof(struct hostent));
+            oStarDictClient->sa = sa_;
 	    oStarDictClient->host_resolved = true;
     }
 
@@ -669,7 +677,19 @@ void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
         on_error_.emit(str.c_str());
         return;
     }
+    Socket::connect(oStarDictClient->sd_, sa_, oStarDictClient->port_, oStarDictClient, on_connected);
+}
 
+void StarDictClient::on_connected(gpointer data, bool succeeded)
+{
+    StarDictClient *oStarDictClient = (StarDictClient *)data;
+    if (!succeeded) {
+        gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
+                         oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
+        on_error_.emit(mes);
+        g_free(mes);
+        return;
+    }
 #ifdef _WIN32
     oStarDictClient->channel_ = g_io_channel_win32_new_socket(oStarDictClient->sd_);
 #else
@@ -690,14 +710,6 @@ void StarDictClient::on_resolved(gpointer data, struct hostent *ret)
         on_error_.emit(str);
         g_free(str);
         g_error_free(err);
-        return;
-    }
-
-    if (!Socket::connect(oStarDictClient->sd_, ret, oStarDictClient->port_)) {
-        gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
-                         oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
-        on_error_.emit(mes);
-        g_free(mes);
         return;
     }
 
