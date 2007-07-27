@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 11:17+0800\n"
+"POT-Creation-Date: 2007-07-27 10:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:31
-#: ../src/docklet.cpp:199 ../src/mainwin.cpp:470 ../src/splash.cpp:84
+#: ../src/docklet.cpp:199 ../src/mainwin.cpp:469 ../src/splash.cpp:84
 #: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2279
 #: ../src/win32/systray.cpp:216 ../src/win32/systray.cpp:264
 msgid "StarDict"
@@ -491,7 +491,7 @@ msgstr ""
 msgid "Add dictionary"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1732 ../src/prefsdlg.cpp:1225
+#: ../src/dictmanagedlg.cpp:1732 ../src/prefsdlg.cpp:1227
 msgid "Add"
 msgstr ""
 
@@ -523,7 +523,7 @@ msgstr ""
 msgid "D_ict List"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1868 ../src/mainwin.cpp:511
+#: ../src/dictmanagedlg.cpp:1868 ../src/mainwin.cpp:510
 msgid "Manage _Dict"
 msgstr ""
 
@@ -567,11 +567,11 @@ msgstr ""
 msgid "StarDict - Stopped"
 msgstr ""
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2549
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2548
 msgid "_Scan"
 msgstr ""
 
-#: ../src/docklet.cpp:107 ../src/mainwin.cpp:548
+#: ../src/docklet.cpp:107 ../src/mainwin.cpp:547
 msgid "_Quit"
 msgstr ""
 
@@ -583,7 +583,7 @@ msgstr ""
 msgid "Save to file"
 msgstr ""
 
-#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1413
+#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1412
 msgid "Pronounce the word"
 msgstr ""
 
@@ -595,7 +595,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2582
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2581
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr ""
@@ -621,23 +621,23 @@ msgstr ""
 msgid "Found %d words:\n"
 msgstr ""
 
-#: ../src/floatwin.cpp:820
+#: ../src/floatwin.cpp:823
 msgid "_Copy"
 msgstr ""
 
-#: ../src/floatwin.cpp:826
+#: ../src/floatwin.cpp:829
 msgid "_Save"
 msgstr ""
 
-#: ../src/floatwin.cpp:831 ../src/mainwin.cpp:1914
+#: ../src/floatwin.cpp:834 ../src/mainwin.cpp:1913
 msgid "_Query"
 msgstr ""
 
-#: ../src/floatwin.cpp:838
+#: ../src/floatwin.cpp:841
 msgid "_Play"
 msgstr ""
 
-#: ../src/floatwin.cpp:846
+#: ../src/floatwin.cpp:849
 msgid "_Fuzzy Query"
 msgstr ""
 
@@ -657,87 +657,87 @@ msgstr ""
 msgid "Show the main menu (Alt+M)"
 msgstr ""
 
-#: ../src/mainwin.cpp:467
+#: ../src/mainwin.cpp:466
 msgid "translator_credits"
 msgstr ""
 
-#: ../src/mainwin.cpp:473
+#: ../src/mainwin.cpp:472
 msgid "StarDict is an international dictionary for GNOME."
 msgstr ""
 
-#: ../src/mainwin.cpp:504
+#: ../src/mainwin.cpp:503
 msgid "Pr_eferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:517
+#: ../src/mainwin.cpp:516
 msgid "Manage _Plugins"
 msgstr ""
 
-#: ../src/mainwin.cpp:526
+#: ../src/mainwin.cpp:525
 msgid "_New Version"
 msgstr ""
 
-#: ../src/mainwin.cpp:534
+#: ../src/mainwin.cpp:533
 msgid "_Help"
 msgstr ""
 
-#: ../src/mainwin.cpp:540
+#: ../src/mainwin.cpp:539
 msgid "_About"
 msgstr ""
 
-#: ../src/mainwin.cpp:1117
+#: ../src/mainwin.cpp:1116
 msgid "List"
 msgstr ""
 
-#: ../src/mainwin.cpp:1128
+#: ../src/mainwin.cpp:1127
 msgid "Result"
 msgstr ""
 
-#: ../src/mainwin.cpp:1138
+#: ../src/mainwin.cpp:1137
 msgid "Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:1149
+#: ../src/mainwin.cpp:1148
 msgid "Tree"
 msgstr ""
 
-#: ../src/mainwin.cpp:1160
+#: ../src/mainwin.cpp:1159
 msgid "Choose dict group"
 msgstr ""
 
-#: ../src/mainwin.cpp:1173
+#: ../src/mainwin.cpp:1172
 msgid "Next word (Alt+Down)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1183
+#: ../src/mainwin.cpp:1182
 msgid "Previous word (Alt+Up)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1366
+#: ../src/mainwin.cpp:1365
 msgid "Show the word list"
 msgstr ""
 
-#: ../src/mainwin.cpp:1381
+#: ../src/mainwin.cpp:1380
 msgid "Hide the word list"
 msgstr ""
 
-#: ../src/mainwin.cpp:1399
+#: ../src/mainwin.cpp:1398
 msgid "Copy"
 msgstr ""
 
-#: ../src/mainwin.cpp:1427
+#: ../src/mainwin.cpp:1426
 msgid "Save to file(Alt+E)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1437
+#: ../src/mainwin.cpp:1436
 msgid "Print"
 msgstr ""
 
-#: ../src/mainwin.cpp:1452
+#: ../src/mainwin.cpp:1451
 msgid "Search in the definition (Ctrl+F)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1638
+#: ../src/mainwin.cpp:1637
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -745,7 +745,7 @@ msgid ""
 "%s%s%s and put them to %s."
 msgstr ""
 
-#: ../src/mainwin.cpp:1661
+#: ../src/mainwin.cpp:1660
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -765,7 +765,7 @@ msgid ""
 "clicking will perform a fuzzy query.\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:1678
+#: ../src/mainwin.cpp:1677
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
@@ -814,198 +814,198 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:1846
+#: ../src/mainwin.cpp:1845
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr ""
 
-#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2173
+#: ../src/mainwin.cpp:1905 ../src/mainwin.cpp:2172
 msgid "_Pronounce"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960
 msgid "Arabic"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952
+#: ../src/mainwin.cpp:1951
 msgid "Chinese"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1959 ../src/mainwin.cpp:1961
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
-#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1958 ../src/mainwin.cpp:1960
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
+#: ../src/mainwin.cpp:2064 ../src/mainwin.cpp:2071
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1957 ../src/mainwin.cpp:1961
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
-#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1956 ../src/mainwin.cpp:1960
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
+#: ../src/mainwin.cpp:2064 ../src/mainwin.cpp:2071
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1953 ../src/mainwin.cpp:1955
-#: ../src/mainwin.cpp:1963 ../src/mainwin.cpp:1965 ../src/mainwin.cpp:1967
-#: ../src/mainwin.cpp:1969 ../src/mainwin.cpp:1971 ../src/mainwin.cpp:1973
-#: ../src/mainwin.cpp:1975 ../src/mainwin.cpp:1977 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1983 ../src/mainwin.cpp:1985 ../src/mainwin.cpp:1987
-#: ../src/mainwin.cpp:1991 ../src/mainwin.cpp:1993 ../src/mainwin.cpp:1995
-#: ../src/mainwin.cpp:1997 ../src/mainwin.cpp:1999 ../src/mainwin.cpp:2001
-#: ../src/mainwin.cpp:2003 ../src/mainwin.cpp:2005 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2011 ../src/mainwin.cpp:2013 ../src/mainwin.cpp:2015
-#: ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2021 ../src/mainwin.cpp:2023
-#: ../src/mainwin.cpp:2025 ../src/mainwin.cpp:2027 ../src/mainwin.cpp:2029
-#: ../src/mainwin.cpp:2031 ../src/mainwin.cpp:2033 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2038 ../src/mainwin.cpp:2040 ../src/mainwin.cpp:2042
-#: ../src/mainwin.cpp:2046 ../src/mainwin.cpp:2048 ../src/mainwin.cpp:2050
-#: ../src/mainwin.cpp:2052 ../src/mainwin.cpp:2054 ../src/mainwin.cpp:2056
-#: ../src/mainwin.cpp:2058 ../src/mainwin.cpp:2060 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1954
+#: ../src/mainwin.cpp:1962 ../src/mainwin.cpp:1964 ../src/mainwin.cpp:1966
+#: ../src/mainwin.cpp:1968 ../src/mainwin.cpp:1970 ../src/mainwin.cpp:1972
+#: ../src/mainwin.cpp:1974 ../src/mainwin.cpp:1976 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1984 ../src/mainwin.cpp:1986
+#: ../src/mainwin.cpp:1990 ../src/mainwin.cpp:1992 ../src/mainwin.cpp:1994
+#: ../src/mainwin.cpp:1996 ../src/mainwin.cpp:1998 ../src/mainwin.cpp:2000
+#: ../src/mainwin.cpp:2002 ../src/mainwin.cpp:2004 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2012 ../src/mainwin.cpp:2014
+#: ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2020 ../src/mainwin.cpp:2022
+#: ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2026 ../src/mainwin.cpp:2028
+#: ../src/mainwin.cpp:2030 ../src/mainwin.cpp:2032 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2039 ../src/mainwin.cpp:2041
+#: ../src/mainwin.cpp:2045 ../src/mainwin.cpp:2047 ../src/mainwin.cpp:2049
+#: ../src/mainwin.cpp:2051 ../src/mainwin.cpp:2053 ../src/mainwin.cpp:2055
+#: ../src/mainwin.cpp:2057 ../src/mainwin.cpp:2059 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2071
 msgid "English"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1965
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1987 ../src/mainwin.cpp:1989
-#: ../src/mainwin.cpp:1993 ../src/mainwin.cpp:1995 ../src/mainwin.cpp:1997
-#: ../src/mainwin.cpp:2003 ../src/mainwin.cpp:2005 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2015 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2021
-#: ../src/mainwin.cpp:2023 ../src/mainwin.cpp:2025 ../src/mainwin.cpp:2031
-#: ../src/mainwin.cpp:2033 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2042
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2048 ../src/mainwin.cpp:2052
-#: ../src/mainwin.cpp:2058 ../src/mainwin.cpp:2060
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1964
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1986 ../src/mainwin.cpp:1988
+#: ../src/mainwin.cpp:1992 ../src/mainwin.cpp:1994 ../src/mainwin.cpp:1996
+#: ../src/mainwin.cpp:2002 ../src/mainwin.cpp:2004 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2014 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2020
+#: ../src/mainwin.cpp:2022 ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2030
+#: ../src/mainwin.cpp:2032 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2041
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2047 ../src/mainwin.cpp:2051
+#: ../src/mainwin.cpp:2057 ../src/mainwin.cpp:2059
 msgid "French"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1963
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1962
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "German"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Italian"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2066 ../src/mainwin.cpp:2068 ../src/mainwin.cpp:2070
-#: ../src/mainwin.cpp:2074
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2067 ../src/mainwin.cpp:2069
+#: ../src/mainwin.cpp:2073
 msgid "Japanese"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2071
 msgid "Korean"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Portuguese"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
 msgid "Russian"
 msgstr ""
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1989
-#: ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1988
+#: ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Spanish"
 msgstr ""
 
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Dutch"
 msgstr ""
 
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2045
 msgid "Greek"
 msgstr ""
 
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
 msgid "Swedish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2096
+#: ../src/mainwin.cpp:2095
 msgid "Google Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2097
+#: ../src/mainwin.cpp:2096
 msgid "Yahoo Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2098
+#: ../src/mainwin.cpp:2097
 msgid "Altavista Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2099
+#: ../src/mainwin.cpp:2098
 msgid "SystranBox Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2100
+#: ../src/mainwin.cpp:2099
 msgid "Excite Japan Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2195
+#: ../src/mainwin.cpp:2194
 msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2226
+#: ../src/mainwin.cpp:2225
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2259
+#: ../src/mainwin.cpp:2258
 msgid "_Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2281
+#: ../src/mainwin.cpp:2280
 msgid "Powered by -"
 msgstr ""
 
-#: ../src/mainwin.cpp:2470
+#: ../src/mainwin.cpp:2469
 msgid "Please input some words to translate."
 msgstr ""
 
-#: ../src/mainwin.cpp:2485
+#: ../src/mainwin.cpp:2484
 msgid "Connecting..."
 msgstr ""
 
-#: ../src/mainwin.cpp:2558
+#: ../src/mainwin.cpp:2557
 msgid "Scan the selection"
 msgstr ""
 
-#: ../src/mainwin.cpp:2572
+#: ../src/mainwin.cpp:2571
 msgid "Show info"
 msgstr ""
 
-#: ../src/mainwin.cpp:2604 ../src/prefsdlg.cpp:1755
+#: ../src/mainwin.cpp:2603 ../src/prefsdlg.cpp:1757
 msgid "Preferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:2614
+#: ../src/mainwin.cpp:2613
 msgid "Manage dictionaries"
 msgstr ""
 
-#: ../src/mainwin.cpp:2624
+#: ../src/mainwin.cpp:2623
 msgid "Go to the StarDict website"
 msgstr ""
 
-#: ../src/mainwin.cpp:2636
+#: ../src/mainwin.cpp:2635
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr ""
 
@@ -1079,20 +1079,20 @@ msgstr ""
 msgid "Net Dict"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1026
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1028
 msgid "Input"
 msgstr ""
 
 #: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1101 ../src/prefsdlg.cpp:1516 ../src/prefsdlg.cpp:1547
+#: ../src/prefsdlg.cpp:1103 ../src/prefsdlg.cpp:1518 ../src/prefsdlg.cpp:1549
 msgid "Options"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1390
+#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1392
 msgid "Search website"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1607
+#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1609
 msgid "Settings"
 msgstr ""
 
@@ -1266,117 +1266,117 @@ msgstr ""
 msgid "StarDict server:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:978
+#: ../src/prefsdlg.cpp:980
 msgid "Port:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:987
+#: ../src/prefsdlg.cpp:989
 msgid "Account:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:998
+#: ../src/prefsdlg.cpp:1000
 msgid "_Register an account"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1033
+#: ../src/prefsdlg.cpp:1035
 msgid "_Search while typing."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1042
+#: ../src/prefsdlg.cpp:1044
 msgid "Word change _timeout:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1051
+#: ../src/prefsdlg.cpp:1053
 msgid "(default:300)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1053
+#: ../src/prefsdlg.cpp:1055
 msgid "Show the _first word when not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1107
+#: ../src/prefsdlg.cpp:1109
 msgid "_Auto run StarDict after boot."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1137
+#: ../src/prefsdlg.cpp:1139
 msgid "Hide main window when _starting StarDict."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1147
+#: ../src/prefsdlg.cpp:1149
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1238 ../src/prefsdlg.cpp:1441
+#: ../src/prefsdlg.cpp:1240 ../src/prefsdlg.cpp:1443
 msgid "Website Name"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1250 ../src/prefsdlg.cpp:1449
+#: ../src/prefsdlg.cpp:1252 ../src/prefsdlg.cpp:1451
 msgid "Website link"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1261 ../src/prefsdlg.cpp:1457
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1459
 msgid "Website search link"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1282
+#: ../src/prefsdlg.cpp:1284
 msgid "Please input the website name."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1284
+#: ../src/prefsdlg.cpp:1286
 msgid "Please input the website link."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1286
+#: ../src/prefsdlg.cpp:1288
 msgid "Please input the website search link."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1288
+#: ../src/prefsdlg.cpp:1290
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for querying a word."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1367
+#: ../src/prefsdlg.cpp:1369
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for quering word."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1522
+#: ../src/prefsdlg.cpp:1524
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1550
+#: ../src/prefsdlg.cpp:1552
 msgid "_Pronounce the word when it pops up."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1559
+#: ../src/prefsdlg.cpp:1561
 msgid "_Show floating window if word not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1624
+#: ../src/prefsdlg.cpp:1626
 msgid "Max window _width:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1634
+#: ../src/prefsdlg.cpp:1636
 msgid "(default:320)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1638
+#: ../src/prefsdlg.cpp:1640
 msgid "Max window hei_ght:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1646
+#: ../src/prefsdlg.cpp:1648
 msgid "(default:240)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1651
+#: ../src/prefsdlg.cpp:1653
 msgid "_Use custom background color:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1733
+#: ../src/prefsdlg.cpp:1735
 msgid "Cat_egories:"
 msgstr ""
 
