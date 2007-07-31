@@ -137,7 +137,7 @@ public:
 
 	void TopWinEnterWord(const gchar *text);
 	void TopWinWordChange(const gchar* sWord);
-	void ListWords(const gchar *sWord, CurrentIndex* iStartIndex, bool showfirst);
+	void ListWords(CurrentIndex* iStartIndex);
 	
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();

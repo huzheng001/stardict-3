@@ -316,6 +316,7 @@ private:
 	GtkWidget *news_label;
 	int news_timeout_id;
 	size_t news_move_index;
+	size_t news_move_len;
 	bool need_resume_news;
 	std::string news_text;
 	static void ScanCallback(GtkToggleButton *button, gpointer data);
