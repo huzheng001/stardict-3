@@ -55,7 +55,7 @@ public:
 	CollateFunctions CollateFunction;
 
 	collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype);
-	bool lookup(const char *str, glong &idx);
+	bool lookup(const char *str, glong &idx, glong &idx_suggest);
 	const gchar *GetWord(glong idx);
 	glong GetOrigIndex(glong cltidx);
 private:
@@ -72,9 +72,9 @@ public:
 
 	idxsyn_file();
 	const gchar *getWord(glong idx, int EnableCollationLevel, int servercollatefunc);
-	bool Lookup(const char *str, glong &idx, int EnableCollationLevel, int servercollatefunc);
+	bool Lookup(const char *str, glong &idx, glong &idx_suggest, int EnableCollationLevel, int servercollatefunc);
 	virtual const gchar *get_key(glong idx) = 0;
-	virtual bool lookup(const char *str, glong &idx) = 0;
+	virtual bool lookup(const char *str, glong &idx, glong &idx_suggest) = 0;
 	virtual ~idxsyn_file() {}
 	void collate_sort(const std::string& url, const std::string& saveurl,
 			  CollateFunctions collf, show_progress_t *sp);
@@ -93,7 +93,7 @@ public:
 	virtual void get_data(glong idx) = 0;
 	virtual  const gchar *get_key_and_data(glong idx) = 0;
 private:
-	virtual bool lookup(const char *str, glong &idx) = 0;
+	virtual bool lookup(const char *str, glong &idx, glong &idx_suggest) = 0;
 };
 
 class synonym_file : public idxsyn_file {
@@ -107,7 +107,7 @@ public:
 		  show_progress_t *sp);
 private:
 	const gchar *get_key(glong idx);
-	bool lookup(const char *str, glong &idx);
+	bool lookup(const char *str, glong &idx, glong &idx_suggest);
 
 	static const gint ENTR_PER_PAGE=32;
 	gulong npages;
@@ -175,11 +175,11 @@ public:
 		*offset = idx_file->wordentry_offset;
 		*size = idx_file->wordentry_size;
 	}
-	bool Lookup(const char *str, glong &idx, int EnableCollationLevel, int servercollatefunc)
+	bool Lookup(const char *str, glong &idx, glong &idx_suggest, int EnableCollationLevel, int servercollatefunc)
 	{
-		return idx_file->Lookup(str, idx, EnableCollationLevel, servercollatefunc);
+		return idx_file->Lookup(str, idx, idx_suggest, EnableCollationLevel, servercollatefunc);
 	}
-	bool LookupSynonym(const char *str, glong &synidx, int EnableCollationLevel, int servercollatefunc);
+	bool LookupSynonym(const char *str, glong &synidx, glong &synidx_suggest, int EnableCollationLevel, int servercollatefunc);
 	bool LookupWithRule(GPatternSpec *pspec, glong *aIndex, int iBuffLen);
 	bool LookupWithRuleSynonym(GPatternSpec *pspec, glong *aIndex, int iBuffLen);
 	gint GetOrigWordCount(glong& iWordIndex, bool isidx);
@@ -189,7 +189,9 @@ public:
 
 struct CurrentIndex {
 	glong idx;
+	glong idx_suggest;
 	glong synidx;
+	glong synidx_suggest;
 };
 
 class Libs {
@@ -247,19 +249,20 @@ public:
 			return NULL;
 		return oLib[iLib]->get_data(iIndex);
 	}
+	const gchar *GetSuggestWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
 	const gchar *poGetCurrentWord(CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
 	const gchar *poGetNextWord(const gchar *word, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
 	const gchar *poGetPreWord(const gchar *word, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc);
-	bool LookupWord(const gchar* sWord, glong& iWordIndex, size_t iLib, int servercollatefunc) {
-		return oLib[iLib]->Lookup(sWord, iWordIndex, EnableCollationLevel, servercollatefunc);
+	bool LookupWord(const gchar* sWord, glong& iWordIndex, glong &idx_suggest, size_t iLib, int servercollatefunc) {
+		return oLib[iLib]->Lookup(sWord, iWordIndex, idx_suggest, EnableCollationLevel, servercollatefunc);
 	}
-	bool LookupSynonymWord(const gchar* sWord, glong& iSynonymIndex, size_t iLib, int servercollatefunc) {
-		return oLib[iLib]->LookupSynonym(sWord, iSynonymIndex, EnableCollationLevel, servercollatefunc);
+	bool LookupSynonymWord(const gchar* sWord, glong& iSynonymIndex, glong &synidx_suggest, size_t iLib, int servercollatefunc) {
+		return oLib[iLib]->LookupSynonym(sWord, iSynonymIndex, synidx_suggest, EnableCollationLevel, servercollatefunc);
 	}
-	bool LookupSimilarWord(const gchar* sWord, glong &iWordIndex, size_t iLib, int servercollatefunc);
-	bool LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, size_t iLib, int servercollatefunc);
-	bool SimpleLookupWord(const gchar* sWord, glong &iWordIndex, size_t iLib, int servercollatefunc);
-	bool SimpleLookupSynonymWord(const gchar* sWord, glong &iWordIndex, size_t iLib, int servercollatefunc);
+	bool LookupSimilarWord(const gchar* sWord, glong &iWordIndex, glong &idx_suggest, size_t iLib, int servercollatefunc);
+	bool LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex, glong &synidx_suggest, size_t iLib, int servercollatefunc);
+	bool SimpleLookupWord(const gchar* sWord, glong &iWordIndex, glong &idx_suggest, size_t iLib, int servercollatefunc);
+	bool SimpleLookupSynonymWord(const gchar* sWord, glong &iWordIndex, glong &synidx_suggest, size_t iLib, int servercollatefunc);
 	gint GetOrigWordCount(glong& iWordIndex, size_t iLib, bool isidx) {
 		return oLib[iLib]->GetOrigWordCount(iWordIndex, isidx);
 	}

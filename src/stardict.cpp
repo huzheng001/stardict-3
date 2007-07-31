@@ -797,31 +797,31 @@ void AppCore::BuildResultData(std::vector<InstantDictIndex> &dictmask, const cha
 	glong iWordIdx;
 	if (piIndexValidStr) {
 		if (iIndex[iLib].idx != INVALID_INDEX) {
-            bLookupWord = !strcmp(oLibs.poGetWord(iIndex[iLib].idx, iRealLib, 0), piIndexValidStr);
+			bLookupWord = !strcmp(oLibs.poGetWord(iIndex[iLib].idx, iRealLib, 0), piIndexValidStr);
 		} else {
 			bLookupWord = false;
 		}
 		if (iIndex[iLib].synidx != UNSET_INDEX && iIndex[iLib].synidx != INVALID_INDEX) {
-            bLookupSynonymWord = !strcmp(oLibs.poGetSynonymWord(iIndex[iLib].synidx, iRealLib, 0), piIndexValidStr);
+			bLookupSynonymWord = !strcmp(oLibs.poGetSynonymWord(iIndex[iLib].synidx, iRealLib, 0), piIndexValidStr);
 		} else {
 			bLookupSynonymWord = false;
 		}
 	} else {
 		if (Method==0) {
-            bLookupWord = oLibs.LookupWord(sWord, iIndex[iLib].idx, iRealLib, 0);
-            bLookupSynonymWord = oLibs.LookupSynonymWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
+			bLookupWord = oLibs.LookupWord(sWord, iIndex[iLib].idx, iIndex[iLib].idx_suggest, iRealLib, 0);
+			bLookupSynonymWord = oLibs.LookupSynonymWord(sWord, iIndex[iLib].synidx, iIndex[iLib].synidx_suggest, iRealLib, 0);
 		} else if (Method==1) {
-			bLookupWord = oLibs.LookupSimilarWord(sWord, iIndex[iLib].idx, iRealLib, 0);
-			bLookupSynonymWord = oLibs.LookupSynonymSimilarWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
+			bLookupWord = oLibs.LookupSimilarWord(sWord, iIndex[iLib].idx, iIndex[iLib].idx_suggest, iRealLib, 0);
+			bLookupSynonymWord = oLibs.LookupSynonymSimilarWord(sWord, iIndex[iLib].synidx, iIndex[iLib].synidx_suggest, iRealLib, 0);
 		} else {
-			bLookupWord = oLibs.SimpleLookupWord(sWord, iIndex[iLib].idx, iRealLib, 0);
-			bLookupSynonymWord = oLibs.SimpleLookupSynonymWord(sWord, iIndex[iLib].synidx, iRealLib, 0);
+			bLookupWord = oLibs.SimpleLookupWord(sWord, iIndex[iLib].idx, iIndex[iLib].idx_suggest, iRealLib, 0);
+			bLookupSynonymWord = oLibs.SimpleLookupSynonymWord(sWord, iIndex[iLib].synidx, iIndex[iLib].synidx_suggest, iRealLib, 0);
 		}
 	}
 	if (bLookupWord || bLookupSynonymWord) {
 		glong orig_idx, orig_synidx;
-        orig_idx = oLibs.CltIndexToOrig(iIndex[iLib].idx, iRealLib, 0);
-        orig_synidx = oLibs.CltSynIndexToOrig(iIndex[iLib].synidx, iRealLib, 0);
+		orig_idx = oLibs.CltIndexToOrig(iIndex[iLib].idx, iRealLib, 0);
+		orig_synidx = oLibs.CltSynIndexToOrig(iIndex[iLib].synidx, iRealLib, 0);
 		nWord=0;
 		if (bLookupWord)
 			nWord++;
@@ -1344,7 +1344,17 @@ void AppCore::TopWinEnterWord(const gchar *text)
 			if (oMidWin.oTextWin.queryWord != res) {
 				bool showfirst = conf->get_bool_at("main_window/showfirst_when_notfound");
 				bool find = SimpleLookupToTextWin(res.c_str(), iCurrentIndex, NULL, true, !showfirst);
-				ListWords(res.c_str(), iCurrentIndex, !find && showfirst);
+				if (!find && showfirst) {
+					const gchar *sug_word = oLibs.GetSuggestWord(res.c_str(), iCurrentIndex, query_dictmask, 0);
+					if (sug_word) {
+						gchar *suit_word = g_strdup(sug_word);
+						SimpleLookupToTextWin(suit_word, iCurrentIndex, NULL, false, true, true);
+						g_free(suit_word);
+					} else {
+						ShowNotFoundToTextWin(res.c_str(), _("<Not Found!>"), TEXT_WIN_NOT_FOUND);
+					}
+				}
+				ListWords(iCurrentIndex);
 				oTopWin.select_region_in_text(0, -1);
 				oTopWin.InsertHisList(text);
 				oTopWin.InsertBackList();
@@ -1451,8 +1461,17 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 	bool find = app->SimpleLookupToTextWin(app->delayed_word_.c_str(),
 					       app->iCurrentIndex, NULL, true,
 					       !showfirst);
-	app->ListWords(app->delayed_word_.c_str(), app->iCurrentIndex,
-		       !find && showfirst);
+	if (!find && showfirst) {
+		const gchar *sug_word = app->oLibs.GetSuggestWord(app->delayed_word_.c_str(), app->iCurrentIndex, app->query_dictmask, 0);
+		if (sug_word) {
+			gchar *suit_word = g_strdup(sug_word);
+			app->SimpleLookupToTextWin(suit_word, app->iCurrentIndex, NULL, false, true, true);
+			g_free(suit_word);
+		} else {
+			app->ShowNotFoundToTextWin(app->delayed_word_.c_str(), _("<Not Found!>"), TEXT_WIN_NOT_FOUND);
+		}
+	}
+	app->ListWords(app->iCurrentIndex);
 
     if (conf->get_bool_at("network/enable_netdict")) {
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
@@ -1466,7 +1485,7 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 	return FALSE;
 }
 
-void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst)
+void AppCore::ListWords(CurrentIndex* iIndex)
 {
 	CurrentIndex *iCurrent = (CurrentIndex*)g_memdup(iIndex, sizeof(CurrentIndex)*query_dictmask.size());
 
@@ -1476,14 +1495,7 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 	int iWordCount=0;
 	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent, query_dictmask, 0);
 	if (poCurrentWord) {
-		if (showfirst) {
-			gchar *cword = g_strdup(poCurrentWord);
-			SimpleLookupToTextWin(sWord, iCurrent, cword, false, true, true);
-			oMidWin.oIndexWin.oListWin.InsertLast(cword);
-			g_free(cword);
-		} else {
-			oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
-		}
+		oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
 		iWordCount++;
 
 		while (iWordCount<LIST_WIN_ROW_NUM &&
@@ -1491,9 +1503,6 @@ void AppCore::ListWords(const gchar *sWord, CurrentIndex* iIndex, bool showfirst
 			oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
 			iWordCount++;
 		}
-	} else {
-		if (showfirst)
-			ShowNotFoundToTextWin(sWord,_("<Not Found!>"), TEXT_WIN_NOT_FOUND);
 	}
 
 	if (iWordCount) {
@@ -1655,16 +1664,20 @@ void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::Look
 
 void AppCore::on_http_client_error(HttpClient *http_client, const char *error_msg)
 {
-	GtkWidget *message_dlg =
-		gtk_message_dialog_new(
-			GTK_WINDOW(window),
-			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-			GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-			error_msg);
-	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
-	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
-	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
-	gtk_widget_show(message_dlg);
+	if (http_client->callback_func_) {
+		http_client->callback_func_(NULL, 0, http_client->userdata);
+	} else {
+		GtkWidget *message_dlg =
+			gtk_message_dialog_new(
+				GTK_WINDOW(window),
+				(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+				GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+				error_msg);
+		gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+		gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+		g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+		gtk_widget_show(message_dlg);
+	}
 	oHttpManager.Remove(http_client);
 }
 

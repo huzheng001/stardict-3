@@ -2673,7 +2673,7 @@ gboolean BottomWin::move_news(gpointer data)
 		oBottomWin->news_move_index = 0;
 	}
 	const char *p1 = p;
-	for (i=0; i < 20; i++) {
+	for (i=0; i < oBottomWin->news_move_len; i++) {
 		if (*p1) {
 			p1 = g_utf8_next_char(p1);
 		} else {
@@ -2691,6 +2691,10 @@ void BottomWin::set_news(const char *news)
 {
 	if (news) {
 		news_text = news;
+		if (bIsPureEnglish(news))
+			news_move_len = 30;
+		else
+			news_move_len = 20;
 		if (news_timeout_id == 0) {
 			news_move_index = 0;
 			news_timeout_id = g_timeout_add(300, move_news, this);

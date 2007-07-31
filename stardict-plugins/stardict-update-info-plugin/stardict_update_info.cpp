@@ -119,6 +119,8 @@ static void updateinfo_parse_text(GMarkupParseContext *context, const gchar *tex
 
 static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 {
+	if (!buffer)
+		return;
 	const char *p = g_strstr_len(buffer, buffer_len, "\r\n\r\n");
 	if (!p) {
 		return;
