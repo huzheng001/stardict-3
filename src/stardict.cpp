@@ -1919,9 +1919,8 @@ void AppCore::End()
 		prefs_dlg->Close(); // After user open the preferences dialog, then choose quit in the notification icon, this dialog can be closed.
 	oTopWin.Destroy();
 	oMidWin.oIndexWin.oListWin.Destroy();
+	oBottomWin.Destroy();
 
-	if (oBottomWin.SearchWebsiteMenu)
-		gtk_widget_destroy(oBottomWin.SearchWebsiteMenu);
 	gtk_widget_destroy(window);
 }
 

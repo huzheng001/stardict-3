@@ -336,7 +336,7 @@ public:
 	GtkWidget* SearchWebsiteMenu;
 
 	BottomWin();
-	~BottomWin();
+	void Destroy();
 	void Create(GtkWidget *vbox);
 	void set_news(const char *news);
 };
