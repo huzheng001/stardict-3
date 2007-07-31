@@ -325,7 +325,7 @@ msgstr "XDXF数据解析插件未找到！"
 
 #: ../src/articleview.cpp:175
 msgid "PowerWord data parse plug-in is not found!"
-msgstr "金山词霸数据解析插件未找到！"
+msgstr "PowerWord数据解析插件未找到！"
 
 #: ../src/articleview.cpp:180
 msgid "Wiki data parse plug-in is not found!"
@@ -1799,19 +1799,19 @@ msgstr "Man虚拟词典插件加载成功。\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:458
 msgid "PowerWord data parse"
-msgstr "金山词霸数据解析"
+msgstr "PowerWord数据解析"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:458
 msgid "PowerWord data parse engine."
-msgstr "金山词霸数据解析引擎。"
+msgstr "PowerWord数据解析引擎。"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:458
 msgid "Parse the PowerWord data."
-msgstr "解析金山词霸数据。"
+msgstr "解析PowerWord数据。"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:470
 msgid "PowerWord data parse plug-in loaded.\n"
-msgstr "金山词霸数据解析插件加载成功。\n"
+msgstr "PowerWord数据解析插件加载成功。\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
 #, c-format

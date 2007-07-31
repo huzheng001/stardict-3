@@ -2527,12 +2527,14 @@ BottomWin::BottomWin()
 	need_resume_news = false;
 }
 
-BottomWin::~BottomWin()
+void BottomWin::Destroy()
 {
 	if (news_timeout_id != 0) {
 		g_source_remove(news_timeout_id);
 		news_timeout_id = 0;
 	}
+	if (SearchWebsiteMenu)
+		gtk_widget_destroy(SearchWebsiteMenu);
 }
 
 void BottomWin::Create(GtkWidget *vbox)
