@@ -1953,7 +1953,10 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
 
         label = gtk_label_new(NULL);
-        gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">Upgrade Now!</span>");
+	std::string mark = "<span foreground=\"blue\" underline=\"single\">";
+	mark += _("Upgrade Now!");
+	mark += "</span>";
+        gtk_label_set_markup(GTK_LABEL(label), mark.c_str());
         upgrade_eventbox = gtk_event_box_new();
         g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
         gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 11:17+0800\n"
+"POT-Creation-Date: 2007-08-01 13:13+0800\n"
 "PO-Revision-Date: 2003-03-14 16:44+0800\n"
 "Last-Translator: Hu Zheng <huzheng_001@163.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -29,8 +29,8 @@ msgstr "查询单词"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:31
-#: ../src/docklet.cpp:199 ../src/mainwin.cpp:470 ../src/splash.cpp:84
-#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2279
+#: ../src/docklet.cpp:199 ../src/mainwin.cpp:469 ../src/splash.cpp:84
+#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2291
 #: ../src/win32/systray.cpp:216 ../src/win32/systray.cpp:264
 msgid "StarDict"
 msgstr "星际译王"
@@ -413,21 +413,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr "只有%d级用户可以选择这个词典！"
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:426
-#: ../src/dictmanagedlg.cpp:2203
+#: ../src/dictmanagedlg.cpp:2206
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "你只能选择%d个词典。"
 
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:782
 #: ../src/dictmanagedlg.cpp:882 ../src/dictmanagedlg.cpp:953
-#: ../src/dictmanagedlg.cpp:1371 ../src/dictmanagedlg.cpp:2126
+#: ../src/dictmanagedlg.cpp:1371 ../src/dictmanagedlg.cpp:2129
 #: ../src/stardict.cpp:1051
 msgid "Dictionary Name"
 msgstr "词典名称"
 
 #: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:783
 #: ../src/dictmanagedlg.cpp:888 ../src/dictmanagedlg.cpp:960
-#: ../src/dictmanagedlg.cpp:1376 ../src/dictmanagedlg.cpp:2127
+#: ../src/dictmanagedlg.cpp:1376 ../src/dictmanagedlg.cpp:2130
 msgid "Word count"
 msgstr "单词数量"
 
@@ -444,7 +444,7 @@ msgstr "请访问 http://stardict.sourceforge.net 下载词典！"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "这些设置将在星际译王下次运行时生效。"
 
-#: ../src/dictmanagedlg.cpp:421 ../src/lib/stddict.cpp:1165
+#: ../src/dictmanagedlg.cpp:421 ../src/lib/stddict.cpp:1201
 msgid "Loading..."
 msgstr "加载中..."
 
@@ -473,23 +473,23 @@ msgid ""
 "floating window."
 msgstr "查词词典将在主窗口显示，取词词典将在浮动窗口显示。"
 
-#: ../src/dictmanagedlg.cpp:784 ../src/dictmanagedlg.cpp:2129
+#: ../src/dictmanagedlg.cpp:784 ../src/dictmanagedlg.cpp:2132
 msgid "Author"
 msgstr "作者"
 
-#: ../src/dictmanagedlg.cpp:785 ../src/dictmanagedlg.cpp:2130
+#: ../src/dictmanagedlg.cpp:785 ../src/dictmanagedlg.cpp:2133
 msgid "Email"
 msgstr "电子邮件"
 
-#: ../src/dictmanagedlg.cpp:786 ../src/dictmanagedlg.cpp:2131
+#: ../src/dictmanagedlg.cpp:786 ../src/dictmanagedlg.cpp:2134
 msgid "Website"
 msgstr "网站"
 
-#: ../src/dictmanagedlg.cpp:787 ../src/dictmanagedlg.cpp:2132
+#: ../src/dictmanagedlg.cpp:787 ../src/dictmanagedlg.cpp:2135
 msgid "Description"
 msgstr "描述"
 
-#: ../src/dictmanagedlg.cpp:788 ../src/dictmanagedlg.cpp:2133
+#: ../src/dictmanagedlg.cpp:788 ../src/dictmanagedlg.cpp:2136
 msgid "Date"
 msgstr "日期"
 
@@ -518,7 +518,7 @@ msgstr "组名："
 msgid "Add dictionary"
 msgstr "添加词典"
 
-#: ../src/dictmanagedlg.cpp:1732 ../src/prefsdlg.cpp:1225
+#: ../src/dictmanagedlg.cpp:1732 ../src/prefsdlg.cpp:1227
 msgid "Add"
 msgstr "添加"
 
@@ -550,7 +550,7 @@ msgstr "移到底部"
 msgid "D_ict List"
 msgstr "词典列表(_I)"
 
-#: ../src/dictmanagedlg.cpp:1868 ../src/mainwin.cpp:511
+#: ../src/dictmanagedlg.cpp:1868 ../src/mainwin.cpp:510
 msgid "Manage _Dict"
 msgstr "词典管理(_D)"
 
@@ -574,15 +574,19 @@ msgstr "全选(_A)"
 msgid "_Unselect all"
 msgstr "全部反选(_U)"
 
-#: ../src/dictmanagedlg.cpp:1974
+#: ../src/dictmanagedlg.cpp:1957
+msgid "Upgrade Now!"
+msgstr "现在升级！"
+
+#: ../src/dictmanagedlg.cpp:1977
 msgid "Manage Dictionaries"
 msgstr "词典管理"
 
-#: ../src/dictmanagedlg.cpp:2121
+#: ../src/dictmanagedlg.cpp:2124
 msgid "Dictionary Information"
 msgstr "词典信息"
 
-#: ../src/dictmanagedlg.cpp:2128
+#: ../src/dictmanagedlg.cpp:2131
 msgid "Synonym word count"
 msgstr "同义词数量"
 
@@ -594,11 +598,11 @@ msgstr "星际译王 | 正在取词"
 msgid "StarDict - Stopped"
 msgstr "星际译王 | 暂停取词"
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2549
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2550
 msgid "_Scan"
 msgstr "取词(_S)"
 
-#: ../src/docklet.cpp:107 ../src/mainwin.cpp:548
+#: ../src/docklet.cpp:107 ../src/mainwin.cpp:547
 msgid "_Quit"
 msgstr "退出(_Q)"
 
@@ -610,7 +614,7 @@ msgstr "在主窗口中查询"
 msgid "Save to file"
 msgstr "保存到文件"
 
-#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1413
+#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1412
 msgid "Pronounce the word"
 msgstr "朗读单词"
 
@@ -622,7 +626,7 @@ msgstr "停止选中区取词"
 msgid "Help"
 msgstr "帮助"
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2582
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2583
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr "退出"
@@ -648,23 +652,23 @@ msgstr "找到 1 个单词：\n"
 msgid "Found %d words:\n"
 msgstr "找到 %d 个单词：\n"
 
-#: ../src/floatwin.cpp:820
+#: ../src/floatwin.cpp:823
 msgid "_Copy"
 msgstr "复制(_C)"
 
-#: ../src/floatwin.cpp:826
+#: ../src/floatwin.cpp:829
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: ../src/floatwin.cpp:831 ../src/mainwin.cpp:1914
+#: ../src/floatwin.cpp:834 ../src/mainwin.cpp:1913
 msgid "_Query"
 msgstr "查询(_Q)"
 
-#: ../src/floatwin.cpp:838
+#: ../src/floatwin.cpp:841
 msgid "_Play"
 msgstr "朗读(_P)"
 
-#: ../src/floatwin.cpp:846
+#: ../src/floatwin.cpp:849
 msgid "_Fuzzy Query"
 msgstr "模糊查询(_F)"
 
@@ -684,87 +688,87 @@ msgstr "返回 - 右键：历史 (Alt+Left)"
 msgid "Show the main menu (Alt+M)"
 msgstr "弹出主菜单 (Alt+M)"
 
-#: ../src/mainwin.cpp:467
+#: ../src/mainwin.cpp:466
 msgid "translator_credits"
 msgstr "Hu Zheng <huzheng_001@163.com>"
 
-#: ../src/mainwin.cpp:473
+#: ../src/mainwin.cpp:472
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "星际译王是 GNOME 中的国际化的词典软件。"
 
-#: ../src/mainwin.cpp:504
+#: ../src/mainwin.cpp:503
 msgid "Pr_eferences"
 msgstr "首选项(_E)"
 
-#: ../src/mainwin.cpp:517
+#: ../src/mainwin.cpp:516
 msgid "Manage _Plugins"
 msgstr "插件管理(_P)"
 
-#: ../src/mainwin.cpp:526
+#: ../src/mainwin.cpp:525
 msgid "_New Version"
 msgstr "检查新版本(_N)"
 
-#: ../src/mainwin.cpp:534
+#: ../src/mainwin.cpp:533
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: ../src/mainwin.cpp:540
+#: ../src/mainwin.cpp:539
 msgid "_About"
 msgstr "关于(_A)"
 
-#: ../src/mainwin.cpp:1117
+#: ../src/mainwin.cpp:1116
 msgid "List"
 msgstr "索引"
 
-#: ../src/mainwin.cpp:1128
+#: ../src/mainwin.cpp:1127
 msgid "Result"
 msgstr "向导"
 
-#: ../src/mainwin.cpp:1138
+#: ../src/mainwin.cpp:1137
 msgid "Translate"
 msgstr "翻译"
 
-#: ../src/mainwin.cpp:1149
+#: ../src/mainwin.cpp:1148
 msgid "Tree"
 msgstr "附录"
 
-#: ../src/mainwin.cpp:1160
+#: ../src/mainwin.cpp:1159
 msgid "Choose dict group"
 msgstr "选择词典分组"
 
-#: ../src/mainwin.cpp:1173
+#: ../src/mainwin.cpp:1172
 msgid "Next word (Alt+Down)"
 msgstr "下一个单词 (Alt+Down)"
 
-#: ../src/mainwin.cpp:1183
+#: ../src/mainwin.cpp:1182
 msgid "Previous word (Alt+Up)"
 msgstr "上一个单词 (Alt+Up)"
 
-#: ../src/mainwin.cpp:1366
+#: ../src/mainwin.cpp:1365
 msgid "Show the word list"
 msgstr "显示单词列表"
 
-#: ../src/mainwin.cpp:1381
+#: ../src/mainwin.cpp:1380
 msgid "Hide the word list"
 msgstr "隐藏单词列表"
 
-#: ../src/mainwin.cpp:1399
+#: ../src/mainwin.cpp:1398
 msgid "Copy"
 msgstr "复制"
 
-#: ../src/mainwin.cpp:1427
+#: ../src/mainwin.cpp:1426
 msgid "Save to file(Alt+E)"
 msgstr "保存到文件(Alt+E)"
 
-#: ../src/mainwin.cpp:1437
+#: ../src/mainwin.cpp:1436
 msgid "Print"
 msgstr "打印"
 
-#: ../src/mainwin.cpp:1452
+#: ../src/mainwin.cpp:1451
 msgid "Search in the definition (Ctrl+F)"
 msgstr "在释义区中搜索 (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1638
+#: ../src/mainwin.cpp:1637
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -775,7 +779,7 @@ msgstr ""
 "请到星际译王的主页下载一些词典进行安装：\n"
 "%s%s%s并且把它们放到%s。"
 
-#: ../src/mainwin.cpp:1661
+#: ../src/mainwin.cpp:1660
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -805,7 +809,7 @@ msgstr ""
 "   你可以在单词前加上 '/' 来进行模糊查询。\n"
 "   当浮动窗口中查询单词失败时，你可以双击窗口来进行模糊查询。\n"
 
-#: ../src/mainwin.cpp:1678
+#: ../src/mainwin.cpp:1677
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
@@ -885,198 +889,198 @@ msgstr ""
 "\n"
 "      声明：作者不保证单词拼写，词意及音标的正确性。\n"
 
-#: ../src/mainwin.cpp:1846
+#: ../src/mainwin.cpp:1845
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "文本\"%s\"未找到。"
 
-#: ../src/mainwin.cpp:1906 ../src/mainwin.cpp:2173
+#: ../src/mainwin.cpp:1905 ../src/mainwin.cpp:2172
 msgid "_Pronounce"
 msgstr "朗读(_P)"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960
 msgid "Arabic"
 msgstr "阿拉伯语"
 
-#: ../src/mainwin.cpp:1952
+#: ../src/mainwin.cpp:1951
 msgid "Chinese"
 msgstr "中文"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1959 ../src/mainwin.cpp:1961
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
-#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1958 ../src/mainwin.cpp:1960
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
+#: ../src/mainwin.cpp:2064 ../src/mainwin.cpp:2071
 msgid "Chinese (Simplified)"
 msgstr "简体中文"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1957 ../src/mainwin.cpp:1961
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
-#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1956 ../src/mainwin.cpp:1960
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
+#: ../src/mainwin.cpp:2064 ../src/mainwin.cpp:2071
 msgid "Chinese (Traditional)"
 msgstr "繁体中文"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1953 ../src/mainwin.cpp:1955
-#: ../src/mainwin.cpp:1963 ../src/mainwin.cpp:1965 ../src/mainwin.cpp:1967
-#: ../src/mainwin.cpp:1969 ../src/mainwin.cpp:1971 ../src/mainwin.cpp:1973
-#: ../src/mainwin.cpp:1975 ../src/mainwin.cpp:1977 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1983 ../src/mainwin.cpp:1985 ../src/mainwin.cpp:1987
-#: ../src/mainwin.cpp:1991 ../src/mainwin.cpp:1993 ../src/mainwin.cpp:1995
-#: ../src/mainwin.cpp:1997 ../src/mainwin.cpp:1999 ../src/mainwin.cpp:2001
-#: ../src/mainwin.cpp:2003 ../src/mainwin.cpp:2005 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2011 ../src/mainwin.cpp:2013 ../src/mainwin.cpp:2015
-#: ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2021 ../src/mainwin.cpp:2023
-#: ../src/mainwin.cpp:2025 ../src/mainwin.cpp:2027 ../src/mainwin.cpp:2029
-#: ../src/mainwin.cpp:2031 ../src/mainwin.cpp:2033 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2038 ../src/mainwin.cpp:2040 ../src/mainwin.cpp:2042
-#: ../src/mainwin.cpp:2046 ../src/mainwin.cpp:2048 ../src/mainwin.cpp:2050
-#: ../src/mainwin.cpp:2052 ../src/mainwin.cpp:2054 ../src/mainwin.cpp:2056
-#: ../src/mainwin.cpp:2058 ../src/mainwin.cpp:2060 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1954
+#: ../src/mainwin.cpp:1962 ../src/mainwin.cpp:1964 ../src/mainwin.cpp:1966
+#: ../src/mainwin.cpp:1968 ../src/mainwin.cpp:1970 ../src/mainwin.cpp:1972
+#: ../src/mainwin.cpp:1974 ../src/mainwin.cpp:1976 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1984 ../src/mainwin.cpp:1986
+#: ../src/mainwin.cpp:1990 ../src/mainwin.cpp:1992 ../src/mainwin.cpp:1994
+#: ../src/mainwin.cpp:1996 ../src/mainwin.cpp:1998 ../src/mainwin.cpp:2000
+#: ../src/mainwin.cpp:2002 ../src/mainwin.cpp:2004 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2012 ../src/mainwin.cpp:2014
+#: ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2020 ../src/mainwin.cpp:2022
+#: ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2026 ../src/mainwin.cpp:2028
+#: ../src/mainwin.cpp:2030 ../src/mainwin.cpp:2032 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2039 ../src/mainwin.cpp:2041
+#: ../src/mainwin.cpp:2045 ../src/mainwin.cpp:2047 ../src/mainwin.cpp:2049
+#: ../src/mainwin.cpp:2051 ../src/mainwin.cpp:2053 ../src/mainwin.cpp:2055
+#: ../src/mainwin.cpp:2057 ../src/mainwin.cpp:2059 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2071
 msgid "English"
 msgstr "英语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1965
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1987 ../src/mainwin.cpp:1989
-#: ../src/mainwin.cpp:1993 ../src/mainwin.cpp:1995 ../src/mainwin.cpp:1997
-#: ../src/mainwin.cpp:2003 ../src/mainwin.cpp:2005 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2015 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2021
-#: ../src/mainwin.cpp:2023 ../src/mainwin.cpp:2025 ../src/mainwin.cpp:2031
-#: ../src/mainwin.cpp:2033 ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2042
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2048 ../src/mainwin.cpp:2052
-#: ../src/mainwin.cpp:2058 ../src/mainwin.cpp:2060
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1964
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1986 ../src/mainwin.cpp:1988
+#: ../src/mainwin.cpp:1992 ../src/mainwin.cpp:1994 ../src/mainwin.cpp:1996
+#: ../src/mainwin.cpp:2002 ../src/mainwin.cpp:2004 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2014 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2020
+#: ../src/mainwin.cpp:2022 ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2030
+#: ../src/mainwin.cpp:2032 ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2041
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2047 ../src/mainwin.cpp:2051
+#: ../src/mainwin.cpp:2057 ../src/mainwin.cpp:2059
 msgid "French"
 msgstr "法语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1963
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1962
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "German"
 msgstr "德语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Italian"
 msgstr "意大利语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2066 ../src/mainwin.cpp:2068 ../src/mainwin.cpp:2070
-#: ../src/mainwin.cpp:2074
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2065 ../src/mainwin.cpp:2067 ../src/mainwin.cpp:2069
+#: ../src/mainwin.cpp:2073
 msgid "Japanese"
 msgstr "日语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2065
-#: ../src/mainwin.cpp:2072
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2064
+#: ../src/mainwin.cpp:2071
 msgid "Korean"
 msgstr "韩语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2010
-#: ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019 ../src/mainwin.cpp:2037
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2009
+#: ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018 ../src/mainwin.cpp:2036
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Portuguese"
 msgstr "葡萄牙语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1982
-#: ../src/mainwin.cpp:1989 ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1981
+#: ../src/mainwin.cpp:1988 ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
 msgid "Russian"
 msgstr "俄语"
 
-#: ../src/mainwin.cpp:1952 ../src/mainwin.cpp:1961 ../src/mainwin.cpp:1989
-#: ../src/mainwin.cpp:1991 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1951 ../src/mainwin.cpp:1960 ../src/mainwin.cpp:1988
+#: ../src/mainwin.cpp:1990 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Spanish"
 msgstr "西班牙语"
 
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044 ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043 ../src/mainwin.cpp:2045
 msgid "Dutch"
 msgstr "荷兰语"
 
-#: ../src/mainwin.cpp:1982 ../src/mainwin.cpp:1989 ../src/mainwin.cpp:1991
-#: ../src/mainwin.cpp:2010 ../src/mainwin.cpp:2017 ../src/mainwin.cpp:2019
-#: ../src/mainwin.cpp:2046
+#: ../src/mainwin.cpp:1981 ../src/mainwin.cpp:1988 ../src/mainwin.cpp:1990
+#: ../src/mainwin.cpp:2009 ../src/mainwin.cpp:2016 ../src/mainwin.cpp:2018
+#: ../src/mainwin.cpp:2045
 msgid "Greek"
 msgstr "希腊语"
 
-#: ../src/mainwin.cpp:2037 ../src/mainwin.cpp:2044
+#: ../src/mainwin.cpp:2036 ../src/mainwin.cpp:2043
 msgid "Swedish"
 msgstr "瑞典语"
 
-#: ../src/mainwin.cpp:2096
+#: ../src/mainwin.cpp:2095
 msgid "Google Translate"
 msgstr "谷歌翻译"
 
-#: ../src/mainwin.cpp:2097
+#: ../src/mainwin.cpp:2096
 msgid "Yahoo Translate"
 msgstr "雅虎翻译"
 
-#: ../src/mainwin.cpp:2098
+#: ../src/mainwin.cpp:2097
 msgid "Altavista Translate"
 msgstr "Altavista翻译"
 
-#: ../src/mainwin.cpp:2099
+#: ../src/mainwin.cpp:2098
 msgid "SystranBox Translate"
 msgstr "SystranBox翻译"
 
-#: ../src/mainwin.cpp:2100
+#: ../src/mainwin.cpp:2099
 msgid "Excite Japan Translate"
 msgstr "Excite Japan翻译"
 
-#: ../src/mainwin.cpp:2195
+#: ../src/mainwin.cpp:2194
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>全文翻译</b>"
 
-#: ../src/mainwin.cpp:2226
+#: ../src/mainwin.cpp:2225
 msgid "To"
 msgstr "到"
 
-#: ../src/mainwin.cpp:2259
+#: ../src/mainwin.cpp:2258
 msgid "_Translate"
 msgstr "翻译(_T)"
 
-#: ../src/mainwin.cpp:2281
+#: ../src/mainwin.cpp:2280
 msgid "Powered by -"
 msgstr "来源 -"
 
-#: ../src/mainwin.cpp:2470
+#: ../src/mainwin.cpp:2469
 msgid "Please input some words to translate."
 msgstr "请输入一些文字来翻译。"
 
-#: ../src/mainwin.cpp:2485
+#: ../src/mainwin.cpp:2484
 msgid "Connecting..."
 msgstr "连接中..."
 
-#: ../src/mainwin.cpp:2558
+#: ../src/mainwin.cpp:2559
 msgid "Scan the selection"
 msgstr "选中区取词"
 
-#: ../src/mainwin.cpp:2572
+#: ../src/mainwin.cpp:2573
 msgid "Show info"
 msgstr "显示信息"
 
-#: ../src/mainwin.cpp:2604 ../src/prefsdlg.cpp:1755
+#: ../src/mainwin.cpp:2605 ../src/prefsdlg.cpp:1757
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../src/mainwin.cpp:2614
+#: ../src/mainwin.cpp:2615
 msgid "Manage dictionaries"
 msgstr "词典管理"
 
-#: ../src/mainwin.cpp:2624
+#: ../src/mainwin.cpp:2625
 msgid "Go to the StarDict website"
 msgstr "访问星际译王的项目主页"
 
-#: ../src/mainwin.cpp:2636
+#: ../src/mainwin.cpp:2637
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "在 Internet 中搜索单词 - 右键：网站列表"
 
@@ -1155,24 +1159,24 @@ msgstr "文章显示"
 msgid "Net Dict"
 msgstr "网络词典"
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1026
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1028
 msgid "Input"
 msgstr "输入"
 
 #: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1101 ../src/prefsdlg.cpp:1516 ../src/prefsdlg.cpp:1547
+#: ../src/prefsdlg.cpp:1103 ../src/prefsdlg.cpp:1518 ../src/prefsdlg.cpp:1549
 msgid "Options"
 msgstr "选项"
 
-#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1390
+#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1392
 msgid "Search website"
 msgstr "搜索网站"
 
-#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1607
+#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1609
 msgid "Settings"
 msgstr "设置"
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2297
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2309
 msgid "Dictionary"
 msgstr "词典"
 
@@ -1342,117 +1346,117 @@ msgstr "启用网络词典。"
 msgid "StarDict server:"
 msgstr "星际译王服务端："
 
-#: ../src/prefsdlg.cpp:978
+#: ../src/prefsdlg.cpp:980
 msgid "Port:"
 msgstr "端口："
 
-#: ../src/prefsdlg.cpp:987
+#: ../src/prefsdlg.cpp:989
 msgid "Account:"
 msgstr "帐号："
 
-#: ../src/prefsdlg.cpp:998
+#: ../src/prefsdlg.cpp:1000
 msgid "_Register an account"
 msgstr "注册一个帐号(R)"
 
-#: ../src/prefsdlg.cpp:1033
+#: ../src/prefsdlg.cpp:1035
 msgid "_Search while typing."
 msgstr "即输即查(_S)。"
 
-#: ../src/prefsdlg.cpp:1042
+#: ../src/prefsdlg.cpp:1044
 msgid "Word change _timeout:"
 msgstr "单词改变时限(_T)："
 
-#: ../src/prefsdlg.cpp:1051
+#: ../src/prefsdlg.cpp:1053
 msgid "(default:300)"
 msgstr "(默认：300)"
 
-#: ../src/prefsdlg.cpp:1053
+#: ../src/prefsdlg.cpp:1055
 msgid "Show the _first word when not found."
 msgstr "未找到时显示第一个单词(_F)。"
 
-#: ../src/prefsdlg.cpp:1107
+#: ../src/prefsdlg.cpp:1109
 msgid "_Auto run StarDict after boot."
 msgstr "开机自动运行星际译王(_A)。"
 
-#: ../src/prefsdlg.cpp:1137
+#: ../src/prefsdlg.cpp:1139
 msgid "Hide main window when _starting StarDict."
 msgstr "启动时隐藏主窗口(_S)。"
 
-#: ../src/prefsdlg.cpp:1147
+#: ../src/prefsdlg.cpp:1149
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "使用打开主窗口热键：Ctrl+Alt+Z(_U)。"
 
-#: ../src/prefsdlg.cpp:1238 ../src/prefsdlg.cpp:1441
+#: ../src/prefsdlg.cpp:1240 ../src/prefsdlg.cpp:1443
 msgid "Website Name"
 msgstr "网站名称"
 
-#: ../src/prefsdlg.cpp:1250 ../src/prefsdlg.cpp:1449
+#: ../src/prefsdlg.cpp:1252 ../src/prefsdlg.cpp:1451
 msgid "Website link"
 msgstr "网站地址"
 
-#: ../src/prefsdlg.cpp:1261 ../src/prefsdlg.cpp:1457
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1459
 msgid "Website search link"
 msgstr "网站搜索地址"
 
-#: ../src/prefsdlg.cpp:1282
+#: ../src/prefsdlg.cpp:1284
 msgid "Please input the website name."
 msgstr "请输入网站名称。"
 
-#: ../src/prefsdlg.cpp:1284
+#: ../src/prefsdlg.cpp:1286
 msgid "Please input the website link."
 msgstr "请输入网站地址。"
 
-#: ../src/prefsdlg.cpp:1286
+#: ../src/prefsdlg.cpp:1288
 msgid "Please input the website search link."
 msgstr "请输入网站网站搜索地址。"
 
-#: ../src/prefsdlg.cpp:1288
+#: ../src/prefsdlg.cpp:1290
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for querying a word."
 msgstr "网站搜索地址应该包含一个 \"%%s\" 字符串以表示要搜索的单词。"
 
-#: ../src/prefsdlg.cpp:1367
+#: ../src/prefsdlg.cpp:1369
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for quering word."
 msgstr "网站搜索地址应该包含一个 \"%%s\" 字符串以表示要搜索的单词。"
 
-#: ../src/prefsdlg.cpp:1522
+#: ../src/prefsdlg.cpp:1524
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr "当鼠标中键点击时在浮动窗口查询(_Q)。"
 
-#: ../src/prefsdlg.cpp:1550
+#: ../src/prefsdlg.cpp:1552
 msgid "_Pronounce the word when it pops up."
 msgstr "弹出时朗读单词(_P)。"
 
-#: ../src/prefsdlg.cpp:1559
+#: ../src/prefsdlg.cpp:1561
 msgid "_Show floating window if word not found."
 msgstr "单词未找到时显示浮动窗口(_S)。"
 
-#: ../src/prefsdlg.cpp:1624
+#: ../src/prefsdlg.cpp:1626
 msgid "Max window _width:"
 msgstr "最大窗口宽度(_W)："
 
-#: ../src/prefsdlg.cpp:1634
+#: ../src/prefsdlg.cpp:1636
 msgid "(default:320)"
 msgstr "(默认：320)"
 
-#: ../src/prefsdlg.cpp:1638
+#: ../src/prefsdlg.cpp:1640
 msgid "Max window hei_ght:"
 msgstr "最大窗口高度(_G)："
 
-#: ../src/prefsdlg.cpp:1646
+#: ../src/prefsdlg.cpp:1648
 msgid "(default:240)"
 msgstr "(默认：240)"
 
-#: ../src/prefsdlg.cpp:1651
+#: ../src/prefsdlg.cpp:1653
 msgid "_Use custom background color:"
 msgstr "使用自定义背景色(_U)："
 
-#: ../src/prefsdlg.cpp:1733
+#: ../src/prefsdlg.cpp:1735
 msgid "Cat_egories:"
 msgstr "类别(_E)："
 
@@ -1470,7 +1474,7 @@ msgstr "TTS命令"
 
 #: ../src/selection.cpp:195 ../src/stardict.cpp:638 ../src/stardict.cpp:769
 #: ../src/stardict.cpp:930 ../src/stardict.cpp:944 ../src/stardict.cpp:949
-#: ../src/stardict.cpp:954 ../src/stardict.cpp:1496
+#: ../src/stardict.cpp:954 ../src/stardict.cpp:1354 ../src/stardict.cpp:1471
 #: ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr "<没有找到！>"
@@ -1499,7 +1503,7 @@ msgstr "全文检索"
 msgid "Search"
 msgstr "搜索"
 
-#: ../src/stardict.cpp:1103 ../src/stardict.cpp:1438
+#: ../src/stardict.cpp:1103 ../src/stardict.cpp:1448
 msgid "Full-text search..."
 msgstr "全文检索..."
 
@@ -1519,31 +1523,31 @@ msgstr "模糊查询也失败了 :-("
 msgid "Found no words matching this pattern!"
 msgstr "未找到任何符合此规则匹配的单词！"
 
-#: ../src/stardict.cpp:1430
+#: ../src/stardict.cpp:1440
 msgid "Press Enter to list the words that match the pattern."
 msgstr "按回车键将列出符合规则的单词。"
 
-#: ../src/stardict.cpp:1434
+#: ../src/stardict.cpp:1444
 msgid "Fuzzy query..."
 msgstr "模糊查询..."
 
-#: ../src/stardict.cpp:1679 ../src/stardict.cpp:1784
+#: ../src/stardict.cpp:1692 ../src/stardict.cpp:1797
 msgid "Not found!\n"
 msgstr "没有找到！\n"
 
-#: ../src/stardict.cpp:1780
+#: ../src/stardict.cpp:1793
 msgid "Convert error!\n"
 msgstr "编码转换出错！\n"
 
-#: ../src/stardict.cpp:2129
+#: ../src/stardict.cpp:2141
 msgid "StarDict is already running. Using the running process."
 msgstr "星际译王已经运行，使用现有进程。"
 
-#: ../src/stardict.cpp:2262
+#: ../src/stardict.cpp:2274
 msgid "- Lookup words"
 msgstr "- 查询单词"
 
-#: ../src/stardict.cpp:2267
+#: ../src/stardict.cpp:2279
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "参数解析失败：%s\n"
@@ -1553,13 +1557,13 @@ msgstr "参数解析失败：%s\n"
 msgid "Can not load image. %s"
 msgstr "不能加载图片。%s"
 
-#: ../src/lib/stardict_client.cpp:1047
+#: ../src/lib/stardict_client.cpp:1059
 msgid ""
 "You haven't choose any dictionries, please choose some by click \"Dict Manage"
 "\"->\"Network dictionaries\"->\"Add\"."
 msgstr "你未选择任何词典，请点击“词典管理”->“网络词典”->“添加”来选择一些词典。"
 
-#: ../src/lib/stddict.cpp:627
+#: ../src/lib/stddict.cpp:642
 msgid "Sorting, please wait..."
 msgstr "排序中，请等待..."
 
@@ -1891,11 +1895,11 @@ msgstr "更新信息。"
 msgid "Get the update information from the Internet."
 msgstr "从因特网获取更新信息。"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:159
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:162
 msgid "Visit StarDict website now?"
 msgstr "现在访问星际译王的项目主页？"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:226
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:229
 msgid "Update info plug-in loaded.\n"
 msgstr "更新信息插件加载成功。\n"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-27 10:42+0800\n"
+"POT-Creation-Date: 2007-08-01 13:13+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:31
 #: ../src/docklet.cpp:199 ../src/mainwin.cpp:469 ../src/splash.cpp:84
-#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2279
+#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2291
 #: ../src/win32/systray.cpp:216 ../src/win32/systray.cpp:264
 msgid "StarDict"
 msgstr ""
@@ -387,21 +387,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr ""
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:426
-#: ../src/dictmanagedlg.cpp:2203
+#: ../src/dictmanagedlg.cpp:2206
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr ""
 
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:782
 #: ../src/dictmanagedlg.cpp:882 ../src/dictmanagedlg.cpp:953
-#: ../src/dictmanagedlg.cpp:1371 ../src/dictmanagedlg.cpp:2126
+#: ../src/dictmanagedlg.cpp:1371 ../src/dictmanagedlg.cpp:2129
 #: ../src/stardict.cpp:1051
 msgid "Dictionary Name"
 msgstr ""
 
 #: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:783
 #: ../src/dictmanagedlg.cpp:888 ../src/dictmanagedlg.cpp:960
-#: ../src/dictmanagedlg.cpp:1376 ../src/dictmanagedlg.cpp:2127
+#: ../src/dictmanagedlg.cpp:1376 ../src/dictmanagedlg.cpp:2130
 msgid "Word count"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgstr ""
 msgid "These settings will take effect the next time you run StarDict."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:421 ../src/lib/stddict.cpp:1165
+#: ../src/dictmanagedlg.cpp:421 ../src/lib/stddict.cpp:1201
 msgid "Loading..."
 msgstr ""
 
@@ -446,23 +446,23 @@ msgid ""
 "floating window."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:784 ../src/dictmanagedlg.cpp:2129
+#: ../src/dictmanagedlg.cpp:784 ../src/dictmanagedlg.cpp:2132
 msgid "Author"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:785 ../src/dictmanagedlg.cpp:2130
+#: ../src/dictmanagedlg.cpp:785 ../src/dictmanagedlg.cpp:2133
 msgid "Email"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:786 ../src/dictmanagedlg.cpp:2131
+#: ../src/dictmanagedlg.cpp:786 ../src/dictmanagedlg.cpp:2134
 msgid "Website"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:787 ../src/dictmanagedlg.cpp:2132
+#: ../src/dictmanagedlg.cpp:787 ../src/dictmanagedlg.cpp:2135
 msgid "Description"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:788 ../src/dictmanagedlg.cpp:2133
+#: ../src/dictmanagedlg.cpp:788 ../src/dictmanagedlg.cpp:2136
 msgid "Date"
 msgstr ""
 
@@ -547,15 +547,19 @@ msgstr ""
 msgid "_Unselect all"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1974
+#: ../src/dictmanagedlg.cpp:1957
+msgid "Upgrade Now!"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1977
 msgid "Manage Dictionaries"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2121
+#: ../src/dictmanagedlg.cpp:2124
 msgid "Dictionary Information"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2128
+#: ../src/dictmanagedlg.cpp:2131
 msgid "Synonym word count"
 msgstr ""
 
@@ -567,7 +571,7 @@ msgstr ""
 msgid "StarDict - Stopped"
 msgstr ""
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2548
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2550
 msgid "_Scan"
 msgstr ""
 
@@ -595,7 +599,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2581
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2583
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr ""
@@ -985,27 +989,27 @@ msgstr ""
 msgid "Connecting..."
 msgstr ""
 
-#: ../src/mainwin.cpp:2557
+#: ../src/mainwin.cpp:2559
 msgid "Scan the selection"
 msgstr ""
 
-#: ../src/mainwin.cpp:2571
+#: ../src/mainwin.cpp:2573
 msgid "Show info"
 msgstr ""
 
-#: ../src/mainwin.cpp:2603 ../src/prefsdlg.cpp:1757
+#: ../src/mainwin.cpp:2605 ../src/prefsdlg.cpp:1757
 msgid "Preferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:2613
+#: ../src/mainwin.cpp:2615
 msgid "Manage dictionaries"
 msgstr ""
 
-#: ../src/mainwin.cpp:2623
+#: ../src/mainwin.cpp:2625
 msgid "Go to the StarDict website"
 msgstr ""
 
-#: ../src/mainwin.cpp:2635
+#: ../src/mainwin.cpp:2637
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr ""
 
@@ -1096,7 +1100,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2297
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2309
 msgid "Dictionary"
 msgstr ""
 
@@ -1394,7 +1398,7 @@ msgstr ""
 
 #: ../src/selection.cpp:195 ../src/stardict.cpp:638 ../src/stardict.cpp:769
 #: ../src/stardict.cpp:930 ../src/stardict.cpp:944 ../src/stardict.cpp:949
-#: ../src/stardict.cpp:954 ../src/stardict.cpp:1496
+#: ../src/stardict.cpp:954 ../src/stardict.cpp:1354 ../src/stardict.cpp:1471
 #: ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr ""
@@ -1423,7 +1427,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ../src/stardict.cpp:1103 ../src/stardict.cpp:1438
+#: ../src/stardict.cpp:1103 ../src/stardict.cpp:1448
 msgid "Full-text search..."
 msgstr ""
 
@@ -1443,31 +1447,31 @@ msgstr ""
 msgid "Found no words matching this pattern!"
 msgstr ""
 
-#: ../src/stardict.cpp:1430
+#: ../src/stardict.cpp:1440
 msgid "Press Enter to list the words that match the pattern."
 msgstr ""
 
-#: ../src/stardict.cpp:1434
+#: ../src/stardict.cpp:1444
 msgid "Fuzzy query..."
 msgstr ""
 
-#: ../src/stardict.cpp:1679 ../src/stardict.cpp:1784
+#: ../src/stardict.cpp:1692 ../src/stardict.cpp:1797
 msgid "Not found!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:1780
+#: ../src/stardict.cpp:1793
 msgid "Convert error!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2129
+#: ../src/stardict.cpp:2141
 msgid "StarDict is already running. Using the running process."
 msgstr ""
 
-#: ../src/stardict.cpp:2262
+#: ../src/stardict.cpp:2274
 msgid "- Lookup words"
 msgstr ""
 
-#: ../src/stardict.cpp:2267
+#: ../src/stardict.cpp:2279
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
@@ -1477,13 +1481,13 @@ msgstr ""
 msgid "Can not load image. %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1047
+#: ../src/lib/stardict_client.cpp:1059
 msgid ""
 "You haven't choose any dictionries, please choose some by click \"Dict Manage"
 "\"->\"Network dictionaries\"->\"Add\"."
 msgstr ""
 
-#: ../src/lib/stddict.cpp:627
+#: ../src/lib/stddict.cpp:642
 msgid "Sorting, please wait..."
 msgstr ""
 
@@ -1815,11 +1819,11 @@ msgstr ""
 msgid "Get the update information from the Internet."
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:159
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:162
 msgid "Visit StarDict website now?"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:226
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:229
 msgid "Update info plug-in loaded.\n"
 msgstr ""
 

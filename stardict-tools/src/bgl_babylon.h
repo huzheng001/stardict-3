@@ -166,14 +166,14 @@ public:
     inline std::string copyright() const { return m_copyright; };
     inline std::string sourceLang() const { return m_sourceLang; };
     inline std::string targetLang() const { return m_targetLang; };
-    inline uint numEntries() const { return m_numEntries; };
+    inline unsigned int numEntries() const { return m_numEntries; };
     inline std::string charset() const { return m_defaultCharset; };
 
     inline std::string filename() const { return m_filename; };
 
 private:
     unsigned int bgl_readnum( int );
-    void convertToUtf8( std::string &, uint = 0 );
+    void convertToUtf8( std::string &, unsigned int = 0 );
 
     std::string m_filename;
     gzFile file;
@@ -185,7 +185,7 @@ private:
     std::string m_copyright;
     std::string m_sourceLang;
     std::string m_targetLang;
-    uint m_numEntries;
+    unsigned int m_numEntries;
     std::string m_defaultCharset;
     std::string m_sourceCharset;
     std::string m_targetCharset;

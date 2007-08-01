@@ -22,8 +22,15 @@
 
 #include<stdlib.h>
 #include<stdio.h>
-
+#include <glib/gstdio.h>
 #include <iconv.h>
+
+#ifdef _WIN32
+#include <io.h>
+#define DUP _dup
+#else
+#define DUP dup
+#endif
 
 Babylon::Babylon( std::string filename )
 {
@@ -43,7 +50,7 @@ bool Babylon::open()
   unsigned char buf[6];
   int i;
 
-  f = fopen( m_filename.c_str(), "r" );
+  f = g_fopen( m_filename.c_str(), "rb" );
   if( f == NULL )
     return false;
 
@@ -71,7 +78,7 @@ bool Babylon::open()
 
   fflush( f );
 
-  file = gzdopen( dup( fileno( f ) ), "r" );
+  file = gzdopen( DUP( fileno( f ) ), "r" );
   if( file == NULL )
     return false;
 
@@ -125,8 +132,8 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
   if( file == NULL ) return false;
 
   bgl_block block;
-  uint pos;
-  uint type;
+  unsigned int pos;
+  unsigned int type;
   std::string headword;
   std::string definition;
 
@@ -143,7 +150,7 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
         switch( block.data[0] )
         {
           case 8:
-            type = (uint)block.data[2];
+            type = (unsigned int)block.data[2];
             if( type > 64 ) type -= 65;
             m_defaultCharset = bgl_charset[type];
             break;
@@ -162,22 +169,22 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
         {
           case 1:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) headword += block.data[pos++];
+            for(unsigned int a=0;a<block.length-2;a++) headword += block.data[pos++];
             m_title = headword;
             break;
           case 2:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) headword += block.data[pos++];
+            for(unsigned int a=0;a<block.length-2;a++) headword += block.data[pos++];
             m_author = headword;
             break;
           case 3:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) headword += block.data[pos++];
+            for(unsigned int a=0;a<block.length-2;a++) headword += block.data[pos++];
             m_email = headword;
             break;
           case 4:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) headword += block.data[pos++];
+            for(unsigned int a=0;a<block.length-2;a++) headword += block.data[pos++];
             m_copyright = headword;
             break;
           case 7:
@@ -190,7 +197,7 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
             break;
           case 9:
             headword.reserve( block.length - 2 );
-            for(uint a=0;a<block.length-2;a++) {
+            for(unsigned int a=0;a<block.length-2;a++) {
               if (block.data[pos] == '\r') {
               } else if (block.data[pos] == '\n') {
                 headword += "<br>";
@@ -202,13 +209,13 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
             m_description = headword;
             break;
           case 26:
-            type = (uint)block.data[2];
+            type = (unsigned int)block.data[2];
             if( type > 64 ) type -= 65;
             if (m_sourceCharset.empty())
               m_sourceCharset = bgl_charset[type];
             break;
           case 27:
-            type = (uint)block.data[2];
+            type = (unsigned int)block.data[2];
             if( type > 64 ) type -= 65;
             if (m_targetCharset.empty())
               m_targetCharset = bgl_charset[type];
@@ -245,7 +252,7 @@ bgl_entry Babylon::readEntry()
   }
 
   bgl_block block;
-  uint len, pos;
+  unsigned int len, pos;
   std::string headword;
   std::string definition;
   std::string temp;
@@ -283,7 +290,7 @@ bgl_entry Babylon::readEntry()
         len = (unsigned char)block.data[pos++];
 
         headword.reserve( len );
-        for(uint a=0;a<len;a++) headword += block.data[pos++];
+        for(unsigned int a=0;a<len;a++) headword += block.data[pos++];
         convertToUtf8( headword, SOURCE_CHARSET );
 
         // Definition
@@ -291,7 +298,7 @@ bgl_entry Babylon::readEntry()
         len = (unsigned char)block.data[pos++] << 8;
         len |= (unsigned char)block.data[pos++];
         definition.reserve( len );
-        for(uint a=0;a<len;a++)
+        for(unsigned int a=0;a<len;a++)
         {
           if( (unsigned char)block.data[pos] == 0x0a )
           {
@@ -320,7 +327,7 @@ bgl_entry Babylon::readEntry()
         {
           len = (unsigned char)block.data[pos++];
           alternate.reserve( len );
-          for(uint a=0;a<len;a++) alternate += block.data[pos++];
+          for(unsigned int a=0;a<len;a++) alternate += block.data[pos++];
           convertToUtf8( alternate, SOURCE_CHARSET );
           alternates.push_back( alternate );
           alternate.clear();
@@ -343,7 +350,7 @@ bgl_entry Babylon::readEntry()
 
 
 
-void Babylon::convertToUtf8( std::string &s, uint type )
+void Babylon::convertToUtf8( std::string &s, unsigned int type )
 {
   if( s.size() < 1 ) return;
   if( type > 2 ) return;
@@ -374,12 +381,18 @@ void Babylon::convertToUtf8( std::string &s, uint type )
     exit(1);
   }
 
-  char *inbuf, *outbuf, *defbuf;
+  char *outbuf, *defbuf;
   size_t inbufbytes, outbufbytes;
 
   inbufbytes = s.size();
   outbufbytes = s.size() * 6;
-  inbuf = (char*)s.data();
+#ifdef _WIN32
+  const char *inbuf;
+  inbuf = s.data();
+#else
+  char *inbuf;
+  inbuf = (char *)s.data();
+#endif
   outbuf = (char*)malloc( outbufbytes + 1 );
   memset( outbuf, '\0', outbufbytes + 1 );
   defbuf = outbuf;
