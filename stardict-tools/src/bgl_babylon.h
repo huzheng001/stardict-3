@@ -110,7 +110,7 @@ const std::string bgl_charset[] = {
 	"ISO-8859-1", /*Default*/
 	"ISO-8859-1", /*Latin*/
 	"ISO-8859-2", /*Eastern European*/
-	"ISO-8859-5", /*Cyriilic*/
+	"WINDOWS-1251", /*Cyriilic*/
 	"SHIFT_JIS", /*Japanese*/
 	"BIG5", /*Traditional Chinese*/
 	"GB18030", /*Simplified Chinese*/

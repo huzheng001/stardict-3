@@ -1741,9 +1741,9 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 		if(p_y){
 			p_y += sizeof(YahooTranslateStartMark) -1;
 			char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
-			char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "<div class=\"pd\">");
+			char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "class=\"pd\">");
 			if(p2_y && p3_y){
-				p3_y += sizeof("<div class=\"pd\">") -1;
+				p3_y += sizeof("class=\"pd\">") -1;
 				result_text.assign(p3_y, p2_y-p3_y);
 				found = true;
 			}
