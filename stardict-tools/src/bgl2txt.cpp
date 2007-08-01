@@ -1,5 +1,4 @@
-#include "bgl_babylonreader.h"
-#include "bgl_stardictbuilder.h"
+#include "libbgl2txt.h"
 
 int main(int argc, char * argv[])
 {
@@ -19,20 +18,6 @@ int main(int argc, char * argv[])
 			infile = argv[i];
 		}
 	}
-	std::string outfile;
-	const char *p = infile.c_str();
-	const char *p1 = strrchr(p, '.');
-	if (p1) {
-		outfile.assign(p, p1-p);
-	} else {
-		outfile = infile;
-	}
-	DictBuilder *builder = new StarDictBuilder( outfile );
-	DictReader *reader = new BabylonReader( infile, builder );
-	if( !reader->convert(source_charset, target_charset) ) {
-		printf( "Error converting %s\n", infile.c_str() );
-		exit(1);
-	}
-	builder->finish();
+	convert_bglfile(infile, source_charset, target_charset);
 	return false;
 }

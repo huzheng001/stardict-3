@@ -21,10 +21,11 @@
 #include "bgl_stardictbuilder.h"
 
 #include <iostream>
+#include <glib.h>
 
 StarDictBuilder::StarDictBuilder( std::string filename )
 {
-  const char *p = strrchr(filename.c_str(), '/');
+  const char *p = strrchr(filename.c_str(), G_DIR_SEPARATOR);
   if (p)
     m_babylonfilename = p+1;
   else

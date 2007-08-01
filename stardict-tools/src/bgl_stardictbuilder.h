@@ -94,7 +94,7 @@ protected:
   std::string m_lastUpdate;
   std::string m_misc;
 
-  uint m_size;
+  unsigned int m_size;
   bool m_isOk;
 
   uint32 m_wordcount;

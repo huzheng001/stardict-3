@@ -23,6 +23,7 @@
 #include "bgl_dictbuilder.h"
 
 #include <stdio.h>
+#include <glib/gstdio.h>
 
 BabylonReader::BabylonReader( std::string filename, DictBuilder *builder )
 {
@@ -53,7 +54,11 @@ bool BabylonReader::convert(std::string &source_charset, std::string &target_cha
   m_builder->setDestLang( m_babylon->targetLang() );
   m_builder->setDescription( m_babylon->description() );
 
+#ifdef _WIN32
+	g_mkdir("res", S_IRWXU);
+#else
   system("rm -rf res;mkdir res");
+#endif
   bgl_entry entry;
   entry = m_babylon->readEntry();
 

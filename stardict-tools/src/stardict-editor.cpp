@@ -6,6 +6,7 @@
 #include "libbabylonfile.h"
 #include "libstardict2txt.h"
 #include "libstardictverify.h"
+#include "libbgl2txt.h"
 
 static GtkWidget *main_window;
 static GtkTextBuffer *compile_page_text_view_buffer;
@@ -45,8 +46,10 @@ void on_compile_page_build_button_clicked(GtkButton *button, gpointer data)
 	gint key = gtk_option_menu_get_history(GTK_OPTION_MENU(compile_page_option_menu));
 	if (key == 0)
 		convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
-	else
+	else if (key == 1)
 		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info, true);
+	else
+		convert_bglfile(gtk_entry_get_text(entry), "", "");
 	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, "Done!\n", -1);
 }
 
@@ -102,6 +105,8 @@ void create_compile_page(GtkWidget *notebook)
 	menuitem=gtk_menu_item_new_with_mnemonic("Tab file");
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	menuitem=gtk_menu_item_new_with_mnemonic("Babylon file");
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	menuitem=gtk_menu_item_new_with_mnemonic("BGL file");
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(compile_page_option_menu), menu);
 	gtk_box_pack_start(GTK_BOX(hbox), compile_page_option_menu, true, false, 0);
