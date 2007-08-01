@@ -47,30 +47,6 @@ void inifile::create_empty()
 	g_key_file_free(gkeyfile_);
 }
 
-void inifile::convert_from_old_version()
-{
-	FILE *f = g_fopen(fname_.c_str(), "r+b");
-
-	if (!f) {
-		g_error(("Can not open %s\n"), fname_.c_str());
-		exit(EXIT_FAILURE);
-	}
-	int ch;
-	while ((ch = fgetc(f)) != EOF) {
-		if (ch == OLD_STRING_SEP)
-			ch = NEW_STRING_SEP;
-		fseek(f, -1, SEEK_CUR);
-		if (fputc(ch, f) == EOF) {
-			g_error(("can not write to %s\n"),
-				fname_.c_str());
-			exit(EXIT_FAILURE);
-		}
-	}
-	fprintf(f, "[stardict-private]\n version=%s\n", myversion);
-	fclose(f);
-
-}
-
 void inifile::convert_from_locale_enc()
 {
 	MyGError err;
@@ -136,8 +112,7 @@ inifile::inifile(const std::string& path)
 					err->message);
 				exit(EXIT_FAILURE);//just in case
 			}
-			g_key_file_free(gkeyfile_);
-			convert_from_old_version();
+			create_empty();
 			continue;
 		}
 		if (strcmp(get_impl(version), myversion)) {
