@@ -267,7 +267,7 @@ static void dirinfo_parse_end_element(GMarkupParseContext *context, const gchar 
         gtk_tree_store_set(Data->model, &iter, 0, (Data->dir_dirname + " (" + Data->dir_dictcount + ')').c_str(), 1, FALSE, 3, (Data->parent + Data->dir_name + '/').c_str(), -1);
         GtkTreeIter iter1;
         gtk_tree_store_append(Data->model, &iter1, &iter);
-        gtk_tree_store_set(Data->model, &iter1, 0, "", -1);
+        gtk_tree_store_set(Data->model, &iter1, 0, "", 1, TRUE, -1);
     } else if (strcmp(element_name, "dict")==0) {
         dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)user_data;
         Data->in_dict = false;
@@ -282,23 +282,23 @@ static void dirinfo_parse_end_element(GMarkupParseContext *context, const gchar 
     }
 }
 
-static gboolean find_iter(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
+static gboolean do_find_iter(GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
     dirinfo_ParseUserData *Data = (dirinfo_ParseUserData *)data;
     gboolean visible;
     gtk_tree_model_get (model, iter, 1, &visible, -1);
     if (visible == FALSE) {
-        gchar *path;
-        gtk_tree_model_get (model, iter, 3, &path, -1);
-        if (path && Data->parent == path) {
+        gchar *dirpath;
+        gtk_tree_model_get (model, iter, 3, &dirpath, -1);
+        if (dirpath && Data->parent == dirpath) {
             Data->iter = (GtkTreeIter *)g_malloc(sizeof(GtkTreeIter));
             *(Data->iter) = *iter;
-            g_free(path);
-            return FALSE;
+            g_free(dirpath);
+            return TRUE;
         }
-        g_free(path);
+        g_free(dirpath);
     }
-    return TRUE;
+    return FALSE;
 }
 
 static void dirinfo_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
@@ -312,7 +312,7 @@ static void dirinfo_parse_text(GMarkupParseContext *context, const gchar *text, 
         if (Data->parent == "/") {
             Data->iter = NULL;
         } else {
-            gtk_tree_model_foreach(GTK_TREE_MODEL(Data->model), find_iter, Data);
+            gtk_tree_model_foreach(GTK_TREE_MODEL(Data->model), do_find_iter, Data);
         }
     } else if (strcmp(element, "userlevel")==0) {
         std::string userlevel(text, text_len);

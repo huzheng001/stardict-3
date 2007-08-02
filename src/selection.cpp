@@ -205,11 +205,12 @@ void Selection::SelectionReceived(gchar* sToken)
 		{
 			gpAppFrame->SimpleLookupToFloat(sToken,true);
 		}
-        if (conf->get_bool_at("network/enable_netdict")) {
-            STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, LastClipWord.c_str());
-            if (!gpAppFrame->oStarDictClient.try_cache(c))
-    	        gpAppFrame->waiting_floatwin_lookupcmd_seq = c->seq;
-                gpAppFrame->oStarDictClient.send_commands(1, c);
-        }
+		if (conf->get_bool_at("network/enable_netdict")) {
+			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, LastClipWord.c_str());
+			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+				gpAppFrame->waiting_floatwin_lookupcmd_seq = c->seq;
+				gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
+		}
     }
 }

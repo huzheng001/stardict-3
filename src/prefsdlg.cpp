@@ -1783,7 +1783,7 @@ bool PrefsDlg::ShowModal()
 		if (ch[0])
 			server = ch;
 		else
-			server = "dict.stardict.org";
+			server = _("dict.stardict.org");
 		conf->set_string_at("network/server", server);
 		int port;
 		ch = gtk_entry_get_text(eStarDictServerPort);
