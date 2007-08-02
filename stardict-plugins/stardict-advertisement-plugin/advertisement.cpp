@@ -76,7 +76,7 @@ static char *build_dictdata(char type, const char *definition)
 			}
 			struct stat stats;
 			FILE *file;
-			if (g_stat (filename.c_str(), &stats) == 0 && (file = g_fopen(filename.c_str(), "r"))!=NULL) {
+			if (g_stat (filename.c_str(), &stats) == 0 && (file = g_fopen(filename.c_str(), "rb"))!=NULL) {
 				size = sizeof(char) + sizeof(guint32) + stats.st_size;
 				data = (char *)g_malloc(sizeof(guint32) + size);
 				char *p = data;
