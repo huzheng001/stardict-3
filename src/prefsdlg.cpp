@@ -941,6 +941,10 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
         for (int i = 0; i < 16; i++)
             sprintf( hex+2*i, "%02x", digest[i] );
         hex[32] = '\0';
+	const gchar *server = gtk_entry_get_text(oPrefsDlg->eStarDictServer);
+	int port = atoi(gtk_entry_get_text(oPrefsDlg->eStarDictServerPort));
+	gpAppFrame->oStarDictClient.set_server(server, port);
+	gpAppFrame->oStarDictClient.set_auth("", "");
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email);
         gpAppFrame->oStarDictClient.send_commands(1, c);
         break;

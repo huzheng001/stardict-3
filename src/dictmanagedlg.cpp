@@ -1977,7 +1977,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));	
 	}
 	max_dict_count = -1;
-    	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 2) {
+    	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 3) {
 		STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
 		STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
 		gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
@@ -2202,7 +2202,7 @@ void DictManageDlg::network_dictinfo(const char *xml)
 void DictManageDlg::network_maxdictcount(int count)
 {
     max_dict_count = count;
-    if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 2) {
+    if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 3) {
         gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), count);
         gtk_label_set_text(GTK_LABEL(this->info_label), str);
         g_free(str);
