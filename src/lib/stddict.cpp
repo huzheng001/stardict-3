@@ -1511,6 +1511,9 @@ void Libs::func_parse_start_element(GMarkupParseContext *context, const gchar *e
 		Data->path.clear();
 		Data->uid.clear();
 		Data->level.clear();
+		Data->download.clear();
+		Data->from.clear();
+		Data->to.clear();
 	} else if (strcmp(element_name, "linkdict")==0) {
 		ParseUserData *Data = (ParseUserData *)user_data;
 		Data->inlinkdict = true;
@@ -1533,6 +1536,9 @@ void Libs::func_parse_end_element(GMarkupParseContext *context, const gchar *ele
 				sub_info_item->isdir = 0;
 				sub_info_item->dict = new DictInfoDictItem();
 				sub_info_item->dict->uid = Data->uid;
+				sub_info_item->dict->download = Data->download;
+				sub_info_item->dict->from = Data->from;
+				sub_info_item->dict->to = Data->to;
 				if (Data->level.empty())
 					sub_info_item->dict->level = 0;
 				else
@@ -1594,6 +1600,12 @@ void Libs::func_parse_text(GMarkupParseContext *context, const gchar *text, gsiz
 		}
 	} else if (strcmp(element, "level")==0) {
 		Data->level.assign(text, text_len);
+	} else if (strcmp(element, "download")==0) {
+		Data->download.assign(text, text_len);
+	} else if (strcmp(element, "from")==0) {
+		Data->from.assign(text, text_len);
+	} else if (strcmp(element, "to")==0) {
+		Data->to.assign(text, text_len);
 	}
 }
 
@@ -1631,6 +1643,98 @@ void Libs::LoadXMLDir(const char *dir, DictInfoItem *info_item)
 			info_item->dir->dictcount += (*i)->dir->dictcount;
 		} else if ((*i)->isdir == 0) {
 			info_item->dir->dictcount++;
+		}
+	}
+}
+
+const std::string &Libs::get_fromto_info() {
+	if(cache_fromto.empty()){
+		std::map<std::string, std::list<FromTo> > map_fromto;
+		gen_fromto_info(root_info_item, map_fromto);
+		cache_fromto+="<lang>";
+		for (std::map<std::string, std::list<FromTo> >::iterator map_it = map_fromto.begin(); map_it != map_fromto.end(); ++map_it){
+			cache_fromto+="<from lang=\"";
+			cache_fromto+=map_it->first;
+			cache_fromto+="\">";
+			std::list<FromTo> &fromTo = map_it->second;
+			for (std::list<FromTo>::iterator i = fromTo.begin() ; i!= fromTo.end(); ++i){
+				cache_fromto+="<to lang=\"";
+				cache_fromto+= i->to;
+				cache_fromto+="\">";
+				std::list<FromToInfo> &fromtoinfo = i->fromto_info;
+				for (std::list<FromToInfo>::iterator j = fromtoinfo.begin() ; j!= fromtoinfo.end(); ++j){
+					cache_fromto+="<dict><uid>";
+					cache_fromto+=j->uid;
+					cache_fromto+="</uid><bookname>";
+					cache_fromto+= j->bookname;
+					cache_fromto+="</bookname></dict>";
+				}
+				cache_fromto+="</to>";
+			}
+			cache_fromto+="</from>";
+		}
+		cache_fromto+="</lang>";
+	}
+	return cache_fromto;
+}
+
+void Libs::gen_fromto_info(struct DictInfoItem *info_item, std::map<std::string, std::list<FromTo> > &map_fromto) {
+	gchar *etext;
+	for(std::list<DictInfoItem *>::iterator i = info_item->dir->info_item_list.begin() ; i!= info_item->dir->info_item_list.end(); ++i){
+		if ((*i)->isdir == 1) {
+			gen_fromto_info((*i), map_fromto);
+		} else {
+			std::string from_str     = (*i)->dict->from;
+			std::string to_str       = (*i)->dict->to;
+			if(from_str.empty() || to_str.empty()){
+				continue;
+			}
+			std::string uid_str      = (*i)->dict->uid;
+			etext = g_markup_escape_text(oLib[(*i)->dict->id]->dict_name().c_str(), -1);
+			std::string bookname_str = etext;
+			g_free(etext);
+			std::map<std::string, std::list<FromTo> >::iterator fromto1 = map_fromto.find(from_str);
+			if (fromto1==map_fromto.end()) {
+				//if an from_str element not already in map,  add new from_str to map
+				FromToInfo fromtoinfo;
+				fromtoinfo.uid = uid_str;
+				fromtoinfo.bookname = bookname_str;
+				std::list<FromToInfo> list_fromtoinfo ;
+				list_fromtoinfo.push_back(fromtoinfo);
+				FromTo new_fromTo;
+				new_fromTo.to = to_str;
+				new_fromTo.fromto_info = list_fromtoinfo;
+				std::list<FromTo> list_fromTo;
+				list_fromTo.push_back(new_fromTo);
+				map_fromto[from_str] = list_fromTo;
+			} else {
+				// else if from_str already in map, so comparison to_str and from_to1 , then choose insert.
+				std::list<FromTo> &fromTo_list = fromto1->second;
+				std::string from_name1 = fromto1->first;
+				bool found = false;
+				for (std::list<FromTo>::iterator new_fromTo = fromTo_list.begin(); new_fromTo != fromTo_list.end(); ++new_fromTo) {
+					if(to_str == new_fromTo->to) {
+						std::list<FromToInfo> &fromtoinfo1 = new_fromTo->fromto_info;
+						FromToInfo fromtoinfo;
+						fromtoinfo.uid = uid_str;
+						fromtoinfo.bookname = bookname_str;
+						fromtoinfo1.push_back(fromtoinfo);
+						found = true;
+						break;
+					}
+				}
+				if(!found){
+					FromToInfo fromtoinfo;
+					fromtoinfo.uid = uid_str;
+					fromtoinfo.bookname = bookname_str;
+					std::list<FromToInfo> fromtoinfo1;
+					fromtoinfo1.push_back(fromtoinfo);
+					FromTo fromTo;
+					fromTo.to = to_str;
+					fromTo.fromto_info = fromtoinfo1;
+					fromTo_list.push_back(fromTo);
+				}				
+			}
 		}
 	}
 }
@@ -1721,6 +1825,44 @@ int Libs::get_dict_level(const char *uid)
 	return uid_iter->second->level;
 }
 
+std::string Libs::get_dicts_list(const char *dictmask, int max_dict_count, int userLevel)
+{
+	std::list<std::string> uid_list;
+	std::string uid;
+	const char *p, *p1;
+	p = dictmask;
+	do {
+		p1 = strchr(p, ' ');
+		if (p1) {
+			uid.assign(p, p1-p);
+			if (!uid.empty())
+				uid_list.push_back(uid);
+			p = p1+1;
+		}
+	} while (p1);
+	uid = p;
+	if (!uid.empty())
+		uid_list.push_back(uid);
+
+	std::string dictmask_str;
+	int count = 0;
+	const std::string *info_string;
+	int level;
+	for (std::list<std::string>::iterator i = uid_list.begin(); i!= uid_list.end(); ++i) {
+		level = get_dict_level((*i).c_str());
+		if (level < 0 || level > userLevel)
+			continue;
+		info_string = get_dict_info(i->c_str(), true);
+		if (info_string) {
+			if (count>=max_dict_count)
+				break;
+			dictmask_str += info_string->c_str();
+			count++;
+		}
+	}
+	return dictmask_str;
+}
+
 const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 {
 	std::map<std::string, DictInfoDictItem *>::iterator uid_iter;
@@ -1787,7 +1929,11 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 			etext = g_markup_escape_text(dict_info.date.c_str(), -1);
 			dict->info_string += etext;
 			g_free(etext);
-			dict->info_string += "</date></dictinfo>";
+			dict->info_string += "</date><download>";
+			etext = g_markup_escape_text(dict->download.c_str(), -1);
+			dict->info_string += etext;
+			g_free(etext);
+			dict->info_string += "</download></dictinfo>";
 		}
 		return &(dict->info_string);
 	}
