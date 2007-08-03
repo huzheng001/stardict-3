@@ -1564,7 +1564,7 @@ msgstr "不能加载图片。%s"
 
 #: ../src/lib/stardict_client.cpp:1059
 msgid ""
-"You haven't choose any dictionries, please choose some by click \"Dict Manage"
+"You haven't choose any dictionaries, please choose some by click \"Dict Manage"
 "\"->\"Network dictionaries\"->\"Add\"."
 msgstr "你未选择任何词典，请点击“词典管理”->“网络词典”->“添加”来选择一些词典。"
 

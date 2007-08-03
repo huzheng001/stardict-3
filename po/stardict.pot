@@ -1488,7 +1488,7 @@ msgstr ""
 
 #: ../src/lib/stardict_client.cpp:1059
 msgid ""
-"You haven't choose any dictionries, please choose some by click \"Dict Manage"
+"You haven't choose any dictionaries, please choose some by click \"Dict Manage"
 "\"->\"Network dictionaries\"->\"Add\"."
 msgstr ""
 

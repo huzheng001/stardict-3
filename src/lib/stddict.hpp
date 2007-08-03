@@ -213,6 +213,8 @@ public:
 	void LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunctions cltfuc);
 	const std::string *get_dir_info(const char *path);
 	const std::string *get_dict_info(const char *uid, bool is_short);
+	const std::string &get_fromto_info();
+	std::string get_dicts_list(const char *dicts, int max_dict_count, int userLevel);
 	int get_dict_level(const char *uid);
 #endif
 #ifdef SD_CLIENT_CODE
@@ -307,6 +309,9 @@ private:
 		std::string info_string;
 		std::string short_info_string;
 		std::string uid;
+		std::string download;
+		std::string from;
+		std::string to;
 		unsigned int level;
 		unsigned int id;
 	};
@@ -337,12 +342,26 @@ private:
 		std::string path;
 		std::string uid;
 		std::string level;
+		std::string download;
+		std::string from;
+		std::string to;
 		bool inlinkdict;
 		std::string linkuid;
 	};
 	static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error);
 	static void func_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error);
 	static void func_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error);
+
+	struct FromToInfo {
+		std::string uid;
+		std::string bookname;
+	};
+	struct FromTo {
+		std::string to;
+		std::list<FromToInfo> fromto_info;
+	};
+	std::string cache_fromto;
+	void gen_fromto_info(struct DictInfoItem *info_item, std::map<std::string, std::list<FromTo> > &map_fromto);
 #endif
 
 	friend class DictLoader;
