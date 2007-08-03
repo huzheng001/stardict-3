@@ -645,8 +645,21 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 #ifdef _WIN32
 bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
 {
+	bool found = LocalSmartLookupToFloat(sWord, BeginPos, bShowIfNotFound);
+	if (conf->get_bool_at("network/enable_netdict")) {
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SMART_QUERY, sWord, BeginPos);
+		if (!oStarDictClient.try_cache(c)) {
+			waiting_floatwin_lookupcmd_seq = c->seq;
+			oStarDictClient.send_commands(1, c);
+		}
+	}
+	return found;
+}
+
+bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
+{
 	if (sWord==NULL || sWord[0]=='\0')
-		return true;
+		return false;
 	char *SearchWord = g_strdup(sWord);
 	char *P1 = SearchWord + BeginPos;
 	P1 = g_utf8_next_char(P1);

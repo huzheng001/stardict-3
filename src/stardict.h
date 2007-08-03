@@ -72,6 +72,9 @@ private:
 	void on_change_scan(bool val);
 	void on_maximize();
 	void on_middle_button_click();
+#ifdef _WIN32
+	bool LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
+#endif
 public:
 	CurrentIndex *iCurrentIndex;
 	unsigned int waiting_mainwin_lookupcmd_seq;
