@@ -24,6 +24,9 @@ enum TextWinQueryResult
 	TEXT_WIN_TIPS, // when the word entry is empty,it will show tip
 	TEXT_WIN_INFO,
 	TEXT_WIN_TREEDICT,
+	TEXT_WIN_NET_FOUND,
+	TEXT_WIN_NET_NOT_FOUND,
+	TEXT_WIN_NET_SHOW_FIRST,
 };
 
 enum ListWinListWordType {
@@ -180,7 +183,6 @@ public:
 	void Create(GtkWidget *hbox, bool has_treedict);
 	void UpdateChooseGroup();
 private:
-	GtkWidget *choosegroup_button;
 	GtkWidget *choosegroup_menu;
 	static void on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
@@ -189,6 +191,7 @@ private:
 	static void PreviousCallback(GtkWidget *widget, LeftWin *oLeftWin);
 	static void NextCallback(GtkWidget *widget, LeftWin *oLeftWin);
 	static void on_choose_group_button_clicked(GtkWidget *widget, LeftWin *oLeftWin);
+	static void on_enable_netdict_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin);
 	static void on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin);
 };
 

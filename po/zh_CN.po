@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-02 18:55+0800\n"
+"POT-Creation-Date: 2007-08-06 09:25+0800\n"
 "PO-Revision-Date: 2003-03-14 16:44+0800\n"
 "Last-Translator: Hu Zheng <huzheng_001@163.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -30,7 +30,7 @@ msgstr "查询单词"
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:31
 #: ../src/docklet.cpp:199 ../src/mainwin.cpp:469 ../src/splash.cpp:84
-#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2291
+#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2304
 #: ../src/win32/systray.cpp:216 ../src/win32/systray.cpp:264
 msgid "StarDict"
 msgstr "星际译王"
@@ -348,7 +348,7 @@ msgid "Unkown data type, please upgrade StarDict!"
 msgstr "未知数据类型，请升级星际译王！"
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57
+#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1786
 msgid "dict.stardict.org"
 msgstr "dict.stardict.cn"
 
@@ -426,7 +426,7 @@ msgstr "你只能选择%d个词典。"
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:782
 #: ../src/dictmanagedlg.cpp:882 ../src/dictmanagedlg.cpp:953
 #: ../src/dictmanagedlg.cpp:1371 ../src/dictmanagedlg.cpp:2129
-#: ../src/stardict.cpp:1051
+#: ../src/stardict.cpp:1064
 msgid "Dictionary Name"
 msgstr "词典名称"
 
@@ -1181,7 +1181,7 @@ msgstr "搜索网站"
 msgid "Settings"
 msgstr "设置"
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2309
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2322
 msgid "Dictionary"
 msgstr "词典"
 
@@ -1477,9 +1477,9 @@ msgstr "真人语音库"
 msgid "Command TTS"
 msgstr "TTS命令"
 
-#: ../src/selection.cpp:195 ../src/stardict.cpp:638 ../src/stardict.cpp:769
-#: ../src/stardict.cpp:930 ../src/stardict.cpp:944 ../src/stardict.cpp:949
-#: ../src/stardict.cpp:954 ../src/stardict.cpp:1354 ../src/stardict.cpp:1471
+#: ../src/selection.cpp:195 ../src/stardict.cpp:638 ../src/stardict.cpp:782
+#: ../src/stardict.cpp:943 ../src/stardict.cpp:957 ../src/stardict.cpp:962
+#: ../src/stardict.cpp:967 ../src/stardict.cpp:1367 ../src/stardict.cpp:1484
 #: ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr "<没有找到！>"
@@ -1500,59 +1500,59 @@ msgstr "开启一个新的星际译王进程"
 msgid "Quit an existing instance of stardict"
 msgstr "使运行中的 StarDict 进程退出"
 
-#: ../src/stardict.cpp:1019
+#: ../src/stardict.cpp:1032
 msgid "Full-text Search"
 msgstr "全文检索"
 
-#: ../src/stardict.cpp:1046
+#: ../src/stardict.cpp:1059
 msgid "Search"
 msgstr "搜索"
 
-#: ../src/stardict.cpp:1103 ../src/stardict.cpp:1448
+#: ../src/stardict.cpp:1116 ../src/stardict.cpp:1461
 msgid "Full-text search..."
 msgstr "全文检索..."
 
-#: ../src/stardict.cpp:1130
+#: ../src/stardict.cpp:1143
 msgid "There are no dictionary's article with such word :-("
 msgstr "没有词典的释义里包含这个单词 :-("
 
-#: ../src/stardict.cpp:1166
+#: ../src/stardict.cpp:1179
 msgid "There are too many spelling errors :-("
 msgstr "拼写错误太多了 :-("
 
-#: ../src/stardict.cpp:1225
+#: ../src/stardict.cpp:1238
 msgid "Fuzzy query failed, too :-("
 msgstr "模糊查询也失败了 :-("
 
-#: ../src/stardict.cpp:1253
+#: ../src/stardict.cpp:1266
 msgid "Found no words matching this pattern!"
 msgstr "未找到任何符合此规则匹配的单词！"
 
-#: ../src/stardict.cpp:1440
+#: ../src/stardict.cpp:1453
 msgid "Press Enter to list the words that match the pattern."
 msgstr "按回车键将列出符合规则的单词。"
 
-#: ../src/stardict.cpp:1444
+#: ../src/stardict.cpp:1457
 msgid "Fuzzy query..."
 msgstr "模糊查询..."
 
-#: ../src/stardict.cpp:1692 ../src/stardict.cpp:1797
+#: ../src/stardict.cpp:1705 ../src/stardict.cpp:1810
 msgid "Not found!\n"
 msgstr "没有找到！\n"
 
-#: ../src/stardict.cpp:1793
+#: ../src/stardict.cpp:1806
 msgid "Convert error!\n"
 msgstr "编码转换出错！\n"
 
-#: ../src/stardict.cpp:2141
+#: ../src/stardict.cpp:2154
 msgid "StarDict is already running. Using the running process."
 msgstr "星际译王已经运行，使用现有进程。"
 
-#: ../src/stardict.cpp:2274
+#: ../src/stardict.cpp:2287
 msgid "- Lookup words"
 msgstr "- 查询单词"
 
-#: ../src/stardict.cpp:2279
+#: ../src/stardict.cpp:2292
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "参数解析失败：%s\n"
@@ -1562,10 +1562,10 @@ msgstr "参数解析失败：%s\n"
 msgid "Can not load image. %s"
 msgstr "不能加载图片。%s"
 
-#: ../src/lib/stardict_client.cpp:1059
+#: ../src/lib/stardict_client.cpp:1067
 msgid ""
-"You haven't choose any dictionaries, please choose some by click \"Dict Manage"
-"\"->\"Network dictionaries\"->\"Add\"."
+"You haven't choose any dictionaries, please choose some by click \"Dict "
+"Manage\"->\"Network dictionaries\"->\"Add\"."
 msgstr "你未选择任何词典，请点击“词典管理”->“网络词典”->“添加”来选择一些词典。"
 
 #: ../src/lib/stddict.cpp:642

@@ -643,17 +643,17 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 }
 
 #ifdef _WIN32
-bool AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
+void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
 {
-	bool found = LocalSmartLookupToFloat(sWord, BeginPos, bShowIfNotFound);
-	if (conf->get_bool_at("network/enable_netdict")) {
+	LocalSmartLookupToFloat(sWord, BeginPos, bShowIfNotFound);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
 		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SMART_QUERY, sWord, BeginPos);
 		if (!oStarDictClient.try_cache(c)) {
 			waiting_floatwin_lookupcmd_seq = c->seq;
 			oStarDictClient.send_commands(1, c);
 		}
 	}
-	return found;
 }
 
 bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
@@ -1320,7 +1320,11 @@ void AppCore::ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTree
 
 void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextWinQueryResult query_result)
 {
-	oMidWin.oTextWin.Show(sReason);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+	} else {
+		oMidWin.oTextWin.Show(sReason);
+	}
 	oMidWin.oTextWin.query_result = query_result;
 	oMidWin.oTextWin.queryWord = sWord;
 
@@ -1341,6 +1345,9 @@ void AppCore::TopWinEnterWord(const gchar *text)
 {
 	if (text[0]=='\0')
 		return;
+	oTopWin.select_region_in_text(0, -1);
+	oTopWin.InsertHisList(text);
+	oTopWin.InsertBackList();
 	std::string res;
 	switch (analyse_query(text, res)) {
 	case qtFUZZY:
@@ -1368,17 +1375,25 @@ void AppCore::TopWinEnterWord(const gchar *text)
 					}
 				}
 				ListWords(iCurrentIndex);
-				oTopWin.select_region_in_text(0, -1);
-				oTopWin.InsertHisList(text);
-				oTopWin.InsertBackList();
-				return;
+				break;
 			}
 		}
 		switch (oMidWin.oTextWin.query_result) {
 		case TEXT_WIN_NOT_FOUND:
 		case TEXT_WIN_SHOW_FIRST:
+		case TEXT_WIN_NET_NOT_FOUND:
+		case TEXT_WIN_NET_SHOW_FIRST:
 			LookupWithFuzzyToMainWin(res.c_str());
-			break;
+			if (conf->get_bool_at("network/enable_netdict")) {
+				std::string word = "/";
+				word += res;
+				STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
+				if (!oStarDictClient.try_cache(c)) {
+					waiting_mainwin_lookupcmd_seq = c->seq;
+					oStarDictClient.send_commands(1, c);
+				}
+			}
+			return;
 		case TEXT_WIN_INFO:
 		case TEXT_WIN_TREEDICT:
 		{
@@ -1404,11 +1419,14 @@ void AppCore::TopWinEnterWord(const gchar *text)
 				gtk_tree_view_scroll_to_cell(oMidWin.oIndexWin.oListWin.treeview_,
 							     path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
-			} else
+				return;
+			} else {
 				SimpleLookupToTextWin(res.c_str(), iCurrentIndex, res.c_str(), false); //text 's index is already cached.
+			}
 			break;
 		}
 		case TEXT_WIN_FOUND:
+		case TEXT_WIN_NET_FOUND:
 			if (oMidWin.oTextWin.queryWord != res) {
 				//user have selected some other word in the list,now select the first word again.
 				GtkTreePath* path = gtk_tree_path_new_first();
@@ -1426,23 +1444,18 @@ void AppCore::TopWinEnterWord(const gchar *text)
 				if (GTK_WIDGET_SENSITIVE(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton)))
 					oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 			}
-			break;
+			return;
 		default:
 			/*nothing*/break;
 		}//switch (oMidWin.oTextWin.query_result) {
 	}
-    if (conf->get_bool_at("network/enable_netdict")) {
-        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
-        if (!oStarDictClient.try_cache(c)) {
-	    waiting_mainwin_lookupcmd_seq = c->seq;
-            oStarDictClient.send_commands(1, c);
+	if (conf->get_bool_at("network/enable_netdict")) {
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
+		if (!oStarDictClient.try_cache(c)) {
+			waiting_mainwin_lookupcmd_seq = c->seq;
+			oStarDictClient.send_commands(1, c);
+		}
 	}
-    }
-
-	//when TEXT_WIN_TIPS,the text[0]=='\0',already returned.
-	oTopWin.select_region_in_text(0, -1);
-	oTopWin.InsertHisList(text);
-	oTopWin.InsertBackList();
 }
 
 void AppCore::TopWinWordChange(const gchar* sWord)
@@ -1486,15 +1499,16 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 	}
 	app->ListWords(app->iCurrentIndex);
 
-    if (conf->get_bool_at("network/enable_netdict")) {
-        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
-        if (!app->oStarDictClient.try_cache(c)) {
-    	    app->waiting_mainwin_lookupcmd_seq = c->seq;
-            app->oStarDictClient.send_commands(1, c);
-        }
-    }
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, app->delayed_word_.c_str());
+		if (!app->oStarDictClient.try_cache(c)) {
+			app->waiting_mainwin_lookupcmd_seq = c->seq;
+			app->oStarDictClient.send_commands(1, c);
+		}
+	}
 
-    app->word_change_timeout_id = 0;//next line destroy timer
+	app->word_change_timeout_id = 0;//next line destroy timer
 	return FALSE;
 }
 

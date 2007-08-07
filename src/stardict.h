@@ -125,7 +125,7 @@ public:
 	void FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***pppWord, gchar ****ppppWordData);
 	bool SimpleLookupToFloat(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
-	bool SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
+	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
 #endif
 	bool SimpleLookupToTextWin(const gchar* sWord, CurrentIndex* piIndex, const gchar *piIndexValidStr = NULL, bool bTryMoreIfNotFound = false, bool bShowNotfound = true, bool isShowFirst = false);
 	void LookupDataToMainWin(const gchar *sWord);

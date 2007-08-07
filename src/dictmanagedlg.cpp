@@ -2137,6 +2137,7 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
 	gtk_label_set_markup(GTK_LABEL(label), markup);
 	g_free (markup);
 	gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),label,false,false,6);
 	if (!Data->dictinfo_download.empty()) {
 		GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
