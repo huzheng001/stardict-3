@@ -889,7 +889,7 @@ int StarDictClient::parse_command_auth(gchar *line)
     int status;
     status = atoi(line);
     if (status != CODE_OK) {
-        gchar *str = g_strdup_printf("Auth denied: %s", line);
+        gchar *str = g_strdup_printf(_("Authentication denied: %s"), line);
         on_error_.emit(str);
         g_free(str);
         return 0;
@@ -902,12 +902,12 @@ int StarDictClient::parse_command_register(gchar *line)
     int status;
     status = atoi(line);
     if (status != CODE_OK) {
-        gchar *str = g_strdup_printf("Register failed: %s", line);
+        gchar *str = g_strdup_printf(_("Register failed: %s"), line);
         on_error_.emit(str);
         g_free(str);
         return 0;
     }
-    on_register_end_.emit("Register success!");
+    on_register_end_.emit(_("Register success!"));
     return 1;
 }
 
@@ -941,10 +941,8 @@ int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
         int status;
         status = atoi(buf);
         if (status != CODE_OK) {
-            gchar *str = g_strdup_printf("Get dict mask failed: %s", buf);
 	    g_free(buf);
-            on_error_.emit(str);
-            g_free(str);
+            on_error_.emit(_("You haven't setup the account. Please open the \"Net Dict\" page in the Preferences dialog and register an account first."));
             return 0;
         }
 	g_free(buf);

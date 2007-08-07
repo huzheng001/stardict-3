@@ -106,10 +106,13 @@ void PangoWidgetBase::end_update()
 
 void PangoWidgetBase::append_text(const char *str)
 {
-	if (update_)
-		cache_ += str;
-	else
+	if (update_) {
+		gchar *mark = g_markup_escape_text(str, -1);
+		cache_ += mark;
+		g_free(mark);
+	} else {
 		do_append_text(str);
+	}
 }
 
 void PangoWidgetBase::append_pango_text(const char *str)
@@ -257,10 +260,13 @@ void LabelPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
 
 void PangoWidgetBase::set_text(const char *str)
 {
-	if (update_)
-		cache_ = str;
-	else
+	if (update_) {
+		gchar *mark = g_markup_escape_text(str, -1);
+		cache_ = mark;
+		g_free(mark);
+	} else {
 		do_set_text(str);
+	}
 }
 
 void TextPangoWidget::do_append_text(const char *str)

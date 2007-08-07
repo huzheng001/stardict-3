@@ -246,7 +246,8 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 	if (text[0]=='\0')
 		return;
 	std::string res;
-	switch (analyse_query(text, res)) {
+	query_t qt = analyse_query(text, res);
+	switch (qt) {
 	case qtFUZZY:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
 		break;
@@ -254,10 +255,25 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 		gpAppFrame->LookupWithRuleToMainWin(res.c_str());
 		break;
 	case qtDATA:
-                gpAppFrame->LookupDataToMainWin(res.c_str());
+               	gpAppFrame->LookupDataToMainWin(res.c_str());
                 break;
 	default:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
+	}
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		std::string word;
+		if (qt == qtSIMPLE) {
+			word = "/";
+			word += res;
+		} else {
+			word = text;
+		}
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
+		if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+			gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+			gpAppFrame->oStarDictClient.send_commands(1, c);
+		}
 	}
 
 	oTopWin->TextSelectAll();
@@ -919,7 +935,8 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 		gchar *word;
 		gtk_tree_model_get (model, &iter, 0, &word, -1);
 		gpAppFrame->SimpleLookupToTextWin(word, NULL);
-		if (conf->get_bool_at("network/enable_netdict")) {
+		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+		if (enable_netdict) {
 			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DEFINE, word);
 			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
 				gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
@@ -1151,7 +1168,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 	}
 
-	choosegroup_button=gtk_button_new();
+	GtkWidget *choosegroup_button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(choosegroup_button),gtk_image_new_from_stock(GTK_STOCK_CONVERT,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(choosegroup_button);
 	gtk_button_set_relief (GTK_BUTTON (choosegroup_button), GTK_RELIEF_NONE);
@@ -1229,31 +1246,37 @@ void LeftWin::NextCallback(GtkWidget *widget, LeftWin *oLeftWin)
 
 void LeftWin::UpdateChooseGroup()
 {
+	if (choosegroup_menu)
+		gtk_widget_destroy(choosegroup_menu);
+	choosegroup_menu = gtk_menu_new();
+	GtkWidget *menuitem;
+	menuitem = gtk_check_menu_item_new_with_label(_("Enable Net Dict"));
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), conf->get_bool_at("network/enable_netdict"));
+	g_signal_connect(G_OBJECT(menuitem), "toggled", G_CALLBACK(on_enable_netdict_menuitem_toggled), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(choosegroup_menu), menuitem);
+	menuitem = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(choosegroup_menu), menuitem);
 	std::list<std::string> group_list;
 	for (std::list<DictManageGroup>::iterator i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
 		group_list.push_back(i->name);
 	}
-	if (group_list.size() > 1) {
-		gtk_widget_show(choosegroup_button);
-		if (choosegroup_menu)
-			gtk_widget_destroy(choosegroup_menu);
-		choosegroup_menu = gtk_menu_new();
-		GtkWidget *menuitem;
-		GSList *group = NULL;
-		for (std::list<std::string>::iterator i = group_list.begin(); i != group_list.end(); ++i) {
-			menuitem = gtk_radio_menu_item_new_with_label(group, i->c_str());
-			g_object_set_data_full(G_OBJECT(menuitem), "stardict_dict_group", g_strdup(i->c_str()), g_free);
-			g_signal_connect(G_OBJECT(menuitem), "toggled", G_CALLBACK(on_choose_group_menuitem_toggled), this);
-			gtk_menu_shell_append(GTK_MENU_SHELL(choosegroup_menu), menuitem);
-			group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menuitem));
-			if (*i == gpAppFrame->dictinfo.active_group) {
-				gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem), TRUE);
-			}
+	GSList *group = NULL;
+	for (std::list<std::string>::iterator i = group_list.begin(); i != group_list.end(); ++i) {
+		menuitem = gtk_radio_menu_item_new_with_label(group, i->c_str());
+		g_object_set_data_full(G_OBJECT(menuitem), "stardict_dict_group", g_strdup(i->c_str()), g_free);
+		g_signal_connect(G_OBJECT(menuitem), "toggled", G_CALLBACK(on_choose_group_menuitem_toggled), this);
+		gtk_menu_shell_append(GTK_MENU_SHELL(choosegroup_menu), menuitem);
+		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (menuitem));
+		if (*i == gpAppFrame->dictinfo.active_group) {
+			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem), TRUE);
 		}
-		gtk_widget_show_all(choosegroup_menu);
-	} else {
-		gtk_widget_hide(choosegroup_button);
 	}
+	gtk_widget_show_all(choosegroup_menu);
+}
+
+void LeftWin::on_enable_netdict_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin)
+{
+	conf->set_bool_at("network/enable_netdict", gtk_check_menu_item_get_active(menuitem));
 }
 
 void LeftWin::on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin)
@@ -1754,44 +1777,49 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 
 void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_response)
 {
-    view->begin_update();
-    if (query_result == TEXT_WIN_FOUND) {
-        view->goto_end();
-    } else if (query_result == TEXT_WIN_SHOW_FIRST) {
-        view->goto_end();
-        if (dict_response->oword == queryWord)
-            query_result = TEXT_WIN_FOUND;
-    } else {
-        if (!dict_response->dict_result_list.empty()) {
-    	    view->clear();
-            if (dict_response->oword == queryWord)
-                query_result = TEXT_WIN_FOUND;
-            else
-                query_result = TEXT_WIN_SHOW_FIRST;
-        }
-	    view->goto_begin();
-    }
-    InstantDictIndex dict_index;
-    dict_index.type = InstantDictType_UNKNOWN;
-    view->SetDictIndex(dict_index);
-    for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-        gchar *mark = g_strdup_printf("%d", view->bookindex);
-        gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast((*i)->bookname, mark);
-        g_free(mark);
-        view->AppendHeader((*i)->bookname);
-        for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
-            view->AppendWord((*j)->word);
-            std::list<char *>::iterator k = (*j)->datalist.begin();
-            view->AppendData(*k, (*j)->word, dict_response->oword);
-            view->AppendNewline();
-            for (++k; k != (*j)->datalist.end(); ++k) {
-                view->AppendDataSeparate();
-                view->AppendData(*k, (*j)->word, dict_response->oword);
-                view->AppendNewline();
-            }
-        }
-    }
-    view->end_update();
+	view->begin_update();
+	bool do_append;
+	if (query_result == TEXT_WIN_FOUND || query_result == TEXT_WIN_SHOW_FIRST) {
+		do_append = true;
+		view->goto_end();
+	} else {
+		do_append = false;
+		view->clear();
+		view->goto_begin();
+	}
+	if (dict_response->dict_result_list.empty()) {
+		query_result = TEXT_WIN_NET_NOT_FOUND;
+		if (!do_append) {
+			Show(_("<Not Found!>"));
+		}
+	} else {
+		if (dict_response->oword == queryWord) {
+			query_result = TEXT_WIN_NET_FOUND;
+		} else {
+			query_result = TEXT_WIN_NET_SHOW_FIRST;
+		}
+		InstantDictIndex dict_index;
+		dict_index.type = InstantDictType_UNKNOWN;
+		view->SetDictIndex(dict_index);
+		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+			gchar *mark = g_strdup_printf("%d", view->bookindex);
+			gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast((*i)->bookname, mark);
+			g_free(mark);
+			view->AppendHeader((*i)->bookname);
+			for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
+				view->AppendWord((*j)->word);
+				std::list<char *>::iterator k = (*j)->datalist.begin();
+				view->AppendData(*k, (*j)->word, dict_response->oword);
+				view->AppendNewline();
+				for (++k; k != (*j)->datalist.end(); ++k) {
+					view->AppendDataSeparate();
+					view->AppendData(*k, (*j)->word, dict_response->oword);
+					view->AppendNewline();
+				}
+			}
+		}
+	}
+	view->end_update();
 }
 
 void TextWin::ShowTreeDictData(gchar *data)

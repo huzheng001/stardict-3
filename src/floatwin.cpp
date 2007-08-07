@@ -276,39 +276,66 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 
 void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response)
 {
-	QueryingWord = dict_response->oword;
-	found_result = FLOAT_WIN_FOUND;
 	view->begin_update();
-	view->clear();
-	std::string mark = "<b><span size=\"x-large\">";
-	gchar *m_str = g_markup_escape_text(dict_response->oword, -1);
-	mark += m_str;
-	g_free(m_str);
-	mark += "</span></b>";
-	view->append_pango_text(mark.c_str());
-	InstantDictIndex dict_index;
-	dict_index.type = InstantDictType_UNKNOWN;
-	view->SetDictIndex(dict_index);
-    for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-        view->AppendNewline();
-        view->AppendHeader((*i)->bookname);
-        for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
-            if (j == (*i)->word_result_list.begin()) {
-                if (strcmp((*j)->word, dict_response->oword))
-                    view->AppendWord((*j)->word);
-            } else {
-                view->AppendNewline();
-                view->AppendWord((*j)->word);
-            }
-            std::list<char *>::iterator k = (*j)->datalist.begin();
-            view->AppendData(*k, (*j)->word, dict_response->oword);
-            for (++k; k != (*j)->datalist.end(); ++k) {
-                view->AppendNewline();
-                view->AppendDataSeparate();
-                view->AppendData(*k, (*j)->word, dict_response->oword);
-            }
-        }
-    }
+	bool do_append;
+	if (found_result == FLOAT_WIN_FOUND) {
+		do_append = true;
+		view->goto_end();
+	} else {
+		do_append = false;
+		view->clear();
+		view->goto_begin();
+	}
+	if (dict_response->dict_result_list.empty()) {
+		found_result = FLOAT_WIN_NET_NOT_FOUND;
+		if (do_append || !conf->get_bool_at("floating_window/show_if_not_found")) {
+			view->end_update();
+			return;
+		}
+		gchar *text;
+		gchar *m_word,*m_reason;
+		m_word = g_markup_escape_text(dict_response->oword,-1);
+		m_reason = g_markup_escape_text(_("<Not Found!>"),-1);
+		text = g_strdup_printf("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>",m_word,m_reason);
+		view->set_pango_text(text);
+		g_free(text);
+		g_free(m_word);
+		g_free(m_reason);
+	} else {
+		found_result = FLOAT_WIN_NET_FOUND;
+		if (!do_append) {
+			std::string mark = "<b><span size=\"x-large\">";
+			gchar *m_str = g_markup_escape_text(dict_response->oword, -1);
+			mark += m_str;
+			g_free(m_str);
+			mark += "</span></b>";
+			view->append_pango_text(mark.c_str());
+		}
+		InstantDictIndex dict_index;
+		dict_index.type = InstantDictType_UNKNOWN;
+		view->SetDictIndex(dict_index);
+		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+			view->AppendNewline();
+			view->AppendHeader((*i)->bookname);
+			for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
+				if (j == (*i)->word_result_list.begin()) {
+					if (strcmp((*j)->word, dict_response->oword)) {
+						view->AppendWord((*j)->word);
+					}
+				} else {
+					view->AppendNewline();
+					view->AppendWord((*j)->word);
+				}
+				std::list<char *>::iterator k = (*j)->datalist.begin();
+				view->AppendData(*k, (*j)->word, dict_response->oword);
+				for (++k; k != (*j)->datalist.end(); ++k) {
+					view->AppendNewline();
+					view->AppendDataSeparate();
+					view->AppendData(*k, (*j)->word, dict_response->oword);
+				}
+			}
+		}
+	}
 	view->end_update();
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(dict_response->oword);
@@ -318,19 +345,19 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
 		else
 			PronounceWord = dict_response->oword;
 	} else {
-        for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-            std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin();
-            if (j != (*i)->word_result_list.end() && strcmp((*j)->word, dict_response->oword)) {
-		readwordtype = gpAppFrame->oReadWord.canRead((*j)->word);
-                if (readwordtype != READWORD_CANNOT) {
-                    if (PronounceWord == (*j)->word)
-                        pronounced = true;
-                    else
-                        PronounceWord = (*j)->word;
-                }
-                break;
-            }
-        }
+		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+			std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin();
+			if (j != (*i)->word_result_list.end() && strcmp((*j)->word, dict_response->oword)) {
+				readwordtype = gpAppFrame->oReadWord.canRead((*j)->word);
+				if (readwordtype != READWORD_CANNOT) {
+					if (PronounceWord == (*j)->word)
+						pronounced = true;
+					else
+						PronounceWord = (*j)->word;
+				}
+				break;
+			}
+		}
 	}
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
@@ -446,6 +473,9 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 	else
 		found_result = FLOAT_WIN_NOT_FOUND;
 
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict)
+		return;
 	if (!conf->get_bool_at("floating_window/show_if_not_found"))
 		return;
 
@@ -455,6 +485,9 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 	m_reason = g_markup_escape_text(sReason,-1);
 	text = g_strdup_printf("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>",m_word,m_reason);
 	view->set_pango_text(text);
+	g_free(text);
+	g_free(m_word);
+	g_free(m_reason);
 	
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
@@ -470,9 +503,6 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 		Popup(false);
 	else
 		Popup(true);
-	g_free(text);
-	g_free(m_word);
-	g_free(m_reason);
 
 	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
