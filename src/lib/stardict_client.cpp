@@ -121,7 +121,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
-		this->data = g_strdup_printf("lookup %s\n", earg.c_str());
+		this->data = g_strdup_printf("lookup %s 30\n", earg.c_str());
 		this->lookup_response = NULL;
 		break;
 	}
@@ -129,7 +129,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
-		this->data = g_strdup_printf("previous %s\n", earg.c_str());
+		this->data = g_strdup_printf("previous %s 15\n", earg.c_str());
         this->wordlist_response = NULL;
 		break;
 	}
@@ -137,8 +137,8 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	{
 		std::string earg;
 		arg_escape(earg, va_arg( ap, const char * ));
-		this->data = g_strdup_printf("next %s\n", earg.c_str());
-        this->wordlist_response = NULL;
+		this->data = g_strdup_printf("next %s 30\n", earg.c_str());
+		this->wordlist_response = NULL;
 		break;
 	}
 	/*case CMD_QUERY:
@@ -1135,7 +1135,12 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             cmd->lookup_response->wordtree = new std::list<STARDICT::LookupResponse::WordTreeElement *>;
         } else {
             cmd->reading_status = 7;
-            cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_List;
+            if (strcmp(buf, "r") == 0)
+                cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Rule_List;
+            else if (strcmp(buf, "f") == 0)
+                cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Fuzzy_List;
+            else 
+                cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_List;
             cmd->lookup_response->wordlist = new std::list<char *>;
         }
         g_free(buf);

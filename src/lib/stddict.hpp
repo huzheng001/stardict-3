@@ -19,6 +19,7 @@ const int MAX_MATCH_ITEM_PER_LIB=100;
 
 extern gint stardict_casecmp(const gchar *s1, const gchar *s2, bool isClt, CollateFunctions func);
 extern bool bIsPureEnglish(const gchar *str);
+extern gint stardict_server_collate(const gchar *str1, const gchar *str2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc);
 
 class show_progress_t {
 public:
@@ -197,6 +198,8 @@ struct CurrentIndex {
 class Libs {
 public:
 	static show_progress_t default_show_progress;
+	int EnableCollationLevel;
+	CollateFunctions CollateFunction;
 
 	Libs(show_progress_t *sp, bool create, int enablelevel, int function);
 	~Libs();
@@ -288,8 +291,6 @@ private:
 	int iMaxFuzzyDistance;
 	show_progress_t *show_progress;
 	bool CreateCacheFile;
-	int EnableCollationLevel;
-	CollateFunctions CollateFunction;
 
 #ifdef SD_SERVER_CODE
 	struct DictInfoItem;

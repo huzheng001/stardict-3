@@ -216,17 +216,16 @@ static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
 
 static void configure()
 {
-	g_print("Advertisement configure.\n");
 }
 
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Advertisement plugin version doesn't match!\n");
+		g_print("Error: User dict plugin version doesn't match!\n");
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Advertisement"), _("Advertisement virtual dictionary."), _("Show advertisement dictionary."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("User Dict"), _("User virtual dictionary."), _("Show the user dictionary."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 
@@ -241,13 +240,13 @@ DLLIMPORT void stardict_plugin_exit(void)
 DLLIMPORT bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->dict_name = _("Advertisement");
+	obj->dict_name = _("User Dict");
 	datapath = plugin_info->datadir;
 	datapath += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement";
 	bool failed = load_dict((datapath + G_DIR_SEPARATOR_S "advertisement.txt").c_str());
 	if (failed)
 		return true;
-	g_print(_("Advertisement plug-in loaded.\n"));
+	g_print(_("User dict plug-in loaded.\n"));
 	return false;
 }
 

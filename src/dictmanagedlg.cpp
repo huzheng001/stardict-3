@@ -387,8 +387,9 @@ void DictManageDlg::on_wazard_button_toggled(GtkToggleButton *button, DictManage
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 0);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
-        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Visit http://stardict.sourceforge.net to download dictionaries!"));
-        gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
+		gtk_widget_show(oDictManageDlg->download_hbox);
+		gtk_widget_hide(oDictManageDlg->info_label);
+        	gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
     }
 }
 
@@ -397,7 +398,8 @@ void DictManageDlg::on_manage_button_toggled(GtkToggleButton *button, DictManage
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 1);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 1);
-		gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Visit http://stardict.sourceforge.net to download dictionaries!"));
+		gtk_widget_show(oDictManageDlg->download_hbox);
+		gtk_widget_hide(oDictManageDlg->info_label);
 		gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
     }
 }
@@ -407,8 +409,10 @@ void DictManageDlg::on_appendix_button_toggled(GtkToggleButton *button, DictMana
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 2);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 0);
-        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("These settings will take effect the next time you run StarDict."));
-        gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
+	        gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("These settings will take effect the next time you run StarDict."));
+		gtk_widget_show(oDictManageDlg->info_label);
+		gtk_widget_hide(oDictManageDlg->download_hbox);
+        	gtk_widget_hide(oDictManageDlg->upgrade_eventbox);
     }
 }
 
@@ -417,18 +421,20 @@ void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManag
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->notebook), 3);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(oDictManageDlg->button_notebook), 2);
-        if (oDictManageDlg->max_dict_count == -1) {
-            gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Loading..."));
-    	    STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
-            STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
-            gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
-        } else {
-            gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), oDictManageDlg->max_dict_count);
-            gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), str);
-            g_free(str);
-        }
-        gtk_widget_show(oDictManageDlg->upgrade_eventbox);
-    }
+		if (oDictManageDlg->max_dict_count == -1) {
+			gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Loading..."));
+			STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
+			STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
+			gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
+		} else {
+			gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), oDictManageDlg->max_dict_count);
+			gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), str);
+			g_free(str);
+		}
+		gtk_widget_show(oDictManageDlg->info_label);
+		gtk_widget_hide(oDictManageDlg->download_hbox);
+		gtk_widget_show(oDictManageDlg->upgrade_eventbox);
+	}
 }
 
 static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter, std::list<DictManageItem> &dictitem, bool is_query)
@@ -1808,9 +1814,14 @@ GtkWidget *DictManageDlg::create_network_buttons()
 	return vbox;
 }
 
+void DictManageDlg::on_download_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
+{
+	show_url("http://stardict.sourceforge.net");
+}
+
 void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
-    show_url("http://www.stardict.org/finance.php");
+	show_url("http://www.stardict.org/finance.php");
 }
 
 bool DictManageDlg::Show(bool &dictmanage_config_changed_)
@@ -1946,33 +1957,46 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		
 		hbox = gtk_hbox_new (FALSE, 6);
 		gtk_box_pack_start (GTK_BOX (vbox), hbox, false, false, 0);
-		info_label = gtk_label_new (_("Visit http://stardict.sourceforge.net to download dictionaries!"));
-		gtk_label_set_selectable(GTK_LABEL (info_label), TRUE);
+		download_hbox = gtk_hbox_new(FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (hbox), download_hbox, FALSE, FALSE, 0);
+		label = gtk_label_new(_("Visit "));
+		gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
+		label = gtk_label_new(NULL);
+		gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">http://stardict.sourceforge.net</span>");
+		GtkWidget *download_eventbox = gtk_event_box_new();
+		g_signal_connect(G_OBJECT(download_eventbox),"button-release-event", G_CALLBACK(on_download_eventbox_clicked), this);
+		gtk_container_add(GTK_CONTAINER(download_eventbox), label);
+		gtk_box_pack_start (GTK_BOX (download_hbox), download_eventbox, FALSE, FALSE, 0);
+		label = gtk_label_new(_(" to download dictionaries!"));
+		gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
+
+		info_label = gtk_label_new (NULL);
 		gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
 		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
 		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
 
-        label = gtk_label_new(NULL);
-	std::string mark = "<span foreground=\"blue\" underline=\"single\">";
-	mark += _("Upgrade Now!");
-	mark += "</span>";
-        gtk_label_set_markup(GTK_LABEL(label), mark.c_str());
-        upgrade_eventbox = gtk_event_box_new();
-        g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
-        gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);
-        gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
+		label = gtk_label_new(NULL);
+		std::string mark = "<span foreground=\"blue\" underline=\"single\">";
+		mark += _("Upgrade Now!");
+		mark += "</span>";
+		gtk_label_set_markup(GTK_LABEL(label), mark.c_str());
+		upgrade_eventbox = gtk_event_box_new();
+		g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
+		gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);
+		gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
 		
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox,
-												true, true, 0);
-		
-		
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, true, true, 0);
 		gtk_widget_show_all(GTK_DIALOG (window)->vbox);
 
-        gtk_widget_realize(upgrade_eventbox);
-        GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
-        gdk_window_set_cursor(upgrade_eventbox->window, cursor);
-        gdk_cursor_unref(cursor);
-        gtk_widget_hide(upgrade_eventbox);
+		GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
+		gtk_widget_realize(download_eventbox);
+		gdk_window_set_cursor(download_eventbox->window, cursor);
+		gtk_widget_realize(upgrade_eventbox);
+		gdk_window_set_cursor(upgrade_eventbox->window, cursor);
+		gdk_cursor_unref(cursor);
+
+		gtk_widget_hide(info_label);
+		gtk_widget_hide(upgrade_eventbox);
 	
 		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));	
 	}
@@ -2121,7 +2145,7 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
 {
     if (strcmp(element_name, "dictinfo")==0) {
         dictinfo_ParseUserData *Data = (dictinfo_ParseUserData *)user_data;
-	GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Dictionary Information"), Data->parent, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_OK, GTK_RESPONSE_NONE, NULL);
+	GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Dictionary Information"), Data->parent, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_CLOSE, GTK_RESPONSE_NONE, NULL);
 	GtkWidget *label = gtk_label_new(NULL);
 	char *markup;
 	markup = g_markup_printf_escaped (
@@ -2142,7 +2166,7 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
 	if (!Data->dictinfo_download.empty()) {
 		GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
 		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,6);
-		GtkWidget *button = gtk_button_new_with_label("Download Now!");
+		GtkWidget *button = gtk_button_new_with_label(_("Download Now!"));
 		g_object_set_data_full(G_OBJECT(button), "stardict_download", g_strdup(Data->dictinfo_download.c_str()), g_free);
 		g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_download_clicked), NULL);
 		gtk_box_pack_start(GTK_BOX(hbox),button,false,false,6);

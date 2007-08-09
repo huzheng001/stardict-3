@@ -124,6 +124,7 @@ private:
 
 public:
 	ListWinListWordType list_word_type;
+	std::string fuzzyWord;
 	GtkTreeView *treeview_;
 
 	ListWin() {}
@@ -136,6 +137,8 @@ public:
 	void InsertLast(const gchar *word);
 	void SetTreeModel(std::vector<gchar *> *reslist, std::vector<InstantDictIndex> &dictmask);
 	void SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *> *wordtree);
+	void MergeFuzzyList(std::list<char *> *wordlist);
+	void MergeWordList(std::list<char *> *wordlist);
 	bool treeview_has_focus() const {
 		return GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(treeview_));
 	}

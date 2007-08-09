@@ -138,7 +138,7 @@ public:
 	void ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextWinQueryResult query_result);
 	void ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboolean fuzzy);
 
-	void TopWinEnterWord(const gchar *text);
+	void TopWinEnterWord();
 	void TopWinWordChange(const gchar* sWord);
 	void ListWords(CurrentIndex* iStartIndex);
 	
