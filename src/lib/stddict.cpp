@@ -56,7 +56,7 @@ static gint stardict_collate(const gchar *str1, const gchar *str2, CollateFuncti
 		return x;
 }
 
-static gint stardict_server_collate(const gchar *str1, const gchar *str2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc)
+gint stardict_server_collate(const gchar *str1, const gchar *str2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc)
 {
 	if (EnableCollationLevel == 0)
 		return stardict_strcmp(str1, str2);
@@ -2874,7 +2874,7 @@ struct Fuzzystruct {
 	int iMatchWordDistance;
 };
 
-inline bool operator<(const Fuzzystruct & lh, const Fuzzystruct & rh) {
+static inline bool operator<(const Fuzzystruct & lh, const Fuzzystruct & rh) {
 	if (lh.iMatchWordDistance!=rh.iMatchWordDistance)
 		return lh.iMatchWordDistance<rh.iMatchWordDistance;
 
@@ -2998,7 +2998,7 @@ bool Libs::LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_si
 	return Found;
 }
 
-inline bool less_for_compare(const char *lh, const char *rh) {
+static inline bool less_for_compare(const char *lh, const char *rh) {
 	return stardict_strcmp(lh, rh)<0;
 }
 

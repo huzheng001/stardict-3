@@ -382,7 +382,6 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 
 static void configure()
 {
-	g_print("Gucharmap configure.\n");
 }
 
 bool stardict_plugin_init(StarDictPlugInObject *obj)

@@ -363,14 +363,15 @@ void AppCore::Create(gchar *queryword)
 		gdk_notify_startup_complete();
 	}
 
-	if (oLibs.has_dict()) {
+	if (oLibs.has_dict() || conf->get_bool_at("network/enable_netdict")) {
 		if (queryword) {
 			Query(queryword);
 		} else {
 			oMidWin.oTextWin.ShowTips();
 		}
-	} else
+	} else {
 		oMidWin.oTextWin.ShowInitFailed();
+	}
 }
 
 gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *app)
@@ -529,7 +530,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		}
 		else {
 			oAppCore->oTopWin.grab_focus();
-			oAppCore->TopWinEnterWord(oAppCore->oTopWin.get_text());
+			oAppCore->TopWinEnterWord();
 		}
 	}	else if (event->type==GDK_KEY_PRESS &&
 						 event->keyval == 0x20 &&
@@ -1086,6 +1087,19 @@ void LookupDataDialog::show()
 			have_next = gtk_tree_model_iter_next(model, &iter);
 		}
 		gtk_widget_destroy(dialog);
+		gpAppFrame->oMidWin.oIndexWin.oListWin.Clear();
+		gpAppFrame->oMidWin.oIndexWin.oListWin.SetModel(false);
+		gpAppFrame->oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
+		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+		if (enable_netdict) {
+			std::string lookupword = "|";
+			lookupword += word;
+			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, lookupword.c_str());
+			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+				gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+				gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
+		}
 		gpAppFrame->LookupDataWithDictMask(word.c_str(), dictmask);
 	} else {
 		gtk_widget_destroy(dialog);
@@ -1094,9 +1108,27 @@ void LookupDataDialog::show()
 
 void AppCore::LookupDataToMainWin(const gchar *sWord)
 {
-	LookupDataDialog *dialog = new LookupDataDialog(sWord);
-	dialog->show();
-	delete dialog;
+	if (query_dictmask.empty()) {
+		oMidWin.oIndexWin.oListWin.Clear();
+		oMidWin.oIndexWin.oListWin.SetModel(false);
+		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
+		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+		if (enable_netdict) {
+			std::string lookupword = "|";
+			lookupword += sWord;
+			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, lookupword.c_str());
+			if (!oStarDictClient.try_cache(c)) {
+				waiting_mainwin_lookupcmd_seq = c->seq;
+				oStarDictClient.send_commands(1, c);
+			}
+		} else {
+			ShowNotFoundToTextWin(sWord, _("There are no dictionary's article with such word :-("), TEXT_WIN_FUZZY_NOT_FOUND);
+		}
+	} else {
+		LookupDataDialog *dialog = new LookupDataDialog(sWord);
+		dialog->show();
+		delete dialog;
+	}
 }
 
 void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDictIndex> &dictmask)
@@ -1106,9 +1138,6 @@ void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDict
 	change_cursor busy(window->window,
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
-
-	oMidWin.oIndexWin.oListWin.Clear();
-	oMidWin.oIndexWin.oListWin.SetModel(false);
 
 	bool cancel = false;
 	FullTextSearchDialog Dialog;
@@ -1129,7 +1158,6 @@ void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDict
 	//clock_t t=clock();
 	std::vector< std::vector<gchar *> > reslist(dictmask.size());
 	if (oLibs.LookupData(sWord, &reslist[0], updateSearchDialog, &Dialog, &cancel, dictmask)) {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
 		for (size_t i=0; i<dictmask.size(); i++) {
 			if (!reslist[i].empty()) {
 				SimpleLookupToTextWin(reslist[i][0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
@@ -1139,7 +1167,6 @@ void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDict
 		oMidWin.oIndexWin.oListWin.SetTreeModel(&reslist[0], dictmask);
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
 		ShowNotFoundToTextWin(sWord, _("There are no dictionary's article with such word :-("), TEXT_WIN_FUZZY_NOT_FOUND);
 	}
 	//t=clock()-t;
@@ -1162,9 +1189,10 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 	// show
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
-	if (Found) {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_FUZZY_LIST;
+	oMidWin.oIndexWin.oListWin.fuzzyWord = sWord;
+	oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_FUZZY_LIST;
 
+	if (Found) {
 		//SimpleLookupToTextWin(oFuzzystruct[0].pMatchWord,NULL);
 		SimpleLookupToTextWin(fuzzy_reslist[0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
 
@@ -1175,7 +1203,6 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 		}
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
 		ShowNotFoundToTextWin(sWord,_("There are too many spelling errors :-("), TEXT_WIN_FUZZY_NOT_FOUND);
 	}
 }
@@ -1248,9 +1275,9 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, query_dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
-	if (iMatchCount) {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_PATTERN_LIST;
+	oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_PATTERN_LIST;
 
+	if (iMatchCount) {
 		for (gint i=0; i<iMatchCount; i++)
 			oMidWin.oIndexWin.oListWin.InsertLast(ppMatchWord[i]);
 		//memset(iCurrentIndex,'\0',sizeof(iCurrentIndex));    // iCurrentIndex is ineffective now.
@@ -1262,7 +1289,6 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 		for(gint i=0; i<iMatchCount; i++)
 			g_free(ppMatchWord[i]);
 	} else {
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
 		ShowNotFoundToTextWin(word,_("Found no words matching this pattern!"), TEXT_WIN_PATTERN_NOT_FOUND);
 	}
 	g_free(ppMatchWord);
@@ -1341,8 +1367,9 @@ void AppCore::ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboo
 	oFloatWin.ShowNotFound(sWord, sReason, fuzzy);
 }
 
-void AppCore::TopWinEnterWord(const gchar *text)
+void AppCore::TopWinEnterWord()
 {
+	const gchar *text = oTopWin.get_text();
 	if (text[0]=='\0')
 		return;
 	oTopWin.select_region_in_text(0, -1);
@@ -1358,7 +1385,7 @@ void AppCore::TopWinEnterWord(const gchar *text)
 		break;
 	case qtDATA:
 		LookupDataToMainWin(res.c_str());
-		break;
+		return;
 	default:
 		if (!conf->get_bool_at("main_window/search_while_typing")) {
 			if (oMidWin.oTextWin.queryWord != res) {
@@ -1518,6 +1545,7 @@ void AppCore::ListWords(CurrentIndex* iIndex)
 
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
+	oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
 
 	int iWordCount=0;
 	const gchar * poCurrentWord=oLibs.poGetCurrentWord(iCurrent, query_dictmask, 0);
@@ -1534,9 +1562,7 @@ void AppCore::ListWords(CurrentIndex* iIndex)
 
 	if (iWordCount) {
 		oMidWin.oIndexWin.oListWin.ReScroll();
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
-	} else
-		oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
+	}
 
 	g_free(iCurrent);
 }
@@ -1548,17 +1574,11 @@ void AppCore::Query(const gchar *word)
 	oTopWin.SetText(word);
 	std::string res;
 	switch (analyse_query(word, res)) {
-	case qtFUZZY:
-		LookupWithFuzzyToMainWin(res.c_str());
-		break;
-	case qtREGEXP:
-		LookupWithRuleToMainWin(res.c_str());
-		break;
-	case qtDATA:
-		LookupDataToMainWin(res.c_str());
+	case qtSIMPLE:
 		break;
 	default:
-		/*nothing?*/;
+		TopWinEnterWord();
+		break;
 	}
 
 	oTopWin.TextSelectAll();
@@ -1593,21 +1613,9 @@ void AppCore::on_stardict_client_error(const char *error_msg)
 
 void AppCore::on_stardict_client_register_end(const char *msg)
 {
-    GtkWindow *parent;
-    if (prefs_dlg && prefs_dlg->window)
-        parent = GTK_WINDOW(prefs_dlg->window);
-    else
-        parent = GTK_WINDOW(window);
-    GtkWidget *message_dlg =
-        gtk_message_dialog_new(
-                parent,
-                (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-                GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-                msg);
-    gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
-    gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
-    g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
-    gtk_widget_show(message_dlg);
+	if (prefs_dlg) {
+		prefs_dlg->on_register_end(msg);
+	}
 }
 
 void AppCore::on_stardict_client_getdictmask_end(const char *msg)
@@ -1657,27 +1665,20 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
     if (seq != 0 && waiting_mainwin_lookupcmd_seq != seq)
         return;
     oMidWin.oTextWin.Show(&(lookup_response->dict_response));
-    if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List) {
-        oMidWin.oIndexWin.oListWin.Clear();
-        oMidWin.oIndexWin.oListWin.SetModel(true);
-        if (!lookup_response->wordlist->empty()) {
-            for (std::list<char *>::const_iterator i = lookup_response->wordlist->begin(); i != lookup_response->wordlist->end(); ++i) {
-                oMidWin.oIndexWin.oListWin.InsertLast(*i);
-            }
-            oMidWin.oIndexWin.oListWin.ReScroll();
-            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_NORMAL_LIST;
-        } else {
-            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
-        }
+    if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List || lookup_response->listtype == STARDICT::LookupResponse::ListType_Rule_List) {
+	if (!lookup_response->wordlist->empty()) {
+		oMidWin.oIndexWin.oListWin.MergeWordList(lookup_response->wordlist);
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
+    } else if (lookup_response->listtype == STARDICT::LookupResponse::ListType_Fuzzy_List) {
+	if (!lookup_response->wordlist->empty()) {
+		oMidWin.oIndexWin.oListWin.MergeFuzzyList(lookup_response->wordlist);
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
     } else if (lookup_response->listtype == STARDICT::LookupResponse::ListType_Tree) {
-        oMidWin.oIndexWin.oListWin.Clear();
-        oMidWin.oIndexWin.oListWin.SetModel(false);
         if (!lookup_response->wordtree->empty()) {
             oMidWin.oIndexWin.oListWin.SetTreeModel(lookup_response->wordtree);
             oMidWin.oIndexWin.oListWin.ReScroll();
-            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_DATA_LIST;
-        } else {
-            oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_EMPTY;
         }
     }
 }

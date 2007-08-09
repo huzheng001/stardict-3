@@ -34,6 +34,8 @@
 #include "desktop.hpp"
 #include "stardict.h"
 #include "utils.h"
+#include "lib/distance.h"
+#include "lib/stddict.hpp"
 
 #include "mainwin.h"
 
@@ -172,7 +174,7 @@ void TopWin::on_entry_changed(GtkEntry *entry, TopWin *oTopWin)
 
 void TopWin::on_entry_activate(GtkEntry *entry, TopWin *oTopWin)
 {
-	gpAppFrame->TopWinEnterWord(gtk_entry_get_text(entry));
+	gpAppFrame->TopWinEnterWord();
 }
 
 gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin)
@@ -260,19 +262,21 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 	default:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
 	}
-	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
-	if (enable_netdict) {
-		std::string word;
-		if (qt == qtSIMPLE) {
-			word = "/";
-			word += res;
-		} else {
-			word = text;
-		}
-		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
-		if (!gpAppFrame->oStarDictClient.try_cache(c)) {
-			gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
-			gpAppFrame->oStarDictClient.send_commands(1, c);
+	if (qt != qtDATA) {
+		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+		if (enable_netdict) {
+			std::string word;
+			if (qt == qtSIMPLE) {
+				word = "/";
+				word += res;
+			} else {
+				word = text;
+			}
+			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
+			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+				gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+				gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
 		}
 	}
 
@@ -327,7 +331,7 @@ void TopWin::do_prev()
 	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
-				return; //this should never happen.
+				return;
 		}
 		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 		if (gtk_tree_path_prev(path)) {
@@ -362,7 +366,7 @@ void TopWin::do_prev()
 		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
-				return; //this should never happen.
+				return;
 		}
 		GtkTreePath* path = gtk_tree_model_get_path(model,&iter);
 		if (gtk_tree_path_prev(path)) {
@@ -390,7 +394,7 @@ void TopWin::do_next()
 	if (midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_NORMAL_LIST) {		
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
-				return; //this should never happen.
+				return;
 		}
 		//if gtk_tree_model_iter_next fail,iter will be invalid,so save it.
 		GtkTreeIter new_iter = iter; 
@@ -426,7 +430,7 @@ void TopWin::do_next()
 		   midwin.oIndexWin.oListWin.list_word_type == LIST_WIN_DATA_LIST) {
 		if (!selected) {
 			if (!gtk_tree_model_get_iter_first(model,&iter))
-				return; //this should never happen.
+				return;
 		}
 		if (gtk_tree_model_iter_next(model,&iter)) {
 			gtk_tree_selection_select_iter(selection, &iter);
@@ -885,6 +889,131 @@ void ListWin::SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *
     gtk_tree_view_expand_all(treeview_);
 }
 
+static inline bool less_for_word_compare(const char *lh, const char *rh) {
+        return stardict_server_collate(lh, rh, gpAppFrame->oLibs.EnableCollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
+}
+
+void ListWin::MergeWordList(std::list<char *> *wordlist)
+{
+	std::list<char *> current_list;
+	gboolean have_iter;
+	GtkTreeIter iter;
+	gchar *word;
+	GtkTreeModel *model = GTK_TREE_MODEL(list_model);
+	have_iter = gtk_tree_model_get_iter_first(model, &iter);
+	while (have_iter) {
+		gtk_tree_model_get (model, &iter, 0, &word, -1);
+		current_list.push_back(word);
+		have_iter = gtk_tree_model_iter_next(model, &iter);
+	}
+	std::vector<char *> merge_list;
+	for (std::list<char *>::iterator i = current_list.begin(); i != current_list.end(); ++i) {
+		merge_list.push_back(*i);
+	}
+	bool duplicated;
+	for (std::list<char *>::iterator i = wordlist->begin(); i != wordlist->end(); ++i) {
+		duplicated = false;
+		for (std::list<char *>::iterator j = current_list.begin(); j != current_list.end(); ++j) {
+			if (strcmp(*i, *j)==0) {
+				duplicated = true;
+				break;
+			}
+		}
+		if (duplicated)
+			continue;
+		merge_list.push_back(*i);
+	}
+	std::sort(merge_list.begin(), merge_list.end(), less_for_word_compare);
+	gtk_list_store_clear(list_model);
+	for (std::vector<char *>::iterator i = merge_list.begin(); i != merge_list.end(); ++i) {
+		gtk_list_store_append (list_model, &iter);
+		gtk_list_store_set (list_model, &iter, 0, *i, -1);
+	}
+	for (std::list<char *>::iterator i = current_list.begin(); i != current_list.end(); ++i) {
+		g_free(*i);
+	}
+}
+
+struct FuzzyWordstruct {
+	char * pMatchWord;
+	int iMatchWordDistance;
+};
+
+static inline bool less_for_fuzzy_compare(const FuzzyWordstruct & lh, const FuzzyWordstruct & rh) {
+	if (lh.iMatchWordDistance!=rh.iMatchWordDistance)
+		return lh.iMatchWordDistance<rh.iMatchWordDistance;
+	return stardict_server_collate(lh.pMatchWord, rh.pMatchWord, gpAppFrame->oLibs.EnableCollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
+}
+
+static inline void unicode_strdown(gunichar *str) {
+	while (*str) {
+		*str=g_unichar_tolower(*str);
+		++str;
+	}
+}
+
+void ListWin::MergeFuzzyList(std::list<char *> *wordlist)
+{
+	std::list<char *> current_list;
+	gboolean have_iter;
+	GtkTreeIter iter;
+	gchar *word;
+	GtkTreeModel *model = GTK_TREE_MODEL(list_model);
+	have_iter = gtk_tree_model_get_iter_first(model, &iter);
+	while (have_iter) {
+		gtk_tree_model_get (model, &iter, 0, &word, -1);
+		current_list.push_back(word);
+		have_iter = gtk_tree_model_iter_next(model, &iter);
+	}
+	std::vector<FuzzyWordstruct> merge_list;
+	FuzzyWordstruct fuzzyitem;
+	EditDistance oEditDistance;
+	gunichar *ucs4_str1, *ucs4_str2;
+	glong ucs4_str1_len, ucs4_str2_len;
+	ucs4_str2 = g_utf8_to_ucs4_fast(fuzzyWord.c_str(), -1, &ucs4_str2_len);
+	unicode_strdown(ucs4_str2);
+	for (std::list<char *>::iterator i = current_list.begin(); i != current_list.end(); ++i) {
+		fuzzyitem.pMatchWord = *i;
+		ucs4_str1 = g_utf8_to_ucs4_fast(*i, -1, &ucs4_str1_len);
+		if (ucs4_str1_len > ucs4_str2_len)
+			ucs4_str1[ucs4_str2_len]=0;
+		unicode_strdown(ucs4_str1);
+		fuzzyitem.iMatchWordDistance = oEditDistance.CalEditDistance(ucs4_str1, ucs4_str2, MAX_FUZZY_DISTANCE);
+		g_free(ucs4_str1);
+		merge_list.push_back(fuzzyitem);
+	}
+	bool duplicated;
+	for (std::list<char *>::iterator i = wordlist->begin(); i != wordlist->end(); ++i) {
+		duplicated = false;
+		for (std::list<char *>::iterator j = current_list.begin(); j != current_list.end(); ++j) {
+			if (strcmp(*i, *j)==0) {
+				duplicated = true;
+				break;
+			}
+		}
+		if (duplicated)
+			continue;
+		fuzzyitem.pMatchWord = *i;
+		ucs4_str1 = g_utf8_to_ucs4_fast(*i, -1, &ucs4_str1_len);
+		if (ucs4_str1_len > ucs4_str2_len)
+			ucs4_str1[ucs4_str2_len]=0;
+		unicode_strdown(ucs4_str1);
+		fuzzyitem.iMatchWordDistance = oEditDistance.CalEditDistance(ucs4_str1, ucs4_str2, MAX_FUZZY_DISTANCE);
+		g_free(ucs4_str1);
+		merge_list.push_back(fuzzyitem);
+	}
+	g_free(ucs4_str2);
+	std::sort(merge_list.begin(), merge_list.end(), less_for_fuzzy_compare);
+	gtk_list_store_clear(list_model);
+	for (std::vector<FuzzyWordstruct>::iterator i = merge_list.begin(); i != merge_list.end(); ++i) {
+		gtk_list_store_append (list_model, &iter);
+		gtk_list_store_set (list_model, &iter, 0, i->pMatchWord, -1);
+	}
+	for (std::list<char *>::iterator i = current_list.begin(); i != current_list.end(); ++i) {
+		g_free(*i);
+	}
+}
+
 gboolean ListWin::on_button_press(GtkWidget * widget, GdkEventButton * event, ListWin *oListWin)
 {
 	if (event->type==GDK_2BUTTON_PRESS) {
@@ -1153,7 +1282,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
 	gtk_container_add (GTK_CONTAINER (translate_button), image);
 	gtk_widget_show_all(translate_button);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,translate_button,_("Translate"),NULL);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,translate_button,_("Full-Text Translation"),NULL);
 	g_signal_connect(G_OBJECT(translate_button),"toggled", G_CALLBACK(on_translate_button_toggled), this);
 
 	if (has_treedict) {

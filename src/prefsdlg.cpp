@@ -869,6 +869,22 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
     gtk_widget_destroy(account_dialog);
 }
 
+void PrefsDlg::on_register_end(const char *msg)
+{
+	gtk_button_set_label(bAccount, register_user.c_str());
+	conf->set_string_at("network/user", register_user);
+	conf->set_string_at("network/md5passwd", register_hex);
+	gpAppFrame->oStarDictClient.set_auth(register_user.c_str(), register_hex.c_str());
+
+	GtkWidget *message_dlg = gtk_message_dialog_new(GTK_WINDOW(window),
+			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+			GTK_MESSAGE_INFO, GTK_BUTTONS_OK, msg);
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+	gtk_widget_show(message_dlg);
+}
+
 void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
     GtkWidget *register_dialog;
@@ -945,6 +961,8 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
 	int port = atoi(gtk_entry_get_text(oPrefsDlg->eStarDictServerPort));
 	gpAppFrame->oStarDictClient.set_server(server, port);
 	gpAppFrame->oStarDictClient.set_auth("", "");
+	oPrefsDlg->register_user = user;
+	oPrefsDlg->register_hex = hex;
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email);
         gpAppFrame->oStarDictClient.send_commands(1, c);
         break;

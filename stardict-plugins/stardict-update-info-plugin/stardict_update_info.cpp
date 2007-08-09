@@ -189,7 +189,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 
 static gboolean get_update_info(gpointer data)
 {
-	plugin_service->send_http_request("stardict.sourceforge.net", "/UPDATE", on_get_http_response, 0);
+	plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, 0);
 	return FALSE;
 }
 

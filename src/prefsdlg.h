@@ -30,6 +30,8 @@ private:
   GtkEntry *eStarDictServer;
   GtkEntry *eStarDictServerPort;
   GtkButton *bAccount;
+  std::string register_user;
+  std::string register_hex;
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE)
   GtkEntry *ePlayCommand;
 #endif
@@ -125,6 +127,7 @@ public:
   PrefsDlg(GtkWindow *parent, GdkPixbuf *logo, const std::list<std::string>& key_combs);
   bool ShowModal();
   void Close();
+  void on_register_end(const char *msg);
 };
 
 #endif
