@@ -141,6 +141,8 @@ public:
 	void TopWinEnterWord();
 	void TopWinWordChange(const gchar* sWord);
 	void ListWords(CurrentIndex* iStartIndex);
+	void ListPreWords(const char*sWord);
+	void ListNextWords(const char*sWord);
 	
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();

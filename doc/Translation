@@ -5,4 +5,4 @@ You can copy po/stardict.pot to yourlocale.po file, then edit it manually while 
 After it is finished, you can mail it to the maintainer as the attachment file. I will contact you for future update too.
 
 Here is a tip for translating:
-To change the order of printf string, you can use the form as "%2$d %1$s", whichhas the original form of "%s %d".
+To change the order of printf string, you can use the form as "%2$d %1$s", which has the original form as "%s %d".

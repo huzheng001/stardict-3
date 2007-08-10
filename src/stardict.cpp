@@ -1558,13 +1558,43 @@ void AppCore::ListWords(CurrentIndex* iIndex)
 			oMidWin.oIndexWin.oListWin.InsertLast(poCurrentWord);
 			iWordCount++;
 		}
-	}
-
-	if (iWordCount) {
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	}
-
 	g_free(iCurrent);
+}
+
+void AppCore::ListPreWords(const char*sWord)
+{
+	oMidWin.oIndexWin.oListWin.Clear();	
+	CurrentIndex *iPreIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * query_dictmask.size());
+	const gchar *preword = oLibs.poGetPreWord(sWord, iPreIndex, query_dictmask, 0);
+	if (preword) {
+		int iWordCount=1;
+		oMidWin.oIndexWin.oListWin.Prepend(preword);
+		while (iWordCount<15 && (preword=oLibs.poGetPreWord(NULL,iPreIndex, query_dictmask, 0))) {
+			oMidWin.oIndexWin.oListWin.Prepend(preword);
+			iWordCount++;
+		}
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
+	g_free(iPreIndex);
+}
+
+void AppCore::ListNextWords(const char*sWord)
+{
+	oMidWin.oIndexWin.oListWin.Clear();
+	CurrentIndex *iNextIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * query_dictmask.size());
+	const gchar *nextword = oLibs.poGetNextWord(sWord, iNextIndex, query_dictmask, 0);
+	if (nextword) {
+		int iWordCount=1;
+		oMidWin.oIndexWin.oListWin.InsertLast(nextword);
+		while (iWordCount<30 && (nextword = oLibs.poGetNextWord(NULL, iNextIndex, query_dictmask, 0))) {
+			oMidWin.oIndexWin.oListWin.InsertLast(nextword);
+			iWordCount++;
+		}
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
+	g_free(iNextIndex);
 }
 
 void AppCore::Query(const gchar *word)
@@ -1644,27 +1674,25 @@ void AppCore::on_stardict_client_maxdictcount_end(int count)
 
 void AppCore::on_stardict_client_previous_end(std::list<char *> *wordlist_response)
 {
-    oMidWin.oIndexWin.oListWin.Clear();
-    oMidWin.oIndexWin.oListWin.SetModel(true);
-    for (std::list<char *>::iterator i = wordlist_response->begin(); i != wordlist_response->end(); ++i) {
-        oMidWin.oIndexWin.oListWin.Prepend(*i);
-    }
+	if (!wordlist_response->empty()) {
+		oMidWin.oIndexWin.oListWin.MergeWordList(wordlist_response);
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
 }
 
 void AppCore::on_stardict_client_next_end(std::list<char *> *wordlist_response)
 {
-    oMidWin.oIndexWin.oListWin.Clear();
-    oMidWin.oIndexWin.oListWin.SetModel(true);
-    for (std::list<char *>::iterator i = wordlist_response->begin(); i != wordlist_response->end(); ++i) {
-        oMidWin.oIndexWin.oListWin.InsertLast(*i);
-    }
+	if (!wordlist_response->empty()) {
+		oMidWin.oIndexWin.oListWin.MergeWordList(wordlist_response);
+		oMidWin.oIndexWin.oListWin.ReScroll();
+	}
 }
 
 void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq)
 {
     if (seq != 0 && waiting_mainwin_lookupcmd_seq != seq)
         return;
-    oMidWin.oTextWin.Show(&(lookup_response->dict_response));
+    oMidWin.oTextWin.Show(&(lookup_response->dict_response), lookup_response->listtype);
     if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List || lookup_response->listtype == STARDICT::LookupResponse::ListType_Rule_List) {
 	if (!lookup_response->wordlist->empty()) {
 		oMidWin.oIndexWin.oListWin.MergeWordList(lookup_response->wordlist);

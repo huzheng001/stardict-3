@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 17:57+0800\n"
+"POT-Creation-Date: 2007-08-10 14:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,8 +30,8 @@ msgstr ""
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:31
-#: ../src/docklet.cpp:199 ../src/mainwin.cpp:489 ../src/splash.cpp:84
-#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2319
+#: ../src/docklet.cpp:199 ../src/mainwin.cpp:473 ../src/splash.cpp:84
+#: ../src/stardict.cpp:239 ../src/stardict.cpp:299 ../src/stardict.cpp:2347
 #: ../src/win32/systray.cpp:216 ../src/win32/systray.cpp:264
 msgid "StarDict"
 msgstr ""
@@ -342,7 +342,7 @@ msgid "Unkown data type, please upgrade StarDict!"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1804
+#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1816
 msgid "dict.stardict.org"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgstr ""
 msgid "Add dictionary"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1738 ../src/prefsdlg.cpp:1249
+#: ../src/dictmanagedlg.cpp:1738 ../src/prefsdlg.cpp:1261
 msgid "Add"
 msgstr ""
 
@@ -523,7 +523,7 @@ msgstr ""
 msgid "D_ict List"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1879 ../src/mainwin.cpp:530
+#: ../src/dictmanagedlg.cpp:1879 ../src/mainwin.cpp:514
 msgid "Manage _Dict"
 msgstr ""
 
@@ -583,11 +583,11 @@ msgstr ""
 msgid "StarDict - Stopped"
 msgstr ""
 
-#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2709
+#: ../src/docklet.cpp:97 ../src/mainwin.cpp:2701
 msgid "_Scan"
 msgstr ""
 
-#: ../src/docklet.cpp:107 ../src/mainwin.cpp:567
+#: ../src/docklet.cpp:107 ../src/mainwin.cpp:551
 msgid "_Quit"
 msgstr ""
 
@@ -599,7 +599,7 @@ msgstr ""
 msgid "Save to file"
 msgstr ""
 
-#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1566
+#: ../src/floatwin.cpp:139 ../src/mainwin.cpp:1550
 msgid "Pronounce the word"
 msgstr ""
 
@@ -611,7 +611,7 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2742
+#: ../src/floatwin.cpp:169 ../src/mainwin.cpp:2734
 #: ../src/win32/systray.cpp:107
 msgid "Quit"
 msgstr ""
@@ -620,7 +620,7 @@ msgstr ""
 msgid "Lock floating window"
 msgstr ""
 
-#: ../src/floatwin.cpp:298 ../src/mainwin.cpp:1922 ../src/selection.cpp:194
+#: ../src/floatwin.cpp:298 ../src/mainwin.cpp:1913 ../src/selection.cpp:194
 #: ../src/stardict.cpp:639 ../src/stardict.cpp:783 ../src/stardict.cpp:944
 #: ../src/stardict.cpp:958 ../src/stardict.cpp:963 ../src/stardict.cpp:968
 #: ../src/stardict.cpp:1401 ../src/stardict.cpp:1524
@@ -653,7 +653,7 @@ msgstr ""
 msgid "_Save"
 msgstr ""
 
-#: ../src/floatwin.cpp:864 ../src/mainwin.cpp:2072
+#: ../src/floatwin.cpp:864 ../src/mainwin.cpp:2064
 msgid "_Query"
 msgstr ""
 
@@ -681,91 +681,91 @@ msgstr ""
 msgid "Show the main menu (Alt+M)"
 msgstr ""
 
-#: ../src/mainwin.cpp:486
+#: ../src/mainwin.cpp:470
 msgid "translator_credits"
 msgstr ""
 
-#: ../src/mainwin.cpp:492
+#: ../src/mainwin.cpp:476
 msgid "StarDict is an international dictionary for GNOME."
 msgstr ""
 
-#: ../src/mainwin.cpp:523
+#: ../src/mainwin.cpp:507
 msgid "Pr_eferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:536
+#: ../src/mainwin.cpp:520
 msgid "Manage _Plugins"
 msgstr ""
 
-#: ../src/mainwin.cpp:545
+#: ../src/mainwin.cpp:529
 msgid "_New Version"
 msgstr ""
 
-#: ../src/mainwin.cpp:553
+#: ../src/mainwin.cpp:537
 msgid "_Help"
 msgstr ""
 
-#: ../src/mainwin.cpp:559
+#: ../src/mainwin.cpp:543
 msgid "_About"
 msgstr ""
 
-#: ../src/mainwin.cpp:1264
+#: ../src/mainwin.cpp:1248
 msgid "List"
 msgstr ""
 
-#: ../src/mainwin.cpp:1275
+#: ../src/mainwin.cpp:1259
 msgid "Result"
 msgstr ""
 
-#: ../src/mainwin.cpp:1285
+#: ../src/mainwin.cpp:1269
 msgid "Full-Text Translation"
 msgstr ""
 
-#: ../src/mainwin.cpp:1296
+#: ../src/mainwin.cpp:1280
 msgid "Tree"
 msgstr ""
 
-#: ../src/mainwin.cpp:1307
+#: ../src/mainwin.cpp:1291
 msgid "Choose dict group"
 msgstr ""
 
-#: ../src/mainwin.cpp:1320
+#: ../src/mainwin.cpp:1304
 msgid "Next word (Alt+Down)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1330
+#: ../src/mainwin.cpp:1314
 msgid "Previous word (Alt+Up)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1382
+#: ../src/mainwin.cpp:1366
 msgid "Enable Net Dict"
 msgstr ""
 
-#: ../src/mainwin.cpp:1519
+#: ../src/mainwin.cpp:1503
 msgid "Show the word list"
 msgstr ""
 
-#: ../src/mainwin.cpp:1534
+#: ../src/mainwin.cpp:1518
 msgid "Hide the word list"
 msgstr ""
 
-#: ../src/mainwin.cpp:1552
+#: ../src/mainwin.cpp:1536
 msgid "Copy"
 msgstr ""
 
-#: ../src/mainwin.cpp:1580
+#: ../src/mainwin.cpp:1564
 msgid "Save to file(Alt+E)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1590
+#: ../src/mainwin.cpp:1574
 msgid "Print"
 msgstr ""
 
-#: ../src/mainwin.cpp:1605
+#: ../src/mainwin.cpp:1589
 msgid "Search in the definition (Ctrl+F)"
 msgstr ""
 
-#: ../src/mainwin.cpp:1791
+#: ../src/mainwin.cpp:1775
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -773,7 +773,7 @@ msgid ""
 "%s%s%s and put them to %s."
 msgstr ""
 
-#: ../src/mainwin.cpp:1814
+#: ../src/mainwin.cpp:1798
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -793,7 +793,7 @@ msgid ""
 "clicking will perform a fuzzy query.\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:1831
+#: ../src/mainwin.cpp:1815
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
@@ -842,198 +842,210 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:2004
+#: ../src/mainwin.cpp:1907 ../src/stardict.cpp:1292
+msgid "Found no words matching this pattern!"
+msgstr ""
+
+#: ../src/mainwin.cpp:1909 ../src/stardict.cpp:1206
+msgid "There are too many spelling errors :-("
+msgstr ""
+
+#: ../src/mainwin.cpp:1911 ../src/stardict.cpp:1125 ../src/stardict.cpp:1170
+msgid "There are no dictionary's article with such word :-("
+msgstr ""
+
+#: ../src/mainwin.cpp:1996
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr ""
 
-#: ../src/mainwin.cpp:2064 ../src/mainwin.cpp:2331
+#: ../src/mainwin.cpp:2056 ../src/mainwin.cpp:2323
 msgid "_Pronounce"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111
 msgid "Arabic"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110
+#: ../src/mainwin.cpp:2102
 msgid "Chinese"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2117 ../src/mainwin.cpp:2119
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2168
-#: ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202
-#: ../src/mainwin.cpp:2223 ../src/mainwin.cpp:2230
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2109 ../src/mainwin.cpp:2111
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2115 ../src/mainwin.cpp:2119
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2168
-#: ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202
-#: ../src/mainwin.cpp:2223 ../src/mainwin.cpp:2230
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2107 ../src/mainwin.cpp:2111
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2113
-#: ../src/mainwin.cpp:2121 ../src/mainwin.cpp:2123 ../src/mainwin.cpp:2125
-#: ../src/mainwin.cpp:2127 ../src/mainwin.cpp:2129 ../src/mainwin.cpp:2131
-#: ../src/mainwin.cpp:2133 ../src/mainwin.cpp:2135 ../src/mainwin.cpp:2140
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2103 ../src/mainwin.cpp:2105
+#: ../src/mainwin.cpp:2113 ../src/mainwin.cpp:2115 ../src/mainwin.cpp:2117
+#: ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2121 ../src/mainwin.cpp:2123
+#: ../src/mainwin.cpp:2125 ../src/mainwin.cpp:2127 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2133 ../src/mainwin.cpp:2135 ../src/mainwin.cpp:2137
 #: ../src/mainwin.cpp:2141 ../src/mainwin.cpp:2143 ../src/mainwin.cpp:2145
-#: ../src/mainwin.cpp:2149 ../src/mainwin.cpp:2151 ../src/mainwin.cpp:2153
-#: ../src/mainwin.cpp:2155 ../src/mainwin.cpp:2157 ../src/mainwin.cpp:2159
-#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2163 ../src/mainwin.cpp:2168
+#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149 ../src/mainwin.cpp:2151
+#: ../src/mainwin.cpp:2153 ../src/mainwin.cpp:2155 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2163 ../src/mainwin.cpp:2165
 #: ../src/mainwin.cpp:2169 ../src/mainwin.cpp:2171 ../src/mainwin.cpp:2173
-#: ../src/mainwin.cpp:2177 ../src/mainwin.cpp:2179 ../src/mainwin.cpp:2181
-#: ../src/mainwin.cpp:2183 ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2187
-#: ../src/mainwin.cpp:2189 ../src/mainwin.cpp:2191 ../src/mainwin.cpp:2195
+#: ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177 ../src/mainwin.cpp:2179
+#: ../src/mainwin.cpp:2181 ../src/mainwin.cpp:2183 ../src/mainwin.cpp:2187
+#: ../src/mainwin.cpp:2188 ../src/mainwin.cpp:2190 ../src/mainwin.cpp:2192
 #: ../src/mainwin.cpp:2196 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2200
-#: ../src/mainwin.cpp:2204 ../src/mainwin.cpp:2206 ../src/mainwin.cpp:2208
-#: ../src/mainwin.cpp:2210 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2214
-#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2223
-#: ../src/mainwin.cpp:2230
+#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204 ../src/mainwin.cpp:2206
+#: ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222
 msgid "English"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2123
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2145 ../src/mainwin.cpp:2147
-#: ../src/mainwin.cpp:2151 ../src/mainwin.cpp:2153 ../src/mainwin.cpp:2155
-#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2163 ../src/mainwin.cpp:2168
-#: ../src/mainwin.cpp:2173 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2179
-#: ../src/mainwin.cpp:2181 ../src/mainwin.cpp:2183 ../src/mainwin.cpp:2189
-#: ../src/mainwin.cpp:2191 ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2200
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2206 ../src/mainwin.cpp:2210
-#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2115
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2137 ../src/mainwin.cpp:2139
+#: ../src/mainwin.cpp:2143 ../src/mainwin.cpp:2145 ../src/mainwin.cpp:2147
+#: ../src/mainwin.cpp:2153 ../src/mainwin.cpp:2155 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2165 ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2171
+#: ../src/mainwin.cpp:2173 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2181
+#: ../src/mainwin.cpp:2183 ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2192
+#: ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2202
+#: ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
 msgid "French"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2121
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149
-#: ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2113
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2141
+#: ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 msgid "German"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2140
-#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149 ../src/mainwin.cpp:2168
-#: ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177 ../src/mainwin.cpp:2195
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2141 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169 ../src/mainwin.cpp:2187
+#: ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 msgid "Italian"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2140
-#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2223
-#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2232
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2224
 msgid "Japanese"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2140
-#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2223
-#: ../src/mainwin.cpp:2230
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222
 msgid "Korean"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2140
-#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149 ../src/mainwin.cpp:2168
-#: ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177 ../src/mainwin.cpp:2195
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2141 ../src/mainwin.cpp:2160
+#: ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169 ../src/mainwin.cpp:2187
+#: ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 msgid "Portuguese"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2140
-#: ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2132
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194
 msgid "Russian"
 msgstr ""
 
-#: ../src/mainwin.cpp:2110 ../src/mainwin.cpp:2119 ../src/mainwin.cpp:2147
-#: ../src/mainwin.cpp:2149 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2102 ../src/mainwin.cpp:2111 ../src/mainwin.cpp:2139
+#: ../src/mainwin.cpp:2141 ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169
+#: ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 msgid "Spanish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149
-#: ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2141
+#: ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 msgid "Dutch"
 msgstr ""
 
-#: ../src/mainwin.cpp:2140 ../src/mainwin.cpp:2147 ../src/mainwin.cpp:2149
-#: ../src/mainwin.cpp:2168 ../src/mainwin.cpp:2175 ../src/mainwin.cpp:2177
-#: ../src/mainwin.cpp:2204
+#: ../src/mainwin.cpp:2132 ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2141
+#: ../src/mainwin.cpp:2160 ../src/mainwin.cpp:2167 ../src/mainwin.cpp:2169
+#: ../src/mainwin.cpp:2196
 msgid "Greek"
 msgstr ""
 
-#: ../src/mainwin.cpp:2195 ../src/mainwin.cpp:2202
+#: ../src/mainwin.cpp:2187 ../src/mainwin.cpp:2194
 msgid "Swedish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2254
+#: ../src/mainwin.cpp:2246
 msgid "Google Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2255
+#: ../src/mainwin.cpp:2247
 msgid "Yahoo Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2256
+#: ../src/mainwin.cpp:2248
 msgid "Altavista Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2257
+#: ../src/mainwin.cpp:2249
 msgid "SystranBox Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2258
+#: ../src/mainwin.cpp:2250
 msgid "Excite Japan Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2353
+#: ../src/mainwin.cpp:2345
 msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2384
+#: ../src/mainwin.cpp:2376
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2417
+#: ../src/mainwin.cpp:2409
 msgid "_Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2439
+#: ../src/mainwin.cpp:2431
 msgid "Powered by -"
 msgstr ""
 
-#: ../src/mainwin.cpp:2628
+#: ../src/mainwin.cpp:2620
 msgid "Please input some words to translate."
 msgstr ""
 
-#: ../src/mainwin.cpp:2643
+#: ../src/mainwin.cpp:2635
 msgid "Connecting..."
 msgstr ""
 
-#: ../src/mainwin.cpp:2718
+#: ../src/mainwin.cpp:2710
 msgid "Scan the selection"
 msgstr ""
 
-#: ../src/mainwin.cpp:2732
+#: ../src/mainwin.cpp:2724
 msgid "Show info"
 msgstr ""
 
-#: ../src/mainwin.cpp:2764 ../src/prefsdlg.cpp:1779
+#: ../src/mainwin.cpp:2756 ../src/prefsdlg.cpp:1791
 msgid "Preferences"
 msgstr ""
 
-#: ../src/mainwin.cpp:2774
+#: ../src/mainwin.cpp:2766
 msgid "Manage dictionaries"
 msgstr ""
 
-#: ../src/mainwin.cpp:2784
+#: ../src/mainwin.cpp:2776
 msgid "Go to the StarDict website"
 msgstr ""
 
-#: ../src/mainwin.cpp:2796
+#: ../src/mainwin.cpp:2788
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr ""
 
@@ -1103,28 +1115,28 @@ msgstr ""
 msgid "Article rendering"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:975
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:987
 msgid "Net Dict"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1050
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1062
 msgid "Input"
 msgstr ""
 
 #: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1125 ../src/prefsdlg.cpp:1540 ../src/prefsdlg.cpp:1571
+#: ../src/prefsdlg.cpp:1137 ../src/prefsdlg.cpp:1552 ../src/prefsdlg.cpp:1583
 msgid "Options"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1414
+#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1426
 msgid "Search website"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1631
+#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1643
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2337
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2365
 msgid "Dictionary"
 msgstr ""
 
@@ -1250,161 +1262,161 @@ msgstr ""
 msgid "Commandline:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:801
+#: ../src/prefsdlg.cpp:806
 msgid "Account"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:812 ../src/prefsdlg.cpp:903
+#: ../src/prefsdlg.cpp:817 ../src/prefsdlg.cpp:914
 msgid "_User Name:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:818 ../src/prefsdlg.cpp:909
+#: ../src/prefsdlg.cpp:823 ../src/prefsdlg.cpp:920
 msgid "_Password:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:840 ../src/prefsdlg.cpp:933
+#: ../src/prefsdlg.cpp:846 ../src/prefsdlg.cpp:945
 msgid "Please input the password."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:892
+#: ../src/prefsdlg.cpp:903
 msgid "Register"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:916
+#: ../src/prefsdlg.cpp:927
 msgid "_Email:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:931
+#: ../src/prefsdlg.cpp:943
 msgid "Please input the user name."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:935
+#: ../src/prefsdlg.cpp:947
 msgid "Please input the email."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:937
+#: ../src/prefsdlg.cpp:949
 msgid "Please input a valid email."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:981
+#: ../src/prefsdlg.cpp:993
 msgid "Enable _network dictionaries."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:993
+#: ../src/prefsdlg.cpp:1005
 msgid "StarDict server:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1002
+#: ../src/prefsdlg.cpp:1014
 msgid "Port:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1011
+#: ../src/prefsdlg.cpp:1023
 msgid "Account:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1022
+#: ../src/prefsdlg.cpp:1034
 msgid "_Register an account"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1057
+#: ../src/prefsdlg.cpp:1069
 msgid "_Search while typing."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1066
+#: ../src/prefsdlg.cpp:1078
 msgid "Word change _timeout:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1075
+#: ../src/prefsdlg.cpp:1087
 msgid "(default:300)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1077
+#: ../src/prefsdlg.cpp:1089
 msgid "Show the _first word when not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1131
+#: ../src/prefsdlg.cpp:1143
 msgid "_Auto run StarDict after boot."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1161
+#: ../src/prefsdlg.cpp:1173
 msgid "Hide main window when _starting StarDict."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1171
+#: ../src/prefsdlg.cpp:1183
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1262 ../src/prefsdlg.cpp:1465
+#: ../src/prefsdlg.cpp:1274 ../src/prefsdlg.cpp:1477
 msgid "Website Name"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1274 ../src/prefsdlg.cpp:1473
+#: ../src/prefsdlg.cpp:1286 ../src/prefsdlg.cpp:1485
 msgid "Website link"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1285 ../src/prefsdlg.cpp:1481
+#: ../src/prefsdlg.cpp:1297 ../src/prefsdlg.cpp:1493
 msgid "Website search link"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1306
+#: ../src/prefsdlg.cpp:1318
 msgid "Please input the website name."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1308
+#: ../src/prefsdlg.cpp:1320
 msgid "Please input the website link."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1310
+#: ../src/prefsdlg.cpp:1322
 msgid "Please input the website search link."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1312
+#: ../src/prefsdlg.cpp:1324
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for querying a word."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1391
+#: ../src/prefsdlg.cpp:1403
 #, c-format
 msgid ""
 "The website search link should contains a \"%%s\" string for quering word."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1546
+#: ../src/prefsdlg.cpp:1558
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1574
+#: ../src/prefsdlg.cpp:1586
 msgid "_Pronounce the word when it pops up."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1583
+#: ../src/prefsdlg.cpp:1595
 msgid "_Show floating window if word not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1648
+#: ../src/prefsdlg.cpp:1660
 msgid "Max window _width:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1658
+#: ../src/prefsdlg.cpp:1670
 msgid "(default:320)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1662
+#: ../src/prefsdlg.cpp:1674
 msgid "Max window hei_ght:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1670
+#: ../src/prefsdlg.cpp:1682
 msgid "(default:240)"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1675
+#: ../src/prefsdlg.cpp:1687
 msgid "_Use custom background color:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1757
+#: ../src/prefsdlg.cpp:1769
 msgid "Cat_egories:"
 msgstr ""
 
@@ -1444,24 +1456,12 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: ../src/stardict.cpp:1125 ../src/stardict.cpp:1170
-msgid "There are no dictionary's article with such word :-("
-msgstr ""
-
 #: ../src/stardict.cpp:1145 ../src/stardict.cpp:1501
 msgid "Full-text search..."
 msgstr ""
 
-#: ../src/stardict.cpp:1206
-msgid "There are too many spelling errors :-("
-msgstr ""
-
 #: ../src/stardict.cpp:1265
 msgid "Fuzzy query failed, too :-("
-msgstr ""
-
-#: ../src/stardict.cpp:1292
-msgid "Found no words matching this pattern!"
 msgstr ""
 
 #: ../src/stardict.cpp:1493
@@ -1472,23 +1472,23 @@ msgstr ""
 msgid "Fuzzy query..."
 msgstr ""
 
-#: ../src/stardict.cpp:1720 ../src/stardict.cpp:1825
+#: ../src/stardict.cpp:1748 ../src/stardict.cpp:1853
 msgid "Not found!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:1821
+#: ../src/stardict.cpp:1849
 msgid "Convert error!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2169
+#: ../src/stardict.cpp:2197
 msgid "StarDict is already running. Using the running process."
 msgstr ""
 
-#: ../src/stardict.cpp:2302
+#: ../src/stardict.cpp:2330
 msgid "- Lookup words"
 msgstr ""
 
-#: ../src/stardict.cpp:2307
+#: ../src/stardict.cpp:2335
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
