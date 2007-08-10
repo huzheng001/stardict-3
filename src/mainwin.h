@@ -133,7 +133,7 @@ public:
 	void Destroy();
 	void Clear();
 	void ReScroll();
-    void Prepend(const gchar *word);
+	void Prepend(const gchar *word);
 	void InsertLast(const gchar *word);
 	void SetTreeModel(std::vector<gchar *> *reslist, std::vector<InstantDictIndex> &dictmask);
 	void SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *> *wordtree);
@@ -243,7 +243,7 @@ public:
   void Show(const gchar *str);
   void Show(const gchar *orig_word, gchar ***Word, gchar ****WordData);
   void ShowTreeDictData(gchar *data);
-  void Show(const struct STARDICT::LookupResponse::DictResponse *dict_response);
+  void Show(const struct STARDICT::LookupResponse::DictResponse *dict_response, STARDICT::LookupResponse::ListType list_type);
   gboolean Find (const gchar *text, gboolean start);
 	bool IsSearchPanelHasFocus() { return GTK_WIDGET_HAS_FOCUS(eSearch); } 
 

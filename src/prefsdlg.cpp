@@ -794,6 +794,11 @@ void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button
 			  gtk_toggle_button_get_active(button));
 }
 
+static void on_account_passwd_button_activated(GtkEntry *entry, GtkDialog *dialog)
+{
+	gtk_dialog_response(dialog, GTK_RESPONSE_OK);
+}
+
 void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
     GtkWidget *account_dialog;
@@ -819,6 +824,7 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
     gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
     GtkWidget *passwd_entry = gtk_entry_new ();
     gtk_entry_set_visibility(GTK_ENTRY(passwd_entry), FALSE);
+    g_signal_connect(G_OBJECT(passwd_entry),"activate", G_CALLBACK(on_account_passwd_button_activated), account_dialog);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_entry);
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
     gtk_table_attach(GTK_TABLE(table), passwd_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
@@ -885,6 +891,11 @@ void PrefsDlg::on_register_end(const char *msg)
 	gtk_widget_show(message_dlg);
 }
 
+static void on_register_email_button_activated(GtkEntry *entry, GtkDialog *dialog)
+{
+	gtk_dialog_response(dialog, GTK_RESPONSE_OK);
+}
+
 void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
     GtkWidget *register_dialog;
@@ -916,6 +927,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
     label = gtk_label_new_with_mnemonic(_("_Email:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
     GtkWidget *email_entry = gtk_entry_new ();
+    g_signal_connect(G_OBJECT(email_entry),"activate", G_CALLBACK(on_register_email_button_activated), register_dialog);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label), email_entry);
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, (GtkAttachOptions)0, 6, 4);
     gtk_table_attach(GTK_TABLE(table), email_entry, 1, 2, 2, 3, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);

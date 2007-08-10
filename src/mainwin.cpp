@@ -344,15 +344,7 @@ void TopWin::do_prev()
 			// user have selected the first row.
 			gchar *word;
 			gtk_tree_model_get (model, &iter, 0, &word, -1);
-			CurrentIndex *iPreIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->query_dictmask.size());
-			const gchar *preword = gpAppFrame->oLibs.poGetPreWord(word, iPreIndex, gpAppFrame->query_dictmask, 0);
-			if (preword) {
-				SetText(preword);
-				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
-					gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
-			}
-			g_free(iPreIndex);
+			gpAppFrame->ListPreWords(word);
 			if (conf->get_bool_at("network/enable_netdict")) {
 				STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_PREVIOUS, word);
 				if (!gpAppFrame->oStarDictClient.try_cache(c))
@@ -409,15 +401,7 @@ void TopWin::do_next()
 		} else {
 			// user have selected the last row.
 			gtk_tree_model_get(model, &new_iter, 0, &word, -1);
-			CurrentIndex *iNextIndex =
-				(CurrentIndex *)g_malloc(sizeof(CurrentIndex) * gpAppFrame->query_dictmask.size());
-			const gchar *nextword = gpAppFrame->oLibs.poGetNextWord(word, iNextIndex, gpAppFrame->query_dictmask, 0);
-			if (nextword) {
-				SetText(nextword);				
-				if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
-					select_region_in_text(0, -1);
-			}
-			g_free(iNextIndex);
+			gpAppFrame->ListNextWords(word);
 			if (conf->get_bool_at("network/enable_netdict")) {
 				STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_NEXT, word);
 				if (!gpAppFrame->oStarDictClient.try_cache(c))
@@ -1904,7 +1888,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->end_update();
 }
 
-void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_response)
+void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_response, STARDICT::LookupResponse::ListType list_type)
 {
 	view->begin_update();
 	bool do_append;
@@ -1919,7 +1903,15 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 	if (dict_response->dict_result_list.empty()) {
 		query_result = TEXT_WIN_NET_NOT_FOUND;
 		if (!do_append) {
-			Show(_("<Not Found!>"));
+			if (list_type == STARDICT::LookupResponse::ListType_Rule_List) {
+				Show(_("Found no words matching this pattern!"));
+			} else if (list_type == STARDICT::LookupResponse::ListType_Fuzzy_List) {
+				Show(_("There are too many spelling errors :-("));
+			} else if (list_type == STARDICT::LookupResponse::ListType_Tree) {
+				Show(_("There are no dictionary's article with such word :-("));
+			} else {
+				Show(_("<Not Found!>"));
+			}
 		}
 	} else {
 		if (dict_response->oword == queryWord) {
