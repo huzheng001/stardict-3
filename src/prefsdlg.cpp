@@ -733,6 +733,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_sound_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
+	GtkWidget *label;
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE)
 	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
 	label=gtk_label_new(_("Command for playing wav files:"));
@@ -748,7 +749,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 #endif
 
-	GtkWidget *label = gtk_label_new(_("RealPeopleTTS search path:"));
+	label = gtk_label_new(_("RealPeopleTTS search path:"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(vbox1),label,false,false,0);
 	tts_textview = gtk_text_view_new();
