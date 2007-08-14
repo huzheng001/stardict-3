@@ -26,7 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #ifdef _WIN32
-#define VERSION "3.0.0"
+#define VERSION "3.0.1"
 #  include <gdk/gdkwin32.h>
 #endif
 
