@@ -1955,7 +1955,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
 msgid "Spell plug-in loaded.\n"
-msgstr "Greffon de "
+msgstr "Greffon de\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:35
 msgid "You are using an old version of StarDict!"

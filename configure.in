@@ -188,11 +188,11 @@ AM_CONDITIONAL(GPE_SUPPORT, test "x${enable_gpe_support}" = "xyes")
 AM_CONDITIONAL(MAEMO_SUPPORT, test "x${enable_maemo_support}" = "xyes")
 
 if test "x${enable_gpe_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.4 glib-2.0 >= 2.2 libgpewidget >= 0.109"
+  DEP_MODULES="gtk+-2.0 >= 2.4 glib-2.0 >= 2.2 gthread-2.0 >= 2.6 libgpewidget >= 0.109"
 elif test "x${enable_maemo_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.6 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
+  DEP_MODULES="gtk+-2.0 >= 2.6 gthread-2.0 >= 2.6 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
 elif test "x${enable_gnome_support}" = "xno" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.6"
+  DEP_MODULES="gtk+-2.0 >= 2.6 gthread-2.0 >= 2.6"
 else
   DEP_MODULES="libgnomeui-2.0 >= 2.2.0"
 fi

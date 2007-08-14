@@ -1582,7 +1582,7 @@ msgstr "存取被拒：%s"
 
 #: ../src/lib/stardict_client.cpp:905
 msgid "Register failed: %s"
-msgstr "註冊失敗：%s\n"
+msgstr "註冊失敗：%s"
 
 #: ../src/lib/stardict_client.cpp:910
 msgid "Register success!"
@@ -2126,7 +2126,7 @@ msgid "About %s"
 msgstr "關於 %s"
 
 msgid "Cannot connect to gconf.\n"
-msgstr "無法連接至 GConf。"
+msgstr "無法連接至 GConf。\n"
 
 msgid "Find"
 msgstr "尋找"
