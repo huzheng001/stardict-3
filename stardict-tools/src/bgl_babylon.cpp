@@ -231,10 +231,10 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
   }
   gzseek( file, 0, SEEK_SET );
 
-  convertToUtf8( m_title, DEFAULT_CHARSET );
-  convertToUtf8( m_author, DEFAULT_CHARSET );
-  convertToUtf8( m_email, DEFAULT_CHARSET );
-  convertToUtf8( m_copyright, DEFAULT_CHARSET );
+  convertToUtf8( m_title, TARGET_CHARSET );
+  convertToUtf8( m_author, TARGET_CHARSET );
+  convertToUtf8( m_email, TARGET_CHARSET );
+  convertToUtf8( m_copyright, TARGET_CHARSET );
   convertToUtf8( m_description, TARGET_CHARSET );
   printf("Default charset: %s\nSource Charset: %s\nTargetCharset: %s\n", m_defaultCharset.c_str(), m_sourceCharset.c_str(), m_targetCharset.c_str());
   return true;

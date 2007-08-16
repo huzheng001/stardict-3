@@ -171,7 +171,9 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	std::string email;
 	std::string website;
 	std::string description;
+	bool print_sameword;
 	if (*p == '\n') {
+		print_sameword = false;
 		p++;
 		linenum++;
 		while (1) {
@@ -217,6 +219,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 			}
 			p = p1;
 		}
+	} else {
+		print_sameword = true;
 	}
 	while (1) {
 		if (*p == '\0') {
@@ -307,9 +311,11 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 						}
 					}
 					if (find) {
-						gchar *str = g_strdup_printf("Same word: %s\n", synworditem.synword);
-						print_info(str);
-						g_free(str);
+						if (print_sameword) {
+							gchar *str = g_strdup_printf("Same word: %s\n", synworditem.synword);
+							print_info(str);
+							g_free(str);
+						}
 						p4 = p5+1;
 						continue;
 					} else {
@@ -336,9 +342,11 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 						}
 					}
 					if (find) {
-						gchar *str = g_strdup_printf("Same word: %s\n", synworditem.synword);
-						print_info(str);
-						g_free(str);
+						if (print_sameword) {
+							gchar *str = g_strdup_printf("Same word: %s\n", synworditem.synword);
+							print_info(str);
+							g_free(str);
+						}
 						break;
 					}
 					synworditem.origword = worditem.word;
