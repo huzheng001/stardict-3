@@ -116,9 +116,9 @@ const std::string bgl_charset[] = {
 	"GB18030", /*Simplified Chinese*/
 	"CP1257", /*Baltic*/
 	"CP1253", /*Greek*/
-	"ISO-8859-15",  /*Korean*/
+	"EUC-KR",  /*Korean*/
 	"ISO-8859-9", /*Turkish*/
-	"ISO-8859-9", /*Hebrew*/
+	"WINDOWS-1255", /*Hebrew*/
 	"CP1256", /*Arabic*/
 	"CP874"  /*Thai*/ };
 

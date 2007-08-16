@@ -141,6 +141,7 @@ wikipediaImage_LDFLAGS = -L/usr/lib/mysql4/mysql
 wikipediaImage_LDADD = $(STARDICT_LIBS) -lmysqlclient
 wikipediaImage_SOURCES = wikipediaImage.cpp
 
+tabfile2sql_CPPFLAGS = -I/usr/include/mysql4/mysql
 tabfile2sql_LDFLAGS = -L/usr/lib/mysql4/mysql
 tabfile2sql_LDADD = $(STARDICT_LIBS) -lmysqlclient
 tabfile2sql_SOURCES = tabfile2sql.cpp
