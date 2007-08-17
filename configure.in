@@ -329,6 +329,7 @@ stardict.spec
 stardict-withoutgnome.spec
 data/Makefile
 doc/Makefile
+debian/Makefile
 po/Makefile.in
 m4/Makefile
 src/Makefile

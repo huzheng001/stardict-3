@@ -1,0 +1,121 @@
+#!/usr/bin/make -f
+# debian/rules for stardict.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+CFLAGS = -Wall -g
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+
+	touch configure-stamp
+
+build: configure-stamp build-stamp
+
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package with gnome support
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-schemas-install \
+		--disable-festival
+	$(MAKE)
+
+
+	#/usr/bin/docbook-to-man debian/stardict.sgml > stardict.1
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp 
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) distclean
+
+	# Clean up
+	rm -f po/.intltool-merge-cache
+	rm -f intltool-extract
+	rm -f intltool-merge
+	rm -f intltool-update
+# I am not sure why we need these
+#ifneq "$(wildcard /usr/share/misc/config.sub)" ""
+#	cp -f /usr/share/misc/config.sub config.sub
+#endif
+#ifneq "$(wildcard /usr/share/misc/config.guess)" ""
+#	cp -f /usr/share/misc/config.guess config.guess
+#endif
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into debian/stardict.
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/stardict
+	rm -f `find $(CURDIR)/debian/stardict -name "*.la"`
+
+	dh_movefiles --sourcedir=debian/stardict
+
+	install -m644 debian/stardict_16x16.xpm \
+		$(CURDIR)/debian/stardict/usr/share/pixmaps
+	install -m644 debian/stardict_32x32.xpm \
+		$(CURDIR)/debian/stardict/usr/share/pixmaps
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs -pstardict ChangeLog
+	dh_installdocs -pstardict
+#	dh_installexamples
+#	dh_install
+	dh_installmenu -pstardict
+#	dh_installdebconf	
+	dh_installman -pstardict
+	dh_scrollkeeper
+	dh_gconf
+#	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_perl
+	dh_pysupport /usr/bin/stardict
+#	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps -L stardict -l debian/stardict/usr/bin
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install 
