@@ -911,8 +911,7 @@ gboolean FloatWin::vButtonReleaseCallback (GtkWidget * widget, GdkEventButton * 
 
 gboolean FloatWin::vMotionNotifyCallback (GtkWidget * widget, GdkEventMotion * event , FloatWin *oFloatWin)
 {
-	if (event->window == oFloatWin->FloatWindow->window || (event->state & GDK_BUTTON1_MASK))
-	{
+	if (event->state & GDK_BUTTON1_MASK) {
 		gint x,y;
 		x = oFloatWin->press_window_x + (gint)(event->x_root) - oFloatWin->press_x_root;
 		y = oFloatWin->press_window_y + (gint)(event->y_root) - oFloatWin->press_y_root;
