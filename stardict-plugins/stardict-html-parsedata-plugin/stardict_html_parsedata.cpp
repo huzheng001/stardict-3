@@ -397,9 +397,14 @@ static void html2result(const char *p, ParseResult &result)
 				}
 			}
 		} else {
-			p++;
-			res += "&lt;";
-			cur_pos++;
+			next = strchr(p+1, '>');
+			if (!next) {
+				p++;
+				res += "&lt;";
+				cur_pos++;
+				continue;
+			}
+			p = next + 1;
 		}
 cycle_end:
 		;
