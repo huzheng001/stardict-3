@@ -76,6 +76,7 @@ struct updateinfo_ParseUserData {
 	std::string version_msg_title;
 	std::string version_msg_content;
 	std::string latest_news;
+	std::string links;
 };
 
 static void updateinfo_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
@@ -113,6 +114,15 @@ static void updateinfo_parse_text(GMarkupParseContext *context, const gchar *tex
 			}
 		} else if (Data->locale_name == locale+1) {
 			Data->latest_news.assign(text, text_len);
+		}
+	} else if (g_str_has_prefix(element, "links")) {
+		const char *locale = element + (sizeof("links")-1);
+		if (locale[0] == '\0') {
+			if (Data->links.empty()) {
+				Data->links.assign(text, text_len);
+			}
+		} else if (Data->locale_name == locale+1) {
+			Data->links.assign(text, text_len);
 		}
 	}
 }
@@ -184,7 +194,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 		std::string res = get_cfg_filename();
 		g_file_set_contents(res.c_str(), content, length, NULL);
 	}
-	plugin_service->set_news(latest_news.c_str());
+	plugin_service->set_news(latest_news.c_str(), Data.links.c_str());
 }
 
 static gboolean get_update_info(gpointer data)

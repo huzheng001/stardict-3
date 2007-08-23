@@ -133,6 +133,7 @@ public:
 	void LookupWithFuzzyToMainWin(const gchar* word);
 	void LookupWithFuzzyToFloatWin(const gchar * word);
 	void LookupWithRuleToMainWin(const gchar* word);
+	void LookupNetDict(const char *word, bool ismainwin);
 	void ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const gchar * sOriginWord, bool isShowFirst);
 	void ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTreeDict);
 	void ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextWinQueryResult query_result);
@@ -164,7 +165,7 @@ public:
 	void on_http_client_error(HttpClient*, const char *);
 	void on_http_client_response(HttpClient*);
 	static void do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata);
-	static void set_news(const char *news);
+	static void set_news(const char *news, const char *links);
 };
 
 #ifdef _WIN32

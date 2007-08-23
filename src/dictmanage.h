@@ -7,6 +7,7 @@
 enum DictManageItemType {
 	LOCAL_DICT,
 	VIRTUAL_DICT,
+	NET_DICT,
 };
 
 struct DictManageItem {

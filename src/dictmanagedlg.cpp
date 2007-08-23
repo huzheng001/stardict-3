@@ -453,15 +453,22 @@ static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter,
 			if (dictinfo.load_from_ifo_file(i->file_or_id.c_str(), false)) {
 				gchar *markup = g_markup_escape_text(dictinfo.bookname.c_str(), dictinfo.bookname.length());
 				gtk_tree_store_append(model, &dict_iter, &type_iter);
-				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, TRUE, -1);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, LOCAL_DICT, -1);
 				g_free(markup);
 			}
-		} else {
+		} else if (i->type == VIRTUAL_DICT){
 			size_t iPlugin;
 			if (gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
 				const char *dictname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(iPlugin);
 				gtk_tree_store_append(model, &dict_iter, &type_iter);
-				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, FALSE, -1);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, VIRTUAL_DICT, -1);
+			}
+		} else {
+			size_t iPlugin;
+			if (gpAppFrame->oStarDictPlugins->NetDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
+				const char *dictname = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(iPlugin);
+				gtk_tree_store_append(model, &dict_iter, &type_iter);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Network Dictionary"), 7, "", 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, NET_DICT, -1);
 			}
 		}
 	}
@@ -469,7 +476,7 @@ static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter,
 
 GtkTreeModel* DictManageDlg::create_dictmanage_tree_model()
 {
-	GtkTreeStore *model = gtk_tree_store_new(13, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+	GtkTreeStore *model = gtk_tree_store_new(13, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_INT, G_TYPE_BOOLEAN, G_TYPE_INT);
 	GtkTreeIter group_iter;
 	gchar *markup;
 	for (std::list<DictManageGroup>::iterator i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
@@ -493,7 +500,7 @@ public:
 			GtkTreeIter iter;
 			gtk_list_store_append(model, &iter);
 			gtk_list_store_set(model, &iter, 
-						 0, !disable, 
+						 0, LOCAL_DICT, 
 						 1, dictinfo.bookname.c_str(), 
 						 2, dictinfo.wordcount, 
 						 3, dictinfo.author.c_str(), 
@@ -522,10 +529,10 @@ GtkTreeModel* DictManageDlg::create_tree_model(int istreedict)
 				conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list"),
 				GetInfo(model, 1));
 	} else if (istreedict == 0) {
-		model = gtk_list_store_new(9, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, 
+		model = gtk_list_store_new(9, G_TYPE_INT, G_TYPE_STRING, G_TYPE_LONG, 
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
-		std::list<std::string> dict_disable_list; // So all are enabled, then means being localdict;
+		std::list<std::string> dict_disable_list;
 		for_each_file(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
 				conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
 				dict_disable_list, GetInfo(model, 0));
@@ -536,7 +543,14 @@ GtkTreeModel* DictManageDlg::create_tree_model(int istreedict)
 			dictname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(i);
 			dictid = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_id(i);
 			gtk_list_store_append(model, &iter);
-			gtk_list_store_set(model, &iter, 0, FALSE, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, dictid, -1);
+			gtk_list_store_set(model, &iter, 0, VIRTUAL_DICT, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Virtual Dictionary"), 7, "", 8, dictid, -1);
+		}
+		n = gpAppFrame->oStarDictPlugins->NetDictPlugins.ndicts();
+		for (size_t i = 0; i < n; i++) {
+			dictname = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(i);
+			dictid = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_id(i);
+			gtk_list_store_append(model, &iter);
+			gtk_list_store_set(model, &iter, 0, NET_DICT, 1, dictname, 2, 0, 3, "", 4, "", 5, "", 6, _("Network Dictionary"), 7, "", 8, dictid, -1);
 		}
 	} else {
 		model = gtk_list_store_new(3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_LONG);
@@ -1022,10 +1036,11 @@ static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *paren
 	GtkTreeIter iter;
 	gboolean have_next = gtk_tree_model_iter_children(model, &iter, parent_iter);
 	while (have_next) {
-		gboolean enable, islocaldict;
+		gboolean enable;
+		DictManageItemType dicttype;
 		gchar *file;
-		gtk_tree_model_get (model, &iter, 0, &enable, 8, &file, 12, &islocaldict, -1);
-		if (islocaldict) {
+		gtk_tree_model_get (model, &iter, 0, &enable, 8, &file, 12, &dicttype, -1);
+		if (dicttype == LOCAL_DICT) {
 			configxml += "<localdict enable=\"";
 			if (enable)
 				configxml += "true";
@@ -1037,8 +1052,20 @@ static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *paren
 			configxml += estr;
 			configxml += "\"/>";
 			g_free(estr);
-		} else {
+		} else if (dicttype == VIRTUAL_DICT){
 			configxml += "<virtualdict enable=\"";
+			if (enable)
+				configxml += "true";
+			else
+				configxml += "false";
+			gchar *estr = g_markup_escape_text(file, -1);
+			g_free(file);
+			configxml += "\" id=\"";
+			configxml += estr;
+			configxml += "\"/>";
+			g_free(estr);
+		} else {
+			configxml += "<netdict enable=\"";
 			if (enable)
 				configxml += "true";
 			else
@@ -1100,13 +1127,13 @@ void DictManageDlg::SaveDictManageList()
 	GtkTreeIter iter;
 	gboolean have_iter;
 	gchar *filename;
-	gboolean islocaldict;
+	DictManageItemType dicttype;
 	std::list<std::string> order_list;
 	
 	have_iter = gtk_tree_model_get_iter_first(dict_tree_model, &iter);
 	while (have_iter) {
-		gtk_tree_model_get (dict_tree_model, &iter, 0, &islocaldict, -1);
-		if (islocaldict) {
+		gtk_tree_model_get (dict_tree_model, &iter, 0, &dicttype, -1);
+		if (dicttype == LOCAL_DICT) {
 			gtk_tree_model_get (dict_tree_model, &iter, 8, &filename, -1);
 			order_list.push_back(filename);
 			g_free(filename);
@@ -1323,7 +1350,7 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_size_request (sw, 350, 230);
-	GtkListStore *now_tree_model = gtk_list_store_new(9, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	GtkListStore *now_tree_model = gtk_list_store_new(9, G_TYPE_INT, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 	std::list<std::string> added_dictlist;
 	GtkTreeIter iter;
 	gboolean have_next = gtk_tree_model_iter_children(dictmanage_tree_model, &iter, parent_iter);
@@ -1346,13 +1373,13 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 			}
 		}
 		if (!added) {
-			gboolean islocaldict;
+			DictManageItemType dicttype;
 			gchar *bookname, *author, *email, *website, *description, *date;
 			glong wordcount;
-			gtk_tree_model_get (dict_tree_model, &iter, 0, &islocaldict, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, -1);
+			gtk_tree_model_get (dict_tree_model, &iter, 0, &dicttype, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, -1);
 			GtkTreeIter new_iter;
 			gtk_list_store_append(now_tree_model, &new_iter);
-			gtk_list_store_set(now_tree_model, &new_iter, 0, islocaldict, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, -1);
+			gtk_list_store_set(now_tree_model, &new_iter, 0, dicttype, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, -1);
 			g_free(bookname);
 			g_free(author);
 			g_free(email);
@@ -1392,13 +1419,13 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 			GtkTreeIter select_iter;
 			while (list) {
 				gtk_tree_model_get_iter(GTK_TREE_MODEL(now_tree_model), &select_iter, (GtkTreePath *)(list->data));
-				gboolean islocaldict;
+				DictManageItemType dicttype;
 				gchar *bookname, *author, *email, *website, *description, *date, *file;
 				glong wordcount; 
-				gtk_tree_model_get (GTK_TREE_MODEL(now_tree_model), &select_iter, 0, &islocaldict, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &file, -1);
+				gtk_tree_model_get (GTK_TREE_MODEL(now_tree_model), &select_iter, 0, &dicttype, 1, &bookname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &file, -1);
 				GtkTreeIter new_iter;
 				gtk_tree_store_insert_before(GTK_TREE_STORE(dictmanage_tree_model), &new_iter, parent_iter, NULL);
-				gtk_tree_store_set(GTK_TREE_STORE(dictmanage_tree_model), &new_iter, 0, TRUE, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, 9, true, 10, 2, 11, FALSE, 12, islocaldict, -1);
+				gtk_tree_store_set(GTK_TREE_STORE(dictmanage_tree_model), &new_iter, 0, TRUE, 1, bookname, 2, wordcount, 3, author, 4, email, 5, website, 6, description, 7, date, 8, file, 9, true, 10, 2, 11, FALSE, 12, dicttype, -1);
 				g_free(bookname);
 				g_free(author);
 				g_free(email);

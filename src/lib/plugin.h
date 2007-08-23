@@ -11,6 +11,7 @@
 enum StarDictPlugInType {
 	StarDictPlugInType_UNKNOWN,
 	StarDictPlugInType_VIRTUALDICT,
+	StarDictPlugInType_NETDICT,
 	StarDictPlugInType_TTS,
 	StarDictPlugInType_PARSEDATA,
 	StarDictPlugInType_MISC,
@@ -22,7 +23,7 @@ struct StarDictPluginSystemService {
 	send_http_request_func_t send_http_request;
 	typedef void (*show_url_func_t)(const char *url);
 	show_url_func_t show_url;
-	typedef void (*set_news_func_t)(const char *news);
+	typedef void (*set_news_func_t)(const char *news, const char *links);
 	set_news_func_t set_news;
 };
 

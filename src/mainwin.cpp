@@ -2663,9 +2663,6 @@ void MidWin::Create(GtkWidget *vbox)
 	oTextWin.Create(vbox1);
 	gtk_paned_pack2(GTK_PANED(hpaned), vbox1, TRUE, FALSE);
 
-	int pos=conf->get_int_at("main_window/hpaned_pos");
-	gtk_paned_set_position(GTK_PANED(hpaned), pos);
-
 	oTransWin.Create(notebook);
 }
 
@@ -2840,7 +2837,7 @@ gboolean BottomWin::move_news(gpointer data)
 	return TRUE;
 }
 
-void BottomWin::set_news(const char *news)
+void BottomWin::set_news(const char *news, const char *links)
 {
 	if (news) {
 		news_text = news;

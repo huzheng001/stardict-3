@@ -211,9 +211,9 @@ void AppCore::do_send_http_request(const char* shost, const char* sfile, get_htt
 	gpAppFrame->oHttpManager.SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
 }
 
-void AppCore::set_news(const char *news)
+void AppCore::set_news(const char *news, const char *links)
 {
-	gpAppFrame->oBottomWin.set_news(news);
+	gpAppFrame->oBottomWin.set_news(news, links);
 }
 
 void AppCore::Create(gchar *queryword)
@@ -362,6 +362,8 @@ void AppCore::Create(gchar *queryword)
 		gtk_widget_realize(window);
 		gdk_notify_startup_complete();
 	}
+	int pos=conf->get_int_at("main_window/hpaned_pos");
+	gtk_paned_set_position(GTK_PANED(oMidWin.hpaned), pos);
 
 	if (oLibs.has_dict() || conf->get_bool_at("network/enable_netdict")) {
 		if (queryword) {
@@ -790,6 +792,10 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 
 void AppCore::BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound)
 {
+	if (dictmask[iLib].type == InstantDictType_NET) {
+		pppWord[iLib] = NULL;
+		return;
+	}
 	if (dictmask[iLib].type != InstantDictType_VIRTUAL)
 		return;
 
@@ -1294,6 +1300,23 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 	g_free(ppMatchWord);
 }
 
+void AppCore::LookupNetDict(const char *sWord, bool ismainwin)
+{
+	if (ismainwin) {
+		for (size_t iLib=0; iLib<query_dictmask.size(); iLib++) {
+			if (query_dictmask[iLib].type == InstantDictType_NET) {
+				oStarDictPlugins->NetDictPlugins.lookup(query_dictmask[iLib].index, sWord);
+			}
+		}
+	} else {
+		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++) {
+			if (scan_dictmask[iLib].type == InstantDictType_NET) {
+				oStarDictPlugins->NetDictPlugins.lookup(scan_dictmask[iLib].index, sWord);
+			}
+		}
+	}
+}
+
 void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 				const gchar *sOriginWord, bool isShowFirst)
 {
@@ -1534,6 +1557,7 @@ gboolean AppCore::on_word_change_timeout(gpointer data)
 			app->oStarDictClient.send_commands(1, c);
 		}
 	}
+	app->LookupNetDict(app->delayed_word_.c_str(), true);
 
 	app->word_change_timeout_id = 0;//next line destroy timer
 	return FALSE;

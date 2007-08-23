@@ -5,6 +5,7 @@ enum InstantDictType {
 	InstantDictType_UNKNOWN = 0,
 	InstantDictType_LOCAL,
 	InstantDictType_VIRTUAL,
+	InstantDictType_NET,
 };
 
 struct InstantDictIndex {
