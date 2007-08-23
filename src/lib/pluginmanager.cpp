@@ -69,6 +69,7 @@ void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& or
 void StarDictPlugins::reorder(const std::list<std::string>& order_list)
 {
 	VirtualDictPlugins.reorder(order_list);
+	NetDictPlugins.reorder(order_list);
 	TtsPlugins.reorder(order_list);
 	ParseDataPlugins.reorder(order_list);
 	MiscPlugins.reorder(order_list);
@@ -88,7 +89,7 @@ bool StarDictPlugins::get_loaded(const char *filename)
 
 class PluginInfoLoader {
 public:
-	PluginInfoLoader(StarDictPlugins& plugins_, std::list<StarDictPluginInfo> &virtualdict_pluginlist_, std::list<StarDictPluginInfo> &tts_pluginlist_, std::list<StarDictPluginInfo> &parsedata_pluginlist_, std::list<StarDictPluginInfo> &misc_pluginlist_): plugins(plugins_), virtualdict_pluginlist(virtualdict_pluginlist_), tts_pluginlist(tts_pluginlist_), parsedata_pluginlist(parsedata_pluginlist_), misc_pluginlist(misc_pluginlist_) {}
+	PluginInfoLoader(StarDictPlugins& plugins_, std::list<StarDictPluginInfo> &virtualdict_pluginlist_, std::list<StarDictPluginInfo> &netdict_pluginlist_, std::list<StarDictPluginInfo> &tts_pluginlist_, std::list<StarDictPluginInfo> &parsedata_pluginlist_, std::list<StarDictPluginInfo> &misc_pluginlist_): plugins(plugins_), virtualdict_pluginlist(virtualdict_pluginlist_), netdict_pluginlist(netdict_pluginlist_), tts_pluginlist(tts_pluginlist_), parsedata_pluginlist(parsedata_pluginlist_), misc_pluginlist(misc_pluginlist_) {}
 	void operator()(const std::string& url, bool disable) {
 		if (!disable) {
 			StarDictPlugInType plugin_type = StarDictPlugInType_UNKNOWN;
@@ -104,6 +105,9 @@ public:
 				switch (plugin_type) {
 					case StarDictPlugInType_VIRTUALDICT:
 						virtualdict_pluginlist.push_back(plugin_info);
+						break;
+					case StarDictPlugInType_NETDICT:
+						netdict_pluginlist.push_back(plugin_info);
 						break;
 					case StarDictPlugInType_TTS:
 						tts_pluginlist.push_back(plugin_info);
@@ -123,6 +127,7 @@ public:
 private:
 	StarDictPlugins& plugins;
 	std::list<StarDictPluginInfo> &virtualdict_pluginlist;
+	std::list<StarDictPluginInfo> &netdict_pluginlist;
 	std::list<StarDictPluginInfo> &tts_pluginlist;
 	std::list<StarDictPluginInfo> &parsedata_pluginlist;
 	std::list<StarDictPluginInfo> &misc_pluginlist;
@@ -132,6 +137,7 @@ void StarDictPlugins::get_plugin_list(const std::list<std::string>& order_list, 
 {
 	plugin_list.clear();
 	std::list<StarDictPluginInfo> virtualdict_pluginlist;
+	std::list<StarDictPluginInfo> netdict_pluginlist;
 	std::list<StarDictPluginInfo> tts_pluginlist;
 	std::list<StarDictPluginInfo> parsedata_pluginlist;
 	std::list<StarDictPluginInfo> misc_pluginlist;
@@ -139,10 +145,13 @@ void StarDictPlugins::get_plugin_list(const std::list<std::string>& order_list, 
 	std::list<std::string> plugins_dirs;
 	plugins_dirs.push_back(plugindirpath);
 	std::list<std::string> disable_list;
-	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginInfoLoader(*this, virtualdict_pluginlist, tts_pluginlist, parsedata_pluginlist, misc_pluginlist));
+	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, order_list, disable_list, PluginInfoLoader(*this, virtualdict_pluginlist, netdict_pluginlist, tts_pluginlist, parsedata_pluginlist, misc_pluginlist));
 
 	if (!virtualdict_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_VIRTUALDICT, virtualdict_pluginlist));
+	}
+	if (!netdict_pluginlist.empty()) {
+		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_NETDICT, netdict_pluginlist));
 	}
 	if (!tts_pluginlist.empty()) {
 		plugin_list.push_back(std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> >(StarDictPlugInType_TTS, tts_pluginlist));
@@ -191,6 +200,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 }
 
 typedef bool (*stardict_virtualdict_plugin_init_func_t)(StarDictVirtualDictPlugInObject *obj);
+typedef bool (*stardict_netdict_plugin_init_func_t)(StarDictNetDictPlugInObject *obj);
 typedef bool (*stardict_tts_plugin_init_func_t)(StarDictTtsPlugInObject *obj);
 typedef bool (*stardict_parsedata_plugin_init_func_t)(StarDictParseDataPlugInObject *obj);
 typedef bool (*stardict_misc_plugin_init_func_t)(void);
@@ -256,6 +266,28 @@ void StarDictPlugins::load_plugin(const char *filename)
 			return;
 		}
 		VirtualDictPlugins.add(baseobj, virtualdict_plugin_obj);
+	} else if (ptype == StarDictPlugInType_NETDICT) {
+		union {
+			stardict_netdict_plugin_init_func_t stardict_netdict_plugin_init;
+			gpointer stardict_netdict_plugin_init_avoid_warning;
+		} func2;
+		func2.stardict_netdict_plugin_init = 0;
+		if (!g_module_symbol (module, "stardict_netdict_plugin_init", (gpointer *)&(func2.stardict_netdict_plugin_init_avoid_warning))) {
+			printf("Load %s failed: No stardict_netdict_plugin_init func!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			return;
+		}
+		StarDictNetDictPlugInObject *netdict_plugin_obj = new StarDictNetDictPlugInObject();
+		failed = func2.stardict_netdict_plugin_init(netdict_plugin_obj);
+		if (failed) {
+			g_print("Load %s failed!\n", filename);
+			g_module_close (module);
+			delete baseobj;
+			delete netdict_plugin_obj;
+			return;
+		}
+		NetDictPlugins.add(baseobj, netdict_plugin_obj);
 	} else if (ptype == StarDictPlugInType_TTS) {
 		union {
 			stardict_tts_plugin_init_func_t stardict_tts_plugin_init;
@@ -340,6 +372,9 @@ void StarDictPlugins::unload_plugin(const char *filename, StarDictPlugInType plu
 		case StarDictPlugInType_VIRTUALDICT:
 			VirtualDictPlugins.unload_plugin(filename);
 			break;
+		case StarDictPlugInType_NETDICT:
+			NetDictPlugins.unload_plugin(filename);
+			break;
 		case StarDictPlugInType_TTS:
 			TtsPlugins.unload_plugin(filename);
 			break;
@@ -359,6 +394,9 @@ void StarDictPlugins::configure_plugin(const char *filename, StarDictPlugInType 
 	switch (plugin_type) {
 		case StarDictPlugInType_VIRTUALDICT:
 			VirtualDictPlugins.configure_plugin(filename);
+			break;
+		case StarDictPlugInType_NETDICT:
+			NetDictPlugins.configure_plugin(filename);
 			break;
 		case StarDictPlugInType_TTS:
 			TtsPlugins.configure_plugin(filename);
@@ -463,6 +501,99 @@ void StarDictVirtualDictPlugin::lookup(const char *word, char ***pppWord, char *
 }
 
 const char *StarDictVirtualDictPlugin::dict_name()
+{
+	return obj->dict_name;
+}
+
+//
+// class StarDictNetDictPlugins begin.
+//
+
+StarDictNetDictPlugins::StarDictNetDictPlugins()
+{
+}
+
+StarDictNetDictPlugins::~StarDictNetDictPlugins()
+{
+	for (std::vector<StarDictNetDictPlugin *>::iterator i = oPlugins.begin(); i != oPlugins.end(); ++i) {
+		delete *i;
+	}
+}
+
+void StarDictNetDictPlugins::add(StarDictPluginBaseObject *baseobj, StarDictNetDictPlugInObject *netdict_plugin_obj)
+{
+	StarDictNetDictPlugin *plugin = new StarDictNetDictPlugin(baseobj, netdict_plugin_obj);
+	oPlugins.push_back(plugin);
+}
+
+void StarDictNetDictPlugins::unload_plugin(const char *filename)
+{
+	for (std::vector<StarDictNetDictPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			delete *iter;
+			oPlugins.erase(iter);
+			break;
+		}
+	}
+}
+
+void StarDictNetDictPlugins::configure_plugin(const char *filename)
+{
+	for (std::vector<StarDictNetDictPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		if (strcmp((*iter)->get_filename(), filename) == 0) {
+			(*iter)->configure();
+			break;
+		}
+	}
+}
+
+void StarDictNetDictPlugins::lookup(size_t iPlugin, const gchar *word)
+{
+	oPlugins[iPlugin]->lookup(word);
+}
+
+const char *StarDictNetDictPlugins::dict_name(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->dict_name();
+}
+
+const char *StarDictNetDictPlugins::dict_id(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->get_filename();
+}
+
+bool StarDictNetDictPlugins::find_dict_by_id(const char *id, size_t &iPlugin)
+{
+	for (std::vector<StarDictNetDictPlugin *>::size_type i = 0; i < oPlugins.size(); i++) {
+		if (strcmp(oPlugins[i]->get_filename(), id)==0) {
+			iPlugin = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+//
+// class StarDictNetDictPlugin begin.
+//
+
+StarDictNetDictPlugin::StarDictNetDictPlugin(StarDictPluginBaseObject *baseobj_, StarDictNetDictPlugInObject *netdict_plugin_obj):
+	StarDictPluginBase(baseobj_)
+{
+	obj = netdict_plugin_obj;
+}
+
+StarDictNetDictPlugin::~StarDictNetDictPlugin()
+{
+	delete obj;
+}
+
+void StarDictNetDictPlugin::lookup(const char *word)
+{
+	obj->lookup_func(word);
+}
+
+const char *StarDictNetDictPlugin::dict_name()
 {
 	return obj->dict_name;
 }
@@ -666,19 +797,20 @@ StarDictMiscPlugin::~StarDictMiscPlugin()
 {
 }
 
-void StarDictVirtualDictPlugins::reorder(const std::list<std::string>& order_list)
+template<typename TV, typename TI>
+void plugins_reorder(TV &oPlugins, const std::list<std::string>& order_list)
 {
-	std::vector<StarDictVirtualDictPlugin *> prev(oPlugins);
+	TV prev(oPlugins);
 	oPlugins.clear();
 	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
-		for (std::vector<StarDictVirtualDictPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
+		for (TI j = prev.begin(); j != prev.end(); ++j) {
 			if (*i == (*j)->get_filename()) {
 				oPlugins.push_back(*j);
 			}
 		}
 	}
-	for (std::vector<StarDictVirtualDictPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
-		std::vector<StarDictVirtualDictPlugin *>::iterator j;
+	for (TI i=prev.begin(); i!=prev.end(); ++i) {
+		TI j;
 		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
 			if (*j == *i)
 				break;
@@ -686,70 +818,29 @@ void StarDictVirtualDictPlugins::reorder(const std::list<std::string>& order_lis
 		if (j == oPlugins.end())
 			delete *i;
 	}
+}
+
+void StarDictVirtualDictPlugins::reorder(const std::list<std::string>& order_list)
+{
+	plugins_reorder<std::vector<StarDictVirtualDictPlugin *>, std::vector<StarDictVirtualDictPlugin *>::iterator>(oPlugins, order_list);
+}
+
+void StarDictNetDictPlugins::reorder(const std::list<std::string>& order_list)
+{
+	plugins_reorder<std::vector<StarDictNetDictPlugin *>, std::vector<StarDictNetDictPlugin *>::iterator>(oPlugins, order_list);
 }
 
 void StarDictTtsPlugins::reorder(const std::list<std::string>& order_list)
 {
-	std::vector<StarDictTtsPlugin *> prev(oPlugins);
-	oPlugins.clear();
-	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
-		for (std::vector<StarDictTtsPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
-			if (*i == (*j)->get_filename()) {
-				oPlugins.push_back(*j);
-			}
-		}
-	}
-	for (std::vector<StarDictTtsPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
-		std::vector<StarDictTtsPlugin *>::iterator j;
-		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
-			if (*j == *i)
-				break;
-		}
-		if (j == oPlugins.end())
-			delete *i;
-	}
+	plugins_reorder<std::vector<StarDictTtsPlugin *>, std::vector<StarDictTtsPlugin *>::iterator>(oPlugins, order_list);
 }
 
 void StarDictParseDataPlugins::reorder(const std::list<std::string>& order_list)
 {
-	std::vector<StarDictParseDataPlugin *> prev(oPlugins);
-	oPlugins.clear();
-	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
-		for (std::vector<StarDictParseDataPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
-			if (*i == (*j)->get_filename()) {
-				oPlugins.push_back(*j);
-			}
-		}
-	}
-	for (std::vector<StarDictParseDataPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
-		std::vector<StarDictParseDataPlugin *>::iterator j;
-		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
-			if (*j == *i)
-				break;
-		}
-		if (j == oPlugins.end())
-			delete *i;
-	}
+	plugins_reorder<std::vector<StarDictParseDataPlugin *>, std::vector<StarDictParseDataPlugin *>::iterator>(oPlugins, order_list);
 }
 
 void StarDictMiscPlugins::reorder(const std::list<std::string>& order_list)
 {
-	std::vector<StarDictMiscPlugin *> prev(oPlugins);
-	oPlugins.clear();
-	for (std::list<std::string>::const_iterator i = order_list.begin(); i != order_list.end(); ++i) {
-		for (std::vector<StarDictMiscPlugin *>::iterator j = prev.begin(); j != prev.end(); ++j) {
-			if (*i == (*j)->get_filename()) {
-				oPlugins.push_back(*j);
-			}
-		}
-	}
-	for (std::vector<StarDictMiscPlugin *>::iterator i=prev.begin(); i!=prev.end(); ++i) {
-		std::vector<StarDictMiscPlugin *>::iterator j;
-		for (j=oPlugins.begin(); j!=oPlugins.end(); ++j) {
-			if (*j == *i)
-				break;
-		}
-		if (j == oPlugins.end())
-			delete *i;
-	}
+	plugins_reorder<std::vector<StarDictMiscPlugin *>, std::vector<StarDictMiscPlugin *>::iterator>(oPlugins, order_list);
 }

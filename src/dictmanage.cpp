@@ -101,6 +101,31 @@ static void config_parse_start_element(GMarkupParseContext *context, const gchar
 				Data->info->groups.back().scandict.push_back(item);
 			}
 		}
+	} else if (strcmp(element_name, "netdict")==0) {
+		bool enable = true;
+		const gchar *id = NULL;
+		size_t i = 0;
+		while (attribute_names[i]) {
+			if (strcmp(attribute_names[i], "enable")==0) {
+				if (strcmp(attribute_values[i], "false")==0) {
+					enable = false;
+				}
+			} else if (strcmp(attribute_names[i], "id")==0) {
+				id = attribute_values[i];
+			}
+			i++;
+		}
+		if (id) {
+			DictManageItem item;
+			item.type = NET_DICT;
+			item.enable = enable;
+			item.file_or_id = id;
+			if (Data->in_querydict) {
+				Data->info->groups.back().querydict.push_back(item);
+			} else if (Data->in_scandict) {
+				Data->info->groups.back().scandict.push_back(item);
+			}
+		}
 	}
 }
 
@@ -234,6 +259,15 @@ static void update_configxml(std::list<std::string> &dict_new_install_list)
 			i->querydict.push_back(item);
 			i->scandict.push_back(item);
 		}
+		n = gpAppFrame->oStarDictPlugins->NetDictPlugins.ndicts();
+		for (size_t j = 0; j < n; j++) {
+			DictManageItem item;
+			item.type = NET_DICT;
+			item.enable = true;
+			item.file_or_id = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_id(j);
+			i->querydict.push_back(item);
+			i->scandict.push_back(item);
+		}
 	}
 	std::string newxml;
 	InfoToConfigXml(newxml, gpAppFrame->dictinfo);
@@ -268,11 +302,22 @@ static void set_dictmask_by_itemlist(std::list<DictManageItem> &itemlist, bool i
 					else
 						gpAppFrame->scan_dictmask.push_back(instance_dict_index);
 				}
-			} else {
+			} else if (i->type == VIRTUAL_DICT){
 				size_t iPlugin;
 				if (gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
 					InstantDictIndex instance_dict_index;
 					instance_dict_index.type = InstantDictType_VIRTUAL;
+					instance_dict_index.index = iPlugin;
+					if (is_query)
+						gpAppFrame->query_dictmask.push_back(instance_dict_index);
+					else
+						gpAppFrame->scan_dictmask.push_back(instance_dict_index);
+				}
+			} else {
+				size_t iPlugin;
+				if (gpAppFrame->oStarDictPlugins->NetDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
+					InstantDictIndex instance_dict_index;
+					instance_dict_index.type = InstantDictType_NET;
 					instance_dict_index.index = iPlugin;
 					if (is_query)
 						gpAppFrame->query_dictmask.push_back(instance_dict_index);

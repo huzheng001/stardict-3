@@ -349,6 +349,7 @@ stardict-plugins/Makefile
 stardict-plugins/stardict-advertisement-plugin/Makefile
 stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
+stardict-plugins/stardict-dictdotcn-plugin/Makefile
 stardict-plugins/stardict-update-info-plugin/Makefile
 stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile

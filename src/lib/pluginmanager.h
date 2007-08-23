@@ -3,6 +3,7 @@
 
 #include "plugin.h"
 #include "virtualdictplugin.h"
+#include "netdictplugin.h"
 #include "ttsplugin.h"
 #include "parsedata_plugin.h"
 #include <glib.h>
@@ -55,6 +56,34 @@ public:
 	void reorder(const std::list<std::string>& order_list);
 private:
 	std::vector<StarDictVirtualDictPlugin *> oPlugins;
+};
+
+class StarDictNetDictPlugin : public StarDictPluginBase {
+public:
+	StarDictNetDictPlugin(StarDictPluginBaseObject *baseobj, StarDictNetDictPlugInObject *netdict_plugin_obj);
+	~StarDictNetDictPlugin();
+	void lookup(const char *word);
+	const char *dict_name();
+	const char *dict_id();
+private:
+	StarDictNetDictPlugInObject *obj;
+};
+
+class StarDictNetDictPlugins {
+public:
+	StarDictNetDictPlugins();
+	~StarDictNetDictPlugins();
+	void add(StarDictPluginBaseObject *baseobj, StarDictNetDictPlugInObject *netdict_plugin_obj);
+	void lookup(size_t iPlugin, const gchar *word);
+	size_t ndicts() { return oPlugins.size(); }
+	const char *dict_name(size_t iPlugin);
+	const char *dict_id(size_t iPlugin);
+	bool find_dict_by_id(const char *id, size_t &iPlugin);
+	void unload_plugin(const char *filename);
+	void configure_plugin(const char *filename);
+	void reorder(const std::list<std::string>& order_list);
+private:
+	std::vector<StarDictNetDictPlugin *> oPlugins;
 };
 
 class StarDictTtsPlugin : public StarDictPluginBase {
@@ -141,6 +170,7 @@ public:
 	void unload_plugin(const char *filename, StarDictPlugInType plugin_type);
 	void reorder(const std::list<std::string>& order_list);
 	StarDictVirtualDictPlugins VirtualDictPlugins;
+	StarDictNetDictPlugins NetDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
 	StarDictParseDataPlugins ParseDataPlugins;
 private:

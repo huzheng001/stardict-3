@@ -344,7 +344,7 @@ public:
 	BottomWin();
 	void Destroy();
 	void Create(GtkWidget *vbox);
-	void set_news(const char *news);
+	void set_news(const char *news, const char *links);
 };
 
 #endif
