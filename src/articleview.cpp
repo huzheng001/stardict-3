@@ -132,7 +132,9 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 						}
 						if (!loaded) {
 							mark += "<span foreground=\"red\">";
-							mark += it->res->key;
+							gchar *m_str = g_markup_escape_text(it->res->key.c_str(), -1);
+							mark += m_str;
+							g_free(m_str);
 							mark += "</span>";
 						}
 						break;

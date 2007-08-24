@@ -278,6 +278,7 @@ void AppCore::Create(gchar *queryword)
 	oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
 	oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
+	// If the plugin send http request before this, then the response won't be processed, you neeed to always use gtk_init_add() instead of g_idle_add() in this case.
 	HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
 	HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
 

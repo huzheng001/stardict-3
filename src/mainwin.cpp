@@ -2449,10 +2449,9 @@ void TransWin::Create(GtkWidget *notebook)
 
 void TransWin::SetLink(const char *linkname)
 {
-	std::string markup = "<span foreground=\"blue\" underline=\"single\">";
-	markup += linkname;
-	markup += "</span>";
-	gtk_label_set_markup(GTK_LABEL(link_label), markup.c_str());
+	gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", linkname);
+	gtk_label_set_markup(GTK_LABEL(link_label), markup);
+	g_free(markup);
 }
 
 void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin)
@@ -2672,6 +2671,7 @@ BottomWin::BottomWin()
 {
 	SearchWebsiteMenu = NULL;
 	news_timeout_id = 0;
+	link_timeout_id = 0;
 	need_resume_news = false;
 }
 
@@ -2680,6 +2680,10 @@ void BottomWin::Destroy()
 	if (news_timeout_id != 0) {
 		g_source_remove(news_timeout_id);
 		news_timeout_id = 0;
+	}
+	if (link_timeout_id != 0) {
+		g_source_remove(link_timeout_id);
+		link_timeout_id = 0;
 	}
 	if (SearchWebsiteMenu)
 		gtk_widget_destroy(SearchWebsiteMenu);
@@ -2730,15 +2734,35 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Quit"), NULL);
 
-	GtkWidget *event_box = gtk_event_box_new();
-	g_signal_connect (G_OBJECT (event_box), "enter_notify_event", G_CALLBACK (vEnterNotifyCallback), this);
-	g_signal_connect (G_OBJECT (event_box), "leave_notify_event", G_CALLBACK (vLeaveNotifyCallback), this);
-	gtk_widget_show(event_box);
-	gtk_box_pack_start(GTK_BOX(hbox),event_box,true,true,0);
+	movenews_event_box = gtk_event_box_new();
+	g_signal_connect (G_OBJECT (movenews_event_box), "enter_notify_event", G_CALLBACK (vEnterNotifyCallback), this);
+	g_signal_connect (G_OBJECT (movenews_event_box), "leave_notify_event", G_CALLBACK (vLeaveNotifyCallback), this);
+	gtk_widget_show(movenews_event_box);
+	gtk_box_pack_start(GTK_BOX(hbox),movenews_event_box,false,false,0);
 	news_label = gtk_label_new(NULL);
-	gtk_container_add(GTK_CONTAINER(event_box), news_label);
+	gtk_container_add(GTK_CONTAINER(movenews_event_box), news_label);
 	gtk_misc_set_alignment (GTK_MISC (news_label), 0.0, 0.5);
 	gtk_widget_show(news_label);
+
+	link_hbox = gtk_hbox_new(false, 0);
+	gtk_box_pack_start(GTK_BOX(hbox),link_hbox,true,true,0);
+	GtkWidget *label = gtk_label_new(NULL);
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(link_hbox), label, true, true, 0);
+	GtkWidget *event_box = gtk_event_box_new();
+	gtk_box_pack_start(GTK_BOX(link_hbox),event_box,false,false,0);
+	g_signal_connect (G_OBJECT (event_box), "button-release-event", G_CALLBACK(on_link_eventbox_clicked), this);
+	gtk_widget_show(event_box);
+	gtk_widget_realize(event_box);
+	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
+	gdk_window_set_cursor(event_box->window, cursor);
+	gdk_cursor_unref(cursor);
+	link_label = gtk_label_new(NULL);
+	gtk_container_add(GTK_CONTAINER(event_box), link_label);
+	gtk_widget_show(link_label);
+	label = gtk_label_new(NULL);
+	gtk_widget_show(label);
+	gtk_box_pack_end(GTK_BOX(link_hbox), label, true, true, 0);
 
 	// the next buttons will be pack from right to left.
 #ifndef CONFIG_GPE
@@ -2785,6 +2809,11 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search an Internet dictionary - Right button: website list"),NULL);
 }
 
+void BottomWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, BottomWin *oBottomWin)
+{
+	gpAppFrame->on_link_click(oBottomWin->linklist[oBottomWin->link_index].second);
+}
+
 gboolean BottomWin::vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, BottomWin *oBottomWin)
 {
 	if (oBottomWin->news_timeout_id != 0) {
@@ -2804,6 +2833,24 @@ gboolean BottomWin::vLeaveNotifyCallback (GtkWidget *widget, GdkEventCrossing *e
 	return TRUE;
 }
 
+gboolean BottomWin::change_link(gpointer data)
+{
+	BottomWin *oBottomWin = static_cast<BottomWin *>(data);
+	oBottomWin->link_index++;
+	if (oBottomWin->link_index == oBottomWin->linklist.size()) {
+		oBottomWin->news_timeout_id = g_timeout_add(300, move_news, data);
+		gtk_widget_hide(oBottomWin->link_hbox);
+		gtk_widget_show(oBottomWin->movenews_event_box);
+		oBottomWin->link_timeout_id = 0;
+		return FALSE;
+	} else {
+		char *markup = g_markup_printf_escaped ("<span foreground=\"blue\" underline=\"single\">%s</span>", oBottomWin->linklist[oBottomWin->link_index].first.c_str());
+		gtk_label_set_markup(GTK_LABEL(oBottomWin->link_label), markup);
+		g_free(markup);
+		return TRUE;
+	}
+}
+
 gboolean BottomWin::move_news(gpointer data)
 {
 	BottomWin *oBottomWin = static_cast<BottomWin *>(data);
@@ -2819,8 +2866,21 @@ gboolean BottomWin::move_news(gpointer data)
 	if (*p) {
 		oBottomWin->news_move_index++;
 	} else {
-		p = oBottomWin->news_text.c_str();
 		oBottomWin->news_move_index = 0;
+		if (oBottomWin->linklist.empty()) {
+			p = oBottomWin->news_text.c_str();
+		} else {
+			oBottomWin->link_index = 0;
+			gtk_label_set_text(GTK_LABEL(oBottomWin->news_label), "");
+			gtk_widget_hide(oBottomWin->movenews_event_box);
+			char *markup = g_markup_printf_escaped ("<span foreground=\"blue\" underline=\"single\">%s</span>", oBottomWin->linklist[0].first.c_str());
+			gtk_label_set_markup(GTK_LABEL(oBottomWin->link_label), markup);
+			g_free(markup);
+			gtk_widget_show(oBottomWin->link_hbox);
+			oBottomWin->link_timeout_id = g_timeout_add(4000, change_link, data);
+			oBottomWin->news_timeout_id = 0;
+			return FALSE;
+		}
 	}
 	const char *p1 = p;
 	for (i=0; i < oBottomWin->news_move_len; i++) {
@@ -2856,6 +2916,27 @@ void BottomWin::set_news(const char *news, const char *links)
 			news_timeout_id = 0;
 		}
 		gtk_label_set_text(GTK_LABEL(news_label), "");
+	}
+	if (links) {
+		linklist.clear();
+		std::list<std::string> lines;
+		const char *p, *p1;
+		p = links;
+		do {
+			p1 = strchr(p, '\n');
+			if (p1) {
+				lines.push_back(std::string(p, p1-p));
+				p = p1 + 1;
+			}
+		} while (p1);
+		lines.push_back(p);
+		for (std::list<std::string>::iterator i = lines.begin(); i != lines.end(); ++i) {
+			p = i->c_str();
+			p1 = strchr(p, '\t');
+			if (p1) {
+				linklist.push_back(std::pair<std::string, std::string>(std::string(p, p1-p), std::string(p1+1)));
+			}
+		}
 	}
 }
 
@@ -2897,10 +2978,8 @@ gboolean BottomWin::on_internetsearch_button_press(GtkWidget * widget, GdkEventB
 			std::vector<std::string> web_list = split(*ci, '\t');
 			if (web_list.size()==3 && web_list[2].find("%s")!=std::string::npos) {
 				menuitem = gtk_image_menu_item_new_with_label(web_list[0].c_str());
-					g_signal_connect(G_OBJECT(menuitem), "activate",
-													 G_CALLBACK(on_internetsearch_menu_item_activate),
-													 const_cast<char *>(ci->c_str()));
-					gtk_menu_shell_append(GTK_MENU_SHELL(oBottomWin->SearchWebsiteMenu), menuitem);
+				g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_internetsearch_menu_item_activate), const_cast<char *>(ci->c_str()));
+				gtk_menu_shell_append(GTK_MENU_SHELL(oBottomWin->SearchWebsiteMenu), menuitem);
 			}
 		}
 

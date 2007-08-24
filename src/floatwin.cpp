@@ -293,14 +293,9 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
 			return;
 		}
 		gchar *text;
-		gchar *m_word,*m_reason;
-		m_word = g_markup_escape_text(dict_response->oword,-1);
-		m_reason = g_markup_escape_text(_("<Not Found!>"),-1);
-		text = g_strdup_printf("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>",m_word,m_reason);
+		text = g_markup_printf_escaped("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>", dict_response->oword, _("<Not Found!>"));
 		view->set_pango_text(text);
 		g_free(text);
-		g_free(m_word);
-		g_free(m_reason);
 	} else {
 		found_result = FLOAT_WIN_NET_FOUND;
 		if (!do_append) {
@@ -480,14 +475,9 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 		return;
 
 	gchar *text;
-	gchar *m_word,*m_reason;
-	m_word = g_markup_escape_text(sWord,-1);
-	m_reason = g_markup_escape_text(sReason,-1);
-	text = g_strdup_printf("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>",m_word,m_reason);
+	text = g_markup_printf_escaped("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>", sWord, sReason);
 	view->set_pango_text(text);
 	g_free(text);
-	g_free(m_word);
-	g_free(m_reason);
 	
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sWord);

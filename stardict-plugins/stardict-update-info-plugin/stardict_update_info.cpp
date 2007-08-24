@@ -5,8 +5,9 @@
 #include <windows.h>
 #endif
 
-const int my_version_num = 30000000; // As 3,00,00,000, so the version is 3.0.0.0
+const int my_version_num = 30001000; // As 3,00,00,000, so the version is 3.0.0.0
 static int latest_version_num;
+static int last_prompt_num;
 static std::string version_msg_title;
 static std::string version_msg_content;
 static std::string latest_news;
@@ -165,19 +166,25 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 		latest_version_num = Data.latest_version_num;
 		version_msg_title = Data.version_msg_title;
 		version_msg_content = Data.version_msg_content;
-
-		if (Data.latest_version_num > my_version_num) {
-			std::string content = version_msg_content;
-			content += "\n\n";
-			content += _("Visit StarDict website now?");
-			GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, content.c_str());
-			gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
-			gtk_window_set_title (GTK_WINDOW (dialog), version_msg_title.c_str());
-			if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES) {
-				plugin_service->show_url("http://stardict.sourceforge.net");
-			}
-			gtk_widget_destroy (dialog);
+	}
+	if (Data.latest_version_num > my_version_num && Data.latest_version_num != last_prompt_num) {
+		std::string content = version_msg_content;
+		content += "\n\n";
+		content += _("Visit StarDict website now?");
+		GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, content.c_str());
+		GtkWidget *prompt = gtk_check_button_new_with_mnemonic(_("_Don't show this until the next update."));
+		gtk_widget_show(prompt);
+		gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), prompt);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
+		gtk_window_set_title (GTK_WINDOW (dialog), version_msg_title.c_str());
+		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES) {
+			plugin_service->show_url("http://stardict.sourceforge.net");
 		}
+		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(prompt))) {
+			updated = true;
+			last_prompt_num = Data.latest_version_num;
+		}
+		gtk_widget_destroy (dialog);
 	}
 	if (Data.latest_news != latest_news) {
 		updated = true;
@@ -189,6 +196,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 		g_key_file_set_string(keyfile, "update", "version_msg_content", version_msg_content.c_str());
 		g_key_file_set_string(keyfile, "update", "latest_news", latest_news.c_str());
 		g_key_file_set_integer(keyfile, "update", "latest_version_num", latest_version_num);
+		g_key_file_set_integer(keyfile, "update", "last_prompt_num", last_prompt_num);
 		gsize length;
 		gchar *content = g_key_file_to_data(keyfile, &length, NULL);
 		std::string res = get_cfg_filename();
@@ -207,7 +215,7 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 {
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
-		g_file_set_contents(res.c_str(), "[update]\nlatest_version_num=0\nversion_msg_title=\nversion_msg_content=\nlatest_news=\n", -1, NULL);
+		g_file_set_contents(res.c_str(), "[update]\nlatest_version_num=0\nlast_prompt_num=0\nversion_msg_title=\nversion_msg_content=\nlatest_news=\n", -1, NULL);
 	}
 	GKeyFile *keyfile = g_key_file_new();
 	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
@@ -217,6 +225,12 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 	if (err) {
 		g_error_free (err);
 		latest_version_num = 0;
+	}
+	err = NULL;
+	last_prompt_num = g_key_file_get_integer(keyfile, "update", "last_prompt_num", &err);
+	if (err) {
+		g_error_free (err);
+		last_prompt_num = 0;
 	}
 	char *str;
 	str = g_key_file_get_string(keyfile, "update", "version_msg_title", NULL);
@@ -235,7 +249,9 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 		g_free(str);
 	}
 	g_key_file_free(keyfile);
-	g_idle_add(get_update_info, NULL);
+	gtk_init_add(get_update_info, NULL);
+	// Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
+	//g_idle_add(get_update_info, NULL);
 	g_print(_("Update info plug-in loaded.\n"));
 	return false;
 }
