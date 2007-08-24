@@ -40,7 +40,9 @@
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_MAEMO)
 static void spawn_command(const gchar *exe, const gchar *arg)
 {
-  gchar *cmd=g_strdup_printf("%s '%s'", exe, arg);
+  gchar *qarg = g_shell_quote(arg);
+  gchar *cmd=g_strdup_printf("%s %s", exe, qarg);
+  g_free(qarg);
   g_spawn_command_line_async(cmd, NULL);
   g_free(cmd);
 }

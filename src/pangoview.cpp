@@ -248,11 +248,9 @@ void LabelPangoWidget::do_set_text(const char *text)
 void LabelPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
 {
 	if (label) {
-		std::string str;
-		str = "<span foreground=\"red\">[Image:";
-		str += label;
-		str += "]</span>";
-		append_pango_text(str.c_str());
+		gchar *markup = g_markup_printf_escaped("<span foreground=\"red\">[Image:%s]</span>", label);
+		append_pango_text(markup);
+		g_free(markup);
 	} else {
 		append_pango_text("<span foreground=\"red\">[Image]</span>");
 	}

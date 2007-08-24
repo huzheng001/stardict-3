@@ -309,7 +309,7 @@ static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
 	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
 	GtkWidget *label = gtk_label_new(NULL);
 	glib::CharStr label_caption(
-		g_strdup_printf("<span weight=\"bold\" size=\"x-large\">%s</span>", caption));
+		g_markup_printf_escaped("<span weight=\"bold\" size=\"x-large\">%s</span>", caption));
 	gtk_label_set_markup(GTK_LABEL(label), get_impl(label_caption));
 	gtk_box_pack_start(GTK_BOX(hbox),label, FALSE, FALSE, 0);
 	GtkWidget *hseparator = gtk_hseparator_new();
