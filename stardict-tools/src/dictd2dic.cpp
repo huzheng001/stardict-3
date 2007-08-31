@@ -7,9 +7,9 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 
-//#define DICTD_WEBSITE "www.dict.org"
+#define DICTD_WEBSITE "www.dict.org"
 //#define DICTD_WEBSITE "www.freedict.de"
-#define DICTD_WEBSITE "www.mova.org"
+//#define DICTD_WEBSITE "www.mova.org"
 
 struct _worditem
 {

@@ -26,7 +26,7 @@ static void saytext(const char *text)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Espeak TTS configure"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Espeak TTS configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *hbox = gtk_hbox_new(false, 5);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);

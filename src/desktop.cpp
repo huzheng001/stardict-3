@@ -67,6 +67,7 @@ void play_wav_file(const std::string& filename)
 void show_help(const gchar *section)
 {
 #ifdef _WIN32
+  // You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
   gchar *filename = g_strdup_printf(_("%s\\help\\stardict.chm"), gStarDictDataDir.c_str());
   ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", filename, NULL, NULL, SW_SHOWNORMAL);
   g_free(filename);

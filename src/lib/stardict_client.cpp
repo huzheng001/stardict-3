@@ -1062,7 +1062,7 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
         g_free(buf);
         if (status != CODE_OK) {
             if (status == CODE_DICTMASK_NOTSET) {
-                on_error_.emit(_("You haven't choose any dictionaries, please choose some by click \"Dict Manage\"->\"Network dictionaries\"->\"Add\"."));
+                on_error_.emit(_("You haven't chosen any dictionaries, please choose some by clicking \"Manage Dict\"->\"Network dictionaries\"->\"Add\"."));
                 return 1;
             } else {
                 return 0;

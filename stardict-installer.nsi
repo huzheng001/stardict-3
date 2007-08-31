@@ -10,7 +10,7 @@ Var ISSILENT
 
 ;General
 
-!define STARDICT_VERSION		"3.0.0"
+!define STARDICT_VERSION		"3.0.1"
 
 Name "StarDict ${STARDICT_VERSION}"
 
@@ -713,13 +713,6 @@ Function .onInit
 FunctionEnd
 
 Function InstallWordPick
-  ReadRegStr $R8 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\AcroRd32.exe" "Path"
-  StrCmp $R8 "" next1 copyfile1
-  copyfile1:
-    SetOutPath "$R8\plug_ins"
-    File .\win32-install-dir\StarDict.api
-  next1:
-
   ReadRegStr $R9 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Acrobat.exe" "Path"
   StrCmp $R9 "" next2 copyfile2
   copyfile2:
@@ -731,12 +724,6 @@ Function InstallWordPick
 FunctionEnd
 
 Function un.DeleteWordPick
-  ReadRegStr $R8 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\AcroRd32.exe" "Path"
-  StrCmp $R8 "" next1 deletefile1
-  deletefile1:
-    Delete "$R8\plug_ins\StarDict.api"
-  next1:
-
   ReadRegStr $R9 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Acrobat.exe" "Path"
   StrCmp $R9 "" next2 deletefile2
   deletefile2:

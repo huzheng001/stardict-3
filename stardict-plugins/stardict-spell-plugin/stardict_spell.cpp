@@ -251,13 +251,13 @@ static bool load_custom_langs()
 		if (dict) {
 			dictlist.push_back(dict);
 		} else {
-			g_print(_("Warning: %s language request spell dict failed!\n"), i->c_str());
+			g_print(_("Warning: failure when requesting a spellchecking dictionary for %s language.\n"), i->c_str());
 		}
 	}
 	if (dictlist.empty()) {
 		enchant_broker_free(broker);
 		broker = NULL;
-		g_print(_("Error, no spell dictionary available!\n"));
+		g_print(_("Error, no spellchecking dictionary available!\n"));
 		return true;
 	} else {
 		return false;
@@ -300,7 +300,7 @@ static bool load_auto_lang()
 	if (!found) {
 		enchant_broker_free(broker);
 		broker = NULL;
-		g_print(_("Error, no spell dictionary available!\n"));
+		g_print(_("Error, no spellchecking dictionary available!\n"));
 		return true;
 	} else {
 		dictlist.push_back(dict);
@@ -315,7 +315,7 @@ static void on_use_custom__ckbutton_toggled(GtkToggleButton *button, GtkWidget *
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configure"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom languages."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_custom);
@@ -399,7 +399,7 @@ void stardict_plugin_exit(void)
 bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->dict_name = _("Spell Suggestion");
+	obj->dict_name = _("Spelling Suggestion");
 	broker = enchant_broker_init();
 	layout = pango_layout_new(gtk_widget_get_pango_context(plugin_info->mainwin));
 
@@ -429,6 +429,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	}
 	if (failed)
 		return true;
-	g_print(_("Spell plug-in loaded.\n"));
+	g_print(_("Spelling plugin loaded.\n"));
 	return false;
 }
