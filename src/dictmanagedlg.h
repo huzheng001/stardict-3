@@ -66,6 +66,7 @@ private:
 
 	void show_add_group_dialog(GtkTreeIter *iter);
 	void show_delete_group_dialog(GtkTreeIter *iter);
+	void show_delete_subgroup_dialog(GtkTreeIter *iter);
 	void show_add_dict_dialog(GtkTreeIter *iter);
 
 	static void on_wazard_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);

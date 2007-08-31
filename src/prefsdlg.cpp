@@ -571,7 +571,7 @@ void PrefsDlg::setup_dictionary_cache_page()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_cache_CreateCacheFile_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
-	check_button = gtk_check_button_new_with_mnemonic(_("_Sort word list by collate function."));
+	check_button = gtk_check_button_new_with_mnemonic(_("_Sort word list by collation function."));
 	enable = conf->get_bool_at("dictionary/enable_collation");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_cache_EnableCollation_ckbutton_toggled), (gpointer)this);
@@ -580,7 +580,7 @@ void PrefsDlg::setup_dictionary_cache_page()
 	gtk_box_pack_start(GTK_BOX(vbox1),collation_hbox,false,false,0);
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
-	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("\tCollate _function:"));
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("\tCollation _function:"));
 	gtk_box_pack_start(GTK_BOX(collation_hbox),label,false,false,0);
 	GtkWidget *combobox = gtk_combo_box_new_text();
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(combobox), FALSE);
@@ -658,7 +658,7 @@ void PrefsDlg::setup_dictionary_export_page()
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
 	GtkWidget *check_button;
-	check_button = gtk_check_button_new_with_mnemonic(_("_Only export word."));
+	check_button = gtk_check_button_new_with_mnemonic(_("_Only export words."));
 	bool enable= conf->get_bool_at("dictionary/only_export_word");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_export_ckbutton_toggled), this);
@@ -1322,7 +1322,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 		else if (!website_searchlink[0])
 			error_msg = _("Please input the website search link.");
 		else if (!strstr(website_searchlink, "%s")) {
-			error_msg = _("The website search link should contains a \"%%s\" string for querying a word.");
+			error_msg = _("The website search link should contain a \"%%s\" string for querying a word.");
 		}
 		
 		if (error_msg) {
@@ -1401,7 +1401,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 					(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 					GTK_MESSAGE_INFO,
 					GTK_BUTTONS_OK,
-					_("The website search link should contains a \"%%s\" string for quering word."));
+					_("The website search link should contain a \"%%s\" string for querying a word."));
 
 				gtk_dialog_set_default_response (GTK_DIALOG (message_dlg), GTK_RESPONSE_OK);
 

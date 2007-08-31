@@ -247,6 +247,7 @@ std::list<std::string> AppConf::get_default_search_website_list()
 #ifdef _WIN32
 bool AppConf::get_win32_use_custom_font()
 {
+	// You may translate it to "win32_use_custom_font=1" for your language.
 	gchar *ch = _("win32_use_custom_font=0");
 	gchar *s = strstr(ch, "win32_use_custom_font=");
 	if (s) {
@@ -258,6 +259,7 @@ bool AppConf::get_win32_use_custom_font()
 
 std::string AppConf::get_win32_custom_font()
 {
+	// You may translate it as "win32_custom_font=tahoma 9".
 	gchar *ch = _("win32_custom_font=");
 	gchar *s = strstr(ch, "win32_custom_font=");
 	if (s) {

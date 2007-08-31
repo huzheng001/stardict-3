@@ -1,6 +1,12 @@
 #ifndef _STARDICT_NETDICT_PLUGIN_H_
 #define _STARDICT_NETDICT_PLUGIN_H_
 
+struct NetDictResponse {
+	const char *bookname;
+	const char *word;
+	char *data;
+};
+
 struct StarDictNetDictPlugInObject{
 	StarDictNetDictPlugInObject();
 

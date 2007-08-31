@@ -1561,7 +1561,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Save to file(Alt+E)"),NULL);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Save to file (Alt+E)"),NULL);
 
 #ifndef CONFIG_GPE
 	button=gtk_button_new();
@@ -1586,7 +1586,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search in the definition (Ctrl+F)"),NULL);
+	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search in the definition text (Ctrl+F)"),NULL);
 }
 
 void ToolWin::ShowListCallback(GtkWidget *widget, gpointer data)
@@ -1774,7 +1774,7 @@ void TextWin::ShowInitFailed()
 {
 	char *fmt = _("Warning! No dictionary is loaded.\n"
 		      "Please go to StarDict's website, download some dictionaries:\n"
-		      "%s%s%s and put them to %s.");
+		      "%s%s%s and put them in %s.");
 	const char *link_pos = strstr(fmt, "%s%s%s");
 	LinksPosList links;
 	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
@@ -1814,7 +1814,7 @@ void TextWin::ShowInfo()
 	view->set_text(
 		_("       Welcome to StarDict\n"
 		  "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
-		  "It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc.\n\n"
+		  "It has powerful features, such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query\" and \"Full-text search\".\n\n"
 		  "       Here is an introduction to using StarDict:\n\n"
 		  "       1. Glob-style pattern matching\n"
 		  "       You can input strings containing \'*\' (wildcard) and \'?\' (joker) as the pattern. "
@@ -1826,10 +1826,10 @@ void TextWin::ShowInfo()
 		  "similar to the word that you input. "
 		  "To create a fuzzy query, just input the word with a beginning \"/\", and then press Enter.\n"
 		  "       3. Full-text search\n"
-		  "       Full-text search searchs a word in the data. To create a Full-text search, just input the word with a beginning \"|\", and then press Enter. For example, \"|ab cd\" searchs data which contain both \"ab\" and \"cd\". If the words contain Space character, you can use \"\\ \", such as \"|apple\\ pie\", other escaping characters are \"\\\\\" for \'\\\', \"\\t\" for Tab and \"\\n\" for new line.\n"
+		  "       Full-text search searches for a word in the data. To create a Full-text search, just input the word with a beginning \"|\", and then press Enter. For example, \"|ab cd\" searches data which contain both \"ab\" and \"cd\". If the words contain Space character, you can use \"\\ \", such as \"|apple\\ pie\", other escaping characters are \"\\\\\" for \'\\\', \"\\t\" for Tab and \"\\n\" for new line.\n"
 		  "       4. Special character search\n"
-		  "       If your words contain special characters, you can use \'\\\' to escape it, for example, \"a\\*b\\?\" searchs \"a*b?\", \"\\/abc\" searchs \"/abc\".\n"
-		  "       5. Scan selected word\n"
+		  "       If your words contain special characters, you can use \'\\\' to escape it, for example, \"a\\*b\\?\" searches \"a*b?\", \"\\/abc\" searches \"/abc\".\n"
+		  "       5. Scan the selected word\n"
 		  "       Turn on the check button at the bottom-left corner of the StarDict window to activate this feature. "
 		  "When this feature is on, StarDict will automatically look up words, phrases, and Chinese characters in other applications. "
 		  "Just highlight a word or phrase with your mouse, and a floating window will pop up showing the definition of the "
@@ -1908,7 +1908,7 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 			} else if (list_type == STARDICT::LookupResponse::ListType_Fuzzy_List) {
 				Show(_("There are too many spelling errors :-("));
 			} else if (list_type == STARDICT::LookupResponse::ListType_Tree) {
-				Show(_("There are no dictionary's article with such word :-("));
+				Show(_("There are no dictionary articles containing this word. :-("));
 			} else {
 				Show(_("<Not Found!>"));
 			}
@@ -2632,8 +2632,8 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
 	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
-	gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
-	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str(), engine_index);
+	glong engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
+	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
 }
 
 /*********************************************/

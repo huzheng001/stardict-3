@@ -206,7 +206,7 @@ void AppCore::on_link_click(const std::string &link)
 	}
 }
 
-void AppCore::do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, int userdata)
+void AppCore::do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata)
 {
 	gpAppFrame->oHttpManager.SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
 }
@@ -1129,7 +1129,7 @@ void AppCore::LookupDataToMainWin(const gchar *sWord)
 				oStarDictClient.send_commands(1, c);
 			}
 		} else {
-			ShowNotFoundToTextWin(sWord, _("There are no dictionary's article with such word :-("), TEXT_WIN_FUZZY_NOT_FOUND);
+			ShowNotFoundToTextWin(sWord, _("There are no dictionary articles containing this word. :-("), TEXT_WIN_FUZZY_NOT_FOUND);
 		}
 	} else {
 		LookupDataDialog *dialog = new LookupDataDialog(sWord);
@@ -1174,7 +1174,7 @@ void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDict
 		oMidWin.oIndexWin.oListWin.SetTreeModel(&reslist[0], dictmask);
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
-		ShowNotFoundToTextWin(sWord, _("There are no dictionary's article with such word :-("), TEXT_WIN_FUZZY_NOT_FOUND);
+		ShowNotFoundToTextWin(sWord, _("There are no dictionary articles containing this word. :-("), TEXT_WIN_FUZZY_NOT_FOUND);
 	}
 	//t=clock()-t;
 	//g_message("Time: %.3lf sec\n", double(t)/CLOCKS_PER_SEC);
@@ -1776,7 +1776,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	}
 	const char *buffer = http_client->buffer;
 	size_t buffer_len = http_client->buffer_len;
-	gint engine_index = http_client->userdata;
+	glong engine_index = (glong)(http_client->userdata);
 
 	bool found = false;
 	std::string result_text;
@@ -1871,7 +1871,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 				oMidWin.oTransWin.SetText(text);
 				g_free(text);
 			} else {
-				oMidWin.oTransWin.SetText(_("Convert error!\n"));
+				oMidWin.oTransWin.SetText(_("Conversion error!\n"));
 			}
 		}
 	} else {

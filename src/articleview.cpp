@@ -169,22 +169,22 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 			case 'x':
 				p++;
 				sec_size = strlen(p) + 1;
-				mark+= _("XDXF data parse plug-in is not found!");
+				mark+= _("XDXF data parsing plug-in is not found!");
 				break;
 			case 'k':
 				p++;
 				sec_size = strlen(p) + 1;
-				mark+= _("PowerWord data parse plug-in is not found!");
+				mark+= _("PowerWord data parsing plug-in is not found!");
 				break;
 			case 'w':
 				p++;
 				sec_size = strlen(p) + 1;
-				mark+= _("Wiki data parse plug-in is not found!");
+				mark+= _("Wiki data parsing plug-in is not found!");
 				break;
 			case 'h':
 				p++;
 				sec_size = strlen(p) + 1;
-				mark+= _("HTML data parse plug-in is not found!");
+				mark+= _("HTML data parsing plug-in is not found!");
 				break;
 			case 't':
 				p++;
@@ -248,7 +248,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					p++;
 					sec_size = strlen(p)+1;
 				}
-				mark += _("Unkown data type, please upgrade StarDict!");
+				mark += _("Unknown data type, please upgrade StarDict!");
 				break;
 		}
 		p += sec_size;

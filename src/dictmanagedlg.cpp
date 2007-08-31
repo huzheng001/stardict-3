@@ -1292,10 +1292,24 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 
 void DictManageDlg::show_delete_group_dialog(GtkTreeIter *iter)
 {
-	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _("Are you sure to delete this dict group?"));
+	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _("Are you sure you want to delete this group of dictionaries?"));
 	gint response = gtk_dialog_run (GTK_DIALOG (dialog));
 	if (response == GTK_RESPONSE_YES) {
 		gtk_tree_store_remove(GTK_TREE_STORE(dictmanage_tree_model), iter);
+		dictmanage_config_changed = true;
+	}
+	gtk_widget_destroy (dialog);
+}
+
+void DictManageDlg::show_delete_subgroup_dialog(GtkTreeIter *first)
+{
+	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, _("Are you sure you want to delete this sub-group of dictionaries?"));
+	gint response = gtk_dialog_run (GTK_DIALOG (dialog));
+	if (response == GTK_RESPONSE_YES) {
+		while (true) {
+			if (!gtk_tree_store_remove(GTK_TREE_STORE(dictmanage_tree_model), first))
+				break;
+		}
 		dictmanage_config_changed = true;
 	}
 	gtk_widget_destroy (dialog);
@@ -1474,6 +1488,11 @@ void DictManageDlg::on_dictmanage_delete_button_clicked(GtkWidget *widget, DictM
 		if (type == 0) {
 			if (gtk_tree_model_iter_n_children(model, NULL) > 1)
 				oDictManageDlg->show_delete_group_dialog(&iter);
+		} else if (type == 1) {
+			GtkTreeIter first;
+			if (gtk_tree_model_iter_children(model, &first, &iter)) {
+				oDictManageDlg->show_delete_subgroup_dialog(&first);
+			}
 		} else if (type == 2) {
 			gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 			oDictManageDlg->dictmanage_config_changed = true;

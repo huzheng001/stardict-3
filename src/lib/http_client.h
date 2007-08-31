@@ -13,7 +13,7 @@ typedef unsigned long in_addr_t;
 #endif
 
 
-typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, int userdata);
+typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpointer userdata);
 
 class HttpClient {
 public:
@@ -22,11 +22,11 @@ public:
 
 	HttpClient();
 	~HttpClient();
-	void SendHttpGetRequest(const char* shost, const char* sfile, gint data);
-	void SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gint data);
+	void SendHttpGetRequest(const char* shost, const char* sfile, gpointer data);
+	void SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer data);
 	char *buffer;
 	size_t buffer_len;
-	gint userdata;
+	gpointer userdata;
 	get_http_response_func_t callback_func_;
 private:
 	std::string host_;

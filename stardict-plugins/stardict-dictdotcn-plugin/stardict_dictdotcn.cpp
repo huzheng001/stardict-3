@@ -1,12 +1,15 @@
 #include "stardict_dictdotcn.h"
 #include <glib/gi18n.h>
 #include <string>
+#include <map>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
 const StarDictPluginSystemService *plugin_service;
+
+std::map<std::string, NetDictResponse *> response_map;
 
 static char *build_dictdata(char type, const char *definition)
 {
@@ -23,7 +26,28 @@ static char *build_dictdata(char type, const char *definition)
 	return data;
 }
 
-static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
+struct dict_ParseUserData {
+	std::string pron;
+	std::string def;
+	std::string rel;
+};
+
+static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
+{
+	const gchar *element = g_markup_parse_context_get_element(context);
+	if (!element)
+		return;
+	dict_ParseUserData *Data = (dict_ParseUserData *)user_data;
+	if (strcmp(element, "pron")==0) {
+		Data->pron.assign(text, text_len);
+	} else if (strcmp(element, "def")==0) {
+		Data->def.assign(text, text_len);
+	} else if (strcmp(element, "rel")==0) {
+		Data->rel.assign(text, text_len);
+	}
+}
+
+static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
 {
 	if (!buffer)
 		return;
@@ -32,14 +56,54 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 		return;
 	}
 	p += 4;
-	//g_print("%s\n", p);
+	dict_ParseUserData Data;
+	GMarkupParser parser;
+	parser.start_element = NULL;
+	parser.end_element = NULL;
+	parser.text = dict_parse_text;
+	parser.passthrough = NULL;
+	parser.error = NULL;
+	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+	g_markup_parse_context_parse(context, p, buffer_len - (p - buffer), NULL);
+	g_markup_parse_context_end_parse(context, NULL);
+	g_markup_parse_context_free(context);
+	if (Data.def == "Not Found")
+		return;
+
+	NetDictResponse *resp = new NetDictResponse;
+	resp->bookname = _("Dict.cn");
+	resp->word = (const char *)userdata;
+	std::string definition;
+	if (!Data.pron.empty()) {
+		definition += Data.pron;
+		definition += "\n";
+	}
+	definition += Data.def;
+	if (!Data.rel.empty()) {
+		definition += "\n";
+		definition += Data.rel;
+	}
+	resp->data = build_dictdata('m', definition.c_str());
+	std::map<std::string, NetDictResponse *>::iterator it = response_map.find((const char *)userdata);
+	if (it != response_map.end()) {
+		delete it->second;
+	}
+	response_map[(const char *)userdata] = resp;
 }
 
 static void lookup(const char *word)
 {
 	std::string file = "/ws.php?utf8=true&q=";
 	file += word;
-	plugin_service->send_http_request("dict.cn", file.c_str(), on_get_http_response, 0);
+	std::map<std::string, NetDictResponse *>::iterator it = response_map.find(word);
+	if (it == response_map.end()) {
+		std::pair<std::map<std::string, NetDictResponse *>::iterator, bool> result;
+		result = response_map.insert(std::pair<std::string, NetDictResponse *>(word, NULL));
+		if (result.second == true) {
+			plugin_service->send_http_request("dict.cn", file.c_str(), on_get_http_response, (gpointer)(result.first->first.c_str()));
+		}
+	} else {
+	}
 }
 
 static void configure()
@@ -61,6 +125,9 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 
 DLLIMPORT void stardict_plugin_exit(void)
 {
+	for (std::map<std::string, NetDictResponse *>::iterator i = response_map.begin(); i != response_map.end(); ++i) {
+		delete i->second;
+	}
 }
 
 DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)

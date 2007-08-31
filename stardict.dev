@@ -1,7 +1,7 @@
 [Project]
 FileName=stardict.dev
 Name=stardict
-UnitCount=143
+UnitCount=145
 Type=0
 Ver=1
 ObjFiles=
@@ -232,19 +232,19 @@ BuildCmd=
 [VersionInfo]
 Major=3
 Minor=0
-Release=0
+Release=1
 Build=1
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://stardict.sourceforge.net
-FileVersion=3.0.0
+FileVersion=3.0.1
 FileDescription=StarDict
 InternalName=
 LegalCopyright=Hu Zheng <huzheng_001@163.com>
 LegalTrademarks=
 OriginalFilename=stardict.exe
 ProductName=StarDict
-ProductVersion=3.0.0
+ProductVersion=3.0.1
 AutoIncBuildNr=0
 
 [Unit21]
@@ -1469,6 +1469,26 @@ BuildCmd=
 
 [Unit143]
 FileName=src\lib\httpmanager.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit144]
+FileName=src\lib\netdictplugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit145]
+FileName=src\lib\netdictplugin.cpp
 CompileCpp=1
 Folder=lib
 Compile=1

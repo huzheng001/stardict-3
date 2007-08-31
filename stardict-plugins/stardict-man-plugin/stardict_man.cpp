@@ -150,9 +150,9 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configure"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
-	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Need \"man \" prefix for the input words."));
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), need_prefix);
 	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
 	gtk_widget_show_all(vbox);

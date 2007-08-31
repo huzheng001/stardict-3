@@ -128,7 +128,7 @@ static void updateinfo_parse_text(GMarkupParseContext *context, const gchar *tex
 	}
 }
 
-static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
+static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
 {
 	if (!buffer)
 		return;
@@ -207,7 +207,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, int userdata)
 
 static gboolean get_update_info(gpointer data)
 {
-	plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, 0);
+	plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, NULL);
 	return FALSE;
 }
 

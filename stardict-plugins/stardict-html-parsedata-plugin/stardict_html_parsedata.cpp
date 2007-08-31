@@ -438,11 +438,11 @@ static void configure()
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: HTML data parse plugin version doesn't match!\n");
+		g_print("Error: HTML data parsing plugin version doesn't match!\n");
 		return true;
 	}
 	obj->type = StarDictPlugInType_PARSEDATA;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("HTML data parse"), _("HTML data parse engine."), _("Parse the HTML data."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("HTML data parsing"), _("HTML data parsing engine."), _("Parse the HTML data."));
 	obj->configure_func = configure;
 	return false;
 }
@@ -454,7 +454,7 @@ DLLIMPORT void stardict_plugin_exit(void)
 DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
 	obj->parse_func = parse;
-	g_print(_("HTML data parse plug-in loaded.\n"));
+	g_print(_("HTML data parsing plug-in loaded.\n"));
 	return false;
 }
 

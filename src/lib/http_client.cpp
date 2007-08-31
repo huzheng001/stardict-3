@@ -46,7 +46,7 @@ void HttpClient::disconnect()
 	}
 }
 
-void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile, gint data)
+void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile, gpointer data)
 {
 	host_ = shost;
 	file_ = sfile;
@@ -54,7 +54,7 @@ void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile, gint d
 	Socket::resolve(host_, this, on_resolved);
 }
 
-void HttpClient::SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gint data)
+void HttpClient::SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer data)
 {
 	callback_func_ = callback_func;
 	SendHttpGetRequest(shost, sfile, data);
