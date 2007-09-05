@@ -220,8 +220,10 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 			view->SetDictIndex(gpAppFrame->scan_dictmask[i]);
 			if (gpAppFrame->scan_dictmask[i].type == InstantDictType_LOCAL)
 				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->scan_dictmask[i].index).c_str());
-			else
+			else if (gpAppFrame->scan_dictmask[i].type == InstantDictType_VIRTUAL)
 				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
+			else if (gpAppFrame->scan_dictmask[i].type == InstantDictType_NET)
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
 			j=0;
 			do {
 				if (j==0) {
@@ -274,11 +276,71 @@ void FloatWin::ShowText(gchar ***Word, gchar ****WordData, const gchar *sOriginW
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
+void FloatWin::ShowText(NetDictResponse *resp)
+{
+	view->begin_update();
+	bool do_append;
+	if (found_result == FLOAT_WIN_FOUND || found_result == FLOAT_WIN_NET_FOUND) {
+		do_append = true;
+		view->goto_end();
+	} else {
+		do_append = false;
+		view->clear();
+		view->goto_begin();
+	}
+	if (resp->data) {
+		found_result = FLOAT_WIN_NET_FOUND;
+		if (!do_append) {
+			std::string mark = "<b><span size=\"x-large\">";
+			gchar *m_str = g_markup_escape_text(resp->word, -1);
+			mark += m_str;
+			g_free(m_str);
+			mark += "</span></b>";
+			view->append_pango_text(mark.c_str());
+		}
+		InstantDictIndex dict_index;
+		dict_index.type = InstantDictType_UNKNOWN;
+		view->SetDictIndex(dict_index);
+		view->AppendNewline();
+		view->AppendHeader(resp->bookname);
+		view->AppendWord(resp->word);
+		view->AppendData(resp->data, resp->word, resp->word);
+	} else {
+		if (do_append) {
+			view->end_update();
+			return;
+		}
+		found_result = FLOAT_WIN_NET_NOT_FOUND;
+		if (!conf->get_bool_at("floating_window/show_if_not_found")) {
+			view->end_update();
+			return;
+		}
+		gchar *text;
+		text = g_markup_printf_escaped("<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>", resp->word, _("<Not Found!>"));
+		view->set_pango_text(text);
+		g_free(text);
+	}
+	view->end_update();
+	gboolean pronounced = false;
+	readwordtype = gpAppFrame->oReadWord.canRead(resp->word);
+	if (readwordtype != READWORD_CANNOT) {
+		if (PronounceWord == resp->word)
+			pronounced = true;
+		else
+			PronounceWord = resp->word;
+	}
+	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
+
+	Popup(true);
+	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
+		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
+}
+
 void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response)
 {
 	view->begin_update();
 	bool do_append;
-	if (found_result == FLOAT_WIN_FOUND) {
+	if (found_result == FLOAT_WIN_FOUND || found_result == FLOAT_WIN_NET_FOUND) {
 		do_append = true;
 		view->goto_end();
 	} else {
@@ -287,8 +349,12 @@ void FloatWin::ShowText(const struct STARDICT::LookupResponse::DictResponse *dic
 		view->goto_begin();
 	}
 	if (dict_response->dict_result_list.empty()) {
+		if (do_append) {
+			view->end_update();
+			return;
+		}
 		found_result = FLOAT_WIN_NET_NOT_FOUND;
-		if (do_append || !conf->get_bool_at("floating_window/show_if_not_found")) {
+		if (!conf->get_bool_at("floating_window/show_if_not_found")) {
 			view->end_update();
 			return;
 		}
@@ -420,6 +486,8 @@ void FloatWin::ShowText(gchar ****ppppWord, gchar *****pppppWordData, const gcha
 			view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->scan_dictmask[i].index).c_str());
 		else if (gpAppFrame->scan_dictmask[i].type == InstantDictType_VIRTUAL)
 			view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
+		else if (gpAppFrame->scan_dictmask[i].type == InstantDictType_NET)
+			view->AppendHeader(gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(gpAppFrame->scan_dictmask[i].index));
 		m=0;
 		do {
 			if (m==0) {
@@ -470,6 +538,15 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 
 	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
 	if (enable_netdict)
+		return;
+	bool have_netdict = false;
+	for (size_t iLib=0; iLib< gpAppFrame->scan_dictmask.size(); iLib++) {
+		if (gpAppFrame->scan_dictmask[iLib].type == InstantDictType_NET) {
+			have_netdict = true;
+			break;
+		}
+	}
+	if (have_netdict)
 		return;
 	if (!conf->get_bool_at("floating_window/show_if_not_found"))
 		return;

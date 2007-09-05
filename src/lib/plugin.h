@@ -17,6 +17,8 @@ enum StarDictPlugInType {
 	StarDictPlugInType_MISC,
 };
 
+struct NetDictResponse;
+
 struct StarDictPluginSystemService {
 	typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpointer userdata);
 	typedef void (*send_http_request_func_t)(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata);
@@ -25,6 +27,10 @@ struct StarDictPluginSystemService {
 	show_url_func_t show_url;
 	typedef void (*set_news_func_t)(const char *news, const char *links);
 	set_news_func_t set_news;
+	typedef void (*netdict_save_cache_resp_func_t)(const char *dict, const char *key, NetDictResponse *resp);
+	netdict_save_cache_resp_func_t netdict_save_cache_resp;
+	typedef void (*show_netdict_resp_func_t)(NetDictResponse *resp, bool ismainwin);
+	show_netdict_resp_func_t show_netdict_resp;
 };
 
 struct StarDictPluginSystemInfo {

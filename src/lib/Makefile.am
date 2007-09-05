@@ -24,6 +24,7 @@ libstardict_a_SOURCES = \
 	plugin.cpp plugin.h \
 	virtualdictplugin.cpp virtualdictplugin.h \
 	netdictplugin.cpp netdictplugin.h \
+	netdictcache.cpp netdictcache.h	\
 	ttsplugin.cpp ttsplugin.h	\
 	parsedata_plugin.cpp parsedata_plugin.h	\
 	pluginmanager.cpp pluginmanager.h	\

@@ -168,8 +168,10 @@ static void itemlist_to_xml(std::string &newxml, std::list<DictManageItem> &item
 	for (std::list<DictManageItem>::iterator j = item_list.begin(); j != item_list.end(); ++j) {
 		if (j->type == LOCAL_DICT)
 			newxml += "<localdict";
-		else
+		else if (j->type == VIRTUAL_DICT)
 			newxml += "<virtualdict";
+		else
+			newxml += "<netdict";
 		newxml += " enable=\"";
 		if (j->enable)
 			newxml += "true";

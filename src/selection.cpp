@@ -210,5 +210,6 @@ void Selection::SelectionReceived(gchar* sToken)
 				gpAppFrame->oStarDictClient.send_commands(1, c);
 			}
 		}
+		gpAppFrame->LookupNetDict(LastClipWord.c_str(), false);
 	}
 }

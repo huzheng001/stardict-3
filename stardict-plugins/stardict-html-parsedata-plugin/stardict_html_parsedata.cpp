@@ -378,23 +378,25 @@ static void html2result(const char *p, ParseResult &result)
 				}
 			}
 			if (!src.empty()) {
+				ParseResultItem item;
+				item.type = ParseResultItemType_link;
+				item.link = new ParseResultLinkItem;
+				item.link->pango = res;
+				item.link->links_list = links_list;
+				result.item_list.push_back(item);
+				res.clear();
+				cur_pos = 0;
+				links_list.clear();
+				item.type = ParseResultItemType_res;
+				item.res = new ParseResultResItem;
+				item.res->type = "image";
 				int n = src.length();
 				if (src[0]==0x1e && src[n-1]==0x1f) {
-					ParseResultItem item;
-					item.type = ParseResultItemType_link;
-					item.link = new ParseResultLinkItem;
-					item.link->pango = res;
-					item.link->links_list = links_list;
-					result.item_list.push_back(item);
-					res.clear();
-					cur_pos = 0;
-					links_list.clear();
-					item.type = ParseResultItemType_res;
-					item.res = new ParseResultResItem;
-					item.res->type = "image";
 					item.res->key.assign(src.c_str()+1, n-2);
-					result.item_list.push_back(item);
+				} else {
+					item.res->key = src;
 				}
+				result.item_list.push_back(item);
 			}
 		} else {
 			next = strchr(p+1, '>');

@@ -1,15 +1,22 @@
 #include "stardict_dictdotcn.h"
 #include <glib/gi18n.h>
 #include <string>
-#include <map>
+#include <list>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
+#define DICTDOTCN "dict.cn"
+
 const StarDictPluginSystemService *plugin_service;
 
-std::map<std::string, NetDictResponse *> response_map;
+struct QueryInfo {
+	bool ismainwin;
+	char *word;
+};
+
+static std::list<QueryInfo *> keyword_list;
 
 static char *build_dictdata(char type, const char *definition)
 {
@@ -49,13 +56,23 @@ static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsi
 
 static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
 {
-	if (!buffer)
+	if (!buffer) {
 		return;
+	}
 	const char *p = g_strstr_len(buffer, buffer_len, "\r\n\r\n");
 	if (!p) {
 		return;
 	}
 	p += 4;
+	const char *xml = g_strstr_len(p, buffer_len - (p - buffer), "<dict>");
+	if (!xml) {
+		return;
+	}
+	const char *xml_end = g_strstr_len(xml+6, buffer_len - (xml+6 - buffer), "</dict>");
+	if (!xml_end) {
+		return;
+	}
+	xml_end += 7;
 	dict_ParseUserData Data;
 	GMarkupParser parser;
 	parser.start_element = NULL;
@@ -64,46 +81,44 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 	parser.passthrough = NULL;
 	parser.error = NULL;
 	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-	g_markup_parse_context_parse(context, p, buffer_len - (p - buffer), NULL);
+	g_markup_parse_context_parse(context, xml, xml_end - xml, NULL);
 	g_markup_parse_context_end_parse(context, NULL);
 	g_markup_parse_context_free(context);
-	if (Data.def == "Not Found")
-		return;
-
+	QueryInfo *qi = (QueryInfo *)userdata;
 	NetDictResponse *resp = new NetDictResponse;
 	resp->bookname = _("Dict.cn");
-	resp->word = (const char *)userdata;
-	std::string definition;
-	if (!Data.pron.empty()) {
-		definition += Data.pron;
-		definition += "\n";
+	resp->word = qi->word; // So neen't free qi->word;
+	if (Data.def == "Not Found") {
+		resp->data = NULL;
+	} else {
+		std::string definition;
+		if (!Data.pron.empty()) {
+			definition += Data.pron;
+			definition += "\n";
+		}
+		definition += Data.def;
+		if (!Data.rel.empty()) {
+			definition += "\n";
+			definition += Data.rel;
+		}
+		resp->data = build_dictdata('m', definition.c_str());
 	}
-	definition += Data.def;
-	if (!Data.rel.empty()) {
-		definition += "\n";
-		definition += Data.rel;
-	}
-	resp->data = build_dictdata('m', definition.c_str());
-	std::map<std::string, NetDictResponse *>::iterator it = response_map.find((const char *)userdata);
-	if (it != response_map.end()) {
-		delete it->second;
-	}
-	response_map[(const char *)userdata] = resp;
+	plugin_service->netdict_save_cache_resp(DICTDOTCN, qi->word, resp);
+	plugin_service->show_netdict_resp(resp, qi->ismainwin);
+	delete qi;
+	keyword_list.remove(qi);
 }
 
-static void lookup(const char *word)
+static void lookup(const char *word, bool ismainwin)
 {
 	std::string file = "/ws.php?utf8=true&q=";
 	file += word;
-	std::map<std::string, NetDictResponse *>::iterator it = response_map.find(word);
-	if (it == response_map.end()) {
-		std::pair<std::map<std::string, NetDictResponse *>::iterator, bool> result;
-		result = response_map.insert(std::pair<std::string, NetDictResponse *>(word, NULL));
-		if (result.second == true) {
-			plugin_service->send_http_request("dict.cn", file.c_str(), on_get_http_response, (gpointer)(result.first->first.c_str()));
-		}
-	} else {
-	}
+	gchar *keyword = g_strdup(word);
+	QueryInfo *qi = new QueryInfo;
+	qi->ismainwin = ismainwin;
+	qi->word = keyword;
+	keyword_list.push_back(qi);
+	plugin_service->send_http_request("dict.cn", file.c_str(), on_get_http_response, qi);
 }
 
 static void configure()
@@ -125,8 +140,9 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 
 DLLIMPORT void stardict_plugin_exit(void)
 {
-	for (std::map<std::string, NetDictResponse *>::iterator i = response_map.begin(); i != response_map.end(); ++i) {
-		delete i->second;
+	for (std::list<QueryInfo *>::iterator i = keyword_list.begin(); i != keyword_list.end(); ++i) {
+		g_free((*i)->word);
+		delete *i;
 	}
 }
 
@@ -134,6 +150,7 @@ DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Dict.cn");
+	obj->dict_cacheid = DICTDOTCN;
 	g_print(_("Dict.cn plug-in loaded.\n"));
 	return false;
 }

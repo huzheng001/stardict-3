@@ -166,6 +166,7 @@ public:
 	void on_http_client_response(HttpClient*);
 	static void do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata);
 	static void set_news(const char *news, const char *links);
+	static void show_netdict_resp(NetDictResponse *resp, bool ismainwin);
 };
 
 #ifdef _WIN32
