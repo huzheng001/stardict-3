@@ -50,8 +50,8 @@ SetDateSave on
 !define HKLM_APP_PATHS_KEY		"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\stardict.exe"
 !define STARDICT_UNINST_EXE			"stardict-uninst.exe"
 
-!define GTK_MIN_VERSION			"2.6.0"
-!define GTK_INSTALL_VERSION		"2.10.11"
+!define GTK_MIN_VERSION			"2.10.0"
+!define GTK_INSTALL_VERSION		"2.10.13"
 !define GTK_REG_KEY			"SOFTWARE\GTK\2.0"
 !define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
 !define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
@@ -245,6 +245,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
     StrCpy $GTK_FOLDER $R6
     StrCmp $R1 "NONE" done ; If we have no rights, we can't re-install
     ; Even if we have a sufficient version of GTK+, we give user choice to re-install.
+    MessageBox MB_YESNO $(GTK_UPGRADE_PROMPT) /SD IDYES IDNO done
     ClearErrors
     ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT'
     IfErrors gtk_install_error

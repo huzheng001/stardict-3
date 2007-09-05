@@ -85,7 +85,11 @@ bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vecto
   if (word[len-1]=='$') {
     const char *p = word.c_str();
     const char *p1 = strchr(p, '$');
-    headword.assign(p, p1-p);
+    if (p1) {
+      headword.assign(p, p1-p);
+    } else {
+      headword = word;
+    }
   } else {
     headword = word;
   }

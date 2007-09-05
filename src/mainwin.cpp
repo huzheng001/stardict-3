@@ -846,6 +846,8 @@ void ListWin::SetTreeModel(std::vector<gchar *> *reslist, std::vector<InstantDic
 				bookname = gpAppFrame->oLibs.dict_name(dictmask[i].index).c_str();
 			else if (dictmask[i].type == InstantDictType_VIRTUAL)
 				bookname = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(dictmask[i].index);
+			else if (dictmask[i].type == InstantDictType_NET)
+				bookname = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(dictmask[i].index);
 			gtk_tree_store_set(tree_model, &parent, 0, bookname, -1);
 			for (std::vector<gchar *>::iterator p=reslist[i].begin();
 			     p != reslist[i].end(); ++p) {
@@ -1056,6 +1058,7 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 				gpAppFrame->oStarDictClient.send_commands(1, c);
 			}
 		}
+		gpAppFrame->LookupNetDict(word, true);
 		g_free(word);
 	}
 }
@@ -1867,6 +1870,8 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str());
 			else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL)
 				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
+			else if (gpAppFrame->query_dictmask[i].type == InstantDictType_NET)
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
 			j=0;
 			do {
 				view->AppendWord(Word[i][j]);
@@ -1888,11 +1893,44 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 	view->end_update();
 }
 
+void TextWin::Show(NetDictResponse *resp)
+{
+	view->begin_update();
+	bool do_append;
+	if (query_result == TEXT_WIN_FOUND || query_result == TEXT_WIN_SHOW_FIRST || query_result == TEXT_WIN_NET_FOUND || query_result == TEXT_WIN_NET_SHOW_FIRST) {
+		do_append = true;
+		view->goto_end();
+	} else {
+		do_append = false;
+		view->clear();
+		view->goto_begin();
+	}
+	if (resp->data) {
+		query_result = TEXT_WIN_NET_FOUND;
+		InstantDictIndex dict_index;
+		dict_index.type = InstantDictType_UNKNOWN;
+		view->SetDictIndex(dict_index);
+		gchar *mark = g_strdup_printf("%d", view->bookindex);
+		gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast(resp->bookname, mark);
+		g_free(mark);
+		view->AppendHeader(resp->bookname);
+		view->AppendWord(resp->word);
+		view->AppendData(resp->data, resp->word, resp->word);
+		view->AppendNewline();
+	} else {
+		if (!do_append) {
+			query_result = TEXT_WIN_NET_NOT_FOUND;
+			Show(_("<Not Found!>"));
+		}
+	}
+	view->end_update();
+}
+
 void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_response, STARDICT::LookupResponse::ListType list_type)
 {
 	view->begin_update();
 	bool do_append;
-	if (query_result == TEXT_WIN_FOUND || query_result == TEXT_WIN_SHOW_FIRST) {
+	if (query_result == TEXT_WIN_FOUND || query_result == TEXT_WIN_SHOW_FIRST || query_result == TEXT_WIN_NET_FOUND || query_result == TEXT_WIN_NET_SHOW_FIRST) {
 		do_append = true;
 		view->goto_end();
 	} else {
@@ -1901,8 +1939,8 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 		view->goto_begin();
 	}
 	if (dict_response->dict_result_list.empty()) {
-		query_result = TEXT_WIN_NET_NOT_FOUND;
 		if (!do_append) {
+			query_result = TEXT_WIN_NET_NOT_FOUND;
 			if (list_type == STARDICT::LookupResponse::ListType_Rule_List) {
 				Show(_("Found no words matching this pattern!"));
 			} else if (list_type == STARDICT::LookupResponse::ListType_Fuzzy_List) {
@@ -1917,7 +1955,10 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 		if (dict_response->oword == queryWord) {
 			query_result = TEXT_WIN_NET_FOUND;
 		} else {
-			query_result = TEXT_WIN_NET_SHOW_FIRST;
+			if (query_result == TEXT_WIN_FOUND)
+				query_result = TEXT_WIN_NET_FOUND;
+			else if (query_result == TEXT_WIN_SHOW_FIRST)
+				query_result = TEXT_WIN_NET_SHOW_FIRST;
 		}
 		InstantDictIndex dict_index;
 		dict_index.type = InstantDictType_UNKNOWN;

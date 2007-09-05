@@ -67,6 +67,7 @@ public:
   void ShowText(gchar ***pppWord, gchar **** ppppWordData, const gchar * sOriginWord);
   void ShowText(gchar ****ppppWord, gchar ***** pppppWordData, const gchar ** ppOriginWord, gint count,const gchar * sOriginWord);
   void ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response);
+  void ShowText(NetDictResponse *resp);
   void ShowNotFound(const char* sWord,const char* sReason, gboolean fuzzy);
   void Show();
   void Hide();

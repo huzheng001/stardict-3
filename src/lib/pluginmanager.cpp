@@ -547,9 +547,9 @@ void StarDictNetDictPlugins::configure_plugin(const char *filename)
 	}
 }
 
-void StarDictNetDictPlugins::lookup(size_t iPlugin, const gchar *word)
+void StarDictNetDictPlugins::lookup(size_t iPlugin, const gchar *word, bool ismainwin)
 {
-	oPlugins[iPlugin]->lookup(word);
+	oPlugins[iPlugin]->lookup(word, ismainwin);
 }
 
 const char *StarDictNetDictPlugins::dict_name(size_t iPlugin)
@@ -560,6 +560,11 @@ const char *StarDictNetDictPlugins::dict_name(size_t iPlugin)
 const char *StarDictNetDictPlugins::dict_id(size_t iPlugin)
 {
 	return oPlugins[iPlugin]->get_filename();
+}
+
+const char *StarDictNetDictPlugins::dict_cacheid(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->dict_cacheid();
 }
 
 bool StarDictNetDictPlugins::find_dict_by_id(const char *id, size_t &iPlugin)
@@ -588,14 +593,19 @@ StarDictNetDictPlugin::~StarDictNetDictPlugin()
 	delete obj;
 }
 
-void StarDictNetDictPlugin::lookup(const char *word)
+void StarDictNetDictPlugin::lookup(const char *word, bool ismainwin)
 {
-	obj->lookup_func(word);
+	obj->lookup_func(word, ismainwin);
 }
 
 const char *StarDictNetDictPlugin::dict_name()
 {
 	return obj->dict_name;
+}
+
+const char *StarDictNetDictPlugin::dict_cacheid()
+{
+	return obj->dict_cacheid;
 }
 
 //

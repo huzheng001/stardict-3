@@ -7,7 +7,7 @@ Summary: 	A powerful dictionary platform written in GTK+2
 Version:	%{version}
 Release:	1%{?dist}
 Group: 		Applications/System
-License: 	GPL
+License: 	GPLv3
 URL: 		http://stardict.sourceforge.net
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -68,6 +68,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/omf/*
 %{_mandir}/man1/*
 %doc %{_datadir}/gnome/help/stardict
+%doc README COPYING ChangeLog AUTHORS doc/FAQ doc/HACKING doc/HowToCreateDictionary doc/StarDictFileFormat doc/Translation
 
 
 %post

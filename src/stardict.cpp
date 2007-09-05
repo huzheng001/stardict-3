@@ -73,6 +73,7 @@ HINSTANCE stardictexe_hInstance;
 #include "dictmanagedlg.h"
 #include "pluginmanagedlg.h"
 #include "prefsdlg.h"
+#include "lib/netdictcache.h"
 
 #include "stardict.h"
 
@@ -216,6 +217,14 @@ void AppCore::set_news(const char *news, const char *links)
 	gpAppFrame->oBottomWin.set_news(news, links);
 }
 
+void AppCore::show_netdict_resp(NetDictResponse *resp, bool ismainwin)
+{
+	if (ismainwin)
+		gpAppFrame->oMidWin.oTextWin.Show(resp);
+	else
+		gpAppFrame->oFloatWin.ShowText(resp);
+}
+
 void AppCore::Create(gchar *queryword)
 {
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
@@ -249,6 +258,8 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.send_http_request = do_send_http_request;
 	oStarDictPluginSystemService.show_url = show_url;
 	oStarDictPluginSystemService.set_news = set_news;
+	oStarDictPluginSystemService.netdict_save_cache_resp = netdict_save_cache_resp;
+	oStarDictPluginSystemService.show_netdict_resp = show_netdict_resp;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else
@@ -366,7 +377,14 @@ void AppCore::Create(gchar *queryword)
 	int pos=conf->get_int_at("main_window/hpaned_pos");
 	gtk_paned_set_position(GTK_PANED(oMidWin.hpaned), pos);
 
-	if (oLibs.has_dict() || conf->get_bool_at("network/enable_netdict")) {
+	bool have_netdict = false;
+	for (size_t iLib=0; iLib<query_dictmask.size(); iLib++) {
+		if (query_dictmask[iLib].type == InstantDictType_NET) {
+			have_netdict = true;
+			break;
+		}
+	}
+	if (oLibs.has_dict() || conf->get_bool_at("network/enable_netdict") || have_netdict) {
 		if (queryword) {
 			Query(queryword);
 		} else {
@@ -658,6 +676,7 @@ void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfN
 			oStarDictClient.send_commands(1, c);
 		}
 	}
+	LookupNetDict(sWord, false);
 }
 
 bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
@@ -794,15 +813,25 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 void AppCore::BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound)
 {
 	if (dictmask[iLib].type == InstantDictType_NET) {
-		pppWord[iLib] = NULL;
-		return;
+		const char *dict_cacheid = oStarDictPlugins->NetDictPlugins.dict_cacheid(dictmask[iLib].index);
+		NetDictResponse *resp = netdict_get_cache_resp(dict_cacheid, sWord);
+		if (resp && resp->data) {
+			pppWord[iLib] = (gchar **)g_malloc(sizeof(gchar *)*2);
+			pppWord[iLib][0] = g_strdup(resp->word);
+			pppWord[iLib][1] = NULL;
+			ppppWordData[iLib] = (gchar ***)g_malloc(sizeof(gchar **)*(1));
+			ppppWordData[iLib][0] = (gchar **)g_malloc(sizeof(gchar *)*2);
+			ppppWordData[iLib][0][0] =  stardict_datadup(resp->data);
+			ppppWordData[iLib][0][1] = NULL;
+			bFound = true;
+		} else {
+			pppWord[iLib] = NULL;
+		}
+	} else if (dictmask[iLib].type == InstantDictType_VIRTUAL) {
+		oStarDictPlugins->VirtualDictPlugins.lookup(dictmask[iLib].index, sWord, &(pppWord[iLib]), &(ppppWordData[iLib]));
+		if (pppWord[iLib])
+			bFound = true;
 	}
-	if (dictmask[iLib].type != InstantDictType_VIRTUAL)
-		return;
-
-	oStarDictPlugins->VirtualDictPlugins.lookup(dictmask[iLib].index, sWord, &(pppWord[iLib]), &(ppppWordData[iLib]));
-	if (pppWord[iLib])
-		bFound = true;
 }
 
 void AppCore::BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method)
@@ -1303,16 +1332,20 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 
 void AppCore::LookupNetDict(const char *sWord, bool ismainwin)
 {
+	std::vector<InstantDictIndex> *dictmask;
 	if (ismainwin) {
-		for (size_t iLib=0; iLib<query_dictmask.size(); iLib++) {
-			if (query_dictmask[iLib].type == InstantDictType_NET) {
-				oStarDictPlugins->NetDictPlugins.lookup(query_dictmask[iLib].index, sWord);
-			}
-		}
+		dictmask = &query_dictmask;
 	} else {
-		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++) {
-			if (scan_dictmask[iLib].type == InstantDictType_NET) {
-				oStarDictPlugins->NetDictPlugins.lookup(scan_dictmask[iLib].index, sWord);
+		dictmask = &scan_dictmask;
+	}
+	for (size_t iLib=0; iLib<dictmask->size(); iLib++) {
+		if ((*dictmask)[iLib].type == InstantDictType_NET) {
+			const char *dict_cacheid = oStarDictPlugins->NetDictPlugins.dict_cacheid((*dictmask)[iLib].index);
+			NetDictResponse *resp = netdict_get_cache_resp(dict_cacheid, sWord);
+			if (!resp) {
+				oStarDictPlugins->NetDictPlugins.lookup((*dictmask)[iLib].index, sWord, ismainwin);
+			} else if (!(resp->data)) {
+				show_netdict_resp(resp, ismainwin);
 			}
 		}
 	}
@@ -1338,6 +1371,8 @@ void AppCore::ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,
 				oMidWin.oIndexWin.oResultWin.InsertLast(oLibs.dict_name(query_dictmask[i].index).c_str(), mark);
 			else if (query_dictmask[i].type == InstantDictType_VIRTUAL)
 				oMidWin.oIndexWin.oResultWin.InsertLast(oStarDictPlugins->VirtualDictPlugins.dict_name(query_dictmask[i].index), mark);
+			else if (query_dictmask[i].type == InstantDictType_NET)
+				oMidWin.oIndexWin.oResultWin.InsertLast(oStarDictPlugins->NetDictPlugins.dict_name(query_dictmask[i].index), mark);
 			g_free(mark);
 		}
 	}
@@ -1370,9 +1405,15 @@ void AppCore::ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTree
 
 void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextWinQueryResult query_result)
 {
+	bool have_netdict = false;
+	for (size_t iLib=0; iLib<query_dictmask.size(); iLib++) {
+		if (query_dictmask[iLib].type == InstantDictType_NET) {
+			have_netdict = true;
+			break;
+		}
+	}
 	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
-	if (enable_netdict) {
-	} else {
+	if (!enable_netdict && !have_netdict) {
 		oMidWin.oTextWin.Show(sReason);
 	}
 	oMidWin.oTextWin.query_result = query_result;
@@ -1507,6 +1548,7 @@ void AppCore::TopWinEnterWord()
 			oStarDictClient.send_commands(1, c);
 		}
 	}
+	LookupNetDict(text, true);
 }
 
 void AppCore::TopWinWordChange(const gchar* sWord)
