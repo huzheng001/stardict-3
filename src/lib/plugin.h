@@ -27,6 +27,8 @@ struct StarDictPluginSystemService {
 	show_url_func_t show_url;
 	typedef void (*set_news_func_t)(const char *news, const char *links);
 	set_news_func_t set_news;
+	typedef char *(*encode_uri_string_func_t)(const char *string);
+	encode_uri_string_func_t encode_uri_string;
 	typedef void (*netdict_save_cache_resp_func_t)(const char *dict, const char *key, NetDictResponse *resp);
 	netdict_save_cache_resp_func_t netdict_save_cache_resp;
 	typedef void (*show_netdict_resp_func_t)(NetDictResponse *resp, bool ismainwin);

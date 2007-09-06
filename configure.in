@@ -33,7 +33,6 @@ dnl ================================================================
 GETTEXT_PACKAGE=stardict
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
-ALL_LINGUAS="ar cs de el fr hu hr ku mk nl pt_BR ru sk tr tt uk vi zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 
 

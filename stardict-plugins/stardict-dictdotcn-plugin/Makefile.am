@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_dictdotcn.v
+EXTRA_DIST = stardict_dictdotcn.v dictdotcn.dev
 
 
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_dictdotcn.v"
