@@ -5,6 +5,84 @@
 
 #ifdef _WIN32
 #include <windows.h>
+
+static char *strcasestr (const char *phaystack, const char *pneedle)
+{
+	register const unsigned char *haystack, *needle;
+	register char b, c;
+
+	haystack = (const unsigned char *) phaystack;
+	needle = (const unsigned char *) pneedle;
+
+	b = tolower(*needle);
+	if (b != '\0') {
+		haystack--;             /* possible ANSI violation */
+		do {
+			c = *++haystack;
+			if (c == '\0')
+				goto ret0;
+		} while (tolower(c) != (int) b);
+
+		c = tolower(*++needle);
+		if (c == '\0')
+			goto foundneedle;
+		++needle;
+		goto jin;
+
+		for (;;) {
+			register char a;
+			register const unsigned char *rhaystack, *rneedle;
+
+			do {
+				a = *++haystack;
+				if (a == '\0')
+					goto ret0;
+				if (tolower(a) == (int) b)
+					break;
+				a = *++haystack;
+				if (a == '\0')
+					goto ret0;
+			shloop:
+				;
+			}
+			while (tolower(a) != (int) b);
+
+		jin:      a = *++haystack;
+			if (a == '\0')
+				goto ret0;
+
+			if (tolower(a) != (int) c)
+				goto shloop;
+
+			rhaystack = haystack-- + 1;
+			rneedle = needle;
+			a = tolower(*rneedle);
+
+			if (tolower(*rhaystack) == (int) a)
+				do {
+					if (a == '\0')
+						goto foundneedle;
+					++rhaystack;
+					a = tolower(*++needle);
+					if (tolower(*rhaystack) != (int) a)
+						break;
+					if (a == '\0')
+						goto foundneedle;
+					++rhaystack;
+					a = tolower(*++needle);
+				} while (tolower (*rhaystack) == (int) a);
+
+			needle = rneedle;             /* took the register-poor approach */
+
+			if (a == '\0')
+				break;
+		}
+	}
+ foundneedle:
+	return (char*) haystack;
+ ret0:
+	return 0;
+}
 #endif
 
 #define DICTDOTCN "dict.cn"
@@ -17,6 +95,22 @@ struct QueryInfo {
 };
 
 static std::list<QueryInfo *> keyword_list;
+static bool use_html_or_xml;
+
+static std::string get_cfg_filename()
+{
+#ifdef _WIN32
+	std::string res = g_get_user_config_dir();
+	res += G_DIR_SEPARATOR_S "StarDict" G_DIR_SEPARATOR_S "dictdotcn.cfg";
+#else
+	std::string res;
+	gchar *tmp = g_build_filename(g_get_home_dir(), ".stardict", NULL);
+	res=tmp;
+	g_free(tmp);
+	res += G_DIR_SEPARATOR_S "dictdotcn.cfg";
+#endif
+	return res;
+}
 
 static char *build_dictdata(char type, const char *definition)
 {
@@ -64,44 +158,76 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		return;
 	}
 	p += 4;
-	const char *xml = g_strstr_len(p, buffer_len - (p - buffer), "<dict>");
-	if (!xml) {
-		return;
-	}
-	const char *xml_end = g_strstr_len(xml+6, buffer_len - (xml+6 - buffer), "</dict>");
-	if (!xml_end) {
-		return;
-	}
-	xml_end += 7;
-	dict_ParseUserData Data;
-	GMarkupParser parser;
-	parser.start_element = NULL;
-	parser.end_element = NULL;
-	parser.text = dict_parse_text;
-	parser.passthrough = NULL;
-	parser.error = NULL;
-	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-	g_markup_parse_context_parse(context, xml, xml_end - xml, NULL);
-	g_markup_parse_context_end_parse(context, NULL);
-	g_markup_parse_context_free(context);
 	QueryInfo *qi = (QueryInfo *)userdata;
 	NetDictResponse *resp = new NetDictResponse;
 	resp->bookname = _("Dict.cn");
 	resp->word = qi->word; // So neen't free qi->word;
-	if (Data.def == "Not Found") {
+	if (use_html_or_xml) {
+		std::string charset;
+		char *p3 = g_strstr_len(p, buffer_len - (p - buffer), "charset=");
+		if (p3) {
+			p3 += sizeof("charset=") -1;
+			char *p4 = strchr(p3, '\"');
+			if (p4) {
+				charset.assign(p3, p4-p3);
+			}
+		}
+		gchar *content;
+		if (charset.empty()) {
+			content = NULL;
+		} else {
+			content = g_convert(p, buffer_len - (p - buffer), "UTF-8", charset.c_str(), NULL, NULL, NULL);
+			p = content;
+		}
 		resp->data = NULL;
+		if (p) {
+			const char *body = strcasestr(p, "<body");
+			if (body) {
+				const char *body_end = strcasestr(p, "</body>");
+				if (body_end) {
+					body_end += sizeof("</body>") -1;
+					std::string html(body, body_end - body);
+					resp->data = build_dictdata('h', html.c_str());
+				}
+			}
+		}
+		g_free(content);
 	} else {
-		std::string definition;
-		if (!Data.pron.empty()) {
-			definition += Data.pron;
-			definition += "\n";
+		const char *xml = g_strstr_len(p, buffer_len - (p - buffer), "<dict>");
+		if (!xml) {
+			return;
 		}
-		definition += Data.def;
-		if (!Data.rel.empty()) {
-			definition += "\n";
-			definition += Data.rel;
+		const char *xml_end = g_strstr_len(xml+6, buffer_len - (xml+6 - buffer), "</dict>");
+		if (!xml_end) {
+			return;
 		}
-		resp->data = build_dictdata('m', definition.c_str());
+		xml_end += 7;
+		dict_ParseUserData Data;
+		GMarkupParser parser;
+		parser.start_element = NULL;
+		parser.end_element = NULL;
+		parser.text = dict_parse_text;
+		parser.passthrough = NULL;
+		parser.error = NULL;
+		GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+		g_markup_parse_context_parse(context, xml, xml_end - xml, NULL);
+		g_markup_parse_context_end_parse(context, NULL);
+		g_markup_parse_context_free(context);
+		if (Data.def == "Not Found") {
+			resp->data = NULL;
+		} else {
+			std::string definition;
+			if (!Data.pron.empty()) {
+				definition += Data.pron;
+				definition += "\n";
+			}
+			definition += Data.def;
+			if (!Data.rel.empty()) {
+				definition += "\n";
+				definition += Data.rel;
+			}
+			resp->data = build_dictdata('m', definition.c_str());
+		}
 	}
 	plugin_service->netdict_save_cache_resp(DICTDOTCN, qi->word, resp);
 	plugin_service->show_netdict_resp(resp, qi->ismainwin);
@@ -111,8 +237,15 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 
 static void lookup(const char *word, bool ismainwin)
 {
-	std::string file = "/ws.php?utf8=true&q=";
-	file += word;
+	std::string file;
+	if (use_html_or_xml) {
+		file = "/mini.php?q=";
+	} else {
+		file = "/ws.php?utf8=true&q=";
+	}
+	char *eword = plugin_service->encode_uri_string(word);
+	file += eword;
+	g_free(eword);
 	gchar *keyword = g_strdup(word);
 	QueryInfo *qi = new QueryInfo;
 	qi->ismainwin = ismainwin;
@@ -123,6 +256,35 @@ static void lookup(const char *word, bool ismainwin)
 
 static void configure()
 {
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Dict.cn configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	GtkWidget *xml_button = gtk_radio_button_new_with_label(NULL, _("Query by XML API."));
+	gtk_box_pack_start(GTK_BOX(vbox), xml_button, false, false, 0);
+	GtkWidget *html_button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(xml_button), _("Query by HTML API."));
+	gtk_box_pack_start(GTK_BOX(vbox), html_button, false, false, 0);
+	if (use_html_or_xml) {
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(html_button), true);
+	} else {
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(xml_button), true);
+	}
+	gtk_widget_show_all(vbox);
+	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gtk_dialog_run(GTK_DIALOG(window));
+	gboolean new_use_html_or_xml = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(html_button));
+	if (new_use_html_or_xml != use_html_or_xml) {
+		use_html_or_xml = new_use_html_or_xml;
+		const char *tmp;
+		if (use_html_or_xml) {
+			tmp = "true";
+		} else {
+			tmp = "false";
+		}
+		gchar *data = g_strdup_printf("[dictdotcn]\nuse_html_or_xml=%s\n", tmp);
+		std::string res = get_cfg_filename();
+		g_file_set_contents(res.c_str(), data, -1, NULL);
+		g_free(data);
+	}
+	gtk_widget_destroy (window);
 }
 
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
@@ -148,6 +310,19 @@ DLLIMPORT void stardict_plugin_exit(void)
 
 DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)
 {
+	std::string res = get_cfg_filename();
+	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
+		g_file_set_contents(res.c_str(), "[dictdotcn]\nuse_html_or_xml=false\n", -1, NULL);
+	}
+	GKeyFile *keyfile = g_key_file_new();
+	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
+	GError *err = NULL;
+	use_html_or_xml = g_key_file_get_boolean(keyfile, "dictdotcn", "use_html_or_xml", &err);
+	if (err) {
+		g_error_free (err);
+		use_html_or_xml = false;
+	}
+	g_key_file_free(keyfile);
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Dict.cn");
 	obj->dict_cacheid = DICTDOTCN;

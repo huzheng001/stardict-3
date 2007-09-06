@@ -258,6 +258,7 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.send_http_request = do_send_http_request;
 	oStarDictPluginSystemService.show_url = show_url;
 	oStarDictPluginSystemService.set_news = set_news;
+	oStarDictPluginSystemService.encode_uri_string = common_encode_uri_string;
 	oStarDictPluginSystemService.netdict_save_cache_resp = netdict_save_cache_resp;
 	oStarDictPluginSystemService.show_netdict_resp = show_netdict_resp;
 #ifdef _WIN32

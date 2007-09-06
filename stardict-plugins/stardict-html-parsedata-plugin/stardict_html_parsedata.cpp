@@ -94,6 +94,7 @@ static void html_topango(const std::string& str, std::string &pango, size_t &pan
 	static const int html_value_len[] = {1};
 	size_t cur_pos;
 	int i;
+	char *etext;
 
 	pango.clear();
 	for (cur_pos = 0, q = str.c_str(); *q; ++cur_pos) {
@@ -132,9 +133,14 @@ static void html_topango(const std::string& str, std::string &pango, size_t &pan
 					}
 				}
 			}
+		} else if (*q == '\r' || *q == '\n') {
+			q++;
+			cur_pos--;
 		} else {
 			p = g_utf8_next_char(q);
-			pango.append(q, p-q);
+			etext = g_markup_escape_text(q, p-q);
+			pango += etext;
+			g_free(etext);
 			q = p;
 		}
 	}
@@ -268,14 +274,16 @@ static void html2result(const char *p, ParseResult &result)
 			}
 			p1 = strcasestr(name.c_str(), "color=");
 			if (p1) {
-				p1 += sizeof("color=") -1 +1;
+				p1 += sizeof("color=") -1;
+				if (*p1 == '\'' || *p1 == '\"')
+					p1++;
 				const char *p2 = p1;
 				while (true) {
 					if (*p2 == '\0') {
 						p2 = NULL;
 						break;
 					}
-					if (*p2 == '\'' || *p2 == '"')
+					if (*p2 == '\'' || *p2 == '"' || *p2 == ' ' || *p2 == '>')
 						break;
 					p2++;
 				}

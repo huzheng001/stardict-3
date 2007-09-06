@@ -203,6 +203,8 @@ gboolean HttpClient::on_io_in_event(GIOChannel *ch, GIOCondition cond, gpointer 
 		g_free(str_return);
 	}
 	if (res == G_IO_STATUS_NORMAL) {
+		http_client->buffer = (char *)g_realloc(http_client->buffer, http_client->buffer_len + 1);
+		http_client->buffer[http_client->buffer_len] = '\0'; // So the text is end by a extra '\0'.
 		on_response_.emit(http_client);
 		return FALSE;
 	}

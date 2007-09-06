@@ -2049,9 +2049,20 @@ gboolean TextWin::Find (const gchar *text, gboolean start)
 gboolean TextWin::on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin)
 {
 	if (event->button == 2) {
+#ifdef _WIN32
+		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin->view->widget()));
+		if (gtk_text_buffer_get_selection_bounds(buffer, NULL, NULL)) {
+			gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
+					      gpAppFrame->oSelection.UTF8_STRING_Atom,
+					      GDK_CURRENT_TIME);
+		} else {
+			gtk_clipboard_request_text(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), gpAppFrame->oTopWin.ClipboardReceivedCallback, &(gpAppFrame->oTopWin));
+		}
+#else
 		gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
 				      gpAppFrame->oSelection.UTF8_STRING_Atom,
 				      GDK_CURRENT_TIME);
+#endif
 		return TRUE;
 	}
 
@@ -2526,69 +2537,6 @@ void TransWin::SetText(const char *text, int len)
 {
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
 	gtk_text_buffer_set_text(buffer, text, len);
-}
-
-static gchar * byte_to_hex(unsigned char nr) {
-	gchar *result = NULL;
-
-	result = g_strdup_printf("%%%x%x", nr / 0x10, nr % 0x10);
-	return result;
-}
-
-static gchar * common_encode_uri_string(gchar *string) {
-	gchar		*newURIString;
-	gchar		*hex, *tmp = NULL;
-	int		i, j, len, bytes;
-
-	/* the UTF-8 string is casted to ASCII to treat
-	   the characters bytewise and convert non-ASCII
-	   compatible chars to URI hexcodes */
-	newURIString = g_strdup("");
-	len = strlen(string);
-	for(i = 0; i < len; i++) {
-		if(g_ascii_isalnum(string[i]) || strchr("-_.!~*'()", (int)string[i]))
-		   	tmp = g_strdup_printf("%s%c", newURIString, string[i]);
-		else if(string[i] == ' ')
-			tmp = g_strdup_printf("%s%%20", newURIString);
-		else if((unsigned char)string[i] <= 127) {
-			tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex(string[i]));g_free(hex);
-		} else {
-			bytes = 0;
-			if(((unsigned char)string[i] >= 192) && ((unsigned char)string[i] <= 223))
-				bytes = 2;
-			else if(((unsigned char)string[i] > 223) && ((unsigned char)string[i] <= 239))
-				bytes = 3;
-			else if(((unsigned char)string[i] > 239) && ((unsigned char)string[i] <= 247))
-				bytes = 4;
-			else if(((unsigned char)string[i] > 247) && ((unsigned char)string[i] <= 251))
-				bytes = 5;
-			else if(((unsigned char)string[i] > 247) && ((unsigned char)string[i] <= 251))
-				bytes = 6;
-				
-			if(0 != bytes) {
-				if((i + (bytes - 1)) > len) {
-					g_warning(("Unexpected end of character sequence or corrupt UTF-8 encoding! Some characters were dropped!"));
-					break;
-				}
-
-				for(j=0; j < (bytes - 1); j++) {
-					tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex((unsigned char)string[i++]));
-					g_free(hex);
-					g_free(newURIString);
-					newURIString = tmp;
-				}
-				tmp = g_strdup_printf("%s%s", newURIString, hex = byte_to_hex((unsigned char)string[i]));
-				g_free(hex);
-			} else {
-				/* sh..! */
-				g_error("Internal error while converting UTF-8 chars to HTTP URI!");
-			}
-		}
-		g_free(newURIString); 
-		newURIString = tmp;
-	}
-
-	return newURIString;
 }
 
 void TransWin::GetHostFile(std::string &host, std::string &file, const char *text)
