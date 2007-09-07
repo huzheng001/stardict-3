@@ -1,33 +1,31 @@
-# Translation of `stardict' messages to Dutch.
-# Copyright (C) 2005 Free Software Foundation, Inc.
+# Swedish translation of stardict.
+# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the stardict package.
-# Ruud Slaats <ruudslaats@eurotechgroup.nl>, 2005.
+# Daniel Nylander <po@danielnylander.se>, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-28 14:36+0800\n"
-"PO-Revision-Date: 2005-01-20 14:07+0100\n"
-"Last-Translator: Ruud Slaats <ruudslaats@eurotechgroup.nl>\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"PO-Revision-Date: 2006-03-13 21:43+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
 
 #: data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
-msgstr "stardict programma"
+msgstr "stardict-program"
 
 #: data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
-msgstr "stardict geautomatiseerde fabriek"
+msgstr "stardicts automatiksfabrik"
 
 #: data/stardict.desktop.in.h:1
 msgid "Lookup words"
-msgstr "Woorden opzoeken"
+msgstr "Slå upp ord"
 
 #: data/stardict.desktop.in.h:2 src/mainwin.cpp:490 src/splash.cpp:42
 #: src/stardict.cpp:153 src/stardict.cpp:1523 src/win32/systray.cpp:198
@@ -37,207 +35,209 @@ msgstr "StarDict"
 
 #: data/stardict.schemas.in.h:1
 msgid "A custom font that will be used in StarDict. This will only take effect if the \"Use Custom Font\" option is turned on."
-msgstr "Een aangepast lettertype zal gebruikt worden in StarDict. Dit zal alleen effect hebben als de optie \"Aangepast lettertype gebruiken\" is aangezet."
+msgstr "Ett anpassat typsnitt som kommer att användas i StarDict. Denna kommer endast vara aktiv om alternativet \"Använd anpassat typsnitt\" är påslaget. "
 
 #: data/stardict.schemas.in.h:2
 msgid "Custom Font"
-msgstr "Aangepast lettertype"
+msgstr "Anpassat typsnitt"
 
 #: data/stardict.schemas.in.h:3
 msgid "Dictionary order"
-msgstr "Woordenboekvolgorde"
+msgstr "Ordboksordning"
 
 #: data/stardict.schemas.in.h:4
 msgid "Disabled dictionary list"
-msgstr "Woordenboeklijst uitgezet"
+msgstr "Inaktiverad ordbokslista"
 
 #: data/stardict.schemas.in.h:5
 msgid "Disabled tree dictionary list"
-msgstr "Boomstructuur woordenboeklijst uitgezet"
+msgstr "Inaktiverad trädordbokslista"
 
 #: data/stardict.schemas.in.h:6
 msgid "Enable sound event"
-msgstr "Geluidsgebeurtenissen aanzetten"
+msgstr "Aktivera händelseljud"
 
 #: data/stardict.schemas.in.h:7
 msgid "Hide floating window when modifier key released"
-msgstr "Het zwevende venster verbergen als de optietoets wordt losgelaten."
+msgstr "Dölj flytande fönster när modifierartangenten är släppt"
 
 #: data/stardict.schemas.in.h:8
 msgid "Hide floating window when modifier key released. It only take effect when only_scan_while_modifier_key is turned on."
-msgstr "Het zwevende venster verbergen als de optietoets wordt losgelaten. Het zal pas actief zijn als only_scan_while_modifier_key is ingeschakeld."
+msgstr "Dölj flytande fönster när modifierartangenten är släppt. Den är endast aktiv när only_scan_while_modifier_key är påslagen."
 
 #: data/stardict.schemas.in.h:9
 msgid "Hide the list"
-msgstr "De lijst verbergen"
+msgstr "Dölj listan"
 
 #: data/stardict.schemas.in.h:10
 msgid "Hide the window when start up"
-msgstr "Het venster verbergen bij het opstarten"
+msgstr "Dölj fönstret vid uppstart"
 
 #: data/stardict.schemas.in.h:11
 msgid "Hpaned 's position"
-msgstr "Hpaned 's positie"
+msgstr "Hpaneds position"
 
 #: data/stardict.schemas.in.h:12
 msgid "List the dictionaries in the order."
-msgstr "De woordenboeken in volgorde opsommen."
+msgstr "Lista ordbäckerna i ordningen."
 
 #: data/stardict.schemas.in.h:13
 msgid "List the dictionaries which are disabled."
-msgstr "De woordenboeken die zijn uitgeschakeld opsommen."
+msgstr "Lista ordböcker som är inaktiverade."
 
 #: data/stardict.schemas.in.h:14
 msgid "List the search websites."
-msgstr "De zoekwebsites opsommen."
+msgstr "Lista webbplatser för sökning."
 
 #: data/stardict.schemas.in.h:15
 msgid "List the tree dictionaries in the order."
-msgstr "De boomstructuur woordenboeken in volgorde opsommen."
+msgstr "Lista trädordböckerna i ordningen."
 
 #: data/stardict.schemas.in.h:16
 msgid "List the tree dictionaries which are disabled."
-msgstr "De boomstructuur woordenboeken die zijn uitgeschakeld opsommen."
+msgstr "Lista trädordböckerna som är inaktiverade."
 
 #: data/stardict.schemas.in.h:17
 msgid "Only do scanning while modifier key being pressed"
-msgstr "Alleen maar zoeken als de optietoets is ingedrukt"
+msgstr "Sök endast igenom när modifierartangenten trycks ned"
 
 #: data/stardict.schemas.in.h:18
 msgid "Only do scanning while the modifier key being pressed. The modifier key is set by \"scan_modifier_key\"."
-msgstr "Alleen maar zoeken als de optietoets is ingedrukt. De optietoets is in te stellen met \"scan_modifier_key\"."
+msgstr "Sök endast igenom när modifierartangenten trycks ned. Modifierartangenten ställs in med \"scan_modifier_key\"."
 
 #: data/stardict.schemas.in.h:19
 msgid "Only do scanning while this modifier key being pressed. It can be Win(0), Shift(1), Alt(2) or Ctrl(3)."
-msgstr "Alleen maar zoeken als deze optietoets is ingedrukt. Het kan Win(0), Shift(1), Alt(2) of Ctrl(3) zijn."
+msgstr "Sök endast igenom när modifierartangenten trycks ned. Den kan vara Win(0), Shift(1), Alt(2) eller Ctrl(3)."
 
 #: data/stardict.schemas.in.h:20
 msgid "Pronounce the word when pop up the floating window."
-msgstr "Het woord uitspreken als het zwevende venster tevoorschijn komt."
+msgstr "Uttala ordet när det poppar upp ett flytande fönster."
 
 #: data/stardict.schemas.in.h:21
 msgid "Pronounce the word when pop up."
-msgstr "Het woord uitspreken als het tevoorschijn komt."
+msgstr "Uttala ordet när det poppar upp."
 
 #: data/stardict.schemas.in.h:22
 msgid "Query in the floating window when middle mouse button clicked"
-msgstr "In het zwevende venster zoeken als er op middelste muisknop wordt geklikt"
+msgstr "Fråga i det flytande fönstret när musens mittenknapp klickas"
 
 #: data/stardict.schemas.in.h:23
 msgid "Scan modifier key"
-msgstr "Zoek optietoets"
+msgstr "Modifierartangent för sökning"
 
 #: data/stardict.schemas.in.h:24
 msgid "Scan the Selection"
-msgstr "De selectie zoeken"
+msgstr "Sök igenom markering"
 
 #: data/stardict.schemas.in.h:25
 msgid "Search website list"
-msgstr "De websitelijst doorzoeken"
+msgstr "Lista på sökwebbplatser"
 
 #: data/stardict.schemas.in.h:26
 msgid "The hpaned's position, which between the listview and the textview."
-msgstr "De positie van hpaned; dat is de afstand tussen de lijstweergave en de tekstweergave."
+msgstr "Hpaneds position, som är mellan listvyn och textvyn."
 
 #: data/stardict.schemas.in.h:27
 msgid "The stardict 's float window 's max height."
-msgstr "De maximale hoogte van het zwevende StarDict-venster."
+msgstr "Max höjd på Stardicts flytande fönster."
 
 #: data/stardict.schemas.in.h:28
 msgid "The stardict 's float window 's max width."
-msgstr "De maximale breedte van het zwevende StarDict-venster."
+msgstr "Max bredd på Stardicts flytande fönster."
 
 #: data/stardict.schemas.in.h:29
 msgid "The stardict 's main window 's height."
-msgstr "De hoogte van het StarDict-hoofdvenster."
+msgstr "Höjd på Stardicts huvudfönster."
 
 #: data/stardict.schemas.in.h:30
 msgid "The stardict 's main window 's width."
-msgstr "De breedt van het StarDict-hoofdvenster"
+msgstr "Bredd på Stardicts huvudfönster."
 
 #: data/stardict.schemas.in.h:31
 msgid "Tree Dictionary order"
-msgstr "Boomstructuur woordenboek volgorde"
+msgstr "Trädordboksordning"
 
 #: data/stardict.schemas.in.h:32
 msgid "Use Custom Font"
-msgstr "Aangepast lettertype gebruiken"
+msgstr "Använd anpassat typsnitt"
 
 #: data/stardict.schemas.in.h:33
 msgid "Whether enable sound event. StarDict will play sound event when button is active, released, and when pop up menu."
-msgstr "Of de geluidsgebeurtenissen aangezet moeten worden. StarDict zal een geluid laten horen bij een gebeurtenis zoals het actief worden of loslaten van een knop en het verschijnen van een opduikmenu."
+msgstr "Huruvida ljudhändelser ska aktiveras. StarDict kommer att spela upp ljudhändelser när knappen är aktiv, släppt, och vid en popup-meny."
 
 #: data/stardict.schemas.in.h:34
 msgid "Whether hide the the listview which list the words."
-msgstr "Of de lijstweergave verborgen moet worden die de woorden opsomt."
+msgstr "Huruvida listvyn som listar orden ska döljas."
 
 #: data/stardict.schemas.in.h:35
 msgid "Whether hide the the main window when start up."
-msgstr "Of het hoofdvenster verborgen moet worden bij het opstarten van het programma."
+msgstr "Huruvida huvudfönstret ska döljas vid uppstart."
 
+# Denna är skum. Riktigt skum
 #: data/stardict.schemas.in.h:36
 msgid "Whether lock the float window.while locked,the window will always be shown there."
-msgstr "Als het zwevende venster vergrendeld is zal het venster altijd zichtbaar zijn."
+msgstr "Huruvida det flytande fönstret ska låsas, fönstret kommer alltid att vara där."
 
 #: data/stardict.schemas.in.h:37
 msgid "Whether query in the floating window, or the main window. This happens when user clicks the middle mouse button on the notification area icon."
-msgstr "Of gezocht moet worden in het zwevende venster of in het hoofdvenster. Dit gebeurt als de gebruiker met de middelste muisknop klikt op het pictogram in het mededelingengebied."
+msgstr "Huruvida frågan ställs i det flytande fönstret eller i huvudfönstret. Detta inträffar när användare klickar på mittenknappen på ikonen för  notifieringsrutan."
 
+# Intressant engelska
 #: data/stardict.schemas.in.h:38
 msgid "Whether scan the selection.when the user selected some text,stardict will popup a flat window and show its meaning."
-msgstr "Zoek de selectie. Als de gebruiker tekst selecteert zal StarDict een popup venster laten zien met de vertaling van de tekst."
+msgstr "Huruvida markeringen ska genomsökas när användaren markerar en text och StarDict kommer att poppa upp ett fönster och visa dess betydelse."
 
 #: data/stardict.schemas.in.h:39
 msgid "Whether the Window is maximized"
-msgstr "Of het venster is gemaximaliseerd"
+msgstr "Huruvida fönstret är maximerat"
 
 #: data/stardict.schemas.in.h:40
 msgid "Whether the main window is maximized."
-msgstr "Of het hoofdvenster is gemaximaliseerd."
+msgstr "Huruvida huvudfönstret är maximerat."
 
 #: data/stardict.schemas.in.h:41
 msgid "Whether to use a font specific instead of the system's default font to StarDict. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
-msgstr "Of een specifiek lettertype gebruikt moet worden in plaats van het standaardlettertype van het systeem. Als deze optie is aangezet, zal het lettertype bij \"Aangepast lettertype\" gebruikt worden in plaats van het systeemlettertype."
+msgstr "Huruvida ett specifik typsnitt ska användas istället för systemets standardtypsnitt i StarDict. Om detta alternativ är påslaget, kommer typsnittet namngivet i alternativet \"Anpassat typsnitt\" att användas istället för systemets typsnitt."
 
 #: data/stardict.schemas.in.h:42
 msgid "Window 's height"
-msgstr "Vensterhoogte"
+msgstr "Fönstrets höjd"
 
 #: data/stardict.schemas.in.h:43
 msgid "Window 's max height"
-msgstr "Max. vensterhoogte"
+msgstr "Fönstrets max höjd"
 
 #: data/stardict.schemas.in.h:44
 msgid "Window 's max width"
-msgstr "Max. vensterbreedte"
+msgstr "Fönstrets max bredd"
 
 #: data/stardict.schemas.in.h:45
 msgid "Window 's width"
-msgstr "Vensterbreedte"
+msgstr "Fönstrets bredd"
 
 #: data/stardict.schemas.in.h:46
 msgid "lock's x position"
-msgstr "vergrendel de x-posititie"
+msgstr "låser x-position"
 
 #: data/stardict.schemas.in.h:47
 msgid "lock's y position"
-msgstr "vergrendel de y-posititie"
+msgstr "låser y-position"
 
 #: data/stardict.schemas.in.h:48
 msgid "the window's x position while locked."
-msgstr "de x-postitie van het venster als deze vergrendeld is."
+msgstr "fönstrets x-position när låst."
 
 #: data/stardict.schemas.in.h:49
 msgid "the window's y position while locked."
-msgstr "de y-postitie van het venster als deze vergrendeld is."
+msgstr "fönstrets y-position när låst."
 
 #: data/stardict.schemas.in.h:50
 msgid "whether lock the window"
-msgstr "of het venster vergrendeld is"
+msgstr "huruvida fönstret ska låsas"
 
 #: src/conf.cpp:14
 msgid "Cannot connect to gconf."
-msgstr "Kan niet verbinden met gconf."
+msgstr "Kan inte ansluta till gconf."
 
 #. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-dictmanage"), stardict_data_dir);
 #. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-scan-selection"), stardict_data_dir);
@@ -246,35 +246,35 @@ msgstr "Kan niet verbinden met gconf."
 #: src/prefsdlg.cpp:95 src/stardict.cpp:306
 #, c-format
 msgid "file:///%s/help/C/stardict.html"
-msgstr "file:///%s/help/nl/stardict.html"
+msgstr "file:///%s/help/C/stardict.html"
 
 #: src/dictmanagedlg.cpp:483
 msgid "Enable"
-msgstr "Aanzetten"
+msgstr "Aktivera"
 
 #: src/dictmanagedlg.cpp:489
 msgid "Dictionary Name"
-msgstr "Woordenboeknaam"
+msgstr "Ordbokens namn"
 
 #: src/dictmanagedlg.cpp:495
 msgid "Word count"
-msgstr "Aantal woorden"
+msgstr "Antal ord"
 
 #: src/dictmanagedlg.cpp:501
 msgid "Author"
-msgstr "Auteur"
+msgstr "Upphovsman"
 
 #: src/dictmanagedlg.cpp:507
 msgid "Email"
-msgstr "E-mail"
+msgstr "E-post"
 
 #: src/dictmanagedlg.cpp:513
 msgid "Website"
-msgstr "Website"
+msgstr "Webbplats"
 
 #: src/dictmanagedlg.cpp:519
 msgid "Description"
-msgstr "Omschrijving"
+msgstr "Beskrivning"
 
 #: src/dictmanagedlg.cpp:525
 msgid "Date"
@@ -282,183 +282,183 @@ msgstr "Datum"
 
 #: src/dictmanagedlg.cpp:531
 msgid "File name"
-msgstr "Bestandsnaam"
+msgstr "Filnamn"
 
 #: src/dictmanagedlg.cpp:759
 msgid "D_ictionaries"
-msgstr "W_oordenboeken"
+msgstr "O_rdböcker"
 
 #: src/dictmanagedlg.cpp:774
 msgid "T_ree dictionaries"
-msgstr "B_oomstructuur woordenboeken"
+msgstr "T_rädordböcker"
 
 #: src/dictmanagedlg.cpp:795
 msgid "These settings will take effect the next time you run StarDict."
-msgstr "Deze instellingen worden de volgende keer dat StarDict wordt gestart actief."
+msgstr "De här inställningarna blir aktiva nästa gång du kör StarDict."
 
 #: src/dictmanagedlg.cpp:806
 msgid "Manage Dictionaries"
-msgstr "Woordenboeken beheren"
+msgstr "Hantera ordböcker"
 
 #: src/docklet.cpp:112 src/mainwin.cpp:1695
 msgid "_Scan"
-msgstr "_Zoek"
+msgstr "_Sök igenom"
 
 #: src/docklet.cpp:120 src/mainwin.cpp:567
 msgid "_Quit"
-msgstr "A_fsluiten"
+msgstr "_Avsluta"
 
 #: src/floatwin.cpp:106
 msgid "Query in the main window"
-msgstr "In het hoofdvenster zoeken"
+msgstr "Fråga i huvudfönstret"
 
 #: src/floatwin.cpp:114 src/mainwin.cpp:1084
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
 #: src/floatwin.cpp:122 src/mainwin.cpp:1093
 msgid "Pronounce the word"
-msgstr "Het woord uitspreken"
+msgstr "Uttala ordet"
 
 #: src/floatwin.cpp:132
 msgid "Stop selection scanning"
-msgstr "Selectie zoeken stoppen"
+msgstr "Stoppa sökning"
 
 #: src/floatwin.cpp:147
 msgid "Help"
-msgstr "Hulp"
+msgstr "Hjälp"
 
 #: src/floatwin.cpp:155 src/mainwin.cpp:1728 src/win32/systray.cpp:76
 msgid "Quit"
-msgstr "Afsluiten"
+msgstr "Avsluta"
 
 #: src/floatwin.cpp:167
 msgid "Lock floating window"
-msgstr "Het zwevende venster vergrendelen"
+msgstr "Lås flytande fönster"
 
 #: src/floatwin.cpp:307
 msgid "Fuzzy query"
-msgstr "'Vaag zoeken'"
+msgstr "Oskarp sökning"
 
 #: src/floatwin.cpp:313
 msgid "has succeeded.\n"
-msgstr "is gelukt.\n"
+msgstr "har lyckats.\n"
 
 #: src/floatwin.cpp:314
 msgid "Found "
-msgstr "Gevonden "
+msgstr "Hittad "
 
 #: src/floatwin.cpp:316
 msgid "1 word:\n"
-msgstr "1 woord:\n"
+msgstr "1 ord:\n"
 
 #: src/floatwin.cpp:322
 msgid " words:\n"
-msgstr " woorden:\n"
+msgstr " ord:\n"
 
 #: src/floatwin.cpp:899
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopiera"
 
 #: src/floatwin.cpp:906
 msgid "_Query"
-msgstr "_Zoeken"
+msgstr "_Fråga"
 
 #: src/floatwin.cpp:913
 msgid "_Play"
-msgstr "_Afspelen"
+msgstr "_Spela upp"
 
 #: src/floatwin.cpp:921
 msgid "_Fuzzy Query"
-msgstr "'_Vaag zoeken'"
+msgstr "_Oskarp sökning"
 
 #: src/mainwin.cpp:69
 msgid "Clear the search box"
-msgstr "Het zoekvak wissen"
+msgstr "Töm sökrutan"
 
 #: src/mainwin.cpp:92
 msgid "Fuzzy Query"
-msgstr "'Vaag zoeken'"
+msgstr "Oskarp sökning"
 
 #: src/mainwin.cpp:103
 msgid "Go Back - Right button: history (Alt+Left)"
-msgstr "Ga terug - Rechterknop: geschiedenis (Alt+Links)"
+msgstr "Gå tillbaka - Högerklick: historik (Alt+Vänster)"
 
 #: src/mainwin.cpp:113
 msgid "Previous word (Alt+Up)"
-msgstr "Vorig woord (Alt+Pijltje omhoog)"
+msgstr "Föregående ord (Alt+Upp)"
 
 #: src/mainwin.cpp:123
 msgid "Next word (Alt+Down)"
-msgstr "Volgend woord (Alt+Pijltje omlaag)"
+msgstr "Nästa ord (Alt+Ned)"
 
 #: src/mainwin.cpp:133
 msgid "Show the main menu (Alt+M)"
-msgstr "Het hoofdmenu weergeven (Alt+M)"
+msgstr "Visa huvudmenyn (Alt+M)"
 
 #: src/mainwin.cpp:487
 msgid "translator_credits"
-msgstr "Ruud Slaats <ruudslaats@eurotechgroup.nl>"
+msgstr "Daniel Nylander <po@danielnylander.se>"
 
 #: src/mainwin.cpp:494
 msgid "StarDict is an international dictionary for GNOME.\n"
-msgstr "StarDict is een internationaal woordenboek voor GNOME.\n"
+msgstr "StarDict är en internationell ordbok för GNOME.\n"
 
 #: src/mainwin.cpp:526
 msgid "Pr_eferences"
-msgstr "Voor_keuren"
+msgstr "Inställnin_gar"
 
 #: src/mainwin.cpp:533
 msgid "_Dict Manage"
-msgstr "_Woordenboek beheer"
+msgstr "_Hantera"
 
 #: src/mainwin.cpp:541
 msgid "_New Version"
-msgstr "_Nieuwe versie"
+msgstr "_Ny version"
 
 #: src/mainwin.cpp:549
 msgid "_Help"
-msgstr "_Hulp"
+msgstr "_Hjälp"
 
 #: src/mainwin.cpp:555
 msgid "_About"
-msgstr "_Info"
+msgstr "_Om"
 
 #: src/mainwin.cpp:983
 msgid "_List"
-msgstr "_Lijst"
+msgstr "_Lista"
 
 #: src/mainwin.cpp:998
 msgid "_Tree"
-msgstr "_Boom"
+msgstr "_Träd"
 
 #: src/mainwin.cpp:1050
 msgid "Show the word list"
-msgstr "Laat de woordenlijst zien"
+msgstr "Ord ordlistan"
 
 #: src/mainwin.cpp:1061
 msgid "Hide the word list"
-msgstr "Woordenlijst verbergen"
+msgstr "Göm ordlistan"
 
 #: src/mainwin.cpp:1104
 msgid "Save to file"
-msgstr "Opslaan naar bestand"
+msgstr "Spara till fil"
 
 #: src/mainwin.cpp:1115
 msgid "Print"
-msgstr "Afdrukken"
+msgstr "Skriv ut"
 
 #: src/mainwin.cpp:1126
 msgid "Search in the definition (Ctrl+F)"
-msgstr "In de definitie zoeken (Ctrl+F)"
+msgstr "Sök i definitionen (Ctrl+F)"
 
 #: src/mainwin.cpp:1211
 msgid "Find"
-msgstr "Zoeken"
+msgstr "Sök"
 
 #: src/mainwin.cpp:1219
 msgid "_Search for:"
-msgstr "_Zoeken naar:"
+msgstr "_Sök efter:"
 
 #: src/mainwin.cpp:1321
 msgid ""
@@ -466,8 +466,8 @@ msgid ""
 "Please go to StarDict's website and download some dictionaries:\n"
 "http://stardict.sourceforge.net"
 msgstr ""
-"Waarschuwing! Er is geen woordenboek geladen. \n"
-"Ga a.u.b. naar de StarDict-website en download een paar woordenboeken:\n"
+"Varning! Ingen ordbok är inläst.\n"
+"Vänligen gå till StarDict:s webbplats och ladda ner några ordböcker:\n"
 "http://stardict.sourceforge.net"
 
 #: src/mainwin.cpp:1329
@@ -483,16 +483,16 @@ msgid ""
 "   Input a word beginning with '/' to do a Fuzzy query.\n"
 "   When the floating window reports that a word was not found, double clicking will perform a fuzzy query.\n"
 msgstr ""
-"        Welkom bij StarDict!\n"
+"        Välkommen till StarDict!\n"
 "\n"
-"   Druk op Ctrl+Q om te stoppen. Druk op Alt+Z om het venster te minimaliseren of druk op Alt+X om het venster te verbergen.\n"
-"   Druk op Alt+C of ESC om de invoervelden te wissen.\n"
-"   Druk op de Spatiebalk om de focus naar het invoerveld te verplaatsen.\n"
-"   Als het gevraagde woord niet gevonden wordt, kunt u op de Tab-toets drukken om het eerste woord in de woorden lijst te selecteren.\n"
-"   Als er tekst geselecteerd is kan daarop worden gezocht door met de middelste muisknop te klikken op definitiegebied van het hoofdvenster of op het mededelingengebied.\n"
-"   StarDict kan de tekst vergelijken met een patroon dat '*' (jokerteken) en '?' (joker) bevat.\n"
-"   Als het woord begint met een '/' wordt er een 'vaag zoeken' uitgevoerd.\n"
-"   Als het zwevende venster rapporteert dat het woord niet gevonden is zal dubbelklikken op het woord een wazige zoekopdracht uitvoeren.\n"
+"   Tryck Ctrl+Q för att avsluta. Tryck Alt+Z för att ikonifiera fönstret eller Alt+X för att dölja fönstret.\n"
+"   Tryck Alt+C eller ESC för att rensa inmatningsrutan.\n"
+"   Tryck Blanksteg för att flytta fokus till inmatningsrutan.\n"
+"   Om sökordet inte hittas, kan du tryck Tabulator-tangenten för att välja det första ordet i ordlistan.\n"
+"   Efter en text har markerats, klicka på musens mittenknapp på huvudfönstrets Definitionsruta eller på ikonen för notifieringsrutan för att slå upp ordet.\n"
+"   StarDict kan matcha strängar mot mönster som innehåller \"*\" (jokertecken) och \"?\" (ett jokertecken).\n"
+"   Mata in ett ord som börjar med \"/\" för att göra en oskarp sökning.\n"
+"   När det flytande fönstret rapporterar att ett ord inte hittats, dubbelklicka för att göra en oskarp sökning.\n"
 
 #: src/mainwin.cpp:1347
 msgid ""
@@ -516,30 +516,30 @@ msgid ""
 "StarDict 2.4.4 released on 2004.11.28\n"
 "http://stardict.sourceforge.net\n"
 msgstr ""
-"       Welkom bij StarDict\n"
-"StarDict is een cross-platform, internationaal woordenboek geschreven in Gtk2. Het heeft krachtige onderdelen zoals \"Glob-stijl patroonherkenning\", \"Geselecteerd woord opzoeken\", \"Vaag zoeken\" etc.\n"
+"       Välkommen till StarDict\n"
+"StarDict är en plattformsoberoende och internationell ordbok skriven i Gtk2. Den har kraftfulla funktion såsom \"Mönstermatchning av glob-stil,\" \"Sök av markerat ord,\" \"Oskarp sökning,\" etc.\n"
 "\n"
-"       Hier is een inleiding in het gebruik van StarDict:\n"
+"       Här är en introduktion hur man använder StarDict:\n"
 "\n"
-"       1. Glob-stijl patroonherkenning\n"
-"        U kunt tekenreeksen invoeren met '*' (jokerteken) en '?' (joker) als patroon. '*' komt overeen met een willekeurige, mogelijk lege, tekenreeks en '?' komt overeen met een willekeurig teken. Nadat er op Enter is gedrukt, zal het woord dat aan dit patroon voldoet worden weergegeven in de lijst.\n"
-"       2. Wazig zoeken\n"
-"       Als u niet meer weet hoe u een bepaald woord precies schrijft kunt u StarDict wazig zoeken proberen. Het gebruikt \"Levenshtein-bewerkafstand\" om de gelijkheid tussen twee woorden te berekenen. Het geeft het resultaat dat het dichtste in de buurt komt van het ingegeven woord. Om een wazige zoekactie te doen moet het woord ingetypt worden te beginnen met een  \"/\" en hierna op Enter drukken.\n"
-"       3. Zoek geselecteerd woord\n"
-"       Zet het selectievakje linksonder in het StarDict-venster aan om deze mogelijkheid te activeren. Als deze mogelijk actief is zal StarDict automatisch woorden, zinnen en Chinese tekens opzoeken in andere programma's. U hoeft alleen maar een woord of zin met de muis op te lichten en er zal een zwevend venster te voorschijn komen met de vertaling van het geselecteerde woord.\n"
-"       4. Woordenboek beheer\n"
-"       Klik op de \"Woordenboeken beheren\"-knop rechtsonder in het venster om de woordenboek beheerdialoog te laten zien.  Vanuit hier kunt u bepaalde woordenboeken uitzetten die u niet nodig heeft. Ook kunt u de woordenboekvolgorde bepalen voor het zoekresultaat.\n"
+"       1. Mönstermatchning av glob-stil\n"
+"       Du kan mata in strängar som innehåller \"*\" (jokertecken) och \"?\" (ett jokertecken) som mönstret. \"*\" matchar en godtycklig, möjligen tom, sträng, och \"?\" matchar ett godtyckligt tecken. Efter Enter har tryckts, kommer orden som matchar detta mönster att visas i listan.\n"
+"       2. Oskarp sökning\n"
+"       När du inte kan komma ihåg hur man stavar ett ord exakt, kan du försöka med StarDicts oskapa sökning. Den använder \"Levenshtein Edit Distance\" för att beräkna likheten mellan två ord, och ger träffarna resultat efter hur lika de är ordet du matade in. För att skapa en oskarp sökning, mata in ordet med ett inledande \"/\", och tryck sedan Enter.\n"
+"       3. Sök markerat ord\n"
+"       Kryssa i kryssrutan i nedre vänstra hörnet av StarDict-fönstret för att aktivera denna funktion.  När denna funktion är påslagen, kommer StarDict att automatiskt slå upp ord, fraser, och kinesiska tecken i andra program.  Bara att markera ett ord eller fras med din mus, och ett flytande fönster poppar upp och visar definitionen av det markerade ordet.\n"
+"       4. Hantering av ordböcker\n"
+"       Klicka på knappen \"Hantera ordböcker\" i nedre högra hörnet av fönstret för att komma åt dialogrutan för hantering av ordböcker.  Härifrån kan du inaktivera vissa ordböcker som du inte behöver, och ställa in ordböckernas frågeordning.\n"
 "\n"
 "\n"
-"       Let op: Dit programma wordt verspreidt in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE. Er wordt niet gegarandeert dat de woordspelling, definities en fonetische informatie correct zijn.\n"
+"       Redogörelse: Detta program distribueras i hopp om att det ska vara användbart, men UTAN NÅGON FORM AV GARANTI; utan garanti att ordens stavning, definition, och fonetisk information är korrekta.\n"
 "\n"
-"StarDict 2.4.4 is vrijgegeven op 28-11-2004\n"
+"StarDict 2.4.4 utgiven den 28 november 2004\n"
 "http://stardict.sourceforge.net\n"
 
 #: src/mainwin.cpp:1564
 #, c-format
 msgid "The text \"%s\" was not found."
-msgstr "De tekst \"%s\" is niet gevonden."
+msgstr "Texten \"%s\" hittades inte."
 
 #: src/mainwin.cpp:1661
 #, c-format
@@ -568,87 +568,87 @@ msgstr ""
 
 #: src/mainwin.cpp:1707
 msgid "Scan the selection"
-msgstr "De selectie zoeken"
+msgstr "Sök igenom markerade"
 
 #: src/mainwin.cpp:1718
 msgid "Show info"
-msgstr "Info weergeven"
+msgstr "Visa info"
 
 #: src/mainwin.cpp:1741 src/prefsdlg.cpp:1226
 msgid "Preferences"
-msgstr "Voorkeuren"
+msgstr "Inställningar"
 
 #: src/mainwin.cpp:1751
 msgid "Manage dictionaries"
-msgstr "Woordenboeken beheren"
+msgstr "Hantera ordböcker"
 
 #: src/mainwin.cpp:1761
 msgid "Go to the StarDict website"
-msgstr "Ga naar de StarDict-website"
+msgstr "Gå till StarDicts webbplats"
 
 #: src/mainwin.cpp:1772
 msgid "Search an Internet dictionary - Right button: website list"
-msgstr "In een Internetwoordenboek zoeken - Rechtermuisknop: lijst websites"
+msgstr "Sök i en Internet-ordbok - Högerklick: webbplatslista"
 
 #: src/prefsdlg.cpp:43
 msgid "Scan Selection"
-msgstr "Selectie zoeken"
+msgstr "Sök igenom markering"
 
 #: src/prefsdlg.cpp:44
 msgid "Font"
-msgstr "Lettertype"
+msgstr "Typsnitt"
 
 #: src/prefsdlg.cpp:45
 msgid "Sound"
-msgstr "Geluid"
+msgstr "Ljud"
 
 #: src/prefsdlg.cpp:52 src/prefsdlg.cpp:60 src/prefsdlg.cpp:67
 msgid "Options"
-msgstr "Opties"
+msgstr "Alternativ"
 
 #: src/prefsdlg.cpp:53
 msgid "Search website"
-msgstr "Zoekwebsite"
+msgstr "Sök webbplats"
 
 #: src/prefsdlg.cpp:68
 msgid "Size"
-msgstr "Grootte"
+msgstr "Storlek"
 
 #: src/prefsdlg.cpp:75 src/stardict.cpp:1577
 msgid "Dictionary"
-msgstr "Woordenboek"
+msgstr "Ordbok"
 
 #: src/prefsdlg.cpp:77
 msgid "Main window"
-msgstr "Hoofdvenster"
+msgstr "Huvudfönster"
 
 #: src/prefsdlg.cpp:79
 msgid "Notification area icon"
-msgstr "Mededelingengebied pictogram"
+msgstr "Ikon för notifieringsruta"
 
 #: src/prefsdlg.cpp:81
 msgid "Floating window"
-msgstr "Zwevend venster"
+msgstr "Flytande fönster"
 
 #: src/prefsdlg.cpp:230
 msgid "Categories"
-msgstr "Categorieen"
+msgstr "Kategorier"
 
 #: src/prefsdlg.cpp:310
 msgid "<span weight=\"bold\" size=\"x-large\">Scan Selection</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Selectie zoeken</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Sök igenom markering</span>"
 
 #: src/prefsdlg.cpp:318
 msgid "_Only do scanning while modifier key being pressed."
-msgstr "_Alleen zoeken als de optietoets is ingedrukt."
+msgstr "_Sök endast igenom när modifierartangenten trycks ned."
 
 #: src/prefsdlg.cpp:333
 msgid "H_ide floating window when modifier key released."
-msgstr "Het zwevende venster v_erbergen als de optietoets ingedrukt wordt."
+msgstr "Dölj _flytande fönster när modifierartangenten släpps."
 
 #: src/prefsdlg.cpp:347
 msgid "Scan modifier _key:"
-msgstr "Optie_toets zoeken:"
+msgstr "_Modifierartangent för sökning:"
 
 #: src/prefsdlg.cpp:354
 msgid "_Win"
@@ -668,170 +668,170 @@ msgstr "_Ctrl"
 
 #: src/prefsdlg.cpp:390
 msgid "Choose dictionary font"
-msgstr "Een woordenboek lettertype kiezen"
+msgstr "Välj typsnitt för ordbok"
 
 #: src/prefsdlg.cpp:393 src/prefsdlg.cpp:467
 msgid "Choose"
-msgstr "Kiezen"
+msgstr "Välj"
 
 #: src/prefsdlg.cpp:395
 msgid "Dictionary font"
-msgstr "Woordenboek lettertype"
+msgstr "Typsnitt för ordbok"
 
 #: src/prefsdlg.cpp:432
 msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Lettertype</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Typsnitt</span>"
 
 #: src/prefsdlg.cpp:440
 msgid "_Use custom font."
-msgstr "Aangepast lettertype gebruiken."
+msgstr "_Använd anpassat typsnitt."
 
 #: src/prefsdlg.cpp:454
 msgid "Dictionary _font:"
-msgstr "Woordenboek _lettertype:"
+msgstr "Typsnitt för _ordbok:"
 
 #: src/prefsdlg.cpp:501
 msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Geluid</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Ljud</span>"
 
 #: src/prefsdlg.cpp:512
 msgid "_Enable sound event."
-msgstr "Geluidsgebeurtenissen _aanzetten."
+msgstr "_Aktivera händelseljud."
 
 #: src/prefsdlg.cpp:549 src/prefsdlg.cpp:981 src/prefsdlg.cpp:1031
 msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Opties</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Alternativ</span>"
 
 #: src/prefsdlg.cpp:560
 msgid "Hide main window when _starting StarDict."
-msgstr "Hoofdvenster verbergen als StarDict wordt _gestart."
+msgstr "Göm huvudfönstret vid upp_start av StarDict."
 
 #: src/prefsdlg.cpp:650
 msgid "Please input the website name."
-msgstr "Geef alstublieft de naam van de website."
+msgstr "Mata in webbplatsens namn."
 
 #: src/prefsdlg.cpp:652
 msgid "Please input the website link."
-msgstr "Geef alstublieft het adres van de website."
+msgstr "Mata in webbplatsens länk."
 
 #: src/prefsdlg.cpp:654
 msgid "Please input the website search link."
-msgstr "Geef alstublieft het zoekadres van de website."
+msgstr "Mata in webbplatsens söklänk."
 
 #: src/prefsdlg.cpp:656 src/prefsdlg.cpp:787
 #, c-format
 msgid "The website search link should contains a \"%%s\" string for quering word."
-msgstr "Het website zoekadres moet een \"%%s\" teken bevatten voor het te zoeken woord."
+msgstr "Webbplatsens söklänk bör innehålla en \"%%s\"-sträng för ordsökning."
 
 #: src/prefsdlg.cpp:692
 msgid "Add"
-msgstr "Toevoegen"
+msgstr "Lägg till"
 
 #: src/prefsdlg.cpp:824
 msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Zoekwebsite</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Sök webbplats</span>"
 
 #: src/prefsdlg.cpp:888
 msgid "Website Name"
-msgstr "Website naam"
+msgstr "Webbplatsens namn"
 
 #: src/prefsdlg.cpp:896
 msgid "Website link"
-msgstr "Website adres"
+msgstr "Webbplatsens länk"
 
 #: src/prefsdlg.cpp:904
 msgid "Website search link"
-msgstr "Website zoekadres"
+msgstr "Webbplatsens söklänk"
 
 #: src/prefsdlg.cpp:992
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button clicked."
 msgstr ""
-"_Zoek in het zwevende venster als de middelste muis-\n"
-"knop wordt ingedrukt."
+"_Fråga i det flytande fönstret när musens mittenknapp\n"
+"klickas."
 
 #: src/prefsdlg.cpp:1042
 msgid "_Pronouce the word when pop up."
-msgstr "Het woord uit_spreken als het tevoorschijn komt."
+msgstr "_Uttala ordet när det poppar upp."
 
 #: src/prefsdlg.cpp:1092
 msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Max. venstergrootte</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Max fönsterstorlek</span>"
 
 #: src/prefsdlg.cpp:1118
 msgid "Max window _width:"
-msgstr "Max. venser_breedte:"
+msgstr "Max fönsterbr_edd:"
 
 #: src/prefsdlg.cpp:1127
 msgid "(default:320)"
-msgstr "(standaard: 320)"
+msgstr "(standard:320)"
 
 #: src/prefsdlg.cpp:1134
 msgid "Max window hei_ght:"
-msgstr "Max. vensterhoo_gte:"
+msgstr "Max fönster_höjd:"
 
 #: src/prefsdlg.cpp:1142
 msgid "(default:240)"
-msgstr "(standaard:240)"
+msgstr "(standard:240)"
 
 #: src/prefsdlg.cpp:1202
 msgid "Cat_egories:"
-msgstr "Cat_ogorieen:"
+msgstr "Kat_egorier:"
 
 #: src/selection.cpp:232 src/stardict.cpp:484 src/stardict.cpp:551
 #: src/stardict.cpp:581 src/stardict.cpp:585 src/stardict.cpp:590
 #: src/win32/clipboard.cpp:113
 msgid "<Not Found!>"
-msgstr "<Niets gevonden!>"
+msgstr "<Hittades ej!>"
 
 #: src/stardict.cpp:69
 msgid "Turn on all debugging messages"
-msgstr "Alle debugberichten aanzetten"
+msgstr "Slå på alla felsökningsmeddelanden"
 
 #: src/stardict.cpp:72
 msgid "Hide the main window"
-msgstr "Het hoofdvenster verbergen"
+msgstr "Göm huvudfönstret"
 
 #: src/stardict.cpp:75
 msgid "Quit an existing instance of stardict"
-msgstr "Een bestaande instantie van StarDict afsluiten"
+msgstr "Avsluta en existerande instans av stardict"
 
 #: src/stardict.cpp:730
 msgid "There are too many spelling errors :-("
-msgstr "Er zijn teveel spelfouten :-("
+msgstr "Det är för många stavfel :-("
 
 #: src/stardict.cpp:888
 msgid "Fuzzy query failed, too :-("
-msgstr "'Vaag zoeken' is ook mislukt :-("
+msgstr "Oskarp sökning misslyckades också :-("
 
 #: src/stardict.cpp:951
 msgid "Found no words matching this pattern!"
-msgstr "Geen woorden gevonden die aan dit patroon voldoen!"
+msgstr "Hittade inga ord som matchar detta mönster!"
 
 #: src/stardict.cpp:1075
 msgid "Press Enter to list the words that match the pattern."
-msgstr "Druk op Enter om de woorden op te sommen die overeenkomen met het patroon."
+msgstr "Tryck Enter för att lista orden som matchar mönstret."
 
 #: src/stardict.cpp:1082
 msgid "Fuzzy query..."
-msgstr "'Vaag zoeken'..."
+msgstr "Oskarp sökning..."
 
 #: src/stardict.cpp:1416
 msgid "StarDict is already running. Using the running process."
-msgstr "StarDict loopt al. Het lopende proces wordt gebruikt."
+msgstr "StarDict körs redan. Använder den körande processen."
 
 #: src/win32/systray.cpp:73
 msgid "Scan"
-msgstr "Zoeken"
+msgstr "Sök"
 
 #: src/win32/systray.cpp:223
 msgid "StarDict - Scanning"
-msgstr "StarDict - Zoeken"
+msgstr "StarDict - Söker"
 
 #: src/win32/systray.cpp:226
 msgid "StarDict - Stopped"
-msgstr "StarDict - Gestopt"
+msgstr "StarDict - Stoppad"
 
 #: src/win32/winconf.cpp:36
 #, c-format
@@ -855,105 +855,114 @@ msgstr ""
 
 #: src/win32/gnome-about.c:256
 msgid "Credits"
-msgstr "Verdiensten"
+msgstr "Tack till"
 
 #: src/win32/gnome-about.c:288
 msgid "Written by"
-msgstr "Geschreven door"
+msgstr "Skrivet av"
 
 #: src/win32/gnome-about.c:303
 msgid "Documented by"
-msgstr "Gedocumenteerd door"
+msgstr "Dokumenterat av"
 
 #: src/win32/gnome-about.c:318
 msgid "Translated by"
-msgstr "Vertaald door"
+msgstr "Översatt av"
 
 #: src/win32/gnome-about.c:381
 msgid "C_redits"
-msgstr "V_erdiensten"
+msgstr "Tack _till"
 
 #: src/win32/gnome-about.c:436
 msgid "Program name"
-msgstr "Programmanaam"
+msgstr "Programnamn"
 
 #: src/win32/gnome-about.c:437
 msgid "The name of the program"
-msgstr "De programmanaam"
+msgstr "Namnet på programmet"
 
 #: src/win32/gnome-about.c:444
 msgid "Program version"
-msgstr "Programmaversie"
+msgstr "Programversion"
 
 #: src/win32/gnome-about.c:445
 msgid "The version of the program"
-msgstr "De programmaversie"
+msgstr "Programmets version"
 
 #: src/win32/gnome-about.c:451
 msgid "Copyright string"
-msgstr "Auteursrecht tekst"
+msgstr "Copyrightsträng"
 
 #: src/win32/gnome-about.c:452
 msgid "Copyright information for the program"
-msgstr "Auteursrechtelijke informatie over het programma"
+msgstr "Copyrightinformation för programmet"
 
 #: src/win32/gnome-about.c:459
 msgid "Comments string"
-msgstr "Opmerkingstekst"
+msgstr "Kommentarssträng"
 
 #: src/win32/gnome-about.c:460
 msgid "Comments about the program"
-msgstr "Opmerkingen over het programma"
+msgstr "Kommentarer om programmet"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:466
 msgid "Authors"
-msgstr "Auteurs"
+msgstr "Upphovsmän"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:467
 msgid "List of authors of the programs"
-msgstr "Lijst van auteurs van het programma"
+msgstr "Lista av upphovsmän för programmen"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:469
 msgid "Author entry"
-msgstr "Auteurveld"
+msgstr "Upphovsman"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:470
 msgid "A single author entry"
-msgstr "Een enkelvoudige auteur item"
+msgstr "En upphovsman"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:477
 msgid "Documenters"
-msgstr "Documentators"
+msgstr "Dokumenterat av"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:478
 msgid "List of people documenting the program"
-msgstr "Lijst van mensen die hebben gedocumenteerd aan het programma"
+msgstr "Lista av folk som dokumenterat programmet"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:480
 msgid "Documenter entry"
-msgstr "Documentatorveld"
+msgstr "Dokumenterare"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:481
 msgid "A single documenter entry"
-msgstr "Een enkel documenteerder item"
+msgstr "En post för dokumenteraren"
 
+# Verkar inte användas av programmet
 #: src/win32/gnome-about.c:489
 msgid "Translator credits"
-msgstr "Vertaler verdiensten"
+msgstr "Översättning av"
 
 #: src/win32/gnome-about.c:490
 msgid "Credits to the translators. This string should be marked as translatable"
-msgstr ""
+msgstr "Daniel Nylander <po@danielnylander.se>"
 
 #: src/win32/gnome-about.c:497
 msgid "Logo"
-msgstr "Logo"
+msgstr "Logotyp"
 
 #: src/win32/gnome-about.c:498
 msgid "A logo for the about box"
-msgstr "Een logo voor het infovak"
+msgstr "En logo för Om-rutan"
 
 #: src/win32/gnome-about.c:577
 #, c-format
 msgid "About %s"
-msgstr "Info %s"
+msgstr "Om %s"
