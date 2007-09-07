@@ -64,7 +64,7 @@ a= (PAIR *)s1;
 b= (PAIR *)s2;
 
 rez=stardict_strcmp(a->words, b->words);
-if (rez==0) rez=stardict_strcmp(a->trans, b->trans);
+//if (rez==0) rez=stardict_strcmp(a->trans, b->trans);
 return rez;
 }
 
@@ -109,6 +109,7 @@ char same;
 FILE *F, *F2, *F3;
 char *p, *p2;
 char *current, *current2;
+char buf[20000];
 char prev[200];
 char prev2[200];
 char lang[50];
@@ -122,8 +123,8 @@ rules=(RULE *)malloc(sizeof(RULE)*10000);
 
 current=malloc(200);
 
-setbuf(stdout, 0);
-if (argc<2) 
+//setbuf(stdout, 0);
+if (argc<3) 
    {
    printf("\nUsage:\n\nmyspell2dic es_ES.dic.utf es_ES.aff.utf\n\n");
    exit(0);
@@ -136,6 +137,13 @@ if ((p=strchr(lang, '\n'))!=NULL) *p=0;
 if (*lang==0) strcpy(lang, "Spanish");
 
 F=fopen(argv[2], "rt");
+
+if (!F)
+   {
+   printf("\nFile %s not found\n\n", argv[2]);
+   exit(1);
+   }
+
 nr=0;
 
 while (fgets(current, 200, F))
@@ -184,8 +192,13 @@ if (strncmp(current, "SFX ", 4)==0)
 fclose(F);
 F=fopen(argv[1], "rt");
 
+if (!F)
+   {
+   printf("\nFile %s not found\n\n", argv[1]);
+   exit(1);
+   }
 
-fprintf(stderr, "\nConversion can take a couple of minutes, please wait...\n");
+fprintf(stderr, "\nConversion can take several minutes, please wait...\n");
 fflush(stderr);
 
 fgets(current, 200, F);
@@ -194,46 +207,66 @@ while (fgets(current, 200, F))
    {
    p=strchr(current, '/');
    if (!p) continue;
-   
+   *buf=0;
+   //printf("\n%s/", current);
    for (*(p++)=0; *p>' '; p++)
-   for (i=0; i<nr; i++)
-   if (*p==rules[i].c) 
       {
-      len=strlen(current);
-      flen=strlen(rules[i].from);
-      common=len-flen;
+		//printf("%c:\n", *p);
+		if (*buf!=0) 
+			{strcat(buf, "\n\n");
+			}
       
-      if (common>0)
+      for (i=0; i<nr; i++)
+      if (*p==rules[i].c) 
          {
-         if (MatchesMask(current, rules+i))
+         
+         len=strlen(current);
+         flen=strlen(rules[i].from);
+         common=len-flen;
+         
+         if (common>0)
             {
-            current2=malloc(len-flen+strlen(rules[i].to)+1);
-            strncpy(current2, current, (*rules[i].from==0)? len: common);
-            strcpy(current2+((*rules[i].from==0)? len: common), rules[i].to);
-            
-            if (g_utf8_validate(current, -1, NULL)!=TRUE ||
-            g_utf8_validate(current2, -1, NULL)!=TRUE) 
+            if (MatchesMask(current, rules+i))
                {
-               fprintf(stderr, "\nError! Invalid character found, first convert to UTF-8.\n\n");
-               fprintf(stderr, "Examples:\nrecode latin1..utf-8 <es_ES.dic >es_ES.dic.utf\n");
-               fprintf(stderr, "recode KOI8-RU..utf-8 <uk_UA.aff >uk_UA.aff.utf\n");
-               fprintf(stderr, "The encoding is specified in .aff file.");
-               exit(1);
+               current2=malloc(len-flen+strlen(rules[i].to)+1);
+               strncpy(current2, current, (*rules[i].from==0)? len: common);
+               strcpy(current2+((*rules[i].from==0)? len: common), rules[i].to);
+               
+               if (g_utf8_validate(current, -1, NULL)!=TRUE ||
+               g_utf8_validate(current2, -1, NULL)!=TRUE) 
+                  {
+                  fprintf(stderr, "\nError! Invalid character found, first convert to UTF-8.\n\n");
+                  fprintf(stderr, "Examples:\nrecode latin1..utf-8 <es_ES.dic >es_ES.dic.utf\n");
+                  fprintf(stderr, "recode KOI8-RU..utf-8 <uk_UA.aff >uk_UA.aff.utf\n");
+                  fprintf(stderr, "The encoding is specified in .aff file.");
+                  exit(1);
+                  }
+               //arr[n].words=strdup(current);
+               //arr[n].trans=current2;
+               //n++;
+               p2=strchr(buf, 0);
+               if (*buf!=0) if (*(p2-1)!='\n') strcpy(p2++, " ");
+               
+               strcpy(p2, current2);
+               
+               arr[n].words=strdup(current2);
+               arr[n].trans=malloc(strlen(current)+6);
+               sprintf(arr[n].trans, "=> {%s}", current);
+               //printf("%s\n", current2);
+               n++;
+               if (n>9999990) arr=(PAIR *)malloc(sizeof(PAIR)*100000000);
                }
-            arr[n].words=strdup(current);
-            arr[n].trans=current2;
-            n++;
-            
-            arr[n].words=strdup(current2);
-            arr[n].trans=malloc(strlen(current)+6);
-            sprintf(arr[n].trans, "=> {%s}", current);
-            //printf("%li\t%li\t%s\t%s\n", n, i, current, current2);
-            n++;
             }
+         
+         
          }
+      //printf("%s                     \r", current);
       }
+      arr[n].words=strdup(current);
+      arr[n].trans=strdup(buf);
+      n++;
    }
-fprintf(stderr, "\nSorting...\n");
+fprintf(stderr, "\nSorting %li pairs, merging, please wait...\n", n);
 fflush(stderr);
 free(current);
 
@@ -244,21 +277,33 @@ p=strchr(fname, 0);
 
 strcpy(p, "idx");
 F2=fopen(fname, "wb");
+if (!F2)
+   {
+   printf("\nCan't write to %s\n\n", fname);
+   exit(1);
+   }
 
 strcpy(p, "dict");
 F3=fopen(fname, "wb");
+if (!F3)
+   {
+   printf("\nCan't write to %s\n\n", fname);
+   exit(1);
+   }
+
 
 nn=off=*prev=*prev2=0;
 for (i=0; i<n; i++)
    {
    same=0;
    
+
    current=arr[i].words;
    current2=arr[i].trans;
    if (*prev) if (strcmp(prev, current)==0)
       {
-      same=1;
       if (strcmp(current2, prev2)==0) continue;
+      same=1;
       nn--;
       }
    nn++;
@@ -267,9 +312,9 @@ for (i=0; i<n; i++)
    
    if (same) 
       {
-      fwrite(", ", 2, 1, F3);
-      siz+=2;
-      off+=2;
+      fwrite(" ", 1, 1, F3);
+      siz++;
+      off++;
       }
    else siz=0;
    
@@ -318,6 +363,7 @@ for (i=0; i<nr; i++)
    free(rules[i].mask);
    }
 free(rules);
+fprintf(stderr, "\nRestart StarDict now!\n\n");
 
 return 0;
 }

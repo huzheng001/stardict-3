@@ -1,476 +1,582 @@
-# Translation of `stardict' messages to Dutch.
+# Kinyarwanda translations for stardict package.
 # Copyright (C) 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the stardict package.
-# Ruud Slaats <ruudslaats@eurotechgroup.nl>, 2005.
+# Steve Murphy <murf@e-tools.com>, 2005.
+# Steve performed initial rough translation from compendium built from translations provided by the following translators:
+# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
+# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
+# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
+# Carole Karema <karemacarole@hotmail.com>, 2005.
+# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
+# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
+# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005.
+# Antoine Bigirimana <antoine@e-tools.com>, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-28 14:36+0800\n"
-"PO-Revision-Date: 2005-01-20 14:07+0100\n"
-"Last-Translator: Ruud Slaats <ruudslaats@eurotechgroup.nl>\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"PO-Revision-Date: 2005-04-04 10:55-0700\n"
+"Last-Translator: Steven Michael Murphy <murf@e-tools.com>\n"
+"Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
 
 #: data/GNOME_Stardict.server.in.h:1
+#, fuzzy
 msgid "stardict application"
-msgstr "stardict programma"
+msgstr "Porogaramu"
 
 #: data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
-msgstr "stardict geautomatiseerde fabriek"
+msgstr ""
 
 #: data/stardict.desktop.in.h:1
+#, fuzzy
 msgid "Lookup words"
-msgstr "Woorden opzoeken"
+msgstr "Amagambo"
 
 #: data/stardict.desktop.in.h:2 src/mainwin.cpp:490 src/splash.cpp:42
 #: src/stardict.cpp:153 src/stardict.cpp:1523 src/win32/systray.cpp:198
 #: src/win32/systray.cpp:220
 msgid "StarDict"
-msgstr "StarDict"
+msgstr ""
 
 #: data/stardict.schemas.in.h:1
+#, fuzzy
 msgid "A custom font that will be used in StarDict. This will only take effect if the \"Use Custom Font\" option is turned on."
-msgstr "Een aangepast lettertype zal gebruikt worden in StarDict. Dit zal alleen effect hebben als de optie \"Aangepast lettertype gebruiken\" is aangezet."
+msgstr "A Kunoza Intego- nyuguti in INGARUKA NIBA i Kugena Ihitamo ni ku"
 
 #: data/stardict.schemas.in.h:2
+#, fuzzy
 msgid "Custom Font"
-msgstr "Aangepast lettertype"
+msgstr "Kugena"
 
 #: data/stardict.schemas.in.h:3
+#, fuzzy
 msgid "Dictionary order"
-msgstr "Woordenboekvolgorde"
+msgstr "Itondekanya"
 
 #: data/stardict.schemas.in.h:4
+#, fuzzy
 msgid "Disabled dictionary list"
-msgstr "Woordenboeklijst uitgezet"
+msgstr "Inkoranyamagambo Urutonde"
 
 #: data/stardict.schemas.in.h:5
+#, fuzzy
 msgid "Disabled tree dictionary list"
-msgstr "Boomstructuur woordenboeklijst uitgezet"
+msgstr "Inkoranyamagambo Urutonde"
 
 #: data/stardict.schemas.in.h:6
+#, fuzzy
 msgid "Enable sound event"
-msgstr "Geluidsgebeurtenissen aanzetten"
+msgstr "Ijwi Icyabaye"
 
 #: data/stardict.schemas.in.h:7
+#, fuzzy
 msgid "Hide floating window when modifier key released"
-msgstr "Het zwevende venster verbergen als de optietoets wordt losgelaten."
+msgstr "Bihindagurika Idirishya Ryari: Urufunguzo"
 
 #: data/stardict.schemas.in.h:8
+#, fuzzy
 msgid "Hide floating window when modifier key released. It only take effect when only_scan_while_modifier_key is turned on."
-msgstr "Het zwevende venster verbergen als de optietoets wordt losgelaten. Het zal pas actief zijn als only_scan_while_modifier_key is ingeschakeld."
+msgstr "Bihindagurika Idirishya Ryari: Urufunguzo INGARUKA Ryari: ni ku"
 
 #: data/stardict.schemas.in.h:9
+#, fuzzy
 msgid "Hide the list"
-msgstr "De lijst verbergen"
+msgstr "i Urutonde"
 
 #: data/stardict.schemas.in.h:10
+#, fuzzy
 msgid "Hide the window when start up"
-msgstr "Het venster verbergen bij het opstarten"
+msgstr "i Idirishya Ryari: Gutangira Hejuru"
 
 #: data/stardict.schemas.in.h:11
+#, fuzzy
 msgid "Hpaned 's position"
-msgstr "Hpaned 's positie"
+msgstr "S Ibirindiro"
 
 #: data/stardict.schemas.in.h:12
+#, fuzzy
 msgid "List the dictionaries in the order."
-msgstr "De woordenboeken in volgorde opsommen."
+msgstr "i Inkoranyamagambo in i Itondekanya"
 
 #: data/stardict.schemas.in.h:13
+#, fuzzy
 msgid "List the dictionaries which are disabled."
-msgstr "De woordenboeken die zijn uitgeschakeld opsommen."
+msgstr "i Inkoranyamagambo Yahagaritswe"
 
 #: data/stardict.schemas.in.h:14
+#, fuzzy
 msgid "List the search websites."
-msgstr "De zoekwebsites opsommen."
+msgstr "i Gushaka"
 
 #: data/stardict.schemas.in.h:15
+#, fuzzy
 msgid "List the tree dictionaries in the order."
-msgstr "De boomstructuur woordenboeken in volgorde opsommen."
+msgstr "i Inkoranyamagambo in i Itondekanya"
 
 #: data/stardict.schemas.in.h:16
+#, fuzzy
 msgid "List the tree dictionaries which are disabled."
-msgstr "De boomstructuur woordenboeken die zijn uitgeschakeld opsommen."
+msgstr "i Inkoranyamagambo Yahagaritswe"
 
 #: data/stardict.schemas.in.h:17
+#, fuzzy
 msgid "Only do scanning while modifier key being pressed"
-msgstr "Alleen maar zoeken als de optietoets is ingedrukt"
+msgstr "Urufunguzo"
 
 #: data/stardict.schemas.in.h:18
+#, fuzzy
 msgid "Only do scanning while the modifier key being pressed. The modifier key is set by \"scan_modifier_key\"."
-msgstr "Alleen maar zoeken als de optietoets is ingedrukt. De optietoets is in te stellen met \"scan_modifier_key\"."
+msgstr "i Urufunguzo Urufunguzo ni Gushyiraho ku"
 
 #: data/stardict.schemas.in.h:19
+#, fuzzy
 msgid "Only do scanning while this modifier key being pressed. It can be Win(0), Shift(1), Alt(2) or Ctrl(3)."
-msgstr "Alleen maar zoeken als deze optietoets is ingedrukt. Het kan Win(0), Shift(1), Alt(2) of Ctrl(3) zijn."
+msgstr "iyi Urufunguzo 0 1. 2. Cyangwa 3."
 
 #: data/stardict.schemas.in.h:20
+#, fuzzy
 msgid "Pronounce the word when pop up the floating window."
-msgstr "Het woord uitspreken als het zwevende venster tevoorschijn komt."
+msgstr "i ijambo Ryari: Hejuru i Bihindagurika Idirishya"
 
 #: data/stardict.schemas.in.h:21
+#, fuzzy
 msgid "Pronounce the word when pop up."
-msgstr "Het woord uitspreken als het tevoorschijn komt."
+msgstr "i ijambo Ryari: Hejuru"
 
 #: data/stardict.schemas.in.h:22
+#, fuzzy
 msgid "Query in the floating window when middle mouse button clicked"
-msgstr "In het zwevende venster zoeken als er op middelste muisknop wordt geklikt"
+msgstr "in i Bihindagurika Idirishya Ryari: Hagati Imbeba Akabuto"
 
 #: data/stardict.schemas.in.h:23
+#, fuzzy
 msgid "Scan modifier key"
-msgstr "Zoek optietoets"
+msgstr "Urufunguzo"
 
 #: data/stardict.schemas.in.h:24
+#, fuzzy
 msgid "Scan the Selection"
-msgstr "De selectie zoeken"
+msgstr "i"
 
 #: data/stardict.schemas.in.h:25
+#, fuzzy
 msgid "Search website list"
-msgstr "De websitelijst doorzoeken"
+msgstr "Webu Urutonde"
 
 #: data/stardict.schemas.in.h:26
+#, fuzzy
 msgid "The hpaned's position, which between the listview and the textview."
-msgstr "De positie van hpaned; dat is de afstand tussen de lijstweergave en de tekstweergave."
+msgstr "Ibirindiro hagati i Na i"
 
 #: data/stardict.schemas.in.h:27
+#, fuzzy
 msgid "The stardict 's float window 's max height."
-msgstr "De maximale hoogte van het zwevende StarDict-venster."
+msgstr "S Kureremba Idirishya S KININI Ubuhagarike"
 
 #: data/stardict.schemas.in.h:28
+#, fuzzy
 msgid "The stardict 's float window 's max width."
-msgstr "De maximale breedte van het zwevende StarDict-venster."
+msgstr "S Kureremba Idirishya S KININI Ubugari"
 
 #: data/stardict.schemas.in.h:29
+#, fuzzy
 msgid "The stardict 's main window 's height."
-msgstr "De hoogte van het StarDict-hoofdvenster."
+msgstr "S Idirishya S Ubuhagarike"
 
 #: data/stardict.schemas.in.h:30
+#, fuzzy
 msgid "The stardict 's main window 's width."
-msgstr "De breedt van het StarDict-hoofdvenster"
+msgstr "S Idirishya S Ubugari"
 
 #: data/stardict.schemas.in.h:31
+#, fuzzy
 msgid "Tree Dictionary order"
-msgstr "Boomstructuur woordenboek volgorde"
+msgstr "Itondekanya"
 
 #: data/stardict.schemas.in.h:32
+#, fuzzy
 msgid "Use Custom Font"
-msgstr "Aangepast lettertype gebruiken"
+msgstr "Kugena"
 
 #: data/stardict.schemas.in.h:33
+#, fuzzy
 msgid "Whether enable sound event. StarDict will play sound event when button is active, released, and when pop up menu."
-msgstr "Of de geluidsgebeurtenissen aangezet moeten worden. StarDict zal een geluid laten horen bij een gebeurtenis zoals het actief worden of loslaten van een knop en het verschijnen van een opduikmenu."
+msgstr "Gushoboza Ijwi Icyabaye Gukina Ijwi Icyabaye Ryari: Akabuto ni Gikora Na Ryari: Hejuru Ibikubiyemo"
 
 #: data/stardict.schemas.in.h:34
+#, fuzzy
 msgid "Whether hide the the listview which list the words."
-msgstr "Of de lijstweergave verborgen moet worden die de woorden opsomt."
+msgstr "Gushisha i i Urutonde i Amagambo"
 
 #: data/stardict.schemas.in.h:35
+#, fuzzy
 msgid "Whether hide the the main window when start up."
-msgstr "Of het hoofdvenster verborgen moet worden bij het opstarten van het programma."
+msgstr "Gushisha i i Idirishya Ryari: Gutangira Hejuru"
 
 #: data/stardict.schemas.in.h:36
+#, fuzzy
 msgid "Whether lock the float window.while locked,the window will always be shown there."
-msgstr "Als het zwevende venster vergrendeld is zal het venster altijd zichtbaar zijn."
+msgstr "i Kureremba Idirishya Gifunze i Idirishya Buri gihe"
 
 #: data/stardict.schemas.in.h:37
+#, fuzzy
 msgid "Whether query in the floating window, or the main window. This happens when user clicks the middle mouse button on the notification area icon."
-msgstr "Of gezocht moet worden in het zwevende venster of in het hoofdvenster. Dit gebeurt als de gebruiker met de middelste muisknop klikt op het pictogram in het mededelingengebied."
+msgstr "Ikibazo# in i Bihindagurika Idirishya Cyangwa i Idirishya Ryari: Ukoresha: i Hagati Imbeba Akabuto ku i Ikimenyetso Ubuso Agashushondanga"
 
 #: data/stardict.schemas.in.h:38
+#, fuzzy
 msgid "Whether scan the selection.when the user selected some text,stardict will popup a flat window and show its meaning."
-msgstr "Zoek de selectie. Als de gebruiker tekst selecteert zal StarDict een popup venster laten zien met de vertaling van de tekst."
+msgstr "Gusikana i Ihitamo Ryari: i Ukoresha: Byahiswemo Umwandiko a Kirambuye Idirishya Na Garagaza Igisobanuro"
 
 #: data/stardict.schemas.in.h:39
+#, fuzzy
 msgid "Whether the Window is maximized"
-msgstr "Of het venster is gemaximaliseerd"
+msgstr "i ni"
 
 #: data/stardict.schemas.in.h:40
+#, fuzzy
 msgid "Whether the main window is maximized."
-msgstr "Of het hoofdvenster is gemaximaliseerd."
+msgstr "i Idirishya ni"
 
 #: data/stardict.schemas.in.h:41
+#, fuzzy
 msgid "Whether to use a font specific instead of the system's default font to StarDict. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
-msgstr "Of een specifiek lettertype gebruikt moet worden in plaats van het standaardlettertype van het systeem. Als deze optie is aangezet, zal het lettertype bij \"Aangepast lettertype\" gebruikt worden in plaats van het systeemlettertype."
+msgstr "Kuri Gukoresha a Intego- nyuguti Bya i Mburabuzi Intego- nyuguti Kuri iyi Ihitamo ni ku Hanyuma i Intego- nyuguti in i Kugena Ihitamo Bya i Sisitemu Intego- nyuguti"
 
 #: data/stardict.schemas.in.h:42
+#, fuzzy
 msgid "Window 's height"
-msgstr "Vensterhoogte"
+msgstr "S Ubuhagarike"
 
 #: data/stardict.schemas.in.h:43
+#, fuzzy
 msgid "Window 's max height"
-msgstr "Max. vensterhoogte"
+msgstr "S KININI Ubuhagarike"
 
 #: data/stardict.schemas.in.h:44
+#, fuzzy
 msgid "Window 's max width"
-msgstr "Max. vensterbreedte"
+msgstr "S KININI Ubugari"
 
 #: data/stardict.schemas.in.h:45
+#, fuzzy
 msgid "Window 's width"
-msgstr "Vensterbreedte"
+msgstr "S Ubugari"
 
 #: data/stardict.schemas.in.h:46
+#, fuzzy
 msgid "lock's x position"
-msgstr "vergrendel de x-posititie"
+msgstr "X Ibirindiro"
 
 #: data/stardict.schemas.in.h:47
+#, fuzzy
 msgid "lock's y position"
-msgstr "vergrendel de y-posititie"
+msgstr "Y Ibirindiro"
 
 #: data/stardict.schemas.in.h:48
+#, fuzzy
 msgid "the window's x position while locked."
-msgstr "de x-postitie van het venster als deze vergrendeld is."
+msgstr "i X Ibirindiro Gifunze"
 
 #: data/stardict.schemas.in.h:49
+#, fuzzy
 msgid "the window's y position while locked."
-msgstr "de y-postitie van het venster als deze vergrendeld is."
+msgstr "i Y Ibirindiro Gifunze"
 
 #: data/stardict.schemas.in.h:50
+#, fuzzy
 msgid "whether lock the window"
-msgstr "of het venster vergrendeld is"
+msgstr "i Idirishya"
 
 #: src/conf.cpp:14
+#, fuzzy
 msgid "Cannot connect to gconf."
-msgstr "Kan niet verbinden met gconf."
+msgstr "Kwihuza Kuri"
 
 #. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-dictmanage"), stardict_data_dir);
 #. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-scan-selection"), stardict_data_dir);
 #. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-prefs"), stardict_data_dir);
 #: src/dictmanagedlg.cpp:27 src/floatwin.cpp:1071 src/mainwin.cpp:465
 #: src/prefsdlg.cpp:95 src/stardict.cpp:306
-#, c-format
+#, fuzzy, c-format
 msgid "file:///%s/help/C/stardict.html"
-msgstr "file:///%s/help/nl/stardict.html"
+msgstr "IDOSIYE Ifashayobora C HTML"
 
 #: src/dictmanagedlg.cpp:483
 msgid "Enable"
-msgstr "Aanzetten"
+msgstr "Gushoboza"
 
 #: src/dictmanagedlg.cpp:489
 msgid "Dictionary Name"
-msgstr "Woordenboeknaam"
+msgstr ""
 
 #: src/dictmanagedlg.cpp:495
+#, fuzzy
 msgid "Word count"
-msgstr "Aantal woorden"
+msgstr "Kubara amagambo"
 
 #: src/dictmanagedlg.cpp:501
 msgid "Author"
-msgstr "Auteur"
+msgstr "Umwanditsi"
 
 #: src/dictmanagedlg.cpp:507
 msgid "Email"
-msgstr "E-mail"
+msgstr "Imeli"
 
 #: src/dictmanagedlg.cpp:513
+#, fuzzy
 msgid "Website"
-msgstr "Website"
+msgstr "Webu"
 
 #: src/dictmanagedlg.cpp:519
 msgid "Description"
-msgstr "Omschrijving"
+msgstr "Insobanuramiterere"
 
 #: src/dictmanagedlg.cpp:525
 msgid "Date"
-msgstr "Datum"
+msgstr "Itariki"
 
 #: src/dictmanagedlg.cpp:531
 msgid "File name"
-msgstr "Bestandsnaam"
+msgstr "Izina ry'idosiye"
 
+# sfx2/source\appl\app.src:STR_KEY_DICTIONARY_PATH.text
 #: src/dictmanagedlg.cpp:759
+#, fuzzy
 msgid "D_ictionaries"
-msgstr "W_oordenboeken"
+msgstr "Inkoranyamagambo"
 
 #: src/dictmanagedlg.cpp:774
+#, fuzzy
 msgid "T_ree dictionaries"
-msgstr "B_oomstructuur woordenboeken"
+msgstr "Inkoranyamagambo"
 
 #: src/dictmanagedlg.cpp:795
+#, fuzzy
 msgid "These settings will take effect the next time you run StarDict."
-msgstr "Deze instellingen worden de volgende keer dat StarDict wordt gestart actief."
+msgstr "Amagenamiterere INGARUKA i Komeza>> Igihe Gukoresha"
 
 #: src/dictmanagedlg.cpp:806
 msgid "Manage Dictionaries"
-msgstr "Woordenboeken beheren"
+msgstr ""
 
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/inc\globlmn.hrc:ITEM_INSERT_TWAIN_MENU.SID_SCAN.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/sdi\svxslots.src:SID_SCAN.text
 #: src/docklet.cpp:112 src/mainwin.cpp:1695
+#, fuzzy
 msgid "_Scan"
-msgstr "_Zoek"
+msgstr "Gusikana"
 
 #: src/docklet.cpp:120 src/mainwin.cpp:567
+#, fuzzy
 msgid "_Quit"
-msgstr "A_fsluiten"
+msgstr "Kuvamo"
 
 #: src/floatwin.cpp:106
+#, fuzzy
 msgid "Query in the main window"
-msgstr "In het hoofdvenster zoeken"
+msgstr "in i Idirishya"
 
 #: src/floatwin.cpp:114 src/mainwin.cpp:1084
 msgid "Copy"
-msgstr ""
+msgstr "Guporora"
 
 #: src/floatwin.cpp:122 src/mainwin.cpp:1093
+#, fuzzy
 msgid "Pronounce the word"
-msgstr "Het woord uitspreken"
+msgstr "i ijambo"
 
 #: src/floatwin.cpp:132
+#, fuzzy
 msgid "Stop selection scanning"
-msgstr "Selectie zoeken stoppen"
+msgstr "Ihitamo"
 
 #: src/floatwin.cpp:147
 msgid "Help"
-msgstr "Hulp"
+msgstr "Gufasha"
 
 #: src/floatwin.cpp:155 src/mainwin.cpp:1728 src/win32/systray.cpp:76
 msgid "Quit"
-msgstr "Afsluiten"
+msgstr "Kuvamo"
 
 #: src/floatwin.cpp:167
+#, fuzzy
 msgid "Lock floating window"
-msgstr "Het zwevende venster vergrendelen"
+msgstr "Bihindagurika Idirishya"
 
 #: src/floatwin.cpp:307
+#, fuzzy
 msgid "Fuzzy query"
-msgstr "'Vaag zoeken'"
+msgstr "Ikibazo#"
 
 #: src/floatwin.cpp:313
+#, fuzzy
 msgid "has succeeded.\n"
-msgstr "is gelukt.\n"
+msgstr "Byakunze"
 
+# sw/source\ui\uiview\view.src:MSG_INDEX_OVERFLOW.text
 #: src/floatwin.cpp:314
+#, fuzzy
 msgid "Found "
-msgstr "Gevonden "
+msgstr "Byabonetse"
 
 #: src/floatwin.cpp:316
+#, fuzzy
 msgid "1 word:\n"
-msgstr "1 woord:\n"
+msgstr "1. ijambo"
 
 #: src/floatwin.cpp:322
+#, fuzzy
 msgid " words:\n"
-msgstr " woorden:\n"
+msgstr "Amagambo:"
 
+# dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_COPY.text
 #: src/floatwin.cpp:899
+#, fuzzy
 msgid "_Copy"
-msgstr ""
+msgstr "Gukoporora"
 
 #: src/floatwin.cpp:906
+#, fuzzy
 msgid "_Query"
-msgstr "_Zoeken"
+msgstr "Ikibazo"
 
 #: src/floatwin.cpp:913
+#, fuzzy
 msgid "_Play"
-msgstr "_Afspelen"
+msgstr "Gukina"
 
 #: src/floatwin.cpp:921
 msgid "_Fuzzy Query"
-msgstr "'_Vaag zoeken'"
+msgstr ""
 
 #: src/mainwin.cpp:69
+#, fuzzy
 msgid "Clear the search box"
-msgstr "Het zoekvak wissen"
+msgstr "i Gushaka Agasanduku"
 
 #: src/mainwin.cpp:92
 msgid "Fuzzy Query"
-msgstr "'Vaag zoeken'"
+msgstr ""
 
 #: src/mainwin.cpp:103
+#, fuzzy
 msgid "Go Back - Right button: history (Alt+Left)"
-msgstr "Ga terug - Rechterknop: geschiedenis (Alt+Links)"
+msgstr "Akabuto Urutonde"
 
 #: src/mainwin.cpp:113
+#, fuzzy
 msgid "Previous word (Alt+Up)"
-msgstr "Vorig woord (Alt+Pijltje omhoog)"
+msgstr "ijambo"
 
 #: src/mainwin.cpp:123
+#, fuzzy
 msgid "Next word (Alt+Down)"
-msgstr "Volgend woord (Alt+Pijltje omlaag)"
+msgstr "ijambo"
 
 #: src/mainwin.cpp:133
+#, fuzzy
 msgid "Show the main menu (Alt+M)"
-msgstr "Het hoofdmenu weergeven (Alt+M)"
+msgstr "i Ibikubiyemo"
 
 #: src/mainwin.cpp:487
 msgid "translator_credits"
-msgstr "Ruud Slaats <ruudslaats@eurotechgroup.nl>"
+msgstr ""
 
 #: src/mainwin.cpp:494
+#, fuzzy
 msgid "StarDict is an international dictionary for GNOME.\n"
-msgstr "StarDict is een internationaal woordenboek voor GNOME.\n"
+msgstr "ni Mpuzamahanga Inkoranyamagambo kugirango"
 
 #: src/mainwin.cpp:526
+#, fuzzy
 msgid "Pr_eferences"
-msgstr "Voor_keuren"
+msgstr "Ibyahiswemo"
 
 #: src/mainwin.cpp:533
 msgid "_Dict Manage"
-msgstr "_Woordenboek beheer"
+msgstr ""
 
 #: src/mainwin.cpp:541
 msgid "_New Version"
-msgstr "_Nieuwe versie"
+msgstr ""
 
 #: src/mainwin.cpp:549
+#, fuzzy
 msgid "_Help"
-msgstr "_Hulp"
+msgstr "Ifashayobora"
 
 #: src/mainwin.cpp:555
+#, fuzzy
 msgid "_About"
-msgstr "_Info"
+msgstr "Bigyanye"
 
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFont.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
 #: src/mainwin.cpp:983
+#, fuzzy
 msgid "_List"
-msgstr "_Lijst"
+msgstr "Urutonde"
 
 #: src/mainwin.cpp:998
 msgid "_Tree"
-msgstr "_Boom"
+msgstr ""
 
 #: src/mainwin.cpp:1050
+#, fuzzy
 msgid "Show the word list"
-msgstr "Laat de woordenlijst zien"
+msgstr "i ijambo Urutonde"
 
 #: src/mainwin.cpp:1061
+#, fuzzy
 msgid "Hide the word list"
-msgstr "Woordenlijst verbergen"
+msgstr "i ijambo Urutonde"
 
 #: src/mainwin.cpp:1104
+#, fuzzy
 msgid "Save to file"
-msgstr "Opslaan naar bestand"
+msgstr "Kubika Kuri IDOSIYE"
 
 #: src/mainwin.cpp:1115
 msgid "Print"
-msgstr "Afdrukken"
+msgstr "Gucapa"
 
 #: src/mainwin.cpp:1126
+#, fuzzy
 msgid "Search in the definition (Ctrl+F)"
-msgstr "In de definitie zoeken (Ctrl+F)"
+msgstr "in i Insobanuro"
 
 #: src/mainwin.cpp:1211
 msgid "Find"
-msgstr "Zoeken"
+msgstr "Gushaka"
 
 #: src/mainwin.cpp:1219
+#, fuzzy
 msgid "_Search for:"
-msgstr "_Zoeken naar:"
+msgstr "Gushakisha:"
 
 #: src/mainwin.cpp:1321
+#, fuzzy
 msgid ""
 "Warning! No dictionary is loaded.\n"
 "Please go to StarDict's website and download some dictionaries:\n"
 "http://stardict.sourceforge.net"
-msgstr ""
-"Waarschuwing! Er is geen woordenboek geladen. \n"
-"Ga a.u.b. naar de StarDict-website en download een paar woordenboeken:\n"
-"http://stardict.sourceforge.net"
+msgstr "Inkoranyamagambo ni Gyayo Kuri Webu Na Gufungura Inkoranyamagambo HTTP Cyuzuye"
 
 #: src/mainwin.cpp:1329
+#, fuzzy
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -482,19 +588,10 @@ msgid ""
 "   StarDict can match strings against patterns containing '*' (wildcard) and '?' (joker).\n"
 "   Input a word beginning with '/' to do a Fuzzy query.\n"
 "   When the floating window reports that a word was not found, double clicking will perform a fuzzy query.\n"
-msgstr ""
-"        Welkom bij StarDict!\n"
-"\n"
-"   Druk op Ctrl+Q om te stoppen. Druk op Alt+Z om het venster te minimaliseren of druk op Alt+X om het venster te verbergen.\n"
-"   Druk op Alt+C of ESC om de invoervelden te wissen.\n"
-"   Druk op de Spatiebalk om de focus naar het invoerveld te verplaatsen.\n"
-"   Als het gevraagde woord niet gevonden wordt, kunt u op de Tab-toets drukken om het eerste woord in de woorden lijst te selecteren.\n"
-"   Als er tekst geselecteerd is kan daarop worden gezocht door met de middelste muisknop te klikken op definitiegebied van het hoofdvenster of op het mededelingengebied.\n"
-"   StarDict kan de tekst vergelijken met een patroon dat '*' (jokerteken) en '?' (joker) bevat.\n"
-"   Als het woord begint met een '/' wordt er een 'vaag zoeken' uitgevoerd.\n"
-"   Als het zwevende venster rapporteert dat het woord niet gevonden is zal dubbelklikken op het woord een wazige zoekopdracht uitvoeren.\n"
+msgstr "Kuri Kuri Kuvamo Kuri i Idirishya Cyangwa Kuri Gushisha i Idirishya C Cyangwa Kuri Gusiba i Iyinjiza Umwandiko Urufunguzo Kuri Kwimura Kuri i Iyinjiza Icyinjijwe i Ikibazo# ijambo OYA Byabonetse Kanda Urufunguzo Kuri Guhitamo i Itangira ijambo in i ijambo Urutonde Byahiswemo Umwandiko i Hagati Imbeba Akabuto ku i Ubuso Cyangwa ku i Ikimenyetso Ubuso Agashushondanga Hejuru ijambo BIHUYE Ikurikiranyanyuguti Na a ijambo Itangiriro Na: Kuri a Ikibazo# i Bihindagurika Idirishya Raporo a ijambo OYA Byabonetse MAHARAKUBIRI a Ikibazo#"
 
 #: src/mainwin.cpp:1347
+#, fuzzy
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc.\n"
@@ -515,34 +612,15 @@ msgid ""
 "\n"
 "StarDict 2.4.4 released on 2004.11.28\n"
 "http://stardict.sourceforge.net\n"
-msgstr ""
-"       Welkom bij StarDict\n"
-"StarDict is een cross-platform, internationaal woordenboek geschreven in Gtk2. Het heeft krachtige onderdelen zoals \"Glob-stijl patroonherkenning\", \"Geselecteerd woord opzoeken\", \"Vaag zoeken\" etc.\n"
-"\n"
-"       Hier is een inleiding in het gebruik van StarDict:\n"
-"\n"
-"       1. Glob-stijl patroonherkenning\n"
-"        U kunt tekenreeksen invoeren met '*' (jokerteken) en '?' (joker) als patroon. '*' komt overeen met een willekeurige, mogelijk lege, tekenreeks en '?' komt overeen met een willekeurig teken. Nadat er op Enter is gedrukt, zal het woord dat aan dit patroon voldoet worden weergegeven in de lijst.\n"
-"       2. Wazig zoeken\n"
-"       Als u niet meer weet hoe u een bepaald woord precies schrijft kunt u StarDict wazig zoeken proberen. Het gebruikt \"Levenshtein-bewerkafstand\" om de gelijkheid tussen twee woorden te berekenen. Het geeft het resultaat dat het dichtste in de buurt komt van het ingegeven woord. Om een wazige zoekactie te doen moet het woord ingetypt worden te beginnen met een  \"/\" en hierna op Enter drukken.\n"
-"       3. Zoek geselecteerd woord\n"
-"       Zet het selectievakje linksonder in het StarDict-venster aan om deze mogelijkheid te activeren. Als deze mogelijk actief is zal StarDict automatisch woorden, zinnen en Chinese tekens opzoeken in andere programma's. U hoeft alleen maar een woord of zin met de muis op te lichten en er zal een zwevend venster te voorschijn komen met de vertaling van het geselecteerde woord.\n"
-"       4. Woordenboek beheer\n"
-"       Klik op de \"Woordenboeken beheren\"-knop rechtsonder in het venster om de woordenboek beheerdialoog te laten zien.  Vanuit hier kunt u bepaalde woordenboeken uitzetten die u niet nodig heeft. Ook kunt u de woordenboekvolgorde bepalen voor het zoekresultaat.\n"
-"\n"
-"\n"
-"       Let op: Dit programma wordt verspreidt in de hoop dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE. Er wordt niet gegarandeert dat de woordspelling, definities en fonetische informatie correct zijn.\n"
-"\n"
-"StarDict 2.4.4 is vrijgegeven op 28-11-2004\n"
-"http://stardict.sourceforge.net\n"
+msgstr "2.. 3.. 4.. 4.."
 
 #: src/mainwin.cpp:1564
-#, c-format
+#, fuzzy, c-format
 msgid "The text \"%s\" was not found."
-msgstr "De tekst \"%s\" is niet gevonden."
+msgstr "Umwandiko OYA Byabonetse"
 
 #: src/mainwin.cpp:1661
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
 "H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
@@ -554,293 +632,334 @@ msgid ""
 "Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?query=%s\n"
 "Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"
-msgstr ""
-"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
-"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
-"WhatIs\thttp://www.whatis.com\thttp://www.whatis.com/WhatIs_Search_Results_Exact/1,290214,,00.html?query=%s\n"
-"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?q=%s\n"
-"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
-"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/WebQuery?searchText=%s\n"
-"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
-"Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?query=%s\n"
-"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
-"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"
+msgstr "org. HTML. Urubuga. Urubuga. google. google. comsearch."
 
 #: src/mainwin.cpp:1707
+#, fuzzy
 msgid "Scan the selection"
-msgstr "De selectie zoeken"
+msgstr "i Ihitamo"
 
 #: src/mainwin.cpp:1718
+#, fuzzy
 msgid "Show info"
-msgstr "Info weergeven"
+msgstr "Ibisobanuro"
 
 #: src/mainwin.cpp:1741 src/prefsdlg.cpp:1226
 msgid "Preferences"
-msgstr "Voorkeuren"
+msgstr "Ibyahisemo"
 
 #: src/mainwin.cpp:1751
+#, fuzzy
 msgid "Manage dictionaries"
-msgstr "Woordenboeken beheren"
+msgstr "Inkoranyamagambo"
 
 #: src/mainwin.cpp:1761
+#, fuzzy
 msgid "Go to the StarDict website"
-msgstr "Ga naar de StarDict-website"
+msgstr "Kuri i Webu"
 
 #: src/mainwin.cpp:1772
+#, fuzzy
 msgid "Search an Internet dictionary - Right button: website list"
-msgstr "In een Internetwoordenboek zoeken - Rechtermuisknop: lijst websites"
+msgstr "Inkoranyamagambo Akabuto Webu Urutonde"
 
 #: src/prefsdlg.cpp:43
 msgid "Scan Selection"
-msgstr "Selectie zoeken"
+msgstr ""
 
 #: src/prefsdlg.cpp:44
 msgid "Font"
-msgstr "Lettertype"
+msgstr "Umukono"
 
 #: src/prefsdlg.cpp:45
 msgid "Sound"
-msgstr "Geluid"
+msgstr "Ijwi"
 
 #: src/prefsdlg.cpp:52 src/prefsdlg.cpp:60 src/prefsdlg.cpp:67
 msgid "Options"
-msgstr "Opties"
+msgstr "Amahitamo"
 
 #: src/prefsdlg.cpp:53
+#, fuzzy
 msgid "Search website"
-msgstr "Zoekwebsite"
+msgstr "Webu"
 
 #: src/prefsdlg.cpp:68
 msgid "Size"
-msgstr "Grootte"
+msgstr "Ingano"
 
 #: src/prefsdlg.cpp:75 src/stardict.cpp:1577
 msgid "Dictionary"
-msgstr "Woordenboek"
+msgstr "Inkoranyamagambo"
 
 #: src/prefsdlg.cpp:77
+#, fuzzy
 msgid "Main window"
-msgstr "Hoofdvenster"
+msgstr "Idirishya"
 
 #: src/prefsdlg.cpp:79
+#, fuzzy
 msgid "Notification area icon"
-msgstr "Mededelingengebied pictogram"
+msgstr "Ubuso Agashushondanga"
 
 #: src/prefsdlg.cpp:81
+#, fuzzy
 msgid "Floating window"
-msgstr "Zwevend venster"
+msgstr "Idirishya"
 
 #: src/prefsdlg.cpp:230
 msgid "Categories"
-msgstr "Categorieen"
+msgstr "Ibyiciro"
 
 #: src/prefsdlg.cpp:310
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Scan Selection</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Selectie zoeken</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini"
 
 #: src/prefsdlg.cpp:318
+#, fuzzy
 msgid "_Only do scanning while modifier key being pressed."
-msgstr "_Alleen zoeken als de optietoets is ingedrukt."
+msgstr "Urufunguzo"
 
 #: src/prefsdlg.cpp:333
+#, fuzzy
 msgid "H_ide floating window when modifier key released."
-msgstr "Het zwevende venster v_erbergen als de optietoets ingedrukt wordt."
+msgstr "Bihindagurika Idirishya Ryari: Urufunguzo"
 
 #: src/prefsdlg.cpp:347
+#, fuzzy
 msgid "Scan modifier _key:"
-msgstr "Optie_toets zoeken:"
+msgstr "Urufunguzo"
 
 #: src/prefsdlg.cpp:354
 msgid "_Win"
-msgstr "_Win"
+msgstr ""
 
 #: src/prefsdlg.cpp:357
+#, fuzzy
 msgid "_Shift"
-msgstr "_Shift"
+msgstr "Gusunika"
 
 #: src/prefsdlg.cpp:359
+#, fuzzy
 msgid "_Alt"
-msgstr "_Alt"
+msgstr "Alt"
 
+# the control key
 #: src/prefsdlg.cpp:361
+#, fuzzy
 msgid "_Ctrl"
-msgstr "_Ctrl"
+msgstr "Ctrl"
 
 #: src/prefsdlg.cpp:390
+#, fuzzy
 msgid "Choose dictionary font"
-msgstr "Een woordenboek lettertype kiezen"
+msgstr "Inkoranyamagambo Intego- nyuguti"
 
 #: src/prefsdlg.cpp:393 src/prefsdlg.cpp:467
 msgid "Choose"
-msgstr "Kiezen"
+msgstr "Guhitamo"
 
 #: src/prefsdlg.cpp:395
+#, fuzzy
 msgid "Dictionary font"
-msgstr "Woordenboek lettertype"
+msgstr "Intego- nyuguti"
 
 #: src/prefsdlg.cpp:432
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Lettertype</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini"
 
 #: src/prefsdlg.cpp:440
+#, fuzzy
 msgid "_Use custom font."
-msgstr "Aangepast lettertype gebruiken."
+msgstr "Kunoza Intego- nyuguti"
 
 #: src/prefsdlg.cpp:454
+#, fuzzy
 msgid "Dictionary _font:"
-msgstr "Woordenboek _lettertype:"
+msgstr "Intego- nyuguti"
 
 #: src/prefsdlg.cpp:501
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Geluid</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini"
 
 #: src/prefsdlg.cpp:512
+#, fuzzy
 msgid "_Enable sound event."
-msgstr "Geluidsgebeurtenissen _aanzetten."
+msgstr "Ijwi Icyabaye"
 
 #: src/prefsdlg.cpp:549 src/prefsdlg.cpp:981 src/prefsdlg.cpp:1031
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Opties</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini"
 
 #: src/prefsdlg.cpp:560
+#, fuzzy
 msgid "Hide main window when _starting StarDict."
-msgstr "Hoofdvenster verbergen als StarDict wordt _gestart."
+msgstr "Idirishya Ryari:"
 
 #: src/prefsdlg.cpp:650
+#, fuzzy
 msgid "Please input the website name."
-msgstr "Geef alstublieft de naam van de website."
+msgstr "Iyinjiza i Webu Izina:"
 
 #: src/prefsdlg.cpp:652
+#, fuzzy
 msgid "Please input the website link."
-msgstr "Geef alstublieft het adres van de website."
+msgstr "Iyinjiza i Webu Ihuza"
 
 #: src/prefsdlg.cpp:654
+#, fuzzy
 msgid "Please input the website search link."
-msgstr "Geef alstublieft het zoekadres van de website."
+msgstr "Iyinjiza i Webu Gushaka Ihuza"
 
 #: src/prefsdlg.cpp:656 src/prefsdlg.cpp:787
-#, c-format
+#, fuzzy, c-format
 msgid "The website search link should contains a \"%%s\" string for quering word."
-msgstr "Het website zoekadres moet een \"%%s\" teken bevatten voor het te zoeken woord."
+msgstr "Webu Gushaka Ihuza Kirimo a Ikurikiranyanyuguti kugirango ijambo"
 
 #: src/prefsdlg.cpp:692
 msgid "Add"
-msgstr "Toevoegen"
+msgstr "Kongera"
 
 #: src/prefsdlg.cpp:824
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Zoekwebsite</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini"
 
 #: src/prefsdlg.cpp:888
 msgid "Website Name"
-msgstr "Website naam"
+msgstr ""
 
 #: src/prefsdlg.cpp:896
+#, fuzzy
 msgid "Website link"
-msgstr "Website adres"
+msgstr "Ihuza"
 
 #: src/prefsdlg.cpp:904
+#, fuzzy
 msgid "Website search link"
-msgstr "Website zoekadres"
+msgstr "Gushaka Ihuza"
 
 #: src/prefsdlg.cpp:992
+#, fuzzy
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button clicked."
-msgstr ""
-"_Zoek in het zwevende venster als de middelste muis-\n"
-"knop wordt ingedrukt."
+msgstr "in i Bihindagurika Idirishya Ryari: Hagati"
 
 #: src/prefsdlg.cpp:1042
+#, fuzzy
 msgid "_Pronouce the word when pop up."
-msgstr "Het woord uit_spreken als het tevoorschijn komt."
+msgstr "i ijambo Ryari: Hejuru"
 
 #: src/prefsdlg.cpp:1092
+#, fuzzy
 msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Max. venstergrootte</span>"
+msgstr "<Uburemere UTSINDAGIYE Ingano X Binini Idirishya Ingano"
 
 #: src/prefsdlg.cpp:1118
+#, fuzzy
 msgid "Max window _width:"
-msgstr "Max. venser_breedte:"
+msgstr "Idirishya Ubugari"
 
 #: src/prefsdlg.cpp:1127
+#, fuzzy
 msgid "(default:320)"
-msgstr "(standaard: 320)"
+msgstr "(Mburabuzi"
 
 #: src/prefsdlg.cpp:1134
+#, fuzzy
 msgid "Max window hei_ght:"
-msgstr "Max. vensterhoo_gte:"
+msgstr "Idirishya Ubuhagarike"
 
 #: src/prefsdlg.cpp:1142
+#, fuzzy
 msgid "(default:240)"
-msgstr "(standaard:240)"
+msgstr "(Mburabuzi"
 
+# sw/source\ui\misc\glossary.src:DLG_GLOSSARY.PB_BIB.text
 #: src/prefsdlg.cpp:1202
+#, fuzzy
 msgid "Cat_egories:"
-msgstr "Cat_ogorieen:"
+msgstr "Ibyiciro..."
 
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\dochdl\dochdl.src:STR_NOGLOS2.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\uiview\view.src:STR_NOGLOS2.text
 #: src/selection.cpp:232 src/stardict.cpp:484 src/stardict.cpp:551
 #: src/stardict.cpp:581 src/stardict.cpp:585 src/stardict.cpp:590
 #: src/win32/clipboard.cpp:113
+#, fuzzy
 msgid "<Not Found!>"
-msgstr "<Niets gevonden!>"
+msgstr "<ntibyabonetse"
 
 #: src/stardict.cpp:69
+#, fuzzy
 msgid "Turn on all debugging messages"
-msgstr "Alle debugberichten aanzetten"
+msgstr "ku Byose Ubutumwa"
 
 #: src/stardict.cpp:72
+#, fuzzy
 msgid "Hide the main window"
-msgstr "Het hoofdvenster verbergen"
+msgstr "i Idirishya"
 
 #: src/stardict.cpp:75
+#, fuzzy
 msgid "Quit an existing instance of stardict"
-msgstr "Een bestaande instantie van StarDict afsluiten"
+msgstr "Urugero Bya"
 
 #: src/stardict.cpp:730
+#, fuzzy
 msgid "There are too many spelling errors :-("
-msgstr "Er zijn teveel spelfouten :-("
+msgstr "Ivuganyuguti Amakosa"
 
 #: src/stardict.cpp:888
+#, fuzzy
 msgid "Fuzzy query failed, too :-("
-msgstr "'Vaag zoeken' is ook mislukt :-("
+msgstr "Ikibazo# Byanze"
 
 #: src/stardict.cpp:951
+#, fuzzy
 msgid "Found no words matching this pattern!"
-msgstr "Geen woorden gevonden die aan dit patroon voldoen!"
+msgstr "Oya Amagambo iyi Ishusho"
 
 #: src/stardict.cpp:1075
+#, fuzzy
 msgid "Press Enter to list the words that match the pattern."
-msgstr "Druk op Enter om de woorden op te sommen die overeenkomen met het patroon."
+msgstr "Kuri Urutonde i Amagambo BIHUYE i Ishusho"
 
 #: src/stardict.cpp:1082
+#, fuzzy
 msgid "Fuzzy query..."
-msgstr "'Vaag zoeken'..."
+msgstr "Ikibazo#"
 
 #: src/stardict.cpp:1416
+#, fuzzy
 msgid "StarDict is already running. Using the running process."
-msgstr "StarDict loopt al. Het lopende proces wordt gebruikt."
+msgstr "ni i"
 
 #: src/win32/systray.cpp:73
 msgid "Scan"
-msgstr "Zoeken"
+msgstr "Gusikana"
 
 #: src/win32/systray.cpp:223
 msgid "StarDict - Scanning"
-msgstr "StarDict - Zoeken"
+msgstr ""
 
 #: src/win32/systray.cpp:226
 msgid "StarDict - Stopped"
-msgstr "StarDict - Gestopt"
+msgstr ""
 
 #: src/win32/winconf.cpp:36
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "use_custom_font=1\n"
 "custom_font=sans 8\n"
-msgstr ""
-"use_custom_font=1\n"
-"custom_font=sans 8\n"
+msgstr "Nta"
 
 #: src/win32/winconf.cpp:43
 #, c-format
@@ -849,111 +968,128 @@ msgid ""
 "window_height=357\n"
 "hpaned_pos=165\n"
 msgstr ""
-"window_width=551\n"
-"window_height=357\n"
-"hpaned_pos=165\n"
 
 #: src/win32/gnome-about.c:256
 msgid "Credits"
-msgstr "Verdiensten"
+msgstr ""
 
 #: src/win32/gnome-about.c:288
+#, fuzzy
 msgid "Written by"
-msgstr "Geschreven door"
+msgstr "ku"
 
 #: src/win32/gnome-about.c:303
+#, fuzzy
 msgid "Documented by"
-msgstr "Gedocumenteerd door"
+msgstr "ku"
 
 #: src/win32/gnome-about.c:318
+#, fuzzy
 msgid "Translated by"
-msgstr "Vertaald door"
+msgstr "ku"
 
 #: src/win32/gnome-about.c:381
 msgid "C_redits"
-msgstr "V_erdiensten"
+msgstr ""
 
 #: src/win32/gnome-about.c:436
+#, fuzzy
 msgid "Program name"
-msgstr "Programmanaam"
+msgstr "Izina:"
 
 #: src/win32/gnome-about.c:437
+#, fuzzy
 msgid "The name of the program"
-msgstr "De programmanaam"
+msgstr "Izina: Bya i Porogaramu"
 
 #: src/win32/gnome-about.c:444
+#, fuzzy
 msgid "Program version"
-msgstr "Programmaversie"
+msgstr "Verisiyo"
 
 #: src/win32/gnome-about.c:445
+#, fuzzy
 msgid "The version of the program"
-msgstr "De programmaversie"
+msgstr "Verisiyo Bya i Porogaramu"
 
 #: src/win32/gnome-about.c:451
+#, fuzzy
 msgid "Copyright string"
-msgstr "Auteursrecht tekst"
+msgstr "Ikurikiranyanyuguti"
 
 #: src/win32/gnome-about.c:452
+#, fuzzy
 msgid "Copyright information for the program"
-msgstr "Auteursrechtelijke informatie over het programma"
+msgstr "Ibisobanuro kugirango i Porogaramu"
 
 #: src/win32/gnome-about.c:459
+#, fuzzy
 msgid "Comments string"
-msgstr "Opmerkingstekst"
+msgstr "Ikurikiranyanyuguti"
 
 #: src/win32/gnome-about.c:460
+#, fuzzy
 msgid "Comments about the program"
-msgstr "Opmerkingen over het programma"
+msgstr "Ibyerekeye i Porogaramu"
 
 #: src/win32/gnome-about.c:466
 msgid "Authors"
-msgstr "Auteurs"
+msgstr "Abahanzi"
 
 #: src/win32/gnome-about.c:467
+#, fuzzy
 msgid "List of authors of the programs"
-msgstr "Lijst van auteurs van het programma"
+msgstr "Bya Abahanzi Bya i Porogaramu"
 
 #: src/win32/gnome-about.c:469
+#, fuzzy
 msgid "Author entry"
-msgstr "Auteurveld"
+msgstr "Icyinjijwe"
 
 #: src/win32/gnome-about.c:470
+#, fuzzy
 msgid "A single author entry"
-msgstr "Een enkelvoudige auteur item"
+msgstr "A UMWE Umwanditsi Icyinjijwe"
 
 #: src/win32/gnome-about.c:477
 msgid "Documenters"
-msgstr "Documentators"
+msgstr ""
 
 #: src/win32/gnome-about.c:478
+#, fuzzy
 msgid "List of people documenting the program"
-msgstr "Lijst van mensen die hebben gedocumenteerd aan het programma"
+msgstr "Bya Abantu i Porogaramu"
 
 #: src/win32/gnome-about.c:480
+#, fuzzy
 msgid "Documenter entry"
-msgstr "Documentatorveld"
+msgstr "Icyinjijwe"
 
 #: src/win32/gnome-about.c:481
+#, fuzzy
 msgid "A single documenter entry"
-msgstr "Een enkel documenteerder item"
+msgstr "A UMWE Icyinjijwe"
 
 #: src/win32/gnome-about.c:489
 msgid "Translator credits"
-msgstr "Vertaler verdiensten"
+msgstr ""
 
 #: src/win32/gnome-about.c:490
+#, fuzzy
 msgid "Credits to the translators. This string should be marked as translatable"
-msgstr ""
+msgstr "Kuri i Ikurikiranyanyuguti cy/ byagarajwe Nka"
 
 #: src/win32/gnome-about.c:497
 msgid "Logo"
-msgstr "Logo"
+msgstr "ikirango"
 
 #: src/win32/gnome-about.c:498
+#, fuzzy
 msgid "A logo for the about box"
-msgstr "Een logo voor het infovak"
+msgstr "A ikirango kugirango i Ibyerekeye Agasanduku"
 
+# offmgr/source\offapp\intro\intro.hrc:TEXT_DEFAULTABOUT.text
 #: src/win32/gnome-about.c:577
-#, c-format
+#, fuzzy, c-format
 msgid "About %s"
-msgstr "Info %s"
+msgstr "Ibyerekeye"
