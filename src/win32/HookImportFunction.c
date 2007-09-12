@@ -5,7 +5,7 @@
 // These code come from: http://dev.csdn.net/article/2/2786.shtm
 // I fixed a bug in it and improved it to hook all the modules of a program.
 
-#define MakePtr(cast, ptr, AddValue) (cast)((DWORD)(ptr)+(DWORD)(AddValue))
+#define MakePtr(cast, ptr, AddValue) (cast)((size_t)(ptr)+(size_t)(AddValue))
 
 static PIMAGE_IMPORT_DESCRIPTOR GetNamedImportDescriptor(HMODULE hModule, LPCSTR szImportModule)
 {
@@ -27,7 +27,7 @@ static PIMAGE_IMPORT_DESCRIPTOR GetNamedImportDescriptor(HMODULE hModule, LPCSTR
 	pImportDesc = MakePtr(PIMAGE_IMPORT_DESCRIPTOR, pDOSHeader, pNTHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 	while (pImportDesc->Name) {
 		PSTR szCurrMod = MakePtr(PSTR, pDOSHeader, pImportDesc->Name);
-		if (stricmp(szCurrMod, szImportModule) == 0)
+		if (_stricmp(szCurrMod, szImportModule) == 0)
 			break;
 		pImportDesc++;
 	}
@@ -54,7 +54,7 @@ static BOOL HookImportFunction(HMODULE hModule, LPCSTR szImportModule, LPCSTR sz
 	PIMAGE_THUNK_DATA pOrigThunk;
 	PIMAGE_THUNK_DATA pRealThunk;
 
-	if (!IsNT() && ((DWORD)hModule >= 0x80000000))
+	if (!IsNT() && ((size_t)hModule >= 0x80000000))
 		return FALSE;
 	pImportDesc = GetNamedImportDescriptor(hModule, szImportModule);
 	if (pImportDesc == NULL)
@@ -77,7 +77,7 @@ static BOOL HookImportFunction(HMODULE hModule, LPCSTR szImportModule, LPCSTR sz
 				continue;
 			}
 			bDoHook = FALSE;
-			if ((szFunc[0] == pByName->Name[0]) && (strcmpi(szFunc, (char*)pByName->Name) == 0)) {
+			if ((szFunc[0] == pByName->Name[0]) && (_strcmpi(szFunc, (char*)pByName->Name) == 0)) {
 				if (paHookFuncs)
 					bDoHook = TRUE;
 			}

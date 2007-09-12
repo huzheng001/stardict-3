@@ -65,6 +65,12 @@ arr=(PAIR *)malloc(sizeof(PAIR)*40000);
 
 setbuf(stdout, 0);
 
+if (argc>1)
+   {
+   printf("Just run ydp2dict in a folder containing dict*.dat files\n");
+   exit(0);
+   }
+
 for (cyc=0; cyc<=1; cyc++)
    {
    strcpy(s, (cyc==0)? "English_Polish": "Polish_English");

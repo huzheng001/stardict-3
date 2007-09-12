@@ -37,6 +37,7 @@
 #include "mapfile.hpp"
 
 #include "stddict.hpp"
+#include <algorithm>
 
 static inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {

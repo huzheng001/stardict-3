@@ -26,6 +26,7 @@ src/lib/stddict.cpp
 src/win32/clipboard.cpp
 src/win32/systray.cpp
 stardict-plugins/stardict-advertisement-plugin/advertisement.cpp
+stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp
 stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp
 stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp
 stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp
@@ -35,4 +36,5 @@ stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedat
 stardict-plugins/stardict-spell-plugin/stardict_spell.cpp
 stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
 stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp
+stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp
 stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp

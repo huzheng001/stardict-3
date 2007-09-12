@@ -1,3 +1,37 @@
 This package contain some tools for StarDict.
 
 http://stardict.sourceforge.net
+
+Make sure you restart StarDict after using a converter!
+
+dictd2dic.sh	converter from dictd format (you may need dictzip package for .dz)
+(dictd2dic)
+
+dsl2dict	converter for Lingvo proprietary dictionaries
+
+exc.sh		converter of English irregular forms from WordNet-base package
+(exc2i2e)
+
+fest2dict	converter from Festival (CMU) file of transcriptions
+
+i2e.sh		converter for Spanish I2E (Inglés 2 Español) dictionaries
+(i2e2dict)
+
+myspell.sh	converter that allows to see Spanish and Polish verb forms 
+(myspell2dic)	in correct grammar order (venir=>yo vengo, tu vienes, el viene...
+		kochać=>ja kocham, ty kochasz, on kocha, my kochamy...)
+
+mova		converter from MOVA format
+
+ooo.sh		converter for OpenOffice (myspell) thesauri (synonyms) of
+(ooo2dict)	English, German and Italian. Sometimes they are easier
+		to grip than long GCIDE or WordNet description
+
+stardict2txt	converter from StarDict to text format. Useful for mobile phones
+
+testutf8	utility to test any dictionary's UTF-8 conformance (often
+		cause of weird symbols)
+
+ydp2dict	converter for Polish Collins proprietary dictionaries
+		(see also YDPDict project: http://toxygen.net/ydpdict/)
+

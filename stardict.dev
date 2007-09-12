@@ -192,7 +192,7 @@ BuildCmd=
 [Unit17]
 FileName=src\selection.cpp
 CompileCpp=1
-Folder=libsigcpp
+Folder=main
 Compile=1
 Link=1
 Priority=1000
@@ -202,7 +202,7 @@ BuildCmd=
 [Unit18]
 FileName=src\selection.h
 CompileCpp=1
-Folder=libsigcpp
+Folder=main
 Compile=1
 Link=1
 Priority=1000

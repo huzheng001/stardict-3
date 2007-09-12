@@ -11,9 +11,15 @@
 
 # include <winsock2.h>
 
+#if defined(_MSC_VER)
+#pragma comment(lib,"WS2_32.lib")
+#endif
+
 # define EINPROGRESS	WSAEINPROGRESS
 # define EWOULDBLOCK	WSAEWOULDBLOCK
 # define ETIMEDOUT	    WSAETIMEDOUT
+# define EAGAIN			WSAEWOULDBLOCK
+# define EINTR			WSAEINTR
 #else
 extern "C" {
 # include <unistd.h>

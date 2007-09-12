@@ -942,12 +942,10 @@ void AppCore::FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***p
 	g_free(ppppWordData);
 }
 
-/* the input can be:
- * (sWord,NULL,false) look up the sWord.
- * (sWord,piIndex,false),look up the sWord,and set piIndex
- * to the new indexes that found.
- * (sWord,piIndex,true), show word by piIndex's information.
- * it will always found, so bTryMoreIfNotFound is useless.
+/* The input can be:
+ * (sWord, NULL, NULL). Look up the sWord.
+ * (sWord, piIndex, NULL). Look up the sWord, and set piIndex to the new indexes that found.
+ * (sWord, piIndex, "word"), show sWord by piIndex's information, while the index point to "word".
  */
 bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, const gchar *piIndexValidStr, bool bTryMoreIfNotFound, bool bShowNotfound, bool isShowFirst)
 {

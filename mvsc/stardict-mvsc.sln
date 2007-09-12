@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mvsc", "stardict-mvsc.vcproj", "{A7776EE3-84FC-48A7-87AE-E67CACC3C8E9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "texthook", "texthook.vcproj", "{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "textouthook", "textouthook.vcproj", "{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "textoutspy", "textoutspy.vcproj", "{499E55F2-F913-4779-9910-630D76657A8B}"
 EndProject

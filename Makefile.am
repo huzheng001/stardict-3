@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = m4 src stardict-plugins tests pixmaps po help data doc debian
+SUBDIRS = m4 src stardict-plugins tests pixmaps po help data doc debian mvsc
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \

@@ -34,10 +34,10 @@ for (i=0; i<4; i++)
    {
    switch (i)
       {
-      case 0: freopen("noun.exc", "rt", stdin); break;
-      case 1: freopen("verb.exc", "rt", stdin); break;
-      case 2: freopen("adj.exc", "rt", stdin); break;
-      case 3: freopen("adv.exc", "rt", stdin); break;
+      case 0: freopen("/usr/share/wordnet/noun.exc", "rt", stdin); break;
+      case 1: freopen("/usr/share/wordnet/verb.exc", "rt", stdin); break;
+      case 2: freopen("/usr/share/wordnet/adj.exc", "rt", stdin); break;
+      case 3: freopen("/usr/share/wordnet/adv.exc", "rt", stdin); break;
       }
    while (fgets(word, 200, stdin))
       {

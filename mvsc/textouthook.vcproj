@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="texthook"
+	Name="textouthook"
 	ProjectGUID="{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
 	RootNamespace="texthook"
 	Keyword="Win32Proj"
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS;_CRT_SECURE_NO_DEPRECATE;BUILDING_DLL;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
