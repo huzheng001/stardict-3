@@ -171,6 +171,7 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	std::string email;
 	std::string website;
 	std::string description;
+	std::string date;
 	bool print_sameword;
 	if (*p == '\n') {
 		print_sameword = false;
@@ -213,6 +214,9 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 			} else if (g_str_has_prefix(p, "website=")) {
 				p += sizeof("website=") -1;
 				website = p;
+			} else if (g_str_has_prefix(p, "date=")) {
+				p += sizeof("date=") -1;
+				date = p;
 			} else if (g_str_has_prefix(p, "description=")) {
 				p += sizeof("description=") -1;
 				description = p;
@@ -494,6 +498,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 		fprintf(ifofile, "email=%s\n", email.c_str());
 	if (!website.empty())
 		fprintf(ifofile, "website=%s\n", website.c_str());
+	if (!date.empty())
+		fprintf(ifofile, "date=%s\n", date.c_str());
 	if (!description.empty())
 		fprintf(ifofile, "description=%s\n", description.c_str());
 	fprintf(ifofile, "sametypesequence=%s\n", sametypesequence.c_str());

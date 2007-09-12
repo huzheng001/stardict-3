@@ -38,6 +38,7 @@
 #include "lib/stddict.hpp"
 
 #include "mainwin.h"
+#include <algorithm>
 
 
 /**************************************************/

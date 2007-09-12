@@ -3,7 +3,7 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict wordnet
 
 noinst_LIBRARIES = libbgl2txt.a
 
@@ -210,6 +210,10 @@ ydp2dict_LDFLAGS =
 ydp2dict_LDADD = $(STARDICT_LIBS)
 ydp2dict_SOURCES = ydp2dict.c
 
+wordnet_LDFLAGS =
+wordnet_LDADD = $(STARDICT_LIBS)
+wordnet_SOURCES = wordnet.cpp
+
 bgl2txt_DEPENDENCIES = libbgl2txt.a
 bgl2txt_LDFLAGS =
 bgl2txt_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
@@ -224,4 +228,4 @@ stardict_editor_LDFLAGS =
 stardict_editor_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp libstardictverify.h
 
-EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py
+EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py

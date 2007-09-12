@@ -1,7 +1,3 @@
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
 #include "GetWord.h"
 #include "TextOutHook.h"
 
@@ -27,7 +23,7 @@ TKnownWndClass GetWindowType(HWND WND, const char* WNDClass)
 	};
 	int i;
 	for (i=0; i<7; i++) {
-		if (strcasecmp(WNDClass, StrKnownClasses[i])==0)
+		if (_stricmp(WNDClass, StrKnownClasses[i])==0)
 			break;
 	}
 	if (i<7) {
@@ -129,8 +125,8 @@ static int GetWordFromConsolePack(TConsoleParams *params)
 		CONSOLE_SCREEN_BUFFER_INFO csbi;
 		if (GetConsoleScreenBufferInfo(hStdOut, &csbi)) {
 			COORD CurPos;
-			CurPos.X = csbi.srWindow.Left + params->Pt.x * (csbi.srWindow.Right - csbi.srWindow.Left + 1) / params->ClientRect.right;
-			CurPos.Y = csbi.srWindow.Top + params->Pt.y * (csbi.srWindow.Bottom - csbi.srWindow.Top + 1) / params->ClientRect.bottom;
+			CurPos.X = csbi.srWindow.Left + (SHORT)(params->Pt.x * (csbi.srWindow.Right - csbi.srWindow.Left + 1) / params->ClientRect.right);
+			CurPos.Y = csbi.srWindow.Top + (SHORT)(params->Pt.y * (csbi.srWindow.Bottom - csbi.srWindow.Top + 1) / params->ClientRect.bottom);
 			if ((CurPos.X >= 0) && (CurPos.X <= csbi.dwSize.X - 1) && (CurPos.Y >= 0) && (CurPos.Y <= csbi.dwSize.Y - 1)) {
 				int BegPos;
 				char *Buf;
@@ -160,7 +156,7 @@ static int GetWordFromConsolePack(TConsoleParams *params)
 }
 static void GetWordFromConsolePackEnd() {}
 
-static BOOL RemoteExecute(HANDLE hProcess, void *RemoteThread, DWORD RemoteSize, void *Data, int DataSize, DWORD *dwReturn)
+static BOOL RemoteExecute(HANDLE hProcess, void *RemoteThread, size_t RemoteSize, void *Data, int DataSize, DWORD *dwReturn)
 {
 	void *pRemoteThread = VirtualAllocEx(hProcess, NULL, RemoteSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 	void *pData;
@@ -216,7 +212,7 @@ static char* GetWordFromConsole(HWND WND, POINT Pt, int *BeginPos)
 		// The next line will fail in Win2k, but OK in Windows XP.
 		HANDLE ph = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, pid);
 		if (ph) {
-			if (!RemoteExecute(ph, GetWordFromConsolePack, (DWORD)GetWordFromConsolePackEnd - (DWORD)GetWordFromConsolePack, TP, sizeof(TConsoleParams), &MaxWordSize))
+			if (!RemoteExecute(ph, GetWordFromConsolePack, (size_t)GetWordFromConsolePackEnd - (size_t)GetWordFromConsolePack, TP, sizeof(TConsoleParams), &MaxWordSize))
 				MaxWordSize = 0;
 			CloseHandle(ph);
 		}
@@ -225,7 +221,7 @@ static char* GetWordFromConsole(HWND WND, POINT Pt, int *BeginPos)
 	}
 
 	if (MaxWordSize > 0) {
-		Result = strdup(TP->Buffer);
+		Result = _strdup(TP->Buffer);
 	} else {
 		Result = NULL;
 	}

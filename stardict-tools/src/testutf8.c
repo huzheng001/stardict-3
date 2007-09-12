@@ -23,7 +23,7 @@ long off, siz, n, i, idxsiz;
 char same, j;
 FILE *F, *F2;
 char *p, *p2, *idx;
-char words[200];
+char *words;
 
 int main (int argc, char *argv[])
 {
@@ -33,6 +33,7 @@ if (argc<2)
 	getchar();
 	exit(1);
 	}
+words=(char *)malloc(300);
 
 sprintf(words, "/usr/share/stardict/dic/%s.ifo", argv[1]);
 F=fopen(words, "rt");
@@ -61,6 +62,7 @@ for (p=idx, i=0; i<n; i++)
    for (j=3; j>=0; j--)
    ((char*)&siz)[(int)j]=*p++;
    fseek(F2, off, SEEK_SET);
+   words=(char *)realloc(words, siz+1);
    fread(words, siz, 1, F2);
    words[siz]=0;
    if (g_utf8_validate(words, -1, NULL)!=TRUE) fprintf(stderr, "Error: %s\n", words);

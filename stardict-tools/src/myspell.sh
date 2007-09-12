@@ -17,3 +17,5 @@ echo "Polish" |./myspell2dic pl_PL.dic.utf pl_PL.aff.utf 2>/dev/null
 recode KOI8-RU..UTF-8 </usr/share/myspell/dicts/uk_UA.dic >uk_UA.dic.utf
 recode KOI8-RU..UTF-8 </usr/share/myspell/dicts/uk_UA.aff >uk_UA.aff.utf
 echo "Ukrainian" |./myspell2dic uk_UA.dic.utf uk_UA.aff.utf 2>/dev/null
+
+echo "Restart StarDict now!"

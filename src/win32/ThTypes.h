@@ -11,7 +11,7 @@ extern "C"
 typedef struct TCurrentMode {
 	HWND WND;
 	POINT Pt;
-	int WordLen;
+	size_t WordLen;
 	char MatchedWord[256];
 	int BeginPos;
 } TCurrentMode;
@@ -19,7 +19,7 @@ typedef struct TCurrentMode {
 typedef struct TGlobalDLLData {
 	HWND ServerWND;
 	HHOOK g_hHookMouse;
-	DWORD TimerID;
+	UINT_PTR TimerID;
 	HWND LastWND;
 	POINT LastPt;
 	TCurrentMode CurMod;

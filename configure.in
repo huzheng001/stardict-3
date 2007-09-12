@@ -329,6 +329,7 @@ stardict-withoutgnome.spec
 data/Makefile
 doc/Makefile
 debian/Makefile
+mvsc/Makefile
 po/Makefile.in
 m4/Makefile
 src/Makefile
@@ -357,6 +358,7 @@ stardict-plugins/stardict-espeak-tts-plugin/Makefile
 stardict-plugins/stardict-wiki-parsedata-plugin/Makefile
 stardict-plugins/stardict-powerword-parsedata-plugin/Makefile
 stardict-plugins/stardict-xdxf-parsedata-plugin/Makefile
+stardict-plugins/stardict-wordnet-plugin/Makefile
 stardict-plugins/stardict-html-parsedata-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile

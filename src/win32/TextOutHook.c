@@ -1,9 +1,3 @@
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include <math.h>
-
 #include "TextOutHook.h"
 #include "GetWord.h"
 #include "HookImportFunction.h"
@@ -184,7 +178,7 @@ char* ExtractFromEverything(HWND WND, POINT Pt, int *BeginPos)
 	GetWordTextOutHook(&CParams);
 	ConvertToMatchedWordA(&CParams);
 	*BeginPos = CParams.BeginPos;
-	return strdup(CParams.MatchedWordA);
+	return _strdup(CParams.MatchedWordA);
 }
 
 static void IsInsidePointA(const HDC DC, int X, int Y, LPCSTR Str, int Count)
@@ -226,7 +220,7 @@ static void IsInsidePointA(const HDC DC, int X, int Y, LPCSTR Str, int Count)
 		//if (PtInRect(&Rect, CurParams->Pt)) {
 			CurParams->Active = !PtInRect(&Rect, CurParams->Pt);
 			//CurParams->Active = FALSE;
-			BegPos = round(abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1));
+			BegPos = (int)((abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1)) + 0.5);
 			while ((BegPos < Count - 1) && GetTextExtentPoint32A(DC, Str, BegPos + 1, &Size) && (Size.cx < CurParams->Pt.x - Rect.left))
 				BegPos++;
 			while ((BegPos >= 0) && GetTextExtentPoint32A(DC, Str, BegPos + 1, &Size) && (Size.cx > CurParams->Pt.x - Rect.left))
@@ -287,7 +281,7 @@ static void IsInsidePointW(const HDC DC, int X, int Y, LPCWSTR Str, int Count)
 		//if (PtInRect(&Rect, CurParams->Pt)) {
 			CurParams->Active = !PtInRect(&Rect, CurParams->Pt);
 			//CurParams->Active = FALSE;
-			BegPos = round(abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1));
+			BegPos = (int)((abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1)) + 0.5);
 			while ((BegPos < Count - 1) && GetTextExtentPoint32W(DC, Str, BegPos + 1, &Size) && (Size.cx < CurParams->Pt.x - Rect.left))
 				BegPos++;
 			while ((BegPos >= 0) && GetTextExtentPoint32W(DC, Str, BegPos + 1, &Size) && (Size.cx > CurParams->Pt.x - Rect.left))

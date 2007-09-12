@@ -406,6 +406,9 @@ See http://meta.wikimedia.org/wiki/Help:Editing#The_wiki_markup
 'h'
 Html codes.
 
+'n'
+WordNet data.
+
 'r'
 Resource file list.
 The content can be:

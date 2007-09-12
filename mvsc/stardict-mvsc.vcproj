@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\src\win32&quot;;&quot;E:\evgeniy\projects\stardict-project\stardict\trunk\mvsc&quot;;&quot;E:\evgeniy\projects\stardict-project\libsigc++-2.0.16&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\atk-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\cairo&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\pango-1.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0\include&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\include\glib-2.0&quot;"
+				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;;&quot;gtk\include\atk-1.0&quot;;gtk\include\cairo;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\pango-1.0&quot;;gtk\include;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\evgeniy\projects\stardict-project\gtk\lib&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\pango&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\gtk-2.0&quot;;&quot;E:\evgeniy\projects\stardict-project\gtk\lib\glib-2.0&quot;"
+				AdditionalLibraryDirectories="gtk\lib;gtk\lib\sigc;gtk\lib\pango;&quot;gtk\lib\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -191,10 +191,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\connection.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\src\lib\ctype-mb.cpp"
 				>
 			</File>
@@ -208,6 +204,10 @@
 			</File>
 			<File
 				RelativePath="..\src\desktop.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\dictmanage.cpp"
 				>
 			</File>
 			<File
@@ -243,6 +243,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\pluginmanagedlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\prefsdlg.cpp"
 				>
 			</File>
@@ -259,23 +263,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\signal.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\signal_base.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\src\skin.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\functors\slot.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\functors\slot_base.cc"
 				>
 			</File>
 			<File
@@ -284,10 +272,6 @@
 			</File>
 			<File
 				RelativePath="..\src\stardict.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\trackable.cc"
 				>
 			</File>
 			<File
@@ -362,7 +346,47 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\http_client.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\httpmanager.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\lib.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\md5.c"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\netdictcache.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\netdictplugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\parsedata_plugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\plugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\pluginmanager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\sockets.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\stardict_client.cpp"
 					>
 				</File>
 				<File
@@ -370,7 +394,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\storage.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\treedict.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\ttsplugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\virtualdictplugin.cpp"
 					>
 				</File>
 			</Filter>
@@ -385,23 +421,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\bind.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\bind_return.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\class_factory.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\class_slot.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\compatibility.h"
 				>
 			</File>
 			<File
@@ -410,10 +430,6 @@
 			</File>
 			<File
 				RelativePath="..\src\config_file.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\connection.h"
 				>
 			</File>
 			<File
@@ -429,23 +445,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\functors\functor_trait.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\functors\functors.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\gtk_iskeyspressed.hpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\gtktextviewpango.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\hide.h"
 				>
 			</File>
 			<File
@@ -465,31 +469,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\limit_reference.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\mainwin.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\functors\mem_fun.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\method_slot.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\win32\MinimizeToTray.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\object.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\object_slot.h"
 				>
 			</File>
 			<File
@@ -505,23 +489,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\functors\ptr_fun.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\readword.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\reference_wrapper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\retype.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\retype_return.h"
 				>
 			</File>
 			<File
@@ -529,31 +497,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\sigc++\sigc++.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\signal.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\signal_base.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\skin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\functors\slot.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\slot.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\functors\slot_base.h"
 				>
 			</File>
 			<File
@@ -565,42 +509,26 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\ThTypes.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\trackable.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\tray.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\sigc++\type_traits.h"
 				>
 			</File>
 			<File
 				RelativePath="..\src\utils.h"
 				>
 			</File>
-			<File
-				RelativePath="..\src\sigc++\visit_each.h"
-				>
-			</File>
 			<Filter
 				Name="win32"
 				>
-				<File
-					RelativePath="..\src\win32\hicon.h"
-					>
-				</File>
 				<File
 					RelativePath="..\src\win32\mouseover.h"
 					>
 				</File>
 				<File
 					RelativePath="..\src\win32\systray.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\win32\ThTypes.h"
 					>
 				</File>
 				<File
@@ -628,6 +556,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\dict_client.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\dictmask.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\dictziplib.hpp"
 					>
 				</File>
@@ -637,6 +573,14 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\file.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\http_client.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\httpmanager.h"
 					>
 				</File>
 				<File
@@ -660,7 +604,43 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\md5.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\my_global.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\netdictcache.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\netdictplugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\parsedata_plugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\plugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\pluginmanager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\sockets.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\stardict_client.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\stardict_libconfig.h"
 					>
 				</File>
 				<File
@@ -668,7 +648,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\storage.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\treedict.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\ttsplugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\virtualdictplugin.h"
 					>
 				</File>
 			</Filter>
