@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="textouthook"
-	ProjectGUID="{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
-	RootNamespace="texthook"
+	Name="advertisement"
+	ProjectGUID="{315C8DBB-63B5-472A-8943-B21ED509CE01}"
+	RootNamespace="advertisement"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -20,7 +20,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS;_CRT_SECURE_NO_DEPRECATE;BUILDING_DLL"
+				AdditionalIncludeDirectories="gtk\include;&quot;gtk\include\pango-1.0&quot;;&quot;gtk\include\atk-1.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;;gtk\include\cairo;&quot;gtk\include\gtk-2.0&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ADVERTISEMENT_EXPORTS;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,7 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -116,9 +118,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ADVERTISEMENT_EXPORTS"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
@@ -171,47 +173,27 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="ФґОДјю"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\win32\GetWord.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\win32\HookImportFunction.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\win32\TextOutHook.c"
+				RelativePath="..\stardict-plugins\stardict-advertisement-plugin\advertisement.cpp"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Header Files"
+			Name="Н·ОДјю"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\src\win32\GetWord.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\win32\HookImportFunction.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\win32\TextOutHook.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\win32\ThTypes.h"
+				RelativePath="..\stardict-plugins\stardict-advertisement-plugin\advertisement.h"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="Resource Files"
+			Name="ЧКФґОДјю"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>

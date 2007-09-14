@@ -654,7 +654,11 @@ void TopWin::SaveHistory()
 	gchar *word;
 	while (have_item) {
 		gtk_tree_model_get(model, &iter, 0, &word, -1);
+#ifdef _MSC_VER
+		fprintf_s(f, "%s\n", word);
+#else
 		fprintf(f, "%s\n", word);
+#endif
 		g_free(word);
 		have_item = gtk_tree_model_iter_next(model, &iter);
 	}

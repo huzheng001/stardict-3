@@ -144,7 +144,11 @@ int dictData::read_header(const std::string &fname, int computeCRC)
 	
 	if (id1 != GZ_MAGIC1 || id2 != GZ_MAGIC2) {
 		this->type = DICT_TEXT;
+#if defined(_MSC_VER)
+		fstat( _fileno( str ), &sb );
+#else
 		fstat( fileno( str ), &sb );
+#endif
 		this->compressedLength = this->length = sb.st_size;
 		this->origFilename     = fname;
 		this->mtime            = sb.st_mtime;
@@ -290,8 +294,12 @@ bool dictData::open(const std::string& fname, int computeCRC)
 		// "\"%s\" not in text or dzip format\n", fname );
 		return false;
 	}
-   
+
+#if defined(_MSC_VER)
+	if ((fd = ::_open(fname.c_str(), O_RDONLY )) < 0) {
+#else
 	if ((fd = ::open(fname.c_str(), O_RDONLY )) < 0) {
+#endif
 		//err_fatal_errno( __FUNCTION__,
 		//       "Cannot open data file \"%s\"\n", fname );
 		return false;
@@ -303,7 +311,11 @@ bool dictData::open(const std::string& fname, int computeCRC)
    }
 
    this->size = sb.st_size;
-	 ::close(fd);
+#if defined(_MSC_VER)
+	::_close(fd);
+#else
+	::close(fd);
+#endif
 	 if (!mapfile.open(fname.c_str(), size))
 		 return false;		
 

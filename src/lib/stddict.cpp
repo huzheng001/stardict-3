@@ -511,8 +511,13 @@ bool cache_file::save_cache(const std::string& url, CollateFunctions cltfunc, gu
 			fwrite(COLLATIONFILE_MAGIC_DATA, 1, sizeof(COLLATIONFILE_MAGIC_DATA)-1, out);
 		fwrite("url=", 1, sizeof("url=")-1, out);
 		fwrite(url.c_str(), 1, url.length(), out);
-		if (cachefiletype == CacheFileType_clt)
+		if (cachefiletype == CacheFileType_clt) {
+#ifdef _MSC_VER
+			fprintf_s(out, "\nfunc=%d", cltfunc);
+#else
 			fprintf(out, "\nfunc=%d", cltfunc);
+#endif
+		}
 		fwrite("\n", 1, 2, out);
 		fwrite(wordoffset, sizeof(guint32), npages, out);
 		fclose(out);

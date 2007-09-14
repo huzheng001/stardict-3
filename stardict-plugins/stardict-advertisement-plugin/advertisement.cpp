@@ -9,6 +9,10 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#ifdef _MSC_VER
+// gtk's g_fopen have compatible problem with vs2005.
+#  define g_fopen fopen
+#endif
 #endif
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
