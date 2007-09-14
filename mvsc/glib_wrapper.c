@@ -6,7 +6,7 @@
 #include <glib/gstdio.h>
 
 FILE *
-g_fopen (const gchar *filename,
+my_g_fopen (const gchar *filename,
 	 const gchar *mode)
 {
 #ifdef _WIN32

@@ -4,6 +4,10 @@
 #ifdef _WIN32
 #include <windows.h>
 
+#ifdef _MSC_VER
+#  define strncasecmp _strnicmp
+#endif
+
 static char *strcasestr (const char *phaystack, const char *pneedle)
 {
 	register const unsigned char *haystack, *needle;

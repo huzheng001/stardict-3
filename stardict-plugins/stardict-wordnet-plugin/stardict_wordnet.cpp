@@ -132,7 +132,7 @@ DLLIMPORT void stardict_plugin_exit(void)
 {
 }
 
-DLLIMPORT bool stardict_plugin_init(StarDictParseDataPlugInObject *obj)
+DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
 	obj->parse_func = parse;
 	g_print(_("WordNet data parsing plug-in loaded.\n"));
