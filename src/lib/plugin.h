@@ -38,6 +38,7 @@ struct StarDictPluginSystemService {
 struct StarDictPluginSystemInfo {
 	const char *datadir;
 	GtkWidget *mainwin;
+	GtkWidget *pluginwin;
 };
 
 // Notice: You need to init these structs' members before creating a StarDictPlugins object.

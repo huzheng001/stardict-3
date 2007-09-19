@@ -360,6 +360,7 @@ stardict-plugins/stardict-powerword-parsedata-plugin/Makefile
 stardict-plugins/stardict-xdxf-parsedata-plugin/Makefile
 stardict-plugins/stardict-wordnet-plugin/Makefile
 stardict-plugins/stardict-html-parsedata-plugin/Makefile
+stardict-plugins/stardict-sapi-tts-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile
 help/Makefile

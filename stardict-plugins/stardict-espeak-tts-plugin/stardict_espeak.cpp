@@ -2,6 +2,7 @@
 #include <espeak/speak_lib.h>
 #include <glib/gi18n.h>
 
+static const StarDictPluginSystemInfo *plugin_info = NULL;
 static std::string voice_engine;
 
 static std::string get_cfg_filename()
@@ -26,7 +27,7 @@ static void saytext(const char *text)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Espeak TTS configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Espeak TTS configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *hbox = gtk_hbox_new(false, 5);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -76,6 +77,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	obj->type = StarDictPlugInType_TTS;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Espeak"), _("Espeak TTS."), _("Pronounce words by Espeak TTS engine."));
 	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
 	return false;
 }
 

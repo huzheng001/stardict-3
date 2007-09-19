@@ -2,6 +2,7 @@
 #include <glib/gi18n.h>
 #include <string>
 
+static const StarDictPluginSystemInfo *plugin_info = NULL;
 static bool need_prefix;
 
 static std::string get_cfg_filename()
@@ -150,7 +151,7 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), need_prefix);
@@ -183,6 +184,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	obj->type = StarDictPlugInType_VIRTUALDICT;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Man"), _("Man virtual dictionary."), _("Show the man pages."));
 	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
 
 	return false;
 }

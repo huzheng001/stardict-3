@@ -16,7 +16,7 @@ wenjing.jpg
 P
 wenjing2.jpg
 x
-Blog: <iref href="http://officepig.blogcn.com">关于一群猪的幸福生活</iref>.\nPhoto: <iref href="http://reciteword.cosoft.org.cn/yaoguang/wenjing.php">照片魔方</iref>.
+Blog: <iref href="http://wenjingtoday.blog.sohu.com">今天明天后天</iref>.\nPhoto: <iref href="http://reciteword.cosoft.org.cn/yaoguang/wenjing.php">照片魔方</iref>.
 
 RedHat	红帽子
 P
