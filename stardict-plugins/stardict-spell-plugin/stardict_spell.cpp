@@ -315,7 +315,7 @@ static void on_use_custom__ckbutton_toggled(GtkToggleButton *button, GtkWidget *
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom languages."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_custom);

@@ -10,6 +10,21 @@ libsigc++ have static link problem on vs2005 presently.
 
 For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
 
+For sapi-tts plugin, you need to install Microsoft Speech SDK at C:\Programe Files\ and fix these compile error of sphelper.h:
+=====
+1) line 2560
+    SPPHONEID* pphoneId = (SPPHONEID*)((WCHAR *)dsPhoneId);
+2) line 2634
+    pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
+3) line 2372 and 2373
+    const WCHAR *psz;
+    for (psz = (const WCHAR *)lParam; *psz; psz++) {}
+4) add to the top of the file to prevent all the other errors...
+#pragma warning( disable : 4430 )
+#pragma warning( disable : 4996 )
+=====
+
+
 There are two crash bug with vs2005, which you need to notice.
 1. Use my_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
 2. Use fprintf_s instead of fprintf, or it will crash. This is a little strange.

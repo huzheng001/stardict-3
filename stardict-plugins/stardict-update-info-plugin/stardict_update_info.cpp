@@ -5,14 +5,15 @@
 #include <windows.h>
 #endif
 
-const int my_version_num = 30001000; // As 3,00,00,000, so the version is 3.0.0.0
+static const int my_version_num = 30001000; // As 3,00,00,000, so the version is 3.0.0.0
 static int latest_version_num;
 static int last_prompt_num;
 static std::string version_msg_title;
 static std::string version_msg_content;
 static std::string latest_news;
 
-const StarDictPluginSystemService *plugin_service;
+static const StarDictPluginSystemInfo *plugin_info = NULL;
+static const StarDictPluginSystemService *plugin_service;
 
 static std::string get_cfg_filename()
 {
@@ -48,7 +49,7 @@ static void configure()
 	content += "\n";
 	content += latest_news;
 	
-	GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, content.c_str());
+	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, content.c_str());
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Update information"));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy (dialog);
@@ -63,6 +64,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 	obj->type = StarDictPlugInType_MISC;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Update Info"), _("Update information."), _("Get the update information from the Internet."));
 	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;
 	return false;
 }
@@ -171,7 +173,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		std::string content = version_msg_content;
 		content += "\n\n";
 		content += _("Visit StarDict website now?");
-		GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, content.c_str());
+		GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->mainwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, content.c_str());
 		GtkWidget *prompt = gtk_check_button_new_with_mnemonic(_("_Don't show this until the next update."));
 		gtk_widget_show(prompt);
 		gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), prompt);

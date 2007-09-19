@@ -19,6 +19,8 @@ You can find plug-in projects at stardict-plugins/.
 
 You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/TextOutHook.dev.
 
+For the sapi-tts plugin, you need to compile it by vs2005, see mvsc/readme.txt.
+
 ========
 To build the installer.
 

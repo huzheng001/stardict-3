@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xdxf-parsedata", "xdxf-pars
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "update-info", "update-info.vcproj", "{8DF3871C-B32C-4CD9-ABBE-31773D23ABC8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sapi-tts", "sapi-tts.vcproj", "{D64728EB-02DD-4B53-8587-5C8BD81024A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -67,6 +69,10 @@ Global
 		{8DF3871C-B32C-4CD9-ABBE-31773D23ABC8}.Debug|Win32.Build.0 = Debug|Win32
 		{8DF3871C-B32C-4CD9-ABBE-31773D23ABC8}.Release|Win32.ActiveCfg = Release|Win32
 		{8DF3871C-B32C-4CD9-ABBE-31773D23ABC8}.Release|Win32.Build.0 = Release|Win32
+		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Debug|Win32.Build.0 = Debug|Win32
+		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Release|Win32.ActiveCfg = Release|Win32
+		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

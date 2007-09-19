@@ -87,7 +87,8 @@ static char *strcasestr (const char *phaystack, const char *pneedle)
 
 #define DICTDOTCN "dict.cn"
 
-const StarDictPluginSystemService *plugin_service;
+static const StarDictPluginSystemInfo *plugin_info = NULL;
+static const StarDictPluginSystemService *plugin_service;
 
 struct QueryInfo {
 	bool ismainwin;
@@ -256,7 +257,7 @@ static void lookup(const char *word, bool ismainwin)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Dict.cn configuration"), NULL, GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Dict.cn configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 	GtkWidget *xml_button = gtk_radio_button_new_with_label(NULL, _("Query by XML API."));
 	gtk_box_pack_start(GTK_BOX(vbox), xml_button, false, false, 0);
@@ -296,6 +297,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 	obj->type = StarDictPlugInType_NETDICT;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Dict.cn"), _("Dict.cn network dictionary."), _("Query result from Dict.cn website."));
 	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;
 	return false;
 }

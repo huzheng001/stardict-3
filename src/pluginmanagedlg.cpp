@@ -390,6 +390,7 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool &order_changed)
 {
 	window = gtk_dialog_new();
+	oStarDictPluginSystemInfo.pluginwin = window;
 	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
 	gtk_dialog_set_has_separator(GTK_DIALOG(window), false);
 	gtk_dialog_add_button(GTK_DIALOG(window), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
