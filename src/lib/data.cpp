@@ -25,6 +25,7 @@
 #include "kmp.h"
 
 #include "data.hpp"
+#include "getuint32.h"
 
 
 DictBase::DictBase()
@@ -111,7 +112,7 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 				break;
 			case 'W':
 			case 'P':
-				sec_size = *reinterpret_cast<guint32 *>(p2);
+				sec_size = get_uint32(p2);
 				sec_size += sizeof(guint32);
 				memcpy(p1, p2, sec_size);
 				p1+=sec_size;
@@ -119,7 +120,7 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 				break;
 			default:
 				if (g_ascii_isupper(sametypesequence[i])) {
-					sec_size = *reinterpret_cast<guint32 *>(p2);
+					sec_size = get_uint32(p2);
 					sec_size += sizeof(guint32);
 				} else {
 					sec_size = strlen(p2)+1;
@@ -149,13 +150,13 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 			break;
 		case 'W':
 		case 'P':
-			*reinterpret_cast<guint32 *>(p1)=sec_size;
+			memcpy(p1, &sec_size, sizeof(guint32));
 			p1 += sizeof(guint32);
 			memcpy(p1, p2, sec_size);
 			break;
 		default:
 			if (g_ascii_isupper(sametypesequence[sametypesequence_len-1])) {
-				*reinterpret_cast<guint32 *>(p1)=sec_size;
+				memcpy(p1, &sec_size, sizeof(guint32));
 				p1 += sizeof(guint32);
 				memcpy(p1, p2, sec_size);
 			} else {
@@ -166,14 +167,14 @@ gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 			break;
 		}
 		g_free(origin_data);
-		*reinterpret_cast<guint32 *>(data)=data_size;
+		memcpy(data, &data_size, sizeof(guint32));
 	} else {
 		data = (gchar *)g_malloc(idxitem_size + sizeof(guint32));
 		if (dictfile)
 			fread(data+sizeof(guint32), idxitem_size, 1, dictfile);
 		else
 			dictdzfile->read(data+sizeof(guint32), idxitem_offset, idxitem_size);
-		*reinterpret_cast<guint32 *>(data)=idxitem_size;
+		memcpy(data, &idxitem_size, sizeof(guint32));
 	}
 	g_free(cache[cache_cur].data);
 
@@ -228,7 +229,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 				break;
 			default:
 				if (g_ascii_isupper(sametypesequence[i])) {
-					sec_size = *reinterpret_cast<guint32 *>(p);
+					sec_size = get_uint32(p);
 					sec_size += sizeof(guint32);
 				} else {
 					sec_size = strlen(p)+1;
@@ -283,7 +284,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 				break;
                         default:
                                 if (g_ascii_isupper(*p)) {
-                                        sec_size = *reinterpret_cast<guint32 *>(p);
+                                        sec_size = get_uint32(p);
 					sec_size += sizeof(guint32);
                                 } else {
                                         sec_size = strlen(p)+1;
