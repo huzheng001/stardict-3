@@ -26,6 +26,7 @@
 #endif
 
 #include "file.hpp"
+#include "getuint32.h"
 
 #include "treedict.hpp"
 
@@ -133,11 +134,11 @@ void TreeDict::load_model(gchar **buffer, GtkTreeIter *parent, guint32 count)
 
 	for (guint32 i=0; i< count; i++) {
 		p1 = *buffer + strlen(*buffer) +1;
-		offset = g_ntohl(*reinterpret_cast<guint32 *>(p1));
+		offset = g_ntohl(get_uint32(p1));
 		p1 += sizeof(guint32);
-		size = g_ntohl(*reinterpret_cast<guint32 *>(p1));
+		size = g_ntohl(get_uint32(p1));
 		p1 += sizeof(guint32);
-		subentry_count = g_ntohl(*reinterpret_cast<guint32 *>(p1));
+		subentry_count = g_ntohl(get_uint32(p1));
 		p1 += sizeof(guint32);
 		gtk_tree_store_append(model, &iter, parent);
 		gtk_tree_store_set(model, &iter, 0, *buffer, 1, offset, 2, size, -1);

@@ -27,6 +27,7 @@
 
 #include "sockets.hpp"
 #include "md5.h"
+#include "getuint32.h"
 
 #include "stardict_client.hpp"
 
@@ -1111,8 +1112,8 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
 	    size_count = size_left = sizeof(guint32);
         }
     } else if (cmd->reading_status == 4) {
-        *reinterpret_cast<guint32 *>(buf) = g_ntohl(*reinterpret_cast<guint32 *>(buf));
-        guint32 datasize = *reinterpret_cast<guint32 *>(buf);
+        guint32 datasize = g_ntohl(get_uint32(buf));
+	memcpy(buf, &datasize, sizeof(guint32));
         if (datasize == 0) {
 	    g_free(buf);
             cmd->reading_status = 3;

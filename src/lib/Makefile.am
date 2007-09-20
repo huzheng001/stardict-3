@@ -29,6 +29,7 @@ libstardict_a_SOURCES = \
 	parsedata_plugin.cpp parsedata_plugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h	\
+	getuint32.h	\
 	stardict_libconfig.h
 
 if USE_SYSTEM_SIGCPP

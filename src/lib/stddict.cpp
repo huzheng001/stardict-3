@@ -38,6 +38,7 @@
 
 #include "stddict.hpp"
 #include <algorithm>
+#include "getuint32.h"
 
 static inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
@@ -198,9 +199,9 @@ void offset_index::page_t::fill(gchar *data, gint nent, glong idx_)
 		entries[i].keystr=p;
 		len=strlen(p);
 		p+=len+1;
-		entries[i].off=g_ntohl(*reinterpret_cast<guint32 *>(p));
+		entries[i].off=g_ntohl(get_uint32(p));
 		p+=sizeof(guint32);
-		entries[i].size=g_ntohl(*reinterpret_cast<guint32 *>(p));
+		entries[i].size=g_ntohl(get_uint32(p));
 		p+=sizeof(guint32);
 	}
 }
@@ -913,9 +914,9 @@ const gchar *wordlist_index::get_key(glong idx)
 void wordlist_index::get_data(glong idx)
 {
 	gchar *p1 = wordlist[idx]+strlen(wordlist[idx])+sizeof(gchar);
-	wordentry_offset = g_ntohl(*reinterpret_cast<guint32 *>(p1));
+	wordentry_offset = g_ntohl(get_uint32(p1));
 	p1 += sizeof(guint32);
-	wordentry_size = g_ntohl(*reinterpret_cast<guint32 *>(p1));
+	wordentry_size = g_ntohl(get_uint32(p1));
 }
 
 const gchar *wordlist_index::get_key_and_data(glong idx)
@@ -983,7 +984,7 @@ void synonym_file::page_t::fill(gchar *data, gint nent, glong idx_)
 		entries[i].keystr=p;
 		len=strlen(p);
 		p+=len+1;
-		entries[i].index=g_ntohl(*reinterpret_cast<guint32 *>(p));
+		entries[i].index=g_ntohl(get_uint32(p));
 		p+=sizeof(guint32);
 	}
 }

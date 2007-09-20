@@ -6,6 +6,7 @@
 #include <map>
 #include <list>
 #include <vector>
+#include "../../src/lib/getuint32.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -208,7 +209,7 @@ static void lookup(const char *word, char ***pppWord, char ****ppppWordData)
 			(*ppppWordData)[i] = (gchar **)g_malloc(sizeof(gchar *)*(datalist.size()+1));
 			int j = 0;
 			for (std::list<char *>::iterator it = datalist.begin(); it != datalist.end(); ++it) {
-				(*ppppWordData)[i][j] = (char *)g_memdup(*it, sizeof(guint32) + *reinterpret_cast<const guint32 *>(*it));
+				(*ppppWordData)[i][j] = (char *)g_memdup(*it, sizeof(guint32) + get_uint32(*it));
 				j++;
 			}
 			(*ppppWordData)[i][j] = NULL;

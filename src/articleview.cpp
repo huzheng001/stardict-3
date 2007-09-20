@@ -29,6 +29,7 @@
 #include "conf.h"
 #include "utils.h"
 #include "stardict.h"
+#include "lib/getuint32.h"
 
 #include "articleview.h"
 
@@ -71,7 +72,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 	std::string mark;
 
 	guint32 data_size,sec_size=0;
-	data_size=*reinterpret_cast<const guint32 *>(data);
+	data_size=get_uint32(data);
 	data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
 	const gchar *p=data;
 	bool first_time = true;
@@ -212,14 +213,14 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				break;
 			case 'W':
 				p++;
-				sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+				sec_size=g_ntohl(get_uint32(p));
 				//enbale sound button.
 				sec_size += sizeof(guint32);
 				break;
 			case 'P':
 				{
 				p++;
-				sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+				sec_size=g_ntohl(get_uint32(p));
 				if (sec_size) {
 					GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
 					gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
@@ -242,7 +243,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 			default:
 				if (g_ascii_isupper(*p)) {
 					p++;
-					sec_size=g_ntohl(*reinterpret_cast<const guint32 *>(p));
+					sec_size=g_ntohl(get_uint32(p));
 					sec_size += sizeof(guint32);
 				} else {
 					p++;
