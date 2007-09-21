@@ -176,6 +176,109 @@ AC_SUBST(ESPEAK_LIBS)
 AC_SUBST(ESPEAK_PLUGIN_DIR)
 
 dnl ================================================================
+dnl other plugin checks.
+dnl ================================================================
+
+AC_ARG_ENABLE([dictdotcn],
+	AS_HELP_STRING([--disable-dictdotcn],[Disable dictdotcn netdict plugin (default: enabled)]),
+	[enable_dictdotcn=$enableval],
+	[enable_dictdotcn=yes])
+if test "x$enable_dictdotcn" = "xyes" ; then
+	DICTDOTCN_PLUGIN_DIR="stardict-dictdotcn-plugin"
+else
+	DICTDOTCN_PLUGIN_DIR=
+fi
+AC_SUBST(DICTDOTCN_PLUGIN_DIR)
+
+AC_ARG_ENABLE([advertisement],
+	AS_HELP_STRING([--disable-advertisement],[Disable advertisement virtual dict plugin (default: enabled)]),
+	[enable_advertisement=$enableval],
+	[enable_advertisement=yes])
+if test "x$enable_advertisement" = "xyes" ; then
+	ADVERTISEMENT_PLUGIN_DIR="stardict-advertisement-plugin"
+else
+	ADVERTISEMENT_PLUGIN_DIR=
+fi
+AC_SUBST(ADVERTISEMENT_PLUGIN_DIR)
+
+AC_ARG_ENABLE([man],
+	AS_HELP_STRING([--disable-man],[Disable man virtual dict plugin (default: enabled)]),
+	[enable_man=$enableval],
+	[enable_man=yes])
+if test "x$enable_man" = "xyes" ; then
+	MAN_PLUGIN_DIR="stardict-man-plugin"
+else
+	MAN_PLUGIN_DIR=
+fi
+AC_SUBST(MAN_PLUGIN_DIR)
+
+AC_ARG_ENABLE([updateinfo],
+	AS_HELP_STRING([--disable-updateinfo],[Disable update-info plugin (default: enabled)]),
+	[enable_updateinfo=$enableval],
+	[enable_updateinfo=yes])
+if test "x$enable_updateinfo" = "xyes" ; then
+	UPDATE_INFO_PLUGIN_DIR="stardict-update-info-plugin"
+else
+	UPDATE_INFO_PLUGIN_DIR=
+fi
+AC_SUBST(UPDATE_INFO_PLUGIN_DIR)
+
+AC_ARG_ENABLE([htmlparse],
+	AS_HELP_STRING([--disable-htmlparse],[Disable html parse plugin (default: enabled)]),
+	[enable_htmlparse=$enableval],
+	[enable_htmlparse=yes])
+if test "x$enable_htmlparse" = "xyes" ; then
+	HTML_PARSEDATA_PLUGIN_DIR="stardict-html-parsedata-plugin"
+else
+	HTML_PARSEDATA_PLUGIN_DIR=
+fi
+AC_SUBST(HTML_PARSEDATA_PLUGIN_DIR)
+
+AC_ARG_ENABLE([xdxfparse],
+	AS_HELP_STRING([--disable-xdxfparse],[Disable xdxf parse plugin (default: enabled)]),
+	[enable_xdxfparse=$enableval],
+	[enable_xdxfparse=yes])
+if test "x$enable_xdxfparse" = "xyes" ; then
+	XDXF_PARSEDATA_PLUGIN_DIR="stardict-xdxf-parsedata-plugin"
+else
+	XDXF_PARSEDATA_PLUGIN_DIR=
+fi
+AC_SUBST(XDXF_PARSEDATA_PLUGIN_DIR)
+
+AC_ARG_ENABLE([wordnet],
+	AS_HELP_STRING([--disable-wordnet],[Disable wordnet plugin (default: enabled)]),
+	[enable_wordnet=$enableval],
+	[enable_wordnet=yes])
+if test "x$enable_wordnet" = "xyes" ; then
+	WORDNET_PLUGIN_DIR="stardict-wordnet-plugin"
+else
+	WORDNET_PLUGIN_DIR=
+fi
+AC_SUBST(WORDNET_PLUGIN_DIR)
+
+AC_ARG_ENABLE([powerwordparse],
+	AS_HELP_STRING([--disable-powerwordparse],[Disable powerword parse plugin (default: enabled)]),
+	[enable_powerwordparse=$enableval],
+	[enable_powerwordparse=yes])
+if test "x$enable_powerwordparse" = "xyes" ; then
+	POWERWORD_PARSEDATA_PLUGIN_DIR="stardict-powerword-parsedata-plugin"
+else
+	POWERWORD_PARSEDATA_PLUGIN_DIR=
+fi
+AC_SUBST(POWERWORD_PARSEDATA_PLUGIN_DIR)
+
+AC_ARG_ENABLE([wikiparse],
+	AS_HELP_STRING([--disable-wikiparse],[Disable wiki parse plugin (default: enabled)]),
+	[enable_wikiparse=$enableval],
+	[enable_wikiparse=yes])
+if test "x$enable_wikiparse" = "xyes" ; then
+	WIKI_PARSEDATA_PLUGIN_DIR="stardict-wiki-parsedata-plugin"
+else
+	WIKI_PARSEDATA_PLUGIN_DIR=
+fi
+AC_SUBST(WIKI_PARSEDATA_PLUGIN_DIR)
+
+dnl ================================================================
 dnl main program checks.
 dnl ================================================================
 
