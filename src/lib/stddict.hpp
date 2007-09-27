@@ -148,6 +148,7 @@ class Dict : public DictBase {
 private:
 	std::string ifo_file_name;
 	std::string bookname;
+	std::string dicttype;
 
 	bool load_ifofile(const std::string& ifofilename, gulong &idxfilesize, glong &wordcount, glong &synwordcount);
 public:
@@ -163,6 +164,7 @@ public:
 	glong narticles() { return idx_file->wordcount; }
 	glong nsynarticles();
 	const std::string& dict_name() { return bookname; }
+	const std::string& dict_type() { return dicttype; }
 	const std::string& ifofilename() { return ifo_file_name; }
 
 	gchar *get_data(glong index)
@@ -229,6 +231,7 @@ public:
 	glong narticles(size_t idict) { return oLib[idict]->narticles(); }
 	glong nsynarticles(size_t idict) { return oLib[idict]->nsynarticles(); }
 	const std::string& dict_name(size_t idict) { return oLib[idict]->dict_name(); }
+	const std::string& dict_type(size_t idict) { return oLib[idict]->dict_type(); }
 	bool has_dict() { return !oLib.empty(); }
 
 	const gchar * poGetWord(glong iIndex,size_t iLib, int servercollatefunc) {

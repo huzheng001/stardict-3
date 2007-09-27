@@ -184,6 +184,11 @@ static void init_tree_model(GtkTreeStore *tree_model)
 				gtk_tree_store_set(tree_model, &iter, 0, false, 2, _("<b>Network Dictionary</b>"), -1);
 				add_tree_model(tree_model, &iter, i->second);
 				break;
+			case StarDictPlugInType_SPECIALDICT:
+				gtk_tree_store_append(tree_model, &iter, NULL);
+				gtk_tree_store_set(tree_model, &iter, 0, false, 2, _("<b>Special Dictionary</b>"), -1);
+				add_tree_model(tree_model, &iter, i->second);
+				break;
 			case StarDictPlugInType_TTS:
 				gtk_tree_store_append(tree_model, &iter, NULL);
 				gtk_tree_store_set(tree_model, &iter, 0, false, 2, _("<b>TTS Engine</b>"), -1);

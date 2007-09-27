@@ -141,7 +141,6 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 		index_file_size = atol(tmpstr);
 		g_free(tmpstr);
 	} else {
-
 		p2 = strstr(p1,"\nidxfilesize=");
 		if (!p2) {
 			g_free(buffer);
@@ -153,6 +152,13 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 		tmpstr[p3-(p2+sizeof("\nidxfilesize=")-1)] = '\0';
 		index_file_size = atol(tmpstr);
 		g_free(tmpstr);
+
+		p2 = strstr(p1,"\ndicttype=");
+		if (p2) {
+			p2+=sizeof("\ndicttype=")-1;
+			p3 = strchr(p2, '\n');
+			dicttype.assign(p2, p3-p2);
+		}
 	}
 
 	p2 = strstr(p1,"\nbookname=");

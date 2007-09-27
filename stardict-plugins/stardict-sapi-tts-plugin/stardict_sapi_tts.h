@@ -11,8 +11,8 @@
 # define DLLIMPORT
 #endif
 
-#include "../../../src/lib/plugin.h"
-#include "../../../src/lib/ttsplugin.h"
+#include "../../src/lib/plugin.h"
+#include "../../src/lib/ttsplugin.h"
 
 extern "C" {
 	DLLIMPORT extern bool stardict_plugin_init(StarDictPlugInObject *obj);

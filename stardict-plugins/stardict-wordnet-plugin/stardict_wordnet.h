@@ -12,12 +12,12 @@
 #endif
 
 #include "../../src/lib/plugin.h"
-#include "../../src/lib/parsedata_plugin.h"
+#include "../../src/lib/specialdictplugin.h"
 
 extern "C" {
 	DLLIMPORT extern bool stardict_plugin_init(StarDictPlugInObject *obj);
 	DLLIMPORT extern void stardict_plugin_exit(void);
-	DLLIMPORT extern bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj);
+	DLLIMPORT extern bool stardict_specialdict_plugin_init(StarDictSpecialDictPlugInObject *obj);
 }
 
 #endif

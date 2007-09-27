@@ -1,6 +1,7 @@
 #ifndef _STARDICT_PARSEDATA_PLUGIN_H_
 #define _STARDICT_PARSEDATA_PLUGIN_H_
 
+#include <gtk/gtk.h>
 #include <string>
 #include <list>
 
@@ -8,6 +9,7 @@ enum ParseResultItemType {
 	ParseResultItemType_mark,
 	ParseResultItemType_link,
 	ParseResultItemType_res,
+	ParseResultItemType_widget,
 };
 
 struct ParseResultMarkItem {
@@ -34,12 +36,17 @@ struct ParseResultResItem {
 	std::string key;
 };
 
+struct ParseResultWidgetItem {
+	GtkWidget *widget;
+};
+
 struct ParseResultItem {
 	ParseResultItemType type;
 	union {
 		ParseResultMarkItem *mark;
 		ParseResultLinkItem *link;
 		ParseResultResItem *res;
+		ParseResultWidgetItem *widget;
 	};
 };
 

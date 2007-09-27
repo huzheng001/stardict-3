@@ -14,6 +14,8 @@ void ParseResult::clear()
 			delete i->link;
 		} else if (i->type == ParseResultItemType_res) {
 			delete i->res;
+		} else if (i->type == ParseResultItemType_widget) {
+			delete i->widget;
 		}
 	}
 	item_list.clear();

@@ -18,6 +18,7 @@ struct DictInfo {
   std::string description;
   guint32 index_file_size;
   std::string sametypesequence;
+  std::string dicttype;
   bool load_from_ifo_file(const std::string& ifofilename, bool istreedict);
 };
 
