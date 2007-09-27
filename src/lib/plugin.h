@@ -12,6 +12,7 @@ enum StarDictPlugInType {
 	StarDictPlugInType_UNKNOWN,
 	StarDictPlugInType_VIRTUALDICT,
 	StarDictPlugInType_NETDICT,
+	StarDictPlugInType_SPECIALDICT,
 	StarDictPlugInType_TTS,
 	StarDictPlugInType_PARSEDATA,
 	StarDictPlugInType_MISC,

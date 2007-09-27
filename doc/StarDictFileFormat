@@ -82,6 +82,7 @@ website=
 description=	// You can use <br> for new line.
 date=
 sametypesequence= // very important.
+dicttype=
 
 
 wordcount is the count of word entries in .idx file, it must be right.
@@ -94,6 +95,9 @@ don't need to call realloc() for many times.
 
 idxoffsetbits can be 64 or 32. If "idxoffsetbits=64", the offset field of the 
 .idx file will be 64 bits.
+
+dicttype is used by some special dictionary plugins, such as wordnet. Its value 
+can be "wordnet" presently.
 
 The "sametypesequence" option is described in further detail below.
 

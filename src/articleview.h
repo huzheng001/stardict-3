@@ -29,6 +29,7 @@ public:
 	void append_text(const char *str) { pango_view_->append_text(str); }
 	void append_pango_text(const char *str) { pango_view_->append_pango_text(str); }
 	void append_pixbuf(GdkPixbuf *pixbuf, const char *label = NULL) { pango_view_->append_pixbuf(pixbuf, label); }
+	void append_widget(GtkWidget *widget) { pango_view_->append_widget(widget); }
 	void set_pango_text(const char *str) { pango_view_->set_pango_text(str); }
 	std::string get_text() { return pango_view_->get_text(); }
 	void append_pango_text_with_links(const std::string& str,

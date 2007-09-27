@@ -109,23 +109,30 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					{
 						bool loaded = false;
 						if (it->res->type == "image") {
-							GdkPixbuf* pixbuf = NULL;
-							if (dict_index.type == InstantDictType_LOCAL) {
-								int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-								if (type == 0) {
-								} else if (type == 1) {
-									const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, it->res->key.c_str());
-									if (filename) {
-										pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-									}
-								}
-							}
-							if (pixbuf) {
+							if (for_float_win) {
 								loaded = true;
 								append_and_mark_orig_word(mark, real_oword, LinksPosList());
 								mark.clear();
-								append_pixbuf(pixbuf, it->res->key.c_str());
-								g_object_unref(pixbuf);
+								append_pixbuf(NULL, it->res->key.c_str());
+							} else {
+								GdkPixbuf* pixbuf = NULL;
+								if (dict_index.type == InstantDictType_LOCAL) {
+									int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+									if (type == 0) {
+									} else if (type == 1) {
+										const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, it->res->key.c_str());
+										if (filename) {
+											pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+										}
+									}
+								}
+								if (pixbuf) {
+									loaded = true;
+									append_and_mark_orig_word(mark, real_oword, LinksPosList());
+									mark.clear();
+									append_pixbuf(pixbuf, it->res->key.c_str());
+									g_object_unref(pixbuf);
+								}
 							}
 						} else if (it->res->type == "sound") {
 						} else if (it->res->type == "video") {
@@ -140,6 +147,9 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 						}
 						break;
 					}
+					case ParseResultItemType_widget:
+						append_widget(it->widget->widget);
+						break;
 					default:
 						break;
 				}
@@ -222,18 +232,24 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				p++;
 				sec_size=g_ntohl(get_uint32(p));
 				if (sec_size) {
-					GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
-					gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
-					gdk_pixbuf_loader_close(loader, NULL);
-					GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
-					if (pixbuf) {
+					if (for_float_win) {
 						append_and_mark_orig_word(mark, real_oword, LinksPosList());
 						mark.clear();
-						append_pixbuf(pixbuf);
+						append_pixbuf(NULL);
 					} else {
-						mark += _("<span foreground=\"red\">[Load image error!]</span>");
+						GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+						gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
+						gdk_pixbuf_loader_close(loader, NULL);
+						GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+						if (pixbuf) {
+							append_and_mark_orig_word(mark, real_oword, LinksPosList());
+							mark.clear();
+							append_pixbuf(pixbuf);
+						} else {
+							mark += _("<span foreground=\"red\">[Load image error!]</span>");
+						}
+						g_object_unref(loader);
 					}
-					g_object_unref(loader);
 				} else {
 					mark += _("<span foreground=\"red\">[Missing Image]</span>");
 				}

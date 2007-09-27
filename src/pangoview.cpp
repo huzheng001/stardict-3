@@ -36,6 +36,7 @@ public:
 	void clear();
 	void append_mark(const char *mark);
 	void append_pixbuf(GdkPixbuf *pixbuf, const char *label);
+	void append_widget(GtkWidget *widget);
 	void begin_update();
 	void end_update();
 	std::string get_text();
@@ -77,6 +78,7 @@ public:
 	void clear();
 	void append_mark(const char *mark) {}
 	void append_pixbuf(GdkPixbuf *pixbuf, const char *label);
+	void append_widget(GtkWidget *widget);
 	std::string get_text();
 	void modify_bg(GtkStateType state, const GdkColor *color);
 protected:
@@ -256,6 +258,14 @@ void LabelPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
 	}
 }
 
+void LabelPangoWidget::append_widget(GtkWidget *widget)
+{
+	append_pango_text("<span foreground=\"red\">[Widget]</span>");
+	if (widget) {
+		gtk_widget_destroy(widget);
+	}
+}
+
 void PangoWidgetBase::set_text(const char *str)
 {
 	if (update_) {
@@ -406,6 +416,14 @@ void TextPangoWidget::append_pixbuf(GdkPixbuf *pixbuf, const char *label)
 	do_append_pango_text(cache_.c_str());
 	cache_.clear();
 	gtk_text_buffer_insert_pixbuf (gtk_text_view_get_buffer(textview_), &iter_, pixbuf);
+}
+
+void TextPangoWidget::append_widget(GtkWidget *widget)
+{
+	do_append_pango_text(cache_.c_str());
+	cache_.clear();
+	GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor (gtk_text_view_get_buffer(textview_), &iter_);
+	gtk_text_view_add_child_at_anchor (textview_, widget, anchor);
 }
 
 TextPangoWidget::TextBufLinks::const_iterator TextPangoWidget::find_link(gint x,

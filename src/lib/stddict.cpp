@@ -1294,6 +1294,7 @@ bool Dict::load_ifofile(const std::string& ifofilename, gulong &idxfilesize, glo
 	synwordcount=dict_info.synwordcount;
 
 	sametypesequence=dict_info.sametypesequence;
+	dicttype=dict_info.dicttype;
 
 	return true;
 }
