@@ -6,7 +6,7 @@
 struct StarDictSpecialDictPlugInObject{
 	StarDictSpecialDictPlugInObject();
 
-	typedef void (*render_widget_func_t)(bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
+	typedef void (*render_widget_func_t)(bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
 	render_widget_func_t render_widget_func;
 	const char *dict_type;
 };

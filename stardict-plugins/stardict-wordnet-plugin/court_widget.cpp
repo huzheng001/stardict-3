@@ -2,6 +2,7 @@
 #include <math.h>
 #include <list>
 
+
 wnobj::wnobj(partic_t & p, unsigned int t) : _p(p), _t(t)
 {
 }
@@ -66,6 +67,11 @@ void ball_t::draw(cairo_t *cr)
 	draw_ball(cr, v.x, v.y);
 }
 
+const char *ball_t::get_text()
+{
+	return text.c_str();
+}
+
 word_t::~word_t()
 {
 	g_object_unref(_layout);
@@ -76,6 +82,11 @@ void word_t::draw(cairo_t *cr)
 	point_t<single> left_top = _p.get_left_top();
 	tsize_t<single> & size = _p.get_size();
 	draw_text(cr, left_top.x, left_top.y, size.w, size.h, _layout);
+}
+
+const char *word_t::get_text()
+{
+	return pango_layout_get_text(_layout);
 }
 
 wncourt_t::wncourt_t() : _env(), _scene(), _newton(_scene, _env)
@@ -185,6 +196,24 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 			}
 			wncourt->oldX = (int)(event->x);
 			wncourt->oldY = (int)(event->y);
+		} else if (event->button == 2) {
+			return FALSE;
+		}
+	} else if (event->type == GDK_2BUTTON_PRESS) {
+		if (event->button == 1) {
+			wnobj * b;
+			if (wncourt->_court->hit((int)(event->x), (int)(event->y), &b)) {
+				if (b->getT() & wnobj::et_word) {
+					char *sWord = g_strdup(b->get_text());
+					char ***Word;
+					char ****WordData;
+					wncourt->lookup_dict(wncourt->_dictid, sWord, &Word, &WordData);
+					wncourt->set_word(sWord, Word[0], WordData[0]);
+					wncourt->FreeResultData(1, Word, WordData);
+					g_free(sWord);
+				}
+			} else {
+			}
 		}
 	}
 	return TRUE;
@@ -199,6 +228,8 @@ gboolean WnCourt::on_button_release_event_callback(GtkWidget * widget, GdkEventB
 			wncourt->dragball = NULL;
 		}
 		wncourt->panning = false;
+	} else if (event->button == 2) {
+		return FALSE;
 	}
 	return TRUE;
 }
@@ -233,7 +264,7 @@ void WnCourt::render_scene()
 	gtk_widget_queue_draw(drawing_area);
 }
 
-WnCourt::WnCourt() : _init_angle(0), init_spring_length(81), dragball(NULL)
+WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_) : _dictid(dictid), lookup_dict(lookup_dict_), FreeResultData(FreeResultData_), _init_angle(0), init_spring_length(81), dragball(NULL)
 {
 	_court = new wncourt_t();
 	widget_width = 400;
@@ -289,7 +320,7 @@ static void func_parse_text(GMarkupParseContext *context, const gchar *text, gsi
 	}
 }
 
-static void wordnet2result(gchar *Word, gchar *WordData, std::string &type, std::list<std::string> &wordlist, std::string &gloss)
+static void wordnet2result(const gchar *Word, gchar *WordData, std::string &type, std::list<std::string> &wordlist, std::string &gloss)
 {
 	guint32 data_size = *reinterpret_cast<guint32 *>(WordData);
 	type.clear();
@@ -310,9 +341,10 @@ static void wordnet2result(gchar *Word, gchar *WordData, std::string &type, std:
 
 void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 {
-	if (Word == NULL) {
-	}
+	ClearScene();
 	CreateWord(orig_word);
+	if (Word == NULL)
+		return;
 	Push();
 	std::string type;
 	std::list<std::string> wordlist;
@@ -324,7 +356,7 @@ void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 		do {
 			CreateNode(Word[i]);
 			Push();
-			wordnet2result(Word[i], WordData[i][j], type, wordlist, gloss);
+			wordnet2result(orig_word, WordData[i][j], type, wordlist, gloss);
 			for (std::list<std::string>::iterator it = wordlist.begin(); it != wordlist.end(); ++it) {
 				CreateWord(it->c_str());
 			}
@@ -338,6 +370,14 @@ void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 GtkWidget *WnCourt::get_widget()
 {
 	return drawing_area;
+}
+
+void WnCourt::ClearScene()
+{
+	dragball=NULL;
+	//overball=NULL;
+	_court->clear();
+	_wnstack.clear();
 }
 
 void WnCourt::CreateWord(const char *text)

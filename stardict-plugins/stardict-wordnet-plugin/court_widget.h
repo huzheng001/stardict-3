@@ -29,9 +29,11 @@ public:
 	wnobj(partic_t & p, unsigned int t=et_normal);
 	virtual ~wnobj() {}
 	partic_t & getP() const { return _p; }
+	unsigned int getT() const { return _t; }
 	void set_center();
 	void set_anchor(bool b);
 	virtual void draw(cairo_t *cr) = 0;
+	virtual const char *get_text() = 0;
 	static void draw_spring(cairo_t *cr, const spring_t & s);
 protected:
 	partic_t & _p;
@@ -46,6 +48,7 @@ public:
 	ball_t(partic_t & p, const char *text_): wnobj(p, et_ball | et_normal), text(text_) {}
 	virtual ~ball_t() {}
 	void draw(cairo_t *cr);
+	const char *get_text();
 private:
 	std::string text;
 };
@@ -55,6 +58,7 @@ public:
 	word_t(partic_t & p, PangoLayout *layout): wnobj(p, et_word | et_normal), _layout(layout) {}
 	virtual ~word_t();
 	void draw(cairo_t *cr);
+	const char *get_text();
 private:
 	PangoLayout * _layout;
 };
@@ -83,11 +87,16 @@ private:
 
 class WnCourt {
 public:
-	WnCourt();
+	typedef void (*lookup_dict_func_t)(size_t dictid, const char *word, char ****Word, char *****WordData);
+	typedef void (*FreeResultData_func_t)(size_t dictmask_size, char ***pppWord, char ****ppppWordData);
+	WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_);
 	~WnCourt();
 	GtkWidget *get_widget();
 	void set_word(const gchar *orig_word, gchar **Word = NULL, gchar ***WordData = NULL);
 private:
+	size_t _dictid;
+	lookup_dict_func_t lookup_dict;
+	FreeResultData_func_t FreeResultData;
 	GtkWidget *drawing_area;
 	int timeout;
 	wnobj * newobj;
@@ -106,6 +115,7 @@ private:
 	static gboolean on_button_release_event_callback(GtkWidget * widget, GdkEventButton *event, WnCourt *wncourt);
 	static gboolean on_motion_notify_event_callback(GtkWidget * widget, GdkEventMotion * event , WnCourt *wncourt);
 	static gint do_render_scene(gpointer data);
+	void ClearScene();
 	void CreateWord(const char *text);
 	void CreateNode(const char *text);
 	void Push();

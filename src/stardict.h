@@ -122,7 +122,7 @@ public:
 	void Query(const gchar *word);
 	void BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
 	void BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
-	void FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***pppWord, gchar ****ppppWordData);
+	static void FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData);
 	bool SimpleLookupToFloat(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
 	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
@@ -167,6 +167,7 @@ public:
 	static void do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata);
 	static void set_news(const char *news, const char *links);
 	static void show_netdict_resp(NetDictResponse *resp, bool ismainwin);
+	static void lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData);
 };
 
 #ifdef _WIN32

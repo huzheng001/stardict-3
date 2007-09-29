@@ -688,9 +688,9 @@ void StarDictSpecialDictPlugins::configure_plugin(const char *filename)
 	}
 }
 
-void StarDictSpecialDictPlugins::render_widget(size_t iPlugin, bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
+void StarDictSpecialDictPlugins::render_widget(size_t iPlugin, bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
 {
-	oPlugins[iPlugin]->render_widget(ismainwin, orig_word, Word, WordData, widget);
+	oPlugins[iPlugin]->render_widget(ismainwin, dictid, orig_word, Word, WordData, widget);
 }
 
 const char *StarDictSpecialDictPlugins::dict_type(size_t iPlugin)
@@ -713,9 +713,9 @@ StarDictSpecialDictPlugin::~StarDictSpecialDictPlugin()
 	delete obj;
 }
 
-void StarDictSpecialDictPlugin::render_widget(bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
+void StarDictSpecialDictPlugin::render_widget(bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
 {
-	obj->render_widget_func(ismainwin, orig_word, Word, WordData, widget);
+	obj->render_widget_func(ismainwin, dictid, orig_word, Word, WordData, widget);
 }
 
 const char *StarDictSpecialDictPlugin::dict_type()

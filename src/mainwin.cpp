@@ -1880,7 +1880,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 					GtkWidget *widget = NULL;
 					for (size_t iPlugin = 0; iPlugin < nPlugins; iPlugin++) {
 						if (dicttype == gpAppFrame->oStarDictPlugins->SpecialDictPlugins.dict_type(iPlugin)) {
-							gpAppFrame->oStarDictPlugins->SpecialDictPlugins.render_widget(iPlugin, true, orig_word, Word[i], WordData[i], &widget);
+							gpAppFrame->oStarDictPlugins->SpecialDictPlugins.render_widget(iPlugin, true, gpAppFrame->query_dictmask[i].index, orig_word, Word[i], WordData[i], &widget);
 							break;
 						}
 					}

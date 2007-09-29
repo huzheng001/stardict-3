@@ -147,14 +147,14 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 	return true;
 }*/
 
-static void render_widget(bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
+static void render_widget(bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget)
 {
 	if (!ismainwin)
 		return;
 	if (text_or_graphic_mode)
 		return;
 
-	WnCourt *wncourt = new WnCourt();
+	WnCourt *wncourt = new WnCourt(dictid, plugin_service->lookup_dict, plugin_service->FreeResultData);
 	wncourt->set_word(orig_word, Word, WordData);
 	*widget = wncourt->get_widget();
 }
