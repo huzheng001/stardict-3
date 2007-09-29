@@ -75,6 +75,7 @@ static void my_once_free()
 		list = list->next;
 	}
 	g_slist_free(my_once_root_block);
+	my_once_root_block = NULL;
 }
 
 int utf8_collate_init(CollateFunctions func)

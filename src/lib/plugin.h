@@ -34,6 +34,10 @@ struct StarDictPluginSystemService {
 	netdict_save_cache_resp_func_t netdict_save_cache_resp;
 	typedef void (*show_netdict_resp_func_t)(NetDictResponse *resp, bool ismainwin);
 	show_netdict_resp_func_t show_netdict_resp;
+	typedef void (*lookup_dict_func_t)(size_t dictid, const char *word, char ****Word, char *****WordData);
+	lookup_dict_func_t lookup_dict;
+	typedef void (*FreeResultData_func_t)(size_t dictmask_size, char ***pppWord, char ****ppppWordData);
+	FreeResultData_func_t FreeResultData;
 };
 
 struct StarDictPluginSystemInfo {

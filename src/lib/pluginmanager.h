@@ -93,7 +93,7 @@ class StarDictSpecialDictPlugin : public StarDictPluginBase {
 public:
 	StarDictSpecialDictPlugin(StarDictPluginBaseObject *baseobj, StarDictSpecialDictPlugInObject *speicaldict_plugin_obj);
 	~StarDictSpecialDictPlugin();
-	void render_widget(bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
+	void render_widget(bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
 	const char *dict_type();
 private:
 	StarDictSpecialDictPlugInObject *obj;
@@ -104,7 +104,7 @@ public:
 	StarDictSpecialDictPlugins();
 	~StarDictSpecialDictPlugins();
 	void add(StarDictPluginBaseObject *baseobj, StarDictSpecialDictPlugInObject *specialdict_plugin_obj);
-	void render_widget(size_t iPlugin, bool ismainwin, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
+	void render_widget(size_t iPlugin, bool ismainwin, size_t dictid, const gchar *orig_word, gchar **Word, gchar ***WordData, GtkWidget **widget);
 	size_t nplugins() { return oPlugins.size(); }
 	const char *dict_type(size_t iPlugin);
 	void unload_plugin(const char *filename);

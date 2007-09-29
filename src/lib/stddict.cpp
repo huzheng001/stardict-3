@@ -1459,8 +1459,7 @@ Libs::~Libs()
 #endif
 	for (std::vector<Dict *>::iterator p=oLib.begin(); p!=oLib.end(); ++p)
 		delete *p;
-	if (EnableCollationLevel)
-		utf8_collate_end();
+	utf8_collate_end();
 }
 
 bool Libs::load_dict(const std::string& url, show_progress_t *sp)
@@ -2043,6 +2042,14 @@ void Libs::reload(std::list<std::string> &load_list, int is_coll_enb, int collf)
 		oLib.clear();
 		EnableCollationLevel = is_coll_enb;
 		CollateFunction = CollateFunctions(collf);
+		if (EnableCollationLevel == 0) {
+		} else if (EnableCollationLevel == 1) {
+			if (utf8_collate_init(CollateFunction))
+				printf("Init collate function failed!\n");
+		} else if (EnableCollationLevel == 2) {
+			if (utf8_collate_init_all())
+				printf("Init collate functions failed!\n");
+		}
 		load(load_list);
 	}
 }

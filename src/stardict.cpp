@@ -225,6 +225,23 @@ void AppCore::show_netdict_resp(NetDictResponse *resp, bool ismainwin)
 		gpAppFrame->oFloatWin.ShowText(resp);
 }
 
+void AppCore::lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData)
+{
+	InstantDictIndex instance_dict_index;
+	instance_dict_index.type = InstantDictType_LOCAL;
+	instance_dict_index.index = dictid;
+	std::vector<InstantDictIndex> dictmask;
+	dictmask.push_back(instance_dict_index);
+	bool bFound = false;
+	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * dictmask.size());
+	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * dictmask.size());
+	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * dictmask.size());
+	gpAppFrame->BuildResultData(dictmask, sWord, iIndex, NULL, 0, pppWord, ppppWordData, bFound, 2);
+	*Word = pppWord;
+	*WordData = ppppWordData;
+	g_free(iIndex);
+}
+
 void AppCore::Create(gchar *queryword)
 {
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
@@ -261,6 +278,8 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.encode_uri_string = common_encode_uri_string;
 	oStarDictPluginSystemService.netdict_save_cache_resp = netdict_save_cache_resp;
 	oStarDictPluginSystemService.show_netdict_resp = show_netdict_resp;
+	oStarDictPluginSystemService.lookup_dict = lookup_dict;
+	oStarDictPluginSystemService.FreeResultData = FreeResultData;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else
@@ -634,7 +653,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
-			FreeResultData(scan_dictmask, pppWord, ppppWordData);
+			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
 			g_free(SearchWord);
 			return true;
@@ -653,7 +672,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 				EndPointer = SearchWord-1; // so < SearchWord
 		}
 	}
-	FreeResultData(scan_dictmask, pppWord, ppppWordData);
+	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 	g_free(iIndex);
 
 	// not found
@@ -712,7 +731,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 		if (bFound) {
 			oFloatWin.ShowText(pppWord, ppppWordData, P1);
 			oTopWin.InsertHisList(P1);
-			FreeResultData(scan_dictmask, pppWord, ppppWordData);
+			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
 			g_free(SearchWord);
 			return true;
@@ -798,7 +817,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 			}
 		}
 	}
-	FreeResultData(scan_dictmask, pppWord, ppppWordData);
+	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 	g_free(iIndex);
 
 	// not found
@@ -915,13 +934,13 @@ void AppCore::BuildResultData(std::vector<InstantDictIndex> &dictmask, const cha
 	}
 }
 
-void AppCore::FreeResultData(std::vector<InstantDictIndex> &dictmask, gchar ***pppWord, gchar ****ppppWordData)
+void AppCore::FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData)
 {
 	if (!pppWord)
 		return;
 	int j, k;
 	size_t i;
-	for (i=0; i<dictmask.size(); i++) {
+	for (i=0; i<dictmask_size; i++) {
 		if (pppWord[i]) {
 			j=0;
 			while (pppWord[i][j]) {
@@ -1007,7 +1026,7 @@ bool AppCore::SimpleLookupToTextWin(const char* sWord, CurrentIndex *piIndex, co
 	if (!piIndex)
 		g_free(iIndex);
 
-	FreeResultData(query_dictmask, pppWord, ppppWordData);
+	FreeResultData(query_dictmask.size(), pppWord, ppppWordData);
 
 	return bFound;
 }
@@ -1280,14 +1299,14 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 				ppppWord[i]=pppWord;
 				pppppWordData[i]=ppppWordData;
 			} else {
-				FreeResultData(scan_dictmask, pppWord, ppppWordData);
+				FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 				ppppWord[i]=NULL;
 			}
 		}
 		oFloatWin.ShowText(ppppWord, pppppWordData, ppOriginWord, count, sWord);
 		for (i=0; i<count; i++) {
 			if (ppppWord[i])
-				FreeResultData(scan_dictmask, ppppWord[i], pppppWordData[i]);
+				FreeResultData(scan_dictmask.size(), ppppWord[i], pppppWordData[i]);
 		}
 		g_free(ppppWord);
 		g_free(pppppWordData);
