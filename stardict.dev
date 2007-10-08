@@ -1,7 +1,7 @@
 [Project]
 FileName=stardict.dev
 Name=stardict
-UnitCount=147
+UnitCount=149
 Type=0
 Ver=1
 ObjFiles=
@@ -1509,6 +1509,26 @@ BuildCmd=
 
 [Unit147]
 FileName=src\lib\netdictcache.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit148]
+FileName=src\lib\specialdictplugin.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit149]
+FileName=src\lib\specialdictplugin.cpp
 CompileCpp=1
 Folder=lib
 Compile=1

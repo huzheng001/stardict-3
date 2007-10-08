@@ -119,7 +119,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;;&quot;gtk\include\atk-1.0&quot;;gtk\include\cairo;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\pango-1.0&quot;;gtk\include;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -137,7 +138,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="gtk\lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -383,6 +386,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\sockets.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\specialdictplugin.cpp"
 					>
 				</File>
 				<File
@@ -633,6 +640,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\sockets.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\specialdictplugin.h"
 					>
 				</File>
 				<File
