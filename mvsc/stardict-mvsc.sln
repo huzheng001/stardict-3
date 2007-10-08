@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "update-info", "update-info.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sapi-tts", "sapi-tts.vcproj", "{D64728EB-02DD-4B53-8587-5C8BD81024A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wordnet", "wordnet.vcproj", "{88F58D89-E6EE-4413-8410-6CFD88AD430A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -73,6 +75,10 @@ Global
 		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Debug|Win32.Build.0 = Debug|Win32
 		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Release|Win32.ActiveCfg = Release|Win32
 		{D64728EB-02DD-4B53-8587-5C8BD81024A3}.Release|Win32.Build.0 = Release|Win32
+		{88F58D89-E6EE-4413-8410-6CFD88AD430A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{88F58D89-E6EE-4413-8410-6CFD88AD430A}.Debug|Win32.Build.0 = Debug|Win32
+		{88F58D89-E6EE-4413-8410-6CFD88AD430A}.Release|Win32.ActiveCfg = Release|Win32
+		{88F58D89-E6EE-4413-8410-6CFD88AD430A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

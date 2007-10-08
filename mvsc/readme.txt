@@ -9,6 +9,7 @@ Then download libsigc++ and compile it. Copy sigc-2.0d.lib to "mvsc\gtk\lib\".
 libsigc++ have static link problem on vs2005 presently.
 
 For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
+For wordnet plugin files, they are the same.
 
 For sapi-tts plugin, you need to install Microsoft Speech SDK at C:\Programe Files\ and fix these compile error of sphelper.h:
 =====
@@ -28,5 +29,7 @@ For sapi-tts plugin, you need to install Microsoft Speech SDK at C:\Programe Fil
 There are two crash bug with vs2005, which you need to notice.
 1. Use my_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
 2. Use fprintf_s instead of fprintf, or it will crash. This is a little strange.
+
+There are two builds in vs2005: Debug and Release, you should choose Release version in most case.
 
 You should can compile and run stardict successfully now.

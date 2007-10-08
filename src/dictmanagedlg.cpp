@@ -1315,6 +1315,11 @@ void DictManageDlg::show_delete_subgroup_dialog(GtkTreeIter *first)
 	gtk_widget_destroy (dialog);
 }
 
+static void on_add_group_entry_activated(GtkEntry *entry, GtkDialog *dialog)
+{
+	gtk_dialog_response(dialog, GTK_RESPONSE_ACCEPT);
+}
+
 void DictManageDlg::show_add_group_dialog(GtkTreeIter *sibling)
 {
 	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("New dict group"), GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
@@ -1323,23 +1328,25 @@ void DictManageDlg::show_add_group_dialog(GtkTreeIter *sibling)
 	GtkWidget *label = gtk_label_new(_("Group name:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
 	GtkWidget *entry = gtk_entry_new();
+	g_signal_connect(G_OBJECT(entry), "activate", G_CALLBACK(on_add_group_entry_activated), dialog);
 	gtk_box_pack_start(GTK_BOX(hbox),entry,false,false,0);
 	gtk_widget_show_all(hbox);
-	gtk_dialog_run(GTK_DIALOG(dialog));
-	const char *name = gtk_entry_get_text(GTK_ENTRY(entry));
-	if (name[0] != '\0') {
-		GtkTreeIter group_iter;
-		GtkTreeStore *model = GTK_TREE_STORE(dictmanage_tree_model);
-		gtk_tree_store_insert_after(model, &group_iter, NULL, sibling);
-		gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", name);
-		gtk_tree_store_set(model, &group_iter, 1, markup, 3, name, 9, false, 10, 0, 11, TRUE, -1);
-		g_free(markup);
-		GtkTreeIter type_iter;
-		gtk_tree_store_append(model, &type_iter, &group_iter);
-		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict", 9, false, 10, 1, 11, FALSE, -1);
-		gtk_tree_store_append(model, &type_iter, &group_iter);
-		gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
-		dictmanage_config_changed = true;
+	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
+		const char *name = gtk_entry_get_text(GTK_ENTRY(entry));
+		if (name[0] != '\0') {
+			GtkTreeIter group_iter;
+			GtkTreeStore *model = GTK_TREE_STORE(dictmanage_tree_model);
+			gtk_tree_store_insert_after(model, &group_iter, NULL, sibling);
+			gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\">%s</span>", name);
+			gtk_tree_store_set(model, &group_iter, 1, markup, 3, name, 9, false, 10, 0, 11, TRUE, -1);
+			g_free(markup);
+			GtkTreeIter type_iter;
+			gtk_tree_store_append(model, &type_iter, &group_iter);
+			gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Query Dict</span>"), 3, "querydict", 9, false, 10, 1, 11, FALSE, -1);
+			gtk_tree_store_append(model, &type_iter, &group_iter);
+			gtk_tree_store_set(model, &type_iter, 1, _("<span foreground=\"red\">Scan Dict</span>"), 3, "scandict", 9, false, 10, 1, 11, FALSE, -1);
+			dictmanage_config_changed = true;
+		}
 	}
 	gtk_widget_destroy(dialog);
 }
