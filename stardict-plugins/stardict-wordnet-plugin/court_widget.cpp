@@ -20,51 +20,84 @@ void wnobj::set_center()
 	_p.set_anchor(true);
 }
 
-void wnobj::draw_ball(cairo_t *cr, double x, double y)
+void wnobj::draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble alpha)
 {
-	const double r = 6;
+	const double r = 5;
 	cairo_save(cr);
 	cairo_arc(cr, x + r/3, y + r/3, r, 0, 2 * M_PI);
-	cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
+	cairo_set_source_rgba(cr, 0.5, 0.5, 0.5, alpha);
 	cairo_fill(cr);
 	cairo_arc(cr, x, y, r, 0, 2 * M_PI);
-	cairo_set_source_rgb(cr, 1, 0, 0);
+	cairo_set_source_rgba(cr, color.red, color.green, color.blue, alpha);
 	cairo_fill(cr);
 	cairo_arc(cr, x - r/3, y - r/3, r/3, 0, 2 * M_PI);
-	cairo_set_source_rgba(cr, 1, 1, 1, 0.8);
+	cairo_set_source_rgba(cr, 1, 1, 1, 0.8*alpha);
 	cairo_fill(cr);
 	cairo_restore(cr);
 }
 
-void wnobj::draw_line(cairo_t *cr, double x1, double y1, double x2, double y2)
+void wnobj::draw_line(cairo_t *cr, double x1, double y1, double x2, double y2, gdouble alpha)
 {
+	cairo_save(cr);
+	cairo_set_source_rgba(cr, 0, 0, 0, alpha);
 	cairo_move_to(cr, x1, y1);
 	cairo_line_to(cr, x2, y2);
 	cairo_stroke(cr);
+	cairo_restore(cr);
 }
 
-void wnobj::draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout)
+void wnobj::draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout, gdouble alpha)
 {
 	cairo_save(cr);
-	cairo_set_source_rgb(cr, 1, 1, 1);
+	cairo_set_source_rgba(cr, 1, 1, 1, alpha);
 	cairo_rectangle(cr, x, y, w, h);
 	cairo_fill(cr);
-	cairo_restore(cr);
 	cairo_move_to(cr, x, y);
+	cairo_set_source_rgba(cr, 0, 0, 0, alpha);
 	pango_cairo_show_layout(cr, layout);
+	cairo_restore(cr);
 }
 
-void wnobj::draw_spring(cairo_t *cr, const spring_t & s)
+void wnobj::draw_spring(cairo_t *cr, const spring_t & s, gdouble alpha)
 {
 	vector_t &a = s.getA().getP();
 	vector_t &b = s.getB().getP();
-	draw_line(cr, a.x, a.y, b.x, b.y);
+	draw_line(cr, a.x, a.y, b.x, b.y, alpha);
 }
 
-void ball_t::draw(cairo_t *cr)
+ball_t::ball_t(partic_t & p, const char *text_, const char *type_): wnobj(p, et_ball | et_normal), text(text_), type(type_)
+{
+	if (strcmp(type_, "n")==0) {
+		color.red = 0;
+		color.green = 0;
+		color.blue = 1;
+	} else if (strcmp(type_, "v")==0) {
+		color.red = 1;
+		color.green = 0.5;
+		color.blue = 0.25;
+	} else if (strcmp(type_, "a")==0) {
+		color.red = 0;
+		color.green = 0;
+		color.blue = 0.5;
+	} else if (strcmp(type_, "s")==0) {
+		color.red = 1;
+		color.green = 0.25;
+		color.blue = 0;
+	} else if (strcmp(type_, "r")==0) {
+		color.red = 0.8;
+		color.green = 0.8;
+		color.blue = 0;
+	} else {
+		color.red = 0;
+		color.green = 0;
+		color.blue = 0;
+	}
+}
+
+void ball_t::draw(cairo_t *cr, gdouble alpha)
 {
 	vector_t v = getP().getP();
-	draw_ball(cr, v.x, v.y);
+	draw_ball(cr, v.x, v.y, color, alpha);
 }
 
 const char *ball_t::get_text()
@@ -77,11 +110,11 @@ word_t::~word_t()
 	g_object_unref(_layout);
 }
 
-void word_t::draw(cairo_t *cr)
+void word_t::draw(cairo_t *cr, gdouble alpha)
 {
 	point_t<single> left_top = _p.get_left_top();
 	tsize_t<single> & size = _p.get_size();
-	draw_text(cr, left_top.x, left_top.y, size.w, size.h, _layout);
+	draw_text(cr, left_top.x, left_top.y, size.w, size.h, _layout, alpha);
 }
 
 const char *word_t::get_text()
@@ -89,7 +122,7 @@ const char *word_t::get_text()
 	return pango_layout_get_text(_layout);
 }
 
-wncourt_t::wncourt_t() : _env(), _scene(), _newton(_scene, _env)
+wncourt_t::wncourt_t() : _env(), _scene(), _newton(_scene, _env), _alpha(255)
 {
 }
 
@@ -108,10 +141,10 @@ word_t * wncourt_t::create_word(PangoLayout *layout)
 	return b;
 }
 
-ball_t * wncourt_t::create_ball(const char *text)
+ball_t * wncourt_t::create_ball(const char *text, const char *type)
 {
-	partic_t * p = _scene.create_partic(10, 12, 12);
-	ball_t * b = new ball_t(*p, text);
+	partic_t * p = _scene.create_partic(10, 10, 10);
+	ball_t * b = new ball_t(*p, text, type);
 	_wnobjs.push_back(b);
 	return b;
 }
@@ -150,25 +183,48 @@ bool wncourt_t::hit(int x, int y, wnobj ** b)
 	return false;
 }
 
+void wncourt_t::updte_alpha(char d)
+{
+	_alpha = _alpha - d < 0 ? 0 : _alpha - d;
+}
+
 gboolean WnCourt::expose_event_callback (GtkWidget *widget, GdkEventExpose *event, WnCourt *wncourt)
 {
 	cairo_t *cr = gdk_cairo_create(widget->window);
-	wncourt->draw_wnobjs(cr);
+	if (wncourt->_secourt && wncourt->_secourt->get_alpha() != 0) {
+		wncourt->_secourt->updte_alpha(16);
+		if (wncourt->_secourt->get_alpha() != 0) {
+			wncourt->draw_wnobjs(cr, wncourt->_secourt);
+		}
+	}
+	wncourt->draw_wnobjs(cr, wncourt->_court);
+	wncourt->draw_dragbar(cr);
 	cairo_destroy(cr);
 	return TRUE;
 }
 
-void WnCourt::draw_wnobjs(cairo_t *cr)
+void WnCourt::draw_wnobjs(cairo_t *cr, wncourt_t *court)
 {
 	cairo_set_line_width(cr, 1);
-	vector<spring_t *> & springs = _court->get_scene().get_springs();
+	gdouble alpha = court->get_alpha()/(255.0f);
+	vector<spring_t *> & springs = court->get_scene().get_springs();
 	for(vector<spring_t *>::iterator it = springs.begin(); it != springs.end(); ++it) {
-		wnobj::draw_spring(cr, **it);
+		wnobj::draw_spring(cr, **it, alpha);
 	}
-	std::vector<wnobj *> & partics = _court->get_wnobjs();
+	std::vector<wnobj *> & partics = court->get_wnobjs();
 	for(std::vector<wnobj *>::iterator it = partics.begin(); it != partics.end(); ++it) {
-		(*it)->draw(cr);
+		(*it)->draw(cr, alpha);
 	}
+}
+
+void WnCourt::draw_dragbar(cairo_t *cr)
+{
+	cairo_move_to(cr, widget_width -15, widget_height);
+	cairo_line_to(cr, widget_width, widget_height - 15);
+	cairo_line_to(cr, widget_width, widget_height);
+	cairo_line_to(cr, widget_width -15, widget_height);
+	cairo_set_source_rgba(cr, 0, 0, 1, 0.8);
+	cairo_fill(cr);
 }
 
 void WnCourt::on_destroy_callback (GtkObject *object, WnCourt *wncourt)
@@ -188,7 +244,12 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 	if (event->type == GDK_BUTTON_PRESS) {
 		if (event->button == 1) {
 			wnobj * b;
-			if (wncourt->_court->hit((int)(event->x), (int)(event->y), &b)) {
+			if (event->x > wncourt->widget_width - 15 && event->y > wncourt->widget_height - 15) {
+				wncourt->resizing = true;
+				GdkCursor* cursor = gdk_cursor_new(GDK_SIZING);
+				gdk_window_set_cursor(widget->window, cursor);
+				gdk_cursor_unref(cursor);
+			} else if (wncourt->_court->hit((int)(event->x), (int)(event->y), &b)) {
 				wncourt->dragball = b;
 				wncourt->dragball->set_anchor(true);
 			} else {
@@ -213,6 +274,7 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 					g_free(sWord);
 				}
 			} else {
+				wncourt->CenterScene();
 			}
 		}
 	}
@@ -227,6 +289,12 @@ gboolean WnCourt::on_button_release_event_callback(GtkWidget * widget, GdkEventB
 			wncourt->_court->get_env().reset();
 			wncourt->dragball = NULL;
 		}
+		if (wncourt->resizing) {
+			GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
+			gdk_window_set_cursor(widget->window, cursor);
+			gdk_cursor_unref(cursor);
+			wncourt->resizing = false;
+		}
 		wncourt->panning = false;
 	} else if (event->button == 2) {
 		return FALSE;
@@ -240,10 +308,16 @@ gboolean WnCourt::on_motion_notify_event_callback(GtkWidget * widget, GdkEventMo
 		if (wncourt->dragball) {
 			vector_t dv((single)(event->x - wncourt->oldX), (single)(event->y - wncourt->oldY), 0);
 			wncourt->dragball->getP().getP().add(dv);
-		} else {
-			if (wncourt->panning) {
-				wncourt->_court->get_scene().pan(vector_t((single)(event->x - wncourt->oldX), (single)(event->y - wncourt->oldY), 0));
-			}
+		} else if (wncourt->resizing) {
+			wncourt->widget_width = (gint)event->x;
+			wncourt->widget_height = (gint)event->y;
+			if (wncourt->widget_width < 20)
+				wncourt->widget_width = 20;
+			if (wncourt->widget_height < 20)
+				wncourt->widget_height = 20;
+			gtk_widget_set_size_request (wncourt->drawing_area, wncourt->widget_width, wncourt->widget_height);
+		} else if (wncourt->panning) {
+			wncourt->_court->get_scene().pan(vector_t((single)(event->x - wncourt->oldX), (single)(event->y - wncourt->oldY), 0));
 		}
 		wncourt->oldX = (int)(event->x);
 		wncourt->oldY = (int)(event->y);
@@ -261,14 +335,22 @@ gint WnCourt::do_render_scene(gpointer data)
 void WnCourt::render_scene()
 {
 	_court->update(1.0f);
-	gtk_widget_queue_draw(drawing_area);
+	if (need_draw()) {
+		gtk_widget_queue_draw(drawing_area);
+	}
 }
 
-WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_) : _dictid(dictid), lookup_dict(lookup_dict_), FreeResultData(FreeResultData_), _init_angle(0), init_spring_length(81), dragball(NULL)
+bool WnCourt::need_draw()
+{
+	return (_secourt && _secourt->get_alpha() != 0) ||
+			overball || dragball || panning || _court->need_draw();
+}
+
+WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_, gint *widget_width_, gint *widget_height_) : _dictid(dictid), lookup_dict(lookup_dict_), FreeResultData(FreeResultData_), global_widget_width(widget_width_), global_widget_height(widget_height_), _secourt(NULL), _init_angle(0), init_spring_length(81), resizing(false), panning(false), dragball(NULL), overball(NULL)
 {
 	_court = new wncourt_t();
-	widget_width = 400;
-	widget_height = 300;
+	widget_width = *widget_width_;
+	widget_height = *widget_height_;
 
 	drawing_area = gtk_drawing_area_new();
 	gtk_widget_set_size_request (drawing_area, widget_width, widget_height);
@@ -285,13 +367,16 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 	g_signal_connect (G_OBJECT (drawing_area), "button_release_event", G_CALLBACK (on_button_release_event_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "motion_notify_event", G_CALLBACK (on_motion_notify_event_callback), this);
 	gtk_widget_show(drawing_area);
-	timeout = g_timeout_add(100, do_render_scene, this);
+	timeout = g_timeout_add(int(1000/16), do_render_scene, this);
 }
 
 WnCourt::~WnCourt()
 {
 	g_source_remove(timeout);
 	delete _court;
+	delete _secourt;
+	*global_widget_width = widget_width;
+	*global_widget_height = widget_height;
 }
 
 struct WnUserData {
@@ -354,9 +439,9 @@ void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 	do {
 		j = 0;
 		do {
-			CreateNode(Word[i]);
-			Push();
 			wordnet2result(orig_word, WordData[i][j], type, wordlist, gloss);
+			CreateNode(Word[i], type.c_str());
+			Push();
 			for (std::list<std::string>::iterator it = wordlist.begin(); it != wordlist.end(); ++it) {
 				CreateWord(it->c_str());
 			}
@@ -374,10 +459,20 @@ GtkWidget *WnCourt::get_widget()
 
 void WnCourt::ClearScene()
 {
+	if (_secourt)
+		delete _secourt;
+	_secourt = _court;
+	_court = new wncourt_t();
 	dragball=NULL;
-	//overball=NULL;
-	_court->clear();
+	overball=NULL;
 	_wnstack.clear();
+}
+
+void WnCourt::CenterScene()
+{
+	if (!_court->get_scene().get_center())
+		return;
+	_court->get_scene().center_to(vector_t(widget_width/2, widget_height/2, 0));
 }
 
 void WnCourt::CreateWord(const char *text)
@@ -394,9 +489,9 @@ void WnCourt::CreateWord(const char *text)
 	}
 }
 
-void WnCourt::CreateNode(const char *text)
+void WnCourt::CreateNode(const char *text, const char *type)
 {
-	newobj = _court->create_ball(text);
+	newobj = _court->create_ball(text, type);
 	wnobj *top = get_top();
 	if (top) {
 		_court->create_spring(newobj, top, init_spring_length, 0.4f);

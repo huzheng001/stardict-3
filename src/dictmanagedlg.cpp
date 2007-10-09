@@ -500,7 +500,7 @@ public:
 			GtkTreeIter iter;
 			gtk_list_store_append(model, &iter);
 			gtk_list_store_set(model, &iter, 
-						 0, LOCAL_DICT, 
+						 0, istreedict ? (!disable) : LOCAL_DICT, 
 						 1, dictinfo.bookname.c_str(), 
 						 2, dictinfo.wordcount, 
 						 3, dictinfo.author.c_str(), 
