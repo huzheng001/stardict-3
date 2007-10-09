@@ -1,7 +1,14 @@
+2007.12.8
+StarDict-3.0.1 (Perfection) released.
+StarDict's total download count reached three millions in 2007.10.1.
+Add dictdotcn plugin.
+Add win32 sapi-tts plugin.
+Add wordnet plugin.
+
 2007.8.13
 StarDict-3.0.0 (RedHat) released.
 http://www.StarDict.org on-line dictionries website is out in 2006.9.25. We have developed the stardictd dictionary server for it.
-StarDict's total download count reached two million in 2007.3.8.
+StarDict's total download count reached two millions in 2007.3.8.
 Network dictionaries support.
 Plugin system.
 Full-text translation.

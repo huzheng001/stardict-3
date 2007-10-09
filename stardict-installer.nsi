@@ -109,6 +109,8 @@ SetDateSave on
 		"GTK+ Runtime (required if not present)"
   LangString GTK_UPGRADE_PROMPT			${LANG_ENGLISH} \
 		"An old version of the GTK+ runtime was found. Do you wish to upgrade?$\rNote: StarDict may not work unless you do."
+  LangString GTK_SKIP_PROMPT			${LANG_ENGLISH} \
+		"A same version of the GTK+ runtime was found. Do you wish to skip its installation?"
   LangString GTK_INSTALL_ERROR			${LANG_ENGLISH} \
 		"Error installing GTK+ runtime."
 
@@ -245,7 +247,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
     StrCpy $GTK_FOLDER $R6
     StrCmp $R1 "NONE" done ; If we have no rights, we can't re-install
     ; Even if we have a sufficient version of GTK+, we give user choice to re-install.
-    MessageBox MB_YESNO $(GTK_UPGRADE_PROMPT) /SD IDYES IDNO done
+    MessageBox MB_YESNO $(GTK_SKIP_PROMPT) /SD IDYES IDYES done
     ClearErrors
     ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT'
     IfErrors gtk_install_error

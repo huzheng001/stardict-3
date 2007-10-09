@@ -8,6 +8,7 @@
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static const StarDictPluginSystemService *plugin_service;
+static gint widget_width, widget_height;
 static bool text_or_graphic_mode;
 
 static std::string get_cfg_filename()
@@ -154,9 +155,23 @@ static void render_widget(bool ismainwin, size_t dictid, const gchar *orig_word,
 	if (text_or_graphic_mode)
 		return;
 
-	WnCourt *wncourt = new WnCourt(dictid, plugin_service->lookup_dict, plugin_service->FreeResultData);
+	WnCourt *wncourt = new WnCourt(dictid, plugin_service->lookup_dict, plugin_service->FreeResultData, &widget_width, &widget_height);
 	wncourt->set_word(orig_word, Word, WordData);
 	*widget = wncourt->get_widget();
+}
+
+static void save_conf_file()
+{
+	const char *tmp;
+	if (text_or_graphic_mode) {
+		tmp = "true";
+	} else {
+		tmp = "false";
+	}
+	gchar *data = g_strdup_printf("[wordnet]\ntext_or_graphic_mode=%s\nwidth=%d\nheight=%d\n", tmp, widget_width, widget_height);
+	std::string res = get_cfg_filename();
+	g_file_set_contents(res.c_str(), data, -1, NULL);
+	g_free(data);
 }
 
 static void configure()
@@ -178,16 +193,7 @@ static void configure()
 	gboolean new_text_or_graphic_mode = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(text_button));
 	if (new_text_or_graphic_mode != text_or_graphic_mode) {
 		text_or_graphic_mode = new_text_or_graphic_mode;
-		const char *tmp;
-		if (text_or_graphic_mode) {
-			tmp = "true";
-		} else {
-			tmp = "false";
-		}
-		gchar *data = g_strdup_printf("[wordnet]\ntext_or_graphic_mode=%s\n", tmp);
-		std::string res = get_cfg_filename();
-		g_file_set_contents(res.c_str(), data, -1, NULL);
-		g_free(data);
+		save_conf_file();
 	}
 	gtk_widget_destroy (window);
 }
@@ -208,21 +214,35 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 
 DLLIMPORT void stardict_plugin_exit(void)
 {
+	save_conf_file();
 }
 
 DLLIMPORT bool stardict_specialdict_plugin_init(StarDictSpecialDictPlugInObject *obj)
 {
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
-		g_file_set_contents(res.c_str(), "[wordnet]\ntext_or_graphic_mode=false\n", -1, NULL);
+		g_file_set_contents(res.c_str(), "[wordnet]\ntext_or_graphic_mode=false\nwidth=400\nheight=300\n", -1, NULL);
 	}
 	GKeyFile *keyfile = g_key_file_new();
 	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
-	GError *err = NULL;
+	GError *err;
+	err = NULL;
 	text_or_graphic_mode = g_key_file_get_boolean(keyfile, "wordnet", "text_or_graphic_mode", &err);
 	if (err) {
 		g_error_free (err);
 		text_or_graphic_mode = false;
+	}
+	err = NULL;
+	widget_width = g_key_file_get_integer(keyfile, "wordnet", "width", &err);
+	if (err) {
+		g_error_free (err);
+		widget_width = 400;
+	}
+	err = NULL;
+	widget_height = g_key_file_get_integer(keyfile, "wordnet", "height", &err);
+	if (err) {
+		g_error_free (err);
+		widget_height = 300;
 	}
 	g_key_file_free(keyfile);
 	obj->render_widget_func = render_widget;
