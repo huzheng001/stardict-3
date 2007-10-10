@@ -1873,9 +1873,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 			view->SetDictIndex(gpAppFrame->query_dictmask[i]);
 			if (gpAppFrame->query_dictmask[i].type == InstantDictType_LOCAL) {
 				const std::string &dicttype = gpAppFrame->oLibs.dict_type(gpAppFrame->query_dictmask[i].index);
-				if (dicttype.empty()) {
-					view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str());
-				} else {
+				if (!dicttype.empty()) {
 					size_t nPlugins = gpAppFrame->oStarDictPlugins->SpecialDictPlugins.nplugins();
 					GtkWidget *widget = NULL;
 					for (size_t iPlugin = 0; iPlugin < nPlugins; iPlugin++) {
@@ -1891,6 +1889,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 						continue;
 					}
 				}
+				view->AppendHeader(gpAppFrame->oLibs.dict_name(gpAppFrame->query_dictmask[i].index).c_str());
 			} else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL) {
 				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
 			} else if (gpAppFrame->query_dictmask[i].type == InstantDictType_NET) {
