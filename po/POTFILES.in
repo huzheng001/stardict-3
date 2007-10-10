@@ -37,5 +37,6 @@ stardict-plugins/stardict-spell-plugin/stardict_spell.cpp
 stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
 stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp
 stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp
+stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp
 stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp
 stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp

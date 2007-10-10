@@ -197,6 +197,11 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				sec_size = strlen(p) + 1;
 				mark+= _("HTML data parsing plug-in is not found!");
 				break;
+			case 'n':
+				p++;
+				sec_size = strlen(p) + 1;
+				mark+= _("WordNet data parsing plug-in is not found!");
+				break;
 			case 't':
 				p++;
 				sec_size = strlen(p);

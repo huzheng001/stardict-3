@@ -25,6 +25,7 @@ StarDictPluginBase::~StarDictPluginBase()
 		func.stardict_plugin_exit();
 	}
 	g_module_close (baseobj->module);
+	delete baseobj;
 }
 
 void StarDictPluginBase::configure()

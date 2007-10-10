@@ -132,6 +132,9 @@ struct dict_ParseUserData {
 	std::string pron;
 	std::string def;
 	std::string rel;
+	std::list<std::pair<std::string, std::string> > sentences;
+	std::string orig;
+	std::string trans;
 };
 
 static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
@@ -146,6 +149,27 @@ static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsi
 		Data->def.assign(text, text_len);
 	} else if (strcmp(element, "rel")==0) {
 		Data->rel.assign(text, text_len);
+	} else if (strcmp(element, "orig")==0) {
+		Data->orig.assign(text, text_len);
+	} else if (strcmp(element, "trans")==0) {
+		Data->trans.assign(text, text_len);
+	}
+}
+
+static void dict_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
+{
+	if (strcmp(element_name, "sent")==0) {
+		dict_ParseUserData *Data = (dict_ParseUserData *)user_data;
+		Data->orig.clear();
+		Data->trans.clear();
+	}
+}
+
+static void dict_parse_end_element(GMarkupParseContext *context, const gchar *element_name, gpointer user_data, GError **error)
+{
+	if (strcmp(element_name, "sent")==0) {
+		dict_ParseUserData *Data = (dict_ParseUserData *)user_data;
+		Data->sentences.push_back(std::pair<std::string, std::string>(Data->orig, Data->trans));
 	}
 }
 
@@ -205,8 +229,8 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		xml_end += 7;
 		dict_ParseUserData Data;
 		GMarkupParser parser;
-		parser.start_element = NULL;
-		parser.end_element = NULL;
+		parser.start_element = dict_parse_start_element;
+		parser.end_element = dict_parse_end_element;
 		parser.text = dict_parse_text;
 		parser.passthrough = NULL;
 		parser.error = NULL;
@@ -219,13 +243,25 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		} else {
 			std::string definition;
 			if (!Data.pron.empty()) {
+				definition += "[";
 				definition += Data.pron;
-				definition += "\n";
+				definition += "]\n";
 			}
 			definition += Data.def;
 			if (!Data.rel.empty()) {
 				definition += "\n";
 				definition += Data.rel;
+			}
+			if (!Data.sentences.empty()) {
+				definition += "\n\n例句与用法:";
+				int index = 1;
+				char *tmp_str;
+				for (std::list<std::pair<std::string, std::string> >::iterator i = Data.sentences.begin(); i != Data.sentences.end(); ++i) {
+					tmp_str = g_strdup_printf("\n%d. %s\n   %s", index, i->first.c_str(), i->second.c_str());
+					definition += tmp_str;
+					g_free(tmp_str);
+					index++;
+				}
 			}
 			resp->data = build_dictdata('m', definition.c_str());
 		}
