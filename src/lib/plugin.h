@@ -38,6 +38,8 @@ struct StarDictPluginSystemService {
 	lookup_dict_func_t lookup_dict;
 	typedef void (*FreeResultData_func_t)(size_t dictmask_size, char ***pppWord, char ****ppppWordData);
 	FreeResultData_func_t FreeResultData;
+	typedef void (*ShowPangoTips_func_t)(const char *word, const char *text);
+	ShowPangoTips_func_t ShowPangoTips;
 };
 
 struct StarDictPluginSystemInfo {

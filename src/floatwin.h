@@ -69,6 +69,7 @@ public:
   void ShowText(const struct STARDICT::LookupResponse::DictResponse *dict_response);
   void ShowText(NetDictResponse *resp);
   void ShowNotFound(const char* sWord,const char* sReason, gboolean fuzzy);
+  void ShowPangoTips(const char *word, const char *text);
   void Show();
   void Hide();
   void set_bg(const GdkColor *color);
