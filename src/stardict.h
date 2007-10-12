@@ -168,6 +168,7 @@ public:
 	static void set_news(const char *news, const char *links);
 	static void show_netdict_resp(NetDictResponse *resp, bool ismainwin);
 	static void lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData);
+	static void ShowPangoTips(const char *word, const char *text);
 };
 
 #ifdef _WIN32

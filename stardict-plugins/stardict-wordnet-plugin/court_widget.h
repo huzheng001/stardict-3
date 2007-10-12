@@ -38,15 +38,17 @@ public:
 	unsigned int getT() const { return _t; }
 	void set_center();
 	void set_anchor(bool b);
+	void set_highlight(bool b);
 	virtual void draw(cairo_t *cr, gdouble alpha) = 0;
 	virtual const char *get_text() = 0;
 	static void draw_spring(cairo_t *cr, const spring_t & s, gdouble alpha);
 protected:
 	partic_t & _p;
 	unsigned int _t;
-	static void draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble alpha);
+	bool highlight;
+	static void draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble alpha, bool highlight);
 	static void draw_line(cairo_t *cr, double x1, double y1, double x2, double y2, gdouble alpha);
-	static void draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout, gdouble alpha);
+	static void draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout, gdouble alpha, bool highlight);
 };
 
 class ball_t: public wnobj {
@@ -55,6 +57,7 @@ public:
 	virtual ~ball_t() {}
 	void draw(cairo_t *cr, gdouble alpha);
 	const char *get_text();
+	const char *get_type_str();
 private:
 	std::string text;
 	std::string type;
@@ -101,7 +104,8 @@ class WnCourt {
 public:
 	typedef void (*lookup_dict_func_t)(size_t dictid, const char *word, char ****Word, char *****WordData);
 	typedef void (*FreeResultData_func_t)(size_t dictmask_size, char ***pppWord, char ****ppppWordData);
-	WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_, gint *widget_width_, gint *widget_height_);
+	typedef void (*ShowPangoTips_func_t)(const char *word, const char *text);
+	WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_, ShowPangoTips_func_t ShowPangoTips_, gint *widget_width_, gint *widget_height_);
 	~WnCourt();
 	GtkWidget *get_widget();
 	void set_word(const gchar *orig_word, gchar **Word = NULL, gchar ***WordData = NULL);
@@ -109,6 +113,8 @@ private:
 	size_t _dictid;
 	lookup_dict_func_t lookup_dict;
 	FreeResultData_func_t FreeResultData;
+	ShowPangoTips_func_t ShowPangoTips;
+	std::string CurrentWord;
 	GtkWidget *drawing_area;
 	gint *global_widget_width, *global_widget_height;
 	gint widget_width, widget_height;
@@ -142,7 +148,6 @@ private:
 	vector_t get_next_pos(vector_t & center);
 	void draw_wnobjs(cairo_t *cr, wncourt_t *court);
 	void draw_dragbar(cairo_t *cr);
-	void render_scene();
 	bool need_draw();
 };
 

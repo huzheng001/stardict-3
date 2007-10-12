@@ -33,7 +33,7 @@ static void render_widget(bool ismainwin, size_t dictid, const gchar *orig_word,
 	if (text_or_graphic_mode)
 		return;
 
-	WnCourt *wncourt = new WnCourt(dictid, plugin_service->lookup_dict, plugin_service->FreeResultData, &widget_width, &widget_height);
+	WnCourt *wncourt = new WnCourt(dictid, plugin_service->lookup_dict, plugin_service->FreeResultData, plugin_service->ShowPangoTips, &widget_width, &widget_height);
 	wncourt->set_word(orig_word, Word, WordData);
 	*widget = wncourt->get_widget();
 }

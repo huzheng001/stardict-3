@@ -575,6 +575,25 @@ void FloatWin::ShowNotFound(const char* sWord,const char* sReason, gboolean fuzz
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
+void FloatWin::ShowPangoTips(const char *sWord, const char *text)
+{
+	QueryingWord = sWord;
+	found_result = FLOAT_WIN_FOUND;
+	view->set_pango_text(text);
+
+	gboolean pronounced = false;
+	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
+	if (readwordtype != READWORD_CANNOT) {
+		if (PronounceWord == sWord)
+			pronounced = true;
+		else
+			PronounceWord = sWord;
+	}
+	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
+
+	Popup(true);
+}
+
 void FloatWin::Popup(gboolean updatePosition)
 {
   ismoving = true;

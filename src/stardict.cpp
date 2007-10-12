@@ -242,6 +242,11 @@ void AppCore::lookup_dict(size_t dictid, const char *sWord, char ****Word, char 
 	g_free(iIndex);
 }
 
+void AppCore::ShowPangoTips(const char *word, const char *text)
+{
+	gpAppFrame->oFloatWin.ShowPangoTips(word, text);
+}
+
 void AppCore::Create(gchar *queryword)
 {
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
@@ -280,6 +285,7 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.show_netdict_resp = show_netdict_resp;
 	oStarDictPluginSystemService.lookup_dict = lookup_dict;
 	oStarDictPluginSystemService.FreeResultData = FreeResultData;
+	oStarDictPluginSystemService.ShowPangoTips = ShowPangoTips;
 #ifdef _WIN32
 	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 #else

@@ -3,7 +3,7 @@
 #include <list>
 
 
-wnobj::wnobj(partic_t & p, unsigned int t) : _p(p), _t(t)
+wnobj::wnobj(partic_t & p, unsigned int t) : _p(p), _t(t), highlight(false)
 {
 }
 
@@ -14,13 +14,18 @@ void wnobj::set_anchor(bool b)
 	_p.set_anchor(b);
 }
 
+void wnobj::set_highlight(bool b)
+{
+	highlight = b;
+}
+
 void wnobj::set_center()
 {
 	_t = _t | et_center;
 	_p.set_anchor(true);
 }
 
-void wnobj::draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble alpha)
+void wnobj::draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble alpha, bool highlight)
 {
 	const double r = 5;
 	cairo_save(cr);
@@ -28,7 +33,11 @@ void wnobj::draw_ball(cairo_t *cr, double x, double y, BallColor &color, gdouble
 	cairo_set_source_rgba(cr, 0.5, 0.5, 0.5, alpha);
 	cairo_fill(cr);
 	cairo_arc(cr, x, y, r, 0, 2 * M_PI);
-	cairo_set_source_rgba(cr, color.red, color.green, color.blue, alpha);
+	if (highlight) {
+		cairo_set_source_rgb(cr, 1, 1, 0);
+	} else {
+		cairo_set_source_rgba(cr, color.red, color.green, color.blue, alpha);
+	}
 	cairo_fill(cr);
 	cairo_arc(cr, x - r/3, y - r/3, r/3, 0, 2 * M_PI);
 	cairo_set_source_rgba(cr, 1, 1, 1, 0.8*alpha);
@@ -46,14 +55,18 @@ void wnobj::draw_line(cairo_t *cr, double x1, double y1, double x2, double y2, g
 	cairo_restore(cr);
 }
 
-void wnobj::draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout, gdouble alpha)
+void wnobj::draw_text(cairo_t *cr, double x, double y, double w, double h, PangoLayout * layout, gdouble alpha, bool highlight)
 {
 	cairo_save(cr);
 	cairo_set_source_rgba(cr, 1, 1, 1, alpha);
 	cairo_rectangle(cr, x, y, w, h);
 	cairo_fill(cr);
 	cairo_move_to(cr, x, y);
-	cairo_set_source_rgba(cr, 0, 0, 0, alpha);
+	if (highlight) {
+		cairo_set_source_rgb(cr, 0, 0, 1);
+	} else {
+		cairo_set_source_rgba(cr, 0, 0, 0, alpha);
+	}
 	pango_cairo_show_layout(cr, layout);
 	cairo_restore(cr);
 }
@@ -97,12 +110,28 @@ ball_t::ball_t(partic_t & p, const char *text_, const char *type_): wnobj(p, et_
 void ball_t::draw(cairo_t *cr, gdouble alpha)
 {
 	vector_t v = getP().getP();
-	draw_ball(cr, v.x, v.y, color, alpha);
+	draw_ball(cr, v.x, v.y, color, alpha, highlight);
 }
 
 const char *ball_t::get_text()
 {
 	return text.c_str();
+}
+
+const char *ball_t::get_type_str()
+{
+	if (type == "n")
+		return "Noun";
+	else if (type == "v")
+		return "Verb";
+	else if (type == "a")
+		return "Adjective";
+	else if (type == "s")
+		return "Adjective satellite";
+	else if (type == "r")
+		return "Adverb";
+	else
+		return type.c_str();
 }
 
 word_t::~word_t()
@@ -114,7 +143,7 @@ void word_t::draw(cairo_t *cr, gdouble alpha)
 {
 	point_t<single> left_top = _p.get_left_top();
 	tsize_t<single> & size = _p.get_size();
-	draw_text(cr, left_top.x, left_top.y, size.w, size.h, _layout, alpha);
+	draw_text(cr, left_top.x, left_top.y, size.w, size.h, _layout, alpha, highlight);
 }
 
 const char *word_t::get_text()
@@ -241,6 +270,9 @@ void WnCourt::on_realize_callback(GtkWidget *widget, WnCourt *wncourt)
 
 gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventButton *event, WnCourt *wncourt)
 {
+	if (wncourt->timeout == 0) {
+		wncourt->timeout = g_timeout_add(int(1000/16), do_render_scene, wncourt);
+	}
 	if (event->type == GDK_BUTTON_PRESS) {
 		if (event->button == 1) {
 			wnobj * b;
@@ -308,6 +340,10 @@ gboolean WnCourt::on_motion_notify_event_callback(GtkWidget * widget, GdkEventMo
 		if (wncourt->dragball) {
 			vector_t dv((single)(event->x - wncourt->oldX), (single)(event->y - wncourt->oldY), 0);
 			wncourt->dragball->getP().getP().add(dv);
+			if (wncourt->overball) {
+				wncourt->overball->set_highlight(false);
+				wncourt->overball = NULL;
+			}
 		} else if (wncourt->resizing) {
 			wncourt->widget_width = (gint)event->x;
 			wncourt->widget_height = (gint)event->y;
@@ -315,12 +351,35 @@ gboolean WnCourt::on_motion_notify_event_callback(GtkWidget * widget, GdkEventMo
 				wncourt->widget_width = 20;
 			if (wncourt->widget_height < 20)
 				wncourt->widget_height = 20;
+			wncourt->CenterScene();
 			gtk_widget_set_size_request (wncourt->drawing_area, wncourt->widget_width, wncourt->widget_height);
 		} else if (wncourt->panning) {
 			wncourt->_court->get_scene().pan(vector_t((single)(event->x - wncourt->oldX), (single)(event->y - wncourt->oldY), 0));
 		}
 		wncourt->oldX = (int)(event->x);
 		wncourt->oldY = (int)(event->y);
+	} else {
+		wnobj * b;
+		if (wncourt->_court->hit((int)event->x, (int)event->y, &b)) {
+			if (wncourt->overball != b) {
+				wncourt->overball = b;
+				wncourt->overball->set_anchor(true);
+				wncourt->overball->set_highlight(true);
+				gtk_widget_queue_draw(wncourt->drawing_area);
+				if (wncourt->overball->getT() & wnobj::et_ball) {
+					ball_t *ball = static_cast<ball_t *>(wncourt->overball);
+					char *text = g_markup_printf_escaped("<i>%s</i>\n%s", ball->get_type_str(), ball->get_text());
+					wncourt->ShowPangoTips(wncourt->CurrentWord.c_str(), text);
+					g_free(text);
+				}
+			}
+		} else {
+			if (wncourt->overball) {
+				wncourt->overball->set_anchor(false);
+				wncourt->overball->set_highlight(false);
+				wncourt->overball = NULL;
+			}
+		}
 	}
 	return TRUE;
 }
@@ -328,25 +387,23 @@ gboolean WnCourt::on_motion_notify_event_callback(GtkWidget * widget, GdkEventMo
 gint WnCourt::do_render_scene(gpointer data)
 {
 	WnCourt *wncourt = static_cast<WnCourt *>(data);
-	wncourt->render_scene();
-	return TRUE;
-}
-
-void WnCourt::render_scene()
-{
-	_court->update(1.0f);
-	if (need_draw()) {
-		gtk_widget_queue_draw(drawing_area);
+	wncourt->_court->update(1.0f);
+	if (wncourt->need_draw()) {
+		gtk_widget_queue_draw(wncourt->drawing_area);
+		return TRUE;
+	} else {
+		wncourt->timeout = 0;
+		return FALSE;
 	}
 }
 
 bool WnCourt::need_draw()
 {
 	return (_secourt && _secourt->get_alpha() != 0) ||
-			overball || dragball || panning || _court->need_draw();
+			dragball || panning || _court->need_draw();
 }
 
-WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_, gint *widget_width_, gint *widget_height_) : _dictid(dictid), lookup_dict(lookup_dict_), FreeResultData(FreeResultData_), global_widget_width(widget_width_), global_widget_height(widget_height_), _secourt(NULL), _init_angle(0), init_spring_length(81), resizing(false), panning(false), dragball(NULL), overball(NULL)
+WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_func_t FreeResultData_, ShowPangoTips_func_t ShowPangoTips_, gint *widget_width_, gint *widget_height_) : _dictid(dictid), lookup_dict(lookup_dict_), FreeResultData(FreeResultData_), ShowPangoTips(ShowPangoTips_), global_widget_width(widget_width_), global_widget_height(widget_height_), _secourt(NULL), _init_angle(0), init_spring_length(81), resizing(false), panning(false), dragball(NULL), overball(NULL)
 {
 	_court = new wncourt_t();
 	widget_width = *widget_width_;
@@ -354,7 +411,7 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 
 	drawing_area = gtk_drawing_area_new();
 	gtk_widget_set_size_request (drawing_area, widget_width, widget_height);
-	gtk_widget_add_events(drawing_area, GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK);
+	gtk_widget_add_events(drawing_area, GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK | GDK_POINTER_MOTION_MASK);
 	GdkColor color;
 	color.red = 65535;
 	color.green = 65535;
@@ -372,7 +429,8 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 
 WnCourt::~WnCourt()
 {
-	g_source_remove(timeout);
+	if (timeout)
+		g_source_remove(timeout);
 	delete _court;
 	delete _secourt;
 	*global_widget_width = widget_width;
@@ -427,6 +485,7 @@ static void wordnet2result(const gchar *Word, gchar *WordData, std::string &type
 void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 {
 	ClearScene();
+	CurrentWord = orig_word;
 	CreateWord(orig_word);
 	if (Word == NULL)
 		return;
@@ -440,7 +499,7 @@ void WnCourt::set_word(const gchar *orig_word, gchar **Word, gchar ***WordData)
 		j = 0;
 		do {
 			wordnet2result(orig_word, WordData[i][j], type, wordlist, gloss);
-			CreateNode(Word[i], type.c_str());
+			CreateNode(gloss.c_str(), type.c_str());
 			Push();
 			for (std::list<std::string>::iterator it = wordlist.begin(); it != wordlist.end(); ++it) {
 				CreateWord(it->c_str());
