@@ -83,7 +83,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 		return true;
 	}
 	obj->type = StarDictPlugInType_SPECIALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("WordNet dict rendering"), _("WordNet dict rendering engine."), _("Render the WordNet dictionary."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("WordNet dict rendering"), _("WordNet dict rendering engine."), _("Render the WordNet dictionary.\nStatement: The engine of this plugin comes from dedict(http://sevenpie.net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for his open source sharing!"));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;
