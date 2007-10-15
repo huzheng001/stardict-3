@@ -1884,8 +1884,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 					}
 					if (widget) {
 						view->append_widget(widget);
-						if (i != gpAppFrame->query_dictmask.size()-1)
-							view->AppendNewline();
+						view->AppendNewline();
 						continue;
 					}
 				}

@@ -58,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-, root, root)
 %{_bindir}/stardict
-%{_datadir}/applications/stardict.desktop
+%{_datadir}/applications/*.desktop
 %{_datadir}/stardict
 %{_libdir}/stardict
 %{_datadir}/idl/*
