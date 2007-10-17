@@ -17,6 +17,7 @@ public:
 		: pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
 
 	void SetDictIndex(InstantDictIndex index);
+	void AppendHeaderMark();
 	void AppendHeader(const char *dict_name);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
