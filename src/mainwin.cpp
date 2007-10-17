@@ -1883,6 +1883,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 						}
 					}
 					if (widget) {
+						view->AppendHeaderMark();
 						view->append_widget(widget);
 						view->AppendNewline();
 						continue;

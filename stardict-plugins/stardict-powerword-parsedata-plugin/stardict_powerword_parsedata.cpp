@@ -5,6 +5,38 @@
 #include <windows.h>
 #endif
 
+static size_t xml_strlen(const char *xmlstr)
+{
+	const char *q;
+	static const char* xml_entrs[] = { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };
+	static const int xml_ent_len[] = { 3,     3,     4,      5,       5 };
+	size_t cur_pos;
+	int i;
+
+	for (cur_pos = 0, q = xmlstr; *q; ++cur_pos) {
+		if (*q == '&') {
+			for (i = 0; xml_entrs[i]; ++i)
+				if (strncmp(xml_entrs[i], q + 1,
+					    xml_ent_len[i]) == 0) {
+					q += xml_ent_len[i] + 1;
+					break;
+				}
+			if (xml_entrs[i] == NULL)
+				++q;
+		} else if (*q == '<') {
+			const char *p = strchr(q+1, '>');
+			if (p)
+				q = p + 1;
+			else
+				++q;
+			--cur_pos;
+		} else
+			q = g_utf8_next_char(q);
+	}
+
+	return cur_pos;
+}
+
 static gchar* toUtfPhonetic(const gchar *text, gsize len)
 {
 	std::string p;
@@ -51,7 +83,7 @@ static gchar* toUtfPhonetic(const gchar *text, gsize len)
 	return g_markup_escape_text(p.c_str(), -1);
 }
 
-static gchar *powerword_markup_escape_text(const gchar *text, gssize length)
+static void powerword_markup_add_text(const gchar *text, gssize length, std::string *pango, std::string::size_type &cur_pos, LinksPosList *links_list)
 {
 	const gchar *p;
 	const gchar *end;
@@ -169,18 +201,42 @@ static gchar *powerword_markup_escape_text(const gchar *text, gssize length)
 								}
 							case 'l':
 							case 'D':
-								if (previous_islink)
-									g_string_append (str, "\t");
-								g_string_append (str, "<span foreground=\"blue\" underline=\"single\">");
-								next = n+1;
-								break;
 							case 'L':
 							case 'U':
 								if (previous_islink)
 									g_string_append (str, "\t");
-								g_string_append (str, "<span foreground=\"#008080\" underline=\"single\">");
-								next = n+1;
+								if (*next == 'l' || *next == 'D')
+									g_string_append (str, "<span foreground=\"blue\" underline=\"single\">");
+								else
+									g_string_append (str, "<span foreground=\"#008080\" underline=\"single\">");
+								*pango += str->str;
+								cur_pos += xml_strlen(str->str);
+								g_string_erase(str, 0, -1);
+								{
+								const gchar *tag_end = n+1;
+								while (tag_end!=end) {
+									if (*tag_end=='}')
+										break;
+									else
+										tag_end++;
+								}
+								char *tmpstr = g_markup_escape_text(n+1, tag_end - (n+1));
+								size_t xml_len = xml_strlen(tmpstr);
+								std::string link("query://");
+								link.append(n+1, tag_end - (n+1));
+								links_list->push_back(LinkDesc(cur_pos, xml_len, link));
+								*pango += tmpstr;
+								cur_pos += xml_len;
+								g_free(tmpstr);
+								g_string_append (str, "</span>");
+								currentmarktag--;
+								if (tag_end!=end)
+									next = tag_end+1;
+								else
+									next = end;
+								previous_islink = true;
 								break;
+								}
 							case '2':
 								// Phonetic. Need more work...
 								next = n+1;
@@ -251,11 +307,15 @@ static gchar *powerword_markup_escape_text(const gchar *text, gssize length)
 			}
 		} while (currentmarktag>0);
 	}
-	return g_string_free (str, FALSE);
+	*pango += str->str;
+	cur_pos += xml_strlen(str->str);
+	g_string_free (str, TRUE);
 }
 
 typedef struct _PwUserData {
-	std::string *res;
+	std::string *pango;
+	LinksPosList *links_list;
+	std::string::size_type cur_pos;
 	const gchar *oword;
 	bool first_jbcy;
 } PwUserData;
@@ -278,58 +338,67 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 	}
 	if (len==0)
 		return;
-	std::string *res = ((PwUserData*)user_data)->res;
+	std::string *pango = ((PwUserData*)user_data)->pango;
+	std::string::size_type &cur_pos = ((PwUserData*)user_data)->cur_pos;
 	if (strcmp(element, "词典音标")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="[<span foreground=\"blue\">";
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		*pango+="[<span foreground=\"blue\">";
+		cur_pos++;
 		gchar *str = toUtfPhonetic(text, len);
-		*res+=str;
+		*pango+=str;
+		cur_pos+=xml_strlen(str);
 		g_free(str);
-		*res+="</span>]";
+		*pango+="</span>]";
+		cur_pos++;
 	} else if (strcmp(element, "单词原型")==0) {
 		const gchar *oword = ((PwUserData*)user_data)->oword;
 		if (strncmp(oword, text, len)) {
-			if (!res->empty())
-				*res+='\n';
-			*res+="<b>";
+			if (!pango->empty()) {
+				*pango+='\n';
+				cur_pos++;
+			}
+			*pango+="<b>";
 			gchar *str = g_markup_escape_text(text, len);
-			res->append(str);
+			pango->append(str);
+			cur_pos+=xml_strlen(str);
 			g_free(str);
-			*res+="</b>";
+			*pango+="</b>";
 		}
 	} else if (strcmp(element, "单词词性")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<i>";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</i>";
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		*pango+="<i>";
+		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
+		*pango+="</i>";
 	} else if (strcmp(element, "汉语拼音")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"blue\" underline=\"single\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		*pango+="<span foreground=\"blue\" underline=\"single\">";
+		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
+		*pango+="</span>";
 	} else if (strcmp(element, "例句原型")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"#008080\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		*pango+="<span foreground=\"#008080\">";
+		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
+		*pango+="</span>";
 	} else if (strcmp(element, "例句解释")==0) {
-		if (!res->empty())
-			*res+='\n';
-		*res+="<span foreground=\"#01259A\">";
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
-		*res+="</span>";
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		*pango+="<span foreground=\"#01259A\">";
+		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
+		*pango+="</span>";
 	/*} else if (strcmp(element, "相关词")==0) {
 		if (!res->empty())
 			*res+='\n';
@@ -366,51 +435,56 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 	strcmp(element, "另见")==0
 	) {*/
 	{
-		if (!res->empty())
-			*res+='\n';
-		gchar *str = powerword_markup_escape_text(text, len);
-		res->append(str);
-		g_free(str);
+		if (!pango->empty()) {
+			*pango+='\n';
+			cur_pos++;
+		}
+		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
 	}
 }
 
 static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
 {
-	std::string *res = ((PwUserData*)user_data)->res;
+	std::string res;
 	if (strcmp(element_name, "基本词义")==0) {
 		if (((PwUserData*)user_data)->first_jbcy) {
 			((PwUserData*)user_data)->first_jbcy = false;
 		} else {
-			*res+="\n<span foreground=\"blue\">&lt;基本词义&gt;</span>";
+			res="\n<span foreground=\"blue\">&lt;基本词义&gt;</span>";
 		}
 	} else if (strcmp(element_name, "继承用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;继承用法&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;继承用法&gt;</span>";
 	} else if (strcmp(element_name, "习惯用语")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;习惯用语&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;习惯用语&gt;</span>";
 	} else if (strcmp(element_name, "词性变化")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;词性变化&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;词性变化&gt;</span>";
 	} else if (strcmp(element_name, "特殊用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;特殊用法&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;特殊用法&gt;</span>";
 	} else if (strcmp(element_name, "参考词汇")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;参考词汇&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;参考词汇&gt;</span>";
 	} else if (strcmp(element_name, "常用词组")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;常用词组&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;常用词组&gt;</span>";
 	} else if (strcmp(element_name, "语源")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;语源&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;语源&gt;</span>";
 	} else if (strcmp(element_name, "派生")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;派生&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;派生&gt;</span>";
 	} else if (strcmp(element_name, "用法")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;用法&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;用法&gt;</span>";
 	} else if (strcmp(element_name, "注释")==0) {
-		*res+="\n<span foreground=\"blue\">&lt;注释&gt;</span>";
+		res="\n<span foreground=\"blue\">&lt;注释&gt;</span>";
+	}
+	if (!res.empty()) {
+		*(((PwUserData*)user_data)->pango) += res;
+		((PwUserData*)user_data)->cur_pos += xml_strlen(res.c_str());
 	}
 }
 
-static std::string powerword2pango(const char *p, guint32 sec_size, const gchar *oword)
+static void powerword2link(const char *p, guint32 sec_size, const gchar *oword, std::string *pango, LinksPosList *links_list)
 {
-	std::string res;
 	PwUserData Data;
-	Data.res = &res;
+	Data.pango = pango;
+	Data.links_list = links_list;
+	Data.cur_pos = 0;
 	Data.oword = oword;
 	Data.first_jbcy = true;
 
@@ -424,7 +498,6 @@ static std::string powerword2pango(const char *p, guint32 sec_size, const gchar 
 	g_markup_parse_context_parse(context, p, sec_size, NULL);
 	g_markup_parse_context_end_parse(context, NULL);
 	g_markup_parse_context_free(context);
-	return res;
 }
 
 static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
@@ -434,10 +507,14 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 	p++;
 	size_t len = strlen(p);
 	if (len) {
+		std::string pango;
+		LinksPosList links_list;
+		powerword2link(p, len, oword, &pango, &links_list);
 		ParseResultItem item;
-		item.type = ParseResultItemType_mark;
-		item.mark = new ParseResultMarkItem;
-		item.mark->pango = powerword2pango(p, len, oword);
+		item.type = ParseResultItemType_link;
+		item.link = new ParseResultLinkItem;
+		item.link->pango = pango;
+		item.link->links_list = links_list;
 		result.item_list.push_back(item);
 	}
 	*parsed_size = 1 + len + 1;

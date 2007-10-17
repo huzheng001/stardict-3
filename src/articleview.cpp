@@ -294,14 +294,19 @@ void ArticleView::SetDictIndex(InstantDictIndex index)
 	dict_index = index;
 }
 
-void ArticleView::AppendHeader(const char *dict_name)
+void ArticleView::AppendHeaderMark()
 {
 	if (!for_float_win) {
 		gchar *mark = g_strdup_printf("%d", bookindex);
 		pango_view_->append_mark(mark);
 		g_free(mark);
-        bookindex++;
+		bookindex++;
 	}
+}
+
+void ArticleView::AppendHeader(const char *dict_name)
+{
+	AppendHeaderMark();
 	std::string mark= "<span foreground=\"blue\">";
 #ifdef CONFIG_GPE
 	mark+= "&lt;- ";
