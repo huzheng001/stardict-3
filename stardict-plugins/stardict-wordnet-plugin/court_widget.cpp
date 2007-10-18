@@ -536,13 +536,18 @@ void WnCourt::CenterScene()
 
 void WnCourt::CreateWord(const char *text)
 {
-	PangoLayout *layout = gtk_widget_create_pango_layout(drawing_area, text);
-	newobj = _court->create_word(layout);
 	wnobj *top = get_top();
 	if (top) {
+		PangoLayout *layout = gtk_widget_create_pango_layout(drawing_area, text);
+		newobj = _court->create_word(layout);
 		_court->create_spring(newobj, top, init_spring_length);
 		newobj->getP().getP() = get_next_pos(get_top()->getP().getP());
 	} else {
+		PangoLayout *layout = gtk_widget_create_pango_layout(drawing_area, "");
+		gchar *str = g_markup_printf_escaped("<big><b>%s</b></big>", text);
+		pango_layout_set_markup(layout, str, -1);
+		g_free(str);
+		newobj = _court->create_word(layout);
 		newobj->getP().getP() = get_center_pos();
 		_court->set_center(newobj);
 	}

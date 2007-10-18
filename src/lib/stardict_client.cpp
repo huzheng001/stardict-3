@@ -668,10 +668,14 @@ void StarDictClient::on_resolved(gpointer data, bool resolved, in_addr_t sa_)
 {
     StarDictClient *oStarDictClient = (StarDictClient *)data;
     if (!resolved) {
-        gchar *mes = g_strdup_printf("Can not reslove %s: %s\n",
+	static bool showed_once = false;
+	if (!showed_once) {
+		showed_once = true;
+	        gchar *mes = g_strdup_printf("Can not reslove %s: %s\n",
                          oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
-        on_error_.emit(mes);
-        g_free(mes);
+        	on_error_.emit(mes);
+	        g_free(mes);
+	}
         return;
     }
 
@@ -694,10 +698,14 @@ void StarDictClient::on_connected(gpointer data, bool succeeded)
 {
     StarDictClient *oStarDictClient = (StarDictClient *)data;
     if (!succeeded) {
-        gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
+	static bool showed_once = false;
+	if (!showed_once) {
+		showed_once = true;
+	        gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
                          oStarDictClient->host_.c_str(), Socket::get_error_msg().c_str());
-        on_error_.emit(mes);
-        g_free(mes);
+        	on_error_.emit(mes);
+	        g_free(mes);
+	}
         return;
     }
 #ifdef _WIN32
