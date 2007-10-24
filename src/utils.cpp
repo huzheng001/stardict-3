@@ -45,6 +45,9 @@ void ProcessGtkEvent()
 
 std::string get_user_config_dir()
 {
+        const gchar *config_path_from_env = g_getenv("STARDICT_CONFIG_PATH");
+        if (config_path_from_env)
+            return config_path_from_env;
 #ifdef _WIN32
 	std::string res = g_get_user_config_dir();
 	res += G_DIR_SEPARATOR_S "StarDict";
