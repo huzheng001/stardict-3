@@ -1720,9 +1720,17 @@ void AppCore::ListClick(const gchar *word)
 
 void AppCore::on_stardict_client_error(const char *error_msg)
 {
+	GtkWindow *parent;
+	if (dict_manage_dlg && dict_manage_dlg->window && GTK_WIDGET_VISIBLE(dict_manage_dlg->window)) {
+		parent = GTK_WINDOW(dict_manage_dlg->window);
+	} else if (prefs_dlg && prefs_dlg->window) {
+		parent = GTK_WINDOW(prefs_dlg->window);
+	} else {
+		parent = GTK_WINDOW(window);
+	}
     GtkWidget *message_dlg =
         gtk_message_dialog_new(
-                GTK_WINDOW(window),
+                parent,
                 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                 GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
                 error_msg);
@@ -1814,9 +1822,17 @@ void AppCore::on_http_client_error(HttpClient *http_client, const char *error_ms
 	if (http_client->callback_func_) {
 		http_client->callback_func_(NULL, 0, http_client->userdata);
 	} else {
+		GtkWindow *parent;
+		if (dict_manage_dlg && dict_manage_dlg->window && GTK_WIDGET_VISIBLE(dict_manage_dlg->window)) {
+			parent = GTK_WINDOW(dict_manage_dlg->window);
+		} else if (prefs_dlg && prefs_dlg->window) {
+			parent = GTK_WINDOW(prefs_dlg->window);
+		} else {
+			parent = GTK_WINDOW(window);
+		}
 		GtkWidget *message_dlg =
 			gtk_message_dialog_new(
-				GTK_WINDOW(window),
+				parent,
 				(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 				GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
 				error_msg);
