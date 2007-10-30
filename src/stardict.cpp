@@ -334,6 +334,8 @@ void AppCore::Create(gchar *queryword)
 	gtk_window_set_default_size (GTK_WINDOW(window), width, height);
 	if (maximized)
 		gtk_window_maximize(GTK_WINDOW(window));
+	int transparent=conf->get_int_at("main_window/transparent");
+	gtk_window_set_opacity(GTK_WINDOW(window), (100-transparent)/100.0);
 	gtk_window_set_title (GTK_WINDOW (window), _("StarDict"));
 	gtk_window_set_icon(GTK_WINDOW(window),
 			    get_impl(oAppSkin.icon));
@@ -342,8 +344,6 @@ void AppCore::Create(gchar *queryword)
 	g_signal_connect (G_OBJECT (window), "window_state_event", G_CALLBACK (on_window_state_event), this);
 	g_signal_connect (G_OBJECT (window), "key_press_event", G_CALLBACK (vKeyPressReleaseCallback), this);
 	g_signal_connect (G_OBJECT (window), "key_release_event", G_CALLBACK (vKeyPressReleaseCallback), this);
-
-	tooltips = gtk_tooltips_new ();
 
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 	gtk_widget_show(vbox);
@@ -356,7 +356,7 @@ void AppCore::Create(gchar *queryword)
 	unlock_keys->set_comb(combnum2str(conf->get_int_at("dictionary/scan_modifier_key")));
 	oFloatWin.Create();
 	bool scan=conf->get_bool_at("dictionary/scan_selection");
-	oDockLet.reset(PlatformFactory::create_tray_icon(window, scan, tooltips,
+	oDockLet.reset(PlatformFactory::create_tray_icon(window, scan,
 							 oAppSkin));
 	oDockLet->on_quit_.connect(sigc::mem_fun(this, &AppCore::Quit));
 	oDockLet->on_change_scan_.connect(
@@ -1354,6 +1354,31 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 	g_free(ppMatchWord);
 }
 
+void AppCore::LookupWithRegexToMainWin(const gchar *word)
+{
+	change_cursor busy(window->window,
+			   get_impl(oAppSkin.watch_cursor),
+			   get_impl(oAppSkin.normal_cursor));
+
+	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB) * query_dictmask.size());
+	gint iMatchCount=oLibs.LookupWithRegex(word, ppMatchWord, query_dictmask);
+	oMidWin.oIndexWin.oListWin.Clear();
+	oMidWin.oIndexWin.oListWin.SetModel(true);
+	oMidWin.oIndexWin.oListWin.list_word_type = LIST_WIN_PATTERN_LIST;
+
+	if (iMatchCount) {
+		for (gint i=0; i<iMatchCount; i++)
+			oMidWin.oIndexWin.oListWin.InsertLast(ppMatchWord[i]);
+		SimpleLookupToTextWin(ppMatchWord[0], iCurrentIndex, NULL); // so iCurrentIndex is refreshed.
+		oMidWin.oIndexWin.oListWin.ReScroll();
+		for(gint i=0; i<iMatchCount; i++)
+			g_free(ppMatchWord[i]);
+	} else {
+		ShowNotFoundToTextWin(word,_("Found no words matching this regular expressions!"), TEXT_WIN_PATTERN_NOT_FOUND);
+	}
+	g_free(ppMatchWord);
+}
+
 void AppCore::LookupNetDict(const char *sWord, bool ismainwin)
 {
 	std::vector<InstantDictIndex> *dictmask;
@@ -1469,8 +1494,11 @@ void AppCore::TopWinEnterWord()
 	case qtFUZZY:
 		LookupWithFuzzyToMainWin(res.c_str());
 		break;
-	case qtREGEXP:
+	case qtPATTERN:
 		LookupWithRuleToMainWin(res.c_str());
+		break;
+	case qtREGEX:
+		LookupWithRegexToMainWin(res.c_str());
 		break;
 	case qtDATA:
 		LookupDataToMainWin(res.c_str());
@@ -1579,8 +1607,11 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 {
 	std::string res;
 	switch (analyse_query(sWord, res)) {
-	case qtREGEXP:
+	case qtPATTERN:
 		oMidWin.oTextWin.Show(_("Press Enter to list the words that match the pattern."));
+		break;
+	case qtREGEX:
+		oMidWin.oTextWin.Show(_("Press Enter to list the words that match this regular expressions."));
 		break;
 	case qtFUZZY:
 		if (strlen(sWord)==1)

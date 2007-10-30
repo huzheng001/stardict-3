@@ -80,7 +80,6 @@ public:
 	unsigned int waiting_mainwin_lookupcmd_seq;
 	unsigned int waiting_floatwin_lookupcmd_seq;
 	GtkWidget *window;
-	GtkTooltips *tooltips;
 
 	TopWin oTopWin;
 	MidWin oMidWin;
@@ -133,6 +132,7 @@ public:
 	void LookupWithFuzzyToMainWin(const gchar* word);
 	void LookupWithFuzzyToFloatWin(const gchar * word);
 	void LookupWithRuleToMainWin(const gchar* word);
+	void LookupWithRegexToMainWin(const gchar* word);
 	void LookupNetDict(const char *word, bool ismainwin);
 	void ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const gchar * sOriginWord, bool isShowFirst);
 	void ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTreeDict);

@@ -88,7 +88,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(ClearCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,3);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Clear the search box"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Clear the search box"));
 #endif
 
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
@@ -115,7 +115,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(GoCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Fuzzy Query"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Fuzzy Query"));
 #endif
 
 	button=gtk_button_new();
@@ -127,7 +127,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_back_button_press),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go Back - Right button: history (Alt+Left)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Go Back - Right button: history (Alt+Left)"));
 
 	GtkWidget *label;
 	label = gtk_label_new("\t");
@@ -142,7 +142,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(MenuCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Show the main menu (Alt+M)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Show the main menu (Alt+M)"));
 }
 
 void TopWin::Destroy(void)
@@ -254,8 +254,11 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 	case qtFUZZY:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
 		break;
-	case qtREGEXP:
+	case qtPATTERN:
 		gpAppFrame->LookupWithRuleToMainWin(res.c_str());
+		break;
+	case qtREGEX:
+		gpAppFrame->LookupWithRegexToMainWin(res.c_str());
 		break;
 	case qtDATA:
                	gpAppFrame->LookupDataToMainWin(res.c_str());
@@ -1253,7 +1256,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_wazard));
 	gtk_container_add (GTK_CONTAINER (wazard_button), image);
 	gtk_widget_show_all(wazard_button);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,wazard_button,_("List"),NULL);
+	gtk_widget_set_tooltip_text(wazard_button,_("List"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(wazard_button), true);
 	g_signal_connect(G_OBJECT(wazard_button),"toggled", G_CALLBACK(on_wazard_button_toggled), this);
 
@@ -1264,7 +1267,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_dictlist));
 	gtk_container_add (GTK_CONTAINER (result_button), image);
 	gtk_widget_show_all(result_button);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,result_button,_("Result"),NULL);
+	gtk_widget_set_tooltip_text(result_button,_("Result"));
 	g_signal_connect(G_OBJECT(result_button),"toggled", G_CALLBACK(on_result_button_toggled), this);
 	
 	GtkWidget *translate_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(result_button));
@@ -1274,7 +1277,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
 	gtk_container_add (GTK_CONTAINER (translate_button), image);
 	gtk_widget_show_all(translate_button);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,translate_button,_("Full-Text Translation"),NULL);
+	gtk_widget_set_tooltip_text(translate_button,_("Full-Text Translation"));
 	g_signal_connect(G_OBJECT(translate_button),"toggled", G_CALLBACK(on_translate_button_toggled), this);
 
 	if (has_treedict) {
@@ -1285,7 +1288,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 		image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_appendix));
 		gtk_container_add (GTK_CONTAINER (appendix_button), image);
 		gtk_widget_show_all(appendix_button);
-		gtk_tooltips_set_tip(gpAppFrame->tooltips,appendix_button,_("Tree"),NULL);
+		gtk_widget_set_tooltip_text(appendix_button,_("Tree"));
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 	}
 
@@ -1296,7 +1299,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	GTK_WIDGET_UNSET_FLAGS (choosegroup_button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(choosegroup_button),"clicked", G_CALLBACK(on_choose_group_button_clicked),this);
 	gtk_box_pack_start(GTK_BOX(vbox),choosegroup_button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips, choosegroup_button, _("Choose dict group"),NULL);
+	gtk_widget_set_tooltip_text(choosegroup_button, _("Choose dict group"));
 	choosegroup_menu = NULL;
 	UpdateChooseGroup();
 
@@ -1309,7 +1312,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NextCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Next word (Alt+Down)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Next word (Alt+Down)"));
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_UP,GTK_ICON_SIZE_BUTTON));
@@ -1319,7 +1322,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreviousCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Previous word (Alt+Up)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Previous word (Alt+Up)"));
 }
 
 void LeftWin::on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
@@ -1508,7 +1511,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),ShowListButton,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,ShowListButton,_("Show the word list"),NULL);
+	gtk_widget_set_tooltip_text(ShowListButton,_("Show the word list"));
 
 	HideListButton=gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_FIRST,GTK_ICON_SIZE_SMALL_TOOLBAR);
@@ -1523,7 +1526,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),HideListButton,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips, HideListButton,_("Hide the word list"),NULL);
+	gtk_widget_set_tooltip_text(HideListButton,_("Hide the word list"));
 
 
 	if (conf->get_bool_at("main_window/hide_list"))
@@ -1541,7 +1544,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(CopyCallback),this);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Copy"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Copy"));
 #endif
 
 	PronounceWordMenuButton = gtk_menu_tool_button_new_from_stock(GTK_STOCK_EXECUTE);
@@ -1555,7 +1558,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(PronounceWordMenuButton),false,false,5);
 #endif
-	gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(PronounceWordMenuButton), gpAppFrame->tooltips, _("Pronounce the word"),NULL);
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(PronounceWordMenuButton), _("Pronounce the word"));
 	gtk_widget_set_sensitive(GTK_WIDGET(PronounceWordMenuButton), false);
 
 	button=gtk_button_new();
@@ -1569,7 +1572,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Save to file (Alt+E)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Save to file (Alt+E)"));
 
 #ifndef CONFIG_GPE
 	button=gtk_button_new();
@@ -1579,7 +1582,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PrintCallback),this);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Print"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Print"));
 	gtk_widget_set_sensitive(button, false);
 #endif
 
@@ -1594,7 +1597,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search in the definition text (Ctrl+F)"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Search in the definition text (Ctrl+F)"));
 }
 
 void ToolWin::ShowListCallback(GtkWidget *widget, gpointer data)
@@ -1828,21 +1831,24 @@ void TextWin::ShowInfo()
 		  "       You can input strings containing \'*\' (wildcard) and \'?\' (joker) as the pattern. "
 		  "\'*\' matches an arbitrary, possibly empty, string, and \'?\' matches an arbitrary character. "
 		  "After pressing Enter, the words that match this pattern will be shown in the list.\n"
-		  "       2. Fuzzy query\n"
+		  "       2. Regular expressions matching\n"
+		  "       You can input strings as Perl-compatible regular expressions with a beginning \":\" character as the identifier. "
+		  "After pressing Enter, the words that match this regex will be shown in the list.\n"
+		  "       3. Fuzzy query\n"
 		  "       When you can't remember how to spell a word exactly, you can try StarDict's Fuzzy query. "
 		  "It uses \"Levenshtein Edit Distance\" to compute the similarity between two words, and gives the match results which are most "
 		  "similar to the word that you input. "
 		  "To create a fuzzy query, just input the word with a beginning \"/\", and then press Enter.\n"
-		  "       3. Full-text search\n"
+		  "       4. Full-text search\n"
 		  "       Full-text search searches for a word in the data. To create a Full-text search, just input the word with a beginning \"|\", and then press Enter. For example, \"|ab cd\" searches data which contain both \"ab\" and \"cd\". If the words contain Space character, you can use \"\\ \", such as \"|apple\\ pie\", other escaping characters are \"\\\\\" for \'\\\', \"\\t\" for Tab and \"\\n\" for new line.\n"
-		  "       4. Special character search\n"
+		  "       5. Special character search\n"
 		  "       If your words contain special characters, you can use \'\\\' to escape it, for example, \"a\\*b\\?\" searches \"a*b?\", \"\\/abc\" searches \"/abc\".\n"
-		  "       5. Scan the selected word\n"
+		  "       6. Scan the selected word\n"
 		  "       Turn on the check button at the bottom-left corner of the StarDict window to activate this feature. "
 		  "When this feature is on, StarDict will automatically look up words, phrases, and Chinese characters in other applications. "
 		  "Just highlight a word or phrase with your mouse, and a floating window will pop up showing the definition of the "
 		  "selected word.\n"
-		  "       6. Dictionary management\n"
+		  "       7. Dictionary management\n"
 		  "       Click the \"Manage dictionaries\" button at the bottom-right corner of the window to access the dictionary management "
 		  "dialog. From here, you can disable some dictionaries that you don't need, and set the dictionaries\' querying order.\n"
 		  "\n\n"
@@ -2720,7 +2726,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(ScanSelectionCheckButton), "toggled",
 									 G_CALLBACK(ScanCallback), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),ScanSelectionCheckButton,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,ScanSelectionCheckButton,_("Scan the selection"),NULL);
+	gtk_widget_set_tooltip_text(ScanSelectionCheckButton,_("Scan the selection"));
 
 	GtkWidget *button = gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -2734,7 +2740,7 @@ void BottomWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,8);
 #endif
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Show info"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Show info"));
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_QUIT,GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -2744,7 +2750,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(QuitCallback), NULL);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Quit"), NULL);
+	gtk_widget_set_tooltip_text(button,_("Quit"));
 
 	movenews_event_box = gtk_event_box_new();
 	g_signal_connect (G_OBJECT (movenews_event_box), "enter_notify_event", G_CALLBACK (vEnterNotifyCallback), this);
@@ -2786,7 +2792,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreferenceCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Preferences"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Preferences"));
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -2796,7 +2802,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(DictManageCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Manage dictionaries"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Manage dictionaries"));
 
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_INDEX,GTK_ICON_SIZE_SMALL_TOOLBAR));
@@ -2806,7 +2812,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NewVersionCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Go to the StarDict website"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Go to the StarDict website"));
 #endif
 
 	button=gtk_button_new();
@@ -2818,7 +2824,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_internetsearch_button_press),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Search an Internet dictionary - Right button: website list"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Search an Internet dictionary - Right button: website list"));
 }
 
 void BottomWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, BottomWin *oBottomWin)

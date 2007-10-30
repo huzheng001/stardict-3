@@ -10,7 +10,7 @@ class AppSkin;//forward declaration
 
 class DockLet : public TrayBase {
 public:
-	DockLet(GtkWidget *, bool, GtkTooltips *, const AppSkin&);
+	DockLet(GtkWidget *, bool, const AppSkin&);
  	~DockLet();
 	void minimize_to_tray();
 	void set_scan_mode(bool);
@@ -23,7 +23,6 @@ private:
 	GtkWidget *scan_menuitem_;
 	bool embedded_;
 	GdkPixbuf *normal_icon_, *stop_icon_, *scan_icon_;
-        GtkTooltips *tooltips_;
 
 	static void on_embedded(GtkWidget *widget, gpointer data);
 	static void on_destroyed(GtkWidget *widget, DockLet *oDockLet);

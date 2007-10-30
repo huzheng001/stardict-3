@@ -38,10 +38,10 @@ int main()
 	add_analyse_query_test(aq_tests, "|data", qtDATA, "data");
 	add_analyse_query_test(aq_tests, "\\|data", qtSIMPLE, "|data");
 	add_analyse_query_test(aq_tests, "\\/fuzzy", qtSIMPLE, "/fuzzy");
-	add_analyse_query_test(aq_tests, "re?ex*", qtREGEXP, "re?ex*");
+	add_analyse_query_test(aq_tests, "re?ex*", qtPATTERN, "re?ex*");
 	add_analyse_query_test(aq_tests, "re\\?ex\\*", qtSIMPLE, "re?ex*");
-	add_analyse_query_test(aq_tests, "re?ex\\*", qtREGEXP, "re?ex*");
-	add_analyse_query_test(aq_tests, "re\\?ex*", qtREGEXP, "re?ex*");
+	add_analyse_query_test(aq_tests, "re?ex\\*", qtPATTERN, "re?ex*");
+	add_analyse_query_test(aq_tests, "re\\?ex*", qtPATTERN, "re?ex*");
 	add_analyse_query_test(aq_tests, "\\|data\\?", qtSIMPLE, "|data?");
 	add_analyse_query_test(aq_tests, "", qtSIMPLE, "");
 	add_analyse_query_test(aq_tests, "\\/", qtSIMPLE, "/");

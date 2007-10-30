@@ -14,13 +14,17 @@ query_t analyse_query(const char *s, std::string& res)
 		res=s+1;
 		return qtFUZZY;
 	}
+	if (*s==':') {
+		res=s+1;
+		return qtREGEX;
+	}
 
 	if (*s=='|') {
 		res=s+1;
 		return qtDATA;
 	}
 
-	bool regexp=false;
+	bool pattern=false;
 	const char *p=s;
 	res="";
 	for (; *p; res+=*p, ++p) {
@@ -31,10 +35,10 @@ query_t analyse_query(const char *s, std::string& res)
 			continue;
 		}
 		if (*p=='*' || *p=='?')
-			regexp=true;
+			pattern=true;
 	}
-	if (regexp)
-		return qtREGEXP;
+	if (pattern)
+		return qtPATTERN;
 
 	return qtSIMPLE;
 }
@@ -43,7 +47,7 @@ void stardict_input_escape(const char *text, std::string &res)
 {
 	res.clear();
 	const char *p = text;
-	if (*p == '/' || *p == '|') {
+	if (*p == '/' || *p == '|' || *p == ':') {
 		res = "\\";
 		res += *p;
 		p++;

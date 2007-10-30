@@ -86,10 +86,12 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/bg_red", 65535);
 	add_entry("/apps/stardict/preferences/floating_window/bg_green", 65535);
 	add_entry("/apps/stardict/preferences/floating_window/bg_blue", 51200);
+	add_entry("/apps/stardict/preferences/floating_window/transparent", 0);
 
 	add_entry("/apps/stardict/preferences/floating_window/lock_x", 0);
 	add_entry("/apps/stardict/preferences/floating_window/lock_y", 0);
 	add_entry("/apps/stardict/preferences/dictionary/scan_modifier_key", 0);
+	add_entry("/apps/stardict/preferences/main_window/transparent", 0);
 	add_entry("/apps/stardict/preferences/main_window/hpaned_pos", DEFAULT_HPANED_POS);
 	add_entry("/apps/stardict/preferences/main_window/window_width", DEFAULT_WINDOW_WIDTH);
 	add_entry("/apps/stardict/preferences/main_window/window_height", DEFAULT_WINDOW_HEIGHT);

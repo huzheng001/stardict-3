@@ -103,6 +103,7 @@ private:
   static void on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
+  static void on_setup_mainwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_moveup_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_movedown_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
@@ -116,6 +117,7 @@ private:
   static void on_setup_floatwin_size_max_height_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPrefsDlg);
+  static void on_setup_floatwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg);
   static void on_markup_search_word(GtkToggleButton *, PrefsDlg *);
 
   void resize_categories_tree(void);
