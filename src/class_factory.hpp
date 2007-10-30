@@ -10,7 +10,7 @@ class AppSkin;
 class PlatformFactory {
 public:
 	static void *create_class_by_name(const std::string& name, void *param=NULL);
-	static TrayBase *create_tray_icon(GtkWidget *, bool, GtkTooltips *, const AppSkin&);
+	static TrayBase *create_tray_icon(GtkWidget *, bool, const AppSkin&);
 };
 
 #endif//!_CLASS_FACTORY_HPP_

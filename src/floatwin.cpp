@@ -67,6 +67,9 @@ void FloatWin::Create()
 	g_signal_connect (G_OBJECT (FloatWindow), "enter_notify_event", G_CALLBACK (vEnterNotifyCallback), this);
 	g_signal_connect (G_OBJECT (FloatWindow), "leave_notify_event", G_CALLBACK (vLeaveNotifyCallback), this);
 
+	int transparent=conf->get_int_at("floating_window/transparent");
+	gtk_window_set_opacity(GTK_WINDOW(FloatWindow), (100-transparent)/100.0);
+
 	GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(FloatWindow));
 	gint screen_width = gdk_screen_get_width(screen);
 	gint screen_height = gdk_screen_get_height(screen);
@@ -119,7 +122,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_query_click), this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Query in the main window"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Query in the main window"));
 
 	button= gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_SAVE,GTK_ICON_SIZE_MENU));
@@ -128,7 +131,7 @@ void FloatWin::Create()
 			 G_CALLBACK(on_save_click), this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Save to file"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Save to file"));
 
 	PronounceWordButton= gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(PronounceWordButton),gtk_image_new_from_stock(GTK_STOCK_EXECUTE,GTK_ICON_SIZE_MENU));
@@ -136,7 +139,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(PronounceWordButton),"clicked", G_CALLBACK(on_play_click), this);
 	g_signal_connect(G_OBJECT(PronounceWordButton),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),PronounceWordButton,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,PronounceWordButton,_("Pronounce the word"),NULL);
+	gtk_widget_set_tooltip_text(PronounceWordButton,_("Pronounce the word"));
 	
 	gtk_widget_set_sensitive(PronounceWordButton, false);
 
@@ -146,7 +149,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(StopButton),"clicked", G_CALLBACK(on_stop_click), this);
 	g_signal_connect(G_OBJECT(StopButton),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),StopButton,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips, StopButton, _("Stop selection-scanning"),NULL);
+	gtk_widget_set_tooltip_text(StopButton, _("Stop selection-scanning"));
 
 	gtk_widget_set_sensitive(gpAppFrame->oFloatWin.StopButton, 
 													 conf->get_bool_at("dictionary/scan_selection"));
@@ -158,7 +161,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_help_click), this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Help"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Help"));
 
 	button= gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_QUIT,GTK_ICON_SIZE_MENU));
@@ -166,7 +169,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_quit_click), this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(button_hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Quit"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Quit"));
 #endif
 
 	button = gtk_button_new();
@@ -180,7 +183,7 @@ void FloatWin::Create()
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(vLockCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(button_hbox),button,false,false,0);
-	gtk_tooltips_set_tip(gpAppFrame->tooltips,button,_("Lock floating window"),NULL);
+	gtk_widget_set_tooltip_text(button,_("Lock floating window"));
 	view.reset(new ArticleView(GTK_BOX(vbox), true));
 		
 	gtk_widget_show_all(frame);

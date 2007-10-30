@@ -1133,6 +1133,13 @@ void PrefsDlg::on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggle
 }
 #endif
 
+void PrefsDlg::on_setup_mainwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg)
+{
+	gint transparent = (gint)gtk_range_get_value(range);
+	conf->set_int_at("main_window/transparent", transparent);
+	gtk_window_set_opacity(GTK_WINDOW(gpAppFrame->window), (100-transparent)/100.0);
+}
+
 void PrefsDlg::setup_mainwin_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_EXECUTE);
@@ -1188,6 +1195,18 @@ void PrefsDlg::setup_mainwin_options_page()
 									 G_CALLBACK(on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled), this);
 #endif
 
+	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
+	GtkWidget *label=gtk_label_new(NULL);
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("_Transparency:"));
+	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
+	GtkWidget *hscale;
+	hscale = gtk_hscale_new_with_range(0,80,1);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), hscale);
+	int transparent=conf->get_int_at("main_window/transparent");
+	gtk_range_set_value(GTK_RANGE(hscale), transparent);
+	g_signal_connect(G_OBJECT(hscale), "value-changed", G_CALLBACK(on_setup_mainwin_transparent_scale_changed), this);
+	gtk_box_pack_start(GTK_BOX(hbox),hscale,TRUE,TRUE, 0);
 }
 
 void PrefsDlg::write_mainwin_searchwebsite_list()
@@ -1639,14 +1658,23 @@ void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPr
 	}
 }
 
+void PrefsDlg::on_setup_floatwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg)
+{
+	gint transparent = (gint)gtk_range_get_value(range);
+	conf->set_int_at("floating_window/transparent", transparent);
+	gtk_window_set_opacity(GTK_WINDOW(gpAppFrame->oFloatWin.FloatWindow), (100-transparent)/100.0);
+}
+
 void PrefsDlg::setup_floatwin_size_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Settings"), GTK_STOCK_ZOOM_FIT);
+	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *table;
 	table = gtk_table_new(3, 2, FALSE);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 6);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-	gtk_box_pack_start(GTK_BOX(vbox),table,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),table,false,false,0);
 	
 	int max_width=
 		conf->get_int_at("floating_window/max_window_width");
@@ -1684,7 +1712,7 @@ void PrefsDlg::setup_floatwin_size_page()
 	gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
 	GtkWidget*hbox1 = gtk_hbox_new(false, 5);
-	gtk_box_pack_start(GTK_BOX(vbox),hbox1,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom background color:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("floating_window/use_custom_bg"));
 	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_setup_floatwin_use_custom_bg_toggled), this);
@@ -1696,6 +1724,19 @@ void PrefsDlg::setup_floatwin_size_page()
 	GtkWidget *colorbutton = gtk_color_button_new_with_color(&color);
 	g_signal_connect(G_OBJECT(colorbutton), "color-set", G_CALLBACK(on_setup_floatwin_color_set), this);
 	gtk_box_pack_start(GTK_BOX(hbox1),colorbutton,false,false,0);
+
+	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
+	label=gtk_label_new(NULL);
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("_Transparency:"));
+	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
+	GtkWidget *hscale;
+	hscale = gtk_hscale_new_with_range(0,80,1);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), hscale);
+	int transparent=conf->get_int_at("floating_window/transparent");
+	gtk_range_set_value(GTK_RANGE(hscale), transparent);
+	g_signal_connect(G_OBJECT(hscale), "value-changed", G_CALLBACK(on_setup_floatwin_transparent_scale_changed), this);
+	gtk_box_pack_start(GTK_BOX(hbox),hscale,TRUE,TRUE, 0);
 }
 #endif
 

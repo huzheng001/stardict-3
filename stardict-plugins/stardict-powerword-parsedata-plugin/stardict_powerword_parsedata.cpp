@@ -83,6 +83,102 @@ static gchar* toUtfPhonetic(const gchar *text, gsize len)
 	return g_markup_escape_text(p.c_str(), -1);
 }
 
+static gchar* toUtfPhonetic2(const gchar *text, glong len)
+{
+	std::string p;
+	const char *s = text;
+	const char *n;
+	std::string uc;
+	while (s-text < len) {
+		n = g_utf8_next_char(s);
+		uc.assign(s, n-s);
+		if (uc == "8")
+			p+=":";
+		else if (uc == "0")
+			p+="Ŋ";
+		else if (uc == "¾")
+			p+="ǔ";
+		else if (uc == "%")
+			p+="ɔ";
+		else if (uc == "µ")
+			p+="ě";
+		else if (uc == "³")
+			p+="ā";
+		else if (uc == "!")
+			p+="I";
+		else if (uc == "W")
+			p+="ɛ";
+		else if (uc == "&")
+			p+="U";
+		else if (uc == "…")
+			p+="ə";
+		else if (uc == "¹")
+			p+="ǐ";
+		else if (uc == "“")
+			p+="′";
+		else if (uc == "*")
+			p+="ə";
+		else if (uc == "6")
+			p+="ˋ";
+		else if (uc == "+")
+			p+="ɚ";
+		else if (uc == "”")
+			p+="´";
+		else if (uc == "‘")
+			p+="KH";
+		else if (uc == "$")
+			p+="ɑ";
+		else if (uc == "7")
+			p+="͵";
+		else if (uc == "'")
+			p+="KH";
+		else if (uc == "½")
+			p+="ō";
+		else if (uc == "¼")
+			p+="ǒ";
+		else if (uc == "¶")
+			p+="ē";
+		else if (uc == "º")
+			p+="ī";
+		else if (uc == "G")
+			p+="θ";
+		else if (uc == "9")
+			p+="ʒ";
+		else if (uc == ".")
+			p+="ʃ";
+		else if (uc == "/")
+			p+="ʒ";
+		else if (uc == "²")
+			p+="ǎ";
+		else if (uc == "#")
+			p+="æ";
+		else if (uc == "’")
+			p+="N";
+		else if (uc == "Y")
+			p+="t";
+		else if (uc == "H")
+			p+="ð";
+		else if (uc == "÷")
+			p+="ń";
+		else if (uc == "é")
+			p+="ê";
+		else if (uc == "¿")
+			p+="ū";
+		else if (uc == ")")
+			p+="ɜ";
+		else if (uc == "Ó")
+			p+="ǒ";
+		else if (uc == "ï")
+			p+="Ś";
+		else if (uc == "Ä")
+			p+="ǐ";
+		else
+			p+= uc;
+		s = n;
+	}
+	return g_markup_escape_text(p.c_str(), -1);
+}
+
 static void powerword_markup_add_text(const gchar *text, gssize length, std::string *pango, std::string::size_type &cur_pos, LinksPosList *links_list)
 {
 	const gchar *p;
@@ -178,6 +274,7 @@ static void powerword_markup_add_text(const gchar *text, gssize length, std::str
 								next = n+1;
 								break;
 							case 'X':
+							case '2':
 								{
 								const gchar *tag_end = n+1;
 								while (tag_end!=end) {
@@ -187,7 +284,12 @@ static void powerword_markup_add_text(const gchar *text, gssize length, std::str
 										tag_end++;
 								}
 								g_string_append (str, "<span foreground=\"blue\">");
-								gchar *tag_str = toUtfPhonetic(n+1, tag_end - (n+1));
+								gchar *tag_str;
+								if (*next == 'X') {
+									tag_str = toUtfPhonetic(n+1, tag_end - (n+1));
+								} else {
+									tag_str = toUtfPhonetic2(n+1, tag_end - (n+1));
+								}
 								g_string_append (str, tag_str);
 								g_free(tag_str);
 								g_string_append (str, "</span>");
@@ -237,10 +339,6 @@ static void powerword_markup_add_text(const gchar *text, gssize length, std::str
 								previous_islink = true;
 								break;
 								}
-							case '2':
-								// Phonetic. Need more work...
-								next = n+1;
-								break;
 							/*case ' ':
 							case '9':
 							case 'S':*/

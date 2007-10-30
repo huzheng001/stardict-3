@@ -185,6 +185,8 @@ public:
 	bool LookupSynonym(const char *str, glong &synidx, glong &synidx_suggest, int EnableCollationLevel, int servercollatefunc);
 	bool LookupWithRule(GPatternSpec *pspec, glong *aIndex, int iBuffLen);
 	bool LookupWithRuleSynonym(GPatternSpec *pspec, glong *aIndex, int iBuffLen);
+	bool LookupWithRegex(GRegex *regex, glong *aIndex, int iBuffLen);
+	bool LookupWithRegexSynonym(GRegex *regex, glong *aIndex, int iBuffLen);
 	gint GetOrigWordCount(glong& iWordIndex, bool isidx);
 	bool GetWordPrev(glong iWordIndex, glong &pidx, bool isidx, int EnableCollationLevel, int servercollatefunc);
 	void GetWordNext(glong &iWordIndex, bool isidx, int EnableCollationLevel, int servercollatefunc);
@@ -283,6 +285,7 @@ public:
 
 	bool LookupWithFuzzy(const gchar *sWord, gchar *reslist[], gint reslist_size, std::vector<InstantDictIndex> &dictmask);
 	gint LookupWithRule(const gchar *sWord, gchar *reslist[], std::vector<InstantDictIndex> &dictmask);
+	gint LookupWithRegex(const gchar *sWord, gchar *reslist[], std::vector<InstantDictIndex> &dictmask);
 
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
 	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);

@@ -1,9 +1,13 @@
 2007.12.8
 StarDict-3.0.1 (Perfection) released.
 StarDict's total download count reached three millions in 2007.10.1.
+Add Debian support.
 Add dictdotcn plugin.
+Add vs2005 compile support.
 Add win32 sapi-tts plugin.
 Add wordnet plugin.
+Add regex query support.
+Many other changes.
 
 2007.8.13
 StarDict-3.0.0 (RedHat) released.

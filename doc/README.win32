@@ -4,7 +4,7 @@ Please install Dev-C++,they can be found in http://www.bloodshed.net/dev/
 
 Then install developer packages, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
 These packages are needed:
-glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zip cairo-dev-1.4.8.zip gettext-dev-0.14.5.zip  Zlib 1.2.3
+glib-dev-2.14.2.zip gtk+-dev-2.12.1.zip pango-dev-1.18.3.zip atk-dev-1.20.0.zip cairo-dev-1.4.10.zip gettext-dev-0.14.5.zip zlib123-dll.zip libiconv-1.9.1.bin.woe32.zip
 Just extract them into X:\Dev-Cpp\ is OK.
 Notice, for Zlib, you should put the zlib1.dll in top\bin folder.
 

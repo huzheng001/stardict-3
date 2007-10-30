@@ -61,12 +61,11 @@ void *PlatformFactory::create_class_by_name(const std::string& name, void *param
 }
 
 TrayBase *PlatformFactory::create_tray_icon(GtkWidget *win, bool scan,
-					    GtkTooltips *tooltips,
 					    const AppSkin& skin)
 {
 #ifdef _WIN32
 	return new DockLet(win, scan);
 #else
-	return new DockLet(win, scan, tooltips, skin);
+	return new DockLet(win, scan, skin);
 #endif
 }

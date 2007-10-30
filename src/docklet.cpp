@@ -8,13 +8,12 @@
 
 #include "docklet.h"
 
-DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on, GtkTooltips *tooltips,
+DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on,
 		 const AppSkin& skin) : TrayBase(mainwin, is_scan_on)
 {
 	menu_ = NULL;
 	image_ = NULL;
 	embedded_ = false;
-	tooltips_ = tooltips;
 
 	normal_icon_ = get_impl(skin.docklet_normal_icon);
 	scan_icon_ = get_impl(skin.docklet_scan_icon);
@@ -28,13 +27,13 @@ void DockLet::create_docklet()
 	docklet_ = egg_tray_icon_new("StarDict");
 	box_ = gtk_event_box_new();
 	if (is_hide_state()) {
-		gtk_tooltips_set_tip(tooltips_, box_, _("StarDict"),NULL);
+		gtk_widget_set_tooltip_text(box_, _("StarDict"));
 		image_ = gtk_image_new_from_pixbuf(normal_icon_);
 	} else if (is_scan_on()) {
-		gtk_tooltips_set_tip(tooltips_, box_, _("StarDict - Scanning"),NULL);
+		gtk_widget_set_tooltip_text(box_, _("StarDict - Scanning"));
 		image_ = gtk_image_new_from_pixbuf(scan_icon_);
 	} else {
-		gtk_tooltips_set_tip(tooltips_, box_, _("StarDict - Stopped"),NULL);
+		gtk_widget_set_tooltip_text(box_, _("StarDict - Stopped"));
 		image_ = gtk_image_new_from_pixbuf(stop_icon_);
 	}
 
@@ -180,15 +179,13 @@ void DockLet::minimize_to_tray()
 
 void DockLet::scan_on()
 {
-        gtk_tooltips_set_tip(tooltips_, box_, _("StarDict - Scanning"),
-                                     NULL);
+        gtk_widget_set_tooltip_text(box_, _("StarDict - Scanning"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), scan_icon_);
 }
 
 void DockLet::scan_off()
 {
-        gtk_tooltips_set_tip(tooltips_, box_, _("StarDict - Stopped"),
-                             NULL);
+        gtk_widget_set_tooltip_text(box_, _("StarDict - Stopped"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), stop_icon_);
 }
 
@@ -196,7 +193,7 @@ void DockLet::show_normal_icon()
 {
         if (!image_)
                 return;
-        gtk_tooltips_set_tip(tooltips_, box_, _("StarDict"), NULL);
+        gtk_widget_set_tooltip_text(box_, _("StarDict"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), normal_icon_);
 }
 

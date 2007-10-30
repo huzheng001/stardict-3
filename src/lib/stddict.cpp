@@ -1428,6 +1428,30 @@ bool Dict::LookupWithRuleSynonym(GPatternSpec *pspec, glong *aIndex, int iBuffLe
 	return (iIndexCount>0);
 }
 
+bool Dict::LookupWithRegex(GRegex *regex, glong *aIndex, int iBuffLen)
+{
+	int iIndexCount=0;
+	for (glong i=0; i<narticles() && iIndexCount<iBuffLen-1; i++)
+		// Need to deal with same word in index? But this will slow down processing in most case.
+		if (g_regex_match(regex, idx_file->getWord(i, 0, 0), (GRegexMatchFlags)0, NULL))
+			aIndex[iIndexCount++]=i;
+	aIndex[iIndexCount]= -1; // -1 is the end.
+	return (iIndexCount>0);
+}
+
+bool Dict::LookupWithRegexSynonym(GRegex *regex, glong *aIndex, int iBuffLen)
+{
+	if (syn_file.get() == NULL)
+		return false;
+	int iIndexCount=0;
+	for (glong i=0; i<nsynarticles() && iIndexCount<iBuffLen-1; i++)
+		// Need to deal with same word in index? But this will slow down processing in most case.
+		if (g_regex_match(regex, syn_file->getWord(i, 0, 0), (GRegexMatchFlags)0, NULL))
+			aIndex[iIndexCount++]=i;
+	aIndex[iIndexCount]= -1; // -1 is the end.
+	return (iIndexCount>0);
+}
+
 //===================================================================
 show_progress_t Libs::default_show_progress;
 
@@ -3064,6 +3088,59 @@ gint Libs::LookupWithRule(const gchar *word, gchar **ppMatchWord, std::vector<In
 		}
 	}
 	g_pattern_spec_free(pspec);
+
+	if (iMatchCount)// sort it.
+		std::sort(ppMatchWord, ppMatchWord+iMatchCount, less_for_compare);
+	return iMatchCount;
+}
+
+gint Libs::LookupWithRegex(const gchar *word, gchar **ppMatchWord, std::vector<InstantDictIndex> &dictmask)
+{
+	glong aiIndex[MAX_MATCH_ITEM_PER_LIB+1];
+	gint iMatchCount = 0;
+	GRegex *regex = g_regex_new(word, G_REGEX_OPTIMIZE, (GRegexMatchFlags)0, NULL);
+
+	const gchar * sMatchWord;
+	bool bAlreadyInList;
+	std::vector<Dict *>::size_type iRealLib;
+	for (std::vector<InstantDictIndex>::size_type iLib=0; iLib<dictmask.size(); iLib++) {
+		//if(oLibs.LookdupWordsWithRule(pspec,aiIndex,MAX_MATCH_ITEM_PER_LIB+1-iMatchCount,iLib))
+		// -iMatchCount,so save time,but may got less result and the word may repeat.
+		if (dictmask[iLib].type != InstantDictType_LOCAL)
+			continue;
+		iRealLib = dictmask[iLib].index;
+		if (oLib[iRealLib]->LookupWithRegex(regex, aiIndex, MAX_MATCH_ITEM_PER_LIB+1)) {
+			show_progress->notify_about_work();
+			for (int i=0; aiIndex[i]!=-1; i++) {
+				sMatchWord = poGetOrigWord(aiIndex[i],iRealLib);
+				bAlreadyInList = false;
+				for (int j=0; j<iMatchCount; j++) {
+					if (strcmp(ppMatchWord[j],sMatchWord)==0) {//already in list
+						bAlreadyInList = true;
+						break;
+					}
+				}
+				if (!bAlreadyInList)
+					ppMatchWord[iMatchCount++] = g_strdup(sMatchWord);
+			}
+		}
+		if (oLib[iRealLib]->LookupWithRegexSynonym(regex, aiIndex, MAX_MATCH_ITEM_PER_LIB+1)) {
+			show_progress->notify_about_work();
+			for (int i=0; aiIndex[i]!=-1; i++) {
+				sMatchWord = poGetOrigSynonymWord(aiIndex[i],iRealLib);
+				bAlreadyInList = false;
+				for (int j=0; j<iMatchCount; j++) {
+					if (strcmp(ppMatchWord[j],sMatchWord)==0) {//already in list
+						bAlreadyInList = true;
+						break;
+					}
+				}
+				if (!bAlreadyInList)
+					ppMatchWord[iMatchCount++] = g_strdup(sMatchWord);
+			}
+		}
+	}
+	g_regex_unref(regex);
 
 	if (iMatchCount)// sort it.
 		std::sort(ppMatchWord, ppMatchWord+iMatchCount, less_for_compare);
