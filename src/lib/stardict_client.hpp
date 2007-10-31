@@ -66,6 +66,7 @@ namespace STARDICT {
             ListType_None,
             ListType_List,
             ListType_Rule_List,
+            ListType_Regex_List,
             ListType_Fuzzy_List,
             ListType_Tree,
         };

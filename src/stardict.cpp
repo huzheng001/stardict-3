@@ -1823,7 +1823,7 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
     if (seq != 0 && waiting_mainwin_lookupcmd_seq != seq)
         return;
     oMidWin.oTextWin.Show(&(lookup_response->dict_response), lookup_response->listtype);
-    if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List || lookup_response->listtype == STARDICT::LookupResponse::ListType_Rule_List) {
+    if (lookup_response->listtype == STARDICT::LookupResponse::ListType_List || lookup_response->listtype == STARDICT::LookupResponse::ListType_Rule_List || lookup_response->listtype == STARDICT::LookupResponse::ListType_Regex_List) {
 	if (!lookup_response->wordlist->empty()) {
 		oMidWin.oIndexWin.oListWin.MergeWordList(lookup_response->wordlist);
 		oMidWin.oIndexWin.oListWin.ReScroll();
