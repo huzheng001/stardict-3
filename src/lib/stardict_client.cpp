@@ -1146,6 +1146,8 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             cmd->reading_status = 7;
             if (strcmp(buf, "r") == 0)
                 cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Rule_List;
+            else if (strcmp(buf, "g") == 0)
+                cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Regex_List;
             else if (strcmp(buf, "f") == 0)
                 cmd->lookup_response->listtype = STARDICT::LookupResponse::ListType_Fuzzy_List;
             else 

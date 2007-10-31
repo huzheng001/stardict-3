@@ -1972,6 +1972,8 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 			query_result = TEXT_WIN_NET_NOT_FOUND;
 			if (list_type == STARDICT::LookupResponse::ListType_Rule_List) {
 				Show(_("Found no words matching this pattern!"));
+			} else if (list_type == STARDICT::LookupResponse::ListType_Regex_List) {
+				Show(_("Found no words matching this regular expression!"));
 			} else if (list_type == STARDICT::LookupResponse::ListType_Fuzzy_List) {
 				Show(_("There are too many spelling errors :-("));
 			} else if (list_type == STARDICT::LookupResponse::ListType_Tree) {
