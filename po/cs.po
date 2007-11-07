@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-28 14:36+0800\n"
+"POT-Creation-Date: 2007-11-05 13:51+0800\n"
 "PO-Revision-Date: 2004-12-29 08:51-0500\n"
 "Last-Translator: Jaroslav Jiricka <jiricka@mujbox.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -16,25 +16,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/GNOME_Stardict.server.in.h:1
+#: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
 msgstr "aplikace StarDict"
 
-#: data/GNOME_Stardict.server.in.h:2
+#: ../data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
 msgstr "generátor StarDict"
 
-#: data/stardict.desktop.in.h:1
+#: ../data/stardict.desktop.in.h:1
 msgid "Lookup words"
 msgstr "Slovník s pokročilými funkcemi"
 
-#: data/stardict.desktop.in.h:2 src/mainwin.cpp:490 src/splash.cpp:42
-#: src/stardict.cpp:153 src/stardict.cpp:1523 src/win32/systray.cpp:198
-#: src/win32/systray.cpp:220
+#. gtk_widget_set_app_paintable(window, TRUE);
+#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
+#: ../src/docklet.cpp:196 ../src/mainwin.cpp:477 ../src/splash.cpp:84
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2485
+#: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr "StarDict"
 
-#: data/stardict.schemas.in.h:1
+#: ../data/stardict.schemas.in.h:1
 msgid ""
 "A custom font that will be used in StarDict. This will only take effect if "
 "the \"Use Custom Font\" option is turned on."
@@ -42,475 +44,858 @@ msgstr ""
 "Písmo, které bude použito v programu StarDict. Má význam pouze při zatržení "
 "volby „Použít vlastní písmo“."
 
-#: data/stardict.schemas.in.h:2
+#: ../data/stardict.schemas.in.h:2
 msgid "Custom Font"
 msgstr "Vlastní písmo"
 
-#: data/stardict.schemas.in.h:3
+#: ../data/stardict.schemas.in.h:3
+#, fuzzy
+msgid "Dictionary configuration XML"
+msgstr "Písmo slovníku"
+
+#: ../data/stardict.schemas.in.h:4
 msgid "Dictionary order"
 msgstr "Pořadí slovníku"
 
-#: data/stardict.schemas.in.h:4
-msgid "Disabled dictionary list"
+#: ../data/stardict.schemas.in.h:5
+#, fuzzy
+msgid "Disabled plugins list"
 msgstr "Seznam zakázaných slovníků"
 
-#: data/stardict.schemas.in.h:5
-msgid "Disabled tree dictionary list"
+#: ../data/stardict.schemas.in.h:6
+#, fuzzy
+msgid "Disabled tree dictionaries list"
 msgstr "Seznam zakázaných stromových slovníků"
 
-#: data/stardict.schemas.in.h:6
+#: ../data/stardict.schemas.in.h:7
 msgid "Enable sound event"
 msgstr "Povolit zvuky událostí. "
 
-#: data/stardict.schemas.in.h:7
-msgid "Hide floating window when modifier key released"
+#: ../data/stardict.schemas.in.h:8
+#, fuzzy
+msgid "Enable the use of TTS program"
+msgstr "Název programu"
+
+#: ../data/stardict.schemas.in.h:9
+msgid "Engine index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:10
+#, fuzzy
+msgid "Hide floating window when modifier key is released"
 msgstr "Skrýt plovoucí okno při uvolnění modifikátorové klávesy."
 
-#: data/stardict.schemas.in.h:8
+#: ../data/stardict.schemas.in.h:11
+#, fuzzy
 msgid ""
-"Hide floating window when modifier key released. It only take effect when "
+"Hide floating window when modifier key is released. It only take effect when "
 "only_scan_while_modifier_key is turned on."
 msgstr ""
 "Skrýt plovoucí okno při uvolnění modifikátorové klávesy. Má význam pouze při "
 "zapnuté volbě „Skenovat pouze při stisku modifikátorové klávesy“."
 
-#: data/stardict.schemas.in.h:9
+#: ../data/stardict.schemas.in.h:12
 msgid "Hide the list"
 msgstr "Skrýt seznam"
 
-#: data/stardict.schemas.in.h:10
-msgid "Hide the window when start up"
+#: ../data/stardict.schemas.in.h:13
+#, fuzzy
+msgid "Hide the window on startup"
 msgstr "Při spuštění programu StarDict skrýt okno."
 
-#: data/stardict.schemas.in.h:11
+#: ../data/stardict.schemas.in.h:14
 msgid "Hpaned 's position"
 msgstr "Poloha oddělovače"
 
-#: data/stardict.schemas.in.h:12
-msgid "List the dictionaries in the order."
+#: ../data/stardict.schemas.in.h:15
+#, fuzzy
+msgid "List the dictionaries in order."
 msgstr "Vypsat seznam slovníků v pořadí, v jakém se mají prohledávat."
 
-#: data/stardict.schemas.in.h:13
-msgid "List the dictionaries which are disabled."
+#: ../data/stardict.schemas.in.h:16
+#, fuzzy
+msgid "List the plugins in order."
+msgstr "Vypsat seznam slovníků v pořadí, v jakém se mají prohledávat."
+
+#: ../data/stardict.schemas.in.h:17
+#, fuzzy
+msgid "List the plugins which are disabled."
 msgstr "Vypsat seznam zakázaných slovníků."
 
-#: data/stardict.schemas.in.h:14
+#: ../data/stardict.schemas.in.h:18
 msgid "List the search websites."
 msgstr "Zobrazit seznam WWW stránek pro hledání"
 
-#: data/stardict.schemas.in.h:15
-msgid "List the tree dictionaries in the order."
+#: ../data/stardict.schemas.in.h:19
+#, fuzzy
+msgid "List the tree dictionaries in order."
 msgstr ""
 "Vypsat seznam stromových slovníků v pořadí, v jakém se mají prohledávat."
 
-#: data/stardict.schemas.in.h:16
+#: ../data/stardict.schemas.in.h:20
 msgid "List the tree dictionaries which are disabled."
 msgstr "Vypsat seznam zakázaných slovníků."
 
-#: data/stardict.schemas.in.h:17
-msgid "Only do scanning while modifier key being pressed"
+#: ../data/stardict.schemas.in.h:21
+#, fuzzy
+msgid "Maximum window-height"
+msgstr "Maximální _výška okna:"
+
+#: ../data/stardict.schemas.in.h:22
+#, fuzzy
+msgid "Maximum window-width"
+msgstr "Maximální _šířka okna:"
+
+#: ../data/stardict.schemas.in.h:23
+#, fuzzy
+msgid "Only scan while modifier key is being pressed"
 msgstr "Skenovat pouze při stisku modifikátorové klávesy"
 
-#: data/stardict.schemas.in.h:18
+#: ../data/stardict.schemas.in.h:24
+#, fuzzy
 msgid ""
-"Only do scanning while the modifier key being pressed. The modifier key is "
-"set by \"scan_modifier_key\"."
+"Only scan while the modifier key is being pressed. The modifier key is set "
+"by \"scan_modifier_key\"."
 msgstr ""
 "Skenovat výběr pouze při stisku modifikátorové klávesy nastavené volbou "
 "„Modifikátorová klávesa pro skenování“"
 
-#: data/stardict.schemas.in.h:19
+#: ../data/stardict.schemas.in.h:25
+#, fuzzy
 msgid ""
-"Only do scanning while this modifier key being pressed. It can be Win(0), "
-"Shift(1), Alt(2) or Ctrl(3)."
+"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
+"(1), Alt(2) or Ctrl(3)."
 msgstr ""
 "Skenovat výběr pouze při stisku této modifikátorové klávesy. Je možno vybrat "
 "klávesu Win(0), Shift(1), Alt(2) nebo Ctrl(3)."
 
-#: data/stardict.schemas.in.h:20
-msgid "Pronounce the word when pop up the floating window."
-msgstr "Při zobrazení plovoucího okna přehrát zvukový záznam výslovnosti."
+#: ../data/stardict.schemas.in.h:26
+msgid "Plug-in order"
+msgstr ""
 
-#: data/stardict.schemas.in.h:21
-msgid "Pronounce the word when pop up."
+#: ../data/stardict.schemas.in.h:27
+#, fuzzy
+msgid "Pronounce the word when it pops up."
 msgstr "Vyslovovat nalezená slova."
 
-#: data/stardict.schemas.in.h:22
-msgid "Query in the floating window when middle mouse button clicked"
+#: ../data/stardict.schemas.in.h:28
+#, fuzzy
+msgid "Pronounce the word when the floating window pops up."
+msgstr "Při zobrazení plovoucího okna přehrát zvukový záznam výslovnosti."
+
+#: ../data/stardict.schemas.in.h:29
+#, fuzzy
+msgid "Query in the floating window when middle mouse button is clicked"
 msgstr ""
 "Při stisku prostředního tlačítka myši zobrazit definici v plovoucím okně."
 
-#: data/stardict.schemas.in.h:23
-msgid "Scan modifier key"
+#: ../data/stardict.schemas.in.h:30
+msgid "Save the dictionary management configuration."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:31
+#, fuzzy
+msgid "Scan selection"
+msgstr "_Skenovat výběr"
+
+#: ../data/stardict.schemas.in.h:32
+#, fuzzy
+msgid "Scan-modifier key"
 msgstr "Modifikátorová klávesa pro skenování:"
 
-#: data/stardict.schemas.in.h:24
-msgid "Scan the Selection"
-msgstr "Skenovat výběr"
-
-#: data/stardict.schemas.in.h:25
+#: ../data/stardict.schemas.in.h:33
 msgid "Search website list"
 msgstr "Seznam WWW stránek pro vyhledávání"
 
-#: data/stardict.schemas.in.h:26
-msgid "The hpaned's position, which between the listview and the textview."
+#: ../data/stardict.schemas.in.h:34
+msgid "Source language index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:35
+msgid "TTS program command-line"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:36
+msgid "Target language index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:37
+msgid ""
+"The command-line to use in order to enable pronunciation of words via an "
+"external TTS program."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:38
+#, fuzzy
+msgid "The height of the main stardict window."
+msgstr "Zobrazit výsledek dotazu v hlavním okně"
+
+#: ../data/stardict.schemas.in.h:39
+#, fuzzy
+msgid "The hpaned's position, between the listview and the textview."
 msgstr "Poloha oddělovače mezi seznamem hesel a definiční oblastí."
 
-#: data/stardict.schemas.in.h:27
-msgid "The stardict 's float window 's max height."
-msgstr "Maximální výška plovoucího okna StarDictu."
+#: ../data/stardict.schemas.in.h:40
+msgid "The index of the source language for translating."
+msgstr ""
 
-#: data/stardict.schemas.in.h:28
-msgid "The stardict 's float window 's max width."
-msgstr "Maximální šířka plovoucího okna StarDictu."
+#: ../data/stardict.schemas.in.h:41
+msgid "The index of the target language for translating."
+msgstr ""
 
-#: data/stardict.schemas.in.h:29
-msgid "The stardict 's main window 's height."
-msgstr "Výška hlavního okna StarDictu."
+#: ../data/stardict.schemas.in.h:42
+msgid "The index of the translation engine."
+msgstr ""
 
-#: data/stardict.schemas.in.h:30
-msgid "The stardict 's main window 's width."
-msgstr "Šířka hlavního okna StarDictu."
+#: ../data/stardict.schemas.in.h:43
+msgid "The maximum height of the floating stardict window."
+msgstr ""
 
-#: data/stardict.schemas.in.h:31
+#: ../data/stardict.schemas.in.h:44
+msgid "The maximum width of the floating stardict window."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:45
+#, fuzzy
+msgid "The width of the main stardict window."
+msgstr "Skrýt hlavní okno"
+
+#: ../data/stardict.schemas.in.h:46
 msgid "Tree Dictionary order"
 msgstr "Pořadí slovníků"
 
-#: data/stardict.schemas.in.h:32
+#: ../data/stardict.schemas.in.h:47
 msgid "Use Custom Font"
 msgstr "Použít vlastní písmo."
 
-#: data/stardict.schemas.in.h:33
+#: ../data/stardict.schemas.in.h:48
+#, fuzzy
+msgid "Whether the main window is maximized or not."
+msgstr "Maximalizovat hlavní okno."
+
+#: ../data/stardict.schemas.in.h:49
+#, fuzzy
+msgid "Whether the window is maximized or not"
+msgstr "Maximalizovat okno"
+
+#: ../data/stardict.schemas.in.h:50
 msgid ""
-"Whether enable sound event. StarDict will play sound event when button is "
-"active, released, and when pop up menu."
+"Whether to enable StartDict to use an external TTS program for "
+"pronounciation, or not."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:51
+#, fuzzy
+msgid ""
+"Whether to enable sound events or not. StarDict will play a sound event when "
+"a button is active or released, and when a menu pops up."
 msgstr ""
 "Používat zvuky událostí. StarDict bude přehrávat zvuky při vybrání tlačítka, "
 "při uvolnění tlačítka a při zobrazení menu."
 
-#: data/stardict.schemas.in.h:34
-msgid "Whether hide the the listview which list the words."
-msgstr "Skrýt seznam hesel (slovníkových záznamů)."
-
-#: data/stardict.schemas.in.h:35
-msgid "Whether hide the the main window when start up."
+#: ../data/stardict.schemas.in.h:52
+#, fuzzy
+msgid "Whether to hide the main window on startup, or not."
 msgstr "Skrýt hlavní okno při spuštění."
 
-#: data/stardict.schemas.in.h:36
+#: ../data/stardict.schemas.in.h:53
+#, fuzzy
+msgid "Whether to hide the word-list view or not."
+msgstr "Skrýt seznam hesel (slovníkových záznamů)."
+
+#: ../data/stardict.schemas.in.h:54
+#, fuzzy
 msgid ""
-"Whether lock the float window.while locked,the window will always be shown "
-"there."
+"Whether to lock the floating window or not. While locked, the window will "
+"not disappear."
 msgstr ""
 "Uzamknout polohu plovoucího okna. Okno se bude vždy zobrazovat v daném místě."
 
-#: data/stardict.schemas.in.h:37
+#: ../data/stardict.schemas.in.h:55
+#, fuzzy
 msgid ""
-"Whether query in the floating window, or the main window. This happens when "
-"user clicks the middle mouse button on the notification area icon."
+"Whether to query in the floating window, or in the main window. Query is "
+"activated by the user clicking the middle mouse button on the notification "
+"area icon."
 msgstr ""
 "Při stisku prostředního tlačítka myši nad oznamovací oblastí zobrazit "
 "definici vybraného slova v plovoucím okně namísto hlavního okna. "
 
-#: data/stardict.schemas.in.h:38
+#: ../data/stardict.schemas.in.h:56
+#, fuzzy
 msgid ""
-"Whether scan the selection.when the user selected some text,stardict will "
-"popup a flat window and show its meaning."
+"Whether to scan the selection or not. When the user selects text, StarDict "
+"will popup a flat window showing the meaning of that text."
 msgstr ""
 "Skenovat výběr, tj. zobrazovat definice slov vybraných myší v plovoucím okně "
 "StarDictu."
 
-#: data/stardict.schemas.in.h:39
-msgid "Whether the Window is maximized"
-msgstr "Maximalizovat okno"
-
-#: data/stardict.schemas.in.h:40
-msgid "Whether the main window is maximized."
-msgstr "Maximalizovat hlavní okno."
-
-#: data/stardict.schemas.in.h:41
+#: ../data/stardict.schemas.in.h:57
+#, fuzzy
 msgid ""
-"Whether to use a font specific instead of the system's default font to "
-"StarDict. If this option is turned on, then the font named in the \"Custom "
-"Font\" option will be used instead of the system font."
+"Whether to use a user-defined font in StarDict, instead of the default "
+"system font. If this option is turned on, then the font named in the "
+"\"Custom Font\" option will be used instead of the system font."
 msgstr ""
 "Použít vlastní písmo namísto výchozího písma programu StarDict. Při zatržení "
 "této volby bude namísto systémového písma použito písmo vybrané volbou "
 "„Vlastní písmo“."
 
-#: data/stardict.schemas.in.h:42
-msgid "Window 's height"
+#: ../data/stardict.schemas.in.h:58
+#, fuzzy
+msgid "Window-height"
 msgstr "Výška okna"
 
-#: data/stardict.schemas.in.h:43
-msgid "Window 's max height"
-msgstr "Maximální výška okna"
-
-#: data/stardict.schemas.in.h:44
-msgid "Window 's max width"
-msgstr "Maximální šířka okna."
-
-#: data/stardict.schemas.in.h:45
-msgid "Window 's width"
+#: ../data/stardict.schemas.in.h:59
+#, fuzzy
+msgid "Window-width"
 msgstr "Šířka okna"
 
-#: data/stardict.schemas.in.h:46
-msgid "lock's x position"
+#: ../data/stardict.schemas.in.h:60
+#, fuzzy
+msgid "lock position (x)"
 msgstr "Poloha zámku na ose X."
 
-#: data/stardict.schemas.in.h:47
-msgid "lock's y position"
-msgstr "Poloha zámku na ose Y."
+#: ../data/stardict.schemas.in.h:61
+#, fuzzy
+msgid "lock position (y)"
+msgstr "Poloha zámku na ose X."
 
-#: data/stardict.schemas.in.h:48
+#: ../data/stardict.schemas.in.h:62
 msgid "the window's x position while locked."
 msgstr "Poloha plovoucího okna na vodorovné ose při uzamčení polohy okna."
 
-#: data/stardict.schemas.in.h:49
+#: ../data/stardict.schemas.in.h:63
 msgid "the window's y position while locked."
 msgstr "Poloha plovoucího okna na svislé ose při uzamčení polohy okna."
 
-#: data/stardict.schemas.in.h:50
-msgid "whether lock the window"
+#: ../data/stardict.schemas.in.h:64
+#, fuzzy
+msgid "whether to lock the window or not"
 msgstr "Uzamknout polohu plovoucího okna"
 
-#: src/conf.cpp:14
-msgid "Cannot connect to gconf."
-msgstr "Nelze navázat spojení s programem gconf."
-
-#. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-dictmanage"), stardict_data_dir);
-#. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-scan-selection"), stardict_data_dir);
-#. gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-prefs"), stardict_data_dir);
-#: src/dictmanagedlg.cpp:27 src/floatwin.cpp:1071 src/mainwin.cpp:465
-#: src/prefsdlg.cpp:95 src/stardict.cpp:306
-#, c-format
-msgid "file:///%s/help/C/stardict.html"
+#: ../src/articleview.cpp:183
+msgid "XDXF data parsing plug-in is not found!"
 msgstr ""
 
-#: src/dictmanagedlg.cpp:483
-msgid "Enable"
-msgstr "Povolit"
+#: ../src/articleview.cpp:188
+msgid "PowerWord data parsing plug-in is not found!"
+msgstr ""
 
-#: src/dictmanagedlg.cpp:489
+#: ../src/articleview.cpp:193
+msgid "Wiki data parsing plug-in is not found!"
+msgstr ""
+
+#: ../src/articleview.cpp:198
+msgid "HTML data parsing plug-in is not found!"
+msgstr ""
+
+#: ../src/articleview.cpp:203
+msgid "WordNet data parsing plug-in is not found!"
+msgstr ""
+
+#: ../src/articleview.cpp:254
+msgid "<span foreground=\"red\">[Load image error!]</span>"
+msgstr ""
+
+#: ../src/articleview.cpp:259
+msgid "<span foreground=\"red\">[Missing Image]</span>"
+msgstr ""
+
+#: ../src/articleview.cpp:273
+msgid "Unknown data type, please upgrade StarDict!"
+msgstr ""
+
+#. Default stardictd server.
+#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
+msgid "dict.stardict.org"
+msgstr ""
+
+#: ../src/conf.cpp:226
+#, fuzzy, no-c-format
+msgid ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
+msgstr ""
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://www.whatis.com\thttp://www.whatis.com/"
+"WhatIs_Search_Results_Exact/1,290214,,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?"
+"query=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
+
+#. You may translate it to "win32_use_custom_font=1" for your language.
+#: ../src/conf.cpp:253
+#, fuzzy
+msgid "win32_use_custom_font=0"
+msgstr "Použít _vlastní písmo."
+
+#. You may translate it as "win32_custom_font=tahoma 9".
+#: ../src/conf.cpp:265
+#, fuzzy
+msgid "win32_custom_font="
+msgstr "Použít _vlastní písmo."
+
+#. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
+#: ../src/desktop.cpp:71
+#, c-format
+msgid "%s\\help\\stardict.chm"
+msgstr ""
+
+#: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
+msgid "Default Group"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:62
+#, c-format
+msgid "Only level %d user can choose this dictionary!"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
+#: ../src/dictmanagedlg.cpp:2283
+#, c-format
+msgid "You can only choose %d dictionaries."
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
+#: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
+#: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
+#: ../src/stardict.cpp:1125
 msgid "Dictionary Name"
 msgstr "Název slovníku"
 
-#: src/dictmanagedlg.cpp:495
+#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:803
+#: ../src/dictmanagedlg.cpp:908 ../src/dictmanagedlg.cpp:980
+#: ../src/dictmanagedlg.cpp:1430 ../src/dictmanagedlg.cpp:2206
 msgid "Word count"
 msgstr "Počet slov"
 
-#: src/dictmanagedlg.cpp:501
-msgid "Author"
-msgstr "Autor"
-
-#: src/dictmanagedlg.cpp:507
-msgid "Email"
-msgstr "Email"
-
-#: src/dictmanagedlg.cpp:513
-msgid "Website"
-msgstr "WWW stránka"
-
-#: src/dictmanagedlg.cpp:519
-msgid "Description"
-msgstr "Popis"
-
-#: src/dictmanagedlg.cpp:525
-msgid "Date"
-msgstr "Datum"
-
-#: src/dictmanagedlg.cpp:531
-msgid "File name"
-msgstr "Jméno souboru"
-
-#: src/dictmanagedlg.cpp:759
-msgid "D_ictionaries"
-msgstr "_Slovníky"
-
-#: src/dictmanagedlg.cpp:774
-msgid "T_ree dictionaries"
+#: ../src/dictmanagedlg.cpp:216
+#, fuzzy
+msgid "Browse Dictionaries"
 msgstr "S_tromové slovníky"
 
-#: src/dictmanagedlg.cpp:795
+#: ../src/dictmanagedlg.cpp:412
 msgid "These settings will take effect the next time you run StarDict."
 msgstr ""
 "Změny v nastavení se projeví až při příštím spuštění programu StarDict."
 
-#: src/dictmanagedlg.cpp:806
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1208
+msgid "Loading..."
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
+msgid "<span foreground=\"red\">Query Dict</span>"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
+#, fuzzy
+msgid "<span foreground=\"red\">Scan Dict</span>"
+msgstr "<span weight=\"bold\" size=\"x-large\">Skenování výběru</span>"
+
+#: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
+#, fuzzy
+msgid "Virtual Dictionary"
+msgstr "Slovník"
+
+#: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
+#, fuzzy
+msgid "Network Dictionary"
+msgstr "Slovník"
+
+#: ../src/dictmanagedlg.cpp:783
+msgid ""
+"You can have multiple groups of dictionaries, such as \"Study English\", "
+"\"Learn German\", and switch them instantly."
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:788
+msgid ""
+"The Query Dict will show in the main window, the Scan Dict will show in the "
+"floating window."
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
+msgid "Author"
+msgstr "Autor"
+
+#: ../src/dictmanagedlg.cpp:805 ../src/dictmanagedlg.cpp:2209
+msgid "Email"
+msgstr "Email"
+
+#: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
+msgid "Website"
+msgstr "WWW stránka"
+
+#: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
+msgid "Description"
+msgstr "Popis"
+
+#: ../src/dictmanagedlg.cpp:808 ../src/dictmanagedlg.cpp:2212
+msgid "Date"
+msgstr "Datum"
+
+#: ../src/dictmanagedlg.cpp:809
+msgid "File name"
+msgstr "Jméno souboru"
+
+#: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
+#: ../src/pluginmanagedlg.cpp:373
+msgid "Enable"
+msgstr "Povolit"
+
+#: ../src/dictmanagedlg.cpp:1295
+msgid "Are you sure you want to delete this group of dictionaries?"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1306
+msgid "Are you sure you want to delete this sub-group of dictionaries?"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1325
+msgid "New dict group"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1328
+#, fuzzy
+msgid "Group name:"
+msgstr "Název programu"
+
+#: ../src/dictmanagedlg.cpp:1365
+#, fuzzy
+msgid "Add dictionary"
+msgstr "Slovník"
+
+#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1281
+msgid "Add"
+msgstr "Přidat"
+
+#: ../src/dictmanagedlg.cpp:1798
+#, fuzzy
+msgid "Delete"
+msgstr "Datum"
+
+#: ../src/dictmanagedlg.cpp:1805
+msgid "Information"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1814
+msgid "Move to top"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1821
+msgid "Move up"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1828
+msgid "Move down"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1835
+msgid "Move to bottom"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1917
+#, fuzzy
+msgid "D_ict List"
+msgstr "_Seznam"
+
+#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:518
+#, fuzzy
+msgid "Manage _Dict"
+msgstr "Výběr slovníků"
+
+#: ../src/dictmanagedlg.cpp:1946
+msgid "T_ree dictionaries"
+msgstr "S_tromové slovníky"
+
+#: ../src/dictmanagedlg.cpp:1960
+#, fuzzy
+msgid "_Network dictionaries"
+msgstr "S_tromové slovníky"
+
+#: ../src/dictmanagedlg.cpp:1984
+#, fuzzy
+msgid "_Show information"
+msgstr "Zobrazit úvodní informace"
+
+#: ../src/dictmanagedlg.cpp:1991
+msgid "Select _All"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:1996
+msgid "_Unselect all"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:2015
+msgid "Visit "
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:2023
+#, fuzzy
+msgid " to download dictionaries!"
+msgstr "Výběr slovníků"
+
+#: ../src/dictmanagedlg.cpp:2032
+msgid "Upgrade Now!"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:2053
 msgid "Manage Dictionaries"
 msgstr "Výběr slovníků"
 
-#: src/docklet.cpp:112 src/mainwin.cpp:1695
+#: ../src/dictmanagedlg.cpp:2200
+#, fuzzy
+msgid "Dictionary Information"
+msgstr "Písmo slovníku"
+
+#: ../src/dictmanagedlg.cpp:2207
+#, fuzzy
+msgid "Synonym word count"
+msgstr "Počet slov"
+
+#: ../src/dictmanagedlg.cpp:2221
+msgid "Download Now!"
+msgstr ""
+
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:182 ../src/win32/systray.cpp:258
+msgid "StarDict - Scanning"
+msgstr "Stardict - skenování"
+
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:188 ../src/win32/systray.cpp:263
+msgid "StarDict - Stopped"
+msgstr "StarDict - pozastaven"
+
+#: ../src/docklet.cpp:96 ../src/mainwin.cpp:2722
 msgid "_Scan"
 msgstr "_Skenovat výběr"
 
-#: src/docklet.cpp:120 src/mainwin.cpp:567
+#: ../src/docklet.cpp:106 ../src/mainwin.cpp:555
 msgid "_Quit"
 msgstr "U_končit"
 
-#: src/floatwin.cpp:106
+#: ../src/floatwin.cpp:125
 msgid "Query in the main window"
 msgstr "Zobrazit výsledek dotazu v hlavním okně"
 
-#: src/floatwin.cpp:114 src/mainwin.cpp:1084
-msgid "Copy"
-msgstr "Kopírovat definici hesla"
-
-#: src/floatwin.cpp:122 src/mainwin.cpp:1093
-msgid "Pronounce the word"
-msgstr "Výslovnost"
-
-#: src/floatwin.cpp:132
-msgid "Stop selection scanning"
-msgstr "Zastavit skenování výběru"
-
-#: src/floatwin.cpp:147
-msgid "Help"
-msgstr "Nápověda"
-
-#: src/floatwin.cpp:155 src/mainwin.cpp:1728 src/win32/systray.cpp:76
-msgid "Quit"
-msgstr "Ukončit"
-
-#: src/floatwin.cpp:167
-msgid "Lock floating window"
-msgstr "Zamknout plovoucí okno"
-
-#: src/floatwin.cpp:307
-msgid "Fuzzy query"
-msgstr "Rozšířené vyhledávání"
-
-#: src/floatwin.cpp:313
-msgid "has succeeded.\n"
-msgstr "uspěl.\n"
-
-#: src/floatwin.cpp:314
-msgid "Found "
-msgstr "Nalezeno "
-
-#: src/floatwin.cpp:316
-msgid "1 word:\n"
-msgstr "1 slovo:\n"
-
-#: src/floatwin.cpp:322
-msgid " words:\n"
-msgstr "slov:\n"
-
-#: src/floatwin.cpp:899
-msgid "_Copy"
-msgstr "_Kopírovat"
-
-#: src/floatwin.cpp:906
-msgid "_Query"
-msgstr "_Dotaz"
-
-#: src/floatwin.cpp:913
-msgid "_Play"
-msgstr "_Přehrát"
-
-#: src/floatwin.cpp:921
-msgid "_Fuzzy Query"
-msgstr "_Rozšířené vyhledávání"
-
-#: src/mainwin.cpp:69
-msgid "Clear the search box"
-msgstr "Vymazat obsah vstupního pole"
-
-#: src/mainwin.cpp:92
-msgid "Fuzzy Query"
-msgstr "Rozšířené vyhledávání"
-
-#: src/mainwin.cpp:103
-msgid "Go Back - Right button: history (Alt+Left)"
-msgstr "Zpět - (Alt+šipka vlevo)"
-
-#: src/mainwin.cpp:113
-msgid "Previous word (Alt+Up)"
-msgstr "Předchozí heslo (Alt+Šipka nahoru)"
-
-#: src/mainwin.cpp:123
-msgid "Next word (Alt+Down)"
-msgstr "Další heslo (Alt+Šipka dolů)"
-
-#: src/mainwin.cpp:133
-msgid "Show the main menu (Alt+M)"
-msgstr "Zobrazit hlavní menu (Alt+M)"
-
-#: src/mainwin.cpp:487
-msgid "translator_credits"
-msgstr "Jaroslav Jiřička <jiricka@mujbox.cz>"
-
-#: src/mainwin.cpp:494
-msgid "StarDict is an international dictionary for GNOME.\n"
-msgstr "StarDict je mezinárodní slovník pro GNOME.\n"
-
-#: src/mainwin.cpp:526
-msgid "Pr_eferences"
-msgstr "_Nastavení"
-
-#: src/mainwin.cpp:533
-msgid "_Dict Manage"
-msgstr "_Výběr slovníků"
-
-#: src/mainwin.cpp:541
-msgid "_New Version"
-msgstr "_Nová verze"
-
-#: src/mainwin.cpp:549
-msgid "_Help"
-msgstr "_Nápověda"
-
-#: src/mainwin.cpp:555
-msgid "_About"
-msgstr "_O programu"
-
-#: src/mainwin.cpp:983
-msgid "_List"
-msgstr "_Seznam"
-
-#: src/mainwin.cpp:998
-msgid "_Tree"
-msgstr "_Strom"
-
-#: src/mainwin.cpp:1050
-msgid "Show the word list"
-msgstr "Zobrazit seznam hesel"
-
-#: src/mainwin.cpp:1061
-msgid "Hide the word list"
-msgstr "Skrýt seznam hesel"
-
-#: src/mainwin.cpp:1104
+#: ../src/floatwin.cpp:134
 msgid "Save to file"
 msgstr "Uložit do souboru"
 
-#: src/mainwin.cpp:1115
+#: ../src/floatwin.cpp:142 ../src/mainwin.cpp:1561
+msgid "Pronounce the word"
+msgstr "Výslovnost"
+
+#: ../src/floatwin.cpp:152
+#, fuzzy
+msgid "Stop selection-scanning"
+msgstr "Zastavit skenování výběru"
+
+#: ../src/floatwin.cpp:164
+msgid "Help"
+msgstr "Nápověda"
+
+#: ../src/floatwin.cpp:172 ../src/mainwin.cpp:2755
+#: ../src/win32/systray.cpp:111
+msgid "Quit"
+msgstr "Ukončit"
+
+#: ../src/floatwin.cpp:186
+msgid "Lock floating window"
+msgstr "Zamknout plovoucí okno"
+
+#: ../src/floatwin.cpp:322 ../src/floatwin.cpp:365 ../src/mainwin.cpp:1952
+#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:686
+#: ../src/stardict.cpp:831 ../src/stardict.cpp:1004 ../src/stardict.cpp:1018
+#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1028 ../src/stardict.cpp:1518
+#: ../src/stardict.cpp:1645 ../src/win32/clipboard.cpp:117
+msgid "<Not Found!>"
+msgstr "<Heslo nebylo nalezeno!>"
+
+#: ../src/floatwin.cpp:444
+msgid "Fuzzy query"
+msgstr "Rozšířené vyhledávání"
+
+#: ../src/floatwin.cpp:450
+msgid "has succeeded.\n"
+msgstr "uspěl.\n"
+
+#: ../src/floatwin.cpp:452
+#, fuzzy
+msgid "Found 1 word:\n"
+msgstr "1 slovo:\n"
+
+#: ../src/floatwin.cpp:454
+#, fuzzy, c-format
+msgid "Found %d words:\n"
+msgstr "slov:\n"
+
+#: ../src/floatwin.cpp:942
+msgid "_Copy"
+msgstr "_Kopírovat"
+
+#: ../src/floatwin.cpp:948
+#, fuzzy
+msgid "_Save"
+msgstr "_Skenovat výběr"
+
+#: ../src/floatwin.cpp:953 ../src/mainwin.cpp:2147
+msgid "_Query"
+msgstr "_Dotaz"
+
+#: ../src/floatwin.cpp:960
+msgid "_Play"
+msgstr "_Přehrát"
+
+#: ../src/floatwin.cpp:968
+msgid "_Fuzzy Query"
+msgstr "_Rozšířené vyhledávání"
+
+#: ../src/mainwin.cpp:91
+msgid "Clear the search box"
+msgstr "Vymazat obsah vstupního pole"
+
+#: ../src/mainwin.cpp:118
+msgid "Fuzzy Query"
+msgstr "Rozšířené vyhledávání"
+
+#: ../src/mainwin.cpp:130
+msgid "Go Back - Right button: history (Alt+Left)"
+msgstr "Zpět - (Alt+šipka vlevo)"
+
+#: ../src/mainwin.cpp:145
+msgid "Show the main menu (Alt+M)"
+msgstr "Zobrazit hlavní menu (Alt+M)"
+
+#: ../src/mainwin.cpp:474
+msgid "translator_credits"
+msgstr "Jaroslav Jiřička <jiricka@mujbox.cz>"
+
+#: ../src/mainwin.cpp:480
+#, fuzzy
+msgid "StarDict is an international dictionary for GNOME."
+msgstr "StarDict je mezinárodní slovník pro GNOME.\n"
+
+#: ../src/mainwin.cpp:511
+msgid "Pr_eferences"
+msgstr "_Nastavení"
+
+#: ../src/mainwin.cpp:524
+msgid "Manage _Plugins"
+msgstr ""
+
+#: ../src/mainwin.cpp:533
+msgid "_New Version"
+msgstr "_Nová verze"
+
+#: ../src/mainwin.cpp:541
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../src/mainwin.cpp:547
+msgid "_About"
+msgstr "_O programu"
+
+#: ../src/mainwin.cpp:1259
+#, fuzzy
+msgid "List"
+msgstr "_Seznam"
+
+#: ../src/mainwin.cpp:1270
+msgid "Result"
+msgstr ""
+
+#: ../src/mainwin.cpp:1280
+msgid "Full-Text Translation"
+msgstr ""
+
+#: ../src/mainwin.cpp:1291
+#, fuzzy
+msgid "Tree"
+msgstr "_Strom"
+
+#: ../src/mainwin.cpp:1302
+#, fuzzy
+msgid "Choose dict group"
+msgstr "Vybrat písmo slovníku"
+
+#: ../src/mainwin.cpp:1315
+msgid "Next word (Alt+Down)"
+msgstr "Další heslo (Alt+Šipka dolů)"
+
+#: ../src/mainwin.cpp:1325
+msgid "Previous word (Alt+Up)"
+msgstr "Předchozí heslo (Alt+Šipka nahoru)"
+
+#: ../src/mainwin.cpp:1377
+msgid "Enable Net Dict"
+msgstr ""
+
+#: ../src/mainwin.cpp:1514
+msgid "Show the word list"
+msgstr "Zobrazit seznam hesel"
+
+#: ../src/mainwin.cpp:1529
+msgid "Hide the word list"
+msgstr "Skrýt seznam hesel"
+
+#: ../src/mainwin.cpp:1547
+msgid "Copy"
+msgstr "Kopírovat definici hesla"
+
+#: ../src/mainwin.cpp:1575
+#, fuzzy
+msgid "Save to file (Alt+E)"
+msgstr "Uložit do souboru"
+
+#: ../src/mainwin.cpp:1585
 msgid "Print"
 msgstr "Tisknout"
 
-#: src/mainwin.cpp:1126
-msgid "Search in the definition (Ctrl+F)"
+#: ../src/mainwin.cpp:1600
+#, fuzzy
+msgid "Search in the definition text (Ctrl+F)"
 msgstr "Hledat v definici hesla (Ctrl+F)"
 
-#: src/mainwin.cpp:1211
-msgid "Find"
-msgstr "Najít"
-
-#: src/mainwin.cpp:1219
-msgid "_Search for:"
-msgstr "_Hledat:"
-
-#: src/mainwin.cpp:1321
+#: ../src/mainwin.cpp:1786
+#, fuzzy, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
-"Please go to StarDict's website and download some dictionaries:\n"
-"http://stardict.sourceforge.net"
+"Please go to StarDict's website, download some dictionaries:\n"
+"%s%s%s and put them in %s."
 msgstr ""
 "Pozor! Žádný slovník nebyl nalezen.\n"
 " Chcete-li používat program StarDict, musíte si nejprve vybrat a stáhnout "
 "nějaké slovníky z webových stránek Stardictu:\n"
 " http://stardict.sourceforge.net"
 
-#: src/mainwin.cpp:1329
+#: ../src/mainwin.cpp:1809
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -546,12 +931,13 @@ msgstr ""
 "Pokud se v plovoucím okně objeví zpráva, že hledané slovo nebylo nalezeno, "
 "dvojklikem spustíte rozšířené vyhledávání.\n"
 
-#: src/mainwin.cpp:1347
+#: ../src/mainwin.cpp:1826
+#, fuzzy
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
-"It has powerful features such as \"Glob-style pattern matching,\" \"Scan "
-"selected word,\" \"Fuzzy query,\" etc.\n"
+"It has powerful features, such as \"Glob-style pattern matching,\" \"Scan "
+"selected word,\" \"Fuzzy query\" and \"Full-text search\".\n"
 "\n"
 "       Here is an introduction to using StarDict:\n"
 "\n"
@@ -560,31 +946,43 @@ msgid ""
 "the pattern. '*' matches an arbitrary, possibly empty, string, and '?' "
 "matches an arbitrary character. After pressing Enter, the words that match "
 "this pattern will be shown in the list.\n"
-"       2. Fuzzy query\n"
+"       2. Regular expressions matching\n"
+"       You can input strings as Perl-compatible regular expressions with a "
+"beginning \":\" character as the identifier. After pressing Enter, the words "
+"that match this regex will be shown in the list.\n"
+"       3. Fuzzy query\n"
 "       When you can't remember how to spell a word exactly, you can try "
 "StarDict's Fuzzy query. It uses \"Levenshtein Edit Distance\" to compute the "
 "similarity between two words, and gives the match results which are most "
 "similar to the word that you input. To create a fuzzy query, just input the "
 "word with a beginning \"/\", and then press Enter.\n"
-"       3. Scan selected word\n"
+"       4. Full-text search\n"
+"       Full-text search searches for a word in the data. To create a Full-"
+"text search, just input the word with a beginning \"|\", and then press "
+"Enter. For example, \"|ab cd\" searches data which contain both \"ab\" and "
+"\"cd\". If the words contain Space character, you can use \"\\ \", such as "
+"\"|apple\\ pie\", other escaping characters are \"\\\\\" for '\\', \"\\t\" "
+"for Tab and \"\\n\" for new line.\n"
+"       5. Special character search\n"
+"       If your words contain special characters, you can use '\\' to escape "
+"it, for example, \"a\\*b\\?\" searches \"a*b?\", \"\\/abc\" searches \"/abc"
+"\".\n"
+"       6. Scan the selected word\n"
 "       Turn on the check button at the bottom-left corner of the StarDict "
-"window to activate this feature.  When this feature is on, StarDict will "
+"window to activate this feature. When this feature is on, StarDict will "
 "automatically look up words, phrases, and Chinese characters in other "
-"applications.  Just highlight a word or phrase with your mouse, and a "
+"applications. Just highlight a word or phrase with your mouse, and a "
 "floating window will pop up showing the definition of the selected word.\n"
-"       4. Dictionary management\n"
+"       7. Dictionary management\n"
 "       Click the \"Manage dictionaries\" button at the bottom-right corner "
-"of the window to access the dictionary management dialog.  From here, you "
-"can disable some dictionaries that you don't need, and set the dictionaries' "
-"quering order.\n"
+"of the window to access the dictionary management dialog. From here, you can "
+"disable some dictionaries that you don't need, and set the dictionaries' "
+"querying order.\n"
 "\n"
 "\n"
 "       Statement: This program is distributed in the hope that it will be "
 "useful, but WITHOUT ANY WARRANTY; without the warranty that the word "
 "spelling, definition, and phonetic information are correct.\n"
-"\n"
-"StarDict 2.4.4 released on 2004.11.28\n"
-"http://stardict.sourceforge.net\n"
 msgstr ""
 "Vítejte v programu StarDict!\n"
 "\n"
@@ -628,440 +1026,1450 @@ msgstr ""
 "StarDict verze 2.4.4 z 28. 11. 2004\n"
 "http://stardict.sourceforge.net\n"
 
-#: src/mainwin.cpp:1564
-#, c-format, fuzzy
+#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
+msgid "Found no words matching this pattern!"
+msgstr "Nebylo nalezeno žádné heslo vyhovující zadanému vzoru."
+
+#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
+#, fuzzy
+msgid "Found no words matching this regular expression!"
+msgstr "Nebylo nalezeno žádné heslo vyhovující zadanému vzoru."
+
+#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
+msgid "There are too many spelling errors :-("
+msgstr "Příliš mnoho pravopisných chyb :-("
+
+#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
+msgid "There are no dictionary articles containing this word. :-("
+msgstr ""
+
+#: ../src/mainwin.cpp:2068
+#, fuzzy, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Text „%“ nebyl nalezen."
 
-#: src/mainwin.cpp:1661
-#, c-format
-msgid ""
-"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
-"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
-"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
-"WhatIs\thttp://www.whatis.com\thttp://www.whatis.com/"
-"WhatIs_Search_Results_Exact/1,290214,,00.html?query=%s\n"
-"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
-"q=%s\n"
-"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
-"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
-"WebQuery?searchText=%s\n"
-"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
-"Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?"
-"query=%s\n"
-"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
-"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
-"cmudict?in=%s\n"
-msgstr ""
-"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
-"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
-"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
-"WhatIs\thttp://www.whatis.com\thttp://www.whatis.com/"
-"WhatIs_Search_Results_Exact/1,290214,,00.html?query=%s\n"
-"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
-"q=%s\n"
-"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
-"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
-"WebQuery?searchText=%s\n"
-"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
-"Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?"
-"query=%s\n"
-"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
-"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
-"cmudict?in=%s\n"
+#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2406
+#, fuzzy
+msgid "_Pronounce"
+msgstr "Výslovnost"
 
-#: src/mainwin.cpp:1707
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194
+msgid "Arabic"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185
+#, fuzzy
+msgid "Chinese"
+msgstr "Vybrat"
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2192 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2190 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+msgid "Chinese (Traditional)"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2186 ../src/mainwin.cpp:2188
+#: ../src/mainwin.cpp:2196 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2200
+#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204 ../src/mainwin.cpp:2206
+#: ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
+#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2234
+#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248
+#: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2262
+#: ../src/mainwin.cpp:2264 ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2271 ../src/mainwin.cpp:2273 ../src/mainwin.cpp:2275
+#: ../src/mainwin.cpp:2279 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2283
+#: ../src/mainwin.cpp:2285 ../src/mainwin.cpp:2287 ../src/mainwin.cpp:2289
+#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2298
+#: ../src/mainwin.cpp:2305
+msgid "English"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2198
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
+#: ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228 ../src/mainwin.cpp:2230
+#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2254
+#: ../src/mainwin.cpp:2256 ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2264
+#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2275
+#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2285
+#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293
+msgid "French"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
+#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+msgid "German"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+msgid "Italian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303
+#: ../src/mainwin.cpp:2307
+msgid "Japanese"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
+#: ../src/mainwin.cpp:2305
+msgid "Korean"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
+#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+msgid "Portuguese"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
+#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+msgid "Russian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2222
+#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+msgid "Spanish"
+msgstr ""
+
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
+#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+msgid "Dutch"
+msgstr ""
+
+#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
+#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2279
+#, fuzzy
+msgid "Greek"
+msgstr "_Strom"
+
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+msgid "Swedish"
+msgstr ""
+
+#: ../src/mainwin.cpp:2329
+#, fuzzy
+msgid "Google Translate"
+msgstr "Přeložili"
+
+#: ../src/mainwin.cpp:2330
+#, fuzzy
+msgid "Yahoo Translate"
+msgstr "Přeložili"
+
+#: ../src/mainwin.cpp:2331
+msgid "Altavista Translate"
+msgstr ""
+
+#: ../src/mainwin.cpp:2332
+msgid "SystranBox Translate"
+msgstr ""
+
+#: ../src/mainwin.cpp:2333
+msgid "Excite Japan Translate"
+msgstr ""
+
+#: ../src/mainwin.cpp:2428
+msgid "<b>Full-Text Translation</b>"
+msgstr ""
+
+#: ../src/mainwin.cpp:2459
+msgid "To"
+msgstr ""
+
+#: ../src/mainwin.cpp:2492
+#, fuzzy
+msgid "_Translate"
+msgstr "Přeložili"
+
+#: ../src/mainwin.cpp:2514
+msgid "Powered by -"
+msgstr ""
+
+#: ../src/mainwin.cpp:2639
+#, fuzzy
+msgid "Please input some words to translate."
+msgstr "Prosím, zadejte název webové stránky."
+
+#: ../src/mainwin.cpp:2654
+msgid "Connecting..."
+msgstr ""
+
+#: ../src/mainwin.cpp:2731
 msgid "Scan the selection"
 msgstr "Zobrazovat definice slov vybraných myší"
 
-#: src/mainwin.cpp:1718
+#: ../src/mainwin.cpp:2745
 msgid "Show info"
 msgstr "Zobrazit úvodní informace"
 
-#: src/mainwin.cpp:1741 src/prefsdlg.cpp:1226
+#: ../src/mainwin.cpp:2797 ../src/prefsdlg.cpp:1833
 msgid "Preferences"
 msgstr "Nastavení"
 
-#: src/mainwin.cpp:1751
+#: ../src/mainwin.cpp:2807
 msgid "Manage dictionaries"
 msgstr "Výběr slovníků"
 
-#: src/mainwin.cpp:1761
+#: ../src/mainwin.cpp:2817
 msgid "Go to the StarDict website"
 msgstr "Navštívit webovou stránku projektu StarDict"
 
-#: src/mainwin.cpp:1772
+#: ../src/mainwin.cpp:2829
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr ""
 "Hledat ve slovníku na Internetu - Pravým tlačítkem zobrazíte seznam WWW adres"
 
-#: src/prefsdlg.cpp:43
+#: ../src/pluginmanagedlg.cpp:119
+#, c-format
+msgid ""
+"%s\n"
+"\n"
+"<b>Author:</b>\t%s\n"
+"<b>Website:</b>\t%s\n"
+"<b>Filename:</b>\t%s"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:179
+msgid "<b>Virtual Dictionary</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:184
+msgid "<b>Network Dictionary</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:189
+msgid "<b>Special Dictionary</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:194
+msgid "<b>TTS Engine</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:199
+msgid "<b>Data Parsing Engine</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:204
+msgid "<b>Misc</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:379
+msgid "Plug-in Name"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:402
+msgid "Configure Pl_ug-in"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:412
+msgid "<b>Plug-in Details</b>"
+msgstr ""
+
+#: ../src/pluginmanagedlg.cpp:421
+#, fuzzy
+msgid "Manage Plugins"
+msgstr "Výběr slovníků"
+
+#: ../src/prefsdlg.cpp:75 ../src/prefsdlg.cpp:367
 msgid "Scan Selection"
 msgstr "Skenování výběru"
 
-#: src/prefsdlg.cpp:44
+#: ../src/prefsdlg.cpp:76 ../src/prefsdlg.cpp:484
 msgid "Font"
 msgstr "Písmo"
 
-#: src/prefsdlg.cpp:45
+#: ../src/prefsdlg.cpp:77 ../src/prefsdlg.cpp:565
+msgid "Cache"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:78 ../src/prefsdlg.cpp:656
+msgid "Export"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:725
 msgid "Sound"
 msgstr "Zvuk"
 
-#: src/prefsdlg.cpp:52 src/prefsdlg.cpp:60 src/prefsdlg.cpp:67
+#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:692
+msgid "Article rendering"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:988
+#, fuzzy
+msgid "Net Dict"
+msgstr "StarDict"
+
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1063
+msgid "Input"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
+#: ../src/prefsdlg.cpp:1145 ../src/prefsdlg.cpp:1572 ../src/prefsdlg.cpp:1603
 msgid "Options"
 msgstr "Možnosti"
 
-#: src/prefsdlg.cpp:53
+#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1446
 msgid "Search website"
 msgstr "Hledání na Internetu"
 
-#: src/prefsdlg.cpp:68
-msgid "Size"
-msgstr "Velikost"
+#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1670
+msgid "Settings"
+msgstr ""
 
-#: src/prefsdlg.cpp:75 src/stardict.cpp:1577
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
 msgid "Dictionary"
 msgstr "Slovník"
 
-#: src/prefsdlg.cpp:77
+#: ../src/prefsdlg.cpp:117
+msgid "Network"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:119
 msgid "Main window"
 msgstr "Hlavní okno"
 
-#: src/prefsdlg.cpp:79
+#: ../src/prefsdlg.cpp:121
 msgid "Notification area icon"
 msgstr "Ikona oznamovací oblasti"
 
-#: src/prefsdlg.cpp:81
+#: ../src/prefsdlg.cpp:123
 msgid "Floating window"
 msgstr "Plovoucí okno"
 
-#: src/prefsdlg.cpp:230
+#: ../src/prefsdlg.cpp:260
 msgid "Categories"
 msgstr "Kategorie"
 
-#: src/prefsdlg.cpp:310
-msgid "<span weight=\"bold\" size=\"x-large\">Scan Selection</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Skenování výběru</span>"
-
-#: src/prefsdlg.cpp:318
-msgid "_Only do scanning while modifier key being pressed."
+#: ../src/prefsdlg.cpp:370
+#, fuzzy
+msgid "_Only scan while the modifier key is being pressed."
 msgstr "Skenovat _pouze při stisku modifikátorové klávesy"
 
-#: src/prefsdlg.cpp:333
+#: ../src/prefsdlg.cpp:386
 msgid "H_ide floating window when modifier key released."
 msgstr "_Skrýt plovoucí okno při uvolnění modifikátorové klávesy."
 
-#: src/prefsdlg.cpp:347
+#: ../src/prefsdlg.cpp:396
 msgid "Scan modifier _key:"
 msgstr "Modifikátorová _klávesa pro skenování:"
 
-#: src/prefsdlg.cpp:354
-msgid "_Win"
-msgstr "_Win"
+#: ../src/prefsdlg.cpp:417
+msgid "_Scan clipboard."
+msgstr ""
 
-#: src/prefsdlg.cpp:357
-msgid "_Shift"
-msgstr "_Shift"
+#: ../src/prefsdlg.cpp:423
+msgid "_Use scan hotkey: Ctrl+Alt+F1."
+msgstr ""
 
-#: src/prefsdlg.cpp:359
-msgid "_Alt"
-msgstr "_Alt"
-
-#: src/prefsdlg.cpp:361
-msgid "_Ctrl"
-msgstr "_Ctrl"
-
-#: src/prefsdlg.cpp:390
+#: ../src/prefsdlg.cpp:461
 msgid "Choose dictionary font"
 msgstr "Vybrat písmo slovníku"
 
-#: src/prefsdlg.cpp:393 src/prefsdlg.cpp:467
+#: ../src/prefsdlg.cpp:464 ../src/prefsdlg.cpp:509
 msgid "Choose"
 msgstr "Vybrat"
 
-#: src/prefsdlg.cpp:395
+#: ../src/prefsdlg.cpp:466
 msgid "Dictionary font"
 msgstr "Písmo slovníku"
 
-#: src/prefsdlg.cpp:432
-msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Písmo</span>"
-
-#: src/prefsdlg.cpp:440
+#: ../src/prefsdlg.cpp:487
 msgid "_Use custom font."
 msgstr "Použít _vlastní písmo."
 
-#: src/prefsdlg.cpp:454
+#: ../src/prefsdlg.cpp:499
 msgid "Dictionary _font:"
 msgstr "_Písmo slovníku:"
 
-#: src/prefsdlg.cpp:501
-msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Zvuk</span>"
+#: ../src/prefsdlg.cpp:569
+msgid "Create c_ache files to speed up loading."
+msgstr ""
 
-#: src/prefsdlg.cpp:512
+#: ../src/prefsdlg.cpp:574
+msgid "_Sort word list by collation function."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:583
+msgid "\tCollation _function:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:615
+msgid ""
+"After enabled collation, when load the dictionaries for the first time, it "
+"will take some time for sorting, please wait for a moment."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:621
+msgid "C_lean all cache files"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:638
+msgid "Open file..."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:661
+msgid "_Only export words."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:668
+#, fuzzy
+msgid "File name:"
+msgstr "Jméno souboru"
+
+#: ../src/prefsdlg.cpp:677
+msgid "_Browse..."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:698
+msgid "_Highlight search term"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:730
 msgid "_Enable sound event."
 msgstr "_Povolit zvuky."
 
-#: src/prefsdlg.cpp:549 src/prefsdlg.cpp:981 src/prefsdlg.cpp:1031
-msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Možnosti</span>"
+#: ../src/prefsdlg.cpp:739
+msgid "Command for playing wav files:"
+msgstr ""
 
-#: src/prefsdlg.cpp:560
+#: ../src/prefsdlg.cpp:752
+msgid "RealPeopleTTS search path:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:770
+msgid "_Use TTS program."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:778
+msgid "Commandline:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:807
+#, fuzzy
+msgid "Account"
+msgstr "_O programu"
+
+#: ../src/prefsdlg.cpp:818 ../src/prefsdlg.cpp:915
+#, fuzzy
+msgid "_User Name:"
+msgstr "Název WWW stránky"
+
+#: ../src/prefsdlg.cpp:824 ../src/prefsdlg.cpp:921
+msgid "_Password:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:847 ../src/prefsdlg.cpp:946
+#, fuzzy
+msgid "Please input the password."
+msgstr "Prosím, zadejte název webové stránky."
+
+#: ../src/prefsdlg.cpp:904
+msgid "Register"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:928
+#, fuzzy
+msgid "_Email:"
+msgstr "Email"
+
+#: ../src/prefsdlg.cpp:944
+#, fuzzy
+msgid "Please input the user name."
+msgstr "Prosím, zadejte název webové stránky."
+
+#: ../src/prefsdlg.cpp:948
+#, fuzzy
+msgid "Please input the email."
+msgstr "Prosím vložte adresu webové stránky."
+
+#: ../src/prefsdlg.cpp:950
+#, fuzzy
+msgid "Please input a valid email."
+msgstr "Prosím, zadejte název webové stránky."
+
+#: ../src/prefsdlg.cpp:994
+#, fuzzy
+msgid "Enable _network dictionaries."
+msgstr "Výběr slovníků"
+
+#: ../src/prefsdlg.cpp:1006
+#, fuzzy
+msgid "StarDict server:"
+msgstr "StarDict"
+
+#: ../src/prefsdlg.cpp:1015
+#, fuzzy
+msgid "Port:"
+msgstr "Tisknout"
+
+#: ../src/prefsdlg.cpp:1024
+msgid "Account:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1035
+msgid "_Register an account"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1070
+#, fuzzy
+msgid "_Search while typing."
+msgstr "Seznam WWW stránek pro vyhledávání"
+
+#: ../src/prefsdlg.cpp:1079
+msgid "Word change _timeout:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1088
+#, fuzzy
+msgid "(default:300)"
+msgstr "(výchozí: 320)"
+
+#: ../src/prefsdlg.cpp:1090
+msgid "Show the _first word when not found."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1151
+msgid "_Auto run StarDict after boot."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1181
 msgid "Hide main window when _starting StarDict."
 msgstr "Při spuštění programu StarDict _skrýt hlavní okno."
 
-#: src/prefsdlg.cpp:650
-msgid "Please input the website name."
-msgstr "Prosím, zadejte název webové stránky."
+#: ../src/prefsdlg.cpp:1191
+msgid "_Use open main window hotkey: Ctrl+Alt+Z."
+msgstr ""
 
-#: src/prefsdlg.cpp:652
-msgid "Please input the website link."
-msgstr "Prosím vložte adresu webové stránky."
+#: ../src/prefsdlg.cpp:1201 ../src/prefsdlg.cpp:1731
+msgid "_Transparency:"
+msgstr ""
 
-#: src/prefsdlg.cpp:654
-msgid "Please input the website search link."
-msgstr "Prosím vložte adresu pro vyhledávání."
-
-#: src/prefsdlg.cpp:656 src/prefsdlg.cpp:787
-#, c-format
-msgid ""
-"The website search link should contains a \"%%s\" string for quering word."
-msgstr "Adresa pro vyhledávání by měla obsahovat řetězec „%%s“."
-
-#: src/prefsdlg.cpp:692
-msgid "Add"
-msgstr "Přidat"
-
-#: src/prefsdlg.cpp:824
-msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Hledání na Internetu</span>"
-
-#: src/prefsdlg.cpp:888
+#: ../src/prefsdlg.cpp:1294 ../src/prefsdlg.cpp:1497
 msgid "Website Name"
 msgstr "Název WWW stránky"
 
-#: src/prefsdlg.cpp:896
+#: ../src/prefsdlg.cpp:1306 ../src/prefsdlg.cpp:1505
 msgid "Website link"
 msgstr "Adresa"
 
-#: src/prefsdlg.cpp:904
+#: ../src/prefsdlg.cpp:1317 ../src/prefsdlg.cpp:1513
 msgid "Website search link"
 msgstr "Adresa pro vyhledávání"
 
-#: src/prefsdlg.cpp:992
+#: ../src/prefsdlg.cpp:1338
+msgid "Please input the website name."
+msgstr "Prosím, zadejte název webové stránky."
+
+#: ../src/prefsdlg.cpp:1340
+msgid "Please input the website link."
+msgstr "Prosím vložte adresu webové stránky."
+
+#: ../src/prefsdlg.cpp:1342
+msgid "Please input the website search link."
+msgstr "Prosím vložte adresu pro vyhledávání."
+
+#: ../src/prefsdlg.cpp:1344 ../src/prefsdlg.cpp:1423
+#, fuzzy, c-format
+msgid ""
+"The website search link should contain a \"%%s\" string for querying a word."
+msgstr "Adresa pro vyhledávání by měla obsahovat řetězec „%%s“."
+
+#: ../src/prefsdlg.cpp:1578
+#, fuzzy
 msgid ""
 "_Query in the floating window when middle mouse\n"
-"button clicked."
+"button is clicked."
 msgstr ""
 "Při stisku prostředního tlačítka myši\n"
 "zobrazit definici v plovoucím okně."
 
-#: src/prefsdlg.cpp:1042
-msgid "_Pronouce the word when pop up."
+#: ../src/prefsdlg.cpp:1606
+#, fuzzy
+msgid "_Pronounce the word when it pops up."
 msgstr "Vyslovovat nalezená slova."
 
-#: src/prefsdlg.cpp:1092
-msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Maximální velikost okna</span>"
+#: ../src/prefsdlg.cpp:1615
+msgid "_Show floating window if word not found."
+msgstr ""
 
-#: src/prefsdlg.cpp:1118
+#: ../src/prefsdlg.cpp:1689
 msgid "Max window _width:"
 msgstr "Maximální _šířka okna:"
 
-#: src/prefsdlg.cpp:1127
+#: ../src/prefsdlg.cpp:1699
 msgid "(default:320)"
 msgstr "(výchozí: 320)"
 
-#: src/prefsdlg.cpp:1134
+#: ../src/prefsdlg.cpp:1703
 msgid "Max window hei_ght:"
 msgstr "Maximální _výška okna:"
 
-#: src/prefsdlg.cpp:1142
+#: ../src/prefsdlg.cpp:1711
 msgid "(default:240)"
 msgstr "(výchozí: 240)"
 
-#: src/prefsdlg.cpp:1202
+#: ../src/prefsdlg.cpp:1716
+#, fuzzy
+msgid "_Use custom background color:"
+msgstr "Použít _vlastní písmo."
+
+#: ../src/prefsdlg.cpp:1811
 msgid "Cat_egories:"
 msgstr "Kat_egorie:"
 
-#: src/selection.cpp:232 src/stardict.cpp:484 src/stardict.cpp:551
-#: src/stardict.cpp:581 src/stardict.cpp:585 src/stardict.cpp:590
-#: src/win32/clipboard.cpp:113
-msgid "<Not Found!>"
-msgstr "<Heslo nebylo nalezeno!>"
+#: ../src/progresswin.cpp:35 ../src/progresswin.cpp:39 ../src/splash.cpp:70
+msgid "Loading"
+msgstr ""
 
-#: src/stardict.cpp:69
+#: ../src/readword.cpp:148
+msgid "Real People TTS"
+msgstr ""
+
+#: ../src/readword.cpp:155
+msgid "Command TTS"
+msgstr ""
+
+#: ../src/stardict.cpp:95
 msgid "Turn on all debugging messages"
 msgstr "Zobrazovat všechny zprávy pro ladění."
 
-#: src/stardict.cpp:72
-msgid "Hide the main window"
-msgstr "Skrýt hlavní okno"
+#: ../src/stardict.cpp:97
+msgid "Hide the main window, do not show splash screen"
+msgstr ""
 
-#: src/stardict.cpp:75
+#: ../src/stardict.cpp:100
+#, fuzzy
+msgid "Start a new instance of stardict"
+msgstr "Ukončit existující instanci programu StarDict"
+
+#: ../src/stardict.cpp:104
 msgid "Quit an existing instance of stardict"
 msgstr "Ukončit existující instanci programu StarDict"
 
-#: src/stardict.cpp:730
-msgid "There are too many spelling errors :-("
-msgstr "Příliš mnoho pravopisných chyb :-("
+#: ../src/stardict.cpp:1093
+msgid "Full-text Search"
+msgstr ""
 
-#: src/stardict.cpp:888
+#: ../src/stardict.cpp:1120
+#, fuzzy
+msgid "Search"
+msgstr "_Hledat:"
+
+#: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
+msgid "Full-text search..."
+msgstr ""
+
+#: ../src/stardict.cpp:1325
 msgid "Fuzzy query failed, too :-("
 msgstr "Rozšířené vyhledávání neuspělo :-("
 
-#: src/stardict.cpp:951
-msgid "Found no words matching this pattern!"
-msgstr "Nebylo nalezeno žádné heslo vyhovující zadanému vzoru."
-
-#: src/stardict.cpp:1075
+#: ../src/stardict.cpp:1611
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Pro výpis seznamu hesel odpovídajících zadanému vzoru stiskněte Enter."
 
-#: src/stardict.cpp:1082
+#: ../src/stardict.cpp:1614
+#, fuzzy
+msgid "Press Enter to list the words that match this regular expressions."
+msgstr "Pro výpis seznamu hesel odpovídajících zadanému vzoru stiskněte Enter."
+
+#: ../src/stardict.cpp:1618
 msgid "Fuzzy query..."
 msgstr "Rozšířené vyhledávání..."
 
-#: src/stardict.cpp:1416
+#: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
+#, fuzzy
+msgid "Not found!\n"
+msgstr "<Heslo nebylo nalezeno!>"
+
+#: ../src/stardict.cpp:1987
+msgid "Conversion error!\n"
+msgstr ""
+
+#: ../src/stardict.cpp:2335
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict již běží, používám běžící proces."
 
-#: src/win32/systray.cpp:73
+#: ../src/stardict.cpp:2468
+#, fuzzy
+msgid "- Lookup words"
+msgstr "Slovník s pokročilými funkcemi"
+
+#: ../src/stardict.cpp:2473
+#, c-format
+msgid "Options parsing failed: %s\n"
+msgstr ""
+
+#: ../src/utils.cpp:127
+#, c-format
+msgid "Can not load image. %s"
+msgstr ""
+
+#: ../src/lib/stardict_client.cpp:901
+#, c-format
+msgid "Authentication denied: %s"
+msgstr ""
+
+#: ../src/lib/stardict_client.cpp:914
+#, c-format
+msgid "Register failed: %s"
+msgstr ""
+
+#: ../src/lib/stardict_client.cpp:919
+msgid "Register success!"
+msgstr ""
+
+#: ../src/lib/stardict_client.cpp:954
+msgid ""
+"You haven't setup the account. Please open the \"Net Dict\" page in the "
+"Preferences dialog and register an account first."
+msgstr ""
+
+#: ../src/lib/stardict_client.cpp:1074
+msgid ""
+"You haven't chosen any dictionaries, please choose some by clicking \"Manage "
+"Dict\"->\"Network dictionaries\"->\"Add\"."
+msgstr ""
+
+#: ../src/lib/stddict.cpp:649
+msgid "Sorting, please wait..."
+msgstr ""
+
+#: ../src/win32/systray.cpp:107
 msgid "Scan"
 msgstr "Skenovat výběr"
 
-#: src/win32/systray.cpp:223
-msgid "StarDict - Scanning"
-msgstr "Stardict - skenování"
-
-#: src/win32/systray.cpp:226
-msgid "StarDict - Stopped"
-msgstr "StarDict - pozastaven"
-
-#: src/win32/winconf.cpp:36
-#, c-format
-msgid ""
-"use_custom_font=1\n"
-"custom_font=sans 8\n"
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:248
+msgid "User Dict"
 msgstr ""
 
-#: src/win32/winconf.cpp:43
-#, c-format
-msgid ""
-"window_width=551\n"
-"window_height=357\n"
-"hpaned_pos=165\n"
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+msgid "User virtual dictionary."
 msgstr ""
 
-#: src/win32/gnome-about.c:256
-msgid "Credits"
-msgstr "Kredity"
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#, fuzzy
+msgid "Show the user dictionary."
+msgstr "Vybrat písmo slovníku"
 
-#: src/win32/gnome-about.c:288
-msgid "Written by"
-msgstr "Napsali"
-
-#: src/win32/gnome-about.c:303
-msgid "Documented by"
-msgstr "Zdokumentovali"
-
-#: src/win32/gnome-about.c:318
-msgid "Translated by"
-msgstr "Přeložili"
-
-#: src/win32/gnome-about.c:381
-msgid "C_redits"
-msgstr "K_redity"
-
-#: src/win32/gnome-about.c:436
-msgid "Program name"
-msgstr "Název programu"
-
-#: src/win32/gnome-about.c:437
-msgid "The name of the program"
-msgstr "Název programu"
-
-#: src/win32/gnome-about.c:444
-msgid "Program version"
-msgstr "Verze programu"
-
-#: src/win32/gnome-about.c:445
-msgid "The version of the program"
-msgstr "Verze programu"
-
-#: src/win32/gnome-about.c:451
-msgid "Copyright string"
-msgstr "Autorská práva"
-
-#: src/win32/gnome-about.c:452
-msgid "Copyright information for the program"
-msgstr "Informace o autorských právech k programu"
-
-#: src/win32/gnome-about.c:459
-msgid "Comments string"
-msgstr "Komentář"
-
-#: src/win32/gnome-about.c:460
-msgid "Comments about the program"
-msgstr "Komentář k programu"
-
-#: src/win32/gnome-about.c:466
-msgid "Authors"
-msgstr "Autoři"
-
-#: src/win32/gnome-about.c:467
-msgid "List of authors of the programs"
-msgstr "Seznam autorů programů"
-
-#: src/win32/gnome-about.c:469
-msgid "Author entry"
-msgstr "Položka Autor"
-
-#: src/win32/gnome-about.c:470
-msgid "A single author entry"
-msgstr "Jediná položka pro autora"
-
-#: src/win32/gnome-about.c:477
-msgid "Documenters"
-msgstr "Dokumentaristé"
-
-#: src/win32/gnome-about.c:478
-msgid "List of people documenting the program"
-msgstr "Seznam lidí dokumentujících program"
-
-#: src/win32/gnome-about.c:480
-msgid "Documenter entry"
-msgstr "Položka Dokumentarista"
-
-#: src/win32/gnome-about.c:481
-msgid "A single documenter entry"
-msgstr "Jediná položka pro dokumentaristu"
-
-#: src/win32/gnome-about.c:489
-msgid "Translator credits"
-msgstr "Kredity překladatelů"
-
-#: src/win32/gnome-about.c:490
-msgid ""
-"Credits to the translators. This string should be marked as translatable"
-msgstr "Kredity překladatelů. Tento řetězec by měl být označen k přeložení."
-
-#: src/win32/gnome-about.c:497
-msgid "Logo"
-msgstr "Logo"
-
-#: src/win32/gnome-about.c:498
-msgid "A logo for the about box"
-msgstr "Logo pro dialog O aplikaci"
-
-#: src/win32/gnome-about.c:577
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:254
 #, c-format
-msgid "About %s"
-msgstr "O programu %s"
+msgid "User dict plug-in loaded.\n"
+msgstr ""
 
-#~ msgid "_Scan selection"
-#~ msgstr "_Skenovat výběr"
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+msgid "Dict.cn"
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+msgid "Dict.cn configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+msgid "Query by XML API."
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+msgid "Query by HTML API."
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+msgid "Dict.cn network dictionary."
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+msgid "Query result from Dict.cn website."
+msgstr ""
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#, c-format
+msgid "Dict.cn plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:30
+msgid "Espeak TTS configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:32
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
+msgid "Voice type:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:35
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
+#, fuzzy
+msgid "Default"
+msgstr "(výchozí: 320)"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+msgid "Espeak"
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+msgid "Espeak TTS."
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+msgid "Pronounce words by Espeak TTS engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:108
+msgid "Espeak TTS"
+msgstr ""
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+#, c-format
+msgid "Espeak plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:30
+msgid "Festival TTS configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Festival"
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Festival TTS."
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Pronounce words by Festival TTS engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:131
+msgid "Festival TTS"
+msgstr ""
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:132
+#, c-format
+msgid "Festival plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:215
+msgid "[not a printable character]"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:232
+msgid "General Character Properties"
+msgstr ""
+
+#. character category
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
+msgid "Unicode category:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:241
+msgid "Canonical decomposition:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
+msgid "Various Useful Representations"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:267
+msgid "UTF-8:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:274
+msgid "UTF-16:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:282
+msgid "C octal escaped UTF-8:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:290
+msgid "XML decimal entity:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
+msgid "XML hexadecimal entity:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
+msgid "Alias names:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:310
+msgid "Notes:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:317
+msgid "See also:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:323
+msgid "Approximate equivalents:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:329
+msgid "Equivalents:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:334
+msgid "Annotations and Cross References"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:341
+msgid "Definition in English:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
+msgid "Mandarin Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
+msgid "Cantonese Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
+msgid "Japanese On Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
+msgid "Japanese Kun Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+msgid "Tang Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
+msgid "Korean Pronunciation:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
+msgid "CJK Ideograph Information"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:407
+msgid "Gucharmap"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+msgid "Gucharmap virtual dictionary."
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+msgid "Show information about Unicode characters."
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:408
+#, c-format
+msgid "Gucharmap plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+msgid "HTML data parsing"
+msgstr ""
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+msgid "HTML data parsing engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+msgid "Parse the HTML data."
+msgstr ""
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:471
+#, c-format
+msgid "HTML data parsing plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:154
+msgid "Man configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:156
+msgid "_Input string requires the \"man \" prefix."
+msgstr ""
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:199
+msgid "Man"
+msgstr ""
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#, fuzzy
+msgid "Man virtual dictionary."
+msgstr "Výběr slovníků"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#, fuzzy
+msgid "Show the man pages."
+msgstr "Zobrazit hlavní menu (Alt+M)"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:213
+#, c-format
+msgid "Man plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+msgid "PowerWord data parsing"
+msgstr ""
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+msgid "PowerWord data parsing engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+msgid "Parse the PowerWord data."
+msgstr ""
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#, c-format
+msgid "PowerWord data parsing plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:165
+#, c-format
+msgid "Error: Open file %s failed!"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:209
+msgid "QQWry configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:215
+msgid ""
+"You can update the QQWry.Dat file from this website:\n"
+"http://www.cz88.net"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+#, c-format
+msgid ""
+"Error: File %s not found!\n"
+"You can download it from this website:\n"
+"http://www.cz88.net"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:252
+msgid "QQWry"
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+msgid "Show QQWry IP information."
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+msgid "Show the address information by the IP."
+msgstr ""
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
+#, c-format
+msgid "QQWry plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:74
+msgid "SAPI TTS configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:78
+msgid "TTS voice engine"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:83
+msgid "Voice :"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:132
+msgid "Volume :"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:141
+#, fuzzy
+msgid "Rate :"
+msgstr "Datum"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:153
+msgid "Input the test text:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:161
+msgid "Test"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:269
+msgid "SAPI TTS"
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+msgid "SAPI TTS."
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+msgid "Pronounce words by SAPI TTS engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:270
+#, c-format
+msgid "SAPI tts plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
+#, c-format
+msgid ""
+"Warning: failure when requesting a spellchecking dictionary for %s "
+"language.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:260
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:303
+#, c-format
+msgid "Error, no spellchecking dictionary available!\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+msgid "Spell check configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
+#, fuzzy
+msgid "_Use custom languages."
+msgstr "Použít _vlastní písmo."
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
+msgid "For example: \"en_US de\""
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:329
+msgid "Custom languages:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+msgid "Spell Check"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+msgid "Spell check virtual dictionary."
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+msgid "Spell check the input words and show the correct suggestion."
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:402
+msgid "Spelling Suggestion"
+msgstr ""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
+#, c-format
+msgid "Spelling plugin loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:37
+msgid "You are using an old version of StarDict!"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
+msgid "You are using the newest version of StarDict!"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:42
+msgid "Latest version information:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
+msgid "Latest news:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:53
+msgid "Update information"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+msgid "Update Info"
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+msgid "Update information."
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+msgid "Get the update information from the Internet."
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:175
+#, fuzzy
+msgid "Visit StarDict website now?"
+msgstr "Navštívit webovou stránku projektu StarDict"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
+msgid "_Don't show this until the next update."
+msgstr ""
+
+#. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
+#. g_idle_add(get_update_info, NULL);
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:257
+#, c-format
+msgid "Update info plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+msgid "Wiki data parsing"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+msgid "Wiki data parsing engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+msgid "Parse the wiki data."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:51
+#, c-format
+msgid "Wiki data parsing plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:57
+msgid "WordNet configuration"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:59
+msgid "Graphic mode."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:61
+msgid "Text mode."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+msgid "WordNet dict rendering"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+msgid "WordNet dict rendering engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+msgid ""
+"Render the WordNet dictionary.\n"
+"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
+"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
+"his open source sharing!"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128
+#, c-format
+msgid "WordNet dict rendering plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+msgid "WordNet data parsing"
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+msgid "WordNet data parsing engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+msgid "Parse the WordNet data."
+msgstr ""
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
+#, c-format
+msgid "WordNet data parsing plug-in loaded.\n"
+msgstr ""
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+msgid "XDXF data parsing"
+msgstr ""
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+msgid "XDXF data parsing engine."
+msgstr ""
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+msgid "Parse the XDXF data."
+msgstr ""
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:333
+#, c-format
+msgid "XDXF data parsing plug-in loaded.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Found no words matching this regular expressions!"
+#~ msgstr "Nebylo nalezeno žádné heslo vyhovující zadanému vzoru."
+
+#~ msgid "Scan the Selection"
+#~ msgstr "Skenovat výběr"
+
+#~ msgid "The stardict 's float window 's max height."
+#~ msgstr "Maximální výška plovoucího okna StarDictu."
+
+#~ msgid "The stardict 's float window 's max width."
+#~ msgstr "Maximální šířka plovoucího okna StarDictu."
+
+#~ msgid "The stardict 's main window 's height."
+#~ msgstr "Výška hlavního okna StarDictu."
+
+#~ msgid "The stardict 's main window 's width."
+#~ msgstr "Šířka hlavního okna StarDictu."
+
+#~ msgid "Window 's max height"
+#~ msgstr "Maximální výška okna"
+
+#~ msgid "Window 's max width"
+#~ msgstr "Maximální šířka okna."
+
+#~ msgid "lock's y position"
+#~ msgstr "Poloha zámku na ose Y."
+
+#~ msgid "Cannot connect to gconf."
+#~ msgstr "Nelze navázat spojení s programem gconf."
+
+#~ msgid "D_ictionaries"
+#~ msgstr "_Slovníky"
+
+#~ msgid "Found "
+#~ msgstr "Nalezeno "
+
+#~ msgid "_Dict Manage"
+#~ msgstr "_Výběr slovníků"
+
+#~ msgid "Find"
+#~ msgstr "Najít"
+
+#~ msgid "Size"
+#~ msgstr "Velikost"
+
+#~ msgid "_Win"
+#~ msgstr "_Win"
+
+#~ msgid "_Shift"
+#~ msgstr "_Shift"
+
+#~ msgid "_Alt"
+#~ msgstr "_Alt"
+
+#~ msgid "_Ctrl"
+#~ msgstr "_Ctrl"
+
+#~ msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
+#~ msgstr "<span weight=\"bold\" size=\"x-large\">Písmo</span>"
+
+#~ msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
+#~ msgstr "<span weight=\"bold\" size=\"x-large\">Zvuk</span>"
+
+#~ msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
+#~ msgstr "<span weight=\"bold\" size=\"x-large\">Možnosti</span>"
+
+#~ msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
+#~ msgstr "<span weight=\"bold\" size=\"x-large\">Hledání na Internetu</span>"
+
+#~ msgid "_Pronouce the word when pop up."
+#~ msgstr "Vyslovovat nalezená slova."
+
+#~ msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"x-large\">Maximální velikost okna</span>"
+
+#~ msgid "Credits"
+#~ msgstr "Kredity"
+
+#~ msgid "Written by"
+#~ msgstr "Napsali"
+
+#~ msgid "Documented by"
+#~ msgstr "Zdokumentovali"
+
+#~ msgid "C_redits"
+#~ msgstr "K_redity"
+
+#~ msgid "Program version"
+#~ msgstr "Verze programu"
+
+#~ msgid "The version of the program"
+#~ msgstr "Verze programu"
+
+#~ msgid "Copyright string"
+#~ msgstr "Autorská práva"
+
+#~ msgid "Copyright information for the program"
+#~ msgstr "Informace o autorských právech k programu"
+
+#~ msgid "Comments string"
+#~ msgstr "Komentář"
+
+#~ msgid "Comments about the program"
+#~ msgstr "Komentář k programu"
+
+#~ msgid "Authors"
+#~ msgstr "Autoři"
+
+#~ msgid "List of authors of the programs"
+#~ msgstr "Seznam autorů programů"
+
+#~ msgid "Author entry"
+#~ msgstr "Položka Autor"
+
+#~ msgid "A single author entry"
+#~ msgstr "Jediná položka pro autora"
+
+#~ msgid "Documenters"
+#~ msgstr "Dokumentaristé"
+
+#~ msgid "List of people documenting the program"
+#~ msgstr "Seznam lidí dokumentujících program"
+
+#~ msgid "Documenter entry"
+#~ msgstr "Položka Dokumentarista"
+
+#~ msgid "A single documenter entry"
+#~ msgstr "Jediná položka pro dokumentaristu"
+
+#~ msgid "Translator credits"
+#~ msgstr "Kredity překladatelů"
+
+#~ msgid ""
+#~ "Credits to the translators. This string should be marked as translatable"
+#~ msgstr "Kredity překladatelů. Tento řetězec by měl být označen k přeložení."
+
+#~ msgid "Logo"
+#~ msgstr "Logo"
+
+#~ msgid "A logo for the about box"
+#~ msgstr "Logo pro dialog O aplikaci"
+
+#~ msgid "About %s"
+#~ msgstr "O programu %s"
 
 #~ msgid "Hide main window when _iconify."
 #~ msgstr "Skrýt hlavní okno při _ikonifikaci."
