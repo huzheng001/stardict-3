@@ -1,4 +1,4 @@
-2007.12.8
+2007.11.8
 StarDict-3.0.1 (Perfection) released.
 StarDict's total download count reached three millions in 2007.10.1.
 Add Debian support.
@@ -7,6 +7,7 @@ Add vs2005 compile support.
 Add win32 sapi-tts plugin.
 Add wordnet plugin.
 Add regex query support.
+Add QQWry plugin.
 Many other changes.
 
 2007.8.13

@@ -1374,7 +1374,7 @@ void AppCore::LookupWithRegexToMainWin(const gchar *word)
 		for(gint i=0; i<iMatchCount; i++)
 			g_free(ppMatchWord[i]);
 	} else {
-		ShowNotFoundToTextWin(word,_("Found no words matching this regular expressions!"), TEXT_WIN_PATTERN_NOT_FOUND);
+		ShowNotFoundToTextWin(word,_("Found no words matching this regular expression!"), TEXT_WIN_PATTERN_NOT_FOUND);
 	}
 	g_free(ppMatchWord);
 }
