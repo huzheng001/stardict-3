@@ -18,7 +18,7 @@ public:
 
 	void SetDictIndex(InstantDictIndex index);
 	void AppendHeaderMark();
-	void AppendHeader(const char *dict_name);
+	void AppendHeader(const char *dict_name, const char *dict_link = NULL);
 	void AppendWord(const gchar *word);
 	void AppendData(gchar *data, const gchar *oword, const gchar *origword);
 	void AppendNewline();

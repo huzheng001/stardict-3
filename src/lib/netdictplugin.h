@@ -4,6 +4,7 @@
 struct NetDictResponse {
 	~NetDictResponse();
 	const char *bookname;
+	const char *booklink;
 	char *word;
 	char *data;
 };
@@ -14,6 +15,7 @@ struct StarDictNetDictPlugInObject{
 	typedef void (*lookup_func_t)(const char *word, bool ismainwin);
 	lookup_func_t lookup_func;
 	const char *dict_name;
+	const char *dict_link;
 	const char *dict_cacheid;
 };
 
