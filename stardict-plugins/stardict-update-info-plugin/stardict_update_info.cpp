@@ -5,7 +5,7 @@
 #include <windows.h>
 #endif
 
-static const int my_version_num = 30001000; // As 3,00,00,000, so the version is 3.0.0.0
+static const int my_version_num = 30002000; // As 3,00,00,000, so the version is 3.0.0.0
 static int latest_version_num;
 static int last_prompt_num;
 static std::string version_msg_title;

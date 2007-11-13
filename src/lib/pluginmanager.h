@@ -65,6 +65,7 @@ public:
 	~StarDictNetDictPlugin();
 	void lookup(const char *word, bool ismainwin);
 	const char *dict_name();
+	const char *dict_link();
 	const char *dict_id();
 	const char *dict_cacheid();
 private:
@@ -79,6 +80,7 @@ public:
 	void lookup(size_t iPlugin, const gchar *word, bool ismainwin);
 	size_t ndicts() { return oPlugins.size(); }
 	const char *dict_name(size_t iPlugin);
+	const char *dict_link(size_t iPlugin);
 	const char *dict_id(size_t iPlugin);
 	const char *dict_cacheid(size_t iPlugin);
 	bool find_dict_by_id(const char *id, size_t &iPlugin);

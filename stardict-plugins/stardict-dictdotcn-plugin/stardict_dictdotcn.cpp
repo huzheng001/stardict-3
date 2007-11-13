@@ -186,6 +186,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 	QueryInfo *qi = (QueryInfo *)userdata;
 	NetDictResponse *resp = new NetDictResponse;
 	resp->bookname = _("Dict.cn");
+	resp->booklink = "http://www.dict.cn";
 	resp->word = qi->word; // So neen't free qi->word;
 	if (use_html_or_xml) {
 		std::string charset;
@@ -363,6 +364,7 @@ DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)
 	g_key_file_free(keyfile);
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Dict.cn");
+	obj->dict_link = "http://www.dict.cn";
 	obj->dict_cacheid = DICTDOTCN;
 	g_print(_("Dict.cn plug-in loaded.\n"));
 	return false;

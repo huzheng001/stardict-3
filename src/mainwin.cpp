@@ -26,7 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #ifdef _WIN32
-#define VERSION "3.0.1"
+#define VERSION "3.0.2"
 #  include <gdk/gdkwin32.h>
 #endif
 
@@ -1899,7 +1899,7 @@ void TextWin::Show(const gchar *orig_word, gchar ***Word, gchar ****WordData)
 			} else if (gpAppFrame->query_dictmask[i].type == InstantDictType_VIRTUAL) {
 				view->AppendHeader(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
 			} else if (gpAppFrame->query_dictmask[i].type == InstantDictType_NET) {
-				view->AppendHeader(gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index));
+				view->AppendHeader(gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_name(gpAppFrame->query_dictmask[i].index), gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_link(gpAppFrame->query_dictmask[i].index));
 			}
 			j=0;
 			do {
@@ -1942,7 +1942,7 @@ void TextWin::Show(NetDictResponse *resp)
 		gchar *mark = g_strdup_printf("%d", view->bookindex);
 		gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast(resp->bookname, mark);
 		g_free(mark);
-		view->AppendHeader(resp->bookname);
+		view->AppendHeader(resp->bookname, resp->booklink);
 		view->AppendWord(resp->word);
 		view->AppendData(resp->data, resp->word, resp->word);
 		view->AppendNewline();

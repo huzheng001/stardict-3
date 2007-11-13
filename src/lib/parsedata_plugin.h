@@ -20,7 +20,7 @@ struct LinkDesc {
 	std::string::size_type pos_;
 	std::string::size_type len_;
 	std::string link_;
-	LinkDesc(std::string::size_type pos, std::string::size_type len, std::string link):
+	LinkDesc(std::string::size_type pos, std::string::size_type len, const std::string &link):
 		pos_(pos), len_(len), link_(link) {}
 };
 

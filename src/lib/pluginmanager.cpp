@@ -596,6 +596,11 @@ const char *StarDictNetDictPlugins::dict_name(size_t iPlugin)
 	return oPlugins[iPlugin]->dict_name();
 }
 
+const char *StarDictNetDictPlugins::dict_link(size_t iPlugin)
+{
+	return oPlugins[iPlugin]->dict_link();
+}
+
 const char *StarDictNetDictPlugins::dict_id(size_t iPlugin)
 {
 	return oPlugins[iPlugin]->get_filename();
@@ -640,6 +645,11 @@ void StarDictNetDictPlugin::lookup(const char *word, bool ismainwin)
 const char *StarDictNetDictPlugin::dict_name()
 {
 	return obj->dict_name;
+}
+
+const char *StarDictNetDictPlugin::dict_link()
+{
+	return obj->dict_link;
 }
 
 const char *StarDictNetDictPlugin::dict_cacheid()
