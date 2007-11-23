@@ -767,7 +767,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
 	
 #ifndef _WIN32
-	check_button = gtk_check_button_new_with_mnemonic(_("_Use TTS program."));
+	check_button = gtk_check_button_new_with_mnemonic(_("Enable _TTS program."));
 	enable = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_use_tts_program_ckbutton_toggled), this);

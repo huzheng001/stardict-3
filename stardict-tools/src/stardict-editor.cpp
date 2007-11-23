@@ -203,9 +203,7 @@ void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                         GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
                         NULL);
-#ifndef _WIN32
-		gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
-#endif
+	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
         if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
                 gchar *filename;
                 filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
