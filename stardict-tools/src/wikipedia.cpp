@@ -177,7 +177,7 @@ void convert(char *filename, char *wikiname, char *wikidate)
         fclose(dicfile);
 
 	FILE *ifofile = fopen(ifofilename,"w");
-	gchar *content = g_strdup_printf("StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\nidxfilesize=%ld\nbookname=%s\ndescription=Made by Hu Zheng. WikiPedia version: %s\ndate=2006.12.18\nsametypesequence=w\n", array->len, idxfilesize, wikiname, wikidate);
+	gchar *content = g_strdup_printf("StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\nidxfilesize=%ld\nbookname=%s\ndescription=Made by Hu Zheng. WikiPedia version: %s\ndate=2007.11.20\nsametypesequence=w\n", array->len, idxfilesize, wikiname, wikidate);
 	fwrite(content, strlen(content), 1, ifofile);
 	g_free(content);
 	fclose(ifofile);
@@ -190,7 +190,7 @@ void convert(char *filename, char *wikiname, char *wikidate)
         system(command);
 
 	char dirname[256];
-	sprintf(dirname, "stardict-wikipedia-%s-%s-2.4.2", wikiname, wikidate);
+	sprintf(dirname, "stardict-wikipedia-%s-2.4.2", wikiname);
 	sprintf(command, "mkdir %s", dirname);
 	system(command);
 	sprintf(command, "mv %s %s", idxfilename, dirname);
