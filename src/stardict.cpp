@@ -2439,7 +2439,7 @@ int main(int argc,char **argv)
 			g_warning("Cannot create directory %s.", userdir.c_str());
 	}
     g_thread_init (NULL);
-#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO)
+#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
 #endif

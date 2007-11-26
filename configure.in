@@ -25,6 +25,8 @@ AC_PROG_MAKE_SET
 
 
 AC_FUNC_MMAP
+AC_CHECK_FUNC(gethostbyname_r, AC_DEFINE([HAVE_GETHOSTBYNAME_R], [], [Have gethostbyname_r function.]))
+AC_CHECK_FUNC(memrchr, AC_DEFINE([HAVE_MEMRCHR], [], [Have memrchr function.]))
 
 
 dnl ================================================================
@@ -296,14 +298,18 @@ dnl ================================================================
 AC_ARG_ENABLE(gnome-support, AC_HELP_STRING([--disable-gnome-support], [Disable gnome support]))
 AC_ARG_ENABLE(gpe-support, AC_HELP_STRING([--enable-gpe-support], [Enable gpe support]))
 AC_ARG_ENABLE(maemo-support, AC_HELP_STRING([--enable-maemo-support], [Enable maemo support]))
-AM_CONDITIONAL(GNOME_SUPPORT, test "x${enable_gpe_support}" != "xyes" && test "x${enable_maemo_support}" != "xyes" && test "x${enable_gnome_support}" != "xno")
+AC_ARG_ENABLE(darwin-support, AC_HELP_STRING([--enable-darwin-support], [Enable darwin support]))
+AM_CONDITIONAL(GNOME_SUPPORT, test "x${enable_gpe_support}" != "xyes" && test "x${enable_maemo_support}" != "xyes" && test "x${enable_darwin_support}" != "xyes" && test "x${enable_gnome_support}" != "xno")
 AM_CONDITIONAL(GPE_SUPPORT, test "x${enable_gpe_support}" = "xyes")
 AM_CONDITIONAL(MAEMO_SUPPORT, test "x${enable_maemo_support}" = "xyes")
+AM_CONDITIONAL(DARWIN_SUPPORT, test "x${enable_darwin_support}" = "xyes")
 
 if test "x${enable_gpe_support}" = "xyes" ; then
   DEP_MODULES="gtk+-2.0 >= 2.12 glib-2.0 >= 2.14 gthread-2.0 libgpewidget >= 0.109"
 elif test "x${enable_maemo_support}" = "xyes" ; then
   DEP_MODULES="gtk+-2.0 >= 2.12 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
+elif test "x${enable_darwin_support}" = "xyes" ; then
+  DEP_MODULES="gtk+-2.0 >= 2.12 gthread-2.0"
 elif test "x${enable_gnome_support}" = "xno" ; then
   DEP_MODULES="gtk+-2.0 >= 2.12 gthread-2.0"
 else
@@ -329,6 +335,11 @@ elif test "x${enable_maemo_support}" = "xyes" ; then
 	fi
 	AM_GCONF_SOURCE_2
 	AM_CONDITIONAL(SCHEMAS_INSTALL, test x$schemas_install = xtrue)
+elif test "x${enable_darwin_support}" = "xyes" ; then
+        echo "Enable darwin suppport";
+	AC_DEFINE([CONFIG_DARWIN],[], [Compile with darwin support])
+	AM_CONDITIONAL(SCHEMAS_INSTALL, test "x${enable_darwin_support}" != "xyes")
+	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_darwin_support}" != "xyes")
 elif test "x${enable_gnome_support}" = "xno" ; then
 	echo "Disable gnome support";
 	AC_DEFINE([CONFIG_GTK],[], [Compile without gnome support])
@@ -412,6 +423,7 @@ fi
 
 dnl ==========================================================================
 
+if test "x${enable_darwin_support}" != "xyes" ; then
 # Checks for header files. need by Solaris.
 AC_PATH_XTRA
 if test -n "$X_CFLAGS"; then
@@ -429,6 +441,7 @@ fi
 
 # Checks for libraries.
 AC_CHECK_LIB([X11], [main], , [AC_MSG_ERROR([X11 lib not found])])
+fi
 
 AC_SUBST(STARDICT_LIBS)
 AC_SUBST(STARDICT_CFLAGS)

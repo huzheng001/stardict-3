@@ -115,7 +115,7 @@ private:
 	std::auto_ptr<config_file> cf;
 	cache_t cache;
 
-#ifdef _WIN32
+#if defined(_WIN32) || !defined(HAVE_MEMRCHR)
 static void *memrchr(const void *mem, int c, size_t len) {
 	char *res;
 	char *cmem = (char *)mem;

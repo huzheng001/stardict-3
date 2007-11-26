@@ -1,7 +1,11 @@
 EXTRA_DIST = stardict_wiki_parsedata.v stardict_wiki_parsedata.dev
 
 
+if DARWIN_SUPPORT
+LD_VERSION_SCRIPT_OPTION=
+else
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wiki_parsedata.v"
+endif
 
 noinst_HEADERS = stardict_wiki_parsedata.h
 

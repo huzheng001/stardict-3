@@ -37,7 +37,7 @@
 
 #include "desktop.hpp"
 
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_MAEMO)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 static void spawn_command(const gchar *exe, const gchar *arg)
 {
   gchar *qarg = g_shell_quote(arg);

@@ -34,7 +34,11 @@
 #  include "win32/win32_iskeyspressed.h"
 #  include "win32/systray.h"
 #else
+#ifdef CONFIG_DARWIN
+#  include "gtk_iskeyspressed.hpp"
+#else
 #  include "x11_iskeyspressed.hpp"
+#endif
 #  include "docklet.h"
 #endif
 
@@ -54,7 +58,11 @@ void *PlatformFactory::create_class_by_name(const std::string& name, void *param
 #ifdef _WIN32
 		return new win32_hotkeys();
 #else
+#ifdef CONFIG_DARWIN
+		return new gtk_hotkeys(GTK_WINDOW(param));
+#else
 		return new x11_hotkeys(GTK_WINDOW(param));
+#endif
 #endif
 	}
 	return NULL;
@@ -66,6 +74,10 @@ TrayBase *PlatformFactory::create_tray_icon(GtkWidget *win, bool scan,
 #ifdef _WIN32
 	return new DockLet(win, scan);
 #else
+#ifdef CONFIG_DARWIN
+	return new TrayBase(win, scan);
+#else
 	return new DockLet(win, scan, skin);
+#endif
 #endif
 }

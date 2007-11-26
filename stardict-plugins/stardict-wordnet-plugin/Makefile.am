@@ -2,7 +2,11 @@ EXTRA_DIST = stardict_wordnet.v stardict_wordnet.dev	\
 		stardict_wordnet_parsedata.v stardict_wordnet_parsedata.dev
 
 
+if DARWIN_SUPPORT
+WORDNET_LD_VERSION_SCRIPT_OPTION=
+else
 WORDNET_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wordnet.v"
+endif
 
 stardict_wordnet_LTLIBRARIES = stardict_wordnet.la
 
@@ -16,7 +20,11 @@ stardict_wordnet_la_LDFLAGS = 	-avoid-version \
 					$(WORDNET_LD_VERSION_SCRIPT_OPTION)
 
 
+if DARWIN_SUPPORT
+WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION=
+else
 WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wordnet_parsedata.v"
+endif
 
 stardict_wordnet_parsedata_LTLIBRARIES = stardict_wordnet_parsedata.la
 

@@ -1,7 +1,11 @@
 EXTRA_DIST = stardict_espeak.v
 
 
+if DARWIN_SUPPORT
+LD_VERSION_SCRIPT_OPTION=
+else
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_espeak.v"
+endif
 
 noinst_HEADERS = stardict_espeak.h
 
