@@ -734,7 +734,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_sound_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 	GtkWidget *label;
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
 	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
 	label=gtk_label_new(_("Command for playing wav files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
@@ -1865,7 +1865,7 @@ bool PrefsDlg::ShowModal()
 			port = 2628;
 		conf->set_int_at("network/port", port);
 		gpAppFrame->oStarDictClient.set_server(server, port);
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
 		ch = gtk_entry_get_text(ePlayCommand);
 		if (ch[0])
 			conf->set_string_at("dictionary/play_command", ch);

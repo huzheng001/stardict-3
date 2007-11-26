@@ -48,6 +48,11 @@ STARIDCT_APP_SERVER = \
 	stardict-application-server.cpp stardict-application-server.h
 endif
 
+if !DARWIN_SUPPORT
+KEYPRESS_FILE_MODULE = x11_iskeypress.cpp x11_iskeypress.hpp
+DOCKLET_FILE_MODULE = docklet.cpp docklet.h eggtrayicon.c eggtrayicon.h
+endif
+
 stardict_SOURCES = 			                \
 	$(IDL_SOURCES)			                \
 	$(STARIDCT_APP_SERVER)                  \
@@ -55,8 +60,6 @@ stardict_SOURCES = 			                \
 	$(ISKEYSPRESSED)                        \
 	stardict.cpp stardict.h			        \
 	mainwin.cpp mainwin.h	                \
-	eggtrayicon.c eggtrayicon.h	            \
-	docklet.cpp docklet.h	                \
 	conf.cpp conf.h	                        \
 	skin.cpp skin.h	                        \
 	prefsdlg.cpp prefsdlg.h	                \
@@ -73,7 +76,8 @@ stardict_SOURCES = 			                \
 	class_factory.cpp class_factory.hpp     \
 	config_file.hpp              \
 	$(CONFIG_FILE_MODULE)                   \
-	x11_iskeyspressed.cpp x11_iskeyspressed.hpp \
+	$(KEYPRESS_FILE_MODULE) \
+	$(DOCKLET_FILE_MODULE) \
 	gtk_iskeyspressed.cpp gtk_iskeyspressed.hpp \
 	progresswin.cpp progresswin.hpp \
 	tray.cpp tray.hpp \

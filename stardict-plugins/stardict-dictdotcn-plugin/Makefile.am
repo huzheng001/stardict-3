@@ -1,7 +1,10 @@
 EXTRA_DIST = stardict_dictdotcn.v dictdotcn.dev
 
-
+if DARWIN_SUPPORT
+LD_VERSION_SCRIPT_OPTION=
+else
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_dictdotcn.v"
+endif
 
 noinst_HEADERS = stardict_dictdotcn.h
 

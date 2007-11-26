@@ -1,7 +1,11 @@
 EXTRA_DIST = stardict_spell.v
 
 
+if DARWIN_SUPPORT
+LD_VERSION_SCRIPT_OPTION=
+else
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_spell.v"
+endif
 
 noinst_HEADERS = stardict_spell.h
 

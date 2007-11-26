@@ -1,7 +1,11 @@
 EXTRA_DIST = stardict_update_info.v stardict_update_info.dev
 
 
+if DARWIN_SUPPORT
+LD_VERSION_SCRIPT_OPTION=
+else
 LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_update_info.v"
+endif
 
 noinst_HEADERS = stardict_update_info.h
 

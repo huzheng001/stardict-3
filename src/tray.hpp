@@ -51,9 +51,9 @@ public:
 protected:
 	GtkWidget *mainwin_;//!< Window widget which we should control
 
-	virtual void scan_on() = 0;
-        virtual void scan_off() = 0;
-        virtual void show_normal_icon() = 0;
+	virtual void scan_on() {}
+        virtual void scan_off() {}
+        virtual void show_normal_icon() {}
 
 	bool is_scan_on() const { return is_scan_on_; }
 	bool is_hide_state() const { return hide_state_; }

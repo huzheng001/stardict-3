@@ -108,7 +108,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/enable_collation", false);
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 
-#if defined(CONFIG_GTK) || defined (CONFIG_GPE)
+#if defined(CONFIG_GTK) || defined (CONFIG_GPE) || defined(CONFIG_DARWIN)
 	add_entry("/apps/stardict/preferences/dictionary/play_command", std::string("play"));
 #endif
 #ifdef _WIN32

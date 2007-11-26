@@ -32,7 +32,7 @@ private:
   GtkButton *bAccount;
   std::string register_user;
   std::string register_hex;
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
   GtkEntry *ePlayCommand;
 #endif
 #ifndef CONFIG_GPE

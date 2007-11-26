@@ -159,6 +159,7 @@ gpointer Socket::dns_thread(gpointer data)
     DnsQueryData *query_data = (DnsQueryData *)data;
     struct  hostent *phost;
 #ifndef _WIN32    
+#ifdef HAVE_GETHOSTBYNAME_R
     struct  hostent hostinfo;
     char buf[1024];
     int ret;
@@ -169,6 +170,18 @@ gpointer Socket::dns_thread(gpointer data)
     } else {
         query_data->resolved = false;
     }
+#else
+	static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
+	g_static_mutex_lock (&mutex);
+	phost = gethostbyname(query_data->host.c_str());
+	if (phost) {
+		query_data->sa = ((in_addr*)(phost->h_addr))->s_addr;
+		query_data->resolved = true;
+	} else {
+		query_data->resolved = false;
+	}
+	g_static_mutex_unlock (&mutex);
+#endif
 #else
 	//static GStaticMutex mutex = G_STATIC_MUTEX_INIT;
 	//g_static_mutex_lock (&mutex);
