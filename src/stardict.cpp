@@ -1611,7 +1611,7 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 		oMidWin.oTextWin.Show(_("Press Enter to list the words that match the pattern."));
 		break;
 	case qtREGEX:
-		oMidWin.oTextWin.Show(_("Press Enter to list the words that match this regular expressions."));
+		oMidWin.oTextWin.Show(_("Press Enter to list the words that match this regular expression."));
 		break;
 	case qtFUZZY:
 		if (strlen(sWord)==1)
