@@ -15,5 +15,8 @@ to build the "gtk library only" version of StarDict.
 You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
 You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
 
+For windows version, read doc/README.win32.
+For Mac OS X version, read doc/Readme.mac.
+
 Notice: you can download dictionaries from the StarDict website:
 http://stardict.sourceforge.net

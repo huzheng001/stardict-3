@@ -49,7 +49,7 @@ STARIDCT_APP_SERVER = \
 endif
 
 if !DARWIN_SUPPORT
-KEYPRESS_FILE_MODULE = x11_iskeypress.cpp x11_iskeypress.hpp
+KEYPRESS_FILE_MODULE = x11_iskeyspressed.cpp x11_iskeyspressed.hpp
 DOCKLET_FILE_MODULE = docklet.cpp docklet.h eggtrayicon.c eggtrayicon.h
 endif
 
@@ -57,7 +57,6 @@ stardict_SOURCES = 			                \
 	$(IDL_SOURCES)			                \
 	$(STARIDCT_APP_SERVER)                  \
 	iskeyspressed.hpp            \
-	$(ISKEYSPRESSED)                        \
 	stardict.cpp stardict.h			        \
 	mainwin.cpp mainwin.h	                \
 	conf.cpp conf.h	                        \
