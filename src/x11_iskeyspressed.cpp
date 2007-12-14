@@ -243,6 +243,7 @@ x11_hotkeys::x11_hotkeys(GtkWindow *win_) :
 {
   possb_combs=def_hot_keys->possible_combs();
   possb_combs.push_back("Ctrl+e");
+  possb_combs.push_back("Win+d");
   possb_combs.push_back("F1");
   possb_combs.push_back("F2");
   possb_combs.push_back("F3");

@@ -87,12 +87,14 @@ std::string combnum2str(gint comb_code)
   case 5:
     return "Ctrl+e";
   case 6:
-    return "F1";
+    return "Win+d";
   case 7:
-    return "F2";
+    return "F1";
   case 8:
-    return "F3";
+    return "F2";
   case 9:
+    return "F3";
+  case 10:
     return "F4";
 #endif
   default:

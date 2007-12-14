@@ -1,6 +1,7 @@
 #include "libbgl2txt.h"
 #include "bgl_babylonreader.h"
 #include "bgl_stardictbuilder.h"
+#include <string.h>
 
 void convert_bglfile(std::string infile, std::string source_charset, std::string target_charset)
 {
