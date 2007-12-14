@@ -49,32 +49,68 @@ static gchar* toUtfPhonetic(const gchar *text, gsize len)
 				p+="ɑ"; break;
 			case 'C':
 				p+="ɔ"; break;
-			case 'Q':
-				p+="ʌ"; break;
+			case 'D':
+				p+="ã"; break;
 			case 'E':
 				p+="ә"; break;
-			case 'Z':
-				p+="є"; break;
-			case 'N':
-				p+="ŋ"; break;
-			case 'W':
-				p+="θ"; break;
-			case 'T':
-				p+="ð"; break;
 			case 'F':
 				p+="ʃ"; break;
-			case 'V':
-				p+="ʒ"; break;
-			case 'L':
-				p+="ɚ"; break;
+			case 'G':
+				p+="ɣ"; break;
+			case 'H':
+				p+="Ч"; break;
 			case 'I':
 				p+="i"; break;
-			case '^':
-				p+="ɡ"; break;
-			case '9':
-				p+="ˏ"; break;
+			case 'J':
+				p+="ʊ"; break;
+			case 'K':
+				p+="ʏ"; break;
+			case 'L':
+				p+="ɚ"; break;
+			case 'M':
+				p+="ɲ"; break;
+			case 'N':
+				p+="ŋ"; break;
+			case 'P':
+				p+="ɵ"; break;
+			case 'Q':
+				p+="ʌ"; break;
+			case 'R':
+				p+="ɔ"; break;
+			case 'T':
+				p+="ð"; break;
+			case 'V':
+				p+="ʒ"; break;
+			case 'W':
+				p+="θ"; break;
+			case 'X':
+				p+="Ø"; break;
+			case 'Z':
+				p+="є"; break;
 			case '5':
 				p+="'"; break;
+			case '6':
+				p+="!"; break;
+			case '7':
+				p+="͵"; break;
+			case '9':
+				p+="ˏ"; break;
+			case '_':
+				p+="ˇ"; break;
+			case '=':
+				p+="ê"; break;
+			case 'l':
+				p+="l"; break;
+			case '^':
+				p+="ɡ"; break;
+			case '\\':
+				p+="ɜ"; break;
+			case '?':
+				p+="U"; break;
+			case '@':
+				p+="S"; break;
+			case '[':
+				p+="ə"; break;
 			default:
 				p+=text[i];
 				break;
@@ -172,6 +208,14 @@ static gchar* toUtfPhonetic2(const gchar *text, glong len)
 			p+="Ś";
 		else if (uc == "Ä")
 			p+="ǐ";
+		else if (uc == "\\")
+			p+="ł";
+		else if (uc == "›")
+			p+="ōō";
+		else if (uc == "‹")
+			p+="ǒǒ";
+		else if (uc == "ý")
+			p+="V";
 		else
 			p+= uc;
 		s = n;
