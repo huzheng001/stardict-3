@@ -57,6 +57,7 @@ private:
 	std::string delayed_word_;
 
 	static int MatchWordCompare(const void * s1, const void * s2);
+	static void on_mainwin_show_event(GtkWidget * window, AppCore *app);
 	static gboolean on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *oAppCore);
 	static gboolean on_window_state_event(GtkWidget * window, GdkEventWindowState *event , AppCore *oAppCore);
 	static gboolean vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *event , AppCore *oAppCore);

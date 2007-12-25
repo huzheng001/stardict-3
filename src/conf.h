@@ -165,6 +165,10 @@ static void *memrchr(const void *mem, int c, size_t len) {
 	static bool get_win32_use_custom_font();
 	static std::string get_win32_custom_font();
 #endif
+#ifdef CONFIG_DARWIN
+	static bool get_darwin_use_custom_font();
+	static std::string get_darwin_custom_font();
+#endif
 
 	template <typename T>
 	const T& get(const char *name, Type2Type<T>) const {

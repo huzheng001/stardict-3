@@ -340,6 +340,7 @@ void AppCore::Create(gchar *queryword)
 	gtk_window_set_icon(GTK_WINDOW(window),
 			    get_impl(oAppSkin.icon));
 	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+	g_signal_connect (G_OBJECT (window), "show", G_CALLBACK (on_mainwin_show_event), this);
 	g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (on_delete_event), this);
 	g_signal_connect (G_OBJECT (window), "window_state_event", G_CALLBACK (on_window_state_event), this);
 	g_signal_connect (G_OBJECT (window), "key_press_event", G_CALLBACK (vKeyPressReleaseCallback), this);
@@ -400,8 +401,6 @@ void AppCore::Create(gchar *queryword)
 		gtk_widget_realize(window);
 		gdk_notify_startup_complete();
 	}
-	int pos=conf->get_int_at("main_window/hpaned_pos");
-	gtk_paned_set_position(GTK_PANED(oMidWin.hpaned), pos);
 
 	bool have_netdict = false;
 	for (size_t iLib=0; iLib<query_dictmask.size(); iLib++) {
@@ -421,9 +420,24 @@ void AppCore::Create(gchar *queryword)
 	}
 }
 
+void AppCore::on_mainwin_show_event(GtkWidget * window, AppCore *app)
+{
+	static bool loaded = false;
+	if (!loaded) {
+		loaded = true;
+		// We need to set the hpaned position after the window showed, or it will become incorrect.
+		int pos=conf->get_int_at("main_window/hpaned_pos");
+		gtk_paned_set_position(GTK_PANED(app->oMidWin.hpaned), pos);
+	}
+}
+
 gboolean AppCore::on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *app)
 {
+#ifdef CONFIG_DARWIN
+	gtk_window_iconify(GTK_WINDOW(window));
+#else
 	app->oDockLet->minimize_to_tray();
+#endif
 	return TRUE;
 }
 
