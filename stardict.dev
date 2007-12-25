@@ -232,19 +232,19 @@ BuildCmd=
 [VersionInfo]
 Major=3
 Minor=0
-Release=1
+Release=2
 Build=1
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://stardict.sourceforge.net
-FileVersion=3.0.1
+FileVersion=3.0.2
 FileDescription=StarDict
 InternalName=
 LegalCopyright=Hu Zheng <huzheng_001@163.com>
 LegalTrademarks=
 OriginalFilename=stardict.exe
 ProductName=StarDict
-ProductVersion=3.0.1
+ProductVersion=3.0.2
 AutoIncBuildNr=0
 
 [Unit21]

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-05 13:52+0800\n"
+"POT-Creation-Date: 2007-12-20 12:26+0800\n"
 "PO-Revision-Date: 2003-03-14 16:44+0800\n"
 "Last-Translator: Hu Zheng <huzheng_001@163.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -30,7 +30,7 @@ msgstr "查询单词"
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
 #: ../src/docklet.cpp:196 ../src/mainwin.cpp:477 ../src/splash.cpp:84
-#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2485
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2489
 #: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr "星际译王"
@@ -355,11 +355,11 @@ msgid "Unknown data type, please upgrade StarDict!"
 msgstr "未知数据类型，请升级星际译王！"
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1858
 msgid "dict.stardict.org"
 msgstr "dict.stardict.cn"
 
-#: ../src/conf.cpp:226
+#: ../src/conf.cpp:234
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -402,14 +402,24 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:253
+#: ../src/conf.cpp:261
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=1"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:265
+#: ../src/conf.cpp:273
 msgid "win32_custom_font="
 msgstr "win32_custom_font=tahoma 9"
+
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:286
+msgid "darwin_use_custom_font=0"
+msgstr "darwin_use_custom_font=1"
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:298
+msgid "darwin_custom_font="
+msgstr "darwin_custom_font=STSong 12"
 
 #. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
 #: ../src/desktop.cpp:71
@@ -435,7 +445,7 @@ msgstr "你只能选择%d个词典。"
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
 #: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1125
+#: ../src/stardict.cpp:1129
 msgid "Dictionary Name"
 msgstr "词典名称"
 
@@ -665,10 +675,10 @@ msgid "Lock floating window"
 msgstr "锁定浮动窗口"
 
 #: ../src/floatwin.cpp:322 ../src/floatwin.cpp:365 ../src/mainwin.cpp:1952
-#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:686
-#: ../src/stardict.cpp:831 ../src/stardict.cpp:1004 ../src/stardict.cpp:1018
-#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1028 ../src/stardict.cpp:1518
-#: ../src/stardict.cpp:1645 ../src/win32/clipboard.cpp:117
+#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:690
+#: ../src/stardict.cpp:835 ../src/stardict.cpp:1008 ../src/stardict.cpp:1022
+#: ../src/stardict.cpp:1027 ../src/stardict.cpp:1032 ../src/stardict.cpp:1522
+#: ../src/stardict.cpp:1649 ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr "<没有找到！>"
 
@@ -937,19 +947,19 @@ msgstr ""
 "\n"
 "      声明：作者不保证单词拼写，词意及音标的正确性。\n"
 
-#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
+#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1356
 msgid "Found no words matching this pattern!"
 msgstr "未找到任何符合此规则匹配的单词！"
 
-#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
+#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1381
 msgid "Found no words matching this regular expression!"
 msgstr "未找到任何符合此正则表达式的单词！"
 
-#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
+#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1270
 msgid "There are too many spelling errors :-("
 msgstr "拼写错误太多了 :-("
 
-#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
+#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1189 ../src/stardict.cpp:1234
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "没有词典的释义里包含这个单词 :-("
 
@@ -1248,7 +1258,7 @@ msgstr "搜索网站"
 msgid "Settings"
 msgstr "设置"
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2507
 msgid "Dictionary"
 msgstr "词典"
 
@@ -1367,8 +1377,8 @@ msgid "RealPeopleTTS search path:"
 msgstr "真人语音库搜索路径："
 
 #: ../src/prefsdlg.cpp:770
-msgid "_Use TTS program."
-msgstr "使用TTS程序(_U)"
+msgid "Enable _TTS program."
+msgstr "开启TTS程序(_T)。"
 
 #: ../src/prefsdlg.cpp:778
 msgid "Commandline:"
@@ -1558,56 +1568,56 @@ msgstr "开启一个新的星际译王进程"
 msgid "Quit an existing instance of stardict"
 msgstr "使运行中的 StarDict 进程退出"
 
-#: ../src/stardict.cpp:1093
+#: ../src/stardict.cpp:1097
 msgid "Full-text Search"
 msgstr "全文检索"
 
-#: ../src/stardict.cpp:1120
+#: ../src/stardict.cpp:1124
 msgid "Search"
 msgstr "搜索"
 
-#: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
+#: ../src/stardict.cpp:1209 ../src/stardict.cpp:1626
 msgid "Full-text search..."
 msgstr "全文检索..."
 
-#: ../src/stardict.cpp:1325
+#: ../src/stardict.cpp:1329
 msgid "Fuzzy query failed, too :-("
 msgstr "模糊查询也失败了 :-("
 
-#: ../src/stardict.cpp:1611
+#: ../src/stardict.cpp:1615
 msgid "Press Enter to list the words that match the pattern."
 msgstr "按回车键将列出符合规则的单词。"
 
-#: ../src/stardict.cpp:1614
-msgid "Press Enter to list the words that match this regular expressions."
+#: ../src/stardict.cpp:1618
+msgid "Press Enter to list the words that match this regular expression."
 msgstr "按回车键将列出匹配此正则表达式的单词。"
 
-#: ../src/stardict.cpp:1618
+#: ../src/stardict.cpp:1622
 msgid "Fuzzy query..."
 msgstr "模糊查询..."
 
-#: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
+#: ../src/stardict.cpp:1890 ../src/stardict.cpp:1995
 msgid "Not found!\n"
 msgstr "没有找到！\n"
 
-#: ../src/stardict.cpp:1987
+#: ../src/stardict.cpp:1991
 msgid "Conversion error!\n"
 msgstr "编码转换出错！\n"
 
-#: ../src/stardict.cpp:2335
+#: ../src/stardict.cpp:2339
 msgid "StarDict is already running. Using the running process."
 msgstr "星际译王已经运行，使用现有进程。"
 
-#: ../src/stardict.cpp:2468
+#: ../src/stardict.cpp:2472
 msgid "- Lookup words"
 msgstr "- 查询单词"
 
-#: ../src/stardict.cpp:2473
+#: ../src/stardict.cpp:2477
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "参数解析失败：%s\n"
 
-#: ../src/utils.cpp:127
+#: ../src/utils.cpp:129
 #, c-format
 msgid "Can not load image. %s"
 msgstr "不能加载图片。%s"
@@ -1665,32 +1675,32 @@ msgid "User dict plug-in loaded.\n"
 msgstr "用户词典插件加载成功。\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:366
 msgid "Dict.cn"
 msgstr "Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:297
 msgid "Dict.cn configuration"
 msgstr "Dict.cn 配置"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
 msgid "Query by XML API."
 msgstr "通过XML接口查询。"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by HTML API."
 msgstr "通过HTML接口查询。"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
 msgid "Dict.cn network dictionary."
 msgstr "Dict.cn网络词典。"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
 msgid "Query result from Dict.cn website."
 msgstr "从Dict.cn网站来查询结果。"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:369
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr "Dict.cn网络词典插件加载成功。\n"
@@ -1913,19 +1923,19 @@ msgstr "显示Man手册。"
 msgid "Man plug-in loaded.\n"
 msgstr "Man虚拟词典插件加载成功。\n"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "PowerWord data parsing"
 msgstr "PowerWord数据解析"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "PowerWord data parsing engine."
 msgstr "PowerWord数据解析引擎。"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "Parse the PowerWord data."
 msgstr "解析PowerWord数据。"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr "PowerWord数据解析插件加载成功。\n"
@@ -1968,7 +1978,7 @@ msgid "Show QQWry IP information."
 msgstr "显示QQWry IP信息。"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-msgid "Show the address information by the IP."
+msgid "Show address information by IP."
 msgstr "根据IP显示地址信息。"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
@@ -2159,12 +2169,12 @@ msgstr "WordNet词典渲染引擎。"
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
 msgid ""
 "Render the WordNet dictionary.\n"
-"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
-"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
-"his open source sharing!"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
 msgstr ""
 "渲染WordNet词典。\n"
-"声明：此插件的引擎来源于由边蓬&lt;tianpmoon@gmail.com&gt;开发的dedict(http://"
+"声明：此插件的引擎来源于由边蓬&lt;tianpmoon@gmail.com&gt;开发的dedict (http://"
 "sevenpie.net)，非常感谢他的开源共享！"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128

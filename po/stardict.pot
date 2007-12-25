@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-05 13:53+0800\n"
+"POT-Creation-Date: 2007-12-20 12:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
 #: ../src/docklet.cpp:196 ../src/mainwin.cpp:477 ../src/splash.cpp:84
-#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2485
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2489
 #: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr ""
@@ -349,11 +349,11 @@ msgid "Unknown data type, please upgrade StarDict!"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1858
 msgid "dict.stardict.org"
 msgstr ""
 
-#: ../src/conf.cpp:226
+#: ../src/conf.cpp:234
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -377,13 +377,23 @@ msgid ""
 msgstr ""
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:253
+#: ../src/conf.cpp:261
 msgid "win32_use_custom_font=0"
 msgstr ""
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:265
+#: ../src/conf.cpp:273
 msgid "win32_custom_font="
+msgstr ""
+
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:286
+msgid "darwin_use_custom_font=0"
+msgstr ""
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:298
+msgid "darwin_custom_font="
 msgstr ""
 
 #. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
@@ -410,7 +420,7 @@ msgstr ""
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
 #: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1125
+#: ../src/stardict.cpp:1129
 msgid "Dictionary Name"
 msgstr ""
 
@@ -639,10 +649,10 @@ msgid "Lock floating window"
 msgstr ""
 
 #: ../src/floatwin.cpp:322 ../src/floatwin.cpp:365 ../src/mainwin.cpp:1952
-#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:686
-#: ../src/stardict.cpp:831 ../src/stardict.cpp:1004 ../src/stardict.cpp:1018
-#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1028 ../src/stardict.cpp:1518
-#: ../src/stardict.cpp:1645 ../src/win32/clipboard.cpp:117
+#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:690
+#: ../src/stardict.cpp:835 ../src/stardict.cpp:1008 ../src/stardict.cpp:1022
+#: ../src/stardict.cpp:1027 ../src/stardict.cpp:1032 ../src/stardict.cpp:1522
+#: ../src/stardict.cpp:1649 ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr ""
 
@@ -864,19 +874,19 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
+#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1356
 msgid "Found no words matching this pattern!"
 msgstr ""
 
-#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
+#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1381
 msgid "Found no words matching this regular expression!"
 msgstr ""
 
-#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
+#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1270
 msgid "There are too many spelling errors :-("
 msgstr ""
 
-#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
+#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1189 ../src/stardict.cpp:1234
 msgid "There are no dictionary articles containing this word. :-("
 msgstr ""
 
@@ -1170,7 +1180,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
+#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2507
 msgid "Dictionary"
 msgstr ""
 
@@ -1289,7 +1299,7 @@ msgid "RealPeopleTTS search path:"
 msgstr ""
 
 #: ../src/prefsdlg.cpp:770
-msgid "_Use TTS program."
+msgid "Enable _TTS program."
 msgstr ""
 
 #: ../src/prefsdlg.cpp:778
@@ -1480,56 +1490,56 @@ msgstr ""
 msgid "Quit an existing instance of stardict"
 msgstr ""
 
-#: ../src/stardict.cpp:1093
+#: ../src/stardict.cpp:1097
 msgid "Full-text Search"
 msgstr ""
 
-#: ../src/stardict.cpp:1120
+#: ../src/stardict.cpp:1124
 msgid "Search"
 msgstr ""
 
-#: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
+#: ../src/stardict.cpp:1209 ../src/stardict.cpp:1626
 msgid "Full-text search..."
 msgstr ""
 
-#: ../src/stardict.cpp:1325
+#: ../src/stardict.cpp:1329
 msgid "Fuzzy query failed, too :-("
 msgstr ""
 
-#: ../src/stardict.cpp:1611
+#: ../src/stardict.cpp:1615
 msgid "Press Enter to list the words that match the pattern."
 msgstr ""
 
-#: ../src/stardict.cpp:1614
-msgid "Press Enter to list the words that match this regular expressions."
+#: ../src/stardict.cpp:1618
+msgid "Press Enter to list the words that match this regular expression."
 msgstr ""
 
-#: ../src/stardict.cpp:1618
+#: ../src/stardict.cpp:1622
 msgid "Fuzzy query..."
 msgstr ""
 
-#: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
+#: ../src/stardict.cpp:1890 ../src/stardict.cpp:1995
 msgid "Not found!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:1987
+#: ../src/stardict.cpp:1991
 msgid "Conversion error!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2335
+#: ../src/stardict.cpp:2339
 msgid "StarDict is already running. Using the running process."
 msgstr ""
 
-#: ../src/stardict.cpp:2468
+#: ../src/stardict.cpp:2472
 msgid "- Lookup words"
 msgstr ""
 
-#: ../src/stardict.cpp:2473
+#: ../src/stardict.cpp:2477
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
 
-#: ../src/utils.cpp:127
+#: ../src/utils.cpp:129
 #, c-format
 msgid "Can not load image. %s"
 msgstr ""
@@ -1587,32 +1597,32 @@ msgid "User dict plug-in loaded.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:366
 msgid "Dict.cn"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:297
 msgid "Dict.cn configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
 msgid "Query by XML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by HTML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
 msgid "Dict.cn network dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:335
 msgid "Query result from Dict.cn website."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:369
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr ""
@@ -1835,19 +1845,19 @@ msgstr ""
 msgid "Man plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "PowerWord data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "PowerWord data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:677
 msgid "Parse the PowerWord data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr ""
@@ -1885,7 +1895,7 @@ msgid "Show QQWry IP information."
 msgstr ""
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-msgid "Show the address information by the IP."
+msgid "Show address information by IP."
 msgstr ""
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
@@ -2076,9 +2086,9 @@ msgstr ""
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
 msgid ""
 "Render the WordNet dictionary.\n"
-"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
-"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
-"his open source sharing!"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
 msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128

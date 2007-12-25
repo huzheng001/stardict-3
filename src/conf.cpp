@@ -50,7 +50,11 @@ AppConf::AppConf() :
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", get_win32_use_custom_font());
 #else
+#ifdef CONFIG_DARWIN
+	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", get_darwin_use_custom_font());
+#else
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", false);
+#endif
 #endif
 	add_entry("/apps/stardict/preferences/network/enable_netdict", true);
 	// Default stardictd server.
@@ -101,7 +105,11 @@ AppConf::AppConf() :
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_win32_custom_font());
 #else
+#ifdef CONFIG_DARWIN
+	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_darwin_custom_font());
+#else
 	add_entry("/apps/stardict/preferences/dictionary/custom_font", std::string());
+#endif
 #endif
 
 	add_entry("/apps/stardict/preferences/dictionary/create_cache_file", true);
@@ -266,6 +274,31 @@ std::string AppConf::get_win32_custom_font()
 	gchar *s = strstr(ch, "win32_custom_font=");
 	if (s) {
 		return (s+ sizeof("win32_custom_font=")-1);
+	}
+	return "";
+}
+#endif
+
+#ifdef CONFIG_DARWIN
+bool AppConf::get_darwin_use_custom_font()
+{
+	// You may translate it to "darwin_use_custom_font=1" for your language.
+	gchar *ch = _("darwin_use_custom_font=0");
+	gchar *s = strstr(ch, "darwin_use_custom_font=");
+	if (s) {
+		if (*(s+ sizeof("darwin_use_custom_font=")-1)=='1')
+			return true;
+	}
+	return false;
+}
+
+std::string AppConf::get_darwin_custom_font()
+{
+	// You may translate it as "darwin_custom_font=STSong 12".
+	gchar *ch = _("darwin_custom_font=");
+	gchar *s = strstr(ch, "darwin_custom_font=");
+	if (s) {
+		return (s+ sizeof("darwin_custom_font=")-1);
 	}
 	return "";
 }
