@@ -62,6 +62,9 @@ private:
 
 	static void on_entry_changed(GtkEntry *entry, TopWin *oTopWin);
 	static void on_entry_activate(GtkEntry *entry, TopWin *oTopWin);
+	static void on_entry_populate_popup(GtkEntry *entry, GtkMenu  *menu, TopWin *oTopWin);
+
+	static void on_clear_history_menu_item_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	
 	static void on_main_menu_preferences_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_dictmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
