@@ -104,6 +104,8 @@ void TopWin::Create(GtkWidget *vbox)
 			  G_CALLBACK (on_entry_changed), this);
 	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "activate",
 			  G_CALLBACK (on_entry_activate), this);
+	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "populate-popup",
+			  G_CALLBACK (on_entry_populate_popup), this);
 	gtk_box_pack_start(GTK_BOX(hbox),WordCombo,true,true,3);
 
 #ifndef CONFIG_GPE
@@ -176,6 +178,26 @@ void TopWin::on_entry_changed(GtkEntry *entry, TopWin *oTopWin)
 void TopWin::on_entry_activate(GtkEntry *entry, TopWin *oTopWin)
 {
 	gpAppFrame->TopWinEnterWord();
+}
+
+void TopWin::on_clear_history_menu_item_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
+{
+	GtkListStore* list_store = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(oTopWin->WordCombo)));
+	gtk_list_store_clear(list_store);
+}
+
+void TopWin::on_entry_populate_popup(GtkEntry *entry, GtkMenu  *menu, TopWin *oTopWin)
+{
+	GtkWidget *menuitem;
+	menuitem = gtk_separator_menu_item_new();
+	gtk_widget_show(menuitem);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("Clear _history"));
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_clear_history_menu_item_activate), oTopWin);
+	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_widget_show(menuitem);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 }
 
 gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin)
@@ -478,7 +500,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 			      "version", VERSION,
 			      "website", "http://stardict.sourceforge.net",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
-			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2007 by Hu Zheng, Evgeniy",
+			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy\n" "Copyright \xc2\xa9 2007-2008 by Hu Zheng",
 			      "authors", (const char **)authors,
 			      "documenters", (const char **)documenters,
 			      "translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

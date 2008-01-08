@@ -68,7 +68,8 @@ void FloatWin::Create()
 	g_signal_connect (G_OBJECT (FloatWindow), "leave_notify_event", G_CALLBACK (vLeaveNotifyCallback), this);
 
 	int transparent=conf->get_int_at("floating_window/transparent");
-	gtk_window_set_opacity(GTK_WINDOW(FloatWindow), (100-transparent)/100.0);
+	if (transparent != 0)
+		gtk_window_set_opacity(GTK_WINDOW(FloatWindow), (100-transparent)/100.0);
 
 	GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(FloatWindow));
 	gint screen_width = gdk_screen_get_width(screen);
