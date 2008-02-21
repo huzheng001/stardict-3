@@ -25,15 +25,15 @@ DockLet::DockLet(GtkWidget *mainwin, bool is_scan_on,
 void DockLet::create_docklet()
 {
 	docklet_ = egg_tray_icon_new("StarDict");
-	box_ = gtk_event_box_new();
+	gtk_widget_add_events (GTK_WIDGET(docklet_), GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 	if (is_hide_state()) {
-		gtk_widget_set_tooltip_text(box_, _("StarDict"));
+		gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict"));
 		image_ = gtk_image_new_from_pixbuf(normal_icon_);
 	} else if (is_scan_on()) {
-		gtk_widget_set_tooltip_text(box_, _("StarDict - Scanning"));
+		gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Scanning"));
 		image_ = gtk_image_new_from_pixbuf(scan_icon_);
 	} else {
-		gtk_widget_set_tooltip_text(box_, _("StarDict - Stopped"));
+		gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Stopped"));
 		image_ = gtk_image_new_from_pixbuf(stop_icon_);
 	}
 
@@ -41,11 +41,10 @@ void DockLet::create_docklet()
 			 G_CALLBACK(on_embedded), this);
 	g_signal_connect(G_OBJECT(docklet_), "destroy",
 			 G_CALLBACK(on_destroyed), this);
-	g_signal_connect(G_OBJECT(box_), "button-press-event",
+	g_signal_connect(G_OBJECT(docklet_), "button-press-event",
 			 G_CALLBACK(on_btn_press), this);
 
-	gtk_container_add(GTK_CONTAINER(box_), image_);
-	gtk_container_add(GTK_CONTAINER(docklet_), box_);
+	gtk_container_add(GTK_CONTAINER(docklet_), image_);
 	gtk_widget_show_all(GTK_WIDGET(docklet_));
 
 	/* ref the docklet_ before we bandy it about the place */
@@ -179,13 +178,13 @@ void DockLet::minimize_to_tray()
 
 void DockLet::scan_on()
 {
-        gtk_widget_set_tooltip_text(box_, _("StarDict - Scanning"));
+        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Scanning"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), scan_icon_);
 }
 
 void DockLet::scan_off()
 {
-        gtk_widget_set_tooltip_text(box_, _("StarDict - Stopped"));
+        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Stopped"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), stop_icon_);
 }
 
@@ -193,7 +192,7 @@ void DockLet::show_normal_icon()
 {
         if (!image_)
                 return;
-        gtk_widget_set_tooltip_text(box_, _("StarDict"));
+        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict"));
         gtk_image_set_from_pixbuf(GTK_IMAGE(image_), normal_icon_);
 }
 

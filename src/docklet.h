@@ -16,7 +16,6 @@ public:
 	void set_scan_mode(bool);
 private:
 	EggTrayIcon *docklet_;
-	GtkWidget *box_;
 	GtkWidget *image_; //icon image.
 	typedef  ResourceWrapper<GtkWidget, GtkWidget, gtk_widget_destroy> GMenu;
         GMenu menu_;
