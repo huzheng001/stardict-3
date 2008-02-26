@@ -25,6 +25,7 @@
 #  include "config.h"
 #endif
 
+#include <cstring>
 #include "file.hpp"
 #include "getuint32.h"
 

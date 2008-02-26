@@ -1,5 +1,7 @@
 #include "stardict_update_info.h"
 #include <glib/gi18n.h>
+#include <cstring>
+#include <stdlib.h>
 
 #ifdef _WIN32
 #include <windows.h>

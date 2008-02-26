@@ -25,6 +25,8 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 
+#include <cstring>
+#include <stdlib.h>
 #include "sockets.hpp"
 #include "md5.h"
 #include "getuint32.h"

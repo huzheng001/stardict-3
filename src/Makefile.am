@@ -14,6 +14,8 @@ SUBDIRS = $(LOCAL_SIGCPP_DIR) lib pixmaps sounds win32 dic treedict
 
 bin_PROGRAMS = stardict
 
+DEFAULT_INCLUDES = -I$(top_builddir)
+
 INCLUDES =							                            \
 	$(STARDICT_CFLAGS)						                    \
 	$(LOCAL_SIGCPP_INCLUDE)	\

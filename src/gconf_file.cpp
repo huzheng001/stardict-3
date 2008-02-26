@@ -22,6 +22,7 @@
 #  include "config.h"
 #endif
 
+#include <memory>
 #include <glib/gi18n.h>
 
 #include "gconf_file.hpp"

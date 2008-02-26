@@ -2,6 +2,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
+#include <cstring>
 #include <string>
 #include <map>
 #include <list>

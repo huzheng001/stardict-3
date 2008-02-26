@@ -1,6 +1,8 @@
 #include "stardict_gucharmap.h"
 #include <glib/gi18n.h>
 #include <gucharmap/gucharmap.h>
+#include <stdlib.h>
+#include <cstring>
 #include <string>
 
 static char *build_dictdata(char type, const char *definition)

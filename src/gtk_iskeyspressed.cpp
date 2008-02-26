@@ -97,7 +97,7 @@ bool gtk_hotkeys::is_pressed(void)
     GDK_BUTTON5_MASK  = 1 << 12,
   */
 
-  mask = GdkModifierType(guint(mask) & (1<<13)-1);
+  mask = GdkModifierType(guint(mask) & ((1<<13)-1));
 
   mask = 
     GdkModifierType(guint(mask) & ~(GDK_LOCK_MASK | GDK_BUTTON1_MASK | GDK_BUTTON2_MASK |

@@ -22,6 +22,7 @@
 #  include "config.h"
 #endif
 
+#include <cstring>
 #include "gtktextviewpango.h"
 #include "utils.h"
 #include "skin.h"//for SkinCursor definition

@@ -28,6 +28,7 @@
 #  include "config.h"
 #endif
 
+#include <cstring>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 

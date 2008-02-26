@@ -26,6 +26,7 @@
 
 #include "data.hpp"
 #include "getuint32.h"
+#include <cstring>
 
 
 DictBase::DictBase()
