@@ -1,5 +1,6 @@
 #include "stardict_wiki2xml.h"
 #include "WIKI2XML.h"
+#include <cstring>
 #include <glib.h>
 
 std::string wiki2xml(std::string &str)

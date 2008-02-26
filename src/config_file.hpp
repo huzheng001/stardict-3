@@ -5,7 +5,7 @@
 #include <list>
 #include <string>
 
-#include "sigc++/sigc++.h"
+#include <sigc++/sigc++.h>
 
 class config_file;
 

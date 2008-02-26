@@ -1,6 +1,7 @@
 #include "stardict_espeak.h"
 #include <espeak/speak_lib.h>
 #include <glib/gi18n.h>
+#include <cstring>
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static std::string voice_engine;

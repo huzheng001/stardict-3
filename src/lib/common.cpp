@@ -24,6 +24,8 @@
 #  include "config.h"
 #endif
 
+#include <cstring>
+#include <stdlib.h>
 #include "common.hpp"
 
 static void parse_description(const char *p, long len, std::string &description)

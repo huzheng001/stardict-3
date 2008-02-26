@@ -3,6 +3,7 @@
 #include <glib/gi18n.h>
 #include <enchant.h>
 #include <pango/pango.h>
+#include <cstring>
 #include <string>
 #include <vector>
 

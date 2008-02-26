@@ -1,5 +1,6 @@
 #include "stardict_xdxf_parsedata.h"
 #include <glib/gi18n.h>
+#include <cstring>
 
 #ifdef _WIN32
 #include <windows.h>

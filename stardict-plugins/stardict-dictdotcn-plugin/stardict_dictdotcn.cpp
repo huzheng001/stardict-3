@@ -1,5 +1,6 @@
 #include "stardict_dictdotcn.h"
 #include <glib/gi18n.h>
+#include <cstring>
 #include <string>
 #include <list>
 

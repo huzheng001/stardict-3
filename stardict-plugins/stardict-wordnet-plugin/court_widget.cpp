@@ -1,6 +1,7 @@
 #include "court_widget.h"
 #include <math.h>
 #include <list>
+#include <cstring>
 
 
 wnobj::wnobj(partic_t & p, unsigned int t) : _p(p), _t(t), highlight(false)

@@ -1,5 +1,6 @@
 #include "stardict_wiki_parsedata.h"
 #include "stardict_wiki2xml.h"
+#include <cstring>
 #include <glib/gi18n.h>
 
 #ifdef _WIN32

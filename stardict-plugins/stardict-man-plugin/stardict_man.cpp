@@ -1,5 +1,6 @@
 #include "stardict_man.h"
 #include <glib/gi18n.h>
+#include <cstring>
 #include <string>
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;

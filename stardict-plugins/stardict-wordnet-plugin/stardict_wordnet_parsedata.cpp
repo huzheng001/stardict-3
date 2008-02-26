@@ -1,4 +1,5 @@
 #include "stardict_wordnet_parsedata.h"
+#include <cstring>
 #include <glib/gi18n.h>
 
 #ifdef _WIN32

@@ -2,6 +2,7 @@
 #  include "config.h"
 #endif
 
+#include <memory>
 #include <cerrno>
 #include <cstdio>
 #include <cstdlib>

@@ -1,6 +1,7 @@
 #include "stardict_wordnet.h"
 #include "court_widget.h"
 #include <glib/gi18n.h>
+#include <cstring>
 
 #ifdef _WIN32
 #include <windows.h>

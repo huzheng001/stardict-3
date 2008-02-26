@@ -3,6 +3,7 @@
 #endif
 
 #include <glib.h>
+#include <cstring>
 #include <cstdlib>
 #include <string>
 

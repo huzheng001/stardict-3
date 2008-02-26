@@ -4,6 +4,7 @@
 
 #include "http_client.h"
 #include "sockets.hpp"
+#include <cstring>
 
 sigc::signal<void, HttpClient *, const char *> HttpClient::on_error_;
 sigc::signal<void, HttpClient *> HttpClient::on_response_;
