@@ -25,7 +25,6 @@ class AppCore;
 #ifdef _WIN32
 #  include "win32/clipboard.h"
 #  include "win32/mouseover.h"
-#  include "win32/hotkey.h"
 #endif
 
 #include "tray.hpp"
@@ -34,6 +33,7 @@ class AppCore;
 #include "readword.h"
 #include "iskeyspressed.hpp"
 #include "dictmanage.h"
+#include "globalhotkeys.h"
 
 extern AppCore *gpAppFrame;
 
@@ -90,8 +90,8 @@ public:
 #ifdef _WIN32
 	Clipboard oClipboard;
 	Mouseover oMouseover;
-	Hotkey oHotkey;
 #endif
+	GlobalHotkeys oHotkey;
 	FloatWin oFloatWin;
 	std::auto_ptr<TrayBase> oDockLet;
 
@@ -145,7 +145,7 @@ public:
 	void ListWords(CurrentIndex* iStartIndex);
 	void ListPreWords(const char*sWord);
 	void ListNextWords(const char*sWord);
-	
+
 	void ListClick(const gchar *word);
 	void PopupPrefsDlg();
 	void PopupDictManageDlg();

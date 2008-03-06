@@ -21,7 +21,7 @@ private:
   GtkWidget *tts_textview;
   GtkWidget *searchwebsite_treeview;
   GtkWidget *use_tts_program_hbox;
- 
+
   GtkWindow *parent_window;
 #ifndef CONFIG_GPE
   GdkPixbuf *stardict_logo;
@@ -41,10 +41,11 @@ private:
 #ifndef _WIN32
   GtkEntry *eTTSCommandline;
 #endif
+  GtkWidget *scan_hotkey_editor, *mainwindow_hotkey_editor;
   const std::list<std::string>& key_combs;
 
 #ifndef CONFIG_GPE
-  GtkTreeModel* create_categories_tree_model ();		
+  GtkTreeModel* create_categories_tree_model ();
   void create_categories_tree(void);
   void setup_logo_page();
 #endif
@@ -64,9 +65,9 @@ private:
   void setup_floatwin_size_page();
 #endif
   GtkWidget* create_notebook ();
-  
+
   void write_mainwin_searchwebsite_list();
-  
+
   static void response_handler (GtkDialog *dialog, gint res_id, PrefsDlg *oPrefsDlg);
 #ifndef CONFIG_GPE
   static void categories_tree_selection_cb (GtkTreeSelection *selection, PrefsDlg *oPrefsDlg);
@@ -78,6 +79,8 @@ private:
   static void on_setup_dictionary_scan_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #ifdef _WIN32
   static void on_setup_dictionary_scan_clipboard_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#endif
+#ifndef CONFIG_DARWIN
   static void on_setup_dictionary_use_scan_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
   static void on_setup_dictionary_scan_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
@@ -101,6 +104,8 @@ private:
   static void on_setup_mainwin_startup_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #ifdef _WIN32
   static void on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#endif
+#ifndef CONFIG_DARWIN
   static void on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
   static void on_setup_mainwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg);

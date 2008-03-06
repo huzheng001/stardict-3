@@ -167,10 +167,10 @@ void AppCore::on_change_scan(bool val)
 }
 
 void AppCore::on_maximize()
-{       
+{
 	if (oTopWin.get_text()[0]) {
 //so user can input word directly.
-		gtk_widget_grab_focus(oMidWin.oTextWin.view->widget()); 
+		gtk_widget_grab_focus(oMidWin.oTextWin.view->widget());
 	} else {
 		//this won't change selection text.
 		oTopWin.grab_focus();
@@ -297,7 +297,7 @@ void AppCore::Create(gchar *queryword)
 	GetDictList(load_list);
 	oLibs.load(load_list);
 	oLibs.set_show_progress(&gtk_show_progress);
-    
+
 	oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
 	const std::string &user = conf->get_string_at("network/user");
 	const std::string &md5passwd = conf->get_string_at("network/md5passwd");
@@ -371,8 +371,8 @@ void AppCore::Create(gchar *queryword)
 #ifdef _WIN32
 	oClipboard.Init();
 	oMouseover.Init();
-	oHotkey.Init();
 #endif
+	oHotkey.Init();
 
 	if (scan) {
 		oSelection.start();
@@ -383,12 +383,16 @@ void AppCore::Create(gchar *queryword)
 		oMouseover.start();
 #endif
 	}
-#ifdef _WIN32
-	if (conf->get_bool_at("dictionary/use_scan_hotkey"))
-		oHotkey.start_scan();
-	if (conf->get_bool_at("dictionary/use_mainwindow_hotkey"))
-		oHotkey.start_mainwindow();
-#endif
+	if (conf->get_bool_at("dictionary/use_scan_hotkey")) {
+		const std::string &hotkey = conf->get_string_at(
+		  "dictionary/scan_hotkey");
+		oHotkey.start_scan(hotkey.c_str());
+	}
+	if (conf->get_bool_at("dictionary/use_mainwindow_hotkey")) {
+		const std::string &hotkey = conf->get_string_at(
+		  "dictionary/mainwindow_hotkey");
+		oHotkey.start_mainwindow(hotkey.c_str());
+	}
 
 	bool hide=conf->get_bool_at("main_window/hide_on_startup");
 
@@ -567,7 +571,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 			GtkTreeModel *model;
 			GtkTreeIter iter;
 
-			GtkTreeSelection *selection = 
+			GtkTreeSelection *selection =
 				gtk_tree_view_get_selection(oAppCore->oMidWin.oIndexWin.oListWin.treeview_);
 			if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
 				if (gtk_tree_model_iter_has_child(model, &iter)) {
@@ -1702,7 +1706,7 @@ void AppCore::ListWords(CurrentIndex* iIndex)
 
 void AppCore::ListPreWords(const char*sWord)
 {
-	oMidWin.oIndexWin.oListWin.Clear();	
+	oMidWin.oIndexWin.oListWin.Clear();
 	CurrentIndex *iPreIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * query_dictmask.size());
 	const gchar *preword = oLibs.poGetPreWord(sWord, iPreIndex, query_dictmask, 0);
 	if (preword) {
@@ -2050,7 +2054,7 @@ void AppCore::reload_dicts()
 	GetDictList(load_list);
 	oLibs.reload(load_list, conf->get_bool_at("dictionary/enable_collation"), conf->get_int_at("dictionary/collate_function"));
 	UpdateDictMask();
-	
+
 	const gchar *sWord = oTopWin.get_text();
 
 	if (sWord && sWord[0])
@@ -2092,7 +2096,7 @@ void AppCore::PopupPluginManageDlg()
 		}
 		if (dict_changed) {
 			UpdateDictMask();
-	
+
 			const gchar *sWord = oTopWin.get_text();
 			if (sWord && sWord[0])
 				TopWinWordChange(sWord);
@@ -2116,8 +2120,8 @@ void AppCore::End()
 #ifdef _WIN32
 	oClipboard.End();
 	oMouseover.End();
-	oHotkey.End();
 #endif
+	oHotkey.End();
 	oFloatWin.End();
 
 	oDockLet.reset(0);
@@ -2389,7 +2393,7 @@ static gboolean save_yourself_cb (GnomeClient       *client,
     	if (text[0]) {
 		word = g_strdup(text);
         	argv[argc++] = word;
-	}	
+	}
 
     gnome_client_set_restart_command(client, argc, argv);
     gnome_client_set_clone_command(client, argc, argv);

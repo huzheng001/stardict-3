@@ -83,6 +83,10 @@ stardict_SOURCES = 			                \
 	progresswin.cpp progresswin.hpp \
 	tray.cpp tray.hpp \
 	dictmanage.cpp dictmanage.h	\
+	eggaccelerators.cpp eggaccelerators.h	\
+	globalhotkeys.cpp globalhotkeys.h	\
+	hotkeyeditor.c hotkeyeditor.h	\
+	tomboykeybinder.cpp tomboykeybinder.h	\
 	desktop.cpp desktop.hpp
 
 if GNOME_SUPPORT

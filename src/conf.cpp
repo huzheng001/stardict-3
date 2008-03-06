@@ -1,4 +1,4 @@
-/* 
+/*
  * This file part of StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
  *
@@ -43,7 +43,7 @@ std::auto_ptr<AppConf> conf;
 std::string gStarDictDataDir;
 
 //---------------------------------------------------------------------------------
-AppConf::AppConf() : 
+AppConf::AppConf() :
 	cf(static_cast<config_file *>(PlatformFactory::create_class_by_name("config_file")))
 {
 	add_entry("/apps/stardict/preferences/main_window/maximized", false);
@@ -71,14 +71,18 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
-	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string());	
+	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
 	add_entry("/apps/stardict/preferences/dictionary/markup_search_word", false);
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/scan_clipboard", false);
+#endif
+#ifndef CONFIG_DARWIN
 	add_entry("/apps/stardict/preferences/dictionary/use_scan_hotkey", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_mainwindow_hotkey", true);
+	add_entry("/apps/stardict/preferences/dictionary/scan_hotkey", std::string("<Ctrl><Alt>x"));
+ 	add_entry("/apps/stardict/preferences/dictionary/mainwindow_hotkey", std::string("<Ctrl><Alt>z"));
 #endif
 	add_entry("/apps/stardict/preferences/notification_area_icon/query_in_floatwin", true);
 	add_entry("/apps/stardict/preferences/dictionary/only_scan_while_modifier_key", false);
@@ -127,7 +131,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/history", get_default_history_filename());
 	add_entry("/apps/stardict/preferences/dictionary/only_export_word", true);
 	add_entry("/apps/stardict/preferences/dictionary/export_file", get_default_export_filename());
-	
+
 	add_entry("/apps/stardict/preferences/main_window/search_website_list", std::list<std::string>());
 	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>());
 	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>());
@@ -164,7 +168,7 @@ AppConf::~AppConf()
 		delete it->second;
 }
 //---------------------------------------------------------------------------------
-static std::pair<std::string, std::string> split(const std::string& s) 
+static std::pair<std::string, std::string> split(const std::string& s)
 {
 	std::string::size_type pos=s.rfind("/");
 	std::pair<std::string, std::string> res;
@@ -174,7 +178,7 @@ static std::pair<std::string, std::string> split(const std::string& s)
 		pos=s.length();
 
 	res.first=s.substr(0, pos);
-	
+
 	return res;
 }
 //---------------------------------------------------------------------------------
@@ -188,9 +192,9 @@ void AppConf::notify_add(const char *name, const sigc::slot<void, const baseconf
 //---------------------------------------------------------------------------------
 //load preference
 void AppConf::Load()
-{	
+{
 	for (cache_t::iterator p=cache.begin(); p!=cache.end(); ++p) {
-		std::pair<std::string, std::string> name = split(p->first);	
+		std::pair<std::string, std::string> name = split(p->first);
 		p->second->load(*cf, name.first.c_str(), name.second.c_str());
 	}
 	const std::list<std::string> &list=
@@ -241,7 +245,7 @@ std::list<std::string> AppConf::get_default_search_website_list()
 		"WebCrawler	http://www.webcrawler.com	http://www.webcrawler.com/cgi-bin/WebQuery?searchText=%s\n"
 		"Google	http://www.google.com	http://www.google.com/search?q=%s\n"
 		"Yahoo	http://search.yahoo.com	http://search.yahoo.com/bin/search?p=%s\n"
-		"CMU	http://www.speech.cs.cmu.edu	http://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"	
+		"CMU	http://www.speech.cs.cmu.edu	http://www.speech.cs.cmu.edu/cgi-bin/cmudict?in=%s\n"
 		);
 //TODO: use split instead?
 	gchar *p = default_website;
