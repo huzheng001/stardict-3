@@ -17,5 +17,10 @@ Q) How the show the correct phonetics in some babylon dictionaries?
 A) Download http://stardict.sourceforge.net/files/ksphonet.ttf and install it. In linux, you can put it into ~/.fonts/ directory.
 
 Q) How to compile StarDict on Windows?
-A) read README.win32.
+A) read doc/README.win32
 
+Q) How to compile StarDict on Mac OS X?
+A) read doc/Readme.mac
+
+Q) Why I need to select another words then select the original words again to pop-up the query dialog?
+A) This only happen on some applications such as firefox or KDE programs, and the gnome terminal too. Because when you un-select the words, the application didn't clear the selection buffer, so StarDict can't sense your un-select, then you need to select another words and select the original words to make StarDict know that the selection buffer has changed. All the GTK software(standard widget) haven't this problem. OK, to summarize, this is Not the bug of StarDict, and it can only be fixed by the corresponding applications.
