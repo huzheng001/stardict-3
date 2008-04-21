@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: StarDict 3.0 beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-05 13:51+0800\n"
-"PO-Revision-Date: 2007-11-12 23:25+0100\n"
+"PO-Revision-Date: 2008-04-19 13:04+0200\n"
 "Last-Translator:  <>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -399,7 +399,7 @@ msgstr "Vous ne pouvez choisir que %d dictionnaires."
 #: ../src/dictmanagedlg.cpp:2205
 #: ../src/stardict.cpp:1125
 msgid "Dictionary Name"
-msgstr "Nom des dictionnaires"
+msgstr "Nom du dictionnaire"
 
 #: ../src/dictmanagedlg.cpp:191
 #: ../src/dictmanagedlg.cpp:803
@@ -718,7 +718,7 @@ msgstr "Montrer le menu principal (Alt+M)"
 
 #: ../src/mainwin.cpp:474
 msgid "translator_credits"
-msgstr "Andromaque & Hector <a href=\"cdurpp@ifrance.com\">"
+msgstr "Andromaque & Hector : cdurpp@ifrance.com"
 
 #: ../src/mainwin.cpp:480
 msgid "StarDict is an international dictionary for GNOME."
@@ -730,7 +730,7 @@ msgstr "Préfér_ences"
 
 #: ../src/mainwin.cpp:524
 msgid "Manage _Plugins"
-msgstr "Gestion des Dictionnaires"
+msgstr "Gestion des greffons"
 
 #: ../src/mainwin.cpp:533
 msgid "_New Version"
