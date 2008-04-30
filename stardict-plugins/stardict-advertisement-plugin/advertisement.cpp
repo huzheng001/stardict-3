@@ -7,6 +7,7 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <cstring>
 #include "../../src/lib/getuint32.h"
 
 #ifdef _WIN32

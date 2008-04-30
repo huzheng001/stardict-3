@@ -2,6 +2,10 @@
 #  include "config.h"
 #endif
 
+#if HAVE_STRING_H
+#include <string.h>
+#endif
+
 #include "http_client.h"
 #include "sockets.hpp"
 #include <cstring>

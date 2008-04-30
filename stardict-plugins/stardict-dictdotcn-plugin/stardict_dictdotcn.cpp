@@ -3,6 +3,7 @@
 #include <cstring>
 #include <string>
 #include <list>
+#include <string.h>
 
 #ifdef _WIN32
 #include <windows.h>

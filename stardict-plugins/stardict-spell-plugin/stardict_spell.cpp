@@ -6,6 +6,7 @@
 #include <cstring>
 #include <string>
 #include <vector>
+#include <string.h>
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static EnchantBroker *broker = NULL;

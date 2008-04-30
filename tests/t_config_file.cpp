@@ -10,6 +10,7 @@
 #include <iterator>
 #include <iostream>
 #include <gtk/gtk.h>
+#include <memory>
 
 #include "config_file.hpp"
 #include "inifile.hpp"
