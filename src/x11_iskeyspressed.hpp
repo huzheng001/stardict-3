@@ -4,7 +4,7 @@
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include <gtk/gtk.h>
-
+#include <memory>
 #include "iskeyspressed.hpp"
 
 typedef enum { SYM, CODE, BUTTON } KeyType_t;

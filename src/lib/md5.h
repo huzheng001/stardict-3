@@ -6,10 +6,15 @@ extern "C"
 {
 #endif                          /* __cplusplus */
 
-#ifdef __alpha
-typedef unsigned int uint32;
+#ifdef HAVE_CONFIG_H
+#include <stdint.h>
+#endif
+
+#ifdef HAVE_STDINT_H
+	typedef uint32_t uint32;
 #else
-typedef unsigned long uint32;
+	/* A.Leo.: this wont work on 16 bits platforms ;) */
+	typedef unsigned uint32;
 #endif
 
 struct MD5Context {

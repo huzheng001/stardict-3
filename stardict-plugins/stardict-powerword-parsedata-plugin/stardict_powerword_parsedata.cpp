@@ -1,6 +1,7 @@
 #include "stardict_powerword_parsedata.h"
 #include <cstring>
 #include <glib/gi18n.h>
+#include <string.h>
 
 #ifdef _WIN32
 #include <windows.h>

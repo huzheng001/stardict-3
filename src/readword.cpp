@@ -2,6 +2,8 @@
 #  include "config.h"
 #endif
 
+#include <stdlib.h>
+
 #include <cstring>
 #include <string>
 

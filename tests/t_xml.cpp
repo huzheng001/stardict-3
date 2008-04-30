@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
+#include <string.h>
 
 
 static void xml_decode(const char *str, std::string& decoded)

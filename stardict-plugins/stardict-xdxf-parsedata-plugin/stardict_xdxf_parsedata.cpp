@@ -2,6 +2,9 @@
 #include <glib/gi18n.h>
 #include <cstring>
 
+#include <stdlib.h>
+#include <string.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #endif

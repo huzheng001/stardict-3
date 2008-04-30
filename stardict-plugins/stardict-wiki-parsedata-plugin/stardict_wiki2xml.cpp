@@ -2,6 +2,7 @@
 #include "WIKI2XML.h"
 #include <cstring>
 #include <glib.h>
+#include <string.h>
 
 std::string wiki2xml(std::string &str)
 {
