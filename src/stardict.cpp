@@ -1962,7 +1962,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			}
 		}
 	} else if (engine_index == 0) {
-		#define GoogleTranslateStartMark "<div id=result_box dir=ltr>"
+		#define GoogleTranslateStartMark "<div id=result_box dir=\"ltr\">"
 
 		char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
 		if (p) {
