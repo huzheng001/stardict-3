@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-05 13:52+0800\n"
+"POT-Creation-Date: 2009-07-05 06:08+0800\n"
 "PO-Revision-Date: 2005-04-04 10:55-0700\n"
 "Last-Translator: Steven Michael Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -40,8 +40,8 @@ msgstr "Amagambo"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
-#: ../src/docklet.cpp:196 ../src/mainwin.cpp:477 ../src/splash.cpp:84
-#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2485
+#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/splash.cpp:84
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:340 ../src/stardict.cpp:2504
 #: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr ""
@@ -419,11 +419,11 @@ msgid "Unknown data type, please upgrade StarDict!"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
 msgid "dict.stardict.org"
 msgstr ""
 
-#: ../src/conf.cpp:226
+#: ../src/conf.cpp:238
 #, fuzzy, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -447,15 +447,27 @@ msgid ""
 msgstr "org. HTML. Urubuga. Urubuga. google. google. comsearch."
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:253
+#: ../src/conf.cpp:265
 #, fuzzy
 msgid "win32_use_custom_font=0"
 msgstr "Kunoza Intego- nyuguti"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:265
+#: ../src/conf.cpp:277
 #, fuzzy
 msgid "win32_custom_font="
+msgstr "Kunoza Intego- nyuguti"
+
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:290
+#, fuzzy
+msgid "darwin_use_custom_font=0"
+msgstr "Kunoza Intego- nyuguti"
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:302
+#, fuzzy
+msgid "darwin_custom_font="
 msgstr "Kunoza Intego- nyuguti"
 
 #. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
@@ -482,7 +494,7 @@ msgstr ""
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
 #: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1125
+#: ../src/stardict.cpp:1144
 msgid "Dictionary Name"
 msgstr ""
 
@@ -503,7 +515,7 @@ msgstr "Inkoranyamagambo"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Amagenamiterere INGARUKA i Komeza>> Igihe Gukoresha"
 
-#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1208
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
 msgid "Loading..."
 msgstr ""
 
@@ -590,7 +602,7 @@ msgstr "Izina:"
 msgid "Add dictionary"
 msgstr "Inkoranyamagambo"
 
-#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1281
+#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
 msgid "Add"
 msgstr "Kongera"
 
@@ -630,7 +642,7 @@ msgstr ""
 msgid "D_ict List"
 msgstr "Urutonde"
 
-#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:518
+#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
 #, fuzzy
 msgid "Manage _Dict"
 msgstr "Inkoranyamagambo"
@@ -689,11 +701,11 @@ msgstr "Kubara amagambo"
 msgid "Download Now!"
 msgstr ""
 
-#: ../src/docklet.cpp:33 ../src/docklet.cpp:182 ../src/win32/systray.cpp:258
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
 msgid "StarDict - Scanning"
 msgstr ""
 
-#: ../src/docklet.cpp:36 ../src/docklet.cpp:188 ../src/win32/systray.cpp:263
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:263
 msgid "StarDict - Stopped"
 msgstr ""
 
@@ -701,46 +713,46 @@ msgstr ""
 # svx/inc\globlmn.hrc:ITEM_INSERT_TWAIN_MENU.SID_SCAN.text
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/sdi\svxslots.src:SID_SCAN.text
-#: ../src/docklet.cpp:96 ../src/mainwin.cpp:2722
+#: ../src/docklet.cpp:95 ../src/mainwin.cpp:2744
 #, fuzzy
 msgid "_Scan"
 msgstr "Gusikana"
 
-#: ../src/docklet.cpp:106 ../src/mainwin.cpp:555
+#: ../src/docklet.cpp:105 ../src/mainwin.cpp:577
 #, fuzzy
 msgid "_Quit"
 msgstr "Kuvamo"
 
-#: ../src/floatwin.cpp:125
+#: ../src/floatwin.cpp:126
 #, fuzzy
 msgid "Query in the main window"
 msgstr "in i Idirishya"
 
-#: ../src/floatwin.cpp:134
+#: ../src/floatwin.cpp:135
 #, fuzzy
 msgid "Save to file"
 msgstr "Kubika Kuri IDOSIYE"
 
-#: ../src/floatwin.cpp:142 ../src/mainwin.cpp:1561
+#: ../src/floatwin.cpp:143
 #, fuzzy
 msgid "Pronounce the word"
 msgstr "i ijambo"
 
-#: ../src/floatwin.cpp:152
+#: ../src/floatwin.cpp:153
 #, fuzzy
 msgid "Stop selection-scanning"
 msgstr "Ihitamo"
 
-#: ../src/floatwin.cpp:164
+#: ../src/floatwin.cpp:165
 msgid "Help"
 msgstr "Gufasha"
 
-#: ../src/floatwin.cpp:172 ../src/mainwin.cpp:2755
+#: ../src/floatwin.cpp:173 ../src/mainwin.cpp:2777
 #: ../src/win32/systray.cpp:111
 msgid "Quit"
 msgstr "Kuvamo"
 
-#: ../src/floatwin.cpp:186
+#: ../src/floatwin.cpp:187
 #, fuzzy
 msgid "Lock floating window"
 msgstr "Bihindagurika Idirishya"
@@ -749,37 +761,37 @@ msgstr "Bihindagurika Idirishya"
 # sw/source\ui\dochdl\dochdl.src:STR_NOGLOS2.text
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\uiview\view.src:STR_NOGLOS2.text
-#: ../src/floatwin.cpp:322 ../src/floatwin.cpp:365 ../src/mainwin.cpp:1952
-#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:686
-#: ../src/stardict.cpp:831 ../src/stardict.cpp:1004 ../src/stardict.cpp:1018
-#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1028 ../src/stardict.cpp:1518
-#: ../src/stardict.cpp:1645 ../src/win32/clipboard.cpp:117
+#: ../src/floatwin.cpp:323 ../src/floatwin.cpp:366 ../src/mainwin.cpp:1974
+#: ../src/mainwin.cpp:2004 ../src/selection.cpp:194 ../src/stardict.cpp:705
+#: ../src/stardict.cpp:850 ../src/stardict.cpp:1023 ../src/stardict.cpp:1037
+#: ../src/stardict.cpp:1042 ../src/stardict.cpp:1047 ../src/stardict.cpp:1537
+#: ../src/stardict.cpp:1664 ../src/win32/clipboard.cpp:117
 #, fuzzy
 msgid "<Not Found!>"
 msgstr "<ntibyabonetse"
 
-#: ../src/floatwin.cpp:444
+#: ../src/floatwin.cpp:445
 #, fuzzy
 msgid "Fuzzy query"
 msgstr "Ikibazo#"
 
-#: ../src/floatwin.cpp:450
+#: ../src/floatwin.cpp:451
 #, fuzzy
 msgid "has succeeded.\n"
 msgstr "Byakunze"
 
-#: ../src/floatwin.cpp:452
+#: ../src/floatwin.cpp:453
 #, fuzzy
 msgid "Found 1 word:\n"
 msgstr "1. ijambo"
 
-#: ../src/floatwin.cpp:454
+#: ../src/floatwin.cpp:455
 #, fuzzy, c-format
 msgid "Found %d words:\n"
 msgstr "Amagambo:"
 
 # dbaccess/source/ui/inc/toolbox.hrc:MID_SBA_QRY_COPY.text
-#: ../src/floatwin.cpp:942
+#: ../src/floatwin.cpp:943
 #, fuzzy
 msgid "_Copy"
 msgstr "Gukoporora"
@@ -788,22 +800,22 @@ msgstr "Gukoporora"
 # svx/inc\globlmn.hrc:ITEM_INSERT_TWAIN_MENU.SID_SCAN.text
 # #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
 # svx/sdi\svxslots.src:SID_SCAN.text
-#: ../src/floatwin.cpp:948
+#: ../src/floatwin.cpp:949
 #, fuzzy
 msgid "_Save"
 msgstr "Gusikana"
 
-#: ../src/floatwin.cpp:953 ../src/mainwin.cpp:2147
+#: ../src/floatwin.cpp:954 ../src/mainwin.cpp:2169
 #, fuzzy
 msgid "_Query"
 msgstr "Ikibazo"
 
-#: ../src/floatwin.cpp:960
+#: ../src/floatwin.cpp:961
 #, fuzzy
 msgid "_Play"
 msgstr "Gukina"
 
-#: ../src/floatwin.cpp:968
+#: ../src/floatwin.cpp:969
 msgid "_Fuzzy Query"
 msgstr ""
 
@@ -812,48 +824,52 @@ msgstr ""
 msgid "Clear the search box"
 msgstr "i Gushaka Agasanduku"
 
-#: ../src/mainwin.cpp:118
+#: ../src/mainwin.cpp:120
 msgid "Fuzzy Query"
 msgstr ""
 
-#: ../src/mainwin.cpp:130
+#: ../src/mainwin.cpp:132
 #, fuzzy
 msgid "Go Back - Right button: history (Alt+Left)"
 msgstr "Akabuto Urutonde"
 
-#: ../src/mainwin.cpp:145
+#: ../src/mainwin.cpp:147
 #, fuzzy
 msgid "Show the main menu (Alt+M)"
 msgstr "i Ibikubiyemo"
 
-#: ../src/mainwin.cpp:474
+#: ../src/mainwin.cpp:195
+msgid "Clear _history"
+msgstr ""
+
+#: ../src/mainwin.cpp:496
 msgid "translator_credits"
 msgstr ""
 
-#: ../src/mainwin.cpp:480
+#: ../src/mainwin.cpp:502
 #, fuzzy
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "ni Mpuzamahanga Inkoranyamagambo kugirango"
 
-#: ../src/mainwin.cpp:511
+#: ../src/mainwin.cpp:533
 #, fuzzy
 msgid "Pr_eferences"
 msgstr "Ibyahiswemo"
 
-#: ../src/mainwin.cpp:524
+#: ../src/mainwin.cpp:546
 msgid "Manage _Plugins"
 msgstr ""
 
-#: ../src/mainwin.cpp:533
+#: ../src/mainwin.cpp:555
 msgid "_New Version"
 msgstr ""
 
-#: ../src/mainwin.cpp:541
+#: ../src/mainwin.cpp:563
 #, fuzzy
 msgid "_Help"
 msgstr "Ifashayobora"
 
-#: ../src/mainwin.cpp:547
+#: ../src/mainwin.cpp:569
 #, fuzzy
 msgid "_About"
 msgstr "Bigyanye"
@@ -864,71 +880,76 @@ msgstr "Bigyanye"
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCJK.List.text
 # #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
 # officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....DefaultFontCTL.List.text
-#: ../src/mainwin.cpp:1259
+#: ../src/mainwin.cpp:1281
 #, fuzzy
 msgid "List"
 msgstr "Urutonde"
 
-#: ../src/mainwin.cpp:1270
+#: ../src/mainwin.cpp:1292
 msgid "Result"
 msgstr ""
 
-#: ../src/mainwin.cpp:1280
+#: ../src/mainwin.cpp:1302
 msgid "Full-Text Translation"
 msgstr ""
 
-#: ../src/mainwin.cpp:1291
+#: ../src/mainwin.cpp:1313
 msgid "Tree"
 msgstr ""
 
-#: ../src/mainwin.cpp:1302
+#: ../src/mainwin.cpp:1324
 #, fuzzy
 msgid "Choose dict group"
 msgstr "Inkoranyamagambo Intego- nyuguti"
 
-#: ../src/mainwin.cpp:1315
+#: ../src/mainwin.cpp:1337
 #, fuzzy
 msgid "Next word (Alt+Down)"
 msgstr "ijambo"
 
-#: ../src/mainwin.cpp:1325
+#: ../src/mainwin.cpp:1347
 #, fuzzy
 msgid "Previous word (Alt+Up)"
 msgstr "ijambo"
 
-#: ../src/mainwin.cpp:1377
+#: ../src/mainwin.cpp:1399
 msgid "Enable Net Dict"
 msgstr ""
 
-#: ../src/mainwin.cpp:1514
+#: ../src/mainwin.cpp:1536
 #, fuzzy
 msgid "Show the word list"
 msgstr "i ijambo Urutonde"
 
-#: ../src/mainwin.cpp:1529
+#: ../src/mainwin.cpp:1551
 #, fuzzy
 msgid "Hide the word list"
 msgstr "i ijambo Urutonde"
 
-#: ../src/mainwin.cpp:1547
+#: ../src/mainwin.cpp:1569
 msgid "Copy"
 msgstr "Guporora"
 
-#: ../src/mainwin.cpp:1575
+#: ../src/mainwin.cpp:1583
+#, fuzzy
+msgid "Pronounce the word (Enter)"
+msgstr "i ijambo"
+
+#: ../src/mainwin.cpp:1597
 #, fuzzy
 msgid "Save to file (Alt+E)"
 msgstr "Kubika Kuri IDOSIYE"
 
-#: ../src/mainwin.cpp:1585
+#: ../src/mainwin.cpp:1607
 msgid "Print"
 msgstr "Gucapa"
 
-#: ../src/mainwin.cpp:1600
+#: ../src/mainwin.cpp:1622
 #, fuzzy
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "in i Insobanuro"
 
-#: ../src/mainwin.cpp:1786
+#: ../src/mainwin.cpp:1808
 #, fuzzy, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -938,7 +959,7 @@ msgstr ""
 "Inkoranyamagambo ni Gyayo Kuri Webu Na Gufungura Inkoranyamagambo HTTP "
 "Cyuzuye"
 
-#: ../src/mainwin.cpp:1809
+#: ../src/mainwin.cpp:1831
 #, fuzzy
 msgid ""
 "        Welcome to StarDict!\n"
@@ -967,7 +988,7 @@ msgstr ""
 "Itangiriro Na: Kuri a Ikibazo# i Bihindagurika Idirishya Raporo a ijambo OYA "
 "Byabonetse MAHARAKUBIRI a Ikibazo#"
 
-#: ../src/mainwin.cpp:1826
+#: ../src/mainwin.cpp:1848
 #, fuzzy
 msgid ""
 "       Welcome to StarDict\n"
@@ -1021,227 +1042,227 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr "2.. 3.. 4.. 4.."
 
-#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
+#: ../src/mainwin.cpp:1996 ../src/stardict.cpp:1371
 #, fuzzy
 msgid "Found no words matching this pattern!"
 msgstr "Oya Amagambo iyi Ishusho"
 
-#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
+#: ../src/mainwin.cpp:1998 ../src/stardict.cpp:1396
 #, fuzzy
 msgid "Found no words matching this regular expression!"
 msgstr "Oya Amagambo iyi Ishusho"
 
-#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
+#: ../src/mainwin.cpp:2000 ../src/stardict.cpp:1285
 #, fuzzy
 msgid "There are too many spelling errors :-("
 msgstr "Ivuganyuguti Amakosa"
 
-#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
+#: ../src/mainwin.cpp:2002 ../src/stardict.cpp:1204 ../src/stardict.cpp:1249
 msgid "There are no dictionary articles containing this word. :-("
 msgstr ""
 
-#: ../src/mainwin.cpp:2068
+#: ../src/mainwin.cpp:2090
 #, fuzzy, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Umwandiko OYA Byabonetse"
 
-#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2406
+#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2428
 #, fuzzy
 msgid "_Pronounce"
 msgstr "i ijambo"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
 msgid "Arabic"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185
+#: ../src/mainwin.cpp:2207
 #, fuzzy
 msgid "Chinese"
 msgstr "Guhitamo"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2192 ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2214 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2190 ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2186 ../src/mainwin.cpp:2188
-#: ../src/mainwin.cpp:2196 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2200
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204 ../src/mainwin.cpp:2206
-#: ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
+#: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
 #: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2234
-#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248
+#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2240 ../src/mainwin.cpp:2242
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250
 #: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
-#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2262
-#: ../src/mainwin.cpp:2264 ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2271 ../src/mainwin.cpp:2273 ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2279 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2283
-#: ../src/mainwin.cpp:2285 ../src/mainwin.cpp:2287 ../src/mainwin.cpp:2289
-#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2268 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2276 ../src/mainwin.cpp:2278
+#: ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2282 ../src/mainwin.cpp:2284
+#: ../src/mainwin.cpp:2286 ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2295 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2307 ../src/mainwin.cpp:2309 ../src/mainwin.cpp:2311
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "English"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2198
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228 ../src/mainwin.cpp:2230
-#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2254
-#: ../src/mainwin.cpp:2256 ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2264
-#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2285
-#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2276
+#: ../src/mainwin.cpp:2278 ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2286
+#: ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
 msgid "French"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "German"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Italian"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303
-#: ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
+#: ../src/mainwin.cpp:2329
 msgid "Japanese"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "Korean"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Portuguese"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Russian"
 msgstr ""
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Spanish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Dutch"
 msgstr ""
 
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2301
 msgid "Greek"
 msgstr ""
 
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Swedish"
 msgstr ""
 
-#: ../src/mainwin.cpp:2329
+#: ../src/mainwin.cpp:2351
 #, fuzzy
 msgid "Google Translate"
 msgstr "ku"
 
-#: ../src/mainwin.cpp:2330
+#: ../src/mainwin.cpp:2352
 #, fuzzy
 msgid "Yahoo Translate"
 msgstr "ku"
 
-#: ../src/mainwin.cpp:2331
+#: ../src/mainwin.cpp:2353
 msgid "Altavista Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2332
+#: ../src/mainwin.cpp:2354
 msgid "SystranBox Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2333
+#: ../src/mainwin.cpp:2355
 msgid "Excite Japan Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2428
+#: ../src/mainwin.cpp:2450
 msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2459
+#: ../src/mainwin.cpp:2481
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2492
+#: ../src/mainwin.cpp:2514
 #, fuzzy
 msgid "_Translate"
 msgstr "ku"
 
-#: ../src/mainwin.cpp:2514
+#: ../src/mainwin.cpp:2536
 msgid "Powered by -"
 msgstr ""
 
-#: ../src/mainwin.cpp:2639
+#: ../src/mainwin.cpp:2661
 #, fuzzy
 msgid "Please input some words to translate."
 msgstr "Iyinjiza i Webu Izina:"
 
-#: ../src/mainwin.cpp:2654
+#: ../src/mainwin.cpp:2676
 msgid "Connecting..."
 msgstr ""
 
-#: ../src/mainwin.cpp:2731
+#: ../src/mainwin.cpp:2753
 #, fuzzy
 msgid "Scan the selection"
 msgstr "i Ihitamo"
 
-#: ../src/mainwin.cpp:2745
+#: ../src/mainwin.cpp:2767
 #, fuzzy
 msgid "Show info"
 msgstr "Ibisobanuro"
 
-#: ../src/mainwin.cpp:2797 ../src/prefsdlg.cpp:1833
+#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:1895
 msgid "Preferences"
 msgstr "Ibyahisemo"
 
-#: ../src/mainwin.cpp:2807
+#: ../src/mainwin.cpp:2829
 #, fuzzy
 msgid "Manage dictionaries"
 msgstr "Inkoranyamagambo"
 
-#: ../src/mainwin.cpp:2817
+#: ../src/mainwin.cpp:2839
 #, fuzzy
 msgid "Go to the StarDict website"
 msgstr "Kuri i Webu"
 
-#: ../src/mainwin.cpp:2829
+#: ../src/mainwin.cpp:2851
 #, fuzzy
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Inkoranyamagambo Akabuto Webu Urutonde"
@@ -1297,367 +1318,368 @@ msgstr ""
 msgid "Manage Plugins"
 msgstr "Inkoranyamagambo"
 
-#: ../src/prefsdlg.cpp:75 ../src/prefsdlg.cpp:367
+#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:398
 msgid "Scan Selection"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:76 ../src/prefsdlg.cpp:484
+#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:529
 msgid "Font"
 msgstr "Umukono"
 
-#: ../src/prefsdlg.cpp:77 ../src/prefsdlg.cpp:565
+#: ../src/prefsdlg.cpp:81 ../src/prefsdlg.cpp:610
 msgid "Cache"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:78 ../src/prefsdlg.cpp:656
+#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:701
 msgid "Export"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:725
+#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:770
 msgid "Sound"
 msgstr "Ijwi"
 
-#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:692
+#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:737
 msgid "Article rendering"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:988
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:1033
 msgid "Net Dict"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1063
+#: ../src/prefsdlg.cpp:95 ../src/prefsdlg.cpp:1108
 msgid "Input"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1145 ../src/prefsdlg.cpp:1572 ../src/prefsdlg.cpp:1603
+#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:111
+#: ../src/prefsdlg.cpp:1195 ../src/prefsdlg.cpp:1634 ../src/prefsdlg.cpp:1665
 msgid "Options"
 msgstr "Amahitamo"
 
-#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1446
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1508
 #, fuzzy
 msgid "Search website"
 msgstr "Webu"
 
-#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1670
+#: ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:1732
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
+#: ../src/prefsdlg.cpp:119 ../src/stardict.cpp:2522
 msgid "Dictionary"
 msgstr "Inkoranyamagambo"
 
-#: ../src/prefsdlg.cpp:117
+#: ../src/prefsdlg.cpp:121
 msgid "Network"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:119
+#: ../src/prefsdlg.cpp:123
 #, fuzzy
 msgid "Main window"
 msgstr "Idirishya"
 
-#: ../src/prefsdlg.cpp:121
+#: ../src/prefsdlg.cpp:125
 #, fuzzy
 msgid "Notification area icon"
 msgstr "Ubuso Agashushondanga"
 
-#: ../src/prefsdlg.cpp:123
+#: ../src/prefsdlg.cpp:127
 #, fuzzy
 msgid "Floating window"
 msgstr "Idirishya"
 
-#: ../src/prefsdlg.cpp:260
+#: ../src/prefsdlg.cpp:264
 msgid "Categories"
 msgstr "Ibyiciro"
 
-#: ../src/prefsdlg.cpp:370
+#: ../src/prefsdlg.cpp:401
 #, fuzzy
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "Urufunguzo"
 
-#: ../src/prefsdlg.cpp:386
+#: ../src/prefsdlg.cpp:417
 #, fuzzy
 msgid "H_ide floating window when modifier key released."
 msgstr "Bihindagurika Idirishya Ryari: Urufunguzo"
 
-#: ../src/prefsdlg.cpp:396
+#: ../src/prefsdlg.cpp:427
 #, fuzzy
 msgid "Scan modifier _key:"
 msgstr "Urufunguzo"
 
-#: ../src/prefsdlg.cpp:417
+#: ../src/prefsdlg.cpp:448
 msgid "_Scan clipboard."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:423
-msgid "_Use scan hotkey: Ctrl+Alt+F1."
+#: ../src/prefsdlg.cpp:458
+msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:461
+#: ../src/prefsdlg.cpp:506
 #, fuzzy
 msgid "Choose dictionary font"
 msgstr "Inkoranyamagambo Intego- nyuguti"
 
-#: ../src/prefsdlg.cpp:464 ../src/prefsdlg.cpp:509
+#: ../src/prefsdlg.cpp:509 ../src/prefsdlg.cpp:554
 msgid "Choose"
 msgstr "Guhitamo"
 
-#: ../src/prefsdlg.cpp:466
+#: ../src/prefsdlg.cpp:511
 #, fuzzy
 msgid "Dictionary font"
 msgstr "Intego- nyuguti"
 
-#: ../src/prefsdlg.cpp:487
+#: ../src/prefsdlg.cpp:532
 #, fuzzy
 msgid "_Use custom font."
 msgstr "Kunoza Intego- nyuguti"
 
-#: ../src/prefsdlg.cpp:499
+#: ../src/prefsdlg.cpp:544
 #, fuzzy
 msgid "Dictionary _font:"
 msgstr "Intego- nyuguti"
 
-#: ../src/prefsdlg.cpp:569
+#: ../src/prefsdlg.cpp:614
 msgid "Create c_ache files to speed up loading."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:574
+#: ../src/prefsdlg.cpp:619
 msgid "_Sort word list by collation function."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:583
+#: ../src/prefsdlg.cpp:628
 msgid "\tCollation _function:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:615
+#: ../src/prefsdlg.cpp:660
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:621
+#: ../src/prefsdlg.cpp:666
 msgid "C_lean all cache files"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:638
+#: ../src/prefsdlg.cpp:683
 msgid "Open file..."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:661
+#: ../src/prefsdlg.cpp:706
 msgid "_Only export words."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:668
+#: ../src/prefsdlg.cpp:713
 #, fuzzy
 msgid "File name:"
 msgstr "Izina ry'idosiye"
 
-#: ../src/prefsdlg.cpp:677
+#: ../src/prefsdlg.cpp:722
 msgid "_Browse..."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:698
+#: ../src/prefsdlg.cpp:743
 msgid "_Highlight search term"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:730
+#: ../src/prefsdlg.cpp:775
 #, fuzzy
 msgid "_Enable sound event."
 msgstr "Ijwi Icyabaye"
 
-#: ../src/prefsdlg.cpp:739
+#: ../src/prefsdlg.cpp:784
 msgid "Command for playing wav files:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:752
+#: ../src/prefsdlg.cpp:797
 msgid "RealPeopleTTS search path:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:770
-msgid "_Use TTS program."
-msgstr ""
+#: ../src/prefsdlg.cpp:815
+#, fuzzy
+msgid "Enable _TTS program."
+msgstr "Izina: Bya i Porogaramu"
 
-#: ../src/prefsdlg.cpp:778
+#: ../src/prefsdlg.cpp:823
 msgid "Commandline:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:807
+#: ../src/prefsdlg.cpp:852
 #, fuzzy
 msgid "Account"
 msgstr "Bigyanye"
 
-#: ../src/prefsdlg.cpp:818 ../src/prefsdlg.cpp:915
+#: ../src/prefsdlg.cpp:863 ../src/prefsdlg.cpp:960
 msgid "_User Name:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:824 ../src/prefsdlg.cpp:921
+#: ../src/prefsdlg.cpp:869 ../src/prefsdlg.cpp:966
 msgid "_Password:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:847 ../src/prefsdlg.cpp:946
+#: ../src/prefsdlg.cpp:892 ../src/prefsdlg.cpp:991
 #, fuzzy
 msgid "Please input the password."
 msgstr "Iyinjiza i Webu Izina:"
 
-#: ../src/prefsdlg.cpp:904
+#: ../src/prefsdlg.cpp:949
 msgid "Register"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:928
+#: ../src/prefsdlg.cpp:973
 #, fuzzy
 msgid "_Email:"
 msgstr "Imeli"
 
-#: ../src/prefsdlg.cpp:944
+#: ../src/prefsdlg.cpp:989
 #, fuzzy
 msgid "Please input the user name."
 msgstr "Iyinjiza i Webu Izina:"
 
-#: ../src/prefsdlg.cpp:948
+#: ../src/prefsdlg.cpp:993
 #, fuzzy
 msgid "Please input the email."
 msgstr "Iyinjiza i Webu Ihuza"
 
-#: ../src/prefsdlg.cpp:950
+#: ../src/prefsdlg.cpp:995
 #, fuzzy
 msgid "Please input a valid email."
 msgstr "Iyinjiza i Webu Izina:"
 
-#: ../src/prefsdlg.cpp:994
+#: ../src/prefsdlg.cpp:1039
 #, fuzzy
 msgid "Enable _network dictionaries."
 msgstr "Inkoranyamagambo"
 
-#: ../src/prefsdlg.cpp:1006
+#: ../src/prefsdlg.cpp:1051
 msgid "StarDict server:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1015
+#: ../src/prefsdlg.cpp:1060
 #, fuzzy
 msgid "Port:"
 msgstr "Gucapa"
 
-#: ../src/prefsdlg.cpp:1024
+#: ../src/prefsdlg.cpp:1069
 msgid "Account:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1035
+#: ../src/prefsdlg.cpp:1080
 msgid "_Register an account"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1070
+#: ../src/prefsdlg.cpp:1115
 #, fuzzy
 msgid "_Search while typing."
 msgstr "Webu Urutonde"
 
-#: ../src/prefsdlg.cpp:1079
+#: ../src/prefsdlg.cpp:1124
 msgid "Word change _timeout:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1088
+#: ../src/prefsdlg.cpp:1133
 #, fuzzy
-msgid "(default:300)"
+msgid "(default:300 ms)"
 msgstr "(Mburabuzi"
 
-#: ../src/prefsdlg.cpp:1090
+#: ../src/prefsdlg.cpp:1135
 msgid "Show the _first word when not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1151
+#: ../src/prefsdlg.cpp:1202
 msgid "_Auto run StarDict after boot."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1181
+#: ../src/prefsdlg.cpp:1232
 #, fuzzy
 msgid "Hide main window when _starting StarDict."
 msgstr "Idirishya Ryari:"
 
-#: ../src/prefsdlg.cpp:1191
+#: ../src/prefsdlg.cpp:1245
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1201 ../src/prefsdlg.cpp:1731
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1793
 msgid "_Transparency:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1294 ../src/prefsdlg.cpp:1497
+#: ../src/prefsdlg.cpp:1356 ../src/prefsdlg.cpp:1559
 msgid "Website Name"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1306 ../src/prefsdlg.cpp:1505
+#: ../src/prefsdlg.cpp:1368 ../src/prefsdlg.cpp:1567
 #, fuzzy
 msgid "Website link"
 msgstr "Ihuza"
 
-#: ../src/prefsdlg.cpp:1317 ../src/prefsdlg.cpp:1513
+#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1575
 #, fuzzy
 msgid "Website search link"
 msgstr "Gushaka Ihuza"
 
-#: ../src/prefsdlg.cpp:1338
+#: ../src/prefsdlg.cpp:1400
 #, fuzzy
 msgid "Please input the website name."
 msgstr "Iyinjiza i Webu Izina:"
 
-#: ../src/prefsdlg.cpp:1340
+#: ../src/prefsdlg.cpp:1402
 #, fuzzy
 msgid "Please input the website link."
 msgstr "Iyinjiza i Webu Ihuza"
 
-#: ../src/prefsdlg.cpp:1342
+#: ../src/prefsdlg.cpp:1404
 #, fuzzy
 msgid "Please input the website search link."
 msgstr "Iyinjiza i Webu Gushaka Ihuza"
 
-#: ../src/prefsdlg.cpp:1344 ../src/prefsdlg.cpp:1423
+#: ../src/prefsdlg.cpp:1406 ../src/prefsdlg.cpp:1485
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
 msgstr "Webu Gushaka Ihuza Kirimo a Ikurikiranyanyuguti kugirango ijambo"
 
-#: ../src/prefsdlg.cpp:1578
+#: ../src/prefsdlg.cpp:1640
 #, fuzzy
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr "in i Bihindagurika Idirishya Ryari: Hagati"
 
-#: ../src/prefsdlg.cpp:1606
+#: ../src/prefsdlg.cpp:1668
 #, fuzzy
 msgid "_Pronounce the word when it pops up."
 msgstr "i ijambo Ryari: Hejuru"
 
-#: ../src/prefsdlg.cpp:1615
+#: ../src/prefsdlg.cpp:1677
 msgid "_Show floating window if word not found."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1689
+#: ../src/prefsdlg.cpp:1751
 #, fuzzy
 msgid "Max window _width:"
 msgstr "Idirishya Ubugari"
 
-#: ../src/prefsdlg.cpp:1699
+#: ../src/prefsdlg.cpp:1761
 #, fuzzy
 msgid "(default:320)"
 msgstr "(Mburabuzi"
 
-#: ../src/prefsdlg.cpp:1703
+#: ../src/prefsdlg.cpp:1765
 #, fuzzy
 msgid "Max window hei_ght:"
 msgstr "Idirishya Ubuhagarike"
 
-#: ../src/prefsdlg.cpp:1711
+#: ../src/prefsdlg.cpp:1773
 #, fuzzy
 msgid "(default:240)"
 msgstr "(Mburabuzi"
 
-#: ../src/prefsdlg.cpp:1716
+#: ../src/prefsdlg.cpp:1778
 #, fuzzy
 msgid "_Use custom background color:"
 msgstr "Kunoza Intego- nyuguti"
 
 # sw/source\ui\misc\glossary.src:DLG_GLOSSARY.PB_BIB.text
-#: ../src/prefsdlg.cpp:1811
+#: ../src/prefsdlg.cpp:1873
 #, fuzzy
 msgid "Cat_egories:"
 msgstr "Ibyiciro..."
@@ -1666,11 +1688,11 @@ msgstr "Ibyiciro..."
 msgid "Loading"
 msgstr ""
 
-#: ../src/readword.cpp:148
+#: ../src/readword.cpp:150
 msgid "Real People TTS"
 msgstr ""
 
-#: ../src/readword.cpp:155
+#: ../src/readword.cpp:157
 msgid "Command TTS"
 msgstr ""
 
@@ -1693,35 +1715,35 @@ msgstr "Urugero Bya"
 msgid "Quit an existing instance of stardict"
 msgstr "Urugero Bya"
 
-#: ../src/stardict.cpp:1093
+#: ../src/stardict.cpp:1112
 msgid "Full-text Search"
 msgstr ""
 
-#: ../src/stardict.cpp:1120
+#: ../src/stardict.cpp:1139
 #, fuzzy
 msgid "Search"
 msgstr "Gushakisha:"
 
-#: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
+#: ../src/stardict.cpp:1224 ../src/stardict.cpp:1641
 msgid "Full-text search..."
 msgstr ""
 
-#: ../src/stardict.cpp:1325
+#: ../src/stardict.cpp:1344
 #, fuzzy
 msgid "Fuzzy query failed, too :-("
 msgstr "Ikibazo# Byanze"
 
-#: ../src/stardict.cpp:1611
+#: ../src/stardict.cpp:1630
 #, fuzzy
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Kuri Urutonde i Amagambo BIHUYE i Ishusho"
 
-#: ../src/stardict.cpp:1614
+#: ../src/stardict.cpp:1633
 #, fuzzy
-msgid "Press Enter to list the words that match this regular expressions."
+msgid "Press Enter to list the words that match this regular expression."
 msgstr "Kuri Urutonde i Amagambo BIHUYE i Ishusho"
 
-#: ../src/stardict.cpp:1618
+#: ../src/stardict.cpp:1637
 #, fuzzy
 msgid "Fuzzy query..."
 msgstr "Ikibazo#"
@@ -1730,62 +1752,62 @@ msgstr "Ikibazo#"
 # sw/source\ui\dochdl\dochdl.src:STR_NOGLOS2.text
 # #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
 # sw/source\ui\uiview\view.src:STR_NOGLOS2.text
-#: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
+#: ../src/stardict.cpp:1905 ../src/stardict.cpp:2010
 #, fuzzy
 msgid "Not found!\n"
 msgstr "<ntibyabonetse"
 
-#: ../src/stardict.cpp:1987
+#: ../src/stardict.cpp:2006
 msgid "Conversion error!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2335
+#: ../src/stardict.cpp:2354
 #, fuzzy
 msgid "StarDict is already running. Using the running process."
 msgstr "ni i"
 
-#: ../src/stardict.cpp:2468
+#: ../src/stardict.cpp:2487
 #, fuzzy
 msgid "- Lookup words"
 msgstr "Amagambo"
 
-#: ../src/stardict.cpp:2473
+#: ../src/stardict.cpp:2492
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
 
-#: ../src/utils.cpp:127
+#: ../src/utils.cpp:130
 #, c-format
 msgid "Can not load image. %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:901
+#: ../src/lib/stardict_client.cpp:903
 #, c-format
 msgid "Authentication denied: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:914
+#: ../src/lib/stardict_client.cpp:916
 #, c-format
 msgid "Register failed: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:919
+#: ../src/lib/stardict_client.cpp:921
 msgid "Register success!"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:954
+#: ../src/lib/stardict_client.cpp:956
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1074
+#: ../src/lib/stardict_client.cpp:1076
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
 msgstr ""
 
-#: ../src/lib/stddict.cpp:649
+#: ../src/lib/stddict.cpp:650
 msgid "Sorting, please wait..."
 msgstr ""
 
@@ -1793,88 +1815,88 @@ msgstr ""
 msgid "Scan"
 msgstr "Gusikana"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:248
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:250
 msgid "User Dict"
 msgstr ""
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 msgid "User virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 #, fuzzy
 msgid "Show the user dictionary."
 msgstr "Inkoranyamagambo Intego- nyuguti"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:254
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
 #, c-format
 msgid "User dict plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:190
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:368
 msgid "Dict.cn"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
 msgid "Dict.cn configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by XML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:303
 msgid "Query by HTML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Dict.cn network dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Query result from Dict.cn website."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:371
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:30
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:31
 msgid "Espeak TTS configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:32
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:33
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
 msgid "Voice type:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:35
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
 #, fuzzy
 msgid "Default"
 msgstr "(Mburabuzi"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak TTS."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Pronounce words by Espeak TTS engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:108
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
 msgid "Espeak TTS"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
 #, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr ""
@@ -1904,199 +1926,199 @@ msgstr ""
 msgid "Festival plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:215
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:217
 msgid "[not a printable character]"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:232
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:234
 msgid "General Character Properties"
 msgstr ""
 
 #. character category
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
 msgid "Unicode category:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:241
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:243
 msgid "Canonical decomposition:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:256
 msgid "Various Useful Representations"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:267
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:269
 msgid "UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:274
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
 msgid "UTF-16:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:282
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
 msgid "C octal escaped UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:290
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
 msgid "XML decimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
 msgid "XML hexadecimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:306
 msgid "Alias names:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:310
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
 msgid "Notes:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:317
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:319
 msgid "See also:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:323
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
 msgid "Approximate equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:329
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
 msgid "Equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:334
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:336
 msgid "Annotations and Cross References"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:341
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:343
 msgid "Definition in English:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:346
 msgid "Mandarin Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:349
 msgid "Cantonese Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:352
 msgid "Japanese On Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
 msgid "Japanese Kun Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:358
 msgid "Tang Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:361
 msgid "Korean Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:364
 msgid "CJK Ideograph Information"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:407
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:409
 msgid "Gucharmap"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Gucharmap virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Show information about Unicode characters."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:408
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "Parse the HTML data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:471
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:476
 #, c-format
 msgid "HTML data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:154
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:155
 msgid "Man configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:156
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:157
 msgid "_Input string requires the \"man \" prefix."
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:199
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:200
 msgid "Man"
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 #, fuzzy
 msgid "Man virtual dictionary."
 msgstr "Inkoranyamagambo"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 #, fuzzy
 msgid "Show the man pages."
 msgstr "i Ibikubiyemo"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:213
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:215
 #, c-format
 msgid "Man plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "Parse the PowerWord data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:691
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:165
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:167
 #, c-format
 msgid "Error: Open file %s failed!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:209
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:211
 msgid "QQWry configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:215
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:219
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
@@ -2104,20 +2126,21 @@ msgid ""
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:252
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
 msgid "QQWry"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
 msgid "Show QQWry IP information."
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-msgid "Show the address information by the IP."
-msgstr ""
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#, fuzzy
+msgid "Show address information by IP."
+msgstr "Ibisobanuro"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
 #, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr ""
@@ -2169,185 +2192,185 @@ msgstr ""
 msgid "SAPI tts plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:256
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:260
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:303
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:305
 #, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
 msgid "Spell check configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:322
 #, fuzzy
 msgid "_Use custom languages."
 msgstr "Kunoza Intego- nyuguti"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:325
 msgid "For example: \"en_US de\""
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:329
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:331
 msgid "Custom languages:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell Check"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check the input words and show the correct suggestion."
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:402
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:404
 msgid "Spelling Suggestion"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:434
 #, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:37
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
 msgid "You are using an old version of StarDict!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:41
 msgid "You are using the newest version of StarDict!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:42
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:44
 msgid "Latest version information:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:50
 msgid "Latest news:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:53
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:55
 msgid "Update information"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update Info"
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update information."
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Get the update information from the Internet."
 msgstr ""
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:175
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
 #, fuzzy
 msgid "Visit StarDict website now?"
 msgstr "Kuri i Webu"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:179
 msgid "_Don't show this until the next update."
 msgstr ""
 
 #. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
 #. g_idle_add(get_update_info, NULL);
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:257
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:259
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Parse the wiki data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:51
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:52
 #, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:57
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:58
 msgid "WordNet configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:59
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:60
 msgid "Graphic mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:61
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:62
 msgid "Text mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid ""
 "Render the WordNet dictionary.\n"
-"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
-"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
-"his open source sharing!"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:129
 #, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "Parse the WordNet data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:146
 #, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "Parse the XDXF data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:333
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr ""

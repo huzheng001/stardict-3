@@ -1130,7 +1130,7 @@ void PrefsDlg::setup_mainwin_input_page()
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button), conf->get_int_at("main_window/word_change_timeout"));
 	g_signal_connect(G_OBJECT(spin_button), "value-changed", G_CALLBACK(on_setup_mainwin_input_timeout_spinbutton_changed), this);
 	gtk_box_pack_start(GTK_BOX(hbox),spin_button,FALSE,FALSE, 0);
-	label=gtk_label_new(_("(default:300)"));
+	label=gtk_label_new(_("(default:300 ms)"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
 	check_button = gtk_check_button_new_with_mnemonic(_("Show the _first word when not found."));
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,FALSE,FALSE,0);

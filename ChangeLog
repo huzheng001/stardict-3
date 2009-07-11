@@ -1,6 +1,4 @@
-Spanish translation, thanks to Amos Batto <amosbatto@yahoo.com>
-
-2008.
+2009.
 StarDict-3.0.2 (Bodhisattva) released.
 Mac OS X port.
 Fixed network dictionary authentification issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
@@ -8,6 +6,8 @@ Thanks Vlad Muraviev <rex.lux@gmail.com> for adding many lingvo dictionaries.
 Thanks Evgeniy <dushistov@mail.ru> for tray icon transparent patch.
 Thanks Arseniy Lartsev <ars3niy@users.sourceforge.net> for the cool global hotkeys patch.
 Thanks Hleb Valoshka <375gnu@gmail.com> for Belarusian translation.
+Spanish translation, thanks to Amos Batto <amosbatto@yahoo.com>.
+Hungarian translation update, thanks to Lisovszki Sandor <lisovszki@dunakanyar.net>.
 
 2007.11.8
 StarDict-3.0.1 (Perfection) released.
