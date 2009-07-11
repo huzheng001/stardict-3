@@ -481,14 +481,14 @@ void TopWin::on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
 	const gchar *authors[] = {
-		"Hu Zheng <huzheng_001@163.com>",
+		"Hu Zheng <huzheng001@gmail.com>",
 		"Evgeniy <dushistov@mail.ru>",
 		"Opera Wang <wangvisual@sohu.com>",
 		"Ma Su'an <msa@wri.com.cn>",
 		NULL
 	};
 	gchar *documenters[] = {
-		"Hu Zheng <huzheng_001@163.com>",
+		"Hu Zheng <huzheng001@gmail.com>",
 		"Will Robinson <wsr23@stanford.edu>",
 		"Anthony Fok <foka@debian.org>",
 		NULL
@@ -1580,7 +1580,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #else
 	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(PronounceWordMenuButton),false,false,5);
 #endif
-	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(PronounceWordMenuButton), _("Pronounce the word"));
+	gtk_tool_item_set_tooltip_text(GTK_TOOL_ITEM(PronounceWordMenuButton), _("Pronounce the word (Enter)"));
 	gtk_widget_set_sensitive(GTK_WIDGET(PronounceWordMenuButton), false);
 
 	button=gtk_button_new();

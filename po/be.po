@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the stardict package.
 # Hleb Valoshka <375gnu@gmail.com>, 2008.
 # , fuzzy
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: stardict 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-08 17:21+0200\n"
+"POT-Creation-Date: 2009-07-05 06:08+0800\n"
 "PO-Revision-Date: 2008-03-09 22:05+0200\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
@@ -31,8 +31,8 @@ msgstr "Пошук словаў"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
-#: ../src/docklet.cpp:196 ../src/mainwin.cpp:477 ../src/splash.cpp:84
-#: ../src/stardict.cpp:270 ../src/stardict.cpp:339 ../src/stardict.cpp:2485
+#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/splash.cpp:84
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:340 ../src/stardict.cpp:2504
 #: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr "StarDict"
@@ -41,7 +41,9 @@ msgstr "StarDict"
 msgid ""
 "A custom font that will be used in StarDict. This will only take effect if "
 "the \"Use Custom Font\" option is turned on."
-msgstr "Уласны шрыфт, які будзе ўжыты StarDict. Мае моц толькі тады, калі задзейнічаная можнасьць \"Ужываць свой шрыфт\"."
+msgstr ""
+"Уласны шрыфт, які будзе ўжыты StarDict. Мае моц толькі тады, калі "
+"задзейнічаная можнасьць \"Ужываць свой шрыфт\"."
 
 #: ../data/stardict.schemas.in.h:2
 msgid "Custom Font"
@@ -84,7 +86,9 @@ msgstr "Хаваць плаваючае вакенца, калі адмысло�
 msgid ""
 "Hide floating window when modifier key is released. It only take effect when "
 "only_scan_while_modifier_key is turned on."
-msgstr "Хаваць плаваючае вакенца, калі адмысловая клявіша адпушчана. Мае моц толькі тады, калі only_scan_while_modifier_key уключаны."
+msgstr ""
+"Хаваць плаваючае вакенца, калі адмысловая клявіша адпушчана. Мае моц толькі "
+"тады, калі only_scan_while_modifier_key уключаны."
 
 #: ../data/stardict.schemas.in.h:12
 msgid "Hide the list"
@@ -138,14 +142,17 @@ msgstr "Сканаваць толькі калі націснутая адмыс
 msgid ""
 "Only scan while the modifier key is being pressed. The modifier key is set "
 "by \"scan_modifier_key\"."
-msgstr "Сканаваць толькі калі націснутая адмысловая клявіша. Адмысловая клявіша вызначаецца \"scan_modifier_key\"."
+msgstr ""
+"Сканаваць толькі калі націснутая адмысловая клявіша. Адмысловая клявіша "
+"вызначаецца \"scan_modifier_key\"."
 
 #: ../data/stardict.schemas.in.h:25
 msgid ""
 "Only scan while this modifier key is being pressed. It can be Win(0), Shift"
 "(1), Alt(2) or Ctrl(3)."
-msgstr "Сканаваць толькі калі націснутая гэтая адмысловая клявіша. Можа быць Win(0), Shift"
-"(1), Alt(2) or Ctrl(3)."
+msgstr ""
+"Сканаваць толькі калі націснутая гэтая адмысловая клявіша. Можа быць Win(0), "
+"Shift(1), Alt(2) or Ctrl(3)."
 
 #: ../data/stardict.schemas.in.h:26
 msgid "Plug-in order"
@@ -195,7 +202,8 @@ msgstr "Індэкс мэтавай мовы"
 msgid ""
 "The command-line to use in order to enable pronunciation of words via an "
 "external TTS program."
-msgstr "Загад, якія будзе ўжывацца пры вымаўленьні з дапамогай вонкавай праграмы TTS."
+msgstr ""
+"Загад, якія будзе ўжывацца пры вымаўленьні з дапамогай вонкавай праграмы TTS."
 
 #: ../data/stardict.schemas.in.h:38
 msgid "The height of the main stardict window."
@@ -255,7 +263,8 @@ msgstr "Выкарыстоўваць вонкавую праграму TTS дл�
 msgid ""
 "Whether to enable sound events or not. StarDict will play a sound event when "
 "a button is active or released, and when a menu pops up."
-msgstr "Агучваць падзеі ці не. StarDict будзе іграць гук калі кнопка актыўная ці "
+msgstr ""
+"Агучваць падзеі ці не. StarDict будзе іграць гук калі кнопка актыўная ці "
 "адпушчаная і калі ўзьнікае мэню."
 
 #: ../data/stardict.schemas.in.h:52
@@ -270,21 +279,24 @@ msgstr "Хаваць сьпіс словаў ці не."
 msgid ""
 "Whether to lock the floating window or not. While locked, the window will "
 "not disappear."
-msgstr "Замацоўваць плаваючае вакенца ці не. Пакуль замацаванае, вакенца не зьнікае."
+msgstr ""
+"Замацоўваць плаваючае вакенца ці не. Пакуль замацаванае, вакенца не зьнікае."
 
 #: ../data/stardict.schemas.in.h:55
 msgid ""
 "Whether to query in the floating window, or in the main window. Query is "
 "activated by the user clicking the middle mouse button on the notification "
 "area icon."
-msgstr "Запытваць у плаваючым вакенцы ці ў галоўным вакне. Запыт дасылаецца, калі "
+msgstr ""
+"Запытваць у плаваючым вакенцы ці ў галоўным вакне. Запыт дасылаецца, калі "
 "карыстальнік пстрыкае сярэдняй кнопка мышы па значцы вобласьці апавяшчэньня."
 
 #: ../data/stardict.schemas.in.h:56
 msgid ""
 "Whether to scan the selection or not. When the user selects text, StarDict "
 "will popup a flat window showing the meaning of that text."
-msgstr "Сканаваць вылучэньне ці не. Калі карыстальнік вылучае тэкст, StarDict "
+msgstr ""
+"Сканаваць вылучэньне ці не. Калі карыстальнік вылучае тэкст, StarDict "
 "паказвае пляскатае вакенца са значэньнем вылучанага тэкста."
 
 #: ../data/stardict.schemas.in.h:57
@@ -292,9 +304,10 @@ msgid ""
 "Whether to use a user-defined font in StarDict, instead of the default "
 "system font. If this option is turned on, then the font named in the "
 "\"Custom Font\" option will be used instead of the system font."
-msgstr "Ці ўжываць вызначаны карыстальнікам шрыфт у StarDict замест стандартнага "
-"сыстэмнага. Калі можнасьць задзейнічаная, тады шрыфт, пазначаны ў "
-"можнасьці \"Свой шрыфт\" будзе ўжыты замест сыстэмнага."
+msgstr ""
+"Ці ўжываць вызначаны карыстальнікам шрыфт у StarDict замест стандартнага "
+"сыстэмнага. Калі можнасьць задзейнічаная, тады шрыфт, пазначаны ў можнасьці "
+"\"Свой шрыфт\" будзе ўжыты замест сыстэмнага."
 
 #: ../data/stardict.schemas.in.h:58
 msgid "Window-height"
@@ -357,11 +370,11 @@ msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Невядомы тып даньняў, калі ласка, абнаві StarDict!"
 
 #. Default stardictd server.
-#: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:226
+#: ../src/conf.cpp:238
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -403,13 +416,25 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:253
+#: ../src/conf.cpp:265
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:265
+#: ../src/conf.cpp:277
 msgid "win32_custom_font="
+msgstr "win32_custom_font="
+
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:290
+#, fuzzy
+msgid "darwin_use_custom_font=0"
+msgstr "win32_use_custom_font=0"
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:302
+#, fuzzy
+msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
@@ -436,7 +461,7 @@ msgstr "Ты можаш выбраць толькі %d слоўнікаў."
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
 #: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1125
+#: ../src/stardict.cpp:1144
 msgid "Dictionary Name"
 msgstr "Назва слоўніка"
 
@@ -454,7 +479,7 @@ msgstr "Прагартаць слоўнікі"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Гэтыя настаўленьні будуць мець моц пры наступным запуску StarDict."
 
-#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1208
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
 msgid "Loading..."
 msgstr "Загрузка..."
 
@@ -486,7 +511,9 @@ msgstr ""
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
-msgstr "\"Запытаць слоўнік\" пакажа вынік у галоўным вакне, \"Сканаваць слоўнік\" - у плаваючым."
+msgstr ""
+"\"Запытаць слоўнік\" пакажа вынік у галоўным вакне, \"Сканаваць слоўнік\" - "
+"у плаваючым."
 
 #: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
 msgid "Author"
@@ -537,7 +564,7 @@ msgstr "Імя групы:"
 msgid "Add dictionary"
 msgstr "Дадаць слоўнік"
 
-#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1281
+#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
 msgid "Add"
 msgstr "Дадаць"
 
@@ -569,7 +596,7 @@ msgstr "Перанесьці долу"
 msgid "D_ict List"
 msgstr "Сьпіс _слоўнікаў"
 
-#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:518
+#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
 msgid "Manage _Dict"
 msgstr "Кіраваньне _слоўнікамі"
 
@@ -621,93 +648,93 @@ msgstr "Колькасьць сынонімаў"
 msgid "Download Now!"
 msgstr "Загрузіць зараз!"
 
-#: ../src/docklet.cpp:33 ../src/docklet.cpp:182 ../src/win32/systray.cpp:258
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
 msgid "StarDict - Scanning"
 msgstr "StarDict - скануе"
 
-#: ../src/docklet.cpp:36 ../src/docklet.cpp:188 ../src/win32/systray.cpp:263
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:263
 msgid "StarDict - Stopped"
 msgstr "StarDict - спынены"
 
-#: ../src/docklet.cpp:96 ../src/mainwin.cpp:2722
+#: ../src/docklet.cpp:95 ../src/mainwin.cpp:2744
 msgid "_Scan"
 msgstr "_Сканаваць"
 
-#: ../src/docklet.cpp:106 ../src/mainwin.cpp:555
+#: ../src/docklet.cpp:105 ../src/mainwin.cpp:577
 msgid "_Quit"
 msgstr "_Выйсьці"
 
-#: ../src/floatwin.cpp:125
+#: ../src/floatwin.cpp:126
 msgid "Query in the main window"
 msgstr "Запытаць у галоўным вакне"
 
-#: ../src/floatwin.cpp:134
+#: ../src/floatwin.cpp:135
 msgid "Save to file"
 msgstr "Захаваць у файл"
 
-#: ../src/floatwin.cpp:142 ../src/mainwin.cpp:1561
+#: ../src/floatwin.cpp:143
 msgid "Pronounce the word"
 msgstr "Прамовіць слова пры"
 
-#: ../src/floatwin.cpp:152
+#: ../src/floatwin.cpp:153
 msgid "Stop selection-scanning"
 msgstr "Спыніць сканаваньне вылучэньняў"
 
-#: ../src/floatwin.cpp:164
+#: ../src/floatwin.cpp:165
 msgid "Help"
 msgstr "Дапамога"
 
-#: ../src/floatwin.cpp:172 ../src/mainwin.cpp:2755
+#: ../src/floatwin.cpp:173 ../src/mainwin.cpp:2777
 #: ../src/win32/systray.cpp:111
 msgid "Quit"
 msgstr "Выйсьці"
 
-#: ../src/floatwin.cpp:186
+#: ../src/floatwin.cpp:187
 msgid "Lock floating window"
 msgstr "Замацаваць плаваючае вакенца"
 
-#: ../src/floatwin.cpp:322 ../src/floatwin.cpp:365 ../src/mainwin.cpp:1952
-#: ../src/mainwin.cpp:1982 ../src/selection.cpp:194 ../src/stardict.cpp:686
-#: ../src/stardict.cpp:831 ../src/stardict.cpp:1004 ../src/stardict.cpp:1018
-#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1028 ../src/stardict.cpp:1518
-#: ../src/stardict.cpp:1645 ../src/win32/clipboard.cpp:117
+#: ../src/floatwin.cpp:323 ../src/floatwin.cpp:366 ../src/mainwin.cpp:1974
+#: ../src/mainwin.cpp:2004 ../src/selection.cpp:194 ../src/stardict.cpp:705
+#: ../src/stardict.cpp:850 ../src/stardict.cpp:1023 ../src/stardict.cpp:1037
+#: ../src/stardict.cpp:1042 ../src/stardict.cpp:1047 ../src/stardict.cpp:1537
+#: ../src/stardict.cpp:1664 ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr "<Ня знойдзена!>"
 
-#: ../src/floatwin.cpp:444
+#: ../src/floatwin.cpp:445
 msgid "Fuzzy query"
 msgstr "Недакладны пошук"
 
-#: ../src/floatwin.cpp:450
+#: ../src/floatwin.cpp:451
 msgid "has succeeded.\n"
 msgstr "пасьпяховы.\n"
 
-#: ../src/floatwin.cpp:452
+#: ../src/floatwin.cpp:453
 msgid "Found 1 word:\n"
 msgstr "Адшукана 1 слова:\n"
 
-#: ../src/floatwin.cpp:454
+#: ../src/floatwin.cpp:455
 #, c-format
 msgid "Found %d words:\n"
 msgstr "Адшукана %d слов(ы/аў):\n"
 
-#: ../src/floatwin.cpp:942
+#: ../src/floatwin.cpp:943
 msgid "_Copy"
 msgstr "_Капяваць"
 
-#: ../src/floatwin.cpp:948
+#: ../src/floatwin.cpp:949
 msgid "_Save"
 msgstr "_Захаваць"
 
-#: ../src/floatwin.cpp:953 ../src/mainwin.cpp:2147
+#: ../src/floatwin.cpp:954 ../src/mainwin.cpp:2169
 msgid "_Query"
 msgstr "_Запытаць"
 
-#: ../src/floatwin.cpp:960
+#: ../src/floatwin.cpp:961
 msgid "_Play"
 msgstr "_Прайграць"
 
-#: ../src/floatwin.cpp:968
+#: ../src/floatwin.cpp:969
 msgid "_Fuzzy Query"
 msgstr "_Недакладны пошук"
 
@@ -715,113 +742,123 @@ msgstr "_Недакладны пошук"
 msgid "Clear the search box"
 msgstr "Ачысьціць скрыню пошуку"
 
-#: ../src/mainwin.cpp:118
+#: ../src/mainwin.cpp:120
 msgid "Fuzzy Query"
 msgstr "Недакладны пошук"
 
-#: ../src/mainwin.cpp:130
+#: ../src/mainwin.cpp:132
 msgid "Go Back - Right button: history (Alt+Left)"
 msgstr "Назад - Правая кнопка: гісторыя (Alt+Стз.Улева)"
 
-#: ../src/mainwin.cpp:145
+#: ../src/mainwin.cpp:147
 msgid "Show the main menu (Alt+M)"
 msgstr "Паказаць галоўнае мэню (Alt+M)"
 
-#: ../src/mainwin.cpp:474
+#: ../src/mainwin.cpp:195
+msgid "Clear _history"
+msgstr ""
+
+#: ../src/mainwin.cpp:496
 msgid "translator_credits"
 msgstr "translator_credits"
 
-#: ../src/mainwin.cpp:480
+#: ../src/mainwin.cpp:502
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "StarDict - гэта міжнародны слоўнік для GNOME."
 
-#: ../src/mainwin.cpp:511
+#: ../src/mainwin.cpp:533
 msgid "Pr_eferences"
 msgstr "_Настаўленьні"
 
-#: ../src/mainwin.cpp:524
+#: ../src/mainwin.cpp:546
 msgid "Manage _Plugins"
 msgstr "Кіраваньне _дадаткамі"
 
-#: ../src/mainwin.cpp:533
+#: ../src/mainwin.cpp:555
 msgid "_New Version"
 msgstr "Н_овая вэрсія"
 
-#: ../src/mainwin.cpp:541
+#: ../src/mainwin.cpp:563
 msgid "_Help"
 msgstr "_Дапамога"
 
-#: ../src/mainwin.cpp:547
+#: ../src/mainwin.cpp:569
 msgid "_About"
 msgstr "_Пра"
 
-#: ../src/mainwin.cpp:1259
+#: ../src/mainwin.cpp:1281
 msgid "List"
 msgstr "Сьпіс"
 
-#: ../src/mainwin.cpp:1270
+#: ../src/mainwin.cpp:1292
 msgid "Result"
 msgstr "Вынік"
 
-#: ../src/mainwin.cpp:1280
+#: ../src/mainwin.cpp:1302
 msgid "Full-Text Translation"
 msgstr "Поўнатэкставы пераклад"
 
-#: ../src/mainwin.cpp:1291
+#: ../src/mainwin.cpp:1313
 msgid "Tree"
 msgstr "Дрэва"
 
-#: ../src/mainwin.cpp:1302
+#: ../src/mainwin.cpp:1324
 msgid "Choose dict group"
 msgstr "Выбраць групу слоўнікаў"
 
-#: ../src/mainwin.cpp:1315
+#: ../src/mainwin.cpp:1337
 msgid "Next word (Alt+Down)"
 msgstr "Наступнае слова (Alt+Стр.Уніз)"
 
-#: ../src/mainwin.cpp:1325
+#: ../src/mainwin.cpp:1347
 msgid "Previous word (Alt+Up)"
 msgstr "Папярэдняе слова (Alt+Стр.Уверх)"
 
-#: ../src/mainwin.cpp:1377
+#: ../src/mainwin.cpp:1399
 msgid "Enable Net Dict"
 msgstr "Задзейнічаць сеціўны слоўнік"
 
-#: ../src/mainwin.cpp:1514
+#: ../src/mainwin.cpp:1536
 msgid "Show the word list"
 msgstr "Паказаць сьпіс словаў"
 
-#: ../src/mainwin.cpp:1529
+#: ../src/mainwin.cpp:1551
 msgid "Hide the word list"
 msgstr "Схаваць сьпіс словаў"
 
-#: ../src/mainwin.cpp:1547
+#: ../src/mainwin.cpp:1569
 msgid "Copy"
 msgstr "Капіяваць"
 
-#: ../src/mainwin.cpp:1575
+#: ../src/mainwin.cpp:1583
+#, fuzzy
+msgid "Pronounce the word (Enter)"
+msgstr "Прамовіць слова пры"
+
+#: ../src/mainwin.cpp:1597
 msgid "Save to file (Alt+E)"
 msgstr "Захаваць у файл (Alt+E)"
 
-#: ../src/mainwin.cpp:1585
+#: ../src/mainwin.cpp:1607
 msgid "Print"
 msgstr "Друкаваць"
 
-#: ../src/mainwin.cpp:1600
+#: ../src/mainwin.cpp:1622
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "Пошук у тэксьце азначэньня (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1786
+#: ../src/mainwin.cpp:1808
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
 "Please go to StarDict's website, download some dictionaries:\n"
 "%s%s%s and put them in %s."
-msgstr "Увага! Ніякіх слоўнікаў не загружана.\n"
+msgstr ""
+"Увага! Ніякіх слоўнікаў не загружана.\n"
 "Калі ласка, ідзі на пляцоўку StarDict, загрузі колькі слоўнікаў:\n"
 "%s%s%s і зьмесьці іх у %s."
 
-#: ../src/mainwin.cpp:1809
+#: ../src/mainwin.cpp:1831
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -842,16 +879,22 @@ msgid ""
 msgstr ""
 "        Вітаем у StarDict!\n"
 "\n"
-"   Націсьні Ctrl+Q каб выйсьці. Націсьні Alt+Z каб згарнуць вакно ў значку або Alt+X каб схаваць вакно.\n"
+"   Націсьні Ctrl+Q каб выйсьці. Націсьні Alt+Z каб згарнуць вакно ў значку "
+"або Alt+X каб схаваць вакно.\n"
 "   Націсьні Alt+C або ESC  каб ачысьціць поле ўводу тэкста.\n"
 "   Націсьні Прабел каб перавесьці фокус на поле ўводу.\n"
-"   Калі шуканае слова ня знойдзенае, можна націсьнуць Tab каб выбраць першае слова ў сьпісе словаў.\n"
-"   Вылучыўшы пэўны тэкст націсьні сярэднюю кнопку мышы ў Вобласьці азначэньня галоўнага вакна або па значцы вобласьці апавяшчэньня, каб зьдзейсьніць пошук гэтага слова.\n"
-"   StarDict можа параўноўваць радкі з шаблёнамі, якія ўтрымліваюць '*' і '?'.\n"
+"   Калі шуканае слова ня знойдзенае, можна націсьнуць Tab каб выбраць першае "
+"слова ў сьпісе словаў.\n"
+"   Вылучыўшы пэўны тэкст націсьні сярэднюю кнопку мышы ў Вобласьці "
+"азначэньня галоўнага вакна або па значцы вобласьці апавяшчэньня, каб "
+"зьдзейсьніць пошук гэтага слова.\n"
+"   StarDict можа параўноўваць радкі з шаблёнамі, якія ўтрымліваюць '*' і "
+"'?'.\n"
 "   Пачынай слова з '/' , каб зьдзейсьніць недакладны пошук.\n"
-"   Калі плаваючае вакенца паведамляе, што слова не было знойдзенае, падвойна пстрыкні каб зьдзейсьніць недакладны пошук.\n"
+"   Калі плаваючае вакенца паведамляе, што слова не было знойдзенае, падвойна "
+"пстрыкні каб зьдзейсьніць недакладны пошук.\n"
 
-#: ../src/mainwin.cpp:1826
+#: ../src/mainwin.cpp:1848
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
@@ -904,36 +947,36 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
 "        Вітаем у StarDict\n"
-"StarDict - гэта шматплятформавы і міжнародны слоўнік, напісаны на Gtk2. "
-"Ён мае магутныя функцыі, такія як \",Пошук па ўзоры\" \"Сканаваньне вылучаных словаў\", \"Недакладны пошук\" і \"Поўнатэкставы пошук\".\n"
+"StarDict - гэта шматплятформавы і міжнародны слоўнік, напісаны на Gtk2. Ён "
+"мае магутныя функцыі, такія як \",Пошук па ўзоры\" \"Сканаваньне вылучаных "
+"словаў\", \"Недакладны пошук\" і \"Поўнатэкставы пошук\".\n"
 "\n"
 "        Вось уводзіны ў карыстаньне StarDict:\n"
 "\n"
 "        1. Пошук паводле ўзору\n"
 "        Можна ўводзіць радкі, якія ўтрымліваюць '*' ды '?' у якасьці ўзораў. "
 "'*' адпавядае адвольнаму, нават пустому, радку, а '?' адпавядае адвольнаму "
-"знаку. Пасьля націсканьня Enter будзе паказаны сьпіс словаў, якія адпавядаюць "
-"гэтаму ўзору."
-"        2. Пошук паводле рэгулярнага выразу\n"
+"знаку. Пасьля націсканьня Enter будзе паказаны сьпіс словаў, якія "
+"адпавядаюць гэтаму ўзору.        2. Пошук паводле рэгулярнага выразу\n"
 "        Можна ўводзіць радкі як рэгулярныя выразы мовы Perl, яны павінныя "
-"пачынацца са знаку \":\". Пасьля націсканьня Enter будзе паказаны сьпіс словаў, "
-"якія адпавядаюць гэтаму выразу."
-"        3. Недакладны пошук\n"
+"пачынацца са знаку \":\". Пасьля націсканьня Enter будзе паказаны сьпіс "
+"словаў, якія адпавядаюць гэтаму выразу.        3. Недакладны пошук\n"
 "        Калі ня памятаеш, як правільна напісаць слова, можаш паспрабаваць "
 "недакладны пошук у StarDict. Ён выкарыстоўвае \"Рэдагавальную адлегласьць "
 "Левэнштайна\", каб палічыць падабенства між двума словамі, і дае вынікі, "
 "якія найбольш блізкія да ўведзенага табой слова. Каб скарыстаць недакладны "
-"пошук проста пачні слова з \"/\" і націсьні Enter."
-"        4. Паўнатэкставы пошук\n"
+"пошук проста пачні слова з \"/\" і націсьні Enter.        4. Паўнатэкставы "
+"пошук\n"
 "        Паўнатэкставы пошук шукае слова ў даньнях. Каб пачаць паўнатэкставы "
-"пошук проста ўвядзі слова, якое пачынаецца з \"|\" і націсьні Enter. Напрыклад, "
-"\"|ab cd\" шукае даньні, якія ўтрымліваюць і \"ab\", і \"cd\". Калі словы "
-"ўтрымліваюць знак прабелу, ужывай \"\\ \", вось так: \"|apple\\ pie\". Іншыя знакі "
-"пазьбяганьня: \"\\\\\" для '\\', \"\\t\" для табуляцыі і \"\\n\" для новага радка.\n"
+"пошук проста ўвядзі слова, якое пачынаецца з \"|\" і націсьні Enter. "
+"Напрыклад, \"|ab cd\" шукае даньні, якія ўтрымліваюць і \"ab\", і \"cd\". "
+"Калі словы ўтрымліваюць знак прабелу, ужывай \"\\ \", вось так: \"|apple\\ "
+"pie\". Іншыя знакі пазьбяганьня: \"\\\\\" для '\\', \"\\t\" для табуляцыі і "
+"\"\\n\" для новага радка.\n"
 "        5. Пошук адмысловых знакаў\n"
 "        Калі тваё слова ўтрымлівае адмысловыя знакі, ужывай '\\', каб "
-"пазьбегнуць іх апрацоўкі, напрыклад, \"a\\*b\\?\" шукае \"a*b?\", \"\\/abc\" шукае "
-"\"/abc\".\n"
+"пазьбегнуць іх апрацоўкі, напрыклад, \"a\\*b\\?\" шукае \"a*b?\", \"\\/abc\" "
+"шукае \"/abc\".\n"
 "        6. Сканаваньне вылучанага слова\n"
 "        Задзейнічай пераключальнік у левым ніжнім куце вакна StarDict каб "
 "карыстацца гэтай магчымасьцю. Калі яна задзейнічаная StarDict аўтаматычна "
@@ -947,217 +990,217 @@ msgstr ""
 "\n"
 "\n"
 "        Заява: Гэтая праграма разпаўсюджваецца з надзеяй, што яна будзе "
-"карыснай, але БЕЗЬ НІЯКАЕ ГАРАНТЫІ; без гарантыі напісаньне словаў, азначэньні, "
-"і фанэтычныя зьвесткі правільныя.\n"
+"карыснай, але БЕЗЬ НІЯКАЕ ГАРАНТЫІ; без гарантыі напісаньне словаў, "
+"азначэньні, і фанэтычныя зьвесткі правільныя.\n"
 
-#: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
+#: ../src/mainwin.cpp:1996 ../src/stardict.cpp:1371
 msgid "Found no words matching this pattern!"
 msgstr "Ніводнага слова, якое б адпавядала ўзору!"
 
-#: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
+#: ../src/mainwin.cpp:1998 ../src/stardict.cpp:1396
 msgid "Found no words matching this regular expression!"
 msgstr "Ніводнага слова, якое адпавядала гэтаму рэгулярнаму выразу!"
 
-#: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
+#: ../src/mainwin.cpp:2000 ../src/stardict.cpp:1285
 msgid "There are too many spelling errors :-("
 msgstr "Зашмат памылак правапісу. :-("
 
-#: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
+#: ../src/mainwin.cpp:2002 ../src/stardict.cpp:1204 ../src/stardict.cpp:1249
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Няма артыкулаў слоўніка, якія б утрымлівае гэтае слова. :-("
 
-#: ../src/mainwin.cpp:2068
+#: ../src/mainwin.cpp:2090
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Тэкст \"%s\" ня быў адшуканы."
 
-#: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2406
+#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2428
 msgid "_Pronounce"
 msgstr "_Вымавіць"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
 msgid "Arabic"
 msgstr "Арабская"
 
-#: ../src/mainwin.cpp:2185
+#: ../src/mainwin.cpp:2207
 msgid "Chinese"
 msgstr "Кітайская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2192 ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2214 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Simplified)"
 msgstr "Кітайская (Спрошчаная)"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2190 ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Traditional)"
 msgstr "Кітайская (Традыцыйная)"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2186 ../src/mainwin.cpp:2188
-#: ../src/mainwin.cpp:2196 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2200
-#: ../src/mainwin.cpp:2202 ../src/mainwin.cpp:2204 ../src/mainwin.cpp:2206
-#: ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
+#: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
 #: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2234
-#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248
+#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2240 ../src/mainwin.cpp:2242
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250
 #: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
-#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2262
-#: ../src/mainwin.cpp:2264 ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2271 ../src/mainwin.cpp:2273 ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2279 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2283
-#: ../src/mainwin.cpp:2285 ../src/mainwin.cpp:2287 ../src/mainwin.cpp:2289
-#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2268 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2276 ../src/mainwin.cpp:2278
+#: ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2282 ../src/mainwin.cpp:2284
+#: ../src/mainwin.cpp:2286 ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2295 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2307 ../src/mainwin.cpp:2309 ../src/mainwin.cpp:2311
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "English"
 msgstr "Ангельская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2198
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228 ../src/mainwin.cpp:2230
-#: ../src/mainwin.cpp:2236 ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2254
-#: ../src/mainwin.cpp:2256 ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2264
-#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2285
-#: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2276
+#: ../src/mainwin.cpp:2278 ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2286
+#: ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
 msgid "French"
 msgstr "Француская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "German"
 msgstr "Нямецкая"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Italian"
 msgstr "Італьянская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303
-#: ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
+#: ../src/mainwin.cpp:2329
 msgid "Japanese"
 msgstr "Японская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "Korean"
 msgstr "Карэйская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Portuguese"
 msgstr "Партугальская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Russian"
 msgstr "Расейская"
 
-#: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Spanish"
 msgstr "Гішпанская"
 
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Dutch"
 msgstr "Галяндзкая"
 
-#: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2301
 msgid "Greek"
 msgstr "Грэцкая"
 
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Swedish"
 msgstr "Швэдзкая"
 
-#: ../src/mainwin.cpp:2329
+#: ../src/mainwin.cpp:2351
 msgid "Google Translate"
 msgstr "Пераклад Google"
 
-#: ../src/mainwin.cpp:2330
+#: ../src/mainwin.cpp:2352
 msgid "Yahoo Translate"
 msgstr "Пераклад Yahoo"
 
-#: ../src/mainwin.cpp:2331
+#: ../src/mainwin.cpp:2353
 msgid "Altavista Translate"
 msgstr "Пераклад Altavista"
 
-#: ../src/mainwin.cpp:2332
+#: ../src/mainwin.cpp:2354
 msgid "SystranBox Translate"
 msgstr "Пераклад SystranBox"
 
-#: ../src/mainwin.cpp:2333
+#: ../src/mainwin.cpp:2355
 msgid "Excite Japan Translate"
 msgstr "Пераклад Excite Japan"
 
-#: ../src/mainwin.cpp:2428
+#: ../src/mainwin.cpp:2450
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>Поўнатэкставы пераклад</b>"
 
-#: ../src/mainwin.cpp:2459
+#: ../src/mainwin.cpp:2481
 msgid "To"
 msgstr "У"
 
-#: ../src/mainwin.cpp:2492
+#: ../src/mainwin.cpp:2514
 msgid "_Translate"
 msgstr "_Перакласьці"
 
-#: ../src/mainwin.cpp:2514
+#: ../src/mainwin.cpp:2536
 msgid "Powered by -"
 msgstr "Створаны - "
 
-#: ../src/mainwin.cpp:2639
+#: ../src/mainwin.cpp:2661
 msgid "Please input some words to translate."
 msgstr "Калі ласка, увядзі колькі словаў для перакладу."
 
-#: ../src/mainwin.cpp:2654
+#: ../src/mainwin.cpp:2676
 msgid "Connecting..."
 msgstr "Злучаюся..."
 
-#: ../src/mainwin.cpp:2731
+#: ../src/mainwin.cpp:2753
 msgid "Scan the selection"
 msgstr "Сканаваць вылучэньне"
 
-#: ../src/mainwin.cpp:2745
+#: ../src/mainwin.cpp:2767
 msgid "Show info"
 msgstr "Паказаць зьвесткі"
 
-#: ../src/mainwin.cpp:2797 ../src/prefsdlg.cpp:1833
+#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:1895
 msgid "Preferences"
 msgstr "Настаўленьні"
 
-#: ../src/mainwin.cpp:2807
+#: ../src/mainwin.cpp:2829
 msgid "Manage dictionaries"
 msgstr "Кіраваньне слоўнікамі"
 
-#: ../src/mainwin.cpp:2817
+#: ../src/mainwin.cpp:2839
 msgid "Go to the StarDict website"
 msgstr "Пайсьці на пляцоўку StarDict"
 
-#: ../src/mainwin.cpp:2829
+#: ../src/mainwin.cpp:2851
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Пошук у Сеціўных слоўніках - Правая кнопка: сьпіс пляцовак"
 
@@ -1216,128 +1259,129 @@ msgstr "<b>Падрабязнасьці дадатка</b>"
 msgid "Manage Plugins"
 msgstr "Кіраваньне дадаткамі"
 
-#: ../src/prefsdlg.cpp:75 ../src/prefsdlg.cpp:367
+#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:398
 msgid "Scan Selection"
 msgstr "Сканаваньне вылучэньня"
 
-#: ../src/prefsdlg.cpp:76 ../src/prefsdlg.cpp:484
+#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:529
 msgid "Font"
 msgstr "Шрыфт"
 
-#: ../src/prefsdlg.cpp:77 ../src/prefsdlg.cpp:565
+#: ../src/prefsdlg.cpp:81 ../src/prefsdlg.cpp:610
 msgid "Cache"
 msgstr "Кэш"
 
-#: ../src/prefsdlg.cpp:78 ../src/prefsdlg.cpp:656
+#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:701
 msgid "Export"
 msgstr "Экспарт"
 
-#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:725
+#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:770
 msgid "Sound"
 msgstr "Гук"
 
-#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:692
+#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:737
 msgid "Article rendering"
 msgstr "Падрыхтоўка артыкула"
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:988
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:1033
 msgid "Net Dict"
 msgstr "Сеціўны слоўнік"
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1063
+#: ../src/prefsdlg.cpp:95 ../src/prefsdlg.cpp:1108
 msgid "Input"
 msgstr "Увод"
 
-#: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1145 ../src/prefsdlg.cpp:1572 ../src/prefsdlg.cpp:1603
+#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:111
+#: ../src/prefsdlg.cpp:1195 ../src/prefsdlg.cpp:1634 ../src/prefsdlg.cpp:1665
 msgid "Options"
 msgstr "Можнасьці"
 
-#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1446
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1508
 msgid "Search website"
 msgstr "Пляцоўкі пошуку"
 
-#: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1670
+#: ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:1732
 msgid "Settings"
 msgstr "Настаўленьні"
 
-#: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
+#: ../src/prefsdlg.cpp:119 ../src/stardict.cpp:2522
 msgid "Dictionary"
 msgstr "Слоўнік "
 
-#: ../src/prefsdlg.cpp:117
+#: ../src/prefsdlg.cpp:121
 msgid "Network"
 msgstr "Сеціва"
 
-#: ../src/prefsdlg.cpp:119
+#: ../src/prefsdlg.cpp:123
 msgid "Main window"
 msgstr "Галоўнае вакно"
 
-#: ../src/prefsdlg.cpp:121
+#: ../src/prefsdlg.cpp:125
 msgid "Notification area icon"
 msgstr "Значка вобласьці апавяшчэньня"
 
-#: ../src/prefsdlg.cpp:123
+#: ../src/prefsdlg.cpp:127
 msgid "Floating window"
 msgstr "Плаваючае вакенца"
 
-#: ../src/prefsdlg.cpp:260
+#: ../src/prefsdlg.cpp:264
 msgid "Categories"
 msgstr "Катэгорыі"
 
-#: ../src/prefsdlg.cpp:370
+#: ../src/prefsdlg.cpp:401
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "Сканаваць _толькі калі націснутая адмысловая клявіша."
 
-#: ../src/prefsdlg.cpp:386
+#: ../src/prefsdlg.cpp:417
 msgid "H_ide floating window when modifier key released."
 msgstr "_Хаваць плаваючае вакенца, калі адмысловая клявіша адпушчаная."
 
-#: ../src/prefsdlg.cpp:396
+#: ../src/prefsdlg.cpp:427
 msgid "Scan modifier _key:"
 msgstr "_Адмысловая клявіша сканаваньня:"
 
-#: ../src/prefsdlg.cpp:417
+#: ../src/prefsdlg.cpp:448
 msgid "_Scan clipboard."
 msgstr "_Сканаваць буфэр абмену"
 
-#: ../src/prefsdlg.cpp:423
-msgid "_Use scan hotkey: Ctrl+Alt+F1."
+#: ../src/prefsdlg.cpp:458
+#, fuzzy
+msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "_Ужывай гарачыя клявішы сканаваньня: Ctrl+Alt+F1."
 
-#: ../src/prefsdlg.cpp:461
+#: ../src/prefsdlg.cpp:506
 msgid "Choose dictionary font"
 msgstr "Выбраць шрыфт слоўніка"
 
-#: ../src/prefsdlg.cpp:464 ../src/prefsdlg.cpp:509
+#: ../src/prefsdlg.cpp:509 ../src/prefsdlg.cpp:554
 msgid "Choose"
 msgstr "Выбраць"
 
-#: ../src/prefsdlg.cpp:466
+#: ../src/prefsdlg.cpp:511
 msgid "Dictionary font"
 msgstr "Шрыфт слоўніка"
 
-#: ../src/prefsdlg.cpp:487
+#: ../src/prefsdlg.cpp:532
 msgid "_Use custom font."
 msgstr "_Ужываць шрыфт карыстальніка."
 
-#: ../src/prefsdlg.cpp:499
+#: ../src/prefsdlg.cpp:544
 msgid "Dictionary _font:"
 msgstr "_Шрыфт слоўніка:"
 
-#: ../src/prefsdlg.cpp:569
+#: ../src/prefsdlg.cpp:614
 msgid "Create c_ache files to speed up loading."
 msgstr "Ствараць _кэш файлаў, каб паскорыць загрузку."
 
-#: ../src/prefsdlg.cpp:574
+#: ../src/prefsdlg.cpp:619
 msgid "_Sort word list by collation function."
 msgstr "_Упарадкоўваць сьпіс словаў функцыяй параўнаньня."
 
-#: ../src/prefsdlg.cpp:583
+#: ../src/prefsdlg.cpp:628
 msgid "\tCollation _function:"
 msgstr "\t_Функцыя параўнаньня:"
 
-#: ../src/prefsdlg.cpp:615
+#: ../src/prefsdlg.cpp:660
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
@@ -1345,170 +1389,171 @@ msgstr ""
 "Пасьля задзейнічаньня параўнаньня, пры загрузцы слоўнікаў у першы раз, "
 "патрэбны пэўны час для ўпарадкаваньня, пачакай крыху, калі ласка."
 
-#: ../src/prefsdlg.cpp:621
+#: ../src/prefsdlg.cpp:666
 msgid "C_lean all cache files"
 msgstr "_Ачысьціць усе файлы кэшу"
 
-#: ../src/prefsdlg.cpp:638
+#: ../src/prefsdlg.cpp:683
 msgid "Open file..."
 msgstr "Адкрыць файл..."
 
-#: ../src/prefsdlg.cpp:661
+#: ../src/prefsdlg.cpp:706
 msgid "_Only export words."
 msgstr "Эспартаваць _толькі словы."
 
-#: ../src/prefsdlg.cpp:668
+#: ../src/prefsdlg.cpp:713
 msgid "File name:"
 msgstr "Імя файла:"
 
-#: ../src/prefsdlg.cpp:677
+#: ../src/prefsdlg.cpp:722
 msgid "_Browse..."
 msgstr "_Прагледзець..."
 
-#: ../src/prefsdlg.cpp:698
+#: ../src/prefsdlg.cpp:743
 msgid "_Highlight search term"
 msgstr "_Падсьвяціць шуканы тэрмін"
 
-#: ../src/prefsdlg.cpp:730
+#: ../src/prefsdlg.cpp:775
 msgid "_Enable sound event."
 msgstr "_Задзейнічаць гукавыя падзеі."
 
-#: ../src/prefsdlg.cpp:739
+#: ../src/prefsdlg.cpp:784
 msgid "Command for playing wav files:"
 msgstr "Загад прайграваньня wav-файлаў:"
 
-#: ../src/prefsdlg.cpp:752
+#: ../src/prefsdlg.cpp:797
 msgid "RealPeopleTTS search path:"
 msgstr "Шлях пошуку RealPeopleTTS:"
 
-#: ../src/prefsdlg.cpp:770
-msgid "_Use TTS program."
+#: ../src/prefsdlg.cpp:815
+#, fuzzy
+msgid "Enable _TTS program."
 msgstr "_Ужываць праграму TTS."
 
-#: ../src/prefsdlg.cpp:778
+#: ../src/prefsdlg.cpp:823
 msgid "Commandline:"
 msgstr "Загадны радок:"
 
-#: ../src/prefsdlg.cpp:807
+#: ../src/prefsdlg.cpp:852
 msgid "Account"
 msgstr "Рахунак"
 
-#: ../src/prefsdlg.cpp:818 ../src/prefsdlg.cpp:915
+#: ../src/prefsdlg.cpp:863 ../src/prefsdlg.cpp:960
 msgid "_User Name:"
 msgstr "Імя _карыстальніка:"
 
-#: ../src/prefsdlg.cpp:824 ../src/prefsdlg.cpp:921
+#: ../src/prefsdlg.cpp:869 ../src/prefsdlg.cpp:966
 msgid "_Password:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:847 ../src/prefsdlg.cpp:946
+#: ../src/prefsdlg.cpp:892 ../src/prefsdlg.cpp:991
 msgid "Please input the password."
 msgstr "Калі ласка, увядзі пароль."
 
-#: ../src/prefsdlg.cpp:904
+#: ../src/prefsdlg.cpp:949
 msgid "Register"
 msgstr "Зарэгістраваць"
 
-#: ../src/prefsdlg.cpp:928
+#: ../src/prefsdlg.cpp:973
 msgid "_Email:"
 msgstr "_Э-пошта:"
 
-#: ../src/prefsdlg.cpp:944
+#: ../src/prefsdlg.cpp:989
 msgid "Please input the user name."
 msgstr "Калі ласка, увядзі імя карыстальніка."
 
-#: ../src/prefsdlg.cpp:948
+#: ../src/prefsdlg.cpp:993
 msgid "Please input the email."
 msgstr "Калі ласка, увядзі адрас электроннай пошты."
 
-#: ../src/prefsdlg.cpp:950
+#: ../src/prefsdlg.cpp:995
 msgid "Please input a valid email."
 msgstr "Калі ласка, увядзі правільны адрас электроннай пошты."
 
-#: ../src/prefsdlg.cpp:994
+#: ../src/prefsdlg.cpp:1039
 msgid "Enable _network dictionaries."
 msgstr "Задзейнічаць _сеціўныя слоўнікі."
 
-#: ../src/prefsdlg.cpp:1006
+#: ../src/prefsdlg.cpp:1051
 msgid "StarDict server:"
 msgstr "Паслужнік StarDict:"
 
-#: ../src/prefsdlg.cpp:1015
+#: ../src/prefsdlg.cpp:1060
 msgid "Port:"
 msgstr "Порт:"
 
-#: ../src/prefsdlg.cpp:1024
+#: ../src/prefsdlg.cpp:1069
 msgid "Account:"
 msgstr "Рахунак:"
 
-#: ../src/prefsdlg.cpp:1035
+#: ../src/prefsdlg.cpp:1080
 msgid "_Register an account"
 msgstr "_Зарэгістраваць рахунак"
 
-#: ../src/prefsdlg.cpp:1070
+#: ../src/prefsdlg.cpp:1115
 msgid "_Search while typing."
 msgstr "_Шукаць падчас ўвядзеньня."
 
-#: ../src/prefsdlg.cpp:1079
+#: ../src/prefsdlg.cpp:1124
 msgid "Word change _timeout:"
 msgstr "_Затрымка зьмяненьня слова:"
 
-#: ../src/prefsdlg.cpp:1088
-msgid "(default:300)"
+#: ../src/prefsdlg.cpp:1133
+#, fuzzy
+msgid "(default:300 ms)"
 msgstr "(стандартна: 300)"
 
-#: ../src/prefsdlg.cpp:1090
+#: ../src/prefsdlg.cpp:1135
 msgid "Show the _first word when not found."
 msgstr "Паказаць _першае слова, каля не адшукана."
 
-#: ../src/prefsdlg.cpp:1151
+#: ../src/prefsdlg.cpp:1202
 msgid "_Auto run StarDict after boot."
 msgstr "_Аўтазапуск StarDict пасьля загрузкі."
 
-#: ../src/prefsdlg.cpp:1181
+#: ../src/prefsdlg.cpp:1232
 msgid "Hide main window when _starting StarDict."
 msgstr "_Хаваць галоўнае вакно на пачатку."
 
-#: ../src/prefsdlg.cpp:1191
+#: ../src/prefsdlg.cpp:1245
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "_Ужывай гарачыя клявішы, каб паказаць галоўнае вакно: Ctrl+Alt+Z."
 
-#: ../src/prefsdlg.cpp:1201 ../src/prefsdlg.cpp:1731
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1793
 msgid "_Transparency:"
 msgstr "_Празрыстасьць:"
 
-#: ../src/prefsdlg.cpp:1294 ../src/prefsdlg.cpp:1497
+#: ../src/prefsdlg.cpp:1356 ../src/prefsdlg.cpp:1559
 msgid "Website Name"
 msgstr "Імя пляцоўкі"
 
-#: ../src/prefsdlg.cpp:1306 ../src/prefsdlg.cpp:1505
+#: ../src/prefsdlg.cpp:1368 ../src/prefsdlg.cpp:1567
 msgid "Website link"
 msgstr "Адрас пляцоўкі"
 
-#: ../src/prefsdlg.cpp:1317 ../src/prefsdlg.cpp:1513
+#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1575
 msgid "Website search link"
 msgstr "Пошукавы адрас пляцоўкі"
 
-#: ../src/prefsdlg.cpp:1338
+#: ../src/prefsdlg.cpp:1400
 msgid "Please input the website name."
 msgstr "Калі ласка, увядзі імя пляцоўкі."
 
-#: ../src/prefsdlg.cpp:1340
+#: ../src/prefsdlg.cpp:1402
 msgid "Please input the website link."
 msgstr "Калі ласка, увядзі адрас пляцоўкі."
 
-#: ../src/prefsdlg.cpp:1342
+#: ../src/prefsdlg.cpp:1404
 msgid "Please input the website search link."
 msgstr "Калі ласка, увядзі пошукавы адрас пляцоўкі."
 
-#: ../src/prefsdlg.cpp:1344 ../src/prefsdlg.cpp:1423
+#: ../src/prefsdlg.cpp:1406 ../src/prefsdlg.cpp:1485
 #, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
-msgstr ""
-"Пошукавая спасылка мусіць утрымліваць радок \"%%s\" для запыту слова."
+msgstr "Пошукавая спасылка мусіць утрымліваць радок \"%%s\" для запыту слова."
 
-#: ../src/prefsdlg.cpp:1578
+#: ../src/prefsdlg.cpp:1640
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
@@ -1516,35 +1561,35 @@ msgstr ""
 "_Запыт у плаваючым вакенцы, калі пстрыкнута\n"
 "сярэдняй кнопкай мышы."
 
-#: ../src/prefsdlg.cpp:1606
+#: ../src/prefsdlg.cpp:1668
 msgid "_Pronounce the word when it pops up."
 msgstr "_Прамаўляць слова пры зьяўленьні."
 
-#: ../src/prefsdlg.cpp:1615
+#: ../src/prefsdlg.cpp:1677
 msgid "_Show floating window if word not found."
 msgstr "Паказваць плаваючае _вакенца, калі слова не адшуканае."
 
-#: ../src/prefsdlg.cpp:1689
+#: ../src/prefsdlg.cpp:1751
 msgid "Max window _width:"
 msgstr "Найбольшая _шырыня вакна:"
 
-#: ../src/prefsdlg.cpp:1699
+#: ../src/prefsdlg.cpp:1761
 msgid "(default:320)"
 msgstr "(стандартна: 320)"
 
-#: ../src/prefsdlg.cpp:1703
+#: ../src/prefsdlg.cpp:1765
 msgid "Max window hei_ght:"
 msgstr "Найбольшая _вышыня вакна:"
 
-#: ../src/prefsdlg.cpp:1711
+#: ../src/prefsdlg.cpp:1773
 msgid "(default:240)"
 msgstr "(стандартна :240)"
 
-#: ../src/prefsdlg.cpp:1716
+#: ../src/prefsdlg.cpp:1778
 msgid "_Use custom background color:"
 msgstr "Ужываць свой колер _асноведзі:"
 
-#: ../src/prefsdlg.cpp:1811
+#: ../src/prefsdlg.cpp:1873
 msgid "Cat_egories:"
 msgstr "_Катэгорыі:"
 
@@ -1552,11 +1597,11 @@ msgstr "_Катэгорыі:"
 msgid "Loading"
 msgstr "Загрузка"
 
-#: ../src/readword.cpp:148
+#: ../src/readword.cpp:150
 msgid "Real People TTS"
 msgstr "Real People TTS"
 
-#: ../src/readword.cpp:155
+#: ../src/readword.cpp:157
 msgid "Command TTS"
 msgstr ""
 
@@ -1576,90 +1621,93 @@ msgstr "Выканаць новы асобнік StarDict"
 msgid "Quit an existing instance of stardict"
 msgstr "Выйсьці зь існоўнага асобніка StarDict"
 
-#: ../src/stardict.cpp:1093
+#: ../src/stardict.cpp:1112
 msgid "Full-text Search"
 msgstr "Поўнатэкставы пошук"
 
-#: ../src/stardict.cpp:1120
+#: ../src/stardict.cpp:1139
 msgid "Search"
 msgstr "Шукаць"
 
-#: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
+#: ../src/stardict.cpp:1224 ../src/stardict.cpp:1641
 msgid "Full-text search..."
 msgstr "Поўнатэкставы пошук..."
 
-#: ../src/stardict.cpp:1325
+#: ../src/stardict.cpp:1344
 msgid "Fuzzy query failed, too :-("
 msgstr "Недакладны пошук таксама ня ўдаўся :-("
 
-#: ../src/stardict.cpp:1611
+#: ../src/stardict.cpp:1630
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Націсьці Enter, каб паказаць словы, якія адпавядаюць узору."
 
-#: ../src/stardict.cpp:1614
-msgid "Press Enter to list the words that match this regular expressions."
-msgstr "Націсьці Enter, каб паказаць словы, якія адпавядаюць рэгулярнаму выразу."
+#: ../src/stardict.cpp:1633
+#, fuzzy
+msgid "Press Enter to list the words that match this regular expression."
+msgstr ""
+"Націсьці Enter, каб паказаць словы, якія адпавядаюць рэгулярнаму выразу."
 
-#: ../src/stardict.cpp:1618
+#: ../src/stardict.cpp:1637
 msgid "Fuzzy query..."
 msgstr "Недакладны пошук..."
 
-#: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
+#: ../src/stardict.cpp:1905 ../src/stardict.cpp:2010
 msgid "Not found!\n"
 msgstr "Ня знойдзена!\n"
 
-#: ../src/stardict.cpp:1987
+#: ../src/stardict.cpp:2006
 msgid "Conversion error!\n"
 msgstr "Памылка пераўтварэньня!\n"
 
-#: ../src/stardict.cpp:2335
+#: ../src/stardict.cpp:2354
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict ужо запушчаны. Ужываю існоўны працэс."
 
-#: ../src/stardict.cpp:2468
+#: ../src/stardict.cpp:2487
 msgid "- Lookup words"
 msgstr "- шукаць словы"
 
-#: ../src/stardict.cpp:2473
+#: ../src/stardict.cpp:2492
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "Памылка падчас разьбіраньня можнасьцяў: %s\n"
 
-#: ../src/utils.cpp:127
+#: ../src/utils.cpp:130
 #, c-format
 msgid "Can not load image. %s"
 msgstr "Немагчыма загрузіць выяву. %s"
 
-#: ../src/lib/stardict_client.cpp:901
+#: ../src/lib/stardict_client.cpp:903
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "У ідэнтыфікацыі адмоўлена: %s"
 
-#: ../src/lib/stardict_client.cpp:914
+#: ../src/lib/stardict_client.cpp:916
 #, c-format
 msgid "Register failed: %s"
 msgstr "Рэгістрацыя не ўдалася: %s"
 
-#: ../src/lib/stardict_client.cpp:919
+#: ../src/lib/stardict_client.cpp:921
 msgid "Register success!"
 msgstr "Рэгістрацыя пасьпяховая!"
 
-#: ../src/lib/stardict_client.cpp:954
+#: ../src/lib/stardict_client.cpp:956
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
-"Рахунак не настаўлены. Калі ласка, спачатку раскрый старонку "
-"\"Сеціўныя слоўнікі\" ў вакне настаўленьняў і зарэгіструй рахунак."
+"Рахунак не настаўлены. Калі ласка, спачатку раскрый старонку \"Сеціўныя "
+"слоўнікі\" ў вакне настаўленьняў і зарэгіструй рахунак."
 
-#: ../src/lib/stardict_client.cpp:1074
+#: ../src/lib/stardict_client.cpp:1076
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
-msgstr "Ня выбраны ніводзін слоўнік, калі ласка, выберы колькі, націснуўшы "
+msgstr ""
+"Ня выбраны ніводзін слоўнік, калі ласка, выберы колькі, націснуўшы "
 "\"Кіраваньне слоўнікамі\"->\"Сеціўныя слоўнікі\"->\"Дадаць\""
 
-#: ../src/lib/stddict.cpp:649
+#: ../src/lib/stddict.cpp:650
 msgid "Sorting, please wait..."
 msgstr "Упарадкаваньне, калі ласка, пачакай..."
 
@@ -1667,84 +1715,87 @@ msgstr "Упарадкаваньне, калі ласка, пачакай..."
 msgid "Scan"
 msgstr "Сканаваць"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:248
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:250
 msgid "User Dict"
 msgstr "Слоўнік карыстальніка"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 msgid "User virtual dictionary."
 msgstr "Віртуальны слоўнік карыстальніка."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 msgid "Show the user dictionary."
 msgstr "Паказаць слоўнік карыстальніка."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:254
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+#, c-format
 msgid "User dict plug-in loaded.\n"
 msgstr "Загружаны дадатак слоўніка карыстальніка.\n"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:190
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:368
 msgid "Dict.cn"
 msgstr "Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
 msgid "Dict.cn configuration"
 msgstr "Настаўленьні Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by XML API."
 msgstr "Запыт праз XML API."
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:303
 msgid "Query by HTML API."
 msgstr "Запыт праз HTML API."
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Dict.cn network dictionary."
 msgstr "Сеціўны слоўнік Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Query result from Dict.cn website."
 msgstr "Запытаць вынік з пляцоўкі Dict.cn."
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:371
+#, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr "Дадатак Dict.cn загружаны.\n"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:30
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:31
 msgid "Espeak TTS configuration"
 msgstr "Настаўленьні Espeak TTS"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:32
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:33
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
 msgid "Voice type:"
 msgstr "Тып голасу:"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:35
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
 msgid "Default"
 msgstr "Дапомны"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak"
 msgstr "Espeak"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak TTS."
 msgstr "Espeak TTS."
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Pronounce words by Espeak TTS engine."
 msgstr "Вымавіць словы, выкарыстоўваючы рухавік Espeak TTS."
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:108
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
 msgid "Espeak TTS"
 msgstr "Espeak TTS"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
+#, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr "Загружаны дададак Espeak.\n"
 
@@ -1769,190 +1820,195 @@ msgid "Festival TTS"
 msgstr "Festival TTS"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:132
+#, c-format
 msgid "Festival plug-in loaded.\n"
 msgstr "Загружаны дадатак Festival\n"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:215
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:217
 msgid "[not a printable character]"
 msgstr "[знак, які нельга надрукаваць]"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:232
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:234
 msgid "General Character Properties"
 msgstr "Агульныя ўласьцівасьці знакаў"
 
 #. character category
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
 msgid "Unicode category:"
 msgstr "Катэгорыя Unicode:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:241
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:243
 msgid "Canonical decomposition:"
 msgstr "Кананічнае раскладаньне"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:256
 msgid "Various Useful Representations"
 msgstr "Розныя карысныя прадстаўленьні"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:267
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:269
 msgid "UTF-8:"
 msgstr "UTF-8:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:274
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
 msgid "UTF-16:"
 msgstr "UTF-16:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:282
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
 msgid "C octal escaped UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:290
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
 msgid "XML decimal entity:"
 msgstr "Дзесятковы аб'ект XML"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
 msgid "XML hexadecimal entity:"
 msgstr "Шаснаццаткавы аб'ект XML:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:306
 msgid "Alias names:"
 msgstr "Псэўданімы:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:310
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
 msgid "Notes:"
 msgstr "Нататкі:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:317
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:319
 msgid "See also:"
 msgstr "Гл. таксама:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:323
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
 msgid "Approximate equivalents:"
 msgstr "Прыблізна раўназначныя:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:329
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
 msgid "Equivalents:"
 msgstr "Раўнацэнныя:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:334
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:336
 msgid "Annotations and Cross References"
 msgstr "Заўвагі і спасылкі"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:341
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:343
 msgid "Definition in English:"
 msgstr "Азначэньне ангельскай:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:346
 msgid "Mandarin Pronunciation:"
 msgstr "Мандарыскае вымаўленьне:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:349
 msgid "Cantonese Pronunciation:"
 msgstr "Кантонскае вымаўленьне:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:352
 msgid "Japanese On Pronunciation:"
 msgstr "Японскае вымаўленьне On"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
 msgid "Japanese Kun Pronunciation:"
 msgstr "Японскае вымаўленьне Kun:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:358
 msgid "Tang Pronunciation:"
 msgstr "Вымаўленьне Tang:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:361
 msgid "Korean Pronunciation:"
 msgstr "Карэйскае вымаўленьне:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:364
 msgid "CJK Ideograph Information"
 msgstr "Зьвесткі пра ідэаграмы CJK"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:407
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:409
 msgid "Gucharmap"
 msgstr "Gucharmap"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Gucharmap virtual dictionary."
 msgstr "Віртуальны слоўнік Gucharmap."
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Show information about Unicode characters."
 msgstr "Паказаць зьвесткі пра знакі Unicode."
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:408
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
+#, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr "Загружаны дадатак Gucharmap.\n"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing"
 msgstr "Разбор даньняў HTML"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing engine."
 msgstr "Рухавік разбору даньняў HTML."
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "Parse the HTML data."
 msgstr "Разабраць даньні HTML."
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:471
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:476
+#, c-format
 msgid "HTML data parsing plug-in loaded.\n"
 msgstr "Загружаны дадатак разбору даньняў HTML.\n"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:154
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:155
 msgid "Man configuration"
 msgstr "Настаўленьні Man"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:156
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:157
 msgid "_Input string requires the \"man \" prefix."
 msgstr "_Радок уводу патрабуе прэфіксу \"man \"."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:199
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:200
 msgid "Man"
 msgstr "Man"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 msgid "Man virtual dictionary."
 msgstr "Віртуальны слоўнік Man."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 msgid "Show the man pages."
 msgstr "Паказаць старонкі man."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:213
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:215
+#, c-format
 msgid "Man plug-in loaded.\n"
 msgstr "Загружаны дадатак Man.\n"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing"
 msgstr "Разбор даньняў PowerWord"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing engine."
 msgstr "Рухавік разбору даньняў PowerWord."
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "Parse the PowerWord data."
 msgstr "Разабраць даньні PowerWord."
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:691
+#, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr "Загружаны дадатак разбору даньняў PowerWord!\n"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:165
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:167
 #, c-format
 msgid "Error: Open file %s failed!"
 msgstr "Памылка: не ўдалося адкрыць файл %s!"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:209
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:211
 msgid "QQWry configuration"
 msgstr "Настаўленьні QQWry"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:215
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
@@ -1960,30 +2016,33 @@ msgstr ""
 "Ты можаш абнавіць файл QQWry.Dat з пляцоўкі:\n"
 "http://www.cz88.net"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:219
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
 "You can download it from this website:\n"
 "http://www.cz88.net"
-msgstr "Памылка: Файл %s ня знойдзены!\n"
+msgstr ""
+"Памылка: Файл %s ня знойдзены!\n"
 "Яго можна загрузіць з пляцоўкі\n"
 "http://www.cz88.net"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:252
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
 msgid "QQWry"
 msgstr "QQWry"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
 msgid "Show QQWry IP information."
 msgstr "Паказаць зьвесткі пра QQWry IP."
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-msgid "Show the address information by the IP."
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#, fuzzy
+msgid "Show address information by IP."
 msgstr "Паказаць зьвесткі пра адрас паводле IP."
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
+#, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr "Загружаны дадатак QQWry.\n"
 
@@ -2029,183 +2088,192 @@ msgid "Pronounce words by SAPI TTS engine."
 msgstr "Вымавіць словы, выкарыстоўваючы рухавік SAPI TTS."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:270
+#, c-format
 msgid "SAPI tts plug-in loaded.\n"
 msgstr "Загружаны дадатак SAPI TTS.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:256
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
 msgstr "Увага: няўдалае запатрабаваньне слоўніка правапісаньня для мовы %s.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:260
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:303
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:305
+#, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr "Памылка, адсутнічаюць слоўнікі праверкі правапісу!\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
 msgid "Spell check configuration"
 msgstr "Настаўленьні праверкі правапісу"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:322
 msgid "_Use custom languages."
 msgstr "Ужываць свае _мовы."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:325
 msgid "For example: \"en_US de\""
 msgstr "Напрыклад: \"en_US de\""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:329
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:331
 msgid "Custom languages:"
 msgstr "Свае мовы:"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell Check"
 msgstr "Праверка правапісу"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check virtual dictionary."
 msgstr "Праверыць правапіс віртуальных слоўнікаў."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check the input words and show the correct suggestion."
 msgstr "Праверыць напісаньне уведзеных словаў і паказаць правільную прапанову."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:402
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:404
 msgid "Spelling Suggestion"
 msgstr "Прапановы напісаньня"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:434
+#, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr "Загружаны дадатак праверкі правапісу.\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:37
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
 msgid "You are using an old version of StarDict!"
 msgstr "Ты выкарыстоўваеш старую вэрсію StarDict!"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:41
 msgid "You are using the newest version of StarDict!"
 msgstr "Ты выкарыстоўваеш найноўшую вэрсію StarDict!"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:42
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:44
 msgid "Latest version information:"
 msgstr "Зьвесткі аб апошняй вэрсіі:"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:50
 msgid "Latest news:"
 msgstr "Апошнія навіны:"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:53
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:55
 msgid "Update information"
 msgstr "Абнавіць зьвесткі"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update Info"
 msgstr "Абнавіць зьвесткі"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update information."
 msgstr "Абнавіць зьвесткі"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Get the update information from the Internet."
 msgstr "Атрымаць зьвесткі па абнаўленьнях зь Сеціва."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:175
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
 msgid "Visit StarDict website now?"
 msgstr "Ці наведаць старонку StarDict зараз?"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:179
 msgid "_Don't show this until the next update."
 msgstr "_Не паказваць гэта да наступнага абнаўленьня."
 
 #. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
 #. g_idle_add(get_update_info, NULL);
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:257
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:259
+#, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr "Дадатак абнаўленьня зьвестак загружаны.\n"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing"
 msgstr "Разбор даньняў Wiki"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing engine."
 msgstr "Рухавік разбору даньняў Wiki."
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Parse the wiki data."
 msgstr "Разабраць даньні wiki."
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:51
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:52
+#, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
 msgstr "Загружаны дадатак разбору даньняў Wiki.\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:57
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:58
 msgid "WordNet configuration"
 msgstr "Настаўленьні WordNet "
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:59
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:60
 msgid "Graphic mode."
 msgstr "Графічны рэжым."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:61
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:62
 msgid "Text mode."
 msgstr "Тэкставы рэжым."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering"
 msgstr "Апрацоўка слоўніка WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering engine."
 msgstr "Рухавік апрацоўкі слоўнікаў WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+#, fuzzy
 msgid ""
 "Render the WordNet dictionary.\n"
-"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
-"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
-"his open source sharing!"
-msgstr "Адлюстраваць слоўнік WordNet.\n"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
+msgstr ""
+"Адлюстраваць слоўнік WordNet.\n"
 "Заява: рухавік дадатку узяты з dedict (http://sevenpie.net), які "
-"распрацаваны Bian Peng &lt;tianpmoon@gmail.com&gt;, вялікі яму дзякуй, "
-"што дзеліцца адкрытымі крыніцамі!"
+"распрацаваны Bian Peng &lt;tianpmoon@gmail.com&gt;, вялікі яму дзякуй, што "
+"дзеліцца адкрытымі крыніцамі!"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:129
+#, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
 msgstr "Загружаны дадатак апрацоўкі слоўнікаў WordNet.\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing"
 msgstr "Разбор даньняў WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing engine."
 msgstr "Рухавік разбору даньняў WordNet."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "Parse the WordNet data."
 msgstr "Разабраць даньні WordNet."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:146
+#, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr "Загружаны дадатак разбору даньняў WordNet.\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing"
 msgstr "Разбор даньняў XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing engine."
 msgstr "Рухавік разбору даньняў XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "Parse the XDXF data."
 msgstr "Разабраць даньні XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:333
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
+#, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "Загружаны дадатак разбору даньняў XDXF.\n"
-

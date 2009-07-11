@@ -8,7 +8,7 @@ huzheng	Hu Zheng	胡正	Hungzeng
 P
 huzheng.png
 x
-The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng_001@163.com\nGtalk: huzheng001@gmail.com\nHome page: <iref>http://forlinux.yeah.net</iref>\nMM们<iref href="http://reciteword.cosoft.org.cn/yaoguang/seek.txt">注意</iref>啦！
+The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng001@gmail.com\nHome website: <iref>http://www.huzheng.org</iref>
 
 wenjing	Huang Wenjing	黄文静	猪能飞
 P

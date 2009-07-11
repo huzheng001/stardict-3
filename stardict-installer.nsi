@@ -704,12 +704,10 @@ Function .onInit
     StrCpy $INSTDIR "$PROGRAMFILES\StarDict"
     Goto instdir_done
   user_dir:
-    StrCpy $2 "$SMPROGRAMS"
-    Push $2
-    Call GetParent
-    Call GetParent
-    Pop $2
-    StrCpy $INSTDIR "$2\StarDict"
+    Push $SMPROGRAMS
+    ${GetParent} $SMPROGRAMS $R2
+    ${GetParent} $R2 $R2
+    StrCpy $INSTDIR "$R2\StarDict"
 
   instdir_done:
 

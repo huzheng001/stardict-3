@@ -2,12 +2,12 @@
 # Copyright © 2007, Free Software Foundation.
 # tam trieu <trieutritam@gmail.com>, 2004.
 # Clytie Siddall <clytie@riverland.net.au>, 2005-2007.
-# 
+#
 msgid ""
-""
-msgstr "Project-Id-Version: stardict 3.0.1\n"
+msgstr ""
+"Project-Id-Version: stardict 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-05 13:52+0800\n"
+"POT-Creation-Date: 2009-07-05 06:08+0800\n"
 "PO-Revision-Date: 2007-12-01 17:20+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -29,17 +29,11 @@ msgstr "bộ tạo khả năng tự động hoá stardict"
 msgid "Lookup words"
 msgstr "Tra từ"
 
-#.gtk_widget_set_app_paintable(window, TRUE);
-#: ../data/stardict.desktop.in.h:2
-#: ../src/docklet.cpp:30
-#: ../src/docklet.cpp:196
-#: ../src/mainwin.cpp:477
-#: ../src/splash.cpp:84
-#: ../src/stardict.cpp:270
-#: ../src/stardict.cpp:339
-#: ../src/stardict.cpp:2485
-#: ../src/win32/systray.cpp:220
-#: ../src/win32/systray.cpp:268
+#. gtk_widget_set_app_paintable(window, TRUE);
+#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
+#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/splash.cpp:84
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:340 ../src/stardict.cpp:2504
+#: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
 msgid "StarDict"
 msgstr "StarDict"
 
@@ -47,7 +41,8 @@ msgstr "StarDict"
 msgid ""
 "A custom font that will be used in StarDict. This will only take effect if "
 "the \"Use Custom Font\" option is turned on."
-msgstr "Phông chữ riêng sẽ được dùng trong StarDict. Nó sẽ chỉ có tác động nếu tùy "
+msgstr ""
+"Phông chữ riêng sẽ được dùng trong StarDict. Nó sẽ chỉ có tác động nếu tùy "
 "chọn « Dùng phông riêng » đã được hiệu lực."
 
 #: ../data/stardict.schemas.in.h:2
@@ -90,7 +85,8 @@ msgstr "Ẩn cửa sổ nổi khi phím bổ trợ được buông ra"
 msgid ""
 "Hide floating window when modifier key is released. It only take effect when "
 "only_scan_while_modifier_key is turned on."
-msgstr "Ẩn cửa sổ nổi khi phím bổ trợ được buông ra. Nó chỉ có tác động nếu biến « "
+msgstr ""
+"Ẩn cửa sổ nổi khi phím bổ trợ được buông ra. Nó chỉ có tác động nếu biến « "
 "only_scan_while_modifier_key » (chỉ quét trong khi phím bổ trợ) được bật."
 
 #: ../data/stardict.schemas.in.h:12
@@ -145,14 +141,16 @@ msgstr "Chỉ quét trong khi phím bổ trợ được ấn giữ"
 msgid ""
 "Only scan while the modifier key is being pressed. The modifier key is set "
 "by \"scan_modifier_key\"."
-msgstr "Chỉ quét trong khi phím bổ trợ được ấn giữ. Phím bổ trợ riêng được đặt bằng "
+msgstr ""
+"Chỉ quét trong khi phím bổ trợ được ấn giữ. Phím bổ trợ riêng được đặt bằng "
 "biến « scan_modifier_key » (phím bổ trợ quét)."
 
 #: ../data/stardict.schemas.in.h:25
 msgid ""
 "Only scan while this modifier key is being pressed. It can be Win(0), Shift"
 "(1), Alt(2) or Ctrl(3)."
-msgstr "Chỉ quét trong khi phím bổ trợ được ấn giữ. Phím bổ trợ này có thể là Win"
+msgstr ""
+"Chỉ quét trong khi phím bổ trợ được ấn giữ. Phím bổ trợ này có thể là Win"
 "(0), Shift(1), Alt(2) hay Ctrl(3)."
 
 #: ../data/stardict.schemas.in.h:26
@@ -203,7 +201,9 @@ msgstr "Chỉ mục ngôn ngữ nguồn"
 msgid ""
 "The command-line to use in order to enable pronunciation of words via an "
 "external TTS program."
-msgstr "Dòng lệnh cần dùng để hiệu lực khả năng phát âm từ thông qua chương trình TTS bên ngoài."
+msgstr ""
+"Dòng lệnh cần dùng để hiệu lực khả năng phát âm từ thông qua chương trình "
+"TTS bên ngoài."
 
 #: ../data/stardict.schemas.in.h:38
 msgid "The height of the main stardict window."
@@ -257,13 +257,16 @@ msgstr "Có nên phóng to cửa sổ hay không."
 msgid ""
 "Whether to enable StartDict to use an external TTS program for "
 "pronounciation, or not."
-msgstr "Có nên cho stardict có khả năng sử dụng chương trình TTS bên ngoài để phát âm từ hay không."
+msgstr ""
+"Có nên cho stardict có khả năng sử dụng chương trình TTS bên ngoài để phát "
+"âm từ hay không."
 
 #: ../data/stardict.schemas.in.h:51
 msgid ""
 "Whether to enable sound events or not. StarDict will play a sound event when "
 "a button is active or released, and when a menu pops up."
-msgstr "Có nên hiệu lực các dữ kiện âm thanh hay không. StarDict sẽ chạy dữ kiện âm "
+msgstr ""
+"Có nên hiệu lực các dữ kiện âm thanh hay không. StarDict sẽ chạy dữ kiện âm "
 "thanh khi cái nút được bấm hay buông ra, và khi trình đơn tự mở."
 
 #: ../data/stardict.schemas.in.h:52
@@ -285,7 +288,8 @@ msgid ""
 "Whether to query in the floating window, or in the main window. Query is "
 "activated by the user clicking the middle mouse button on the notification "
 "area icon."
-msgstr "Có nên tra tìm trong cửa sổ nổi, hay trong cửa sổ chính. Chức năng tra tìm "
+msgstr ""
+"Có nên tra tìm trong cửa sổ nổi, hay trong cửa sổ chính. Chức năng tra tìm "
 "được kích hoạt khi người dùng nhấn nút giữa chuột vào biểu tượng trong vùng "
 "thông báo."
 
@@ -293,16 +297,19 @@ msgstr "Có nên tra tìm trong cửa sổ nổi, hay trong cửa sổ chính. C
 msgid ""
 "Whether to scan the selection or not. When the user selects text, StarDict "
 "will popup a flat window showing the meaning of that text."
-msgstr "Có nên quét qua vùng chọn hay không. Khi người dùng lựa chọn văn bản, StarDict sẽ tự mở cửa sổ phẳng hiển thị nghĩa của đoạn đó."
+msgstr ""
+"Có nên quét qua vùng chọn hay không. Khi người dùng lựa chọn văn bản, "
+"StarDict sẽ tự mở cửa sổ phẳng hiển thị nghĩa của đoạn đó."
 
 #: ../data/stardict.schemas.in.h:57
 msgid ""
 "Whether to use a user-defined font in StarDict, instead of the default "
 "system font. If this option is turned on, then the font named in the "
 "\"Custom Font\" option will be used instead of the system font."
-msgstr "Có nên sử dụng phông được người dùng xác định trong StarDict, thay cho phông "
-"hệ thống mặc định. Bật tùy chọn này thì phông được đặt trong tùy chọn « "
-"Phông riêng » sẽ được dùng thay cho phông hệ thống."
+msgstr ""
+"Có nên sử dụng phông được người dùng xác định trong StarDict, thay cho phông "
+"hệ thống mặc định. Bật tùy chọn này thì phông được đặt trong tùy chọn « Phông "
+"riêng » sẽ được dùng thay cho phông hệ thống."
 
 #: ../data/stardict.schemas.in.h:58
 msgid "Window-height"
@@ -364,13 +371,12 @@ msgstr "<span foreground=\"red\">[Ảnh bị thiếu]</span>"
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Không rõ kiểu dữ liệu, hãy nâng cấp chương trình StarDict."
 
-#.Default stardictd server.
-#: ../src/conf.cpp:57
-#: ../src/prefsdlg.cpp:1858
+#. Default stardictd server.
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:226
+#: ../src/conf.cpp:238
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -391,7 +397,8 @@ msgid ""
 "Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
 "cmudict?in=%s\n"
-msgstr "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+msgstr ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
 "s\n"
 "Dự án Từ điển tiếng Việt miễn phí\thttp://gkws0.informatik.uni-leipzig."
 "de:8080/td?word=%@&db=ev&fmt=u&k=viqr\n"
@@ -418,24 +425,35 @@ msgstr "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php
 "cmudict?in=%s\n"
 "Tìm phần mở rộng tập tin\thttp://filext.com/detaillist.php?extdetail=%@\n"
 
-#.You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:253
+#. You may translate it to "win32_use_custom_font=1" for your language.
+#: ../src/conf.cpp:265
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
-#.You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:265
+#. You may translate it as "win32_custom_font=tahoma 9".
+#: ../src/conf.cpp:277
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
-#.You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:290
+#, fuzzy
+msgid "darwin_use_custom_font=0"
+msgstr "win32_use_custom_font=0"
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:302
+#, fuzzy
+msgid "darwin_custom_font="
+msgstr "win32_custom_font="
+
+#. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
 #: ../src/desktop.cpp:71
 #, c-format
 msgid "%s\\help\\stardict.chm"
 msgstr "%s\\help\\stardict.chm"
 
-#: ../src/dictmanage.cpp:46
-#: ../src/dictmanage.cpp:240
+#: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
 msgid "Default Group"
 msgstr "Nhóm mặc định"
 
@@ -444,29 +462,22 @@ msgstr "Nhóm mặc định"
 msgid "Only level %d user can choose this dictionary!"
 msgstr "Chỉ người dùng cấp %d có khả năng chọn từ điển này."
 
-#: ../src/dictmanagedlg.cpp:74
-#: ../src/dictmanagedlg.cpp:430
+#: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
 #: ../src/dictmanagedlg.cpp:2283
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Bạn chỉ có khả năng chọn %d từ điển."
 
-#: ../src/dictmanagedlg.cpp:186
-#: ../src/dictmanagedlg.cpp:802
-#: ../src/dictmanagedlg.cpp:902
-#: ../src/dictmanagedlg.cpp:973
-#: ../src/dictmanagedlg.cpp:1425
-#: ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1125
+#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
+#: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
+#: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
+#: ../src/stardict.cpp:1144
 msgid "Dictionary Name"
 msgstr "Tên từ điển"
 
-#: ../src/dictmanagedlg.cpp:191
-#: ../src/dictmanagedlg.cpp:803
-#: ../src/dictmanagedlg.cpp:908
-#: ../src/dictmanagedlg.cpp:980
-#: ../src/dictmanagedlg.cpp:1430
-#: ../src/dictmanagedlg.cpp:2206
+#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:803
+#: ../src/dictmanagedlg.cpp:908 ../src/dictmanagedlg.cpp:980
+#: ../src/dictmanagedlg.cpp:1430 ../src/dictmanagedlg.cpp:2206
 msgid "Word count"
 msgstr "Đếm từ"
 
@@ -478,28 +489,23 @@ msgstr "Duyệt qua các Từ điển"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Thiết lập này sẽ có tác động lần kế tiếp bạn khởi chạy StarDict."
 
-#: ../src/dictmanagedlg.cpp:425
-#: ../src/lib/stddict.cpp:1208
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
 msgid "Loading..."
 msgstr "Đang nạp..."
 
-#: ../src/dictmanagedlg.cpp:445
-#: ../src/dictmanagedlg.cpp:1345
+#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Tra tìm trong Từ điển</span>"
 
-#: ../src/dictmanagedlg.cpp:447
-#: ../src/dictmanagedlg.cpp:1347
+#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">Quét qua Từ điển</span>"
 
-#: ../src/dictmanagedlg.cpp:464
-#: ../src/dictmanagedlg.cpp:546
+#: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
 msgid "Virtual Dictionary"
 msgstr "Từ điển ảo"
 
-#: ../src/dictmanagedlg.cpp:471
-#: ../src/dictmanagedlg.cpp:553
+#: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
 msgid "Network Dictionary"
 msgstr "Từ điển mạng"
 
@@ -507,39 +513,35 @@ msgstr "Từ điển mạng"
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
-msgstr "Bạn có thể tạo nhiều nhóm từ điển khác nhau, v.d. « Học tiếng Anh », « Tin "
-"học tiếng Việt » và « Tin học tiếng Anh », rồi chuyển đổi ngay giữa các nhóm "
-"này."
+msgstr ""
+"Bạn có thể tạo nhiều nhóm từ điển khác nhau, v.d. « Học tiếng Anh », « Tin học "
+"tiếng Việt » và « Tin học tiếng Anh », rồi chuyển đổi ngay giữa các nhóm này."
 
 #: ../src/dictmanagedlg.cpp:788
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
-msgstr "Tra tìm trong Từ điển sẽ hiển thị trong cửa sổ chính, còn Quét qua Từ điển "
+msgstr ""
+"Tra tìm trong Từ điển sẽ hiển thị trong cửa sổ chính, còn Quét qua Từ điển "
 "sẽ hiển thị trong cửa sổ nổi."
 
-#: ../src/dictmanagedlg.cpp:804
-#: ../src/dictmanagedlg.cpp:2208
+#: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
 msgid "Author"
 msgstr "Tác giả"
 
-#: ../src/dictmanagedlg.cpp:805
-#: ../src/dictmanagedlg.cpp:2209
+#: ../src/dictmanagedlg.cpp:805 ../src/dictmanagedlg.cpp:2209
 msgid "Email"
 msgstr "Địa chỉ thư"
 
-#: ../src/dictmanagedlg.cpp:806
-#: ../src/dictmanagedlg.cpp:2210
+#: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
 msgid "Website"
 msgstr "Địa chỉ Web"
 
-#: ../src/dictmanagedlg.cpp:807
-#: ../src/dictmanagedlg.cpp:2211
+#: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
 msgid "Description"
 msgstr "Mô tả"
 
-#: ../src/dictmanagedlg.cpp:808
-#: ../src/dictmanagedlg.cpp:2212
+#: ../src/dictmanagedlg.cpp:808 ../src/dictmanagedlg.cpp:2212
 msgid "Date"
 msgstr "Ngày"
 
@@ -547,8 +549,7 @@ msgstr "Ngày"
 msgid "File name"
 msgstr "Tên tập tin"
 
-#: ../src/dictmanagedlg.cpp:895
-#: ../src/dictmanagedlg.cpp:967
+#: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
 #: ../src/pluginmanagedlg.cpp:373
 msgid "Enable"
 msgstr "Bật"
@@ -573,8 +574,7 @@ msgstr "Tên nhóm:"
 msgid "Add dictionary"
 msgstr "Thêm từ điển"
 
-#: ../src/dictmanagedlg.cpp:1791
-#: ../src/prefsdlg.cpp:1281
+#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
 msgid "Add"
 msgstr "Thêm"
 
@@ -606,8 +606,7 @@ msgstr "Đem xuống dưới"
 msgid "D_ict List"
 msgstr "Danh sách Từ đ_iển"
 
-#: ../src/dictmanagedlg.cpp:1932
-#: ../src/mainwin.cpp:518
+#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
 msgid "Manage _Dict"
 msgstr "_Quản lý Từ điển"
 
@@ -659,111 +658,93 @@ msgstr "Đếm từ đồng nghĩa"
 msgid "Download Now!"
 msgstr "Tải xuống ngay !"
 
-#: ../src/docklet.cpp:33
-#: ../src/docklet.cpp:182
-#: ../src/win32/systray.cpp:258
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
 msgid "StarDict - Scanning"
 msgstr "StarDict - Đang quét"
 
-#: ../src/docklet.cpp:36
-#: ../src/docklet.cpp:188
-#: ../src/win32/systray.cpp:263
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:263
 msgid "StarDict - Stopped"
 msgstr "StarDict - Bị dừng"
 
-#: ../src/docklet.cpp:96
-#: ../src/mainwin.cpp:2722
+#: ../src/docklet.cpp:95 ../src/mainwin.cpp:2744
 msgid "_Scan"
 msgstr "_Quét"
 
-#: ../src/docklet.cpp:106
-#: ../src/mainwin.cpp:555
+#: ../src/docklet.cpp:105 ../src/mainwin.cpp:577
 msgid "_Quit"
 msgstr "T_hoát"
 
-#: ../src/floatwin.cpp:125
+#: ../src/floatwin.cpp:126
 msgid "Query in the main window"
 msgstr "Tra tìm trong cửa sổ chính"
 
-#: ../src/floatwin.cpp:134
+#: ../src/floatwin.cpp:135
 msgid "Save to file"
 msgstr "Lưu vào tập tin"
 
-#: ../src/floatwin.cpp:142
-#: ../src/mainwin.cpp:1561
+#: ../src/floatwin.cpp:143
 msgid "Pronounce the word"
 msgstr "Phát âm từ"
 
-#: ../src/floatwin.cpp:152
+#: ../src/floatwin.cpp:153
 msgid "Stop selection-scanning"
 msgstr "Dừng quét qua vùng chọn"
 
-#: ../src/floatwin.cpp:164
+#: ../src/floatwin.cpp:165
 msgid "Help"
 msgstr "Trợ giúp"
 
-#: ../src/floatwin.cpp:172
-#: ../src/mainwin.cpp:2755
+#: ../src/floatwin.cpp:173 ../src/mainwin.cpp:2777
 #: ../src/win32/systray.cpp:111
 msgid "Quit"
 msgstr "Thoát"
 
-#: ../src/floatwin.cpp:186
+#: ../src/floatwin.cpp:187
 msgid "Lock floating window"
 msgstr "Khoá cửa sổ nổi"
 
-#: ../src/floatwin.cpp:322
-#: ../src/floatwin.cpp:365
-#: ../src/mainwin.cpp:1952
-#: ../src/mainwin.cpp:1982
-#: ../src/selection.cpp:194
-#: ../src/stardict.cpp:686
-#: ../src/stardict.cpp:831
-#: ../src/stardict.cpp:1004
-#: ../src/stardict.cpp:1018
-#: ../src/stardict.cpp:1023
-#: ../src/stardict.cpp:1028
-#: ../src/stardict.cpp:1518
-#: ../src/stardict.cpp:1645
-#: ../src/win32/clipboard.cpp:117
+#: ../src/floatwin.cpp:323 ../src/floatwin.cpp:366 ../src/mainwin.cpp:1974
+#: ../src/mainwin.cpp:2004 ../src/selection.cpp:194 ../src/stardict.cpp:705
+#: ../src/stardict.cpp:850 ../src/stardict.cpp:1023 ../src/stardict.cpp:1037
+#: ../src/stardict.cpp:1042 ../src/stardict.cpp:1047 ../src/stardict.cpp:1537
+#: ../src/stardict.cpp:1664 ../src/win32/clipboard.cpp:117
 msgid "<Not Found!>"
 msgstr "<Không tìm thấy>"
 
-#: ../src/floatwin.cpp:444
+#: ../src/floatwin.cpp:445
 msgid "Fuzzy query"
 msgstr "Truy vấn mờ"
 
-#: ../src/floatwin.cpp:450
+#: ../src/floatwin.cpp:451
 msgid "has succeeded.\n"
 msgstr "thành công.\n"
 
-#: ../src/floatwin.cpp:452
+#: ../src/floatwin.cpp:453
 msgid "Found 1 word:\n"
 msgstr "Tìm 1 từ :\n"
 
-#: ../src/floatwin.cpp:454
+#: ../src/floatwin.cpp:455
 #, c-format
 msgid "Found %d words:\n"
 msgstr "Tìm %d từ :\n"
 
-#: ../src/floatwin.cpp:942
+#: ../src/floatwin.cpp:943
 msgid "_Copy"
 msgstr "_Chép"
 
-#: ../src/floatwin.cpp:948
+#: ../src/floatwin.cpp:949
 msgid "_Save"
 msgstr "_Lưu"
 
-#: ../src/floatwin.cpp:953
-#: ../src/mainwin.cpp:2147
+#: ../src/floatwin.cpp:954 ../src/mainwin.cpp:2169
 msgid "_Query"
 msgstr "_Tra tìm"
 
-#: ../src/floatwin.cpp:960
+#: ../src/floatwin.cpp:961
 msgid "_Play"
 msgstr "_Phát"
 
-#: ../src/floatwin.cpp:968
+#: ../src/floatwin.cpp:969
 msgid "_Fuzzy Query"
 msgstr "Truy vấn _mờ"
 
@@ -771,114 +752,124 @@ msgstr "Truy vấn _mờ"
 msgid "Clear the search box"
 msgstr "Xoá trường tìm"
 
-#: ../src/mainwin.cpp:118
+#: ../src/mainwin.cpp:120
 msgid "Fuzzy Query"
 msgstr "Truy vấn mờ"
 
-#: ../src/mainwin.cpp:130
+#: ../src/mainwin.cpp:132
 msgid "Go Back - Right button: history (Alt+Left)"
 msgstr "Lùi lại - Nút bên phải: lịch sử (Alt+bên Trái)"
 
-#: ../src/mainwin.cpp:145
+#: ../src/mainwin.cpp:147
 msgid "Show the main menu (Alt+M)"
 msgstr "Hiện trình đơn chính (Alt+M)"
 
-#: ../src/mainwin.cpp:474
+#: ../src/mainwin.cpp:195
+msgid "Clear _history"
+msgstr ""
+
+#: ../src/mainwin.cpp:496
 msgid "translator_credits"
 msgstr "Clytie Siddall <clytie@riverland.net.au>"
 
-#: ../src/mainwin.cpp:480
+#: ../src/mainwin.cpp:502
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "StarDict là một từ điển quốc tế cho GNOME."
 
-#: ../src/mainwin.cpp:511
+#: ../src/mainwin.cpp:533
 msgid "Pr_eferences"
 msgstr "Tù_y thích"
 
-#: ../src/mainwin.cpp:524
+#: ../src/mainwin.cpp:546
 msgid "Manage _Plugins"
 msgstr "Quản lý _Phần bổ sung"
 
-#: ../src/mainwin.cpp:533
+#: ../src/mainwin.cpp:555
 msgid "_New Version"
 msgstr "Phiên bả_n mới"
 
-#: ../src/mainwin.cpp:541
+#: ../src/mainwin.cpp:563
 msgid "_Help"
 msgstr "Trợ g_iúp"
 
-#: ../src/mainwin.cpp:547
+#: ../src/mainwin.cpp:569
 msgid "_About"
 msgstr "_Giới thiệu"
 
-#: ../src/mainwin.cpp:1259
+#: ../src/mainwin.cpp:1281
 msgid "List"
 msgstr "Danh sách"
 
-#: ../src/mainwin.cpp:1270
+#: ../src/mainwin.cpp:1292
 msgid "Result"
 msgstr "Kết quả"
 
-#: ../src/mainwin.cpp:1280
+#: ../src/mainwin.cpp:1302
 msgid "Full-Text Translation"
 msgstr "Dịch toàn văn bản"
 
-#: ../src/mainwin.cpp:1291
+#: ../src/mainwin.cpp:1313
 msgid "Tree"
 msgstr "Cây"
 
-#: ../src/mainwin.cpp:1302
+#: ../src/mainwin.cpp:1324
 msgid "Choose dict group"
 msgstr "Chọn nhóm từ điển"
 
-#: ../src/mainwin.cpp:1315
+#: ../src/mainwin.cpp:1337
 msgid "Next word (Alt+Down)"
 msgstr "Từ kế (Alt+bên Dưới)"
 
-#: ../src/mainwin.cpp:1325
+#: ../src/mainwin.cpp:1347
 msgid "Previous word (Alt+Up)"
 msgstr "Từ lùi (Alt+bên Trên)"
 
-#: ../src/mainwin.cpp:1377
+#: ../src/mainwin.cpp:1399
 msgid "Enable Net Dict"
 msgstr "Bật từ điển Net"
 
-#: ../src/mainwin.cpp:1514
+#: ../src/mainwin.cpp:1536
 msgid "Show the word list"
 msgstr "Hiện danh sách từ"
 
-#: ../src/mainwin.cpp:1529
+#: ../src/mainwin.cpp:1551
 msgid "Hide the word list"
 msgstr "Ẩn danh sách từ"
 
-#: ../src/mainwin.cpp:1547
+#: ../src/mainwin.cpp:1569
 msgid "Copy"
 msgstr "Chép"
 
-#: ../src/mainwin.cpp:1575
+#: ../src/mainwin.cpp:1583
+#, fuzzy
+msgid "Pronounce the word (Enter)"
+msgstr "Phát âm từ"
+
+#: ../src/mainwin.cpp:1597
 msgid "Save to file (Alt+E)"
 msgstr "Lưu vào tập tin (Alt+E)"
 
-#: ../src/mainwin.cpp:1585
+#: ../src/mainwin.cpp:1607
 msgid "Print"
 msgstr "In"
 
-#: ../src/mainwin.cpp:1600
+#: ../src/mainwin.cpp:1622
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "Tìm trong lời định nghĩa (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1786
+#: ../src/mainwin.cpp:1808
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
 "Please go to StarDict's website, download some dictionaries:\n"
 "%s%s%s and put them in %s."
-msgstr "Cảnh báo : chưa nạp từ điển.\n"
+msgstr ""
+"Cảnh báo : chưa nạp từ điển.\n"
 "Hãy đi tới địa chỉ Web của StarDict,\n"
 "tải xuống một số từ điển:\n"
 "%s%s%s và để chúng vào %s."
 
-#: ../src/mainwin.cpp:1809
+#: ../src/mainwin.cpp:1831
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -896,7 +887,8 @@ msgid ""
 "   Input a word beginning with '/' to do a Fuzzy query.\n"
 "   When the floating window reports that a word was not found, double "
 "clicking will perform a fuzzy query.\n"
-msgstr "\tChào mừng bạn sử dụng StarDict.\n"
+msgstr ""
+"\tChào mừng bạn sử dụng StarDict.\n"
 "\n"
 "Bấm tổ hợp phím: • Ctrl+Q\t\tthoát khỏi chương trình\n"
 " • Alt+Z\t\tthu nhỏ cửa sổ\n"
@@ -915,10 +907,9 @@ msgstr "\tChào mừng bạn sử dụng StarDict.\n"
 "Gõ từ bắt đầu với dấu xuyệc (/) để chạy truy vấn mờ (cũng tìm kết quả gần "
 "đúng).\n"
 "\n"
-"Cửa sổ nổi thông báo « Không tìm thấy » thì cú nhấn đôi sẽ chạy truy vấn "
-"mờ.\n"
+"Cửa sổ nổi thông báo « Không tìm thấy » thì cú nhấn đôi sẽ chạy truy vấn mờ.\n"
 
-#: ../src/mainwin.cpp:1826
+#: ../src/mainwin.cpp:1848
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk2. "
@@ -969,10 +960,12 @@ msgid ""
 "       Statement: This program is distributed in the hope that it will be "
 "useful, but WITHOUT ANY WARRANTY; without the warranty that the word "
 "spelling, definition, and phonetic information are correct.\n"
-msgstr "       Chào mừng bạn sử dụng StarDict\n"
+msgstr ""
+"       Chào mừng bạn sử dụng StarDict\n"
 "StarDict là một từ điển quốc tế đa nền tảng được ghi bằng Gtk2.\n"
 "\n"
-"Nó có tính năng mạnh mẽ như « Khớp với mẫu kiểu glob », « Quét tìm từ đã chọn », « Truy vấn mờ » và « Tìm kiếm qua toàn văn bản ».\n"
+"Nó có tính năng mạnh mẽ như « Khớp với mẫu kiểu glob », « Quét tìm từ đã chọn "
+"», « Truy vấn mờ » và « Tìm kiếm qua toàn văn bản ».\n"
 "\n"
 "       Giới thiệu về cách sử dụng StarDict:\n"
 "\n"
@@ -984,20 +977,26 @@ msgstr "       Chào mừng bạn sử dụng StarDict\n"
 "sách.\n"
 "\n"
 "       2. Khớp biểu thức chính quy\n"
-"Bạn có thể gõ chuỗi dạng biểu thức chính quy tương thích với Perl, với dấu chấm « . » đi trước để ngụ ý biểu thức chính quy. Sau khi bấm phím Enter, các từ tương ứng với biểu thức chính quy sẽ được hiển thị trong danh sách.\n"
+"Bạn có thể gõ chuỗi dạng biểu thức chính quy tương thích với Perl, với dấu "
+"chấm « . » đi trước để ngụ ý biểu thức chính quy. Sau khi bấm phím Enter, các "
+"từ tương ứng với biểu thức chính quy sẽ được hiển thị trong danh sách.\n"
 "\n"
-"	3. Truy vấn mờ — « /từ »,\n"
-"Không nhớ được chính tả chính xác của từ thì bạn chạy truy vấn mờ của StarDict. Nó sử dụng « Khoảng cách chỉnh sửa của Levenshtein » để tính độ tương tự giữa hai từ, rồi cung cấp kết quả tương tự nhất với từ bạn đã gõ vào. Để tạo truy vấn mờ, chỉ gõ từ với dấu xuyệc (/) đi trước (v.d. « /chẩng », rồi bấm phím Enter.\n"
+"\t3. Truy vấn mờ — « /từ »,\n"
+"Không nhớ được chính tả chính xác của từ thì bạn chạy truy vấn mờ của "
+"StarDict. Nó sử dụng « Khoảng cách chỉnh sửa của Levenshtein » để tính độ "
+"tương tự giữa hai từ, rồi cung cấp kết quả tương tự nhất với từ bạn đã gõ "
+"vào. Để tạo truy vấn mờ, chỉ gõ từ với dấu xuyệc (/) đi trước (v.d. « /chẩng "
+"», rồi bấm phím Enter.\n"
 "\n"
 "       4. Tìm qua toàn văn bản — « |từ », « |Việt \\ Nam »\n"
 "Chức năng tìm qua toàn văn bản thì tìm từ trong tài liệu hay dữ liệu hiện "
 "thời. Để chạy tiến trình tìm qua toàn văn bản, chỉ gõ từ với dấu ống dẫn (|) "
 "đi trước (v.d. « |bảng »), rồi bấm phím Enter. Chẳng hạn, chuỗi tìm « |Việt "
-"Nam » tìm văn bản chứa cả hai « Việt » và « Nam » (không nhất thiết kề "
-"nhau). Để tìm chuỗi chứa dấu cách, gõ dấu xuyệc ngước (\\) để ngụ ý dấu "
-"cách. Chẳng hạn, chuỗi tìm « |Việt \\ Nam » sẽ tìm văn bản chứa « Việt Nam "
-"», không phải « Việt » và « Nam » ở vị trí khác. Cũng có thể sử dụng dấu "
-"xuyệc ngược để thoát ký tự đặc biệt khác, v.d.: • \\\\\t\\\n"
+"Nam » tìm văn bản chứa cả hai « Việt » và « Nam » (không nhất thiết kề nhau). "
+"Để tìm chuỗi chứa dấu cách, gõ dấu xuyệc ngước (\\) để ngụ ý dấu cách. Chẳng "
+"hạn, chuỗi tìm « |Việt \\ Nam » sẽ tìm văn bản chứa « Việt Nam », không phải « "
+"Việt » và « Nam » ở vị trí khác. Cũng có thể sử dụng dấu xuyệc ngược để thoát "
+"ký tự đặc biệt khác, v.d.: • \\\\\t\\\n"
 " • \\t\tdấu cách Tab\n"
 " • \\n\tdòng mới\n"
 "\n"
@@ -1024,342 +1023,214 @@ msgstr "       Chào mừng bạn sử dụng StarDict\n"
 "GÌ CẢ, không bảo hành từ có chính tả, lời định nghĩa hay thông tin phát âm "
 "đúng.\n"
 
-#: ../src/mainwin.cpp:1974
-#: ../src/stardict.cpp:1352
+#: ../src/mainwin.cpp:1996 ../src/stardict.cpp:1371
 msgid "Found no words matching this pattern!"
 msgstr "Không tìm thấy từ khớp với mẫu này."
 
-#: ../src/mainwin.cpp:1976
-#: ../src/stardict.cpp:1377
+#: ../src/mainwin.cpp:1998 ../src/stardict.cpp:1396
 msgid "Found no words matching this regular expression!"
 msgstr "Không tìm thấy từ khớp với biểu thức chính quy này."
 
-#: ../src/mainwin.cpp:1978
-#: ../src/stardict.cpp:1266
+#: ../src/mainwin.cpp:2000 ../src/stardict.cpp:1285
 msgid "There are too many spelling errors :-("
 msgstr "Quá nhiều lỗi chính tả. :("
 
-#: ../src/mainwin.cpp:1980
-#: ../src/stardict.cpp:1185
-#: ../src/stardict.cpp:1230
+#: ../src/mainwin.cpp:2002 ../src/stardict.cpp:1204 ../src/stardict.cpp:1249
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Không có mục từ điển chứa từ này. :("
 
-#: ../src/mainwin.cpp:2068
+#: ../src/mainwin.cpp:2090
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Không tìm thấy chuỗi « %s »."
 
-#: ../src/mainwin.cpp:2139
-#: ../src/mainwin.cpp:2406
+#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2428
 msgid "_Pronounce"
 msgstr "_Phát âm"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
 msgid "Arabic"
 msgstr "A Rập"
 
-#: ../src/mainwin.cpp:2185
+#: ../src/mainwin.cpp:2207
 msgid "Chinese"
 msgstr "Trung"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2192
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2214 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Simplified)"
 msgstr "Trung (phổ thông)"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2190
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Traditional)"
 msgstr "Trung (truyền thống)"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2186
-#: ../src/mainwin.cpp:2188
-#: ../src/mainwin.cpp:2196
-#: ../src/mainwin.cpp:2198
-#: ../src/mainwin.cpp:2200
-#: ../src/mainwin.cpp:2202
-#: ../src/mainwin.cpp:2204
-#: ../src/mainwin.cpp:2206
-#: ../src/mainwin.cpp:2208
-#: ../src/mainwin.cpp:2210
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2216
-#: ../src/mainwin.cpp:2218
-#: ../src/mainwin.cpp:2220
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2226
-#: ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2230
-#: ../src/mainwin.cpp:2232
-#: ../src/mainwin.cpp:2234
-#: ../src/mainwin.cpp:2236
-#: ../src/mainwin.cpp:2238
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2244
-#: ../src/mainwin.cpp:2246
-#: ../src/mainwin.cpp:2248
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2254
-#: ../src/mainwin.cpp:2256
-#: ../src/mainwin.cpp:2258
-#: ../src/mainwin.cpp:2260
-#: ../src/mainwin.cpp:2262
-#: ../src/mainwin.cpp:2264
-#: ../src/mainwin.cpp:2266
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2271
-#: ../src/mainwin.cpp:2273
-#: ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2279
-#: ../src/mainwin.cpp:2281
-#: ../src/mainwin.cpp:2283
-#: ../src/mainwin.cpp:2285
-#: ../src/mainwin.cpp:2287
-#: ../src/mainwin.cpp:2289
-#: ../src/mainwin.cpp:2291
-#: ../src/mainwin.cpp:2293
-#: ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
+#: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
+#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
+#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2240 ../src/mainwin.cpp:2242
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250
+#: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2268 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2276 ../src/mainwin.cpp:2278
+#: ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2282 ../src/mainwin.cpp:2284
+#: ../src/mainwin.cpp:2286 ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2295 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2307 ../src/mainwin.cpp:2309 ../src/mainwin.cpp:2311
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "English"
 msgstr "Anh"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2198
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2220
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2226
-#: ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2230
-#: ../src/mainwin.cpp:2236
-#: ../src/mainwin.cpp:2238
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2248
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2254
-#: ../src/mainwin.cpp:2256
-#: ../src/mainwin.cpp:2258
-#: ../src/mainwin.cpp:2264
-#: ../src/mainwin.cpp:2266
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2275
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2281
-#: ../src/mainwin.cpp:2285
-#: ../src/mainwin.cpp:2291
-#: ../src/mainwin.cpp:2293
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2276
+#: ../src/mainwin.cpp:2278 ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2286
+#: ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
 msgid "French"
 msgstr "Pháp"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2196
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "German"
 msgstr "Đức"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Italian"
 msgstr "Ý"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2299
-#: ../src/mainwin.cpp:2301
-#: ../src/mainwin.cpp:2303
-#: ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
+#: ../src/mainwin.cpp:2329
 msgid "Japanese"
 msgstr "Nhật"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2298
-#: ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
 msgid "Korean"
 msgstr "Hàn"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Portuguese"
 msgstr "Bồ Đào Nha"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Russian"
 msgstr "Nga"
 
-#: ../src/mainwin.cpp:2185
-#: ../src/mainwin.cpp:2194
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Spanish"
 msgstr "Tây Ban Nha"
 
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Dutch"
 msgstr "Hoà"
 
-#: ../src/mainwin.cpp:2215
-#: ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224
-#: ../src/mainwin.cpp:2243
-#: ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2279
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2301
 msgid "Greek"
 msgstr "Hy Lạp"
 
-#: ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2277
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Swedish"
 msgstr "Thuỵ Điển"
 
-#: ../src/mainwin.cpp:2329
+#: ../src/mainwin.cpp:2351
 msgid "Google Translate"
 msgstr "Dịch qua Google"
 
-#: ../src/mainwin.cpp:2330
+#: ../src/mainwin.cpp:2352
 msgid "Yahoo Translate"
 msgstr "Dịch qua Yahoo"
 
-#: ../src/mainwin.cpp:2331
+#: ../src/mainwin.cpp:2353
 msgid "Altavista Translate"
 msgstr "Dịch qua Altavista"
 
-#: ../src/mainwin.cpp:2332
+#: ../src/mainwin.cpp:2354
 msgid "SystranBox Translate"
 msgstr "Dịch qua SystranBox"
 
-#: ../src/mainwin.cpp:2333
+#: ../src/mainwin.cpp:2355
 msgid "Excite Japan Translate"
 msgstr "Dịch qua Excite Japan"
 
-#: ../src/mainwin.cpp:2428
+#: ../src/mainwin.cpp:2450
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>Dịch toàn văn bản</b>"
 
-#: ../src/mainwin.cpp:2459
+#: ../src/mainwin.cpp:2481
 msgid "To"
 msgstr "Sang"
 
-#: ../src/mainwin.cpp:2492
+#: ../src/mainwin.cpp:2514
 msgid "_Translate"
 msgstr "_Dịch"
 
-#: ../src/mainwin.cpp:2514
+#: ../src/mainwin.cpp:2536
 msgid "Powered by -"
 msgstr "Dựa vào sức mạnh của -"
 
-#: ../src/mainwin.cpp:2639
+#: ../src/mainwin.cpp:2661
 msgid "Please input some words to translate."
 msgstr "Hãy gõ đoạn văn bản cần dịch."
 
-#: ../src/mainwin.cpp:2654
+#: ../src/mainwin.cpp:2676
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
-#: ../src/mainwin.cpp:2731
+#: ../src/mainwin.cpp:2753
 msgid "Scan the selection"
 msgstr "Quét qua văn bản"
 
-#: ../src/mainwin.cpp:2745
+#: ../src/mainwin.cpp:2767
 msgid "Show info"
 msgstr "Hiện thông tin"
 
-#: ../src/mainwin.cpp:2797
-#: ../src/prefsdlg.cpp:1833
+#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:1895
 msgid "Preferences"
 msgstr "Tùy thích"
 
-#: ../src/mainwin.cpp:2807
+#: ../src/mainwin.cpp:2829
 msgid "Manage dictionaries"
 msgstr "Quản lý từ điển"
 
-#: ../src/mainwin.cpp:2817
+#: ../src/mainwin.cpp:2839
 msgid "Go to the StarDict website"
 msgstr "Đi tới địa chỉ Web của StarDict"
 
-#: ../src/mainwin.cpp:2829
+#: ../src/mainwin.cpp:2851
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Tìm qua từ điển Internet - Nút bên phải hiện danh sách địa chỉ Web"
 
@@ -1371,7 +1242,8 @@ msgid ""
 "<b>Author:</b>\t%s\n"
 "<b>Website:</b>\t%s\n"
 "<b>Filename:</b>\t%s"
-msgstr "%s\n"
+msgstr ""
+"%s\n"
 "\n"
 "<b>Tác giả:</b>\t%s\n"
 "<b>Địa chỉ:</b>\t%s\n"
@@ -1417,369 +1289,347 @@ msgstr "<b>Chi tiết về phần bổ sung</b>"
 msgid "Manage Plugins"
 msgstr "Quản lý Phần bổ sung"
 
-#: ../src/prefsdlg.cpp:75
-#: ../src/prefsdlg.cpp:367
+#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:398
 msgid "Scan Selection"
 msgstr "Quét qua vùng chọn"
 
-#: ../src/prefsdlg.cpp:76
-#: ../src/prefsdlg.cpp:484
+#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:529
 msgid "Font"
 msgstr "Phông"
 
-#: ../src/prefsdlg.cpp:77
-#: ../src/prefsdlg.cpp:565
+#: ../src/prefsdlg.cpp:81 ../src/prefsdlg.cpp:610
 msgid "Cache"
 msgstr "Bộ nhớ tạm"
 
-#: ../src/prefsdlg.cpp:78
-#: ../src/prefsdlg.cpp:656
+#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:701
 msgid "Export"
 msgstr "Xuất"
 
-#: ../src/prefsdlg.cpp:79
-#: ../src/prefsdlg.cpp:725
+#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:770
 msgid "Sound"
 msgstr "Âm thanh"
 
-#: ../src/prefsdlg.cpp:80
-#: ../src/prefsdlg.cpp:692
+#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:737
 msgid "Article rendering"
 msgstr "Vẽ mục"
 
-#: ../src/prefsdlg.cpp:85
-#: ../src/prefsdlg.cpp:988
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:1033
 msgid "Net Dict"
 msgstr "Từ điển Net"
 
-#: ../src/prefsdlg.cpp:91
-#: ../src/prefsdlg.cpp:1063
+#: ../src/prefsdlg.cpp:95 ../src/prefsdlg.cpp:1108
 msgid "Input"
 msgstr "Gõ"
 
-#: ../src/prefsdlg.cpp:92
-#: ../src/prefsdlg.cpp:100
-#: ../src/prefsdlg.cpp:107
-#: ../src/prefsdlg.cpp:1145
-#: ../src/prefsdlg.cpp:1572
-#: ../src/prefsdlg.cpp:1603
+#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:111
+#: ../src/prefsdlg.cpp:1195 ../src/prefsdlg.cpp:1634 ../src/prefsdlg.cpp:1665
 msgid "Options"
 msgstr "Tùy chọn"
 
-#: ../src/prefsdlg.cpp:93
-#: ../src/prefsdlg.cpp:1446
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1508
 msgid "Search website"
 msgstr "Địa chỉ Web Tìm kiếm"
 
-#: ../src/prefsdlg.cpp:108
-#: ../src/prefsdlg.cpp:1670
+#: ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:1732
 msgid "Settings"
 msgstr "Thiết lập"
 
-#: ../src/prefsdlg.cpp:115
-#: ../src/stardict.cpp:2503
+#: ../src/prefsdlg.cpp:119 ../src/stardict.cpp:2522
 msgid "Dictionary"
 msgstr "Từ điển"
 
-#: ../src/prefsdlg.cpp:117
+#: ../src/prefsdlg.cpp:121
 msgid "Network"
 msgstr "Mạng"
 
-#: ../src/prefsdlg.cpp:119
+#: ../src/prefsdlg.cpp:123
 msgid "Main window"
 msgstr "Cửa sổ chính"
 
-#: ../src/prefsdlg.cpp:121
+#: ../src/prefsdlg.cpp:125
 msgid "Notification area icon"
 msgstr "Biểu tượng vùng thông báo"
 
-#: ../src/prefsdlg.cpp:123
+#: ../src/prefsdlg.cpp:127
 msgid "Floating window"
 msgstr "Cửa sổ nổi"
 
-#: ../src/prefsdlg.cpp:260
+#: ../src/prefsdlg.cpp:264
 msgid "Categories"
 msgstr "Loại"
 
-#: ../src/prefsdlg.cpp:370
+#: ../src/prefsdlg.cpp:401
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "_Chỉ quét khi phím bổ trợ được ấn giữ."
 
-#: ../src/prefsdlg.cpp:386
+#: ../src/prefsdlg.cpp:417
 msgid "H_ide floating window when modifier key released."
 msgstr "Ẩn cửa sổ nổ_i khi phím bổ trợ được buông ra."
 
-#: ../src/prefsdlg.cpp:396
+#: ../src/prefsdlg.cpp:427
 msgid "Scan modifier _key:"
 msgstr "_Phím bổ trợ quét:"
 
-#: ../src/prefsdlg.cpp:417
+#: ../src/prefsdlg.cpp:448
 msgid "_Scan clipboard."
 msgstr "_Quét qua bảng nháp."
 
-#: ../src/prefsdlg.cpp:423
-msgid "_Use scan hotkey: Ctrl+Alt+F1."
+#: ../src/prefsdlg.cpp:458
+#, fuzzy
+msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "_Dùng phím tắt quét: Ctrl+Alt+F1."
 
-#: ../src/prefsdlg.cpp:461
+#: ../src/prefsdlg.cpp:506
 msgid "Choose dictionary font"
 msgstr "Chọn phông từ điển"
 
-#: ../src/prefsdlg.cpp:464
-#: ../src/prefsdlg.cpp:509
+#: ../src/prefsdlg.cpp:509 ../src/prefsdlg.cpp:554
 msgid "Choose"
 msgstr "Chọn"
 
-#: ../src/prefsdlg.cpp:466
+#: ../src/prefsdlg.cpp:511
 msgid "Dictionary font"
 msgstr "Phông từ điển"
 
-#: ../src/prefsdlg.cpp:487
+#: ../src/prefsdlg.cpp:532
 msgid "_Use custom font."
 msgstr "_Dùng phông riêng."
 
-#: ../src/prefsdlg.cpp:499
+#: ../src/prefsdlg.cpp:544
 msgid "Dictionary _font:"
 msgstr "_Phông từ điển:"
 
-#: ../src/prefsdlg.cpp:569
+#: ../src/prefsdlg.cpp:614
 msgid "Create c_ache files to speed up loading."
 msgstr "Tạo tập tin nhớ tạm để nạp nh_anh hơn."
 
-#: ../src/prefsdlg.cpp:574
+#: ../src/prefsdlg.cpp:619
 msgid "_Sort word list by collation function."
 msgstr "_Sắp xếp danh sách từ bằng hàm đối xứng."
 
-#: ../src/prefsdlg.cpp:583
+#: ../src/prefsdlg.cpp:628
 msgid "\tCollation _function:"
 msgstr "\t_Hàm đối xứng:"
 
-#: ../src/prefsdlg.cpp:615
+#: ../src/prefsdlg.cpp:660
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
-msgstr "Bật khả năng đối xứng thì từ điển được nạp lần đầu tiên cần phải sắp xếp các "
+msgstr ""
+"Bật khả năng đối xứng thì từ điển được nạp lần đầu tiên cần phải sắp xếp các "
 "từ : hãy đợi một chút."
 
-#: ../src/prefsdlg.cpp:621
+#: ../src/prefsdlg.cpp:666
 msgid "C_lean all cache files"
 msgstr "_Xoá mọi tập tin nhớ tạm"
 
-#: ../src/prefsdlg.cpp:638
+#: ../src/prefsdlg.cpp:683
 msgid "Open file..."
 msgstr "Mở tập tin..."
 
-#: ../src/prefsdlg.cpp:661
+#: ../src/prefsdlg.cpp:706
 msgid "_Only export words."
 msgstr "_Chỉ xuất từ."
 
-#: ../src/prefsdlg.cpp:668
+#: ../src/prefsdlg.cpp:713
 msgid "File name:"
 msgstr "Tên tập tin:"
 
-#: ../src/prefsdlg.cpp:677
+#: ../src/prefsdlg.cpp:722
 msgid "_Browse..."
 msgstr "_Duyệt..."
 
-#: ../src/prefsdlg.cpp:698
+#: ../src/prefsdlg.cpp:743
 msgid "_Highlight search term"
 msgstr "Tô sáng c_huỗi tìm kiếm"
 
-#: ../src/prefsdlg.cpp:730
+#: ../src/prefsdlg.cpp:775
 msgid "_Enable sound event."
 msgstr "_Bật dữ kiện âm thanh."
 
-#: ../src/prefsdlg.cpp:739
+#: ../src/prefsdlg.cpp:784
 msgid "Command for playing wav files:"
 msgstr "Lệnh để phát tập tin WAV:"
 
-#: ../src/prefsdlg.cpp:752
+#: ../src/prefsdlg.cpp:797
 msgid "RealPeopleTTS search path:"
 msgstr "Đường dẫn tìm kiếm RealPeopleTTS:"
 
-#: ../src/prefsdlg.cpp:770
-msgid "_Use TTS program."
+#: ../src/prefsdlg.cpp:815
+#, fuzzy
+msgid "Enable _TTS program."
 msgstr "_Dùng chương trình TTS."
 
-#: ../src/prefsdlg.cpp:778
+#: ../src/prefsdlg.cpp:823
 msgid "Commandline:"
 msgstr "Dòng lệnh:"
 
-#: ../src/prefsdlg.cpp:807
+#: ../src/prefsdlg.cpp:852
 msgid "Account"
 msgstr "Tài khoản"
 
-#: ../src/prefsdlg.cpp:818
-#: ../src/prefsdlg.cpp:915
+#: ../src/prefsdlg.cpp:863 ../src/prefsdlg.cpp:960
 msgid "_User Name:"
 msgstr "Tên người _dùng:"
 
-#: ../src/prefsdlg.cpp:824
-#: ../src/prefsdlg.cpp:921
+#: ../src/prefsdlg.cpp:869 ../src/prefsdlg.cpp:966
 msgid "_Password:"
 msgstr "_Mật khẩu :"
 
-#: ../src/prefsdlg.cpp:847
-#: ../src/prefsdlg.cpp:946
+#: ../src/prefsdlg.cpp:892 ../src/prefsdlg.cpp:991
 msgid "Please input the password."
 msgstr "Hãy gõ mật khẩu."
 
-#: ../src/prefsdlg.cpp:904
+#: ../src/prefsdlg.cpp:949
 msgid "Register"
 msgstr "Đăng ký"
 
-#: ../src/prefsdlg.cpp:928
+#: ../src/prefsdlg.cpp:973
 msgid "_Email:"
 msgstr "Đị_a chỉ thư :"
 
-#: ../src/prefsdlg.cpp:944
+#: ../src/prefsdlg.cpp:989
 msgid "Please input the user name."
 msgstr "Hãy gõ tên người dùng."
 
-#: ../src/prefsdlg.cpp:948
+#: ../src/prefsdlg.cpp:993
 msgid "Please input the email."
 msgstr "Hãy gõ địa chỉ thư điện tử."
 
-#: ../src/prefsdlg.cpp:950
+#: ../src/prefsdlg.cpp:995
 msgid "Please input a valid email."
 msgstr "Hãy gõ một địa chỉ thư điện tử hợp lệ."
 
-#: ../src/prefsdlg.cpp:994
+#: ../src/prefsdlg.cpp:1039
 msgid "Enable _network dictionaries."
 msgstr "Bật từ điể_n mạng."
 
-#: ../src/prefsdlg.cpp:1006
+#: ../src/prefsdlg.cpp:1051
 msgid "StarDict server:"
 msgstr "Máy phục vụ StarDict:"
 
-#: ../src/prefsdlg.cpp:1015
+#: ../src/prefsdlg.cpp:1060
 msgid "Port:"
 msgstr "Cổng:"
 
-#: ../src/prefsdlg.cpp:1024
+#: ../src/prefsdlg.cpp:1069
 msgid "Account:"
 msgstr "Tài khoản:"
 
-#: ../src/prefsdlg.cpp:1035
+#: ../src/prefsdlg.cpp:1080
 msgid "_Register an account"
 msgstr "Đăng _ký tài khoản"
 
-#: ../src/prefsdlg.cpp:1070
+#: ../src/prefsdlg.cpp:1115
 msgid "_Search while typing."
 msgstr "_Tìm trong khi gõ."
 
-#: ../src/prefsdlg.cpp:1079
+#: ../src/prefsdlg.cpp:1124
 msgid "Word change _timeout:"
 msgstr "_Thời hạn thay đổi từ :"
 
-#: ../src/prefsdlg.cpp:1088
-msgid "(default:300)"
+#: ../src/prefsdlg.cpp:1133
+#, fuzzy
+msgid "(default:300 ms)"
 msgstr "(mặc định:300)"
 
-#: ../src/prefsdlg.cpp:1090
+#: ../src/prefsdlg.cpp:1135
 msgid "Show the _first word when not found."
 msgstr "Không tìm thấy thì hiện từ đầu."
 
-#: ../src/prefsdlg.cpp:1151
+#: ../src/prefsdlg.cpp:1202
 msgid "_Auto run StarDict after boot."
 msgstr "_Tự động khởi chạy StarDict sau khi khởi động."
 
-#: ../src/prefsdlg.cpp:1181
+#: ../src/prefsdlg.cpp:1232
 msgid "Hide main window when _starting StarDict."
 msgstr "Ẩn cửa sổ chính khi khởi chạy _StarDict."
 
-#: ../src/prefsdlg.cpp:1191
+#: ../src/prefsdlg.cpp:1245
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "_Dùng phím tắt mở cửa sổ chính: Ctrl+Alt+Z."
 
-#: ../src/prefsdlg.cpp:1201
-#: ../src/prefsdlg.cpp:1731
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1793
 msgid "_Transparency:"
 msgstr "_Trong suốt:"
 
-#: ../src/prefsdlg.cpp:1294
-#: ../src/prefsdlg.cpp:1497
+#: ../src/prefsdlg.cpp:1356 ../src/prefsdlg.cpp:1559
 msgid "Website Name"
 msgstr "Tên trang Web"
 
-#: ../src/prefsdlg.cpp:1306
-#: ../src/prefsdlg.cpp:1505
+#: ../src/prefsdlg.cpp:1368 ../src/prefsdlg.cpp:1567
 msgid "Website link"
 msgstr "Liên kết trang Web"
 
-#: ../src/prefsdlg.cpp:1317
-#: ../src/prefsdlg.cpp:1513
+#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1575
 msgid "Website search link"
 msgstr "Liên kết tìm kiếm trang Web"
 
-#: ../src/prefsdlg.cpp:1338
+#: ../src/prefsdlg.cpp:1400
 msgid "Please input the website name."
 msgstr "Hãy gõ tên của trang Web."
 
-#: ../src/prefsdlg.cpp:1340
+#: ../src/prefsdlg.cpp:1402
 msgid "Please input the website link."
 msgstr "Hãy gõ liên kết (địa chỉ) của trang Web."
 
-#: ../src/prefsdlg.cpp:1342
+#: ../src/prefsdlg.cpp:1404
 msgid "Please input the website search link."
 msgstr "Hãy gõ liên kết (địa chỉ) tìm kiếm của trang Web."
 
-#: ../src/prefsdlg.cpp:1344
-#: ../src/prefsdlg.cpp:1423
+#: ../src/prefsdlg.cpp:1406 ../src/prefsdlg.cpp:1485
 #, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
 msgstr "Liên kết tìm kiếm của địa chỉ Web nên chứa chuỗi « %%s » để tra tìm từ."
 
-#: ../src/prefsdlg.cpp:1578
+#: ../src/prefsdlg.cpp:1640
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr "T_ra tìm trong cửa sổ nổi khi nhấn nút giữa trên chuột."
 
-#: ../src/prefsdlg.cpp:1606
+#: ../src/prefsdlg.cpp:1668
 msgid "_Pronounce the word when it pops up."
 msgstr "_Phát âm từ khi nó nhảy ra."
 
-#: ../src/prefsdlg.cpp:1615
+#: ../src/prefsdlg.cpp:1677
 msgid "_Show floating window if word not found."
 msgstr "Không tìm thấy từ thì hiện cửa _sổ nổi."
 
-#: ../src/prefsdlg.cpp:1689
+#: ../src/prefsdlg.cpp:1751
 msgid "Max window _width:"
 msgstr "Độ _rộng cửa sổ tối đa:"
 
-#: ../src/prefsdlg.cpp:1699
+#: ../src/prefsdlg.cpp:1761
 msgid "(default:320)"
 msgstr "(mặc định:320)"
 
-#: ../src/prefsdlg.cpp:1703
+#: ../src/prefsdlg.cpp:1765
 msgid "Max window hei_ght:"
 msgstr "Độ c_ao cửa sổ tối đa:"
 
-#: ../src/prefsdlg.cpp:1711
+#: ../src/prefsdlg.cpp:1773
 msgid "(default:240)"
 msgstr "(mặc định:240)"
 
-#: ../src/prefsdlg.cpp:1716
+#: ../src/prefsdlg.cpp:1778
 msgid "_Use custom background color:"
 msgstr "_Dùng màu nền riêng:"
 
-#: ../src/prefsdlg.cpp:1811
+#: ../src/prefsdlg.cpp:1873
 msgid "Cat_egories:"
 msgstr "_Loại:"
 
-#: ../src/progresswin.cpp:35
-#: ../src/progresswin.cpp:39
-#: ../src/splash.cpp:70
+#: ../src/progresswin.cpp:35 ../src/progresswin.cpp:39 ../src/splash.cpp:70
 msgid "Loading"
 msgstr "Đang nạp"
 
-#: ../src/readword.cpp:148
+#: ../src/readword.cpp:150
 msgid "Real People TTS"
 msgstr "Real People TTS"
 
-#: ../src/readword.cpp:155
+#: ../src/readword.cpp:157
 msgid "Command TTS"
 msgstr "TTS bằng lệnh"
 
@@ -1799,91 +1649,92 @@ msgstr "Khởi chạy tiến trình stardict mới"
 msgid "Quit an existing instance of stardict"
 msgstr "Thoát khỏi tiến trình stardict đang chạy"
 
-#: ../src/stardict.cpp:1093
+#: ../src/stardict.cpp:1112
 msgid "Full-text Search"
 msgstr "Tìm qua toàn văn bản"
 
-#: ../src/stardict.cpp:1120
+#: ../src/stardict.cpp:1139
 msgid "Search"
 msgstr "Tìm"
 
-#: ../src/stardict.cpp:1205
-#: ../src/stardict.cpp:1622
+#: ../src/stardict.cpp:1224 ../src/stardict.cpp:1641
 msgid "Full-text search..."
 msgstr "Tìm qua toàn văn bản..."
 
-#: ../src/stardict.cpp:1325
+#: ../src/stardict.cpp:1344
 msgid "Fuzzy query failed, too :-("
 msgstr "Truy vấn mờ cũng không thành công. :("
 
-#: ../src/stardict.cpp:1611
+#: ../src/stardict.cpp:1630
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Bấm phím Enter để liệt kê các từ khớp với mẫu."
 
-#: ../src/stardict.cpp:1614
-msgid "Press Enter to list the words that match this regular expressions."
+#: ../src/stardict.cpp:1633
+#, fuzzy
+msgid "Press Enter to list the words that match this regular expression."
 msgstr "Bấm phím Enter để liệt kê các từ khớp với biểu thức chính quy này."
 
-#: ../src/stardict.cpp:1618
+#: ../src/stardict.cpp:1637
 msgid "Fuzzy query..."
 msgstr "Truy vấn mờ..."
 
-#: ../src/stardict.cpp:1886
-#: ../src/stardict.cpp:1991
+#: ../src/stardict.cpp:1905 ../src/stardict.cpp:2010
 msgid "Not found!\n"
 msgstr "Không tìm thấy.\n"
 
-#: ../src/stardict.cpp:1987
+#: ../src/stardict.cpp:2006
 msgid "Conversion error!\n"
 msgstr "Lỗi chuyển đổi.\n"
 
-#: ../src/stardict.cpp:2335
+#: ../src/stardict.cpp:2354
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict đang chạy nên dùng tiến trình đang chạy."
 
-#: ../src/stardict.cpp:2468
+#: ../src/stardict.cpp:2487
 msgid "- Lookup words"
 msgstr "- Tra tìm từ"
 
-#: ../src/stardict.cpp:2473
+#: ../src/stardict.cpp:2492
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "Lỗi phân tách tùy chọn: %s\n"
 
-#: ../src/utils.cpp:127
+#: ../src/utils.cpp:130
 #, c-format
 msgid "Can not load image. %s"
 msgstr "Không thể nạp ảnh: %s"
 
-#: ../src/lib/stardict_client.cpp:901
+#: ../src/lib/stardict_client.cpp:903
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "Xác thực bị từ chối: %s"
 
-#: ../src/lib/stardict_client.cpp:914
+#: ../src/lib/stardict_client.cpp:916
 #, c-format
 msgid "Register failed: %s"
 msgstr "Lỗi đăng ký: %s"
 
-#: ../src/lib/stardict_client.cpp:919
+#: ../src/lib/stardict_client.cpp:921
 msgid "Register success!"
 msgstr "Đăng ký thành công."
 
-#: ../src/lib/stardict_client.cpp:954
+#: ../src/lib/stardict_client.cpp:956
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
-msgstr "Bạn chưa thiết lập tài khoản. Trước tiên hãy mở trang « Từ điển Net » trong "
+msgstr ""
+"Bạn chưa thiết lập tài khoản. Trước tiên hãy mở trang « Từ điển Net » trong "
 "hộp thoại Tùy Thích và đăng ký một tài khoản."
 
-#: ../src/lib/stardict_client.cpp:1074
+#: ../src/lib/stardict_client.cpp:1076
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
-msgstr "Bạn chưa chọn từ điển. Hãy chọn từ điển bằng cách nhấn vào « Quản lý Từ điển > "
-"Từ điển mạng > Thêm »."
+msgstr ""
+"Bạn chưa chọn từ điển. Hãy chọn từ điển bằng cách nhấn vào « Quản lý Từ điển "
+"> Từ điển mạng > Thêm »."
 
-#: ../src/lib/stddict.cpp:649
+#: ../src/lib/stddict.cpp:650
 msgid "Sorting, please wait..."
 msgstr "Đang sắp xếp - hãy đợi..."
 
@@ -1891,90 +1742,90 @@ msgstr "Đang sắp xếp - hãy đợi..."
 msgid "Scan"
 msgstr "Quét"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:248
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:250
 msgid "User Dict"
 msgstr "Từ điển người dùng"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 msgid "User virtual dictionary."
 msgstr "Từ điển ảo người dùng."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
 msgid "Show the user dictionary."
 msgstr "Hiện từ điển người dùng."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:254
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
 #, c-format
 msgid "User dict plug-in loaded.\n"
 msgstr "Phần bổ sung từ điển người dùng đã được nạp.\n"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:190
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:368
 msgid "Dict.cn"
 msgstr "Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
 msgid "Dict.cn configuration"
 msgstr "Cấu hình Dict.cn"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by XML API."
 msgstr "Truy vấn bởi API XML"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:303
 msgid "Query by HTML API."
 msgstr "Truy vấn bởi API HTM"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Dict.cn network dictionary."
 msgstr "Từ điển mạng Dict.cn."
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Query result from Dict.cn website."
 msgstr "Kết quả truy vấn từ địa chỉ Web Dict.cn."
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:371
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr "Phần bổ sung Dict.cn đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:30
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:31
 msgid "Espeak TTS configuration"
 msgstr "Cấu hình Espeak TTS"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:32
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:33
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
 msgid "Voice type:"
 msgstr "Kiểu giọng nối:"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:35
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
 msgid "Default"
 msgstr "Mặc định"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak"
 msgstr "Espeak"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak TTS."
 msgstr "Espeak TTS."
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Pronounce words by Espeak TTS engine."
 msgstr "Phát âm từ bằng cơ chế Espeak TTS."
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:108
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
 msgid "Espeak TTS"
 msgstr "Espeak TTS"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
 #, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr "Phần bổ sung Espeak đã được nạp.\n"
@@ -2007,224 +1858,227 @@ msgstr "Festival TTS"
 msgid "Festival plug-in loaded.\n"
 msgstr "Phần bổ sung Festival đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:215
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:217
 msgid "[not a printable character]"
 msgstr "[không phải ký tự in được]"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:232
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:234
 msgid "General Character Properties"
 msgstr "Thuộc tính Ký tự Chung"
 
-#.character category
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
+#. character category
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
 msgid "Unicode category:"
 msgstr "Loại Unicode:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:241
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:243
 msgid "Canonical decomposition:"
 msgstr "Tách chuẩn tắc:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:256
 msgid "Various Useful Representations"
 msgstr "Đại diện có ích khác nhau"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:267
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:269
 msgid "UTF-8:"
 msgstr "UTF-8:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:274
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
 msgid "UTF-16:"
 msgstr "UTF-16:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:282
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
 msgid "C octal escaped UTF-8:"
 msgstr "UTF-8 đã thoát bát phân:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:290
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
 msgid "XML decimal entity:"
 msgstr "Thực thể thập phân XML:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
 msgid "XML hexadecimal entity:"
 msgstr "Thực thể thập lục XML:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:306
 msgid "Alias names:"
 msgstr "Tên bí danh:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:310
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
 msgid "Notes:"
 msgstr "Ghi chú:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:317
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:319
 msgid "See also:"
 msgstr "Xem cũng:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:323
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
 msgid "Approximate equivalents:"
 msgstr "Tương tự xấp xỉ:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:329
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
 msgid "Equivalents:"
 msgstr "Tương tự :"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:334
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:336
 msgid "Annotations and Cross References"
 msgstr "Phụ chú và Tham chiếu chéo"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:341
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:343
 msgid "Definition in English:"
 msgstr "Lời định nghĩa bằng tiếng Anh:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:346
 msgid "Mandarin Pronunciation:"
 msgstr "Phát âm tiếng Trung truyền thống:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:349
 msgid "Cantonese Pronunciation:"
 msgstr "Phát âm tiếng Trung phổ thông:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:352
 msgid "Japanese On Pronunciation:"
 msgstr "Phát âm Nhật On"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
 msgid "Japanese Kun Pronunciation:"
 msgstr "Phát âm Nhật Kun"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:358
 msgid "Tang Pronunciation:"
 msgstr "Phát âm Tang"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:361
 msgid "Korean Pronunciation:"
 msgstr "Phát âm tiếng Hàn"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:364
 msgid "CJK Ideograph Information"
 msgstr "Thông tin chữ viết ghi ý tiếng Trung/Nhật/Hàn"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:407
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:409
 msgid "Gucharmap"
 msgstr "Gucharmap"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Gucharmap virtual dictionary."
 msgstr "Từ điển ảo Gucharmap."
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
 msgid "Show information about Unicode characters."
 msgstr "Hiển thị thông tin về ký tự Unicode."
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:408
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr "Phần bổ sung Gucharmap đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing"
 msgstr "Phân tích dữ liệu HTML"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "HTML data parsing engine."
 msgstr "Cơ chế phân tích dữ liệu HTML."
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
 msgid "Parse the HTML data."
 msgstr "Phân tách dữ liệu HTML."
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:471
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:476
 #, c-format
 msgid "HTML data parsing plug-in loaded.\n"
 msgstr "Phần bổ sung phân tích dữ liệu HTML đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:154
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:155
 msgid "Man configuration"
 msgstr "Cấu hình Man"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:156
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:157
 msgid "_Input string requires the \"man \" prefix."
 msgstr "Chuỗ_i gõ cần thiết tiền tố « man »."
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:199
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:200
 msgid "Man"
 msgstr "Man"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 msgid "Man virtual dictionary."
 msgstr "Từ điển ảo Man."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 msgid "Show the man pages."
 msgstr "Hiển thị các trang hướng dẫn Man."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:213
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:215
 #, c-format
 msgid "Man plug-in loaded.\n"
 msgstr "Phần bổ sung Man đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing"
 msgstr "Phân tích dữ liệu PowerWord"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "PowerWord data parsing engine."
 msgstr "Cơ chế phân tích dữ liệu PowerWord."
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
 msgid "Parse the PowerWord data."
 msgstr "Phân tách dữ liệu PowerWord."
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:691
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr "Phần bổ sung phân tích dữ liệu PowerWord đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:165
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:167
 #, c-format
 msgid "Error: Open file %s failed!"
 msgstr "Lỗi: không thể mở tập tin %s."
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:209
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:211
 msgid "QQWry configuration"
 msgstr "Cấu hình QQWry"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:215
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
-msgstr "Bạn có thể cập nhật tập tin « QQWry.Dat » từ địa chỉ này:\n"
+msgstr ""
+"Bạn có thể cập nhật tập tin « QQWry.Dat » từ địa chỉ này:\n"
 "http://www.cz88.net"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:219
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
 "You can download it from this website:\n"
 "http://www.cz88.net"
-msgstr "Lỗi: không tìm thấy tập tin %s\n"
+msgstr ""
+"Lỗi: không tìm thấy tập tin %s\n"
 "Bạn có thể tải nó xuống địa chỉ này:\n"
 "http://www.cz88.net"
 
 # Name: don't translate/Tên: đừng dịch
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:252
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
 msgid "QQWry"
 msgstr "QQWry"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
 msgid "Show QQWry IP information."
 msgstr "Hiện thông tin IP QQWry"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-msgid "Show the address information by the IP."
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#, fuzzy
+msgid "Show address information by IP."
 msgstr "Hiển thị thông tin địa chỉ theo IP."
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
 #, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr "Phần bổ sung QQWry đã được nạp.\n"
@@ -2275,184 +2129,189 @@ msgstr "Phát âm từ bằng cơ chế SAPI TTS."
 msgid "SAPI tts plug-in loaded.\n"
 msgstr "Phần bổ sung SAPI TTS đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:256
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
-msgstr "Cảnh báo : gặp lỗi khi yêu cầu từ điển kiểm tra chính tả cho ngôn ngữ %s.\n"
+msgstr ""
+"Cảnh báo : gặp lỗi khi yêu cầu từ điển kiểm tra chính tả cho ngôn ngữ %s.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:260
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:303
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:305
 #, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr "Lỗi: không có sẵn từ điển chính tả.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
 msgid "Spell check configuration"
 msgstr "Cấu hình kiểm tra chính tả"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:322
 msgid "_Use custom languages."
 msgstr "_Dùng ngôn ngữ riêng."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:325
 msgid "For example: \"en_US de\""
 msgstr "Thí dụ : « vi VN » và « vi Nước ngoài »"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:329
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:331
 msgid "Custom languages:"
 msgstr "Ngôn ngữ riêng:"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell Check"
 msgstr "Kiểm tra chính tả"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check virtual dictionary."
 msgstr "Từ điển ảo kiểm tra chính tả."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
 msgid "Spell check the input words and show the correct suggestion."
 msgstr "Kiểm tra chuỗi gõ và góp ý từ đúng."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:402
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:404
 msgid "Spelling Suggestion"
 msgstr "Góp ý chính tả"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:434
 #, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr "Phần bổ sung chính tả đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:37
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
 msgid "You are using an old version of StarDict!"
 msgstr "Bạn đang sử dụng phiên bản StarDict cũ."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:41
 msgid "You are using the newest version of StarDict!"
 msgstr "Bạn đang sử dụng phiên bản StarDict mới nhất."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:42
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:44
 msgid "Latest version information:"
 msgstr "Thông tin về phiên bản mới nhất:"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:50
 msgid "Latest news:"
 msgstr "Tin tức:"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:53
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:55
 msgid "Update information"
 msgstr "Thông tin cập nhật"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update Info"
 msgstr "Thông tin cập nhật"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update information."
 msgstr "Thông tin về bản cập nhật."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Get the update information from the Internet."
 msgstr "Lấy thông tin cập nhật từ Internet."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:175
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
 msgid "Visit StarDict website now?"
 msgstr "Thăm trang Web của StarDict ngay bây giờ không?"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:179
 msgid "_Don't show this until the next update."
 msgstr "_Chỉ hiện lại khi nâng cấp kế tiếp."
 
-#.Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
-#.g_idle_add(get_update_info, NULL);
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:257
+#. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
+#. g_idle_add(get_update_info, NULL);
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:259
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr "Phần bổ sung thông tin cập nhật đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing"
 msgstr "Phân tích dữ liệu Wiki"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Wiki data parsing engine."
 msgstr "Cơ chế phân tích dữ liệu Wiki."
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
 msgid "Parse the wiki data."
 msgstr "Phân tách dữ liệu Wiki."
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:51
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:52
 #, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
 msgstr "Phần bổ sung phân tích dữ liệu Wiki đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:57
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:58
 msgid "WordNet configuration"
 msgstr "Cấu hình WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:59
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:60
 msgid "Graphic mode."
 msgstr "Chế độ đồ họa."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:61
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:62
 msgid "Text mode."
 msgstr "Chế độ văn bản."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering"
 msgstr "Vẽ từ điển WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "WordNet dict rendering engine."
 msgstr "Cơ chế vẽ từ điển WordNet."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+#, fuzzy
 msgid ""
 "Render the WordNet dictionary.\n"
-"Statement: The engine of this plugin comes from dedict(http://sevenpie.net), "
-"which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
-"his open source sharing!"
-msgstr "Vẽ từ điển WordNet.\n"
-"Cơ chế của phần bổ sung này đến từ dedict (http://sevenpie.net) được phát triển bởi Bian Peng &lt;tianpmoon@gmail.com&gt;, rất cám ơn vì chia sẻ nguồn mở !"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
+msgstr ""
+"Vẽ từ điển WordNet.\n"
+"Cơ chế của phần bổ sung này đến từ dedict (http://sevenpie.net) được phát "
+"triển bởi Bian Peng &lt;tianpmoon@gmail.com&gt;, rất cám ơn vì chia sẻ nguồn "
+"mở !"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:129
 #, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
 msgstr "Phần bổ sung vẽ từ điển WordNet đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing"
 msgstr "Phân tích dữ liệu WordNet"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "WordNet data parsing engine."
 msgstr "Cơ chế phân tích dữ liệu WordNet."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
 msgid "Parse the WordNet data."
 msgstr "Phân tích dữ liệu WordNet."
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:146
 #, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr "Phần bổ sung phân tích dữ liệu WordNet đã được nạp.\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing"
 msgstr "Phân tích dữ liệu XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "XDXF data parsing engine."
 msgstr "Cơ chế phân tích dữ liệu XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
 msgid "Parse the XDXF data."
 msgstr "Phân tách dữ liệu XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:333
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "Phần bổ sung phân tích dữ liệu XDXF đã được nạp.\n"

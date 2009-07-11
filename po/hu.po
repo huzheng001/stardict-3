@@ -1,19 +1,23 @@
+# translation of hu.po to hungarian
 # Hungarian translation of StarDict
 # This file is distributed under the same license as the stardict package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
 #
+# Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
+# Lisovszki Sándor <lisovszki@gmail.com>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: stardict 2.4.2\n"
+"Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-05 13:52+0800\n"
-"PO-Revision-Date: 2004-02-08 12:51+0100\n"
-"Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
-"Language-Team: Hungarian\n"
+"PO-Revision-Date: 2008-07-09 20:57+0200\n"
+"Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
+"Language-Team: hungarian <mypclinuxos.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
@@ -21,7 +25,7 @@ msgstr "stardict alkalmazás"
 
 #: ../data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
-msgstr "stardict automatizálás factory"
+msgstr "stardict automatizációs üzem"
 
 #: ../data/stardict.desktop.in.h:1
 msgid "Lookup words"
@@ -40,366 +44,327 @@ msgid ""
 "A custom font that will be used in StarDict. This will only take effect if "
 "the \"Use Custom Font\" option is turned on."
 msgstr ""
+"Egyéni betűkészlet lesz használva a StarDict-ben. A változások csak akkor lépnek érvénybe "
+"ha a \"Használj egyéni betűkészletet\" opció be van kapcsolva."
 
 #: ../data/stardict.schemas.in.h:2
-#, fuzzy
 msgid "Custom Font"
-msgstr "_Egyéni betűtípus használata."
+msgstr "Egyéni betűkészlet"
 
 #: ../data/stardict.schemas.in.h:3
-#, fuzzy
 msgid "Dictionary configuration XML"
-msgstr "Szótár betűtípusa"
+msgstr "Szótár beállítás XML"
 
 #: ../data/stardict.schemas.in.h:4
-#, fuzzy
 msgid "Dictionary order"
-msgstr "Szótár betűtípusa"
+msgstr "Szótár utasítás"
 
 #: ../data/stardict.schemas.in.h:5
-#, fuzzy
 msgid "Disabled plugins list"
-msgstr "Válasszon szótár betűtípust"
+msgstr "Bővitmény lista letiltva"
 
 #: ../data/stardict.schemas.in.h:6
-#, fuzzy
 msgid "Disabled tree dictionaries list"
-msgstr "_Fa szótárak"
+msgstr "Szótárfa lista letiltva"
 
 #: ../data/stardict.schemas.in.h:7
-#, fuzzy
 msgid "Enable sound event"
-msgstr "_Hangok engedélyezése."
+msgstr "Hang esemény engedélyezése"
 
 #: ../data/stardict.schemas.in.h:8
-#, fuzzy
 msgid "Enable the use of TTS program"
-msgstr "A program neve"
+msgstr "TTS program használatának engedélyezése"
 
 #: ../data/stardict.schemas.in.h:9
 msgid "Engine index"
-msgstr ""
+msgstr "Rendszer index"
 
 #: ../data/stardict.schemas.in.h:10
-#, fuzzy
 msgid "Hide floating window when modifier key is released"
-msgstr "_Lebegő ablak elrejtése a módosítóbillentyű nyomvatartásakor"
+msgstr "Úszó ablak elrejtése amikor a módosító billentyű fel van szabadítva"
 
 #: ../data/stardict.schemas.in.h:11
 msgid ""
 "Hide floating window when modifier key is released. It only take effect when "
 "only_scan_while_modifier_key is turned on."
 msgstr ""
+"Úszó ablak elrejtése amikor a módosító billentyű fel van szabadítva. Ez akkor lép életbe ha a "
+"csak_keresés_ha_a_módosító_billentyű bekapcsolt állapotban van."
 
 #: ../data/stardict.schemas.in.h:12
-#, fuzzy
 msgid "Hide the list"
-msgstr "Szólista elrejtése"
+msgstr "Lista elrejtése"
 
 #: ../data/stardict.schemas.in.h:13
-#, fuzzy
 msgid "Hide the window on startup"
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Ablak elrejtése induláskor"
 
 #: ../data/stardict.schemas.in.h:14
 msgid "Hpaned 's position"
-msgstr ""
+msgstr "Hpaned pozíciója"
 
 #: ../data/stardict.schemas.in.h:15
-#, fuzzy
 msgid "List the dictionaries in order."
-msgstr "_Fa szótárak"
+msgstr "Könyvtárak listázása."
 
 #: ../data/stardict.schemas.in.h:16
-#, fuzzy
 msgid "List the plugins in order."
-msgstr "_Fa szótárak"
+msgstr "Bővítmények kilistázása."
 
 #: ../data/stardict.schemas.in.h:17
-#, fuzzy
 msgid "List the plugins which are disabled."
-msgstr "_Fa szótárak"
+msgstr "A letiltott bővítmények kilistázása."
 
 #: ../data/stardict.schemas.in.h:18
-#, fuzzy
 msgid "List the search websites."
-msgstr "Webhely keresése"
+msgstr "Kereső weboldalak listázása."
 
 #: ../data/stardict.schemas.in.h:19
-#, fuzzy
 msgid "List the tree dictionaries in order."
-msgstr "_Fa szótárak"
+msgstr "Szótárfák kilistázása."
 
 #: ../data/stardict.schemas.in.h:20
-#, fuzzy
 msgid "List the tree dictionaries which are disabled."
-msgstr "_Fa szótárak"
+msgstr "A letiltott szótárfák kilistázása"
 
 #: ../data/stardict.schemas.in.h:21
-#, fuzzy
 msgid "Maximum window-height"
-msgstr "Maximális ablak_magasság:"
+msgstr "Maximum ablak magasság"
 
 #: ../data/stardict.schemas.in.h:22
-#, fuzzy
 msgid "Maximum window-width"
-msgstr "Maximális ablak_szélesség:"
+msgstr "Maximum ablak szélesség"
 
 #: ../data/stardict.schemas.in.h:23
-#, fuzzy
 msgid "Only scan while modifier key is being pressed"
-msgstr "Csak a módosító_billentyű nyomvatartásakor történik beolvasás."
+msgstr "Csak a módosító billentyű lenyomásakor keres"
 
 #: ../data/stardict.schemas.in.h:24
-#, fuzzy
 msgid ""
 "Only scan while the modifier key is being pressed. The modifier key is set "
 "by \"scan_modifier_key\"."
-msgstr "Csak a módosító_billentyű nyomvatartásakor történik beolvasás."
+msgstr ""
+"Csak a módosító billentyű lenyomásakor keres. "
+"A módisító billenty beállítható: "
+"\"kereső_módosító_billentyű\" segítségével."
 
 #: ../data/stardict.schemas.in.h:25
-#, fuzzy
 msgid ""
 "Only scan while this modifier key is being pressed. It can be Win(0), Shift"
 "(1), Alt(2) or Ctrl(3)."
-msgstr "Csak a módosító_billentyű nyomvatartásakor történik beolvasás."
+msgstr "Csak ezen módosító billentyű lenyomásakor keres. Ez lehet Win(0), Shift(1), Alt(2) vagy Ctrl(3)."
 
 #: ../data/stardict.schemas.in.h:26
 msgid "Plug-in order"
-msgstr ""
+msgstr "Bővítmény utasítás"
 
 #: ../data/stardict.schemas.in.h:27
-#, fuzzy
 msgid "Pronounce the word when it pops up."
-msgstr "_Szó kiejtése felbukkanáskor."
+msgstr "Szó kiejtése, amikor felugrik."
 
 #: ../data/stardict.schemas.in.h:28
-#, fuzzy
 msgid "Pronounce the word when the floating window pops up."
-msgstr "_Szó kiejtése felbukkanáskor."
+msgstr "A szó kiejtése amikor az úszó ablak megjelenik."
 
 #: ../data/stardict.schemas.in.h:29
-#, fuzzy
 msgid "Query in the floating window when middle mouse button is clicked"
-msgstr ""
-"_Középső gombbal kattintáskor lekérdezés a\n"
-"lebegőablakban."
+msgstr "A lebegő ablak lekérdezése a középső egérgomb lenyomásakor"
 
 #: ../data/stardict.schemas.in.h:30
-#, fuzzy
 msgid "Save the dictionary management configuration."
-msgstr "_Fa szótárak"
+msgstr "A szótárkezelő beállításainak mentése."
 
 #: ../data/stardict.schemas.in.h:31
-#, fuzzy
 msgid "Scan selection"
-msgstr "Kijelölés beolvasása"
+msgstr "Kijelölt keresése"
 
 #: ../data/stardict.schemas.in.h:32
-#, fuzzy
 msgid "Scan-modifier key"
-msgstr "Beolvasás _módosítóbillentyűje:"
+msgstr "Módosító billentyű keresése"
 
 #: ../data/stardict.schemas.in.h:33
-#, fuzzy
 msgid "Search website list"
-msgstr "Webhely keresése"
+msgstr "Weboldal lista keresése"
 
 #: ../data/stardict.schemas.in.h:34
 msgid "Source language index"
-msgstr ""
+msgstr "Forrás nyelvi index"
 
 #: ../data/stardict.schemas.in.h:35
 msgid "TTS program command-line"
-msgstr ""
+msgstr "TTS program parancs-sor"
 
 #: ../data/stardict.schemas.in.h:36
 msgid "Target language index"
-msgstr ""
+msgstr "Cél nyelvi index"
 
 #: ../data/stardict.schemas.in.h:37
 msgid ""
 "The command-line to use in order to enable pronunciation of words via an "
 "external TTS program."
-msgstr ""
+msgstr "A parancs-sor akkor kell használni, ha engedélyezni szeretnénk a szavak kiejtését egy TTS programon keresztül."
 
 #: ../data/stardict.schemas.in.h:38
-#, fuzzy
 msgid "The height of the main stardict window."
-msgstr "Lekérdezés a főablakban"
+msgstr "A fő startdict ablak magassága."
 
 #: ../data/stardict.schemas.in.h:39
 msgid "The hpaned's position, between the listview and the textview."
-msgstr ""
+msgstr "A hpaned pozíciója, a lista nézet és a szöveg nézet között."
 
 #: ../data/stardict.schemas.in.h:40
-#, fuzzy
 msgid "The index of the source language for translating."
-msgstr "Főablak elrejtése"
+msgstr "A forrás nyelvi index a fordításhoz."
 
 #: ../data/stardict.schemas.in.h:41
-#, fuzzy
 msgid "The index of the target language for translating."
-msgstr "Főablak elrejtése"
+msgstr "A cél nyelvi index a fordításhoz."
 
 #: ../data/stardict.schemas.in.h:42
-#, fuzzy
 msgid "The index of the translation engine."
-msgstr "Főablak elrejtése"
+msgstr "A fordító motor indexe."
 
 #: ../data/stardict.schemas.in.h:43
-#, fuzzy
 msgid "The maximum height of the floating stardict window."
-msgstr "Lekérdezés a főablakban"
+msgstr "A maximum magassága a stardict úszó ablakának."
 
 #: ../data/stardict.schemas.in.h:44
-#, fuzzy
 msgid "The maximum width of the floating stardict window."
-msgstr "Főablak elrejtése"
+msgstr "A maximum szélessége az úszó stardict ablaknak."
 
 #: ../data/stardict.schemas.in.h:45
-#, fuzzy
 msgid "The width of the main stardict window."
-msgstr "Főablak elrejtése"
+msgstr "A fő stardict ablak szélessége."
 
 #: ../data/stardict.schemas.in.h:46
-#, fuzzy
 msgid "Tree Dictionary order"
-msgstr "_Fa szótárak"
+msgstr "Fa szótár utasítás"
 
 #: ../data/stardict.schemas.in.h:47
-#, fuzzy
 msgid "Use Custom Font"
-msgstr "_Egyéni betűtípus használata."
+msgstr "Egyéni betűkészlet használata"
 
 #: ../data/stardict.schemas.in.h:48
-#, fuzzy
 msgid "Whether the main window is maximized or not."
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Ha a fő ablak maximalizálva van, vagy nincs."
 
 #: ../data/stardict.schemas.in.h:49
-#, fuzzy
 msgid "Whether the window is maximized or not"
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Ha az ablak maximalizálva van, vagy nincs."
 
 #: ../data/stardict.schemas.in.h:50
 msgid ""
 "Whether to enable StartDict to use an external TTS program for "
 "pronounciation, or not."
-msgstr ""
+msgstr "Ha engedélyezve van a Stardict-nek, hogy egy külső TTS programot használjon a szavak kiejtéséhez, vagy nincs."
 
 #: ../data/stardict.schemas.in.h:51
 msgid ""
 "Whether to enable sound events or not. StarDict will play a sound event when "
 "a button is active or released, and when a menu pops up."
-msgstr ""
+msgstr "Ha engedélyezve vannak, vagy nincsenek a hang események. Stardict le fog játszani egy hangot akkor, amikor egy gomb aktív, vagy felszabadult, és akkor amikor a menü felugrik."
 
 #: ../data/stardict.schemas.in.h:52
-#, fuzzy
 msgid "Whether to hide the main window on startup, or not."
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Ha elrejti a fő ablakot indulásnál, ha nem."
 
 #: ../data/stardict.schemas.in.h:53
-#, fuzzy
 msgid "Whether to hide the word-list view or not."
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Ha elrejti a szó-listát, ha nem."
 
 #: ../data/stardict.schemas.in.h:54
 msgid ""
 "Whether to lock the floating window or not. While locked, the window will "
 "not disappear."
-msgstr ""
+msgstr "Ha zárolva van az úszó ablak, ha nem. Lezárás alatt, az ablak nem látható."
 
 #: ../data/stardict.schemas.in.h:55
 msgid ""
 "Whether to query in the floating window, or in the main window. Query is "
 "activated by the user clicking the middle mouse button on the notification "
 "area icon."
-msgstr ""
+msgstr "Ha lekérdez az úszó ablakban, vagy a fő ablakban. A lekérdezést a felhasználó tudja aktiválni, letiltani a középső egérgomb lenyomásával a figyelmeztető terület ikonjánál."
 
 #: ../data/stardict.schemas.in.h:56
 msgid ""
 "Whether to scan the selection or not. When the user selects text, StarDict "
 "will popup a flat window showing the meaning of that text."
-msgstr ""
+msgstr "Ha keresi a kijelölt részt, ha nem. Ha a felhasználó kiválaszt egy szöveget, a StarDict megjelenít egy felugró ablakot, amiben a szöveg jelentése látható."
 
 #: ../data/stardict.schemas.in.h:57
 msgid ""
 "Whether to use a user-defined font in StarDict, instead of the default "
 "system font. If this option is turned on, then the font named in the "
 "\"Custom Font\" option will be used instead of the system font."
-msgstr ""
+msgstr "Ha egy felhasználó által megadott betűkészletet használ a StarDict az alapértelmezett helyett. Ha ez az opció be van kapcsolva, akkor betűkészlet neve az \"Egyéni betűkészlet\" opcióban lesz látható a rendszer betűkészlet helyett."
 
 #: ../data/stardict.schemas.in.h:58
-#, fuzzy
 msgid "Window-height"
-msgstr "Maximális ablak_magasság:"
+msgstr "Ablak magasság"
 
 #: ../data/stardict.schemas.in.h:59
-#, fuzzy
 msgid "Window-width"
-msgstr "Maximális ablak_szélesség:"
+msgstr "Ablak szélesség"
 
 #: ../data/stardict.schemas.in.h:60
 msgid "lock position (x)"
-msgstr ""
+msgstr "(x) pozíció rögzítése "
 
 #: ../data/stardict.schemas.in.h:61
 msgid "lock position (y)"
-msgstr ""
+msgstr "(y) pozíció rögzítése"
 
 #: ../data/stardict.schemas.in.h:62
 msgid "the window's x position while locked."
-msgstr ""
+msgstr "Az ablak(ok) x pozíciója rögzítve van."
 
 #: ../data/stardict.schemas.in.h:63
 msgid "the window's y position while locked."
-msgstr ""
+msgstr "Az ablak(ok) y pozíciója rögzítve van."
 
 #: ../data/stardict.schemas.in.h:64
-#, fuzzy
 msgid "whether to lock the window or not"
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "ha zárolja az ablakot, ha nem"
 
 #: ../src/articleview.cpp:183
 msgid "XDXF data parsing plug-in is not found!"
-msgstr ""
+msgstr "XDFX adat elemző bővítmény nem található! "
 
 #: ../src/articleview.cpp:188
 msgid "PowerWord data parsing plug-in is not found!"
-msgstr ""
+msgstr "PowerWord adat elemző bővítmény nem található!"
 
 #: ../src/articleview.cpp:193
 msgid "Wiki data parsing plug-in is not found!"
-msgstr ""
+msgstr "Wiki adat elemző bővítmény nem található!"
 
 #: ../src/articleview.cpp:198
 msgid "HTML data parsing plug-in is not found!"
-msgstr ""
+msgstr "HTML adat elemző bővítmény nem található!"
 
 #: ../src/articleview.cpp:203
 msgid "WordNet data parsing plug-in is not found!"
-msgstr ""
+msgstr "WordNet adat elemző bővítmény nem található!"
 
 #: ../src/articleview.cpp:254
 msgid "<span foreground=\"red\">[Load image error!]</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">[Kép betöltési hiba]</span>"
 
 #: ../src/articleview.cpp:259
 msgid "<span foreground=\"red\">[Missing Image]</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">[Hiányzó Kép]</span>"
 
 #: ../src/articleview.cpp:273
 msgid "Unknown data type, please upgrade StarDict!"
-msgstr ""
+msgstr "Ismeretlen adat típus, kérlek frissítsd a StarDict alkalmazást!"
 
 #. Default stardictd server.
 #: ../src/conf.cpp:57 ../src/prefsdlg.cpp:1858
 msgid "dict.stardict.org"
-msgstr ""
+msgstr "dict.stardict,org"
 
 #: ../src/conf.cpp:226
-#, fuzzy, no-c-format
+#, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
 "s\n"
@@ -420,55 +385,55 @@ msgid ""
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
 "cmudict?in=%s\n"
 msgstr ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
 "dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
 "H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
 "s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
-"WhatIs\thttp://www.whatis.com\thttp://www.whatis.com/"
-"WhatIs_Search_Results_Exact/1,290214,,00.html?query=%s\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
 "Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
 "q=%s\n"
 "WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
 "WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
 "WebQuery?searchText=%s\n"
 "Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
-"Magellan\thttp://www.mckinley.com\thttp://www.mckinley.com/extsearch.cgi?"
-"query=%s\n"
 "Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
 #: ../src/conf.cpp:253
-#, fuzzy
 msgid "win32_use_custom_font=0"
-msgstr "_Egyéni betűtípus használata."
+msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
 #: ../src/conf.cpp:265
-#, fuzzy
 msgid "win32_custom_font="
-msgstr "_Egyéni betűtípus használata."
+msgstr "win32_custom_font="
 
 #. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
 #: ../src/desktop.cpp:71
-#, fuzzy, c-format
+#, c-format
 msgid "%s\\help\\stardict.chm"
-msgstr "file:///%s/help/C/stardict.html"
+msgstr "%s\\help\\stardict.chm"
 
 #: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
 msgid "Default Group"
-msgstr ""
+msgstr "Alapértelmezett Csoport"
 
 #: ../src/dictmanagedlg.cpp:62
 #, c-format
 msgid "Only level %d user can choose this dictionary!"
-msgstr ""
+msgstr "Csak a %d szintű felhasználó választhatja ezt a szótárt!"
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
 #: ../src/dictmanagedlg.cpp:2283
 #, c-format
 msgid "You can only choose %d dictionaries."
-msgstr ""
+msgstr "Te csak ezeket a szótárakat választhatod: %d"
 
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
@@ -484,48 +449,46 @@ msgid "Word count"
 msgstr "Szavak száma"
 
 #: ../src/dictmanagedlg.cpp:216
-#, fuzzy
 msgid "Browse Dictionaries"
-msgstr "_Fa szótárak"
+msgstr "Szótárak böngészése"
 
 #: ../src/dictmanagedlg.cpp:412
 msgid "These settings will take effect the next time you run StarDict."
-msgstr "A beállítások a StarDict újraindításakor lépnek érvénybe."
+msgstr "Ezek a beállítások csak a StarDict újraindításakor lépnek életbe."
 
 #: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1208
 msgid "Loading..."
-msgstr ""
+msgstr "Betöltés..."
 
 #: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
 msgid "<span foreground=\"red\">Query Dict</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">Szótár lekérdezés</span>"
 
 #: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
-#, fuzzy
 msgid "<span foreground=\"red\">Scan Dict</span>"
-msgstr "<span weight=\"bold\" size=\"x-large\">Kijelölés beolvasása</span>"
+msgstr "<span foreground=\"red\">Szótár keresés</span>"
 
 #: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
-#, fuzzy
 msgid "Virtual Dictionary"
-msgstr "Szótár"
+msgstr "Virtuális szótár"
 
 #: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
-#, fuzzy
 msgid "Network Dictionary"
-msgstr "_Fa szótárak"
+msgstr "Hálózati szótár"
 
 #: ../src/dictmanagedlg.cpp:783
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
+"Több féle szótárcsoportokkal rendelkezhetsz, úgy mint például \"Angol tanuló\", "
+"\"Német tanuló\", és váltogathatod őket."
 
 #: ../src/dictmanagedlg.cpp:788
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
-msgstr ""
+msgstr "A lekérdező szótár a fő ablakban látható, a keresőszótár az úszó ablakban jelenik meg."
 
 #: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
 msgid "Author"
@@ -537,7 +500,7 @@ msgstr "E-mail"
 
 #: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
 msgid "Website"
-msgstr "Webhely"
+msgstr "Weboldal"
 
 #: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
 msgid "Description"
@@ -554,122 +517,111 @@ msgstr "Fájlnév"
 #: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
 #: ../src/pluginmanagedlg.cpp:373
 msgid "Enable"
-msgstr "Engedélyez"
+msgstr "Engedélyezés"
 
 #: ../src/dictmanagedlg.cpp:1295
 msgid "Are you sure you want to delete this group of dictionaries?"
-msgstr ""
+msgstr "Biztosan törölni szeretnéd ezt a szótárcsoportot?"
 
 #: ../src/dictmanagedlg.cpp:1306
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
-msgstr ""
+msgstr "Biztosan törölni szeretnéd ezt az al szótárcsoportot?"
 
 #: ../src/dictmanagedlg.cpp:1325
 msgid "New dict group"
-msgstr ""
+msgstr "Új szótárcsoport"
 
 #: ../src/dictmanagedlg.cpp:1328
-#, fuzzy
 msgid "Group name:"
-msgstr "Programnév"
+msgstr "Csoport neve:"
 
 #: ../src/dictmanagedlg.cpp:1365
-#, fuzzy
 msgid "Add dictionary"
-msgstr "Szótár"
+msgstr "Szótár hozzáadása"
 
 #: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1281
 msgid "Add"
 msgstr "Hozzáadás"
 
 #: ../src/dictmanagedlg.cpp:1798
-#, fuzzy
 msgid "Delete"
-msgstr "Dátum"
+msgstr "Törlés"
 
 #: ../src/dictmanagedlg.cpp:1805
 msgid "Information"
-msgstr ""
+msgstr "Információ"
 
 #: ../src/dictmanagedlg.cpp:1814
 msgid "Move to top"
-msgstr ""
+msgstr "Mozgatás legfelülre"
 
 #: ../src/dictmanagedlg.cpp:1821
 msgid "Move up"
-msgstr ""
+msgstr "Fel"
 
 #: ../src/dictmanagedlg.cpp:1828
 msgid "Move down"
-msgstr ""
+msgstr "Le"
 
 #: ../src/dictmanagedlg.cpp:1835
 msgid "Move to bottom"
-msgstr ""
+msgstr "Mozgatás legalulra"
 
 #: ../src/dictmanagedlg.cpp:1917
-#, fuzzy
 msgid "D_ict List"
-msgstr "_Lista"
+msgstr "S_zótár lista"
 
 #: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:518
-#, fuzzy
 msgid "Manage _Dict"
-msgstr "Szótárak kezelése"
+msgstr "_Szótár kezelő"
 
 #: ../src/dictmanagedlg.cpp:1946
 msgid "T_ree dictionaries"
 msgstr "_Fa szótárak"
 
 #: ../src/dictmanagedlg.cpp:1960
-#, fuzzy
 msgid "_Network dictionaries"
-msgstr "_Fa szótárak"
+msgstr "_Hálózati szótárak"
 
 #: ../src/dictmanagedlg.cpp:1984
-#, fuzzy
 msgid "_Show information"
-msgstr "Információ megjelenítése"
+msgstr "_Információ megjelenítése"
 
 #: ../src/dictmanagedlg.cpp:1991
 msgid "Select _All"
-msgstr ""
+msgstr "_Mindent kijelöl"
 
 #: ../src/dictmanagedlg.cpp:1996
 msgid "_Unselect all"
-msgstr ""
+msgstr "_Kiválasztás megszüntetése"
 
 #: ../src/dictmanagedlg.cpp:2015
-#, fuzzy
 msgid "Visit "
-msgstr "_Lista"
+msgstr "Keresd fel "
 
 #: ../src/dictmanagedlg.cpp:2023
-#, fuzzy
 msgid " to download dictionaries!"
-msgstr "_Fa szótárak"
+msgstr "a szótárak letöltéséhez!"
 
 #: ../src/dictmanagedlg.cpp:2032
 msgid "Upgrade Now!"
-msgstr ""
+msgstr "Frissítés most!"
 
 #: ../src/dictmanagedlg.cpp:2053
 msgid "Manage Dictionaries"
 msgstr "Szótárak kezelése"
 
 #: ../src/dictmanagedlg.cpp:2200
-#, fuzzy
 msgid "Dictionary Information"
-msgstr "Szótár betűtípusa"
+msgstr "Szótár Információ"
 
 #: ../src/dictmanagedlg.cpp:2207
-#, fuzzy
 msgid "Synonym word count"
-msgstr "Szavak száma"
+msgstr "Szinoníma szó számláló"
 
 #: ../src/dictmanagedlg.cpp:2221
 msgid "Download Now!"
-msgstr ""
+msgstr "Letöltés most!"
 
 #: ../src/docklet.cpp:33 ../src/docklet.cpp:182 ../src/win32/systray.cpp:258
 msgid "StarDict - Scanning"
@@ -681,7 +633,7 @@ msgstr "StarDict - leállítva"
 
 #: ../src/docklet.cpp:96 ../src/mainwin.cpp:2722
 msgid "_Scan"
-msgstr "_Beolvasás"
+msgstr "_Vizsgálat"
 
 #: ../src/docklet.cpp:106 ../src/mainwin.cpp:555
 msgid "_Quit"
@@ -700,9 +652,8 @@ msgid "Pronounce the word"
 msgstr "Szó kiejtése"
 
 #: ../src/floatwin.cpp:152
-#, fuzzy
 msgid "Stop selection-scanning"
-msgstr "Kijelölés beolvasásának leállítása"
+msgstr "Kiválasztotak-keresésének leállítása"
 
 #: ../src/floatwin.cpp:164
 msgid "Help"
@@ -734,23 +685,21 @@ msgid "has succeeded.\n"
 msgstr "sikerült.\n"
 
 #: ../src/floatwin.cpp:452
-#, fuzzy
 msgid "Found 1 word:\n"
-msgstr "1 szó:\n"
+msgstr "Egy szót találtam:\n"
 
 #: ../src/floatwin.cpp:454
-#, fuzzy, c-format
+#, c-format
 msgid "Found %d words:\n"
-msgstr " szó:\n"
+msgstr "%d szót találtam:\n"
 
 #: ../src/floatwin.cpp:942
 msgid "_Copy"
 msgstr "_Másolás"
 
 #: ../src/floatwin.cpp:948
-#, fuzzy
 msgid "_Save"
-msgstr "_Beolvasás"
+msgstr "_Mentés"
 
 #: ../src/floatwin.cpp:953 ../src/mainwin.cpp:2147
 msgid "_Query"
@@ -782,21 +731,19 @@ msgstr "Főmenü megjelenítése (Alt+M)"
 
 #: ../src/mainwin.cpp:474
 msgid "translator_credits"
-msgstr "Dvornik László <dvornikl@mailbox.hu>"
+msgstr "Sandor Lisovszki <lisovszki@gmail.com>"
 
 #: ../src/mainwin.cpp:480
-#, fuzzy
 msgid "StarDict is an international dictionary for GNOME."
-msgstr "A StarDict egy nemzetközi szótár a GNOME-hoz.\n"
+msgstr "StarDict egy nemzetközi szótár NEM CSAK GNOME-hoz!!!"
 
 #: ../src/mainwin.cpp:511
 msgid "Pr_eferences"
 msgstr "_Beállítások"
 
 #: ../src/mainwin.cpp:524
-#, fuzzy
 msgid "Manage _Plugins"
-msgstr "Szótárak kezelése"
+msgstr "_Bővítmények kezelése"
 
 #: ../src/mainwin.cpp:533
 msgid "_New Version"
@@ -811,27 +758,24 @@ msgid "_About"
 msgstr "_Névjegy"
 
 #: ../src/mainwin.cpp:1259
-#, fuzzy
 msgid "List"
-msgstr "_Lista"
+msgstr "Lista"
 
 #: ../src/mainwin.cpp:1270
 msgid "Result"
-msgstr ""
+msgstr "Eredmény"
 
 #: ../src/mainwin.cpp:1280
 msgid "Full-Text Translation"
-msgstr ""
+msgstr "Teljes-szöveg fordítása"
 
 #: ../src/mainwin.cpp:1291
-#, fuzzy
 msgid "Tree"
-msgstr "_Fa"
+msgstr "Fa"
 
 #: ../src/mainwin.cpp:1302
-#, fuzzy
 msgid "Choose dict group"
-msgstr "Válasszon szótár betűtípust"
+msgstr "Szótárcsoport választása"
 
 #: ../src/mainwin.cpp:1315
 msgid "Next word (Alt+Down)"
@@ -842,9 +786,8 @@ msgid "Previous word (Alt+Up)"
 msgstr "Előző szó (Alt+Fel)"
 
 #: ../src/mainwin.cpp:1377
-#, fuzzy
 msgid "Enable Net Dict"
-msgstr "StarDict"
+msgstr "Hálózati szótár engedélyezése"
 
 #: ../src/mainwin.cpp:1514
 msgid "Show the word list"
@@ -859,29 +802,27 @@ msgid "Copy"
 msgstr "Másolás"
 
 #: ../src/mainwin.cpp:1575
-#, fuzzy
 msgid "Save to file (Alt+E)"
-msgstr "Mentés fájlba"
+msgstr "Mentés fájlba (Alt+E)"
 
 #: ../src/mainwin.cpp:1585
 msgid "Print"
 msgstr "Nyomtatás"
 
 #: ../src/mainwin.cpp:1600
-#, fuzzy
 msgid "Search in the definition text (Ctrl+F)"
-msgstr "Keresés a definíción belül (Ctrl+F)"
+msgstr "Keresés a meghatározó szövegben (Ctrl+F)"
 
 #: ../src/mainwin.cpp:1786
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
 "Please go to StarDict's website, download some dictionaries:\n"
 "%s%s%s and put them in %s."
 msgstr ""
-"Figyelmeztetés! Nincs betöltve szótár.\n"
-"Kérem látogassa meg a StarDict webhelyét és töltsön le néhány szótárat:\n"
-"http://stardict.sourceforge.net"
+"Figyelmeztetés! Nincs szótár betöltve.\n"
+"kérlek látogasd meg a StarDicz weboldalát a szótárak letöltéséhez:\n"
+"%s%s%s majd helyezd öket ide: %s"
 
 #: ../src/mainwin.cpp:1809
 msgid ""
@@ -970,15 +911,37 @@ msgid ""
 "useful, but WITHOUT ANY WARRANTY; without the warranty that the word "
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
+"       Üdvözlünk a StarDict szótár alkalmazásban\n"
+"A StarDict, egy több platformos nemzetközi szótár Gtk-es motorra épülve. "
+"Hatalmas az eszközkínálat, úgy mint \"Kijelölt szó keresése,\" \"Fuzzy keresés\" és \"Teljes szöveg keresés\".\n"
+"\n"
+"       Egy kis segítség a StarDict használatához:\n"
+"\n"
+"       1. Csoportos keresés/egyező, hasonjló szavak\n"
+"       Lehetőséged van szóláncokat megadni a keresőbe a '*' vagy a '?' előtaggal, majd az Enter lenyomása után az összes hasonló/azonos szó megjelenik egy listában.\n"
+"       2. Általános kifejezés keresése\n"
+"       Beírhatsz Perl-kompatibilis általános kifejezéseket, amelyeket a ':' jellel/azonosítóval kell kezdened, majd az Enter lenyomása után az annak megfelelő szavakat láthatod egy listában.\n"
+"       3. Fuzzy keresés\n"
+"       Ha nem emlékszel arra, hogyan is ejtik a szót, amelyet keresel, akkor egyszerűen csak begépeled a kereső mezőbe az eszedbe jutó foszlányokat, amelyeket a '/' jellel kell kezdened, majd az Enter lenyomása utána program megjelenítni neked a hasonló/azonos szavakat egy listában\n"
+"       4. Teljes-szöveg keresése\n"
+"       A Teljes-szöveg keresés egy szót keres az adatban. Egy Teljes-szöveg kereséshez egyszerűen csak írd be a kívánt szót/betűket, amelyeket a '|' jellel kell kezdeni pl: \"|ab cd\", olyan adatokat keres amelyekben benn található az ab ill. cd. Ha szavak szóközt tartalmaznak, akkor használhatod a következőt: \"\\\", pl: \"|alma\\ pite\", egyéb karakterekhez, új sorhoz a következők használhatók: \"\\\\\" ehhez: '\\', \"\\t\" q Tab-hoz és \"\\n\" az új sorhoz.\n"
+"       5. Speciális karakterek keresése\n"
+"       Ha aszavak speciális karaktereket tartalmaznak, akkor a kihagyásukhoz használhatod ezt: '\\', pl: \"a\\*b\\?\".\n"
+"       6. Kijelölt szó keresése\n"
+"       Kapcsold be a kereső gombot a program bal-felső sarkában a kereső bekapcsolásához. Ha ez a funkció be van kapcsolva, akkor a program automatikusan megjeleníti a kijelölt szó jelentését egy felugrő ablakban.\n"
+"       7. Szótárkezelés\n"
+"       Kattints a \"Szótárak kezelése\" gombra, a kezelő megnyitásához. Ebben a kezelőben engedélyezhetsz, letilthatsz szótárakat.\n"
+"\n"
+"\n"
+"       Felhívás: Ez a program a \"reméljük használható\" szellemében lett fejlesztve, ezért a program használatával kapcsolatos bármilyen meghibásodásra, problémára, NEM ÁLL MÓDUNKBAN GARANCIÁT NYŰJTANI.\n"
 
 #: ../src/mainwin.cpp:1974 ../src/stardict.cpp:1352
 msgid "Found no words matching this pattern!"
 msgstr "Nem található egyező szó!"
 
 #: ../src/mainwin.cpp:1976 ../src/stardict.cpp:1377
-#, fuzzy
 msgid "Found no words matching this regular expression!"
-msgstr "Nem található egyező szó!"
+msgstr "Nem találtam a kifejezéssel egyező szavakat!"
 
 #: ../src/mainwin.cpp:1978 ../src/stardict.cpp:1266
 msgid "There are too many spelling errors :-("
@@ -986,7 +949,7 @@ msgstr "Túl sok a gépelési hiba :-("
 
 #: ../src/mainwin.cpp:1980 ../src/stardict.cpp:1185 ../src/stardict.cpp:1230
 msgid "There are no dictionary articles containing this word. :-("
-msgstr ""
+msgstr "Nincs olyan szótár, amely tartalmazná ezt a szót. :-("
 
 #: ../src/mainwin.cpp:2068
 #, c-format
@@ -994,32 +957,30 @@ msgid "The text \"%s\" was not found."
 msgstr "\"%s\" szöveg nem található."
 
 #: ../src/mainwin.cpp:2139 ../src/mainwin.cpp:2406
-#, fuzzy
 msgid "_Pronounce"
-msgstr "Szó kiejtése"
+msgstr "_Szó kiejtése"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194
 msgid "Arabic"
-msgstr ""
+msgstr "Arab"
 
 #: ../src/mainwin.cpp:2185
-#, fuzzy
 msgid "Chinese"
-msgstr "Válasszon"
+msgstr "Kínai"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2192 ../src/mainwin.cpp:2194
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
 #: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
 #: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Egyszerűsített kínai"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2190 ../src/mainwin.cpp:2194
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243
 #: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
 #: ../src/mainwin.cpp:2298 ../src/mainwin.cpp:2305
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Kínai Hagyományos"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2186 ../src/mainwin.cpp:2188
 #: ../src/mainwin.cpp:2196 ../src/mainwin.cpp:2198 ../src/mainwin.cpp:2200
@@ -1039,7 +1000,7 @@ msgstr ""
 #: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2298
 #: ../src/mainwin.cpp:2305
 msgid "English"
-msgstr ""
+msgstr "Angol"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2198
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
@@ -1051,21 +1012,21 @@ msgstr ""
 #: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2281 ../src/mainwin.cpp:2285
 #: ../src/mainwin.cpp:2291 ../src/mainwin.cpp:2293
 msgid "French"
-msgstr ""
+msgstr "Francia"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2196
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
 #: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
 #: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
 msgid "German"
-msgstr ""
+msgstr "Német"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
 #: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
 #: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
 #: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
 msgid "Italian"
-msgstr ""
+msgstr "Olasz"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
 #: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
@@ -1073,98 +1034,93 @@ msgstr ""
 #: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303
 #: ../src/mainwin.cpp:2307
 msgid "Japanese"
-msgstr ""
+msgstr "Japán"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
 #: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
 #: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2298
 #: ../src/mainwin.cpp:2305
 msgid "Korean"
-msgstr ""
+msgstr "Koreai"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
 #: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2243
 #: ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2270
 #: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugál"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2215
 #: ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250
 #: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
 msgid "Russian"
-msgstr ""
+msgstr "Orosz"
 
 #: ../src/mainwin.cpp:2185 ../src/mainwin.cpp:2194 ../src/mainwin.cpp:2222
 #: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
 #: ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
 msgid "Spanish"
-msgstr ""
+msgstr "Spanyol"
 
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
 #: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
 #: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277 ../src/mainwin.cpp:2279
 msgid "Dutch"
-msgstr ""
+msgstr "Holland"
 
 #: ../src/mainwin.cpp:2215 ../src/mainwin.cpp:2222 ../src/mainwin.cpp:2224
 #: ../src/mainwin.cpp:2243 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
 #: ../src/mainwin.cpp:2279
-#, fuzzy
 msgid "Greek"
-msgstr "_Fa"
+msgstr "Görög"
 
 #: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2277
 msgid "Swedish"
-msgstr ""
+msgstr "Svéd"
 
 #: ../src/mainwin.cpp:2329
-#, fuzzy
 msgid "Google Translate"
-msgstr "Fordította"
+msgstr "Google fordítás"
 
 #: ../src/mainwin.cpp:2330
-#, fuzzy
 msgid "Yahoo Translate"
-msgstr "Fordította"
+msgstr "Yahoo fordítás"
 
 #: ../src/mainwin.cpp:2331
 msgid "Altavista Translate"
-msgstr ""
+msgstr "Altavista fordítás"
 
 #: ../src/mainwin.cpp:2332
 msgid "SystranBox Translate"
-msgstr ""
+msgstr "SystranBox fordítás"
 
 #: ../src/mainwin.cpp:2333
 msgid "Excite Japan Translate"
-msgstr ""
+msgstr "Japán fordítás"
 
 #: ../src/mainwin.cpp:2428
 msgid "<b>Full-Text Translation</b>"
-msgstr ""
+msgstr "<b>Teljes-szöveg fordítása</b>"
 
 #: ../src/mainwin.cpp:2459
 msgid "To"
-msgstr ""
+msgstr "Erre/ennek"
 
 #: ../src/mainwin.cpp:2492
-#, fuzzy
 msgid "_Translate"
-msgstr "Fordította"
+msgstr "_Fordítás"
 
 #: ../src/mainwin.cpp:2514
 msgid "Powered by -"
-msgstr ""
+msgstr "Biztosította -"
 
 #: ../src/mainwin.cpp:2639
-#, fuzzy
 msgid "Please input some words to translate."
-msgstr "Kérem adja meg a webhely nevét."
+msgstr "Kérlek adj meg néhány lefordítandó szót."
 
 #: ../src/mainwin.cpp:2654
 msgid "Connecting..."
-msgstr ""
+msgstr "Kapcsolódás..."
 
 #: ../src/mainwin.cpp:2731
 msgid "Scan the selection"
@@ -1172,7 +1128,7 @@ msgstr "Kijelölés beolvasása"
 
 #: ../src/mainwin.cpp:2745
 msgid "Show info"
-msgstr "Információ megjelenítése"
+msgstr "Info mutatása"
 
 #: ../src/mainwin.cpp:2797 ../src/prefsdlg.cpp:1833
 msgid "Preferences"
@@ -1199,49 +1155,50 @@ msgid ""
 "<b>Website:</b>\t%s\n"
 "<b>Filename:</b>\t%s"
 msgstr ""
+"%s\n"
+"<b>Szerző:</b>\t%s\n"
+"<b>Weboldal:</b>\t%s\n"
+"<b>Fájlnév:</b>\t%s"
 
 #: ../src/pluginmanagedlg.cpp:179
 msgid "<b>Virtual Dictionary</b>"
-msgstr ""
+msgstr "<b>Virtuális szótár</b>"
 
 #: ../src/pluginmanagedlg.cpp:184
-#, fuzzy
 msgid "<b>Network Dictionary</b>"
-msgstr "_Fa szótárak"
+msgstr "<b>Hálózati szótár</b>"
 
 #: ../src/pluginmanagedlg.cpp:189
-#, fuzzy
 msgid "<b>Special Dictionary</b>"
-msgstr "Szótár"
+msgstr "<b>Speciális szótár</b>"
 
 #: ../src/pluginmanagedlg.cpp:194
 msgid "<b>TTS Engine</b>"
-msgstr ""
+msgstr "<b>TTS Hang-alrendszer</b>"
 
 #: ../src/pluginmanagedlg.cpp:199
 msgid "<b>Data Parsing Engine</b>"
-msgstr ""
+msgstr "<b>Adat feldolgozó hang-alrendszer</b>"
 
 #: ../src/pluginmanagedlg.cpp:204
 msgid "<b>Misc</b>"
-msgstr ""
+msgstr "<b>Vegyes</b>"
 
 #: ../src/pluginmanagedlg.cpp:379
 msgid "Plug-in Name"
-msgstr ""
+msgstr "Bővítmény név"
 
 #: ../src/pluginmanagedlg.cpp:402
 msgid "Configure Pl_ug-in"
-msgstr ""
+msgstr "_Bővítmény beállítása"
 
 #: ../src/pluginmanagedlg.cpp:412
 msgid "<b>Plug-in Details</b>"
-msgstr ""
+msgstr "<b>Bővítmény részletek</b>"
 
 #: ../src/pluginmanagedlg.cpp:421
-#, fuzzy
 msgid "Manage Plugins"
-msgstr "Szótárak kezelése"
+msgstr "Bővítmények kezelése"
 
 #: ../src/prefsdlg.cpp:75 ../src/prefsdlg.cpp:367
 msgid "Scan Selection"
@@ -1249,15 +1206,15 @@ msgstr "Kijelölés beolvasása"
 
 #: ../src/prefsdlg.cpp:76 ../src/prefsdlg.cpp:484
 msgid "Font"
-msgstr "Betűtípus"
+msgstr "Betűkészlet"
 
 #: ../src/prefsdlg.cpp:77 ../src/prefsdlg.cpp:565
 msgid "Cache"
-msgstr ""
+msgstr "Gyorstár"
 
 #: ../src/prefsdlg.cpp:78 ../src/prefsdlg.cpp:656
 msgid "Export"
-msgstr ""
+msgstr "Exportálás"
 
 #: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:725
 msgid "Sound"
@@ -1265,16 +1222,15 @@ msgstr "Hang"
 
 #: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:692
 msgid "Article rendering"
-msgstr ""
+msgstr "Hír megjelenítés"
 
 #: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:988
-#, fuzzy
 msgid "Net Dict"
-msgstr "StarDict"
+msgstr "Háló szótár"
 
 #: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:1063
 msgid "Input"
-msgstr ""
+msgstr "Bemenet"
 
 #: ../src/prefsdlg.cpp:92 ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:107
 #: ../src/prefsdlg.cpp:1145 ../src/prefsdlg.cpp:1572 ../src/prefsdlg.cpp:1603
@@ -1287,7 +1243,7 @@ msgstr "Webhely keresése"
 
 #: ../src/prefsdlg.cpp:108 ../src/prefsdlg.cpp:1670
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: ../src/prefsdlg.cpp:115 ../src/stardict.cpp:2503
 msgid "Dictionary"
@@ -1295,7 +1251,7 @@ msgstr "Szótár"
 
 #: ../src/prefsdlg.cpp:117
 msgid "Network"
-msgstr ""
+msgstr "Hálózat"
 
 #: ../src/prefsdlg.cpp:119
 msgid "Main window"
@@ -1314,13 +1270,12 @@ msgid "Categories"
 msgstr "Kategóriák"
 
 #: ../src/prefsdlg.cpp:370
-#, fuzzy
 msgid "_Only scan while the modifier key is being pressed."
-msgstr "Csak a módosító_billentyű nyomvatartásakor történik beolvasás."
+msgstr "_Csak a módosító billentyű lenyomásakor keres."
 
 #: ../src/prefsdlg.cpp:386
 msgid "H_ide floating window when modifier key released."
-msgstr "_Lebegő ablak elrejtése a módosítóbillentyű nyomvatartásakor"
+msgstr "_Lebegő ablak elrejtése a módosítóbillentyű nyomvatartásakor."
 
 #: ../src/prefsdlg.cpp:396
 msgid "Scan modifier _key:"
@@ -1328,11 +1283,11 @@ msgstr "Beolvasás _módosítóbillentyűje:"
 
 #: ../src/prefsdlg.cpp:417
 msgid "_Scan clipboard."
-msgstr ""
+msgstr "_Kereső vágólap"
 
 #: ../src/prefsdlg.cpp:423
 msgid "_Use scan hotkey: Ctrl+Alt+F1."
-msgstr ""
+msgstr "_Kereső gyorbillentyű: Ctr+Alt+F1"
 
 #: ../src/prefsdlg.cpp:461
 msgid "Choose dictionary font"
@@ -1340,7 +1295,7 @@ msgstr "Válasszon szótár betűtípust"
 
 #: ../src/prefsdlg.cpp:464 ../src/prefsdlg.cpp:509
 msgid "Choose"
-msgstr "Válasszon"
+msgstr "Választás:"
 
 #: ../src/prefsdlg.cpp:466
 msgid "Dictionary font"
@@ -1356,46 +1311,47 @@ msgstr "_Szótár betűtípusa:"
 
 #: ../src/prefsdlg.cpp:569
 msgid "Create c_ache files to speed up loading."
-msgstr ""
+msgstr "Gyorstár fájlok létrehozása a betöltés gyorsításáért."
 
 #: ../src/prefsdlg.cpp:574
 msgid "_Sort word list by collation function."
-msgstr ""
+msgstr "_Szó lista rendezése egybevetési/függvény funkció szerint."
 
 #: ../src/prefsdlg.cpp:583
 msgid "\tCollation _function:"
-msgstr ""
+msgstr "\tFüggvény _funkció:"
 
 #: ../src/prefsdlg.cpp:615
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
 msgstr ""
+"Az egybevetés engedélyezése után, amikor először elindítod a szótárakat,  akkor "
+"egy darabig rendezni fog, kérlek légy türelemmel."
 
 #: ../src/prefsdlg.cpp:621
 msgid "C_lean all cache files"
-msgstr ""
+msgstr "_Minden gyorstár fájl ürítése"
 
 #: ../src/prefsdlg.cpp:638
 msgid "Open file..."
-msgstr ""
+msgstr "Fájl megnyitása..."
 
 #: ../src/prefsdlg.cpp:661
 msgid "_Only export words."
-msgstr ""
+msgstr "_Csak szavakat exportálj."
 
 #: ../src/prefsdlg.cpp:668
-#, fuzzy
 msgid "File name:"
-msgstr "Fájlnév"
+msgstr "Fájlnév:"
 
 #: ../src/prefsdlg.cpp:677
 msgid "_Browse..."
-msgstr ""
+msgstr "_Tallózás..."
 
 #: ../src/prefsdlg.cpp:698
 msgid "_Highlight search term"
-msgstr ""
+msgstr "_Keresési időtartam kiemelése"
 
 #: ../src/prefsdlg.cpp:730
 msgid "_Enable sound event."
@@ -1403,107 +1359,95 @@ msgstr "_Hangok engedélyezése."
 
 #: ../src/prefsdlg.cpp:739
 msgid "Command for playing wav files:"
-msgstr ""
+msgstr "Parancs a wav fájlok lejátszásához:"
 
 #: ../src/prefsdlg.cpp:752
 msgid "RealPeopleTTS search path:"
-msgstr ""
+msgstr "RealPeople TTS keresési útvonala:"
 
 #: ../src/prefsdlg.cpp:770
 msgid "_Use TTS program."
-msgstr ""
+msgstr "_TTS program használata."
 
 #: ../src/prefsdlg.cpp:778
 msgid "Commandline:"
-msgstr ""
+msgstr "Parancssor:"
 
 #: ../src/prefsdlg.cpp:807
-#, fuzzy
 msgid "Account"
-msgstr "_Névjegy"
+msgstr "Azonosító"
 
 #: ../src/prefsdlg.cpp:818 ../src/prefsdlg.cpp:915
-#, fuzzy
 msgid "_User Name:"
-msgstr "Webhely neve"
+msgstr "_Felhasználónév:"
 
 #: ../src/prefsdlg.cpp:824 ../src/prefsdlg.cpp:921
 msgid "_Password:"
-msgstr ""
+msgstr "_Jelszó:"
 
 #: ../src/prefsdlg.cpp:847 ../src/prefsdlg.cpp:946
-#, fuzzy
 msgid "Please input the password."
-msgstr "Kérem adja meg a webhely nevét."
+msgstr "Kérem a jelszót."
 
 #: ../src/prefsdlg.cpp:904
 msgid "Register"
-msgstr ""
+msgstr "Regisztráció"
 
 #: ../src/prefsdlg.cpp:928
-#, fuzzy
 msgid "_Email:"
-msgstr "E-mail"
+msgstr "_Email:"
 
 #: ../src/prefsdlg.cpp:944
-#, fuzzy
 msgid "Please input the user name."
-msgstr "Kérem adja meg a webhely nevét."
+msgstr "Kérem a felhasználói nevet."
 
 #: ../src/prefsdlg.cpp:948
-#, fuzzy
 msgid "Please input the email."
-msgstr "Kérem adja meg a webhely hivatkozását."
+msgstr "Kérem az email címet."
 
 #: ../src/prefsdlg.cpp:950
-#, fuzzy
 msgid "Please input a valid email."
-msgstr "Kérem adja meg a webhely nevét."
+msgstr "Kérlek, hogy érvényes email címet adj meg."
 
 #: ../src/prefsdlg.cpp:994
-#, fuzzy
 msgid "Enable _network dictionaries."
-msgstr "Szótárak kezelése"
+msgstr "_Hálózati szótárak engedélyezése."
 
 #: ../src/prefsdlg.cpp:1006
-#, fuzzy
 msgid "StarDict server:"
-msgstr "StarDict"
+msgstr "StarDict szerver:"
 
 #: ../src/prefsdlg.cpp:1015
-#, fuzzy
 msgid "Port:"
-msgstr "Nyomtatás"
+msgstr "Port:"
 
 #: ../src/prefsdlg.cpp:1024
 msgid "Account:"
-msgstr ""
+msgstr "Felhasználói fiók:"
 
 #: ../src/prefsdlg.cpp:1035
 msgid "_Register an account"
-msgstr ""
+msgstr "_Regisztrálás"
 
 #: ../src/prefsdlg.cpp:1070
-#, fuzzy
 msgid "_Search while typing."
-msgstr "Webhely keresése"
+msgstr "_Keresés gépelés közben."
 
 #: ../src/prefsdlg.cpp:1079
 msgid "Word change _timeout:"
-msgstr ""
+msgstr "Szó változtatás _időtúllépése:"
 
 #: ../src/prefsdlg.cpp:1088
-#, fuzzy
 msgid "(default:300)"
-msgstr "(alapértelmezett:320)"
+msgstr "(alapértelmezés: 300)"
 
 #: ../src/prefsdlg.cpp:1090
 msgid "Show the _first word when not found."
-msgstr ""
+msgstr "Mutasd az _első szót, ha nem találod."
 
 #: ../src/prefsdlg.cpp:1151
 msgid "_Auto run StarDict after boot."
-msgstr ""
+msgstr "_Automatikusan indítsd el a StarDictet minden rendszerindításkor."
 
 #: ../src/prefsdlg.cpp:1181
 msgid "Hide main window when _starting StarDict."
@@ -1511,12 +1455,11 @@ msgstr "_Főablak elrejtése a StarDict indulásakor."
 
 #: ../src/prefsdlg.cpp:1191
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
-msgstr ""
+msgstr "_Használd a főablak megnyitó billentyű kombinációt: Ctrl+Alt+Z."
 
 #: ../src/prefsdlg.cpp:1201 ../src/prefsdlg.cpp:1731
-#, fuzzy
 msgid "_Transparency:"
-msgstr "Fordította"
+msgstr "_Átlátszóság:"
 
 #: ../src/prefsdlg.cpp:1294 ../src/prefsdlg.cpp:1497
 msgid "Website Name"
@@ -1543,30 +1486,25 @@ msgid "Please input the website search link."
 msgstr "Kérem adja meg a webhely keresési hivatkozását."
 
 #: ../src/prefsdlg.cpp:1344 ../src/prefsdlg.cpp:1423
-#, fuzzy, c-format
-msgid ""
-"The website search link should contain a \"%%s\" string for querying a word."
-msgstr ""
-"A webhely lekérdezési hivatkozásának a szókereséshez tartalmaznia kellene a"
-"(z) \"%%s\" fűzért."
+#, c-format
+msgid "The website search link should contain a \"%%s\" string for querying a word."
+msgstr "A weblap keresési link tartalmazhat egy \"%%s\" karakterláncot egy szó lekérdezéséhez."
 
 #: ../src/prefsdlg.cpp:1578
-#, fuzzy
 msgid ""
 "_Query in the floating window when middle mouse\n"
 "button is clicked."
 msgstr ""
-"_Középső gombbal kattintáskor lekérdezés a\n"
-"lebegőablakban."
+"A lebegő ablak lekérdezése a középső egérgomb\n"
+"lenyomásakor."
 
 #: ../src/prefsdlg.cpp:1606
-#, fuzzy
 msgid "_Pronounce the word when it pops up."
-msgstr "_Szó kiejtése felbukkanáskor."
+msgstr "_Szó kiejtése, amikor megjelenik/felugrik."
 
 #: ../src/prefsdlg.cpp:1615
 msgid "_Show floating window if word not found."
-msgstr ""
+msgstr "Lebegő ablak mutatása, ha a szó nem található."
 
 #: ../src/prefsdlg.cpp:1689
 msgid "Max window _width:"
@@ -1585,9 +1523,8 @@ msgid "(default:240)"
 msgstr "(alapértelmezett:240)"
 
 #: ../src/prefsdlg.cpp:1716
-#, fuzzy
 msgid "_Use custom background color:"
-msgstr "_Egyéni betűtípus használata."
+msgstr "_Egyéni háttérszín használata:"
 
 #: ../src/prefsdlg.cpp:1811
 msgid "Cat_egories:"
@@ -1595,45 +1532,43 @@ msgstr "_Kategóriák:"
 
 #: ../src/progresswin.cpp:35 ../src/progresswin.cpp:39 ../src/splash.cpp:70
 msgid "Loading"
-msgstr ""
+msgstr "Betöltés"
 
 #: ../src/readword.cpp:148
 msgid "Real People TTS"
-msgstr ""
+msgstr "Real People TTS"
 
 #: ../src/readword.cpp:155
 msgid "Command TTS"
-msgstr ""
+msgstr "Parancs TTS"
 
 #: ../src/stardict.cpp:95
 msgid "Turn on all debugging messages"
 msgstr "Mutasson minden hibakereső üzenetet"
 
 #: ../src/stardict.cpp:97
-#, fuzzy
 msgid "Hide the main window, do not show splash screen"
-msgstr "_Főablak elrejtése a StarDict indulásakor."
+msgstr "Főablak elrejtése, ne mutasd az indítóképernyőt"
 
 #: ../src/stardict.cpp:100
 msgid "Start a new instance of stardict"
-msgstr ""
+msgstr "Egy új Stardict példány indítása"
 
 #: ../src/stardict.cpp:104
 msgid "Quit an existing instance of stardict"
-msgstr ""
+msgstr "Egy StartDict példány bezárása"
 
 #: ../src/stardict.cpp:1093
 msgid "Full-text Search"
-msgstr ""
+msgstr "Teljes-szöveg keresés"
 
 #: ../src/stardict.cpp:1120
-#, fuzzy
 msgid "Search"
-msgstr "Keresés:"
+msgstr "Keresés"
 
 #: ../src/stardict.cpp:1205 ../src/stardict.cpp:1622
 msgid "Full-text search..."
-msgstr ""
+msgstr "Teljes-szöveg keresés..."
 
 #: ../src/stardict.cpp:1325
 msgid "Fuzzy query failed, too :-("
@@ -1641,386 +1576,378 @@ msgstr "Intelligens keresés is sikertelen :-("
 
 #: ../src/stardict.cpp:1611
 msgid "Press Enter to list the words that match the pattern."
-msgstr "Üssön Enter-t az egyező szavak megjelenítéséhez."
+msgstr "Nyomj Enter-t az egyező szavak megjelenítéséhez."
 
 #: ../src/stardict.cpp:1614
-#, fuzzy
 msgid "Press Enter to list the words that match this regular expressions."
-msgstr "Üssön Enter-t az egyező szavak megjelenítéséhez."
+msgstr "Nyomj Entert, a kifejezéssel egyező szavak kilistázásához."
 
 #: ../src/stardict.cpp:1618
 msgid "Fuzzy query..."
 msgstr "Intelligens keresés..."
 
 #: ../src/stardict.cpp:1886 ../src/stardict.cpp:1991
-#, fuzzy
 msgid "Not found!\n"
-msgstr "<Nem található!>"
+msgstr "Nem található!\n"
 
 #: ../src/stardict.cpp:1987
 msgid "Conversion error!\n"
-msgstr ""
+msgstr "Konverzió hiba!\n"
 
 #: ../src/stardict.cpp:2335
 msgid "StarDict is already running. Using the running process."
 msgstr "A StarDict már fut. A futó folyamat használata."
 
 #: ../src/stardict.cpp:2468
-#, fuzzy
 msgid "- Lookup words"
-msgstr "Szavak keresése"
+msgstr "- Szavak keresése"
 
 #: ../src/stardict.cpp:2473
 #, c-format
 msgid "Options parsing failed: %s\n"
-msgstr ""
+msgstr "Opciók elemzése sikertelen: %s\n"
 
 #: ../src/utils.cpp:127
 #, c-format
 msgid "Can not load image. %s"
-msgstr ""
+msgstr "Nem tudom betölteni a képet: %s"
 
 #: ../src/lib/stardict_client.cpp:901
 #, c-format
 msgid "Authentication denied: %s"
-msgstr ""
+msgstr "Hitelesítés megtagadva: %s"
 
 #: ../src/lib/stardict_client.cpp:914
 #, c-format
 msgid "Register failed: %s"
-msgstr ""
+msgstr "Regisztráció nem sikerült: %s"
 
 #: ../src/lib/stardict_client.cpp:919
 msgid "Register success!"
-msgstr ""
+msgstr "Regisztráció siker!"
 
 #: ../src/lib/stardict_client.cpp:954
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
+"Nem állítottál be magadnak fiókot. Kérlek nyisd meg a \"Net Szótár (Net Dict)\" oldalt a beállítások "
+"ablakban és először regisztrálj egy fiókot."
 
 #: ../src/lib/stardict_client.cpp:1074
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
-msgstr ""
+msgstr "Nem választottál semmilyen szótárt se, kérlek válassz a \"Szótárak kezelése\"->\"Hálózati szótárak\"->\"Hosszáadás\"."
 
 #: ../src/lib/stddict.cpp:649
 msgid "Sorting, please wait..."
-msgstr ""
+msgstr "Rendezés, kérlek várj..."
 
 #: ../src/win32/systray.cpp:107
 msgid "Scan"
-msgstr "Beolvasás"
+msgstr "Keresés"
 
 #: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
 #: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:248
-#, fuzzy
 msgid "User Dict"
-msgstr "StarDict"
+msgstr "Felhasználó szótár"
 
 #: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
-#, fuzzy
 msgid "User virtual dictionary."
-msgstr "Szótárak kezelése"
+msgstr "Felhasználói virtuális szótár."
 
 #: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:233
-#, fuzzy
 msgid "Show the user dictionary."
-msgstr "Válasszon szótár betűtípust"
+msgstr "Felhasználói szótár megjelenítése."
 
 #: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:254
 #, c-format
 msgid "User dict plug-in loaded.\n"
-msgstr ""
+msgstr "Felhasználói szótár bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:188
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:365
 msgid "Dict.cn"
-msgstr ""
+msgstr "Dict cn"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:296
-#, fuzzy
 msgid "Dict.cn configuration"
-msgstr "Szótár betűtípusa"
+msgstr "Dict cn beállítás"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:298
 msgid "Query by XML API."
-msgstr ""
+msgstr "Lekérdezés - XML API."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:300
 msgid "Query by HTML API."
-msgstr ""
+msgstr "Lekérdezés - HTML API."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#, fuzzy
 msgid "Dict.cn network dictionary."
-msgstr "Szótárak kezelése"
+msgstr "Dict cn hálózati szótár."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
 msgid "Query result from Dict.cn website."
-msgstr ""
+msgstr "Lekérdezés innen: Dict cn weboldal."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:367
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
-msgstr ""
+msgstr "Dict cn bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:30
 msgid "Espeak TTS configuration"
-msgstr ""
+msgstr "Ebeszéd (espeak) TTS beállítás"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:32
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
 msgid "Voice type:"
-msgstr ""
+msgstr "Hang típus:"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:35
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
-#, fuzzy
 msgid "Default"
-msgstr "(alapértelmezett:320)"
+msgstr "Alapértelmezett"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
 msgid "Espeak"
-msgstr ""
+msgstr "Ebeszéd (Espeak)"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
 msgid "Espeak TTS."
-msgstr ""
+msgstr "Ebeszéd (espeak) TTS."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:78
 msgid "Pronounce words by Espeak TTS engine."
-msgstr ""
+msgstr "Szavak kiejtése az Ebeszéd TTS motorral."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:108
 msgid "Espeak TTS"
-msgstr ""
+msgstr "Ebeszéd TTS"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
 #, c-format
 msgid "Espeak plug-in loaded.\n"
-msgstr ""
+msgstr "Ebeszéd bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:30
 msgid "Festival TTS configuration"
-msgstr ""
+msgstr "Fesztivál TTS beállítás"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
 msgid "Festival"
-msgstr ""
+msgstr "Fesztivál"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
 msgid "Festival TTS."
-msgstr ""
+msgstr "Fesztivál TTS."
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
 msgid "Pronounce words by Festival TTS engine."
-msgstr ""
+msgstr "Szavak kiejtése a Fesztivál TTS motorral."
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:131
 msgid "Festival TTS"
-msgstr ""
+msgstr "Fesztivál TTS"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:132
 #, c-format
 msgid "Festival plug-in loaded.\n"
-msgstr ""
+msgstr "Fesztivál bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:215
 msgid "[not a printable character]"
-msgstr ""
+msgstr "[nem nyomtatható karakter]"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:232
 msgid "General Character Properties"
-msgstr ""
+msgstr "Általános karaktertulajdonságok"
 
 #. character category
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
 msgid "Unicode category:"
-msgstr ""
+msgstr "Unicode kategória:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:241
 msgid "Canonical decomposition:"
-msgstr ""
+msgstr "Kanonikus dekompozíció:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
 msgid "Various Useful Representations"
-msgstr ""
+msgstr "Többféle hasznos reprezentáció"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:267
 msgid "UTF-8:"
-msgstr ""
+msgstr "UTF-8:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:274
 msgid "UTF-16:"
-msgstr ""
+msgstr "UTF-16:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:282
 msgid "C octal escaped UTF-8:"
-msgstr ""
+msgstr "C oktális escape-elt UTF-8:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:290
 msgid "XML decimal entity:"
-msgstr ""
+msgstr "XML decimális entitás:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
 msgid "XML hexadecimal entity:"
-msgstr ""
+msgstr "XML hexadecimális entitás:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
-#, fuzzy
 msgid "Alias names:"
-msgstr "Fájlnév"
+msgstr "Álnevek:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:310
 msgid "Notes:"
-msgstr ""
+msgstr "Megjegyzések:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:317
 msgid "See also:"
-msgstr ""
+msgstr "Lásd még:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:323
 msgid "Approximate equivalents:"
-msgstr ""
+msgstr "Nagyjából egyenértékű:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:329
 msgid "Equivalents:"
-msgstr ""
+msgstr "Egyenértékű:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:334
 msgid "Annotations and Cross References"
-msgstr ""
+msgstr "Magyarázó jegyzetek és kereszthivatkozások"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:341
 msgid "Definition in English:"
-msgstr ""
+msgstr "Angol definíció:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
 msgid "Mandarin Pronunciation:"
-msgstr ""
+msgstr "Mandarin kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
 msgid "Cantonese Pronunciation:"
-msgstr ""
+msgstr "Kantoni kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
 msgid "Japanese On Pronunciation:"
-msgstr ""
+msgstr "Japán on kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
 msgid "Japanese Kun Pronunciation:"
-msgstr ""
+msgstr "Japán kun kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
 msgid "Tang Pronunciation:"
-msgstr ""
+msgstr "Tang kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
 msgid "Korean Pronunciation:"
-msgstr ""
+msgstr "Koreai kiejtés:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
 msgid "CJK Ideograph Information"
-msgstr ""
+msgstr "CJK képírásjel-információ"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:407
 msgid "Gucharmap"
-msgstr ""
+msgstr "Gucharmap"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
 msgid "Gucharmap virtual dictionary."
-msgstr ""
+msgstr "Gucharmap virtuális szótár."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:394
 msgid "Show information about Unicode characters."
-msgstr ""
+msgstr "Információk megjelenítése az Unicode karakterekről."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:408
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
-msgstr ""
+msgstr "Gucharmap bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
 msgid "HTML data parsing"
-msgstr ""
+msgstr "HTML adatelemzés"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
 msgid "HTML data parsing engine."
-msgstr ""
+msgstr "HTML adatelemző motor.."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:459
 msgid "Parse the HTML data."
-msgstr ""
+msgstr "HTML adat elemzése."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:471
 #, c-format
 msgid "HTML data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "HTML adatelemző bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:154
 msgid "Man configuration"
-msgstr ""
+msgstr "Man beállítás"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:156
 msgid "_Input string requires the \"man \" prefix."
-msgstr ""
+msgstr "_A beviteli sztringnek szüksége van a \"man\" előtagra."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:199
 msgid "Man"
-msgstr ""
+msgstr "Man"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
-#, fuzzy
 msgid "Man virtual dictionary."
-msgstr "Szótárak kezelése"
+msgstr "Man virtuális szótár."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:185
-#, fuzzy
 msgid "Show the man pages."
-msgstr "Főmenü megjelenítése (Alt+M)"
+msgstr "Man oldalak megjelenítése."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:213
 #, c-format
 msgid "Man plug-in loaded.\n"
-msgstr ""
+msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
 msgid "PowerWord data parsing"
-msgstr ""
+msgstr "PowerWord adatelemzés."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
 msgid "PowerWord data parsing engine."
-msgstr ""
+msgstr "PowerWord adatelemző motor."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:633
 msgid "Parse the PowerWord data."
-msgstr ""
+msgstr "PowerWord adat elemzése."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:645
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "PowerWord adatelemző bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:165
 #, c-format
 msgid "Error: Open file %s failed!"
-msgstr ""
+msgstr "Hiba: %s fájl megnyitása nem sikerült!"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:209
 msgid "QQWry configuration"
-msgstr ""
+msgstr "QQWry beállítás"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:215
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
+"Könnyedén frissítheted a QQWry.Dat fájlt erről az oldalról:\n"
+"http://www.cz88.net"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
 #, c-format
@@ -2029,72 +1956,73 @@ msgid ""
 "You can download it from this website:\n"
 "http://www.cz88.net"
 msgstr ""
+"Hiba: %s fájl nem található!\n"
+"Erről az oldalról letöltheted:\n"
+"http://www.cz88.net"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:252
 msgid "QQWry"
-msgstr ""
+msgstr "QQWry"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
-#, fuzzy
 msgid "Show QQWry IP information."
-msgstr "Információ megjelenítése"
+msgstr "QQWry IP információ megjelenítése."
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
 msgid "Show the address information by the IP."
-msgstr ""
+msgstr "Az cím információinak megjelenítése az IP által."
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:253
 #, c-format
 msgid "QQWry plug-in loaded.\n"
-msgstr ""
+msgstr "QQWry bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:74
 msgid "SAPI TTS configuration"
-msgstr ""
+msgstr "SAPI TTS beállítás"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:78
 msgid "TTS voice engine"
-msgstr ""
+msgstr "TTS hang motor"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:83
 msgid "Voice :"
-msgstr ""
+msgstr "Hang:"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:132
 msgid "Volume :"
-msgstr ""
+msgstr "Hangerő:"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:141
-#, fuzzy
 msgid "Rate :"
-msgstr "Dátum"
+msgstr "Rate:"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:153
 msgid "Input the test text:"
-msgstr ""
+msgstr "Írd be a teszt szöveget:"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:161
 msgid "Test"
-msgstr ""
+msgstr "Teszt"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:269
 msgid "SAPI TTS"
-msgstr ""
+msgstr "SAPI TTS"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
 msgid "SAPI TTS."
-msgstr ""
+msgstr "SAPI TTS."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
 msgid "Pronounce words by SAPI TTS engine."
-msgstr ""
+msgstr "Szavak kiejtése a SAPI TTS motorral."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:270
 #, c-format
 msgid "SAPI tts plug-in loaded.\n"
-msgstr ""
+msgstr "SAPI tts bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:254
 #, c-format
@@ -2102,135 +2030,135 @@ msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
 msgstr ""
+"Figyelmeztetés: hiba történt egy írásellenőrző szótár lekérésekor ehhez "
+"a nyelvhez: %s.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:260
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:303
 #, c-format
 msgid "Error, no spellchecking dictionary available!\n"
-msgstr ""
+msgstr "Hiba, nincs elérhető helyesírás-ellenőrző szótár!\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
 msgid "Spell check configuration"
-msgstr ""
+msgstr "Helyesírás-ellenőrző beállítása"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
-#, fuzzy
 msgid "_Use custom languages."
-msgstr "_Egyéni betűtípus használata."
+msgstr "_Egyéni nyelvek használata."
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
 msgid "For example: \"en_US de\""
-msgstr ""
+msgstr "Például: \"en_US de\""
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:329
 msgid "Custom languages:"
-msgstr ""
+msgstr "Egyéni nyelvek:"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
 msgid "Spell Check"
-msgstr ""
+msgstr "Helyesírásellenőrzés"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
 msgid "Spell check virtual dictionary."
-msgstr ""
+msgstr "Virtuális szótár helyesírásellenőrzés."
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:379
 msgid "Spell check the input words and show the correct suggestion."
-msgstr ""
+msgstr "A beírt szavak helyesírásellenőrzése, majd a helyes szó megjelenítése."
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:402
 msgid "Spelling Suggestion"
-msgstr ""
+msgstr "Helyesírási javaslat"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
 #, c-format
 msgid "Spelling plugin loaded.\n"
-msgstr ""
+msgstr "Helyesírás bővítőmodul betöltve.\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:37
 msgid "You are using an old version of StarDict!"
-msgstr ""
+msgstr "A StarDict egy régebbi verzióját használod!"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
 msgid "You are using the newest version of StarDict!"
-msgstr ""
+msgstr "A StarDict legújabb verzióját használod!"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:42
 msgid "Latest version information:"
-msgstr ""
+msgstr "Legújabb verzió információ:"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
 msgid "Latest news:"
-msgstr ""
+msgstr "Legújabb hírek:"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:53
 msgid "Update information"
-msgstr ""
+msgstr "Frissítés információ"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
 msgid "Update Info"
-msgstr ""
+msgstr "Frissítés Információ"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
 msgid "Update information."
-msgstr ""
+msgstr "Frissítés információ."
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
 msgid "Get the update information from the Internet."
-msgstr ""
+msgstr "Frissítés információ az internetről."
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:175
-#, fuzzy
 msgid "Visit StarDict website now?"
-msgstr "A StarDict webhelyének meglátogatása"
+msgstr "StarDict weboldal meglátogatása?"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
 msgid "_Don't show this until the next update."
-msgstr ""
+msgstr "_Ne mutasd ezt a következő frissítésig."
 
 #. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
 #. g_idle_add(get_update_info, NULL);
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:257
 #, c-format
 msgid "Update info plug-in loaded.\n"
-msgstr ""
+msgstr "Frissítési információ bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
 msgid "Wiki data parsing"
-msgstr ""
+msgstr "Wiki adatelemzés"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
 msgid "Wiki data parsing engine."
-msgstr ""
+msgstr "Wiki adatelemző motor."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:39
 msgid "Parse the wiki data."
-msgstr ""
+msgstr "Wiki adatok elemzése."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:51
 #, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "Wiki adatelemző modul betöltve.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:57
 msgid "WordNet configuration"
-msgstr ""
+msgstr "WordNet beállítás"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:59
 msgid "Graphic mode."
-msgstr ""
+msgstr "Grafikus mód."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:61
 msgid "Text mode."
-msgstr ""
+msgstr "Szöveges mód."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
 msgid "WordNet dict rendering"
-msgstr ""
+msgstr "WordNet szótár megjelenítés"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
 msgid "WordNet dict rendering engine."
-msgstr ""
+msgstr "WordNet szótár megjelenítő motor."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:86
 msgid ""
@@ -2239,235 +2167,46 @@ msgid ""
 "which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, much thanks for "
 "his open source sharing!"
 msgstr ""
+"WordNet szótár megjelenítése.\n"
+"Nyilatkozat: A bővítmény motorja a dedict oldaláról érkezett (http://sevenpie.net), melynek fejlesztője "
+"Bian Peng &lt;tianpmoon@gmail.com&gt;, rengeteg köszönet a nyílt forráskódú megosztásért!"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:128
 #, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
-msgstr ""
+msgstr "WordNet megjelenítő motor betöltve.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
 msgid "WordNet data parsing"
-msgstr ""
+msgstr "WordNet adatelemzés"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
 msgid "WordNet data parsing engine."
-msgstr ""
+msgstr "WordNet adatelemző motor."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:132
 msgid "Parse the WordNet data."
-msgstr ""
+msgstr "WordNet adatok elemzése."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
 #, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "WordNet adatelemző modul betöltve.\n"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
 msgid "XDXF data parsing"
-msgstr ""
+msgstr "XDFX adatelemzés"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
 msgid "XDXF data parsing engine."
-msgstr ""
+msgstr "XDFX adatelemző motor."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:321
 msgid "Parse the XDXF data."
-msgstr ""
+msgstr "XDFX adatok elemzése."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:333
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "XDFX adatelemző modul betöltve.\n"
 
-#, fuzzy
-#~ msgid "Found no words matching this regular expressions!"
-#~ msgstr "Nem található egyező szó!"
-
-#, fuzzy
-#~ msgid "Scan the Selection"
-#~ msgstr "Kijelölés beolvasása"
-
-#, fuzzy
-#~ msgid "Translate"
-#~ msgstr "Fordította"
-
-#~ msgid ""
-#~ "The website search link should contains a \"%%s\" string for quering word."
-#~ msgstr ""
-#~ "A webhely lekérdezési hivatkozásának a szókereséshez tartalmaznia kellene "
-#~ "a(z) \"%%s\" fűzért."
-
-#~ msgid "D_ictionaries"
-#~ msgstr "_Szótárak"
-
-#~ msgid "Found "
-#~ msgstr "Találat"
-
-#~ msgid "Size"
-#~ msgstr "Méret"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Betűtípus</span>"
-
-#, fuzzy
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Cache</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Betűtípus</span>"
-
-#, fuzzy
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Export</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Betűtípus</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Hang</span>"
-
-#, fuzzy
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Input</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Betűtípus</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Beállítások</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Webhely keresése</span>"
-
-#, fuzzy
-#~ msgid "_Pronouce the word when it pops up."
-#~ msgstr "_Szó kiejtése felbukkanáskor."
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Maximális ablakméret</span>"
-
-#~ msgid "Hide the main window"
-#~ msgstr "Főablak elrejtése"
-
-#, fuzzy
-#~ msgid "The stardict 's float window 's max height."
-#~ msgstr "Maximális ablak_magasság:"
-
-#, fuzzy
-#~ msgid "The stardict 's float window 's max width."
-#~ msgstr "Maximális ablak_magasság:"
-
-#, fuzzy
-#~ msgid "The stardict 's main window 's height."
-#~ msgstr "Maximális ablak_magasság:"
-
-#, fuzzy
-#~ msgid "The stardict 's main window 's width."
-#~ msgstr "Maximális ablak_magasság:"
-
-#, fuzzy
-#~ msgid "Window 's max height"
-#~ msgstr "Maximális ablak_magasság:"
-
-#, fuzzy
-#~ msgid "Window 's max width"
-#~ msgstr "Maximális ablak_szélesség:"
-
-#~ msgid "_Dict Manage"
-#~ msgstr "S_zótárak kezelése"
-
-#~ msgid "Credits"
-#~ msgstr "Köszönet"
-
-#~ msgid "Written by"
-#~ msgstr "Írta"
-
-#~ msgid "Documented by"
-#~ msgstr "Dokumentáció"
-
-#~ msgid "C_redits"
-#~ msgstr "_Köszönet"
-
-#~ msgid "Program version"
-#~ msgstr "Programverzió"
-
-#~ msgid "The version of the program"
-#~ msgstr "A program verziója"
-
-#~ msgid "Copyright string"
-#~ msgstr "Copyright szöveg"
-
-#~ msgid "Copyright information for the program"
-#~ msgstr "A program copyright információi"
-
-#~ msgid "Comments string"
-#~ msgstr "Megjegyzés szöveg"
-
-#~ msgid "Comments about the program"
-#~ msgstr "Megjegyzések a programról"
-
-#~ msgid "Authors"
-#~ msgstr "Szerzők"
-
-#~ msgid "List of authors of the programs"
-#~ msgstr "A program szerzői"
-
-#~ msgid "Author entry"
-#~ msgstr "Szerzőbejegyzés"
-
-#~ msgid "A single author entry"
-#~ msgstr "Egy egyszerű szerzőbejegyzés"
-
-#~ msgid "Documenters"
-#~ msgstr "Dokumentáció"
-
-#~ msgid "List of people documenting the program"
-#~ msgstr "A program dokumentációjának szerzői"
-
-#~ msgid "Documenter entry"
-#~ msgstr "Dokumentáció bejegyzés"
-
-#~ msgid "A single documenter entry"
-#~ msgstr "Egy egyszerű dokumentáció bejegyzés"
-
-#~ msgid "Translator credits"
-#~ msgstr "Fordította"
-
-#~ msgid ""
-#~ "Credits to the translators. This string should be marked as translatable"
-#~ msgstr "Dvornik László <dvornikl@mailbox.hu>"
-
-#~ msgid "Logo"
-#~ msgstr "Logó"
-
-#~ msgid "A logo for the about box"
-#~ msgstr "A névjegy doboz logója"
-
-#~ msgid "About %s"
-#~ msgstr "%s névjegye"
-
-#, fuzzy
-#~ msgid "Cannot connect to gconf.\n"
-#~ msgstr "Nem sikerült kapcsolódni a gconf-hoz."
-
-#~ msgid "Find"
-#~ msgstr "Keresés"
-
-#~ msgid "_Win"
-#~ msgstr "_Win"
-
-#~ msgid "_Shift"
-#~ msgstr "_Shift"
-
-#~ msgid "_Alt"
-#~ msgstr "_Alt"
-
-#~ msgid "_Ctrl"
-#~ msgstr "_Ctrl"
-
-#~ msgid ""
-#~ "use_custom_font=1\n"
-#~ "custom_font=sans 8\n"
-#~ msgstr ""
-#~ "use_custom_font=1\n"
-#~ "custom_font=sans 8\n"
-
-#~ msgid ""
-#~ "window_width=551\n"
-#~ "window_height=357\n"
-#~ "hpaned_pos=165\n"
-#~ msgstr ""
-#~ "window_width=551\n"
-#~ "window_height=357\n"
-#~ "hpaned_pos=165\n"

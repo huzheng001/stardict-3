@@ -238,7 +238,7 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	/* canonical decomposition */
 	gunichar *decomposition;
 	gsize result_len;
-	decomposition = gucharmap_unicode_canonical_decomposition (uc, &result_len);
+	decomposition = g_unicode_canonical_decomposition (uc, &result_len);
 	if (result_len != 1) {
 		definition += _("Canonical decomposition:");
 		definition += " ";

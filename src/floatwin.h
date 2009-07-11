@@ -10,7 +10,7 @@ const int FLOAT_TIMEOUT=300;		        // interval used by floating window.
 const int DISAPPEAR_DISTANCE=400; // it is the square of the distance.
 const int FLOATWIN_BORDER_WIDTH=4;
 const int FLOATWIN_OFFSET_X=8;
-const int FLOATWIN_OFFSET_Y=2; //when the window is too right,the x will change,so make offset_y not equal to 0 will make button box not show all the same.
+const int FLOATWIN_OFFSET_Y=8; //when the window is too right,the x will change,so make offset_y not equal to 0 will make button box not show all the same.
 
 enum FloatWinQueryResult
 {

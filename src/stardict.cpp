@@ -1,6 +1,6 @@
 /* StarDict - A international dictionary for GNOME.
  * http://stardict.sourceforge.net
- * Copyright (C) 2003-2007 Hu Zheng <huzheng_001@163.com>
+ * Copyright (C) 2003-2007 Hu Zheng <huzheng001@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
