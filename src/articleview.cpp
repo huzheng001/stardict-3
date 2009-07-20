@@ -23,6 +23,7 @@
 #endif
 
 #include <cstring>
+#include <iostream>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
@@ -30,9 +31,150 @@
 #include "utils.h"
 #include "stardict.h"
 #include "lib/getuint32.h"
+#include "lib/xml_str.h"
 
 #include "articleview.h"
 
+//#define DEBUG
+//#define DDEBUG
+
+/* Helper class.
+ * Provides a means to generate a unique mark name and insert it at the 
+ * specified point. All marks inserted by this class are deleted when this 
+ * object is destroyed. */
+class Marks {
+public:
+	Marks(PangoWidgetBase* pango_view)
+	: 
+		mark_num_(-1), 
+		pango_view_(pango_view),
+		insert_last_where_mark_(),
+		insert_last_offset_(-1),
+		insert_last_gravity_(false),
+		insert_last_mark_num_(-1),
+		clone_last_where_mark_(),
+		clone_last_gravity_(false),
+		clone_last_mark_num_(-1)
+	{
+	}
+	~Marks(void)
+	{
+		int size = static_cast<int>(marks_list_.size());
+		for(int i=0; i<size; ++i) {
+			if(marks_list_[i] > 0)
+				pango_view_->delete_mark(gen_mark_name(i).c_str());
+		}
+	}
+	// return value: name of the mark inserted
+	std::string append_mark(bool left_gravity = true)
+	{
+		std::string mark(gen_mark_name(++mark_num_));
+#ifdef DDEBUG
+		std::cout << "article::append_mark " << mark << std::endl;
+#endif
+		pango_view_->append_mark(mark.c_str(), left_gravity);
+		marks_list_.push_back(1);
+#ifdef DEBUG
+		if(mark_num_ + 1 != static_cast<int>(marks_list_.size()))
+			g_warning("article::Marks. incorrect list size.");
+#endif
+		return mark;
+	}
+	// return value: name of the mark inserted
+	std::string insert_mark(const std::string& where_mark_name, 
+		int char_offset = 0, bool left_gravity = true)
+	{
+		if(where_mark_name == insert_last_where_mark_ 
+			&& char_offset == insert_last_offset_ 
+			&& left_gravity == insert_last_gravity_ 
+			&& marks_list_[insert_last_mark_num_] > 0) {
+			++marks_list_[insert_last_mark_num_];
+#ifdef DDEBUG
+		std::cout << "article::insert_mark hit" << std::endl;
+#endif
+			return gen_mark_name(insert_last_mark_num_);
+		}
+		std::string mark(gen_mark_name(++mark_num_));
+		insert_last_where_mark_ = where_mark_name;
+		insert_last_offset_ = char_offset;
+		insert_last_gravity_ = left_gravity;
+		insert_last_mark_num_ = mark_num_;
+#ifdef DDEBUG
+		std::cout << "article::insert_mark " << mark << std::endl;
+#endif
+		pango_view_->insert_mark(mark.c_str(), where_mark_name.c_str(), char_offset, 
+			left_gravity);
+		marks_list_.push_back(1);
+#ifdef DEBUG
+		if(mark_num_ + 1 != static_cast<int>(marks_list_.size()))
+			g_warning("article::Marks. incorrect list size.");
+#endif
+		return mark;
+	}
+	/* In is not the same as insert_mark(where_mark_name, 0, left_gravity)! */
+	std::string clone_mark(const std::string& where_mark_name, 
+		bool left_gravity = true)
+	{
+		if(where_mark_name == clone_last_where_mark_
+			&& left_gravity == clone_last_gravity_
+			&& marks_list_[clone_last_mark_num_] > 0) {
+			++marks_list_[clone_last_mark_num_];
+#ifdef DDEBUG
+		std::cout << "article::clone_mark hit" << std::endl;
+#endif
+			return gen_mark_name(clone_last_mark_num_);
+		}
+		std::string mark(gen_mark_name(++mark_num_));
+		clone_last_where_mark_ = where_mark_name;
+		clone_last_gravity_ = left_gravity;
+		clone_last_mark_num_ = mark_num_;
+#ifdef DDEBUG
+		std::cout << "article::clone_mark " << mark << std::endl;
+#endif
+		pango_view_->clone_mark(mark.c_str(), where_mark_name.c_str(), left_gravity);
+		marks_list_.push_back(1);
+#ifdef DEBUG
+		if(mark_num_ + 1 != static_cast<int>(marks_list_.size()))
+			g_warning("article::Marks. incorrect list size.");
+#endif
+		return mark;
+	}
+private:
+	std::string gen_mark_name(int num) const
+	{
+		glib::CharStr gmark(g_strdup_printf("_ArticleView_mark_%d", num));
+		return get_impl(gmark);
+	}
+private:
+	typedef std::vector<int> MarksList;
+	/* marks_list_[i] - number of references to mark i, use gen_mark_name 
+	 * function to get mark name: gen_mark_name(i) */
+	MarksList marks_list_;
+	int mark_num_; // last mark number used
+	PangoWidgetBase* pango_view_;
+	
+	std::string insert_last_where_mark_;
+	int insert_last_offset_;
+	bool insert_last_gravity_;
+	int insert_last_mark_num_;
+
+	std::string clone_last_where_mark_;
+	bool clone_last_gravity_;
+	int clone_last_mark_num_;
+};
+
+struct ParseResultItemWithMark {
+	ParseResultItem* item;
+	std::string mark;
+	int char_offset;
+	// true if a tmp char is added after the mark
+	bool tmp_char;
+	ParseResultItemWithMark(ParseResultItem* item, int char_offset, 
+		bool tmp_char=false)
+	: item(item), char_offset(char_offset), tmp_char(tmp_char)
+	{
+	}
+};
 
 void ArticleView::append_and_mark_orig_word(const std::string& mark,
 					    const gchar *origword,
@@ -93,67 +235,9 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 			}
 		}
 		if (iPlugin != nPlugins) {
-			for (std::list<ParseResultItem>::iterator it = parse_result.item_list.begin(); it != parse_result.item_list.end(); ++it) {
-				switch (it->type) {
-					case ParseResultItemType_mark:
-						mark += it->mark->pango;
-						break;
-					case ParseResultItemType_link:
-					{
-						append_and_mark_orig_word(mark, real_oword, LinksPosList());
-						mark.clear();
-						append_and_mark_orig_word(it->link->pango, real_oword, it->link->links_list);
-						break;
-					}
-					case ParseResultItemType_res:
-					{
-						bool loaded = false;
-						if (it->res->type == "image") {
-							if (for_float_win) {
-								loaded = true;
-								append_and_mark_orig_word(mark, real_oword, LinksPosList());
-								mark.clear();
-								append_pixbuf(NULL, it->res->key.c_str());
-							} else {
-								GdkPixbuf* pixbuf = NULL;
-								if (dict_index.type == InstantDictType_LOCAL) {
-									int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-									if (type == 0) {
-									} else if (type == 1) {
-										const char *filename = gpAppFrame->oLibs.GetStorageFilePath(dict_index.index, it->res->key.c_str());
-										if (filename) {
-											pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-										}
-									}
-								}
-								if (pixbuf) {
-									loaded = true;
-									append_and_mark_orig_word(mark, real_oword, LinksPosList());
-									mark.clear();
-									append_pixbuf(pixbuf, it->res->key.c_str());
-									g_object_unref(pixbuf);
-								}
-							}
-						} else if (it->res->type == "sound") {
-						} else if (it->res->type == "video") {
-						} else {
-						}
-						if (!loaded) {
-							mark += "<span foreground=\"red\">";
-							gchar *m_str = g_markup_escape_text(it->res->key.c_str(), -1);
-							mark += m_str;
-							g_free(m_str);
-							mark += "</span>";
-						}
-						break;
-					}
-					case ParseResultItemType_widget:
-						append_widget(it->widget->widget);
-						break;
-					default:
-						break;
-				}
-			}
+			append_and_mark_orig_word(mark, real_oword, LinksPosList());
+			mark.clear();
+			append_data_parse_result(real_oword, parse_result);
 			parse_result.clear();
 			continue;
 		}
@@ -350,4 +434,230 @@ void ArticleView::AppendWord(const gchar *word)
 void ArticleView::connect_on_link(const sigc::slot<void, const std::string &>& s)
 {
 	pango_view_->on_link_click_.connect(s);
+}
+
+void ArticleView::append_data_parse_result(const gchar *real_oword, 
+	ParseResult& parse_result)
+{
+	/* Why ParseResultItem's cannot be inserted into the pango_view_ in the 
+	 * order they appear in the parse_result list? 
+	 * 
+	 * They can, but that limits use of the pango markup language when markup 
+	 * intermixed with objects that are not expressed in pango markup. 
+	 * For instance we cannot handle the following piece of data:
+	 * markup: "<span foreground=\"purple\">some text"
+	 * res: some image
+	 * markup: "text continues</span>" 
+	 * The first markup string cannot be committed because it is not a valid 
+	 * markup - span tag is not closed. But if we piece two markup strings 
+	 * together, commit markup and then insert the resource, everything will be
+	 * fine.
+	 * 
+	 * Here is an outline of the rules parse_result list must adhere to.
+	 * 
+	 * - each list item with pango markup must contain only complete tags. Tag 
+	 * may not be opened in one list item and closed in another. For example
+	 * this list is not allowed:
+	 * markup: "<span foreground=\"purple\" "
+	 * markup: "size=\"x-large\">"
+	 * 
+	 * - after combining all list items with pango markup the resultant string
+	 * must constitute a valid markup (correct order of tags, each tag must have
+	 * a corresponding closing tag and so on). For example, the following text 
+	 * is not allowed: "<b> bla bla </b><i>text end".
+	 * Note: list item may contain incomplete markup like "<b>text begins".
+	 * 
+	 * - Delayed insert items must generate only valid markup. Items 
+	 * representing images, widgets generate a pango-formated error message
+	 * if the primary object cannot be inserted.
+	 * 
+	 * 
+	 * Position in the pango markup string cannot be exactly specified by 
+	 * character offset only. That is especially important for LabelPangoWidget
+	 * where markup is stored in a string. In order to insert delayed insert 
+	 * items in the correct place it was decided to add a temporary character
+	 * in the string in the place where the delayed item must be inserted.
+	 * Temporary characters are deleted at the end.
+	 * 
+	 * In addition to character offsets marks are used to specify position in 
+	 * the text. Marks must be used instead of char offsets when possible.
+	 * Marks are preferred over offsets because they preserve position across
+	 * text modifications, they have a notion of right and left gravity.
+	 * In general we do not know how many character would be inserted in the 
+	 * text after the call the method insert_pixbuf. Normally it is only one,
+	 * but it may be any number in case of error.
+	 * 
+	 * */
+	Marks marks(pango_view_.get());
+	std::string start_mark = marks.append_mark(true);
+	std::list<ParseResultItemWithMark> delayed_insert_list;
+	// compose markup
+	{
+		std::string markup_str;
+		int char_offset = 0;
+		const char tmp_char = 'x'; // may be any unicode char excluding '<', '&', '>'
+
+		for (std::list<ParseResultItem>::iterator it = parse_result.item_list.begin(); 
+			it != parse_result.item_list.end(); ++it) {
+			switch (it->type) {
+				case ParseResultItemType_mark:
+					char_offset += xml_utf8_strlen(it->mark->pango.c_str());
+					markup_str += it->mark->pango;
+					break;
+				case ParseResultItemType_link:
+				{
+					/* links do not insert any text, so exact mark position is
+					 * not important. */
+					ParseResultItemWithMark item(&*it, char_offset);
+					delayed_insert_list.push_back(item);
+					char_offset += xml_utf8_strlen(it->link->pango.c_str());
+					markup_str += it->link->pango;
+					break;
+				}
+				case ParseResultItemType_res:
+				case ParseResultItemType_widget:
+				{
+					ParseResultItemWithMark item1(NULL, char_offset, true);
+					delayed_insert_list.push_back(item1);
+					char_offset += 1;
+					markup_str += tmp_char;
+					ParseResultItemWithMark item2(&*it, char_offset, true);
+					delayed_insert_list.push_back(item2);
+					char_offset += 1;
+					markup_str += tmp_char;
+					break;
+				}
+				case ParseResultItemType_FormatBeg:
+				case ParseResultItemType_FormatEnd:
+				{
+					/* formats do not insert any text, so exact mark position is
+					 * not important. */
+					ParseResultItemWithMark item2(&*it, char_offset);
+					delayed_insert_list.push_back(item2);
+					break;
+				}
+				default:
+					g_warning("Unsupported item type.");
+					break;
+			}
+		}
+		append_and_mark_orig_word(markup_str, real_oword, LinksPosList());
+		markup_str.clear();
+		pango_view_->flush();
+	}
+	// Marks that precede tmp chars. One mark - one char next to it that must be 
+	// deleted. Different marks do not refer to the same char.
+	std::list<std::string> tmp_char_mark_list;
+	// insert marks
+	for(std::list<ParseResultItemWithMark>::iterator it = delayed_insert_list.begin(); 
+		it != delayed_insert_list.end(); ) {
+		it->mark = marks.insert_mark(start_mark, it->char_offset, false);
+		if(it->tmp_char)
+			tmp_char_mark_list.push_back(it->mark);
+		if(it->item)
+			++it;
+		else
+			it = delayed_insert_list.erase(it);
+	}
+#ifdef DDEBUG
+	std::cout << "ArticleView::append_data_parse_result. marks inserted." 
+		<< std::endl; 
+#endif
+	// insert delayed items
+	for(std::list<ParseResultItemWithMark>::iterator it = delayed_insert_list.begin(); 
+		it != delayed_insert_list.end(); ) {
+		bool EraseCurrent = true;
+		switch(it->item->type) {
+		case ParseResultItemType_link:
+			pango_view_->insert_pango_text_with_links("", it->item->link->links_list, 
+				it->mark.c_str());
+			break;
+		case ParseResultItemType_res:
+		{
+			bool loaded = false;
+			if (it->item->res->type == "image") {
+				if (for_float_win) {
+					loaded = true;
+					pango_view_->insert_pixbuf(NULL, it->item->res->key.c_str(), 
+						it->mark.c_str());
+				} else {
+					GdkPixbuf* pixbuf = NULL;
+					if (dict_index.type == InstantDictType_LOCAL) {
+						int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+						if (type == 0) {
+						} else if (type == 1) {
+							const char *filename = gpAppFrame->oLibs.GetStorageFilePath
+								(dict_index.index, it->item->res->key.c_str());
+							if (filename) {
+								pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+							}
+						}
+					}
+					if (pixbuf) {
+						loaded = true;
+						pango_view_->insert_pixbuf(pixbuf, it->item->res->key.c_str(), 
+							it->mark.c_str());
+						g_object_unref(pixbuf);
+					}
+				}
+			} else if (it->item->res->type == "sound") {
+			} else if (it->item->res->type == "video") {
+			} else {
+			}
+			if (!loaded) {
+				std::string tmark;
+				tmark += "<span foreground=\"red\">";
+				glib::CharStr m_str(g_markup_escape_text(it->item->res->key.c_str(), -1));
+				tmark += get_impl(m_str);
+				tmark += "</span>";
+				pango_view_->insert_pango_text(tmark.c_str(), it->mark.c_str());
+			}
+			break;
+		}
+		case ParseResultItemType_widget:
+			pango_view_->insert_widget(it->item->widget->widget, it->mark.c_str());
+			break;
+		case ParseResultItemType_FormatBeg:
+			// change gravity of the mark
+			it->mark = marks.clone_mark(it->mark, true);
+			EraseCurrent = false;
+			break;
+		case ParseResultItemType_FormatEnd:
+		{
+			// find paired ParseResultItemType_FormatBeg item
+			std::list<ParseResultItemWithMark>::reverse_iterator it2(it);
+			for(; it2 != delayed_insert_list.rend(); ++it2)
+				if(it2->item->type == ParseResultItemType_FormatBeg)
+					break;
+			if(it2 != delayed_insert_list.rend() && it2->item->format_beg->type 
+				== it->item->format_end->type) {
+				if(it->item->format_end->type == ParseResultItemFormatType_Indent)
+					pango_view_->indent_region(it2->mark.c_str(), 0, it->mark.c_str());
+				std::list<ParseResultItemWithMark>::iterator it3(it2.base());
+				delayed_insert_list.erase(--it3);
+			} else
+				g_warning("Not paired ParseResultItemType_FormatEnd item");
+			break;
+		}
+		default:
+			g_assert_not_reached();
+			break;
+		}
+		if(EraseCurrent)
+			it = delayed_insert_list.erase(it);
+		else
+			++it;
+	}
+	// remove tmp chars
+	for(std::list<std::string>::iterator it = tmp_char_mark_list.begin(); 
+		it != tmp_char_mark_list.end(); ++it) {
+#ifdef DDEBUG
+		std::cout << "tmp char mark " << *it << std::endl;
+#endif
+		pango_view_->delete_text(it->c_str(), 1, 0);
+	}
+	pango_view_->reindent();
+	if(!delayed_insert_list.empty())
+		g_warning("delayed_insert_list is not empty. "
+			"parse_result contains not paired items.");
 }

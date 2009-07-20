@@ -7,7 +7,7 @@
 #include "pangoview.h" 
 #include "lib/dictmask.h"
 
-//class which show dictionary's aritcles
+//class which show dictionary's articles
 class ArticleView {
 public:
     unsigned int bookindex;
@@ -59,6 +59,7 @@ private:
 	void append_and_mark_orig_word(const std::string& mark,
 				       const gchar *origword,
 				       const LinksPosList& links);
+	void append_data_parse_result(const gchar *real_oword, ParseResult& parse_result);
 };
 
 

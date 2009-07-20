@@ -200,7 +200,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	obj->dict_name = _("Man");
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
-		g_file_set_contents(res.c_str(), "[man]\nneed_prefix=false\n", -1, NULL);
+		g_file_set_contents(res.c_str(), "[man]\nneed_prefix=true\n", -1, NULL);
 	}
 	GKeyFile *keyfile = g_key_file_new();
 	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
@@ -208,7 +208,7 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	need_prefix = g_key_file_get_boolean(keyfile, "man", "need_prefix", &err);
 	if (err) {
 		g_error_free (err);
-		need_prefix = false;
+		need_prefix = true;
 	}
 	g_key_file_free(keyfile);
 	g_unsetenv("MANPAGER");

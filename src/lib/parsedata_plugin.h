@@ -10,6 +10,19 @@ enum ParseResultItemType {
 	ParseResultItemType_link,
 	ParseResultItemType_res,
 	ParseResultItemType_widget,
+	/* The _FormatBeg and _FormatEnd types should be used for formats that
+	 * cannot be expressed in pango markup, for example, indentation. The part
+	 * of the text undergoing formating may contain other formating
+	 * specifications inside. */
+	ParseResultItemType_FormatBeg,
+	ParseResultItemType_FormatEnd,
+};
+
+enum ParseResultItemFormatType {
+	 ParseResultItemFormatType_Indent,
+/* May be extended with LeftMarginIndent, RightMarginIndent types with
+ * explicitly specified indentation size.
+ * */
 };
 
 struct ParseResultMarkItem {
@@ -40,6 +53,14 @@ struct ParseResultWidgetItem {
 	GtkWidget *widget;
 };
 
+struct ParseResultFormatBegItem {
+	ParseResultItemFormatType type;
+};
+
+struct ParseResultFormatEndItem {
+	ParseResultItemFormatType type;
+};
+
 struct ParseResultItem {
 	ParseResultItemType type;
 	union {
@@ -47,6 +68,8 @@ struct ParseResultItem {
 		ParseResultLinkItem *link;
 		ParseResultResItem *res;
 		ParseResultWidgetItem *widget;
+		ParseResultFormatBegItem* format_beg;
+		ParseResultFormatEndItem* format_end;
 	};
 };
 
