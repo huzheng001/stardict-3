@@ -1,1 +1,1 @@
-EXTRA_DIST = StarDictFileFormat README.win32 HowToCreateDictionary FAQ HACKING Translation Readme.mac
+EXTRA_DIST = StarDictFileFormat README_windows.txt HowToCreateDictionary FAQ HACKING Translation Readme.mac

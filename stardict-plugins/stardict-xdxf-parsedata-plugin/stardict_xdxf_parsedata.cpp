@@ -78,22 +78,29 @@ static void xml_decode(const char *str, std::string& decoded)
                 }        
 }
 
-static void xdxf2result(const char *p, ParseResult &result)
-{
-	LinksPosList links_list;
-	std::string res;
-	const char *tag, *next;
-	std::string name;
-	std::string::size_type cur_pos;
-	int i;
 
+class XDXFParser {
+public:
+	XDXFParser(const char *p, ParseResult &result);
+private:
+	void flush(void);
+private:
 	struct ReplaceTag {
 		const char *match_;
 		int match_len_;
 		const char *replace_;
 		int char_len_;
 	};
-	static const ReplaceTag replace_arr[] = {
+private:
+	ParseResult& result_;
+	LinksPosList links_list_;
+	std::string res_;
+	std::string::size_type cur_pos_;
+
+	static const ReplaceTag replace_arr_[];
+};
+
+const XDXFParser::ReplaceTag XDXFParser::replace_arr_[] = {
 		{ "abr>", 4, "<span foreground=\"green\" style=\"italic\">", 0 },
 		{ "/abr>", 5, "</span>", 0 },
 		{ "b>", 2, "<b>", 0 },
@@ -115,23 +122,30 @@ static void xdxf2result(const char *p, ParseResult &result)
 		{ "ex>", 3, "<span foreground=\"violet\">", 0 },
 		{ "/ex>", 4, "</span>", 0 },
 		{ "/c>", 3, "</span>", 0 },
-		{ NULL, 0, NULL },
+		{ NULL, 0, NULL, 0 },
 	};
 
+XDXFParser::XDXFParser(const char *p, ParseResult &result) :
+	result_(result)
+{
+	const char *tag, *next;
+	std::string name;
+	int i;
+
 	bool is_first_k = true;
-	for (cur_pos = 0; *p && (tag = strchr(p, '<')) != NULL;) {
+	for (cur_pos_ = 0; *p && (tag = strchr(p, '<')) != NULL;) {
 		//TODO: do not create chunk
 		std::string chunk(p, tag - p);
-		res += chunk;
-		cur_pos += xml_strlen(chunk);
+		res_ += chunk;
+		cur_pos_ += xml_strlen(chunk);
 
 		p = tag;
-		for (i = 0; replace_arr[i].match_; ++i)
-			if (strncmp(replace_arr[i].match_, p + 1,
-						replace_arr[i].match_len_) == 0) {
-				res += replace_arr[i].replace_;
-				p += 1 + replace_arr[i].match_len_;
-				cur_pos += replace_arr[i].char_len_;
+		for (i = 0; replace_arr_[i].match_; ++i)
+			if (strncmp(replace_arr_[i].match_, p + 1,
+						replace_arr_[i].match_len_) == 0) {
+				res_ += replace_arr_[i].replace_;
+				p += 1 + replace_arr_[i].match_len_;
+				cur_pos_ += replace_arr_[i].char_len_;
 				goto cycle_end;
 			}
 
@@ -143,12 +157,12 @@ static void xdxf2result(const char *p, ParseResult &result)
 					if (*(next + 4) == '\n')
 						next++;
 				} else {
-					res += "<span foreground=\"blue\">";
+					res_ += "<span foreground=\"blue\">";
 					std::string chunk(p+3, next-(p+3));
-					res += chunk;
+					res_ += chunk;
 					size_t xml_len = xml_strlen(chunk);
-					cur_pos += xml_len;
-					res += "</span>";
+					cur_pos_ += xml_len;
+					res_ += "</span>";
 				}
 				p = next + sizeof("</k>") - 1;
 			} else
@@ -169,13 +183,14 @@ static void xdxf2result(const char *p, ParseResult &result)
 
 				std::string color(name, pos, end_pos - pos);
 				if (pango_color_parse(NULL, color.c_str()))
-					res += "<span foreground=\"" + color + "\">";
+					res_ += "<span foreground=\"" + color + "\">";
 				else
-					res += "<span>";
+					res_ += "<span>";
 			} else
-				res += "<span foreground=\"blue\">";
+				res_ += "<span foreground=\"blue\">";
 			p = next + 1;
-		} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
+		} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' 
+			&& *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
 			next = strchr(p, '>');
 			if (!next) {
 				++p;
@@ -198,31 +213,31 @@ static void xdxf2result(const char *p, ParseResult &result)
 			std::string chunk(p, next - p);
 			p = next + sizeof("</rref>") - 1;
 			if (type.empty()) {
-				if (g_str_has_suffix(chunk.c_str(), ".jpg") || g_str_has_suffix(chunk.c_str(), ".png")) {
+				if (g_str_has_suffix(chunk.c_str(), ".jpg") 
+					|| g_str_has_suffix(chunk.c_str(), ".png")) {
 					type = "image";
-				} else if (g_str_has_suffix(chunk.c_str(), ".wav") || g_str_has_suffix(chunk.c_str(), ".mp3") || g_str_has_suffix(chunk.c_str(), ".ogg")) {
+				} else if (g_str_has_suffix(chunk.c_str(), ".wav") 
+					|| g_str_has_suffix(chunk.c_str(), ".mp3") 
+					|| g_str_has_suffix(chunk.c_str(), ".ogg")) {
 					type = "sound";
-				} else if (g_str_has_suffix(chunk.c_str(), ".avi") || g_str_has_suffix(chunk.c_str(), ".mpeg")) {
+				} else if (g_str_has_suffix(chunk.c_str(), ".avi") 
+					|| g_str_has_suffix(chunk.c_str(), ".mpeg")) {
 					type = "video";
 				} else {
 					type = "attach";
 				}
 			}
+			flush();
 			ParseResultItem item;
-			item.type = ParseResultItemType_link;
-			item.link = new ParseResultLinkItem;
-			item.link->pango = res;
-			item.link->links_list = links_list;
-			result.item_list.push_back(item);
-			res.clear();
-			cur_pos = 0;
-			links_list.clear();
 			item.type = ParseResultItemType_res;
 			item.res = new ParseResultResItem;
 			item.res->type = type;
 			item.res->key = chunk;
-			result.item_list.push_back(item);
-		} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' && *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
+			result_.item_list.push_back(item);
+		} else if ((*(p + 1) == 'k' || *(p + 1) == 'i') && *(p + 2) == 'r' 
+			&& *(p + 3) == 'e' && *(p + 4) == 'f' && (*(p + 5) == ' ' 
+			|| *(p + 5) == '>')) {
+			// kref and iref
 			bool is_k_or_i = (*(p + 1) == 'k');
 			next = strchr(p, '>');
 			if (!next) {
@@ -255,7 +270,7 @@ static void xdxf2result(const char *p, ParseResult &result)
 			if (!next)
 				continue;
 
-			res += "<span foreground=\"blue\" underline=\"single\">";
+			res_ += "<span foreground=\"blue\" underline=\"single\">";
 			std::string::size_type link_len = next - p;
 			std::string chunk(p, link_len);
 			size_t xml_len = xml_strlen(chunk);
@@ -268,20 +283,42 @@ static void xdxf2result(const char *p, ParseResult &result)
 			if (is_k_or_i)
 				link = "query://";
 			link += xml_enc;
-			links_list.push_back(LinkDesc(cur_pos, xml_len, link));
-			res += chunk;
-			cur_pos += xml_len;
-			res += "</span>";
+			links_list_.push_back(LinkDesc(cur_pos_, xml_len, link));
+			res_ += chunk;
+			cur_pos_ += xml_len;
+			res_ += "</span>";
 			if (is_k_or_i)
 				p = next + sizeof("</kref>") - 1;
 			else
 				p = next + sizeof("</iref>") - 1;
+		} else if (strncmp("blockquote", p + 1, 10) == 0 && (*(p + 11) == ' '
+				|| *(p + 11) == '>')) {
+			next = strchr(p, '>');
+			if (!next) {
+				++p;
+				continue;
+			}
+			p = next + 1;
+			flush();
+			ParseResultItem item;
+			item.type = ParseResultItemType_FormatBeg;
+			item.format_beg = new ParseResultFormatBegItem;
+			item.format_beg->type = ParseResultItemFormatType_Indent;
+			result_.item_list.push_back(item);
+		} else if (strncmp("/blockquote>", p + 1, 12) == 0) {
+			p += sizeof("/blockquote>");
+			flush();
+			ParseResultItem item;
+			item.type = ParseResultItemType_FormatEnd;
+			item.format_end = new ParseResultFormatEndItem;
+			item.format_end->type = ParseResultItemFormatType_Indent;
+			result_.item_list.push_back(item);
 		} else {
 			next = strchr(p+1, '>');
 			if (!next) {
 				p++;
-				res += "&lt;";
-				cur_pos++;
+				res_ += "&lt;";
+				cur_pos_++;
 				continue;
 			}
 			p = next + 1;
@@ -289,23 +326,43 @@ static void xdxf2result(const char *p, ParseResult &result)
 cycle_end:
 		;
 	}
-	res += p;
-	ParseResultItem item;
-	item.type = ParseResultItemType_link;
-	item.link = new ParseResultLinkItem;
-	item.link->pango = res;
-	item.link->links_list = links_list;
-	result.item_list.push_back(item);
+	res_ += p;
+	flush();
 }
 
-static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, const char *oword)
+void XDXFParser::flush(void) 
+{
+	if (res_.empty()) {
+		g_assert(cur_pos_ == 0);
+		g_assert(links_list_.empty());
+		return;
+	}
+	ParseResultItem item;
+	if(links_list_.empty()) {
+		item.type = ParseResultItemType_mark;
+		item.mark = new ParseResultMarkItem;
+		item.mark->pango = res_;
+	} else {
+		item.type = ParseResultItemType_link;
+		item.link = new ParseResultLinkItem;
+		item.link->pango = res_;
+		item.link->links_list = links_list_;
+	}
+	result_.item_list.push_back(item);
+	res_.clear();
+	cur_pos_ = 0;
+	links_list_.clear();
+}
+
+static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result, 
+	const char *oword)
 {
 	if (*p != 'x')
 		return false;
 	p++;
 	size_t len = strlen(p);
 	if (len) {
-		xdxf2result(p, result);
+		XDXFParser(p, result);
 	}
 	*parsed_size = 1 + len + 1;
 	return true;

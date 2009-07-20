@@ -31,6 +31,7 @@ libstardict_a_SOURCES = \
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h	\
 	getuint32.h	\
+	xml_str.cpp xml_str.h \
 	stardict_libconfig.h
 
 if USE_SYSTEM_SIGCPP
