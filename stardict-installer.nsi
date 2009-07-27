@@ -1,5 +1,5 @@
 ; Installer script for win32 StarDict
-; Hu Zheng <huzheng_001@163.com>
+; Hu Zheng <huzheng001@gmail.com>
 
 ;--------------------------------
 ;Global Variables
