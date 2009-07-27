@@ -1,12 +1,13 @@
 StarDict can be compiled and run in windows.
 
 Please install Dev-C++,they can be found in http://www.bloodshed.net/dev/
+devcpp-4.9.9.2_setup.exe
 
-Then install developer packages, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
+Then install developer packages, they can be found at http://www.gtk.org/download-windows.html
 These packages are needed:
-glib-dev-2.14.2.zip gtk+-dev-2.12.1.zip pango-dev-1.18.3.zip atk-dev-1.20.0.zip cairo-dev-1.4.10.zip gettext-dev-0.14.5.zip zlib123-dll.zip libiconv-1.9.1.bin.woe32.zip
+atk-dev_1.26.0-1_win32.zip cairo-dev_1.8.6-1_win32.zip gettext-runtime-dev-0.17-1.zip glib-dev_2.20.4-1_win32.zip gtk+-dev_2.16.4-1_win32.zip libiconv-1.9.1.bin.woe32.zip pango-dev_1.24.2-1_win32.zip zlib123-dll.zip
 Just extract them into X:\Dev-Cpp\ is OK.
-Notice, for Zlib, you should put the zlib1.dll in top\bin folder.
+Notice, for Zlib, you need to put the zlib1.dll in X:\Dev-Cpp\bin folder.
 
 Here is a stardict.dev
 use Dev-C++ to open it, then compile it. Becase the compile command is too long,it can't be compile in win98, please use win2000 or XP.
@@ -25,7 +26,7 @@ For the sapi-tts plugin, you need to compile it by vs2005, see mvsc/readme.txt.
 To build the installer.
 
 Grab and install NSIS: http://www.nullsoft.com/free/nsis
-I was using the 2.29 version.
+I was using the 2.44 version.
 
 I use linux commmand to illustrate the steps, but you cann't do it in this way :)
 
@@ -74,9 +75,9 @@ fprintf(file, "a\n");
 fclose(file);
 =====
 
-StarDict's win32 port got many experience from ReciteWord(my another project, http://reciteword.cosoft.org.cn) and Gaim: http://gaim.sourceforge.net/win32/index.php
+StarDict's win32 port got many experience from ReciteWord(my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
 
-Note: when use fopen(), use "rb", never "r".
+Note: when use fopen(), use "rb", never "r" (unless you know what you are doing).
 
 Hu Zheng <huzheng001@gmail.com> http://www.huzheng.org
-2007.7.26
+2009.7.20
