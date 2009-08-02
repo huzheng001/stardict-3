@@ -794,10 +794,18 @@ void DictManageDlg::show_dict_info()
 		gchar *dictname, *author, *email, *website, *description, *date, *filename;
 		glong wordcount;
 		gtk_tree_model_get (model, &iter, 1, &dictname, 2, &wordcount, 3, &author, 4, &email, 5, &website, 6, &description, 7, &date, 8, &filename, -1);
-		GtkWidget *dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW(window),
-			GTK_DIALOG_DESTROY_WITH_PARENT,
-			GTK_MESSAGE_INFO,
-			GTK_BUTTONS_OK,
+		GtkWidget *dialog = gtk_dialog_new_with_buttons (_("Dictionary Information"), 
+			GTK_WINDOW(window), GTK_DIALOG_DESTROY_WITH_PARENT, 
+			GTK_STOCK_CLOSE, GTK_RESPONSE_NONE, NULL);
+		gtk_window_set_default_size (GTK_WINDOW(dialog), 400, 400);
+		GtkWidget *scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+		gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 5);
+		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+			GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
+		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),scrolled_window,TRUE,TRUE,0);
+		GtkWidget *label = gtk_label_new(NULL);
+		gchar *markup;
+		markup = g_markup_printf_escaped (
 			"<b>%s:</b> %s\n<b>%s:</b> %ld\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s\n<b>%s:</b> %s",
 			_("Dictionary Name"), dictname,
 			_("Word count"), wordcount,
@@ -814,8 +822,17 @@ void DictManageDlg::show_dict_info()
 		g_free(description);
 		g_free(date);
 		g_free(filename);
-		if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_NONE)
-			gtk_widget_destroy (dialog);
+		gtk_label_set_markup(GTK_LABEL(label), markup);
+		g_free (markup);
+		gtk_label_set_selectable(GTK_LABEL(label), TRUE);
+		gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+		gtk_label_set_line_wrap_mode(GTK_LABEL(label), PANGO_WRAP_WORD_CHAR);
+		gtk_misc_set_alignment(GTK_MISC(label), 0., 0.);
+		gtk_misc_set_padding(GTK_MISC(label), 5, 5);
+		gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window), label);
+		g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
+		gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+		gtk_widget_show_all(dialog);
 	}
 }
 
@@ -1364,10 +1381,10 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 {
 	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("Add dictionary"), GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),vbox,false,false,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),vbox,TRUE,TRUE,0);
 	GtkWidget *sw;
 	sw = gtk_scrolled_window_new (NULL, NULL);
-	gtk_box_pack_start(GTK_BOX(vbox),sw,false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox),sw,TRUE,TRUE,0);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_size_request (sw, 350, 230);

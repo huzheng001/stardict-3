@@ -7,6 +7,8 @@ The <span foreground="red" weight="bold">best</span> dictionary software in the 
 huzheng	Hu Zheng	胡正	Hungzeng
 P
 huzheng.png
+P
+huzheng_redhat.png
 x
 The author of <iref href="http://stardict.sourceforge.net">StarDict</iref>.\nEmail: huzheng001@gmail.com\nHome website: <iref>http://www.huzheng.org</iref>
 
