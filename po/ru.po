@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-05 06:08+0800\n"
+"POT-Creation-Date: 2009-08-01 16:31+0400\n"
 "PO-Revision-Date: 2007-11-11 22:50+0300\n"
 "Last-Translator: Evgeniy Dushistov <dushistov@mail.ru>\n"
 "Language-Team: ru <ru@li.org>\n"
@@ -60,7 +60,6 @@ msgid "Disabled plugins list"
 msgstr "Список выключенных плагинов."
 
 #: ../data/stardict.schemas.in.h:6
-#, fuzzy
 msgid "Disabled tree dictionaries list"
 msgstr "Список выключенных древовидных словарей"
 
@@ -105,14 +104,12 @@ msgid "List the dictionaries in order."
 msgstr "Отобразить словари по порядку."
 
 #: ../data/stardict.schemas.in.h:16
-#, fuzzy
 msgid "List the plugins in order."
-msgstr "Отобразить словари по порядку."
+msgstr "Отобразить плагины по порядку."
 
 #: ../data/stardict.schemas.in.h:17
-#, fuzzy
 msgid "List the plugins which are disabled."
-msgstr "Отобразить отключенные словари."
+msgstr "Отобразить отключенные плагины."
 
 #: ../data/stardict.schemas.in.h:18
 msgid "List the search websites."
@@ -346,35 +343,35 @@ msgstr "Позиция окна по y когда закреплено."
 msgid "whether to lock the window or not"
 msgstr "Закреплять окно или нет"
 
-#: ../src/articleview.cpp:183
+#: ../src/articleview.cpp:267
 msgid "XDXF data parsing plug-in is not found!"
 msgstr "Плагин для разбора XDXF данных не найден!"
 
-#: ../src/articleview.cpp:188
+#: ../src/articleview.cpp:272
 msgid "PowerWord data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:193
+#: ../src/articleview.cpp:277
 msgid "Wiki data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:198
+#: ../src/articleview.cpp:282
 msgid "HTML data parsing plug-in is not found!"
 msgstr "Плагин для разбора HTML данный не найден!"
 
-#: ../src/articleview.cpp:203
+#: ../src/articleview.cpp:287
 msgid "WordNet data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:254
+#: ../src/articleview.cpp:338
 msgid "<span foreground=\"red\">[Load image error!]</span>"
 msgstr ""
 
-#: ../src/articleview.cpp:259
+#: ../src/articleview.cpp:343
 msgid "<span foreground=\"red\">[Missing Image]</span>"
 msgstr ""
 
-#: ../src/articleview.cpp:273
+#: ../src/articleview.cpp:357
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr ""
 
@@ -444,21 +441,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr ""
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
-#: ../src/dictmanagedlg.cpp:2283
+#: ../src/dictmanagedlg.cpp:2299
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Вы можете выбрать только %d словарей."
 
-#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
-#: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
-#: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
+#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:810
+#: ../src/dictmanagedlg.cpp:918 ../src/dictmanagedlg.cpp:989
+#: ../src/dictmanagedlg.cpp:1441 ../src/dictmanagedlg.cpp:2221
 #: ../src/stardict.cpp:1144
 msgid "Dictionary Name"
 msgstr "Название словаря"
 
-#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:803
-#: ../src/dictmanagedlg.cpp:908 ../src/dictmanagedlg.cpp:980
-#: ../src/dictmanagedlg.cpp:1430 ../src/dictmanagedlg.cpp:2206
+#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:811
+#: ../src/dictmanagedlg.cpp:924 ../src/dictmanagedlg.cpp:996
+#: ../src/dictmanagedlg.cpp:1446 ../src/dictmanagedlg.cpp:2222
 msgid "Word count"
 msgstr "Количество слов"
 
@@ -475,14 +472,14 @@ msgstr "Эти настройки войдут в силу только посл
 msgid "Loading..."
 msgstr "Загружаю..."
 
-#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
+#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1361
 msgid "<span foreground=\"red\">Query Dict</span>"
-msgstr "<span foreground=\"red\">Словари используемые в главном окне</span>"
+msgstr "<span foreground=\"red\">Словари, используемые в главном окне</span>"
 
-#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
+#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1363
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr ""
-"<span foreground=\"red\">Словари используемые в всплывающем окне</span>"
+"<span foreground=\"red\">Словари, используемые в всплывающем окне</span>"
 
 #: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
 msgid "Virtual Dictionary"
@@ -505,138 +502,140 @@ msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr ""
+"Вы можете отдельно выбрать словари, используемые в главном окне, и словари, "
+"используемые во всплывающем окне."
 
-#: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
+#: ../src/dictmanagedlg.cpp:797 ../src/dictmanagedlg.cpp:2216
+msgid "Dictionary Information"
+msgstr "Информация о словаре"
+
+#: ../src/dictmanagedlg.cpp:812 ../src/dictmanagedlg.cpp:2224
 msgid "Author"
 msgstr "Автор"
 
-#: ../src/dictmanagedlg.cpp:805 ../src/dictmanagedlg.cpp:2209
+#: ../src/dictmanagedlg.cpp:813 ../src/dictmanagedlg.cpp:2225
 msgid "Email"
 msgstr "Email"
 
-#: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
+#: ../src/dictmanagedlg.cpp:814 ../src/dictmanagedlg.cpp:2226
 msgid "Website"
 msgstr "Сайт"
 
-#: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
+#: ../src/dictmanagedlg.cpp:815 ../src/dictmanagedlg.cpp:2227
 msgid "Description"
 msgstr "Описание"
 
-#: ../src/dictmanagedlg.cpp:808 ../src/dictmanagedlg.cpp:2212
+#: ../src/dictmanagedlg.cpp:816 ../src/dictmanagedlg.cpp:2228
 msgid "Date"
 msgstr "Дата"
 
-#: ../src/dictmanagedlg.cpp:809
+#: ../src/dictmanagedlg.cpp:817
 msgid "File name"
 msgstr "Файл"
 
-#: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
+#: ../src/dictmanagedlg.cpp:911 ../src/dictmanagedlg.cpp:983
 #: ../src/pluginmanagedlg.cpp:373
 msgid "Enable"
 msgstr "Включить"
 
-#: ../src/dictmanagedlg.cpp:1295
+#: ../src/dictmanagedlg.cpp:1311
 msgid "Are you sure you want to delete this group of dictionaries?"
-msgstr "Вы уверены что хотите удалить эту группу словарей?"
+msgstr "Вы уверены, что хотите удалить эту группу словарей?"
 
-#: ../src/dictmanagedlg.cpp:1306
+#: ../src/dictmanagedlg.cpp:1322
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
-msgstr "Вы уверены что хотите удалить эту подгруппу словарей?"
+msgstr "Вы уверены, что хотите удалить эту подгруппу словарей?"
 
-#: ../src/dictmanagedlg.cpp:1325
+#: ../src/dictmanagedlg.cpp:1341
 msgid "New dict group"
 msgstr "Новая словарная группа"
 
-#: ../src/dictmanagedlg.cpp:1328
+#: ../src/dictmanagedlg.cpp:1344
 msgid "Group name:"
 msgstr "Имя группы:"
 
-#: ../src/dictmanagedlg.cpp:1365
+#: ../src/dictmanagedlg.cpp:1381
 msgid "Add dictionary"
 msgstr "Добавить словарь"
 
-#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
+#: ../src/dictmanagedlg.cpp:1807 ../src/prefsdlg.cpp:1343
 msgid "Add"
 msgstr "Добавить"
 
-#: ../src/dictmanagedlg.cpp:1798
+#: ../src/dictmanagedlg.cpp:1814
 msgid "Delete"
 msgstr "Убрать"
 
-#: ../src/dictmanagedlg.cpp:1805
+#: ../src/dictmanagedlg.cpp:1821
 msgid "Information"
 msgstr "Информация"
 
-#: ../src/dictmanagedlg.cpp:1814
+#: ../src/dictmanagedlg.cpp:1830
 msgid "Move to top"
 msgstr "Сдвинуть на самый вверх"
 
-#: ../src/dictmanagedlg.cpp:1821
+#: ../src/dictmanagedlg.cpp:1837
 msgid "Move up"
 msgstr "Сдвинуть вверх"
 
-#: ../src/dictmanagedlg.cpp:1828
+#: ../src/dictmanagedlg.cpp:1844
 msgid "Move down"
 msgstr "Сдвинуть вниз"
 
-#: ../src/dictmanagedlg.cpp:1835
+#: ../src/dictmanagedlg.cpp:1851
 msgid "Move to bottom"
 msgstr "Задвинуть в самый низ"
 
-#: ../src/dictmanagedlg.cpp:1917
+#: ../src/dictmanagedlg.cpp:1933
 msgid "D_ict List"
 msgstr "С_писок словарей"
 
-#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
+#: ../src/dictmanagedlg.cpp:1948 ../src/mainwin.cpp:540
 msgid "Manage _Dict"
 msgstr "Управление _словарями"
 
-#: ../src/dictmanagedlg.cpp:1946
+#: ../src/dictmanagedlg.cpp:1962
 msgid "T_ree dictionaries"
 msgstr "_Древовидные словари"
 
-#: ../src/dictmanagedlg.cpp:1960
+#: ../src/dictmanagedlg.cpp:1976
 msgid "_Network dictionaries"
 msgstr "_Сетевые словари"
 
-#: ../src/dictmanagedlg.cpp:1984
+#: ../src/dictmanagedlg.cpp:2000
 msgid "_Show information"
 msgstr "_Показать описание"
 
-#: ../src/dictmanagedlg.cpp:1991
+#: ../src/dictmanagedlg.cpp:2007
 msgid "Select _All"
 msgstr "Выбрать _Все"
 
-#: ../src/dictmanagedlg.cpp:1996
+#: ../src/dictmanagedlg.cpp:2012
 msgid "_Unselect all"
 msgstr "_Снять выделение со всех"
 
-#: ../src/dictmanagedlg.cpp:2015
+#: ../src/dictmanagedlg.cpp:2031
 msgid "Visit "
-msgstr "Посетите"
+msgstr "Посетите "
 
-#: ../src/dictmanagedlg.cpp:2023
+#: ../src/dictmanagedlg.cpp:2039
 msgid " to download dictionaries!"
-msgstr "если хотите скачать словари!"
+msgstr " если хотите скачать словари!"
 
-#: ../src/dictmanagedlg.cpp:2032
+#: ../src/dictmanagedlg.cpp:2048
 msgid "Upgrade Now!"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2053
+#: ../src/dictmanagedlg.cpp:2069
 msgid "Manage Dictionaries"
 msgstr "Управление словарями"
 
-#: ../src/dictmanagedlg.cpp:2200
-msgid "Dictionary Information"
-msgstr "Информация о словаре"
-
-#: ../src/dictmanagedlg.cpp:2207
+#: ../src/dictmanagedlg.cpp:2223
 #, fuzzy
 msgid "Synonym word count"
 msgstr "Количество слов"
 
-#: ../src/dictmanagedlg.cpp:2221
+#: ../src/dictmanagedlg.cpp:2237
 msgid "Download Now!"
 msgstr ""
 
@@ -2263,157 +2262,19 @@ msgstr ""
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:382
 msgid "XDXF data parsing"
 msgstr "Разбор данный в формате XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:382
 msgid "XDXF data parsing engine."
 msgstr "движок разбора данных в формате XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:382
 msgid "Parse the XDXF data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:394
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "Плагин для разбора XDXF данных был загружен.\n"
-
-#, fuzzy
-#~ msgid "Found no words matching this regular expressions!"
-#~ msgstr "Не найдено слов совпадающих с шаблоном!"
-
-#~ msgid "Scan the Selection"
-#~ msgstr "Сканировать Выделенное"
-
-#, fuzzy
-#~ msgid "Translate"
-#~ msgstr "Alex Murygin <murygin@aitoc.com>"
-
-#~ msgid ""
-#~ "The website search link should contains a \"%%s\" string for quering word."
-#~ msgstr ""
-#~ "\"Разумная\" ссылка должена содержать \"%%s\" строчку для поиска слов."
-
-#~ msgid "D_ictionaries"
-#~ msgstr "С_ловари"
-
-#~ msgid "Found "
-#~ msgstr "Найдено "
-
-#~ msgid "Can not open: %s - %s\n"
-#~ msgstr "Не могу открыть: %s - %s\n"
-
-#~ msgid "Size"
-#~ msgstr "Размер"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Font</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Шрифт</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Cache</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Кэш</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Export</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Export</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Sound</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Звук</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Input</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Ввод</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Options</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Настройки</span>"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Search Website</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Поиск в интернете</span>"
-
-#~ msgid "_Pronouce the word when it pops up."
-#~ msgstr "_Произнести слово при появлении."
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Max window size</span>"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"x-large\">Максимальный размер окна</span>"
-
-#~ msgid "Hide the main window"
-#~ msgstr "Спрятать главное окно"
-
-#~ msgid "The stardict 's float window 's max height."
-#~ msgstr "Максимальная ширина всплывающего окна."
-
-#~ msgid "The stardict 's float window 's max width."
-#~ msgstr "Максимальная высота всплывающего окна."
-
-#~ msgid "The stardict 's main window 's height."
-#~ msgstr "Высота главного окна."
-
-#~ msgid "The stardict 's main window 's width."
-#~ msgstr "Ширина главного окна."
-
-#~ msgid "Window 's max height"
-#~ msgstr "Максимальная ширина окна"
-
-#~ msgid "Window 's max width"
-#~ msgstr "Максимальная высота окна"
-
-#~ msgid "lock's x position"
-#~ msgstr "Закрепить позицию по x."
-
-#~ msgid "_Dict Manage"
-#~ msgstr "_Управление словарями"
-
-#~ msgid "Authors"
-#~ msgstr "Авторы"
-
-#, fuzzy
-#~ msgid "Author entry"
-#~ msgstr "Автор"
-
-#, fuzzy
-#~ msgid "A single author entry"
-#~ msgstr "Автор"
-
-#, fuzzy
-#~ msgid "Documenter entry"
-#~ msgstr "Автор"
-
-#~ msgid "Translator credits"
-#~ msgstr "Alex Murygin <murygin@aitoc.com>"
-
-#~ msgid "About %s"
-#~ msgstr "О программе %s"
-
-#, fuzzy
-#~ msgid "Cannot connect to gconf.\n"
-#~ msgstr "Невозможно подключиться к gconf."
-
-#~ msgid "Find"
-#~ msgstr "Найти"
-
-#~ msgid "_Win"
-#~ msgstr "_Win"
-
-#~ msgid "_Shift"
-#~ msgstr "_Shift"
-
-#~ msgid "_Alt"
-#~ msgstr "_Alt"
-
-#~ msgid "_Ctrl"
-#~ msgstr "_Ctrl"
-
-#~ msgid "Hide main window when _iconify."
-#~ msgstr "Прятать главное окно при сворачивание."
-
-#~ msgid "Hide the window when iconify."
-#~ msgstr "Прятать главное окно при сворачивание."
-
-#~ msgid "Whether hide the the main window when iconify."
-#~ msgstr "Прятать ли главное окно сразу после сворачивания."
-
-#~ msgid "Startup"
-#~ msgstr "Загрузка"
-
-#~ msgid "<span weight=\"bold\" size=\"x-large\">Startup</span>"
-#~ msgstr "<span weight=\"bold\" size=\"x-large\">Загрузка</span>"
