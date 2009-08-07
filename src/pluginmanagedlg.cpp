@@ -381,7 +381,7 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	gtk_tree_view_column_set_expand(GTK_TREE_VIEW_COLUMN (column), TRUE);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 
-	GtkTargetEntry gte[] = {{"STARDICT_PLUGINMANAGE", GTK_TARGET_SAME_APP, 0}};
+	GtkTargetEntry gte[] = {{(gchar *)"STARDICT_PLUGINMANAGE", GTK_TARGET_SAME_APP, 0}};
 	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
 	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
 	g_signal_connect(G_OBJECT(treeview), "drag-data-received", G_CALLBACK(drag_data_received_cb), this);

@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <stdio.h>
 
 #include "dictziplib.hpp"
 

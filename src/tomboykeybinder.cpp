@@ -149,7 +149,7 @@ filter_func (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
 	GdkFilterReturn return_val = GDK_FILTER_CONTINUE;
 	XEvent *xevent = (XEvent *) gdk_xevent;
-	guint event_mods;
+	GdkModifierType event_mods;
 	GSList *iter;
 
 	TRACE (g_print ("Got Event! %d, %d\n", xevent->type, event->type));
@@ -167,9 +167,9 @@ filter_func (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 		processing_event = TRUE;
 		last_event_time = xevent->xkey.time;
 
-		event_mods = xevent->xkey.state & ~(num_lock_mask  |
-						    caps_lock_mask |
-						    scroll_lock_mask);
+		event_mods = static_cast<GdkModifierType>(
+			xevent->xkey.state & ~(num_lock_mask | caps_lock_mask | scroll_lock_mask)
+			);
 
 		for (iter = bindings; iter != NULL; iter = iter->next) {
 			Binding *binding = (Binding *) iter->data;

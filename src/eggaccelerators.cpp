@@ -361,7 +361,7 @@ egg_virtual_accelerator_name (guint                  accelerator_key,
   static const gchar text_super[] = "<Super>";
   static const gchar text_hyper[] = "<Hyper>";
   guint l;
-  gchar *keyval_name;
+  const gchar *keyval_name;
   gchar *accelerator;
 
   accelerator_mods = (EggVirtualModifierType)((unsigned)accelerator_mods & EGG_VIRTUAL_MODIFIER_MASK);

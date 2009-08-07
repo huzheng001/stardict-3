@@ -209,7 +209,6 @@ private:
 	static void CopyCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void PlayCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void SaveCallback(GtkWidget *widget, ToolWin *oToolWin);
-	static void PrintCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void SearchCallback(GtkWidget *widget, ToolWin *oToolWin);
 	static void on_pronounce_menu_item_activate(GtkMenuItem *menuitem, int engine_index);
 public:

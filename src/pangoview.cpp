@@ -552,11 +552,12 @@ void LabelPangoWidget::Marks::delete_text(size_t where, size_t len)
 	Mark mark_beg(where, true), mark_end(where+len, false);
 	MarksList::iterator it;
 	for(it = marks_list_.begin(); it != marks_list_.end(); ++it)
-		if(position_less(mark_beg, **it))
+		if(position_less(mark_beg, **it)) {
 			if(position_less(**it, mark_end))
 				(*it)->index_ = where;
 			else
 				(*it)->index_ -= len;
+		}
 }
 
 void LabelPangoWidget::Marks::delete_all_text(void)

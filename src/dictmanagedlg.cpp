@@ -926,7 +926,7 @@ GtkWidget *DictManageDlg::create_dict_tree(int istreedict)
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
   	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 
-	GtkTargetEntry gte[] = {{"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
+	GtkTargetEntry gte[] = {{(gchar *)"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
 	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(now_treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
 	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(now_treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
 
@@ -998,7 +998,7 @@ GtkWidget *DictManageDlg::create_dictmanage_tree()
 	gtk_tree_view_append_column (GTK_TREE_VIEW(dictmanage_treeview), column);
   	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 
-	GtkTargetEntry gte[] = {{"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
+	GtkTargetEntry gte[] = {{(gchar *)"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
 	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(dictmanage_treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
 	gtk_tree_view_enable_model_drag_dest(GTK_TREE_VIEW(dictmanage_treeview), gte, 1, (GdkDragAction)(GDK_ACTION_COPY | GDK_ACTION_MOVE));
 

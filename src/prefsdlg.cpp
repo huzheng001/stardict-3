@@ -68,7 +68,7 @@ enum
 
 
 struct CategoriesTreeItem {
-  gchar			*category;
+  const gchar			*category;
 
   CategoriesTreeItem 	*children;
 
