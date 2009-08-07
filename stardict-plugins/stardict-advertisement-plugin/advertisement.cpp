@@ -232,7 +232,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("User Dict"), _("User virtual dictionary."), _("Show the user dictionary."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("User Dict"), _("User virtual dictionary."), _("Show the user dictionary."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 

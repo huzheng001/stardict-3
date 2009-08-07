@@ -65,8 +65,9 @@ TopWin::~TopWin()
 
 static void unfocus_combo_arrow(GtkWidget *widget, gpointer data)
 {
-	if (!GTK_IS_ENTRY(widget))
+	if (!GTK_IS_ENTRY(widget)) {
 		GTK_WIDGET_UNSET_FLAGS(widget, GTK_CAN_FOCUS);
+	}
 }
 
 void TopWin::Create(GtkWidget *vbox)
@@ -487,7 +488,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 		"Ma Su'an <msa@wri.com.cn>",
 		NULL
 	};
-	gchar *documenters[] = {
+	const gchar *documenters[] = {
 		"Hu Zheng <huzheng001@gmail.com>",
 		"Will Robinson <wsr23@stanford.edu>",
 		"Anthony Fok <foka@debian.org>",
@@ -1596,7 +1597,7 @@ void ToolWin::Create(GtkWidget *vbox)
 #endif
 	gtk_widget_set_tooltip_text(button,_("Save to file (Alt+E)"));
 
-#ifndef CONFIG_GPE
+#if 0
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PRINT,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
@@ -1694,10 +1695,6 @@ void ToolWin::SaveCallback(GtkWidget *widget, ToolWin *oToolWin)
 	oToolWin->do_save();
 }
 
-void ToolWin::PrintCallback(GtkWidget *widget, ToolWin *oToolWin)
-{
-}
-
 void ToolWin::do_search()
 {
 	TextWin &oTextWin=gpAppFrame->oMidWin.oTextWin;
@@ -1744,14 +1741,14 @@ gboolean TextWin::OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
 void TextWin::OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin)
 {
   const gchar *text=gtk_entry_get_text(oTextWin->eSearch);
-  if (text && *text)
+  if (text && *text) {
     if (oTextWin->Find(text, oTextWin->search_from_beginning)) {
       oTextWin->search_from_beginning = FALSE;
 
       oTextWin->find_text = text;
     } else
       oTextWin->search_from_beginning = TRUE;
-
+  }
 }
 
 void TextWin::ShowSearchPanel()

@@ -2331,9 +2331,9 @@ stardict_handle_automation_cmdline (gchar *queryword)
 	GNOME_Stardict_Application server;
 
 	CORBA_exception_init (&env);
+	CORBA_char id[] = "OAFIID:GNOME_Stardict_Application";
 
-	server = bonobo_activation_activate_from_id ("OAFIID:GNOME_Stardict_Application",
-                                                     0, NULL, &env);
+	server = bonobo_activation_activate_from_id (id, 0, NULL, &env);
 	if (!server) {
 		gdk_notify_startup_complete ();
 		return;
@@ -2386,7 +2386,7 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 
 	if (gpAppFrame->window) {
 		if (!GTK_WIDGET_VISIBLE(gpAppFrame->window))
-			argv[argc++] = "-h";
+			argv[argc++] = (gchar *)"-h";
 	}
 
 	const gchar *text = gpAppFrame->oTopWin.get_text();
@@ -2531,7 +2531,8 @@ int main(int argc,char **argv)
 
 	if (newinstance_option == FALSE) {
 		CORBA_Object factory;
-		factory = bonobo_activation_activate_from_id("OAFIID:GNOME_Stardict_Factory",
+		CORBA_char id[] = "OAFIID:GNOME_Stardict_Factory";
+		factory = bonobo_activation_activate_from_id(id,
 			Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
 			NULL, NULL);
 
