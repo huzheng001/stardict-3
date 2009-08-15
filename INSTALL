@@ -5,6 +5,7 @@ type:
 make
 make install
 =============
+If compile festival plugin failed, you can add "--disable-festival" option to configure command.
 
 You can use:
 =============
