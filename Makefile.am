@@ -6,6 +6,7 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 	ChangeLog  		\
 	README 			\
+	README.SVN		\
 	INSTALL			\
 	TODO 			\
 	NEWS			\

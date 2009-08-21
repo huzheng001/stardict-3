@@ -11,10 +11,12 @@
 class ArticleView {
 public:
     unsigned int bookindex;
-	ArticleView(GtkContainer *owner, bool floatw=false): 
-		bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
+	ArticleView(GtkContainer *owner, bool floatw=false)
+		: bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)),
+		for_float_win(floatw) {}
 	ArticleView(GtkBox *owner, bool floatw=false)
-		: pango_view_(PangoWidgetBase::create(owner, floatw)), for_float_win(floatw) {}
+		: pango_view_(PangoWidgetBase::create(owner, floatw)),
+		for_float_win(floatw) {}
 
 	void SetDictIndex(InstantDictIndex index);
 	void AppendHeaderMark();
@@ -51,6 +53,8 @@ public:
 	gdouble scroll_pos() { return pango_view_->scroll_pos(); }
 	void connect_on_link(const sigc::slot<void, const std::string &>& s);
 private:
+	struct ParseResultItemWithMark;
+
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 	InstantDictIndex dict_index;
@@ -60,6 +64,13 @@ private:
 				       const gchar *origword,
 				       const LinksPosList& links);
 	void append_data_parse_result(const gchar *real_oword, ParseResult& parse_result);
+	void append_data_res_image(std::list<ParseResultItemWithMark>::iterator it, 
+		bool& loaded);
+	void append_data_res_sound(std::list<ParseResultItemWithMark>::iterator it, 
+		bool& loaded);
+	static void on_sound_button_destroy(GtkObject *object, gpointer user_data);
+	static void on_sound_button_clicked(GtkObject *object, gpointer user_data);
+	static void on_sound_button_realize(GtkObject *object, gpointer user_data);
 };
 
 

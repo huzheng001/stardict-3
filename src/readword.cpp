@@ -131,7 +131,7 @@ void ReadWord::RealTts_read(const gchar *word)
 		for (it=ttspath.begin(); it!=ttspath.end(); ++it) {
 			filename = *it + G_DIR_SEPARATOR_S + lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav";
 			if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
-				play_wav_file(filename);
+				play_sound_file(filename);
 				break;
 			}
 		}

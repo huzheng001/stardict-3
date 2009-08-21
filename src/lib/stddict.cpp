@@ -1275,7 +1275,7 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 	}
 	g_free(dirname);
 
-	g_print("bookname: %s , wordcount %lu\n", bookname.c_str(), wordcount);
+	g_print("bookname: %s, wordcount %lu\n", bookname.c_str(), wordcount);
 	return true;
 }
 
@@ -3242,11 +3242,11 @@ search_out:
 	return i!=dictmask.size();
 }
 
-int Libs::GetStorageType(size_t iLib)
+StorageType Libs::GetStorageType(size_t iLib)
 {
 	if (oLib[iLib]->storage == NULL)
-		return -1;
-	return oLib[iLib]->storage->is_file_or_db;
+		return StorageType_UNKNOWN;
+	return oLib[iLib]->storage->storage_type;
 }
 
 const char *Libs::GetStorageFilePath(size_t iLib, const char *key)
