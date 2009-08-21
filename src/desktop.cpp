@@ -48,7 +48,7 @@ static void spawn_command(const gchar *exe, const gchar *arg)
 }
 #endif
 
-void play_wav_file(const std::string& filename)
+void play_sound_file(const std::string& filename)
 {
 #ifdef _WIN32
 //TODO: more good solution?
@@ -96,5 +96,5 @@ void show_url(const char *url)
 void play_sound_on_event(const gchar *eventname)
 {
 	if (conf->get_bool_at("dictionary/enable_sound_event"))
-	  play_wav_file(gStarDictDataDir+ G_DIR_SEPARATOR_S "sounds" G_DIR_SEPARATOR_S +eventname+".wav");
+	  play_sound_file(gStarDictDataDir+ G_DIR_SEPARATOR_S "sounds" G_DIR_SEPARATOR_S +eventname+".wav");
 }

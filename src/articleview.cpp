@@ -34,6 +34,7 @@
 #include "lib/xml_str.h"
 
 #include "articleview.h"
+#include "desktop.hpp"
 
 //#define DEBUG
 //#define DDEBUG
@@ -163,7 +164,7 @@ private:
 	int clone_last_mark_num_;
 };
 
-struct ParseResultItemWithMark {
+struct ArticleView::ParseResultItemWithMark {
 	ParseResultItem* item;
 	std::string mark;
 	int char_offset;
@@ -576,31 +577,9 @@ void ArticleView::append_data_parse_result(const gchar *real_oword,
 		{
 			bool loaded = false;
 			if (it->item->res->type == "image") {
-				if (for_float_win) {
-					loaded = true;
-					pango_view_->insert_pixbuf(NULL, it->item->res->key.c_str(), 
-						it->mark.c_str());
-				} else {
-					GdkPixbuf* pixbuf = NULL;
-					if (dict_index.type == InstantDictType_LOCAL) {
-						int type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-						if (type == 0) {
-						} else if (type == 1) {
-							const char *filename = gpAppFrame->oLibs.GetStorageFilePath
-								(dict_index.index, it->item->res->key.c_str());
-							if (filename) {
-								pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
-							}
-						}
-					}
-					if (pixbuf) {
-						loaded = true;
-						pango_view_->insert_pixbuf(pixbuf, it->item->res->key.c_str(), 
-							it->mark.c_str());
-						g_object_unref(pixbuf);
-					}
-				}
+				append_data_res_image(it, loaded);
 			} else if (it->item->res->type == "sound") {
+				append_data_res_sound(it, loaded);
 			} else if (it->item->res->type == "video") {
 			} else {
 			}
@@ -660,4 +639,103 @@ void ArticleView::append_data_parse_result(const gchar *real_oword,
 	if(!delayed_insert_list.empty())
 		g_warning("delayed_insert_list is not empty. "
 			"parse_result contains not paired items.");
+}
+
+void ArticleView::append_data_res_image(
+	std::list<ParseResultItemWithMark>::iterator it,
+	bool& loaded)
+{
+	if (for_float_win) {
+		loaded = true;
+		pango_view_->insert_pixbuf(NULL, it->item->res->key.c_str(), 
+			it->mark.c_str());
+	} else {
+		GdkPixbuf* pixbuf = NULL;
+		if (dict_index.type == InstantDictType_LOCAL) {
+			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+			if (type == StorageType_DATABASE) {
+			} else if (type == StorageType_FILE) {
+				const char *filename = gpAppFrame->oLibs.GetStorageFilePath
+					(dict_index.index, it->item->res->key.c_str());
+				if (filename) {
+					pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+				}
+			}
+		}
+		if (pixbuf) {
+			loaded = true;
+			pango_view_->insert_pixbuf(pixbuf, it->item->res->key.c_str(), 
+				it->mark.c_str());
+			g_object_unref(pixbuf);
+		}
+	}
+}
+
+void ArticleView::append_data_res_sound(
+	std::list<ParseResultItemWithMark>::iterator it,
+	bool& loaded)
+{
+	if (for_float_win) {
+		loaded = true;
+		pango_view_->insert_widget(NULL, it->mark.c_str());
+	} else {
+		GtkWidget *widget = NULL;
+		if (dict_index.type == InstantDictType_LOCAL) {
+			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+			if (type == StorageType_DATABASE) {
+			} else if (type == StorageType_FILE) {
+				const char *filename = gpAppFrame->oLibs.GetStorageFilePath
+					(dict_index.index, it->item->res->key.c_str());
+				if (filename) {
+					GtkWidget *button = NULL;
+					GtkWidget *image = NULL;
+					filename = g_strdup(filename);
+					image = gtk_image_new_from_pixbuf(get_impl(
+						gpAppFrame->oAppSkin.pronounce));
+					button = gtk_button_new();
+					/* We need an event box to associate a custom cursor with the
+					 * button. */
+					widget = gtk_event_box_new();
+					g_object_ref_sink(G_OBJECT(widget));
+					gtk_container_add(GTK_CONTAINER(button), image);
+					gtk_container_add(GTK_CONTAINER(widget), button);
+					gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
+					gtk_widget_show_all(widget);
+					g_signal_connect(G_OBJECT(button), "destroy",
+						G_CALLBACK(on_sound_button_destroy), (gpointer)filename);
+					g_signal_connect(G_OBJECT(button), "clicked",
+						G_CALLBACK(on_sound_button_clicked), (gpointer)filename);
+					g_signal_connect(G_OBJECT(button), "realize",
+						G_CALLBACK(on_sound_button_realize), (gpointer)widget);
+				}
+			}
+		}
+		if(widget) {
+			loaded = true;
+			pango_view_->insert_widget(widget, it->mark.c_str());
+			g_object_unref(widget);
+		}
+	}
+}
+
+void ArticleView::on_sound_button_destroy(GtkObject *object, gpointer user_data)
+{
+	g_free(user_data);
+}
+
+void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
+{
+	const char *filename = static_cast<const char*>(user_data);
+	play_sound_file(filename);
+}
+
+void ArticleView::on_sound_button_realize(GtkObject *object, gpointer user_data)
+{
+	/* Event boxes are not automatically realized by GTK+, they must be realized
+	 * explicitly. You need to make sure that an event box is already added as 
+	 * a child to a top-level widget before realizing it. A child realize event 
+	 * handler is a good place for that (imho). */
+	GtkWidget *eventbox = GTK_WIDGET(user_data);
+	gtk_widget_realize(eventbox);
+	gdk_window_set_cursor(eventbox->window, gdk_cursor_new(GDK_HAND2));
 }

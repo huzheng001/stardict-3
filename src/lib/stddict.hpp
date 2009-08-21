@@ -289,7 +289,7 @@ public:
 
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
 	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);
-	int GetStorageType(size_t iLib);
+	StorageType GetStorageType(size_t iLib);
 	const char *GetStorageFilePath(size_t iLib, const char *key);
 	const char *GetStorageFileContent(size_t iLib, const char *key);
 private:

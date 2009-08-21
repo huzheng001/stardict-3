@@ -66,4 +66,6 @@ void AppSkin::load()
 	index_dictlist.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"index_translate.png";
 	index_translate.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"pronounce.png";
+	pronounce.reset(load_image_from_file(filename));
 }
