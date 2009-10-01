@@ -15,7 +15,7 @@ AC_PROG_INTLTOOL([0.22])
 PKG_PROG_PKG_CONFIG
 
 AC_CONFIG_MACRO_DIR(m4)
-AM_PROG_LIBTOOL
+LT_INIT
 
 AC_ISC_POSIX
 AC_PROG_CC
@@ -451,7 +451,7 @@ AC_SUBST(STARDICT_CFLAGS)
 
 dnl ==========================================================================
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 stardict.spec
 stardict-withoutgnome.spec
@@ -502,6 +502,7 @@ help/mk/Makefile
 help/nl/Makefile
 help/uk/Makefile
 ])
+AC_OUTPUT
 
 
 echo "

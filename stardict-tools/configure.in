@@ -7,7 +7,7 @@ AC_CONFIG_SRCDIR([src/stardict-editor.cpp])
 AM_INIT_AUTOMAKE([dist-bzip2])
 AC_CONFIG_HEADER([config.h])
 
-AM_PROG_LIBTOOL
+LT_INIT
 
 # Checks for programs.
 AC_PROG_CC
@@ -38,10 +38,11 @@ dnl For src/dsl2dict.c
 PKG_CHECK_MODULES(DSL2DICT, libpcre)
 
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 ])
+AC_OUTPUT
 
 echo "
 
