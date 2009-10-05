@@ -7,7 +7,7 @@ AC_CONFIG_SRCDIR(src/stardict.cpp)
 AM_INIT_AUTOMAKE([dist-bzip2])
 
 AM_MAINTAINER_MODE
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 AM_DISABLE_STATIC
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
@@ -97,23 +97,6 @@ AC_SUBST(GUCHARMAP_CFLAGS)
 AC_SUBST(GUCHARMAP_LIBS)
 AC_SUBST(GUCHARMAP_PLUGIN_DIR)
 
-AC_DEFUN([AC_FIND_FILE], 
-[
-	$3=NO
-	for x in $2
-	do
-		for y in $1
-		do
-			if test -r "$x/$y"
-			then
-				$3=$x
-				break 2
-			fi
-		done
-	done
-]
-)
-
 dnl ================================================================
 dnl festival tts plugin checks.
 dnl ================================================================
@@ -124,18 +107,17 @@ AC_ARG_ENABLE([festival],
 	[enable_festival=yes])
 
 if test "x$enable_festival" = "xyes" ; then
-	AC_MSG_CHECKING([festival.h])
-	AC_FIND_FILE("festival/festival.h", [/usr/include], festivaldir)
-	if test $festivaldir = NO
-	then
-		AC_MSG_RESULT(not found)
-		AC_MSG_ERROR([Festival library not found. Use --disable-festival to build without festival plugin.])
-	else
-		AC_MSG_RESULT(yes)
-		FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
-		FESTIVAL_CFLAGS="-I/usr/include/speech-tools/EST -ffriend-injection -Wno-deprecated"
-		FESTIVAL_PLUGIN_DIR="stardict-festival-tts-plugin"
-	fi
+	AC_CHECK_HEADERS([festival/festival.h],
+		[
+			FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
+			FESTIVAL_CFLAGS="-I/usr/include/speech-tools/EST -ffriend-injection -Wno-deprecated"
+			FESTIVAL_PLUGIN_DIR="stardict-festival-tts-plugin"
+		],
+		[
+			AC_MSG_ERROR([Festival library not found. Use --disable-festival to build without festival plugin.])
+		],
+		[]
+	)
 else
 	FESTIVAL_CFLAGS=
 	FESTIVAL_LIBS=
@@ -156,18 +138,17 @@ AC_ARG_ENABLE([espeak],
 	[enable_espeak=yes])
 
 if test "x$enable_espeak" = "xyes" ; then
-	AC_MSG_CHECKING([speak_lib.h])
-	AC_FIND_FILE("espeak/speak_lib.h", [/usr/include], espeakdir)
-	if test $espeakdir = NO
-	then
-		AC_MSG_RESULT(not found)
-		AC_MSG_ERROR([Espeak library not found. Use --disable-espeak to build without espeak plugin.])
-	else
-		AC_MSG_RESULT(yes)
-		ESPEAK_LIBS="-lespeak"
-		ESPEAK_CFLAGS=
-		ESPEAK_PLUGIN_DIR="stardict-espeak-tts-plugin"
-	fi
+	AC_CHECK_HEADERS([espeak/speak_lib.h],
+		[
+			ESPEAK_LIBS="-lespeak"
+			ESPEAK_CFLAGS=
+			ESPEAK_PLUGIN_DIR="stardict-espeak-tts-plugin"
+		],
+		[
+			AC_MSG_ERROR([Espeak library not found. Use --disable-espeak to build without espeak plugin.])
+		],
+		[]
+	)
 else
 	ESPEAK_CFLAGS=
 	ESPEAK_LIBS=
