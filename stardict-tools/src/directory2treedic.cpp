@@ -210,10 +210,10 @@ void convert(char *dirname)
 	sprintf(filename, "%s.ifo", dirname);
 	ifofile = fopen(filename,"w");
 	fprintf(ifofile, "StarDict's treedict ifo file\nversion=2.4.2\n");
-	fprintf(ifofile, "wordcount=%ld\n", wordcount);	
+	fprintf(ifofile, "wordcount=%ld\n", wordcount);
 	sprintf(filename, "%s.tdx", dirname);
 	stat (filename, &stats);
-	fprintf(ifofile, "tdxfilesize=%ld\n", stats.st_size);	
+	fprintf(ifofile, "tdxfilesize=%ld\n", (long) stats.st_size);
 	fwrite(buffer, 1, buffer_len, ifofile);
 	g_free(buffer);
 	fclose(ifofile);

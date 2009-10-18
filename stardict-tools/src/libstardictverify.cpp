@@ -116,7 +116,9 @@ static int verify_idxfile(const gchar *idxfilename, guint ifo_wordcount, guint i
 	print_info(str);
 	g_free(str);
 	if (ifo_index_file_size!=(guint)stats.st_size) {
-		gchar *str = g_strdup_printf("Error: in .ifo file, idxfilesize=%d, while the real idx file size is %ld\n", ifo_index_file_size, stats.st_size);
+		gchar *str = g_strdup_printf("Error: in .ifo file, idxfilesize=%d, "
+			"while the real idx file size is %ld\n",
+			ifo_index_file_size, (long) stats.st_size);
 		print_info(str);
 		g_free(str);
 		return EXIT_FAILURE;

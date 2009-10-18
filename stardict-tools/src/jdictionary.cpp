@@ -56,12 +56,12 @@ void save_file(gboolean isFirst, GArray *array, gchar *basefilename)
 	glong wordcount = array->len;
 
 	long offset_old;
-	gchar *previous_word = "";
+	const gchar *previous_word = "";
 	struct _worditem *pworditem;
 	gulong i=0;
 	glong thedatasize;
 	glong tmpglong;
-	gchar *insert_word = "\n";
+	const gchar *insert_word = "\n";
 	gboolean flag;
 	pworditem = &g_array_index(array, struct _worditem, i);
 	gint definition_len;
@@ -116,7 +116,10 @@ void save_file(gboolean isFirst, GArray *array, gchar *basefilename)
 	struct stat stats;
 	stat (idxfilename, &stats);
 	gchar *idxheadbuffer;
-	idxheadbuffer = g_strdup_printf("StarDict's dict ifo file\nversion=2.4.2\nwordcount=%ld\nidxfilesize=%ld\nbookname=jdictionary_%s\ndate=2003.11.14\nsametypesequence=m\n", wordcount, stats.st_size, basefilename);
+	idxheadbuffer = g_strdup_printf("StarDict's dict ifo file\nversion=2.4.2\n"
+		"wordcount=%ld\nidxfilesize=%ld\nbookname=jdictionary_%s\n"
+		"date=2003.11.14\nsametypesequence=m\n",
+		wordcount, (long) stats.st_size, basefilename);
 	fwrite(idxheadbuffer, 1, strlen(idxheadbuffer), ifofile);
 	g_free(idxheadbuffer);
 	fclose(ifofile);
