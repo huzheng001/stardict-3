@@ -35,3 +35,11 @@ testutf8	utility to test any dictionary's UTF-8 conformance (often
 ydp2dict	converter for Polish Collins proprietary dictionaries
 		(see also YDPDict project: http://toxygen.net/ydpdict/)
 
+lingvosound2resdb		converter from ABBYY Lingvo proprietary dictionary sound
+		file into Stardict resource database
+
+resdatabase2dir		converter from Stardict resource database file into resource 
+		directory. See dir2resdatabase for reverse conversion.
+
+dir2resdatabase		converter from resource directory into Stardict resource 
+		database file. See resdatabase2dir for reverse conversion.

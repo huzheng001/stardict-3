@@ -3,13 +3,34 @@ SUBDIRS=
 
 bin_PROGRAMS = stardict-editor
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict wordnet
+noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
+	wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout \
+	soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile dsl2dict \
+	cedict edict duden stardict_dict_update degb2utf frgb2utf jpgb2utf gmx2utf \
+	rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify \
+	fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e \
+	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict \
+	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase
 
 noinst_LIBRARIES = libbgl2txt.a
 
-libbgl2txt_a_SOURCES = libbgl2txt.h libbgl2txt.cpp bgl_babylon.h bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h bgl_babylonreader.cpp bgl_stardictbuilder.h bgl_stardictbuilder.cpp
+AM_CPPFLAGS = $(STARDICT_CFLAGS)
 
-INCLUDES = $(STARDICT_CFLAGS)
+libbgl2txt_a_SOURCES = libbgl2txt.h libbgl2txt.cpp bgl_babylon.h \
+	bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h \
+	bgl_babylonreader.cpp bgl_stardictbuilder.h bgl_stardictbuilder.cpp
+
+lingvosound2resdb_LDFLAGS = 
+lingvosound2resdb_LDADD = $(STARDICT_LIBS)
+lingvosound2resdb_SOURCES = lingvosound2resdb.cpp
+
+dir2resdatabase_LDFLAGS = 
+dir2resdatabase_LDADD = $(STARDICT_LIBS)
+dir2resdatabase_SOURCES = dir2resdatabase.cpp resourcewrap.hpp
+
+resdatabase2dir_LDFLAGS = 
+resdatabase2dir_LDADD = $(STARDICT_LIBS)
+resdatabase2dir_SOURCES = resdatabase2dir.cpp resourcewrap.hpp
 
 pydict2dic_LDFLAGS = 
 pydict2dic_LDADD = $(STARDICT_LIBS)
@@ -20,11 +41,11 @@ olddic2newdic_LDADD = $(STARDICT_LIBS)
 olddic2newdic_SOURCES = olddic2newdic.cpp
 
 oxford2dic_LDFLAGS = 
-oxford2dic_LDADD = $(STARDICT_LIBS)			
+oxford2dic_LDADD = $(STARDICT_LIBS)
 oxford2dic_SOURCES = oxford2dic.cpp
 
 directory2dic_LDFLAGS = 
-directory2dic_LDADD = $(STARDICT_LIBS)			
+directory2dic_LDADD = $(STARDICT_LIBS)
 directory2dic_SOURCES = directory2dic.cpp
 
 dictd2dic_LDFLAGS = 
@@ -48,11 +69,11 @@ treedict2dir_LDADD = $(STARDICT_LIBS)
 treedict2dir_SOURCES = treedict2dir.cpp
 
 jdictionary_LDFLAGS = 
-jdictionary_LDADD = $(STARDICT_LIBS)			
+jdictionary_LDADD = $(STARDICT_LIBS)
 jdictionary_SOURCES = jdictionary.cpp
 
 mova_LDFLAGS = 
-mova_LDADD = $(STARDICT_LIBS)			
+mova_LDADD = $(STARDICT_LIBS)
 mova_SOURCES = mova.cpp
 
 xmlinout_LDFLAGS =
@@ -89,7 +110,8 @@ buddhist_SOURCES = buddhist.cpp
 
 tabfile_LDFLAGS =
 tabfile_LDADD = $(STARDICT_LIBS)
-tabfile_SOURCES = tabfile.cpp libtabfile.cpp libtabfile.h libcommon.cpp libcommon.h
+tabfile_SOURCES = tabfile.cpp libtabfile.cpp libtabfile.h libcommon.cpp \
+	libcommon.h
 
 cedict_LDFLAGS =
 cedict_LDADD = $(STARDICT_LIBS)
@@ -131,28 +153,30 @@ kingsoft_LDFLAGS =
 kingsoft_LDADD = $(STARDICT_LIBS)
 kingsoft_SOURCES = kingsoft.cpp
 
-wikipedia_CPPFLAGS = $(LFS_CFLAGS)
+wikipedia_CPPFLAGS = $(AM_CPPFLAGS) $(LFS_CFLAGS)
 wikipedia_LDFLAGS = $(LFS_LDFLAGS)
 wikipedia_LDADD = $(STARDICT_LIBS) $(LFS_LIBS)
 wikipedia_SOURCES = wikipedia.cpp
 
-wikipediaImage_CPPFLAGS = $(MYSQL_CFLAGS)
+wikipediaImage_CPPFLAGS = $(AM_CPPFLAGS) $(MYSQL_CFLAGS)
 wikipediaImage_LDFLAGS = $(MYSQL_LDFLAGS)
 wikipediaImage_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 wikipediaImage_SOURCES = wikipediaImage.cpp
 
-tabfile2sql_CPPFLAGS = $(MYSQL_CFLAGS)
+tabfile2sql_CPPFLAGS = $(AM_CPPFLAGS) $(MYSQL_CFLAGS)
 tabfile2sql_LDFLAGS = $(MYSQL_LDFLAGS)
 tabfile2sql_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 tabfile2sql_SOURCES = tabfile2sql.cpp
 
 babylon_LDFLAGS =
 babylon_LDADD = $(STARDICT_LIBS)
-babylon_SOURCES = babylon.cpp libbabylonfile.cpp libbabylonfile.h libcommon.cpp libcommon.h
+babylon_SOURCES = babylon.cpp libbabylonfile.cpp libbabylonfile.h \
+	libcommon.cpp libcommon.h
 
 stardict2txt_LDFLAGS =
 stardict2txt_LDADD = $(STARDICT_LIBS)
-stardict2txt_SOURCES = stardict2txt.cpp libstardict2txt.cpp libstardict2txt.h libcommon.cpp libcommon.h
+stardict2txt_SOURCES = stardict2txt.cpp libstardict2txt.cpp libstardict2txt.h \
+	libcommon.cpp libcommon.h
 
 stardict_dict_update_LDFLAGS = 
 stardict_dict_update_LDADD = $(STARDICT_LIBS)			
@@ -221,12 +245,20 @@ bgl2txt_SOURCES = bgl2txt.cpp
 
 stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)
-stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp libstardictverify.h libcommon.cpp libcommon.h
+stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp \
+	libstardictverify.h libcommon.cpp libcommon.h
 
 stardict_editor_DEPENDENCIES = libbgl2txt.a
 stardict_editor_LDFLAGS =
 stardict_editor_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
-stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp libstardictverify.h
+stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
+	libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h \
+	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
+	libstardictverify.h
 
-EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py \
-extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py lingea-trd-decoder.py
+EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
+	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \
+	dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh \
+	exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-\
+	djvu2tiff.py extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
+	lingea-trd-decoder.py
