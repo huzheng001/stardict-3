@@ -28,7 +28,7 @@ echo "Running libtoolize, please ignore non-fatal messages...."
 echo n | libtoolize --copy --force || exit;
 
 echo "Running aclocal...."
-aclocal || exit;
+aclocal -I m4 || exit;
 echo "Running autoheader...."
 autoheader || exit;
 echo "Running automake --add-missing --copy...."

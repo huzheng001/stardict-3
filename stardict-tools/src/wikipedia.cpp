@@ -11,6 +11,10 @@
 
 #include <gtk/gtk.h>
 
+// for systems where O_LARGEFILE is not defined
+#ifndef O_LARGEFILE
+#define O_LARGEFILE 0
+#endif
 
 struct _worditem
 {

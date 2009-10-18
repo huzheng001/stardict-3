@@ -8,6 +8,7 @@
 
 #include <libgen.h>
 #include <glib.h>
+#include <string.h>
 
 #include <ctype.h>
 #include <arpa/inet.h>

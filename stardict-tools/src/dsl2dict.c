@@ -60,6 +60,10 @@
  - Support unsuppported languages (Chinese, etc.).
  */
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #define _GNU_SOURCE
 
 #include <stdio.h>
@@ -79,6 +83,37 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 
+#if !defined(HAVE_GETLINE) && !defined(_WIN32)
+ssize_t getline (char **lineptr, size_t *n, FILE *stream)
+{
+	size_t len;
+	char *str;
+
+	if (!n || !lineptr)
+		return EINVAL;
+
+	str = fgetln (stream, &len);
+	if (!str)
+		return (size_t) -1;
+
+	*n = len;
+
+	*lineptr = realloc (*lineptr, len+1);
+	if (! *lineptr)
+		return (size_t) -1;
+
+	memcpy (*lineptr, str, len);
+	(*lineptr) [len] = 0;
+	return len;
+}
+#endif
+
+#if !defined(HAVE_MEMPCPY) && !defined(_WIN32)
+void *mempcpy(void *dest, const void *src, size_t n)
+{
+  return (char*) memcpy (dest, src, n) + n;
+}
+#endif
 
 #define BUFSIZE BUFSIZ
 #define UCS_MARK 0xFEFF
@@ -392,7 +427,11 @@ static char *make_dict(char *dslfilename, char *outputdir, char *bname)
         size_t inbuff_size;
         size_t outbuff_size = BUFSIZE;
         size_t writems;
-        char *inbufptr = (char *) inbuff;
+#ifdef _WIN32
+        const char *inbufptr = (const char *) inbuff;
+#else
+        ICONV_CONST char *inbufptr = (ICONV_CONST char *) inbuff;
+#endif
         char *outbufptr = (char *) outbuff;
         long filepos = BUFOVERLAP * UCS_CHARLEN;
         char *buffborder;

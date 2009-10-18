@@ -22,6 +22,7 @@
 
 #include <iostream>
 #include <glib.h>
+#include <string.h>
 
 StarDictBuilder::StarDictBuilder( std::string filename )
 {
