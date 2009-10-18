@@ -212,7 +212,9 @@ void convert_tabfile(const char *filename, print_info_t print_info)
 #endif
 
 	g_stat(idxfilename, &stats);
-	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\nidxfilesize=%ld\nbookname=%s\nsametypesequence=m\n", array->len, stats.st_size, basefilename);
+	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
+		"idxfilesize=%ld\nbookname=%s\nsametypesequence=m\n",
+		array->len, (long) stats.st_size, basefilename);
 	fclose(ifofile);
 
 	g_free(buffer);

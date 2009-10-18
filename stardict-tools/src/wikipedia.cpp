@@ -13,7 +13,7 @@
 
 // for systems where O_LARGEFILE is not defined
 #ifndef O_LARGEFILE
-#define O_LARGEFILE 0
+#define O_LARGEFILE (0)
 #endif
 
 struct _worditem

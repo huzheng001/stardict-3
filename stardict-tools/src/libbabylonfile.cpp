@@ -487,7 +487,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 		synwordcount = g_strdup("");
 	}
 	g_stat(idxfilename, &stats);
-        fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n%sidxfilesize=%ld\n", array->len, synwordcount, stats.st_size);
+	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
+		"%sidxfilesize=%ld\n", array->len, synwordcount, (long) stats.st_size);
 	if (bookname.empty())
 		fprintf(ifofile, "bookname=%s\n", basefilename);
 	else
