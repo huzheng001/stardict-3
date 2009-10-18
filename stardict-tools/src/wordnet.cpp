@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <string> 
+#include <string.h>
 
 
 static int hexalpha_to_int(int c)

@@ -18,12 +18,17 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include "bgl_babylon.h"
 
-#include<stdlib.h>
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <glib/gstdio.h>
 #include <iconv.h>
+#include <string.h>
 
 #ifdef _WIN32
 #include <io.h>
@@ -390,8 +395,8 @@ void Babylon::convertToUtf8( std::string &s, unsigned int type )
   const char *inbuf;
   inbuf = s.data();
 #else
-  char *inbuf;
-  inbuf = (char *)s.data();
+  ICONV_CONST char *inbuf;
+  inbuf = (ICONV_CONST char *)s.data();
 #endif
   outbuf = (char*)malloc( outbufbytes + 1 );
   memset( outbuf, '\0', outbufbytes + 1 );

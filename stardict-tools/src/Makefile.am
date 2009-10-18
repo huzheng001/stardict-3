@@ -136,14 +136,14 @@ wikipedia_LDFLAGS = $(LFS_LDFLAGS)
 wikipedia_LDADD = $(STARDICT_LIBS) $(LFS_LIBS)
 wikipedia_SOURCES = wikipedia.cpp
 
-wikipediaImage_CPPFLAGS = -I/usr/include/mysql
-wikipediaImage_LDFLAGS = -L/usr/lib/mysql
-wikipediaImage_LDADD = $(STARDICT_LIBS) -lmysqlclient
+wikipediaImage_CPPFLAGS = $(MYSQL_CFLAGS)
+wikipediaImage_LDFLAGS = $(MYSQL_LDFLAGS)
+wikipediaImage_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 wikipediaImage_SOURCES = wikipediaImage.cpp
 
-tabfile2sql_CPPFLAGS = -I/usr/include/mysql
-tabfile2sql_LDFLAGS = -L/usr/lib/mysql
-tabfile2sql_LDADD = $(STARDICT_LIBS) -lmysqlclient
+tabfile2sql_CPPFLAGS = $(MYSQL_CFLAGS)
+tabfile2sql_LDFLAGS = $(MYSQL_LDFLAGS)
+tabfile2sql_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 tabfile2sql_SOURCES = tabfile2sql.cpp
 
 babylon_LDFLAGS =
