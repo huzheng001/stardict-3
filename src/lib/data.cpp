@@ -42,6 +42,31 @@ DictBase::~DictBase()
 		fclose(dictfile);
 }
 
+/* load dictionary
+ * filebasename - file name without extension.
+ * We try filebasename + "." + mainext + ".dz" file first, 
+ * then filebasename + "." + mainext. */
+bool DictBase::load(const std::string& filebasename, const char* mainext)
+{
+	std::string fullfilename;
+	fullfilename = filebasename + "." + mainext + ".dz";
+	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
+		dictdzfile.reset(new dictData);
+		if (!dictdzfile->open(fullfilename, 0)) {
+			//g_print("open file %s failed!\n",fullfilename);
+			return false;
+		}
+	} else {
+		fullfilename = filebasename + "." + mainext;
+		dictfile = fopen(fullfilename.c_str(),"rb");
+		if (!dictfile) {
+			//g_print("open file %s failed!\n",fullfilename);
+			return false;
+		}
+	}
+	return true;
+}
+
 gchar* DictBase::GetWordData(guint32 idxitem_offset, guint32 idxitem_size)
 {
 	for (int i=0; i<WORDDATA_CACHE_NUM; i++)

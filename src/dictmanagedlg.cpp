@@ -450,7 +450,8 @@ static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter,
 	for (std::list<DictManageItem>::iterator i = dictitem.begin(); i != dictitem.end(); ++i) {
 		if (i->type == LOCAL_DICT) {
 			DictInfo dictinfo;
-			if (dictinfo.load_from_ifo_file(i->file_or_id.c_str(), false)) {
+			if (dictinfo.load_from_ifo_file(i->file_or_id.c_str(),
+				DictInfoType_NormDict)) {
 				gchar *markup = g_markup_escape_text(dictinfo.bookname.c_str(), dictinfo.bookname.length());
 				gtk_tree_store_append(model, &dict_iter, &type_iter);
 				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, LOCAL_DICT, -1);
@@ -496,7 +497,8 @@ public:
 		model(model_), istreedict(istreedict_) {}
 	void operator()(const std::string& url, bool disable) {
 		DictInfo dictinfo;
-		if (dictinfo.load_from_ifo_file(url.c_str(), istreedict)) {
+		if (dictinfo.load_from_ifo_file(url.c_str(),
+			istreedict ? DictInfoType_TreeDict : DictInfoType_NormDict)) {
 			GtkTreeIter iter;
 			gtk_list_store_append(model, &iter);
 			gtk_list_store_set(model, &iter, 

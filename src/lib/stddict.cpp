@@ -95,6 +95,24 @@ static inline gint prefix_match (const gchar *s1, const gchar *s2)
     return ret;
 }
 
+/* check that string str has length allowed for index word 
+ * strlen(str) < MAX_INDEX_KEY_SIZE 
+ * This function does not read more than MAX_INDEX_KEY_SIZE or buf_size chars,
+ * which one is smaller.
+ * return value: 
+ * true - ok,
+ * false - string length exceeded. */
+static bool check_key_str_len(const gchar* str, size_t buf_size)
+{
+	size_t max = MAX_INDEX_KEY_SIZE;
+	if(buf_size < max)
+		max = buf_size;
+	for(size_t i = 0; i < max; ++i)
+		if(!str[i])
+			return true;
+	return false;
+}
+
 static inline bool bIsVowel(gchar inputchar)
 {
   gchar ch = g_ascii_toupper(inputchar);
@@ -131,9 +149,12 @@ private:
 
 	cache_file oft_file;
 	FILE *idxfile;
+	/* number of pages = (wordcount-1)/ENTR_PER_PAGE+2 */
 	gulong npages;
 
-	gchar wordentry_buf[256+sizeof(guint32)*2]; // The length of "word_str" should be less than 256. See doc/DICTFILE_FORMAT.
+	// The length of "word_str" should be less than MAX_INDEX_KEY_SIZE. 
+	// See doc/StarDictFileFormat.
+	gchar wordentry_buf[MAX_INDEX_KEY_SIZE+sizeof(guint32)*2];
 	struct index_entry {
 		glong idx;
 		std::string keystr;
@@ -161,6 +182,7 @@ private:
 	const gchar *get_first_on_page_key(glong page_idx);
 };
 
+/* class for compressed index (file ends with ".gz") */
 class wordlist_index : public index_file {
 public:
 	wordlist_index();
@@ -174,7 +196,11 @@ private:
 	const gchar *get_key(glong idx);
 	bool lookup(const char *str, glong &idx, glong &idx_suggest);
 
+	/* whole uncompressed index file in memory */
 	gchar *idxdatabuf;
+	/* pointers to the words-keys in idxdatabuf. Each word is '\0'-terminated and 
+	 * followed by data offset and size. See ".idx" file format. 
+	 * wordlist.size() == number of words + 1 */
 	std::vector<gchar *> wordlist;
 };
 
@@ -214,7 +240,13 @@ inline const gchar *offset_index::read_first_on_page_key(glong page_idx)
 	gulong minsize = sizeof(wordentry_buf);
 	if (page_size < minsize)
 		minsize = page_size;
-	fread(wordentry_buf, minsize, 1, idxfile); //TODO: check returned values, deal with word entry that strlen>255.
+	fread(wordentry_buf, minsize, 1, idxfile);
+	if(!check_key_str_len(wordentry_buf, minsize)) {
+		wordentry_buf[minsize-1] = '\0';
+		g_critical("Index key length exceeds allowed limit. Key: %s, "
+			"max length = %i", wordentry_buf, MAX_INDEX_KEY_SIZE - 1);
+		return NULL;
+	}
 	return wordentry_buf;
 }
 
@@ -251,7 +283,9 @@ cache_file::~cache_file()
 #define OFFSETFILE_MAGIC_DATA "StarDict's oft file\nversion=2.4.8\n"
 #define COLLATIONFILE_MAGIC_DATA "StarDict's clt file\nversion=2.4.8\n"
 
-MapFile* cache_file::get_cache_loadfile(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next)
+MapFile* cache_file::get_cache_loadfile(const gchar *filename,
+	const std::string &url, const std::string &saveurl,
+	CollateFunctions cltfunc, glong filedatasize, int next)
 {
 	struct stat cachestat;
 	if (g_stat(filename, &cachestat)!=0)
@@ -356,7 +390,8 @@ MapFile* cache_file::get_cache_loadfile(const gchar *filename, const std::string
 	return out;
 }
 
-bool cache_file::load_cache(const std::string& url, const std::string& saveurl, CollateFunctions cltfunc, glong filedatasize)
+bool cache_file::load_cache(const std::string& url, const std::string& saveurl,
+	CollateFunctions cltfunc, glong filedatasize)
 {
 	std::string oftfilename;
 	if (cachefiletype == CacheFileType_oft)
@@ -368,6 +403,8 @@ bool cache_file::load_cache(const std::string& url, const std::string& saveurl, 
 		oftfilename=saveurl+'.'+func+".clt";
 		g_free(func);
 	}
+	/* First search the file in the dictionary directory, then in the cache 
+	 * directory. */
 	for (int i=0;i<2;i++) {
 		if (i==1) {
 			if (!get_cache_filename(saveurl, oftfilename, false, cltfunc))
@@ -611,6 +648,10 @@ static gint sort_collation_index(gconstpointer a, gconstpointer b, gpointer user
 }
 
 idxsyn_file::idxsyn_file()
+:
+	wordcount(0),
+	clt_file(NULL),
+	key_comp_func(stardict_strcmp)
 {
 	memset(clt_files, 0, sizeof(clt_files));
 }
@@ -696,6 +737,7 @@ bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
 		if (!map_file.open(url.c_str(), fsize))
 			return false;
 		const gchar *idxdatabuffer=map_file.begin();
+		/* oft_file.wordoffset[i] holds offset of the i-th page in the index file */
 		oft_file.wordoffset = (guint32 *)g_malloc(npages*sizeof(guint32));
 		const gchar *p1 = idxdatabuffer;
 		gulong index_size;
@@ -780,11 +822,11 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 	glong iTo=npages-2;
 	gint cmpint;
 	glong iThisIndex;
-	if (stardict_strcmp(str, first.keystr.c_str())<0) {
+	if (key_comp_func(str, first.keystr.c_str())<0) {
 		idx = 0;
 		idx_suggest = 0;
 		return false;
-	} else if (stardict_strcmp(str, real_last.keystr.c_str()) >0) {
+	} else if (key_comp_func(str, real_last.keystr.c_str()) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 		return false;
@@ -793,7 +835,7 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_strcmp(str, get_first_on_page_key(iThisIndex));
+			cmpint = key_comp_func(str, get_first_on_page_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -816,7 +858,7 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_strcmp(str, page.entries[iThisIndex].keystr);
+			cmpint = key_comp_func(str, page.entries[iThisIndex].keystr);
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -866,6 +908,11 @@ wordlist_index::~wordlist_index()
 	g_free(idxdatabuf);
 }
 
+/* Parameters:
+ * url - index file path, has suffix ".idx.gz".
+ * wc - number of words in the index
+ * fsize - uncompressed index size
+ * */
 bool wordlist_index::load(const std::string& url, gulong wc, gulong fsize,
 			  bool CreateCacheFile, int EnableCollationLevel,
 			  CollateFunctions _CollateFunction, show_progress_t *sp)
@@ -892,6 +939,7 @@ bool wordlist_index::load(const std::string& url, gulong wc, gulong fsize,
 		wordlist[i] = p1;
 		p1 += strlen(p1) +1 + 2*sizeof(guint32);
 	}
+	/* pointer to the next to last word entry */
 	wordlist[wc] = p1;
 
 	if (EnableCollationLevel == 0) {
@@ -931,10 +979,10 @@ bool wordlist_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 	bool bFound=false;
 	glong iTo=wordlist.size()-2;
 
-	if (stardict_strcmp(str, get_key(0))<0) {
+	if (key_comp_func(str, get_key(0))<0) {
 		idx = 0;
 		idx_suggest = 0;
-	} else if (stardict_strcmp(str, get_key(iTo)) >0) {
+	} else if (key_comp_func(str, get_key(iTo)) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 	} else {
@@ -943,7 +991,7 @@ bool wordlist_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		gint cmpint;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_strcmp(str, get_key(iThisIndex));
+			cmpint = key_comp_func(str, get_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -973,6 +1021,22 @@ bool wordlist_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		}
 	}
 	return bFound;
+}
+
+//===================================================================
+index_file* index_file::Create(const std::string& filebasename, 
+		const char* mainext, std::string& fullfilename)
+{
+	index_file *index = NULL;
+
+	fullfilename = filebasename + "." + mainext + ".gz";
+	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
+		index = new wordlist_index;
+	} else {
+		fullfilename = filebasename + "." + mainext;
+		index = new offset_index;
+	}
+	return index;
 }
 
 //===================================================================
@@ -1114,11 +1178,11 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 	glong iTo=npages-2;
 	gint cmpint;
 	glong iThisIndex;
-	if (stardict_strcmp(str, first.keystr.c_str())<0) {
+	if (key_comp_func(str, first.keystr.c_str())<0) {
 		idx = 0;
 		idx_suggest = 0;
 		return false;
-	} else if (stardict_strcmp(str, real_last.keystr.c_str()) >0) {
+	} else if (key_comp_func(str, real_last.keystr.c_str()) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 		return false;
@@ -1127,7 +1191,7 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_strcmp(str, get_first_on_page_key(iThisIndex));
+			cmpint = key_comp_func(str, get_first_on_page_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -1149,7 +1213,7 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_strcmp(str, page.entries[iThisIndex].keystr);
+			cmpint = key_comp_func(str, page.entries[iThisIndex].keystr);
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -1207,42 +1271,22 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 	if (!load_ifofile(ifofilename, idxfilesize, wordcount, synwordcount))
 		return false;
 	sp->notify_about_start(_("Loading..."));
-	std::string fullfilename(ifofilename);
-	fullfilename.replace(fullfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "dict.dz");
 
-	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
-		dictdzfile.reset(new dictData);
-		if (!dictdzfile->open(fullfilename, 0)) {
-			//g_print("open file %s failed!\n",fullfilename);
-			return false;
-		}
-	} else {
-		fullfilename.erase(fullfilename.length()-sizeof(".dz")+1, sizeof(".dz")-1);
-		dictfile = fopen(fullfilename.c_str(),"rb");
-		if (!dictfile) {
-			//g_print("open file %s failed!\n",fullfilename);
-			return false;
-		}
-	}
+	// ifofilename without extension - base file name
+	std::string filebasename
+		= ifofilename.substr(0, ifofilename.length()-sizeof(".ifo")+1);
+	if(!DictBase::load(filebasename, "dict"))
+		return false;
 
-	fullfilename=ifofilename;
-	fullfilename.replace(fullfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "idx.gz");
-
-	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
-		idx_file.reset(new wordlist_index);
-	} else {
-		fullfilename.erase(fullfilename.length()-sizeof(".gz")+1, sizeof(".gz")-1);
-		idx_file.reset(new offset_index);
-	}
-
+	std::string fullfilename;
+	idx_file.reset(index_file::Create(filebasename, "idx", fullfilename));
 	if (!idx_file->load(fullfilename, wordcount, idxfilesize,
 			    CreateCacheFile, EnableCollationLevel,
 			    CollateFunction, sp))
 		return false;
 
 	if (synwordcount) {
-		fullfilename=ifofilename;
-		fullfilename.replace(fullfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "syn");
+		fullfilename = filebasename + ".syn";
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
 			syn_file.reset(new synonym_file);
 			if (!syn_file->load(fullfilename, synwordcount,
@@ -1252,27 +1296,8 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 		}
 	}
 
-	bool has_res = false;
 	gchar *dirname = g_path_get_dirname(ifofilename.c_str());
-	fullfilename = dirname;
-	fullfilename += G_DIR_SEPARATOR_S "res";
-	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
-		has_res = true;
-	} else {
-		fullfilename = dirname;
-		fullfilename += G_DIR_SEPARATOR_S "res.rifo";
-		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
-			has_res = true;
-		}
-	}
-	if (has_res) {
-		storage = new ResourceStorage();
-		bool failed = storage->load(dirname);
-		if (failed) {
-			delete storage;
-			storage = NULL;
-		}
-	}
+	storage = ResourceStorage::create(dirname, sp);
 	g_free(dirname);
 
 	g_print("bookname: %s, wordcount %lu\n", bookname.c_str(), wordcount);
@@ -1282,9 +1307,7 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 bool Dict::load_ifofile(const std::string& ifofilename, gulong &idxfilesize, glong &wordcount, glong &synwordcount)
 {
 	DictInfo dict_info;
-	if (!dict_info.load_from_ifo_file(ifofilename, false))
-		return false;
-	if (dict_info.wordcount==0)
+	if (!dict_info.load_from_ifo_file(ifofilename, DictInfoType_NormDict))
 		return false;
 
 	ifo_file_name=dict_info.ifo_file_name;
@@ -1923,7 +1946,8 @@ const std::string *Libs::get_dict_info(const char *uid, bool is_short)
 		if (dict->info_string.empty()) {
 			gchar *etext;
 			DictInfo dict_info;
-			if (!dict_info.load_from_ifo_file(oLib[dict->id]->ifofilename(), false))
+			if (!dict_info.load_from_ifo_file(oLib[dict->id]->ifofilename(), 
+				DictInfoType_NormDict))
 				return NULL;
 			dict->info_string += "<dictinfo><bookname>";
 			etext = g_markup_escape_text(dict_info.bookname.c_str(), -1);

@@ -86,7 +86,7 @@ const char* xml_utf8_offset_to_pointer(const char *str, size_t char_offset)
 	size_t cur_pos;
 	int i;
 
-	for(cur_pos = -1, q = str; *q && cur_pos != char_offset; ++cur_pos) {
+	for(cur_pos = static_cast<size_t>(-1), q = str; *q && cur_pos != char_offset; ++cur_pos) {
 		r = q;
 		if (*q == '&') {
 			for (i = 0; xml_entrs[i]; ++i)
