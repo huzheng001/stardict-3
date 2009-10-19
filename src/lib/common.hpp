@@ -5,10 +5,20 @@
 #include <list>
 #include <string>
 
-//this structure contain all information about dictionary
+enum DictInfoType {
+	DictInfoType_NormDict,
+	DictInfoType_TreeDict,
+	DictInfoType_ResDb
+};
+
+// This structure contains all information about dictionary or Resource Storage
+// database.
 struct DictInfo {
   std::string ifo_file_name;
+  union {
   guint32 wordcount;
+  guint32 filecount;
+  };
   guint32 synwordcount;
   std::string bookname;
   std::string author;
@@ -19,9 +29,10 @@ struct DictInfo {
   guint32 index_file_size;
   std::string sametypesequence;
   std::string dicttype;
-  bool load_from_ifo_file(const std::string& ifofilename, bool istreedict);
+  std::string version;
+  DictInfo(void);
+  bool load_from_ifo_file(const std::string& ifofilename, DictInfoType infotype);
+  void clear(void);
 };
-
-typedef std::list<std::string> strlist_t;
 
 #endif//!_COMMON_HPP_

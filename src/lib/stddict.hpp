@@ -16,10 +16,16 @@
 
 const int MAX_FUZZY_DISTANCE= 3; // at most MAX_FUZZY_DISTANCE-1 differences allowed when find similar words
 const int MAX_MATCH_ITEM_PER_LIB=100;
+/* Maximum size of word in index. strlen(word) < MAX_INDEX_KEY_SIZE.
+ * See doc/StarDictFileFormat. */
+const int MAX_INDEX_KEY_SIZE=256;
 
 extern gint stardict_casecmp(const gchar *s1, const gchar *s2, bool isClt, CollateFunctions func);
 extern bool bIsPureEnglish(const gchar *str);
 extern gint stardict_server_collate(const gchar *str1, const gchar *str2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc);
+
+/* function to compare keys in index */
+typedef gint (*key_comp_func_t)(const gchar *s1, const gchar *s2);
 
 class show_progress_t {
 public:
@@ -65,9 +71,14 @@ private:
 
 class idxsyn_file {
 public:
+	// number of words in the index
 	glong wordcount;
 	collation_file *clt_file;
 	collation_file *clt_files[COLLATE_FUNC_NUMS];
+	/* use this function to compare keys in the index
+	 * For all indexes but the resource database index it is stardict_strcmp
+	 * function. */
+	key_comp_func_t key_comp_func;
 	std::string url;
 	std::string saveurl;
 
@@ -85,15 +96,18 @@ public:
 
 class index_file : public idxsyn_file {
 public:
+	/* get_data and get_key_and_data methods return their result through these
+	 * members. */
 	guint32 wordentry_offset;
 	guint32 wordentry_size;
 
+	static index_file* Create(const std::string& filebasename,
+		const char* mainext, std::string& fullfilename);
 	virtual bool load(const std::string& url, gulong wc, gulong fsize,
 			  bool CreateCacheFile, int EnableCollationLevel,
 			  CollateFunctions _CollateFunction, show_progress_t *sp) = 0;
 	virtual void get_data(glong idx) = 0;
-	virtual  const gchar *get_key_and_data(glong idx) = 0;
-private:
+	virtual const gchar *get_key_and_data(glong idx) = 0;
 	virtual bool lookup(const char *str, glong &idx, glong &idx_suggest) = 0;
 };
 
@@ -116,7 +130,7 @@ private:
 	cache_file oft_file;
 	FILE *synfile;
 
-	gchar wordentry_buf[256+sizeof(guint32)];
+	gchar wordentry_buf[MAX_INDEX_KEY_SIZE+sizeof(guint32)];
 	struct index_entry {
 		glong idx;
 		std::string keystr;

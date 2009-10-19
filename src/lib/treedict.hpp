@@ -6,6 +6,8 @@
 #include "common.hpp"
 #include "data.hpp"
 
+typedef std::list<std::string> strlist_t;
+
 class TreeDict : public DictBase {
 public:
 	TreeDict();

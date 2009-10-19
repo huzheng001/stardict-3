@@ -25,6 +25,7 @@ class DictBase {
 public:
 	DictBase();
 	~DictBase();
+	bool load(const std::string& filebasename, const char* mainext);
 	gchar * GetWordData(guint32 idxitem_offset, guint32 idxitem_size);
 	bool containSearchData() {
 		if (sametypesequence.empty())
@@ -36,10 +37,10 @@ public:
 	bool SearchData(std::vector<std::string> &SearchWords, guint32 idxitem_offset, guint32 idxitem_size, gchar *origin_data);
 protected:
 	std::string sametypesequence;
+private:
 	FILE *dictfile;
 	std::auto_ptr<dictData> dictdzfile;
-private:
-  cacheItem cache[WORDDATA_CACHE_NUM];
+	cacheItem cache[WORDDATA_CACHE_NUM];
 	gint cache_cur;
 };
 

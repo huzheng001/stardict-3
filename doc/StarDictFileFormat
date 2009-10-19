@@ -204,7 +204,7 @@ locale characters' sorting is not so good, in this case, you can enable
 the collation feature, see section 6.
 
 
-{4}. The ",syn" file's format.
+{4}. The ".syn" file's format.
 This file is optional, and you should notice tree dictionary needn't this file.
 Only StarDict-2.4.8 and newer support this file.
 
@@ -448,12 +448,12 @@ It have two forms:
 2. The res.rifo, res.ridx and res.rdic database.
 Direct files may have file name encoding problem, as Linux use UTF-8 and 
 Windows use local encoding, so you'd better just use ASCII file name, or 
-use databse to store UTF-8 file name.
-Databse may need to extract the file(such as .wav) file to a temporary 
+use database to store UTF-8 file name.
+Database may need to extract the file (such as .wav) file to a temporary 
 file, so not so efficient compare to direct files. But database have the 
 advantage of compressing.
 You can convert the res directory and the res database from each other by 
-the dir2resdatabse and resdatabase2dir tools.
+the dir2resdatabase and resdatabase2dir tools.
 StarDict will try to load the storage database first, then try the direct 
 files form.
 
@@ -461,11 +461,12 @@ The format of the res.rifo file:
 StarDict's storage ifo file
 version=3.0.0
 filecount=	// required.
+ridxfilesize=	// required.
 idxoffsetbits=	// optional.
 
 
 The format of the res.ridx file:
-filename;	// A string end with '\0'.
+filename;	// A utf-8 string end with '\0'.
 offset;		// 32 or 64 bits unsigned number in network byte order.
 size;		// 32 bits unsigned number in network byte order.
 filename can include a path too, such as "pic/example.png". filename is 
@@ -500,7 +501,7 @@ Available options:
 
 bookname=      // required
 tdxfilesize=   // required
-wordcount=
+wordcount=     // required
 author=
 email=
 website=

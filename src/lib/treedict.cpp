@@ -49,25 +49,11 @@ bool TreeDict::load(const std::string& ifofilename)
 	if (!load_ifofile(ifofilename, &tdxfilesize))
 		return false;
 
+	if(!DictBase::load(ifofilename.substr(0, ifofilename.length()-sizeof(".ifo")+1),
+		"dict"))
+		return false;
+
 	std::string fullfilename(ifofilename);
-	fullfilename.replace(fullfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "dict.dz");
-
-	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
-		dictdzfile.reset(new dictData);
-		if (!dictdzfile->open(fullfilename, 0)) {
-			//g_print("open file %s failed!\n",fullfilename);
-			return false;
-		}
-	} else {
-		fullfilename.erase(fullfilename.length()-sizeof(".dz")+1, sizeof(".dz")-1);
-		dictfile = fopen(fullfilename.c_str(),"rb");
-		if (!dictfile) {
-			//g_print("open file %s failed!\n",fullfilename);
-			return false;
-		}
-	}
-
-	fullfilename=ifofilename;
 	fullfilename.replace(fullfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "tdx.gz");
 
 	gchar *buffer= NULL;
@@ -118,7 +104,7 @@ bool TreeDict::load(const std::string& ifofilename)
 bool TreeDict::load_ifofile(const std::string& ifofilename, gulong *tdxfilesize)
 {
 	DictInfo dict_info;
-	if (!dict_info.load_from_ifo_file(ifofilename, true))
+	if (!dict_info.load_from_ifo_file(ifofilename, DictInfoType_TreeDict))
 		return false;
 
 	*tdxfilesize = dict_info.index_file_size;
