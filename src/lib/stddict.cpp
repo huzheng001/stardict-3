@@ -3176,10 +3176,10 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 {
 	std::vector<std::string> SearchWords;
 	std::string SearchWord;
-        const char *p=sWord;
-        while (*p) {
-                if (*p=='\\') {
-                        p++;
+	const char *p=sWord;
+	while (*p) {
+		if (*p=='\\') {
+			p++;
 			switch (*p) {
 			case ' ':
 				SearchWord+=' ';
@@ -3196,7 +3196,7 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 			default:
 				SearchWord+=*p;
 			}
-                } else if (*p == ' ') {
+		} else if (*p == ' ') {
 			if (!SearchWord.empty()) {
 				SearchWords.push_back(SearchWord);
 				SearchWord.clear();
@@ -3205,7 +3205,7 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 			SearchWord+=*p;
 		}
 		p++;
-        }
+	}
 	if (!SearchWord.empty()) {
 		SearchWords.push_back(SearchWord);
 		SearchWord.clear();

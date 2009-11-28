@@ -31,6 +31,9 @@ void __for_each_file(const std::string& dirname, const std::string& suff,
 	}
 }
 
+/* for each file in the order_list invoke f(<file name>, <disable>)
+ * for each dir in dirs_list find all files ending with suff, invoke 
+ * f(<file name>, <disable>) for each found file. */
 template<typename Function>
 void for_each_file(const List& dirs_list, const std::string& suff,
 			 const List& order_list, const List& disable_list, 
@@ -42,7 +45,7 @@ void for_each_file(const List& dirs_list, const std::string& suff,
 		f(*it, disable);
 	}
 	for (it=dirs_list.begin(); it!=dirs_list.end(); ++it)
-		__for_each_file(*it, suff, order_list, disable_list, f);			
+		__for_each_file(*it, suff, order_list, disable_list, f);
 }
 
 #endif//!_FILE_HPP_

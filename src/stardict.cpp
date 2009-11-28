@@ -136,6 +136,7 @@ AppCore::AppCore() :
 	dict_manage_dlg = NULL;
 	plugin_manage_dlg = NULL;
 	prefs_dlg = NULL;
+	oStarDictPlugins = NULL;
 #ifdef CONFIG_GNOME
 	gnome_sound_init(NULL);
 #endif
@@ -152,6 +153,7 @@ AppCore::~AppCore()
 	delete prefs_dlg;
 	g_free(iCurrentIndex);
 	delete oStarDictPlugins;
+	// window?
 }
 
 class load_show_progress_t : public show_progress_t {
@@ -286,13 +288,13 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.lookup_dict = lookup_dict;
 	oStarDictPluginSystemService.FreeResultData = FreeResultData;
 	oStarDictPluginSystemService.ShowPangoTips = ShowPangoTips;
-#ifdef _WIN32
-	oStarDictPlugins = new StarDictPlugins((gStarDictDataDir + G_DIR_SEPARATOR_S "plugins").c_str(), conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
-#else
-	oStarDictPlugins = new StarDictPlugins(STARDICT_LIB_DIR"/plugins", conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
-#endif
+	std::list<std::string> plugin_new_install_list;
+	UpdatePluginList(plugin_new_install_list);
+	oStarDictPlugins = new StarDictPlugins(GetStardictPluginDir().c_str(),
+		conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"),
+		conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 	oLibs.set_show_progress(&load_show_progress);
-	LoadDictInfo(); // Need to run after plugins are loaded.
+	LoadDictInfo(plugin_new_install_list); // Need to run after plugins are loaded.
 	std::list<std::string> load_list;
 	GetDictList(load_list);
 	oLibs.load(load_list);

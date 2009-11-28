@@ -189,4 +189,6 @@ static void *memrchr(const void *mem, int c, size_t len) {
 extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
 extern std::string gStarDictDataDir;
 
+std::string GetStardictPluginDir(void);
+
 #endif

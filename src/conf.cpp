@@ -308,3 +308,12 @@ std::string AppConf::get_darwin_custom_font()
 }
 #endif
 //---------------------------------------------------------------------------------
+
+std::string GetStardictPluginDir(void)
+{
+#ifdef _WIN32
+	return gStarDictDataDir + G_DIR_SEPARATOR_S "plugins";
+#else
+	return STARDICT_LIB_DIR"/plugins";
+#endif
+}
