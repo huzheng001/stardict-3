@@ -15,12 +15,81 @@ private:
 	std::list<std::string> &dict_all_list;
 };
 
+class GetAllPluginList {
+public:
+	GetAllPluginList(std::list<std::string> &plugin_all_list_) :
+		plugin_all_list(plugin_all_list_) {}
+	void operator()(const std::string& url, bool disable) {
+		plugin_all_list.push_back(url);
+	}
+private:
+	std::list<std::string> &plugin_all_list;
+};
+
+/* List of dictionaries that are present on the hard disk in known directories. */
 static void get_all_dict_list(std::list<std::string> &dict_all_list)
 {
 	std::list<std::string> dict_order_list;
 	std::list<std::string> dict_disable_list;
 	for_each_file(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
 				dict_order_list, dict_disable_list, GetAllDictList(dict_all_list));
+}
+
+/* List of plugins that are present on the hard disk in known directories. */
+static void get_all_plugin_list(std::list<std::string> &plugin_all_list)
+{
+	std::list<std::string> plugin_order_list;
+	std::list<std::string> plugin_disable_list;
+	std::list<std::string> plugins_dirs;
+	plugins_dirs.push_back(GetStardictPluginDir());
+	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, plugin_order_list,
+		plugin_disable_list, GetAllPluginList(plugin_all_list));
+}
+
+/* Remove all items of the var_list that are not in the all_list */
+static void remove_list_items(std::list<std::string> &var_list,
+	const std::list<std::string> &all_list)
+{
+	for(std::list<std::string>::iterator i = var_list.begin(); i != var_list.end();) {
+		if(all_list.end() == std::find(all_list.begin(), all_list.end(), *i))
+			i = var_list.erase(i);
+		else
+			++i;
+	}
+}
+
+std::list<DictManageGroup>::iterator DictManageInfo::get_active_group(void)
+{
+	std::list<DictManageGroup>::iterator i;
+	for (i = groups.begin(); i != groups.end(); ++i) {
+		if (i->name == active_group)
+			break;
+	}
+	if (i == groups.end()) {
+		i = groups.begin();
+		active_group = (i != groups.end()) ? i->name : "";
+	}
+	return i;
+}
+
+std::list<DictManageGroup>::iterator
+DictManageInfo::set_active_group(const std::string& new_group)
+{
+	std::list<DictManageGroup>::iterator i;
+	for (i = groups.begin(); i != groups.end(); ++i) {
+		if (i->name == new_group)
+			break;
+	}
+	if (i == groups.end()) {
+		if (groups.empty()) {
+			DictManageGroup group;
+			group.name = _("Default Group");
+			groups.push_back(group);
+		}
+		i = groups.begin();
+	}
+	active_group = i->name;
+	return i;
 }
 
 struct config_ParseUserData {
@@ -208,9 +277,10 @@ static void InfoToConfigXml(std::string &newxml, DictManageInfo &info)
 	}
 }
 
-static void get_dictlist_from_itemlist(std::list<std::string> &dict_list, std::list<DictManageItem> &itemlist)
+static void get_dictlist_from_itemlist(std::list<std::string> &dict_list,
+	const std::list<DictManageItem> &itemlist)
 {
-	for (std::list<DictManageItem>::iterator i = itemlist.begin(); i != itemlist.end(); ++i) {
+	for (std::list<DictManageItem>::const_iterator i = itemlist.begin(); i != itemlist.end(); ++i) {
 		if (i->type == LOCAL_DICT && i->enable == true) {
 			std::list<std::string>::iterator j;
 			for (j = dict_list.begin(); j != dict_list.end(); ++j) {
@@ -224,26 +294,60 @@ static void get_dictlist_from_itemlist(std::list<std::string> &dict_list, std::l
 	}
 }
 
-static void update_configxml(std::list<std::string> &dict_new_install_list)
+/* remove unavailable dictionaries and plugins */
+static void remove_unavailable_dicts_plugins(std::list<DictManageItem>& dict_list,
+	const std::list<std::string> &dict_all_list,
+	const std::list<std::string> &plugin_all_list)
 {
-	const std::string &configxml = conf->get_string("/apps/stardict/manage_dictionaries/dict_config_xml");
-	DictConfigXmlToInfo(configxml.c_str(), gpAppFrame->dictinfo);
-	const std::string &default_group = conf->get_string("/apps/stardict/manage_dictionaries/dict_default_group");
-	std::list<DictManageGroup>::iterator i;
-	for (i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
-		if (i->name == default_group)
+	for(std::list<DictManageItem>::iterator i=dict_list.begin();
+		i!=dict_list.end(); ) {
+		bool found=false;
+		switch(i->type) {
+		case LOCAL_DICT:
+			found = dict_all_list.end()
+				!= std::find(dict_all_list.begin(), dict_all_list.end(), i->file_or_id);
 			break;
-	}
-	if (i == gpAppFrame->dictinfo.groups.end()) {
-		if (gpAppFrame->dictinfo.groups.empty()) {
-			DictManageGroup group;
-			group.name = _("Default Group");
-			gpAppFrame->dictinfo.groups.push_back(group);
+		case VIRTUAL_DICT:
+		case NET_DICT:
+			found = plugin_all_list.end() != std::find(plugin_all_list.begin(),
+				plugin_all_list.end(), i->file_or_id);
+			break;
+		default:
+			g_error("Unknown plugin type %s\n", i->file_or_id.c_str());
+			found = false;
 		}
-		i = gpAppFrame->dictinfo.groups.begin();
+		if(found)
+			++i;
+		else
+			i = dict_list.erase(i);
 	}
-	gpAppFrame->dictinfo.active_group = i->name;
-	for (std::list<std::string>::iterator j = dict_new_install_list.begin(); j != dict_new_install_list.end(); ++j) {
+}
+
+static void update_configxml(
+	const std::list<std::string> &dict_new_install_list,
+	const std::list<std::string> &plugin_new_install_list)
+{
+	const std::list<std::string> &dict_all_list
+		= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+	const std::list<std::string> &plugin_all_list
+		= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+	const std::string &configxml
+		= conf->get_string("/apps/stardict/manage_dictionaries/dict_config_xml");
+	DictConfigXmlToInfo(configxml.c_str(), gpAppFrame->dictinfo);
+
+	// remove dictionaries and plugins that are not available now
+	for(std::list<DictManageGroup>::iterator igroup=gpAppFrame->dictinfo.groups.begin();
+		igroup!=gpAppFrame->dictinfo.groups.end(); ++igroup) {
+		remove_unavailable_dicts_plugins(igroup->querydict, dict_all_list, plugin_all_list);
+		remove_unavailable_dicts_plugins(igroup->scandict, dict_all_list, plugin_all_list);
+	}
+	
+	std::list<DictManageGroup>::iterator i
+		= gpAppFrame->dictinfo.set_active_group(
+			conf->get_string("/apps/stardict/manage_dictionaries/dict_default_group"));
+	
+	// add new dictionaries to the active group
+	for (std::list<std::string>::const_iterator j = dict_new_install_list.begin(); j != dict_new_install_list.end(); ++j) {
 		DictManageItem item;
 		item.type = LOCAL_DICT;
 		item.enable = true;
@@ -251,22 +355,21 @@ static void update_configxml(std::list<std::string> &dict_new_install_list)
 		i->querydict.push_back(item);
 		i->scandict.push_back(item);
 	}
-	if (configxml.empty()) {
-		size_t n = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.ndicts();
-		for (size_t j = 0; j < n; j++) {
+	// add new plugins to the active group
+	for(std::list<std::string>::const_iterator j=plugin_new_install_list.begin(); j != plugin_new_install_list.end(); ++j) {
+		size_t iPlugin;
+		if(gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(j->c_str(), iPlugin)) {
 			DictManageItem item;
 			item.type = VIRTUAL_DICT;
 			item.enable = true;
-			item.file_or_id = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.dict_id(j);
+			item.file_or_id = *j;
 			i->querydict.push_back(item);
 			i->scandict.push_back(item);
-		}
-		n = gpAppFrame->oStarDictPlugins->NetDictPlugins.ndicts();
-		for (size_t j = 0; j < n; j++) {
+		} else if(gpAppFrame->oStarDictPlugins->NetDictPlugins.find_dict_by_id(j->c_str(), iPlugin)) {
 			DictManageItem item;
 			item.type = NET_DICT;
 			item.enable = true;
-			item.file_or_id = gpAppFrame->oStarDictPlugins->NetDictPlugins.dict_id(j);
+			item.file_or_id = *j;
 			i->querydict.push_back(item);
 			i->scandict.push_back(item);
 		}
@@ -304,7 +407,7 @@ static void set_dictmask_by_itemlist(std::list<DictManageItem> &itemlist, bool i
 					else
 						gpAppFrame->scan_dictmask.push_back(instance_dict_index);
 				}
-			} else if (i->type == VIRTUAL_DICT){
+			} else if (i->type == VIRTUAL_DICT) {
 				size_t iPlugin;
 				if (gpAppFrame->oStarDictPlugins->VirtualDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
 					InstantDictIndex instance_dict_index;
@@ -316,6 +419,7 @@ static void set_dictmask_by_itemlist(std::list<DictManageItem> &itemlist, bool i
 						gpAppFrame->scan_dictmask.push_back(instance_dict_index);
 				}
 			} else {
+				g_assert(i->type == NET_DICT);
 				size_t iPlugin;
 				if (gpAppFrame->oStarDictPlugins->NetDictPlugins.find_dict_by_id(i->file_or_id.c_str(), iPlugin)) {
 					InstantDictIndex instance_dict_index;
@@ -333,15 +437,7 @@ static void set_dictmask_by_itemlist(std::list<DictManageItem> &itemlist, bool i
 
 void UpdateDictMask()
 {
-	std::list<DictManageGroup>::iterator i;
-	for (i = gpAppFrame->dictinfo.groups.begin(); i != gpAppFrame->dictinfo.groups.end(); ++i) {
-		if (i->name == gpAppFrame->dictinfo.active_group)
-			break;
-	}
-	if (i == gpAppFrame->dictinfo.groups.end()) {
-		i = gpAppFrame->dictinfo.groups.begin();
-		gpAppFrame->dictinfo.active_group = i->name;
-	}
+	std::list<DictManageGroup>::iterator i = gpAppFrame->dictinfo.get_active_group();
 	set_dictmask_by_itemlist(i->querydict, true);
 	set_dictmask_by_itemlist(i->scandict, false);
 	g_free(gpAppFrame->iCurrentIndex);
@@ -349,26 +445,47 @@ void UpdateDictMask()
 	conf->set_string("/apps/stardict/manage_dictionaries/dict_default_group", gpAppFrame->dictinfo.active_group);
 }
 
-void LoadDictInfo()
+void LoadDictInfo(const std::list<std::string> &plugin_new_install_list)
 {
 	std::list<std::string> dict_all_list;
 	get_all_dict_list(dict_all_list);
-	const std::list<std::string> &dict_order_list = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+	std::list<std::string> dict_order_list(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"));
+	// remove dictionaries that are not available
+	remove_list_items(dict_order_list, dict_all_list);
+	// find new dictionaries
 	std::list<std::string> dict_new_install_list;
 	for (std::list<std::string>::iterator i = dict_all_list.begin(); i != dict_all_list.end(); ++i) {
-		std::list<std::string>::const_iterator j;
-		for (j = dict_order_list.begin(); j != dict_order_list.end(); ++j) {
-			if (*i == *j)
-				break;
-		}
-		if (j == dict_order_list.end()) {
+		if (dict_order_list.end() == std::find(dict_order_list.begin(), dict_order_list.end(), *i)) {
 			dict_new_install_list.push_back(*i);
 		}
 	}
-	std::list<std::string> new_dict_order_list(dict_order_list);
-	for (std::list<std::string>::iterator i = dict_new_install_list.begin(); i != dict_new_install_list.end(); ++i) {
-		new_dict_order_list.push_back(*i);
+	dict_order_list.insert(dict_order_list.end(), dict_new_install_list.begin(), dict_new_install_list.end());
+	conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", dict_order_list);
+	
+	update_configxml(dict_new_install_list, plugin_new_install_list);
+}
+
+void UpdatePluginList(std::list<std::string> &plugin_new_install_list)
+{
+	plugin_new_install_list.clear();
+	std::list<std::string> plugin_all_list;
+	std::list<std::string> plugin_order_list;
+
+	get_all_plugin_list(plugin_all_list);
+	plugin_order_list = conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+	// remove plugins that are not available
+	remove_list_items(plugin_order_list, plugin_all_list);
+	// find new plugins
+	for(std::list<std::string>::iterator i = plugin_all_list.begin(); i != plugin_all_list.end(); ++i) {
+		if(plugin_order_list.end() == std::find(plugin_order_list.begin(), plugin_order_list.end(), *i))
+			plugin_new_install_list.push_back(*i);
 	}
-	conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", new_dict_order_list);
-	update_configxml(dict_new_install_list);
+	plugin_order_list.insert(plugin_order_list.end(), plugin_new_install_list.begin(), plugin_new_install_list.end());
+	conf->set_strlist("/apps/stardict/manage_plugins/plugin_order_list", plugin_order_list);
+
+	std::list<std::string> plugin_disable_list(
+		conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
+	remove_list_items(plugin_disable_list, plugin_all_list);
+	conf->set_strlist("/apps/stardict/manage_plugins/plugin_disable_list",
+		plugin_disable_list);
 }

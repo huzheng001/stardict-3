@@ -207,6 +207,8 @@ public:
 private:
 	StarDictMiscPlugins MiscPlugins;
 	std::string plugindirpath;
+	/* Plugins that we've tried to load irrespective of the fact were they loaded
+	 * successfully or not. */
 	std::list<std::string> loaded_plugin_list;
 	void load(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list);
 	void get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml, bool &can_configure);

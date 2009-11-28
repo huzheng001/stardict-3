@@ -396,7 +396,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		}
 		MiscPlugins.add(baseobj);
 	} else {
-		g_print("Load %s failed: Unknow type plugin!\n", filename);
+		g_print("Load %s failed: Unknown type plugin!\n", filename);
 		g_module_close (module);
 		delete baseobj;
 		return;
