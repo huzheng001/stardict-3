@@ -2094,6 +2094,7 @@ void AppCore::PopupPluginManageDlg()
 			return;
 		if (order_changed) {
 			oStarDictPlugins->VirtualDictPlugins.reorder(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"));
+			oStarDictPlugins->NetDictPlugins.reorder(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"));
 			oMidWin.oToolWin.UpdatePronounceMenu();
 		}
 		if (dict_changed) {
