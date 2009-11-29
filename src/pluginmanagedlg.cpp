@@ -8,11 +8,24 @@
 #include "stardict.h"
 
 PluginManageDlg::PluginManageDlg()
+:
+window(NULL),
+treeview(NULL),
+detail_label(NULL),
+pref_button(NULL),
+plugin_tree_model(NULL),
+dict_changed_(false),
+order_changed_(false)
 {
 }
 
 PluginManageDlg::~PluginManageDlg()
 {
+	g_assert(!window);
+	g_assert(!treeview);
+	g_assert(!detail_label);
+	g_assert(!pref_button);
+	g_assert(!plugin_tree_model);
 }
 
 void PluginManageDlg::response_handler (GtkDialog *dialog, gint res_id, PluginManageDlg *oPluginManageDlg)
@@ -75,7 +88,8 @@ void PluginManageDlg::on_plugin_enable_toggled (GtkCellRendererToggle *cell, gch
 		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, can_configure);
 	else
 		gtk_widget_set_sensitive(oPluginManageDlg->pref_button, FALSE);
-	if (plugin_type == StarDictPlugInType_VIRTUALDICT) {
+	if (plugin_type == StarDictPlugInType_VIRTUALDICT
+		|| plugin_type == StarDictPlugInType_NETDICT) {
 		oPluginManageDlg->dict_changed_ = true;
 	} else if (plugin_type == StarDictPlugInType_TTS) {
 		gpAppFrame->oMidWin.oToolWin.UpdatePronounceMenu();
@@ -141,7 +155,7 @@ static void plugininfo_parse_text(GMarkupParseContext *context, const gchar *tex
 	}
 }
 
-static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, std::list<StarDictPluginInfo> &infolist)
+static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, const std::list<StarDictPluginInfo> &infolist)
 {
 	plugininfo_ParseUserData Data;
 	GMarkupParser parser;
@@ -151,7 +165,7 @@ static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, std::li
 	parser.passthrough = NULL;
 	parser.error = NULL;
 	GtkTreeIter iter;
-	for (std::list<StarDictPluginInfo>::iterator i = infolist.begin(); i != infolist.end(); ++i) {
+	for (std::list<StarDictPluginInfo>::const_iterator i = infolist.begin(); i != infolist.end(); ++i) {
 		Data.info_str = NULL;
 		Data.detail_str = NULL;
 		Data.filename = i->filename;
@@ -430,12 +444,18 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 			break;
 		}
 	}
+	/* When do we get GTK_RESPONSE_NONE response? Unable to reproduce. */
 	if (result != GTK_RESPONSE_NONE) {
 		dict_changed = dict_changed_;
 		order_changed = order_changed_;
 		gtk_widget_destroy(GTK_WIDGET(window));
-		return false;
-	} else {
-		return true;
 	}
+	window = NULL;
+	treeview = NULL;
+	detail_label = NULL;
+	pref_button = NULL;
+	plugin_tree_model = NULL;
+	oStarDictPluginSystemInfo.pluginwin = NULL;
+
+	return result == GTK_RESPONSE_NONE;
 }
