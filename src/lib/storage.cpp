@@ -30,7 +30,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 	fullfilename += G_DIR_SEPARATOR_S "res.rifo";
 	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
 		storage = new ResourceStorage();
-		if(!storage->load_file(fullfilename.c_str(), sp)) {
+		if(!storage->load_database(fullfilename.c_str(), sp)) {
 			delete storage;
 			storage = NULL;
 		}
@@ -39,7 +39,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 		fullfilename += G_DIR_SEPARATOR_S "res";
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
 			storage = new ResourceStorage();
-			if(!storage->load_database(fullfilename.c_str(), sp)) {
+			if(!storage->load_filesdir(fullfilename.c_str(), sp)) {
 				delete storage;
 				storage = NULL;
 			}
@@ -48,7 +48,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 	return storage;
 }
 
-bool ResourceStorage::load_file(const char *resdir, show_progress_t *sp)
+bool ResourceStorage::load_filesdir(const char *resdir, show_progress_t *sp)
 {
 	g_assert(storage_type == StorageType_UNKNOWN);
 	g_assert(file_storage == NULL && database_storage == NULL);

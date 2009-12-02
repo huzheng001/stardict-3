@@ -48,7 +48,7 @@ public:
 	const char *get_file_path(const char *key);
 	const char *get_file_content(const char *key);
 private:
-	bool load_file(const char *resdir, show_progress_t *sp);
+	bool load_filesdir(const char *resdir, show_progress_t *sp);
 	bool load_database(const char *rifofilename, show_progress_t *sp);
 	File_ResourceStorage *file_storage;
 	Database_ResourceStorage *database_storage;
