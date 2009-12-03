@@ -9,6 +9,12 @@
 #include <list>
 
 class PrefsDlg {
+public:
+	struct SkinEntry {
+		std::string path;
+		std::string name;
+	};
+
 private:
   GtkWidget *notebook;
 #ifndef CONFIG_GPE
@@ -43,6 +49,9 @@ private:
 #endif
   GtkWidget *scan_hotkey_editor, *mainwindow_hotkey_editor;
   const std::list<std::string>& key_combs;
+
+  std::vector<SkinEntry> skins;
+  bool skin_changed;
 
 #ifndef CONFIG_GPE
   GtkTreeModel* create_categories_tree_model ();
@@ -108,6 +117,7 @@ private:
 #ifndef CONFIG_DARWIN
   static void on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
+  static void on_setup_mainwin_skin_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_moveup_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
@@ -126,6 +136,7 @@ private:
   static void on_markup_search_word(GtkToggleButton *, PrefsDlg *);
 
   void resize_categories_tree(void);
+  void find_skins();
 #endif
 
   void change_font_for_all_widgets(const std::string& fontname);

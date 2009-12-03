@@ -48,4 +48,27 @@ void for_each_file(const List& dirs_list, const std::string& suff,
 		__for_each_file(*it, suff, order_list, disable_list, f);
 }
 
+template<typename Function>
+void __for_each_dir(const std::string& dirname, Function f)
+{
+	GDir *dir = g_dir_open(dirname.c_str(), 0, NULL);	
+	if (dir) {
+		const gchar *filename;
+		while ((filename = g_dir_read_name(dir))) {
+			std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
+			if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR))
+				 f(fullfilename, false);
+		}
+		g_dir_close(dir);
+	}
+}
+
+template<typename Function>
+void for_each_dir(const List& dirs_list, Function f)
+{
+	List::const_iterator it;
+	for (it=dirs_list.begin(); it!=dirs_list.end(); ++it)
+		__for_each_dir(*it, f);
+}
+
 #endif//!_FILE_HPP_
