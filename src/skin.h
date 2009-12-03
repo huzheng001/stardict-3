@@ -9,6 +9,19 @@
 typedef ResourceWrapper<GdkCursor, GdkCursor, gdk_cursor_unref> SkinCursor;
 typedef ResourceWrapper<GdkPixbuf, void, g_object_unref> Skin_pixbuf_1;
 
+class SkinStorage {
+private:
+	std::string m_path, m_name;
+public:
+	SkinStorage(const char *path);
+	bool is_valid() const;
+	const char *get_name() const;
+	
+	void load_icon(Skin_pixbuf_1 &icon, const char *name) const;
+	void load_stock_icons(GtkIconFactory *factory) const;
+	void load_gtk_engine() const;
+};
+
 class AppSkin {
 public:
 	int width,height;
@@ -27,6 +40,7 @@ public:
 	Skin_pixbuf_1 pronounce;
 
 	void load();
+	void load(const std::string &path);
 };
 
 #endif

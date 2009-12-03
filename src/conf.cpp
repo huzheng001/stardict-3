@@ -62,6 +62,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/port", 2628);
 	add_entry("/apps/stardict/preferences/network/user", std::string());
 	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
+	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/word_change_timeout", 300);

@@ -2154,10 +2154,11 @@ void AppCore::Init(gchar *queryword)
 			 sigc::mem_fun(this, &AppCore::on_floatwin_lock_y_changed));
 	conf->notify_add("/apps/stardict/preferences/dictionary/scan_modifier_key",
 			 sigc::mem_fun(this, &AppCore::on_scan_modifier_key_changed));
+
+	oAppSkin.load(conf->get_string_at("main_window/skin"));
+
 	if (!hide_option)
 		stardict_splash.show();
-
-	oAppSkin.load();
 
 	Create(queryword);
 

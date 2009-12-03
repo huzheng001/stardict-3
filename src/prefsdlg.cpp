@@ -37,6 +37,7 @@
 #include "utils.h"
 #include "iskeyspressed.hpp"
 #include "lib/md5.h"
+#include "lib/file.hpp"
 
 #include "prefsdlg.h"
 #include "hotkeyeditor.h"
@@ -1190,6 +1191,62 @@ void PrefsDlg::on_setup_mainwin_transparent_scale_changed(GtkRange *range, Prefs
 	gtk_window_set_opacity(GTK_WINDOW(gpAppFrame->window), (100-transparent)/100.0);
 }
 
+void PrefsDlg::on_setup_mainwin_skin_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
+{
+	int index = gtk_combo_box_get_active(combobox);
+	if ((index >= 0) && (index < int(oPrefsDlg->skins.size()))) {
+		if (! oPrefsDlg->skin_changed) {
+			GtkWidget *message_dlg = gtk_message_dialog_new(
+				NULL,
+				(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+				GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+				_("Skin change will take effect after application restart"));
+			gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+			gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+			gtk_dialog_run(GTK_DIALOG(message_dlg));
+			gtk_widget_destroy(message_dlg);
+		}
+		oPrefsDlg->skin_changed = true;
+		conf->set_string_at("main_window/skin", oPrefsDlg->skins[index].path);
+	}
+	//std::string current_skin_path = conf->get_string_at("main_window/skin");
+}
+
+class SkinDetector {
+private:
+	std::vector<PrefsDlg::SkinEntry> *m_skins;
+public:
+	SkinDetector(std::vector<PrefsDlg::SkinEntry> &skins) : m_skins(&skins) {}
+	void operator ()(const std::string &filename, bool disable);
+};
+
+
+void SkinDetector::operator ()(const std::string &filename, bool disable)
+{
+	if (! disable) {
+		SkinStorage skin(filename.c_str());
+		if (skin.is_valid()) {
+			int n = m_skins->size();
+			m_skins->resize(n+1);
+			(*m_skins)[n].path = filename;
+			(*m_skins)[n].name = skin.get_name();
+		}
+	}
+}
+
+
+void PrefsDlg::find_skins()
+{
+	skins.resize(1);
+	skins[0].path = "";
+	skins[0].name = _("Default"); // i.e. no skin applied
+	std::list<std::string> dirs;
+	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/skins");
+	dirs.push_back(gStarDictDataDir + G_DIR_SEPARATOR_S "skins");
+	for_each_dir(dirs, SkinDetector(skins));
+}
+
+
 void PrefsDlg::setup_mainwin_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_EXECUTE);
@@ -1228,6 +1285,21 @@ void PrefsDlg::setup_mainwin_options_page()
 	g_signal_connect(G_OBJECT(check_button), "toggled",
 									 G_CALLBACK(on_setup_mainwin_autorun_ckbutton_toggled), this);
 #endif
+	hbox = gtk_hbox_new(false, 12);
+	gtk_box_pack_start(GTK_BOX(vbox1), hbox,false,false,0);
+	GtkWidget *lbl = gtk_label_new(NULL);
+	gtk_label_set_markup_with_mnemonic(GTK_LABEL(lbl), _("Skin:"));
+	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(lbl),false,false,0);
+	GtkWidget *cb = gtk_combo_box_new_text();
+	std::string current_skin_path = conf->get_string_at("main_window/skin");
+	find_skins();
+	for (int i = 0; i < int(skins.size()); i++) {
+		gtk_combo_box_append_text(GTK_COMBO_BOX(cb), skins[i].name.c_str());
+		if (skins[i].path == current_skin_path)
+			gtk_combo_box_set_active(GTK_COMBO_BOX(cb), i);
+	}
+	gtk_box_pack_start(GTK_BOX(hbox),cb,true,true,0);
+	g_signal_connect(G_OBJECT(cb), "changed", G_CALLBACK(on_setup_mainwin_skin_changed), this);
 
 	check_button = gtk_check_button_new_with_mnemonic(_("Hide main window when _starting StarDict."));
 	gtk_box_pack_start(GTK_BOX(vbox1), check_button, FALSE, FALSE, 0);
@@ -1844,6 +1916,7 @@ PrefsDlg::PrefsDlg(GtkWindow *parent, GdkPixbuf *logo, const std::list<std::stri
 #endif
 
   window = NULL;
+  skin_changed = false;
 }
 
 bool PrefsDlg::ShowModal()
