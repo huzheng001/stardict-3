@@ -449,6 +449,7 @@ src/lib/Makefile
 src/pixmaps/Makefile
 src/sounds/Makefile
 src/dic/Makefile
+src/skins/Makefile
 src/treedict/Makefile
 src/win32/Makefile
 src/win32/acrobat/Makefile

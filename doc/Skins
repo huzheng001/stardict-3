@@ -1,0 +1,48 @@
+Skin support in Stardict
+
+Current implemention of skin support allows to
+- set icons appearing on tool bars, in dialog boxes
+- set colors, fonts, sizes of widgets
+- load custom engine to add special effects
+
+Stardict search skins in the "skins" directory in the following locations:
+- system-wide stardict data directory (normally /usr/local/share/stardict/skins under *nix)
+- user home stardict data directory (normally ~/.stardict/skins under *nix)
+Each skin resides in a separate directory under the skins directory.
+
+A skin directory contains:
+
+- "name" file containing skin name that is shown in the skin selection dialog. That is a plain text file one line long.
+
+- "gtkrc" - gtk resource file. See http://library.gnome.org/devel/gtk/unstable/gtk-Resource-Files.html for resource file format.
+
+- a number of .png files containing stardict-specific icons. See AppSkin::load(const std::string) method in the skin.cpp file for the list of possible values. You will find a block loading icons. For instance, this line loads the index_wazard icon:
+	storage.load_icon(index_wazard, "index_wazard.png");
+
+- "stock" directory with .png files for stock icons (These are icons common to all gtk applications, like OK, cancel, close.) See StockIconInfo structure initialization list in the skin.cpp file for possible values. For instance, the following line specifies OK icon: 
+	{GTK_STOCK_OK, "ok"},
+
+- "engines" directory with libraries to add special effects. Optional.
+	Stardict adds the directory of the selected skin to the GTK_PATH environment variable. See the GTK_PATH variable in http://library.gnome.org/devel/gtk/unstable/gtk-running.html
+
+Some of the items may be omitted. For example, it is not necessary to provide all icons used in the application.
+
+An excerpt of directory structure with one sample skin:
+skins
+skins/sample
+skins/sample/stock
+skins/sample/stock/properties.png
+skins/sample/stock/refresh.png
+skins/sample/stock/...
+skins/sample/engines
+skins/sample/engines/libsample.so
+skins/sample/engines/libsample.dll
+skins/sample/gtkrc
+skins/sample/name
+skins/sample/index_wazard.png
+skins/sample/index_dictlist.png
+skins/sample/index_appendix.png
+skins/sample/index_translate.png
+skins/sample/pronounce.png
+
+To change stardict skin go to Preferences->"Main window" category->"Option" subcategory. Select a skin in the drop-down list on the right. Restart stardict to apply the selected skin.
