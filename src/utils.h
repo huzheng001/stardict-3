@@ -35,18 +35,18 @@ private:
 
 // Helper for enabling 'if (sp)'
 	struct Tester {
-            Tester() {}
-        private:
-            void operator delete(void*);
-        };
+		Tester() {}
+	private:
+		void operator delete(void*);
+	};
 public:
 	// enable 'if (sp)'
-        operator Tester*() const
-        {
-            if (!*this) return 0;
-            static Tester t;
-            return &t;
-        }
+	operator Tester*() const
+	{
+		if (!*this) return 0;
+		static Tester t;
+		return &t;
+	}
 };
 
 namespace glib {

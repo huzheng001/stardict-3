@@ -42,18 +42,33 @@ enum CacheFileType {
 
 class cache_file {
 public:
-	guint32 *wordoffset;
-
 	cache_file(CacheFileType _cachefiletype);
 	~cache_file();
 	bool load_cache(const std::string& url, const std::string& saveurl, CollateFunctions cltfunc, glong filedatasize);
 	bool save_cache(const std::string& url, CollateFunctions cltfunc, gulong npages);
+	// datasize in bytes
+	void allocate_wordoffset(glong datasize);
+	guint32& get_wordoffset(size_t ind)
+	{
+		return wordoffset[ind];
+	}
+	guint32* get_wordoffset(void)
+	{
+		return wordoffset;
+	}
+
 private:
+	guint32 *wordoffset;
 	CacheFileType cachefiletype;
 	MapFile *mf;
 	bool get_cache_filename(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc);
-	MapFile* get_cache_loadfile(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next);
-	FILE* get_cache_savefile(const gchar *filename, const std::string &url, int next, std::string &cfilename, CollateFunctions cltfunc);
+	MapFile* get_cache_for_load(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next);
+	FILE* get_cache_for_save(const gchar *filename, const std::string &url, int next, std::string &cfilename, CollateFunctions cltfunc);
+	gchar *get_next_filename(
+		const gchar *dirname, const gchar *basename, int num,
+		const gchar *extendname, CollateFunctions cltfunc) const;
+	void get_filename(const std::string &url, CollateFunctions cltfunc,
+		std::string &filename) const;
 };
 
 class idxsyn_file;
