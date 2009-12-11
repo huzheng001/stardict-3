@@ -74,14 +74,14 @@ private:
 class idxsyn_file;
 class collation_file : public cache_file {
 public:
-	CollateFunctions CollateFunction;
-
-	collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype);
+	collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype,
+		CollateFunctions _CollateFunction);
 	bool lookup(const char *str, glong &idx, glong &idx_suggest);
 	const gchar *GetWord(glong idx);
 	glong GetOrigIndex(glong cltidx);
 private:
 	idxsyn_file *idx_file;
+	CollateFunctions CollateFunction;
 };
 
 class idxsyn_file {
