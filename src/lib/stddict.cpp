@@ -520,9 +520,11 @@ void cache_file::get_filename(const std::string &url, CollateFunctions cltfunc,
 	}
 }
 
-collation_file::collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype)
+collation_file::collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype,
+	CollateFunctions _CollateFunction)
 : cache_file(_cachefiletype),
-	idx_file(_idx_file)
+	idx_file(_idx_file),
+	CollateFunction(_CollateFunction)
 {
 }
 
@@ -640,8 +642,7 @@ void idxsyn_file::collate_sort(const std::string& url,
 			       CollateFunctions collf,
 			       show_progress_t *sp)
 {
-	clt_file = new collation_file(this, CacheFileType_clt);
-	clt_file->CollateFunction = collf;
+	clt_file = new collation_file(this, CacheFileType_clt, collf);
 	if (!clt_file->load_cache(url, saveurl, collf, wordcount*sizeof(guint32))) {
 		sp->notify_about_start(_("Sorting, please wait..."));
 		clt_file->allocate_wordoffset(wordcount*sizeof(guint32));
@@ -666,8 +667,7 @@ void idxsyn_file::collate_load(CollateFunctions collf)
 {
 	if (clt_files[collf])
 		return;
-	clt_files[collf] = new collation_file(this, CacheFileType_server_clt);
-	clt_files[collf]->CollateFunction = collf;
+	clt_files[collf] = new collation_file(this, CacheFileType_server_clt, collf);
 	if (!clt_files[collf]->load_cache(url, saveurl, collf, wordcount*sizeof(guint32))) {
 		clt_files[collf]->allocate_wordoffset(wordcount*sizeof(guint32));
 		for (glong i=0; i<wordcount; i++)
