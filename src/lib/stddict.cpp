@@ -208,13 +208,11 @@ private:
 
 offset_index::offset_index() : oft_file(CacheFileType_oft)
 {
-	clt_file = NULL;
 	idxfile = NULL;
 }
 
 offset_index::~offset_index()
 {
-	delete clt_file;
 	if (idxfile)
 		fclose(idxfile);
 }
@@ -541,7 +539,7 @@ glong collation_file::GetOrigIndex(glong cltidx)
 bool collation_file::lookup(const char *sWord, glong &idx, glong &idx_suggest)
 {
 	bool bFound=false;
-	glong iTo=idx_file->wordcount-1;
+	glong iTo=idx_file->get_word_count()-1;
 	if (stardict_collate(sWord, GetWord(0), CollateFunction)<0) {
 		idx = 0;
 		idx_suggest = 0;
@@ -606,11 +604,18 @@ static gint sort_collation_index(gconstpointer a, gconstpointer b, gpointer user
 
 idxsyn_file::idxsyn_file()
 :
-	wordcount(0),
 	clt_file(NULL),
-	key_comp_func(stardict_strcmp)
+	key_comp_func(stardict_strcmp),
+	wordcount(0)
 {
 	memset(clt_files, 0, sizeof(clt_files));
+}
+
+idxsyn_file::~idxsyn_file()
+{
+	delete clt_file;
+	for(size_t i=0; i<COLLATE_FUNC_NUMS; ++i)
+		delete clt_files[i];
 }
 
 const gchar *idxsyn_file::getWord(glong idx, int EnableCollationLevel, int servercollatefunc)
@@ -637,24 +642,13 @@ bool idxsyn_file::Lookup(const char *str, glong &idx, glong &idx_suggest, int En
 	return clt_files[servercollatefunc-1]->lookup(str, idx, idx_suggest);
 }
 
-void idxsyn_file::collate_sort(const std::string& url,
-			       const std::string& saveurl,
+void idxsyn_file::collate_sort(const std::string& _url,
+			       const std::string& _saveurl,
 			       CollateFunctions collf,
 			       show_progress_t *sp)
 {
-	clt_file = new collation_file(this, CacheFileType_clt, collf);
-	if (!clt_file->load_cache(url, saveurl, collf, wordcount*sizeof(guint32))) {
-		sp->notify_about_start(_("Sorting, please wait..."));
-		clt_file->allocate_wordoffset(wordcount*sizeof(guint32));
-		for (glong i=0; i<wordcount; i++)
-			clt_file->get_wordoffset(i) = i;
-		sort_collation_index_user_data data;
-		data.idx_file = this;
-		data.cltfunc = collf;
-		g_qsort_with_data(clt_file->get_wordoffset(), wordcount, sizeof(guint32), sort_collation_index, &data);
-		if (!clt_file->save_cache(saveurl, collf, wordcount))
-			g_printerr("Cache update failed.\n");
-	}
+	g_assert(!clt_file);
+	clt_file = collate_load_impl(_url, _saveurl, collf, sp, CacheFileType_clt);
 }
 
 void idxsyn_file::collate_save_info(const std::string& _url, const std::string& _saveurl)
@@ -667,18 +661,28 @@ void idxsyn_file::collate_load(CollateFunctions collf)
 {
 	if (clt_files[collf])
 		return;
-	clt_files[collf] = new collation_file(this, CacheFileType_server_clt, collf);
-	if (!clt_files[collf]->load_cache(url, saveurl, collf, wordcount*sizeof(guint32))) {
-		clt_files[collf]->allocate_wordoffset(wordcount*sizeof(guint32));
+	clt_files[collf] = collate_load_impl(url, saveurl, collf, NULL, CacheFileType_server_clt);
+}
+
+collation_file * idxsyn_file::collate_load_impl(
+	const std::string& _url, const std::string& _saveurl,
+	CollateFunctions collf, show_progress_t *sp, CacheFileType CacheType)
+{
+	collation_file * _clt_file = new collation_file(this, CacheType, collf);
+	if (!_clt_file->load_cache(_url, _saveurl, collf, wordcount*sizeof(guint32))) {
+		if(sp)
+			sp->notify_about_start(_("Sorting, please wait..."));
+		_clt_file->allocate_wordoffset(wordcount*sizeof(guint32));
 		for (glong i=0; i<wordcount; i++)
-			clt_files[collf]->get_wordoffset(i) = i;
+			_clt_file->get_wordoffset(i) = i;
 		sort_collation_index_user_data data;
 		data.idx_file = this;
 		data.cltfunc = collf;
-		g_qsort_with_data(clt_files[collf]->get_wordoffset(), wordcount, sizeof(guint32), sort_collation_index, &data);
-		if (!clt_files[collf]->save_cache(saveurl, collf, wordcount))
+		g_qsort_with_data(_clt_file->get_wordoffset(), wordcount, sizeof(guint32), sort_collation_index, &data);
+		if (!_clt_file->save_cache(_saveurl, collf, wordcount))
 			g_printerr("Cache update failed.\n");
 	}
+	return _clt_file;
 }
 
 bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
@@ -853,13 +857,11 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 
 wordlist_index::wordlist_index()
 {
-	clt_file = NULL;
 	idxdatabuf = NULL;
 }
 
 wordlist_index::~wordlist_index()
 {
-	delete clt_file;
 	g_free(idxdatabuf);
 }
 
@@ -1011,12 +1013,10 @@ void synonym_file::page_t::fill(gchar *data, gint nent, glong idx_)
 
 synonym_file::synonym_file() : oft_file(CacheFileType_oft)
 {
-	clt_file = NULL;
 }
 
 synonym_file::~synonym_file()
 {
-	delete clt_file;
 	if (synfile)
 		fclose(synfile);
 }
@@ -1282,7 +1282,7 @@ glong Dict::nsynarticles()
 {
 	if (syn_file.get() == NULL)
 		return 0;
-	return syn_file->wordcount;
+	return syn_file->get_word_count();
 }
 
 bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, int EnableCollationLevel, int servercollatefunc)
@@ -1293,7 +1293,7 @@ bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, int EnableCollationLe
 	else
 		is_file = syn_file.get();
 	if (idx==INVALID_INDEX) {
-		pidx = is_file->wordcount-1;
+		pidx = is_file->get_word_count()-1;
 		return true;
 	}
 	pidx = idx;
@@ -1327,7 +1327,7 @@ void Dict::GetWordNext(glong &idx, bool isidx, int EnableCollationLevel, int ser
 	gchar *cWord = g_strdup(is_file->getWord(idx, EnableCollationLevel, servercollatefunc));
 	const gchar *pWord;
 	bool found=false;
-	while (idx < is_file->wordcount-1) {
+	while (idx < is_file->get_word_count()-1) {
 		pWord = is_file->getWord(idx+1, EnableCollationLevel, servercollatefunc);
 		if (strcmp(pWord, cWord)!=0) {
 			found=true;
@@ -1361,7 +1361,7 @@ gint Dict::GetOrigWordCount(glong& idx, bool isidx)
 		idx1--;
 	}
 	glong idx2=idx;
-	while (idx2<is_file->wordcount-1) {
+	while (idx2<is_file->get_word_count()-1) {
 		pWord = is_file->get_key(idx2+1);
 		if (strcmp(pWord, cWord)!=0)
 			break;
@@ -2066,14 +2066,14 @@ glong Libs::CltIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 	if (EnableCollationLevel == 1) {
 		if (cltidx == INVALID_INDEX)
 			return cltidx;
-		return oLib[iLib]->idx_file->clt_file->GetOrigIndex(cltidx);
+		return oLib[iLib]->idx_file->get_clt_file()->GetOrigIndex(cltidx);
 	}
 	if (servercollatefunc == 0)
 		return cltidx;
 	if (cltidx == INVALID_INDEX)
 		return cltidx;
 	oLib[iLib]->idx_file->collate_load((CollateFunctions)(servercollatefunc-1));
-	return oLib[iLib]->idx_file->clt_files[servercollatefunc-1]->GetOrigIndex(cltidx);
+	return oLib[iLib]->idx_file->get_clt_file(servercollatefunc-1)->GetOrigIndex(cltidx);
 }
 
 glong Libs::CltSynIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
@@ -2083,14 +2083,14 @@ glong Libs::CltSynIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 	if (EnableCollationLevel == 1) {
 		if (cltidx == UNSET_INDEX || cltidx == INVALID_INDEX)
 			return cltidx;
-		return oLib[iLib]->syn_file->clt_file->GetOrigIndex(cltidx);
+		return oLib[iLib]->syn_file->get_clt_file()->GetOrigIndex(cltidx);
 	}
 	if (servercollatefunc == 0)
 		return cltidx;
 	if (cltidx == UNSET_INDEX || cltidx == INVALID_INDEX)
 		return cltidx;
 	oLib[iLib]->syn_file->collate_load((CollateFunctions)(servercollatefunc-1));
-	return oLib[iLib]->syn_file->clt_files[servercollatefunc-1]->GetOrigIndex(cltidx);
+	return oLib[iLib]->syn_file->get_clt_file(servercollatefunc-1)->GetOrigIndex(cltidx);
 }
 
 const gchar *Libs::GetSuggestWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<InstantDictIndex> &dictmask, int servercollatefunc)

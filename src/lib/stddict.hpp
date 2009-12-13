@@ -86,27 +86,34 @@ private:
 
 class idxsyn_file {
 public:
-	// number of words in the index
-	glong wordcount;
-	collation_file *clt_file;
-	collation_file *clt_files[COLLATE_FUNC_NUMS];
-	/* use this function to compare keys in the index
-	 * For all indexes but the resource database index it is stardict_strcmp
-	 * function. */
-	key_comp_func_t key_comp_func;
-	std::string url;
-	std::string saveurl;
-
 	idxsyn_file();
+	virtual ~idxsyn_file();
 	const gchar *getWord(glong idx, int EnableCollationLevel, int servercollatefunc);
 	bool Lookup(const char *str, glong &idx, glong &idx_suggest, int EnableCollationLevel, int servercollatefunc);
 	virtual const gchar *get_key(glong idx) = 0;
 	virtual bool lookup(const char *str, glong &idx, glong &idx_suggest) = 0;
-	virtual ~idxsyn_file() {}
-	void collate_sort(const std::string& url, const std::string& saveurl,
+	void collate_sort(const std::string& _url, const std::string& _saveurl,
 			  CollateFunctions collf, show_progress_t *sp);
 	void collate_save_info(const std::string& _url, const std::string& _saveurl);
 	void collate_load(CollateFunctions collf);
+	collation_file * get_clt_file(void) { return clt_file; }
+	collation_file * get_clt_file(size_t ind) { return clt_files[ind]; }
+	glong get_word_count(void) const { return wordcount; }
+private:
+	collation_file * collate_load_impl(
+		const std::string& _url, const std::string& _saveurl,
+		CollateFunctions collf, show_progress_t *sp, CacheFileType CacheType);
+	std::string url;
+	std::string saveurl;
+	collation_file *clt_file;
+	collation_file *clt_files[COLLATE_FUNC_NUMS];
+protected:
+	/* use this function to compare keys in the index
+	 * For all indexes but the resource database index it is stardict_strcmp
+	 * function. */
+	key_comp_func_t key_comp_func;
+	// number of words in the index
+	glong wordcount;
 };
 
 class index_file : public idxsyn_file {
@@ -190,7 +197,7 @@ public:
 	bool load(const std::string&, bool CreateCacheFile, int EnableCollationLevel, CollateFunctions,
 		  show_progress_t *);
 
-	glong narticles() { return idx_file->wordcount; }
+	glong narticles() { return idx_file->get_word_count(); }
 	glong nsynarticles();
 	const std::string& dict_name() { return bookname; }
 	const std::string& dict_type() { return dicttype; }
