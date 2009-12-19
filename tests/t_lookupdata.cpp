@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
 	gtk_init(&argc, &argv);
 	
-	Libs libs(NULL, false, false, 0);
+	Libs libs(NULL, false, CollationLevel_NONE, 0);
 	List dict_list;
 	libs.load(dict_list);
 	std::vector<InstantDictIndex> dictmask;

@@ -176,10 +176,9 @@ bool Database_ResourceStorage::load(const std::string& rifofilename,
 	if(idx_file)
 		delete idx_file;
 	idx_file = NULL;
-	idx_file = index_file::Create(filebasename, "ridx", fullfilename);
-	idx_file->key_comp_func = strcmp;
+	idx_file = index_file::Create(filebasename, "ridx", fullfilename, strcmp);
 	if (!idx_file->load(fullfilename, filecount, indexfilesize,
-		false, false, UTF8_GENERAL_CI, sp))
+		false, CollationLevel_NONE, UTF8_GENERAL_CI, sp))
 		return false;
 
 	return true;

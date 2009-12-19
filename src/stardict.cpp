@@ -127,7 +127,7 @@ public:
 AppCore::AppCore() :
 	oLibs(&gtk_show_progress,
 	      conf->get_bool_at("dictionary/create_cache_file"),
-	      conf->get_bool_at("dictionary/enable_collation"),
+	      conf->get_bool_at("dictionary/enable_collation") ? CollationLevel_SINGLE : CollationLevel_NONE,
 	      conf->get_int_at("dictionary/collate_function"))
 {
 	iCurrentIndex = NULL;
@@ -2054,7 +2054,9 @@ void AppCore::reload_dicts()
 {
 	std::list<std::string> load_list;
 	GetDictList(load_list);
-	oLibs.reload(load_list, conf->get_bool_at("dictionary/enable_collation"), conf->get_int_at("dictionary/collate_function"));
+	oLibs.reload(load_list,
+		conf->get_bool_at("dictionary/enable_collation") ? CollationLevel_SINGLE : CollationLevel_NONE,
+		conf->get_int_at("dictionary/collate_function"));
 	UpdateDictMask();
 
 	const gchar *sWord = oTopWin.get_text();

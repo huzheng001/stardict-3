@@ -907,7 +907,7 @@ void ListWin::SetTreeModel(std::list<STARDICT::LookupResponse::WordTreeElement *
 }
 
 static inline bool less_for_word_compare(const char *lh, const char *rh) {
-        return stardict_server_collate(lh, rh, gpAppFrame->oLibs.EnableCollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
+        return stardict_server_collate(lh, rh, gpAppFrame->oLibs.CollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
 }
 
 void ListWin::MergeWordList(std::list<char *> *wordlist)
@@ -959,7 +959,7 @@ struct FuzzyWordstruct {
 static inline bool less_for_fuzzy_compare(const FuzzyWordstruct & lh, const FuzzyWordstruct & rh) {
 	if (lh.iMatchWordDistance!=rh.iMatchWordDistance)
 		return lh.iMatchWordDistance<rh.iMatchWordDistance;
-	return stardict_server_collate(lh.pMatchWord, rh.pMatchWord, gpAppFrame->oLibs.EnableCollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
+	return stardict_server_collate(lh.pMatchWord, rh.pMatchWord, gpAppFrame->oLibs.CollationLevel, gpAppFrame->oLibs.CollateFunction, 0)<0;
 }
 
 static inline void unicode_strdown(gunichar *str) {
