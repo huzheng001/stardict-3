@@ -41,7 +41,7 @@ public:
 	dict_loader(dicts_list_t& dl) : dicts_list(dl) {}
 	void operator()(const std::string& url, bool) { 
 		Dict *d=new Dict;
-		if (d->load(url, false, false, UTF8_GENERAL_CI,
+		if (d->load(url, false, CollationLevel_NONE, UTF8_GENERAL_CI,
 			    &Libs::default_show_progress))
 			dicts_list.push_back(d);
 		else
@@ -61,22 +61,22 @@ static bool test_dict_lookup_success(Dict *d)
 	const char too_small[]={0x1, 0x1, 0x1, 0x0};
 	const char too_big[]={0xCF, 0xCF, 0xCF, 0x0};
 	glong i, s;
-	if (d->Lookup(too_small, i, s, 0, 0)) {
+	if (d->Lookup(too_small, i, s, CollationLevel_NONE, 0)) {
 		std::cerr<<"too_small test failed for: "<<d->dict_name()<<std::endl;
 		return false;
 	}
-	if (d->Lookup(too_big, i, s, 0, 0)) {
+	if (d->Lookup(too_big, i, s, CollationLevel_NONE, 0)) {
 		std::cerr<<"too_big test failed for: "<<d->dict_name()<<std::endl;
 		return false;
 	}
 	std::string first(d->idx_file->get_key(0)), last(d->idx_file->get_key(d->narticles()-1));
 	//if (!d->Lookup(first.c_str(), i) || i!=0) {
-	if (!d->Lookup(first.c_str(), i, s, 0, 0)) {
+	if (!d->Lookup(first.c_str(), i, s, CollationLevel_NONE, 0)) {
 		std::cerr<<"first word lookup failed: "<<d->dict_name()<<std::endl;
 		return false;
 	}
 	//if (!d->Lookup(last.c_str(), i) || i!=glong(d->narticles()-1)) {
-	if (!d->Lookup(last.c_str(), i, s, 0, 0)) {
+	if (!d->Lookup(last.c_str(), i, s, CollationLevel_NONE, 0)) {
 		std::cerr<<"last word lookup failed: "<<d->dict_name()<<std::endl;
 		return false;
 	}
@@ -85,7 +85,7 @@ static bool test_dict_lookup_success(Dict *d)
 		glong idx=random(0, d->narticles()-1);
 		std::string word(d->idx_file->get_key(idx));
 		//if (!d->Lookup(word.c_str(), i) || i!=idx) {
-		if (!d->Lookup(word.c_str(), i, s, 0, 0)) {
+		if (!d->Lookup(word.c_str(), i, s, CollationLevel_NONE, 0)) {
 			std::cerr<<"random word lookup failed: "<<d->dict_name()<<std::endl;
 			return false;
 		}

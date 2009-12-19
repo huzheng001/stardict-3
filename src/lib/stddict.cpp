@@ -43,7 +43,7 @@
 #include "getuint32.h"
 #include "../utils.h"
 
-static inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
+inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
   gint a=g_ascii_strcasecmp(s1, s2);
   if (a == 0)
@@ -61,22 +61,22 @@ static gint stardict_collate(const gchar *str1, const gchar *str2, CollateFuncti
 		return x;
 }
 
-gint stardict_server_collate(const gchar *str1, const gchar *str2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc)
+gint stardict_server_collate(const gchar *str1, const gchar *str2, CollationLevelType CollationLevel, CollateFunctions func, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return stardict_strcmp(str1, str2);
-	if (EnableCollationLevel == 1)
+	if (CollationLevel == CollationLevel_SINGLE)
 		return stardict_collate(str1, str2, func);
 	if (servercollatefunc == 0)
 		return stardict_strcmp(str1, str2);
 	return stardict_collate(str1, str2, (CollateFunctions)(servercollatefunc-1));
 }
 
-gint stardict_casecmp(const gchar *s1, const gchar *s2, int EnableCollationLevel, CollateFunctions func, int servercollatefunc)
+static gint stardict_casecmp(const gchar *s1, const gchar *s2, CollationLevelType CollationLevel, CollateFunctions func, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return g_ascii_strcasecmp(s1, s2);
-	if (EnableCollationLevel == 1)
+	if (CollationLevel == CollationLevel_SINGLE)
 		return utf8_collate(s1, s2, func);
 	if (servercollatefunc == 0)
 		return g_ascii_strcasecmp(s1, s2);
@@ -139,7 +139,7 @@ public:
 	offset_index();
 	~offset_index();
 	bool load(const std::string& url, gulong wc, gulong fsize,
-		  bool CreateCacheFile, int EnableCollationLevel,
+		  bool CreateCacheFile, CollationLevelType CollationLevel,
 		  CollateFunctions _CollateFunction, show_progress_t *sp);
 	void get_data(glong idx);
 	const gchar *get_key_and_data(glong idx);
@@ -149,9 +149,22 @@ private:
 
 	static const gint ENTR_PER_PAGE=32;
 
+	/* oft_file.get_wordoffset(page_num) - offset of the first element on the page
+	 * number page_num. 0<= page_num <= npages-2
+	 * oft_file.get_wordoffset(npages-1) - offset of the next to the last element 
+	 * in the index file
+	 * oft_file.get_wordoffset(page_num+1) - oft_file.get_wordoffset(page_num) 
+	 * - size of data on the page number page_num, in bytes. */
 	cache_file oft_file;
 	FILE *idxfile;
-	/* number of pages = (wordcount-1)/ENTR_PER_PAGE+2 */
+	/* number of pages = ((wordcount-1)/ENTR_PER_PAGE) + 2 
+	 * The page number npages-2 always contains at least one element.
+	 * It may contain from 1 to ENTR_PER_PAGE elements.
+	 * To be exact it contains nentr elements, that may be calculated as follows:
+	 * nentr = wordcount%ENTR_PER_PAGE;
+	 * if(nentr == 0)
+	 *   nentr = ENTR_PER_PAGE;
+	 * The page number npages-1 (the last) is always empty. */
 	gulong npages;
 
 	// The length of "word_str" should be less than MAX_INDEX_KEY_SIZE. 
@@ -185,12 +198,12 @@ private:
 };
 
 /* class for compressed index (file ends with ".gz") */
-class wordlist_index : public index_file {
+class compressed_index : public index_file {
 public:
-	wordlist_index();
-	~wordlist_index();
+	compressed_index();
+	~compressed_index();
 	bool load(const std::string& url, gulong wc, gulong fsize,
-		  bool CreateCacheFile, int EnableCollationLevel,
+		  bool CreateCacheFile, CollationLevelType CollationLevel,
 		  CollateFunctions _CollateFunction, show_progress_t *sp);
 	void get_data(glong idx);
 	const gchar *get_key_and_data(glong idx);
@@ -209,6 +222,7 @@ private:
 offset_index::offset_index() : oft_file(CacheFileType_oft)
 {
 	idxfile = NULL;
+	npages = 0;
 }
 
 offset_index::~offset_index()
@@ -618,11 +632,11 @@ idxsyn_file::~idxsyn_file()
 		delete clt_files[i];
 }
 
-const gchar *idxsyn_file::getWord(glong idx, int EnableCollationLevel, int servercollatefunc)
+const gchar *idxsyn_file::getWord(glong idx, CollationLevelType CollationLevel, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return get_key(idx);
-	if (EnableCollationLevel == 1)
+	if (CollationLevel == CollationLevel_SINGLE)
 		return clt_file->GetWord(idx);
 	if (servercollatefunc == 0)
 		return get_key(idx);
@@ -630,11 +644,11 @@ const gchar *idxsyn_file::getWord(glong idx, int EnableCollationLevel, int serve
 	return clt_files[servercollatefunc-1]->GetWord(idx);
 }
 
-bool idxsyn_file::Lookup(const char *str, glong &idx, glong &idx_suggest, int EnableCollationLevel, int servercollatefunc)
+bool idxsyn_file::Lookup(const char *str, glong &idx, glong &idx_suggest, CollationLevelType CollationLevel, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return lookup(str, idx, idx_suggest);
-	if (EnableCollationLevel == 1)
+	if (CollationLevel == CollationLevel_SINGLE)
 		return clt_file->lookup(str, idx, idx_suggest);
 	if (servercollatefunc == 0)
 		return lookup(str, idx, idx_suggest);
@@ -686,7 +700,7 @@ collation_file * idxsyn_file::collate_load_impl(
 }
 
 bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
-			bool CreateCacheFile, int EnableCollationLevel,
+			bool CreateCacheFile, CollationLevelType CollationLevel,
 			CollateFunctions _CollateFunction, show_progress_t *sp)
 {
 	wordcount=wc;
@@ -726,10 +740,10 @@ bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
 	middle.assign((npages-2)/2, read_first_on_page_key((npages-2)/2));
 	real_last.assign(wc-1, get_key(wc-1));
 
-	if (EnableCollationLevel == 0) {
-	} else if (EnableCollationLevel == 1) {
+	if (CollationLevel == CollationLevel_NONE) {
+	} else if (CollationLevel == CollationLevel_SINGLE) {
 		collate_sort(url, url, _CollateFunction, sp);
-	} else if (EnableCollationLevel == 2) {
+	} else if (CollationLevel == CollationLevel_MULTI) {
 		collate_save_info(url, url);
 	}
 
@@ -855,12 +869,12 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 	return bFound;
 }
 
-wordlist_index::wordlist_index()
+compressed_index::compressed_index()
 {
 	idxdatabuf = NULL;
 }
 
-wordlist_index::~wordlist_index()
+compressed_index::~compressed_index()
 {
 	g_free(idxdatabuf);
 }
@@ -870,8 +884,8 @@ wordlist_index::~wordlist_index()
  * wc - number of words in the index
  * fsize - uncompressed index size
  * */
-bool wordlist_index::load(const std::string& url, gulong wc, gulong fsize,
-			  bool CreateCacheFile, int EnableCollationLevel,
+bool compressed_index::load(const std::string& url, gulong wc, gulong fsize,
+			  bool CreateCacheFile, CollationLevelType CollationLevel,
 			  CollateFunctions _CollateFunction, show_progress_t *sp)
 {
 	wordcount=wc;
@@ -899,25 +913,25 @@ bool wordlist_index::load(const std::string& url, gulong wc, gulong fsize,
 	/* pointer to the next to last word entry */
 	wordlist[wc] = p1;
 
-	if (EnableCollationLevel == 0) {
+	if (CollationLevel == CollationLevel_NONE) {
 	} else {
 		std::string saveurl = url;
 		saveurl.erase(saveurl.length()-sizeof(".gz")+1, sizeof(".gz")-1);
-		if (EnableCollationLevel == 1) {
+		if (CollationLevel == CollationLevel_SINGLE) {
 			collate_sort(url, saveurl, _CollateFunction, sp);
-		} else if (EnableCollationLevel == 2) {
+		} else if (CollationLevel == CollationLevel_MULTI) {
 			collate_save_info(url, saveurl);
 		}
 	}
 	return true;
 }
 
-const gchar *wordlist_index::get_key(glong idx)
+const gchar *compressed_index::get_key(glong idx)
 {
 	return wordlist[idx];
 }
 
-void wordlist_index::get_data(glong idx)
+void compressed_index::get_data(glong idx)
 {
 	gchar *p1 = wordlist[idx]+strlen(wordlist[idx])+sizeof(gchar);
 	wordentry_offset = g_ntohl(get_uint32(p1));
@@ -925,13 +939,13 @@ void wordlist_index::get_data(glong idx)
 	wordentry_size = g_ntohl(get_uint32(p1));
 }
 
-const gchar *wordlist_index::get_key_and_data(glong idx)
+const gchar *compressed_index::get_key_and_data(glong idx)
 {
 	get_data(idx);
 	return get_key(idx);
 }
 
-bool wordlist_index::lookup(const char *str, glong &idx, glong &idx_suggest)
+bool compressed_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 {
 	bool bFound=false;
 	glong iTo=wordlist.size()-2;
@@ -982,17 +996,19 @@ bool wordlist_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 
 //===================================================================
 index_file* index_file::Create(const std::string& filebasename, 
-		const char* mainext, std::string& fullfilename)
+		const char* mainext, std::string& fullfilename,
+		key_comp_func_t key_comp_func)
 {
 	index_file *index = NULL;
 
 	fullfilename = filebasename + "." + mainext + ".gz";
 	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
-		index = new wordlist_index;
+		index = new compressed_index;
 	} else {
 		fullfilename = filebasename + "." + mainext;
 		index = new offset_index;
 	}
+	index->key_comp_func = key_comp_func;
 	return index;
 }
 
@@ -1047,8 +1063,8 @@ inline const gchar *synonym_file::get_first_on_page_key(glong page_idx)
 }
 
 bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
-			int EnableCollationLevel, CollateFunctions _CollateFunction,
-			show_progress_t *sp)
+	CollationLevelType CollationLevel, CollateFunctions _CollateFunction,
+	show_progress_t *sp)
 {
 	wordcount=wc;
 	npages=(wc-1)/ENTR_PER_PAGE+2;
@@ -1089,10 +1105,10 @@ bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
 	middle.assign((npages-2)/2, read_first_on_page_key((npages-2)/2));
 	real_last.assign(wc-1, get_key(wc-1));
 
-	if (EnableCollationLevel == 0) {
-	} else if (EnableCollationLevel == 1)
+	if (CollationLevel == CollationLevel_NONE) {
+	} else if (CollationLevel == CollationLevel_SINGLE)
 		collate_sort(url, url, _CollateFunction, sp);
-	else if (EnableCollationLevel == 2) {
+	else if (CollationLevel == CollationLevel_MULTI) {
 		collate_save_info(url, url);
 	}
 
@@ -1218,8 +1234,8 @@ Dict::~Dict()
 }
 
 bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
-		int EnableCollationLevel, CollateFunctions CollateFunction,
-		show_progress_t *sp)
+	CollationLevelType CollationLevel, CollateFunctions CollateFunction,
+	show_progress_t *sp)
 {
 	gulong idxfilesize;
 	glong wordcount, synwordcount;
@@ -1236,7 +1252,7 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 	std::string fullfilename;
 	idx_file.reset(index_file::Create(filebasename, "idx", fullfilename));
 	if (!idx_file->load(fullfilename, wordcount, idxfilesize,
-			    CreateCacheFile, EnableCollationLevel,
+			    CreateCacheFile, CollationLevel,
 			    CollateFunction, sp))
 		return false;
 
@@ -1245,7 +1261,7 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
 			syn_file.reset(new synonym_file);
 			if (!syn_file->load(fullfilename, synwordcount,
-					    CreateCacheFile, EnableCollationLevel,
+					    CreateCacheFile, CollationLevel,
 					    CollateFunction, sp))
 				return false;
 		}
@@ -1285,7 +1301,7 @@ glong Dict::nsynarticles()
 	return syn_file->get_word_count();
 }
 
-bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, int EnableCollationLevel, int servercollatefunc)
+bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, CollationLevelType CollationLevel, int servercollatefunc)
 {
 	idxsyn_file *is_file;
 	if (isidx)
@@ -1297,11 +1313,11 @@ bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, int EnableCollationLe
 		return true;
 	}
 	pidx = idx;
-	gchar *cWord = g_strdup(is_file->getWord(pidx, EnableCollationLevel, servercollatefunc));
+	gchar *cWord = g_strdup(is_file->getWord(pidx, CollationLevel, servercollatefunc));
 	const gchar *pWord;
 	bool found=false;
 	while (pidx>0) {
-		pWord = is_file->getWord(pidx-1, EnableCollationLevel, servercollatefunc);
+		pWord = is_file->getWord(pidx-1, CollationLevel, servercollatefunc);
 		if (strcmp(pWord, cWord)!=0) {
 			found=true;
 			break;
@@ -1317,18 +1333,18 @@ bool Dict::GetWordPrev(glong idx, glong &pidx, bool isidx, int EnableCollationLe
 	}
 }
 
-void Dict::GetWordNext(glong &idx, bool isidx, int EnableCollationLevel, int servercollatefunc)
+void Dict::GetWordNext(glong &idx, bool isidx, CollationLevelType CollationLevel, int servercollatefunc)
 {
 	idxsyn_file *is_file;
 	if (isidx)
 		is_file = idx_file.get();
 	else
 		is_file = syn_file.get();
-	gchar *cWord = g_strdup(is_file->getWord(idx, EnableCollationLevel, servercollatefunc));
+	gchar *cWord = g_strdup(is_file->getWord(idx, CollationLevel, servercollatefunc));
 	const gchar *pWord;
 	bool found=false;
 	while (idx < is_file->get_word_count()-1) {
-		pWord = is_file->getWord(idx+1, EnableCollationLevel, servercollatefunc);
+		pWord = is_file->getWord(idx+1, CollationLevel, servercollatefunc);
 		if (strcmp(pWord, cWord)!=0) {
 			found=true;
 			break;
@@ -1373,14 +1389,14 @@ gint Dict::GetOrigWordCount(glong& idx, bool isidx)
 	return count;
 }
 
-bool Dict::LookupSynonym(const char *str, glong &synidx, glong &synidx_suggest, int EnableCollationLevel, int servercollatefunc)
+bool Dict::LookupSynonym(const char *str, glong &synidx, glong &synidx_suggest, CollationLevelType CollationLevel, int servercollatefunc)
 {
 	if (syn_file.get() == NULL) {
 		synidx = UNSET_INDEX;
 		synidx_suggest = UNSET_INDEX;
 		return false;
 	}
-	return syn_file->Lookup(str, synidx, synidx_suggest, EnableCollationLevel, servercollatefunc);
+	return syn_file->Lookup(str, synidx, synidx_suggest, CollationLevel, servercollatefunc);
 }
 
 bool Dict::LookupWithRule(GPatternSpec *pspec, glong *aIndex, int iBuffLen)
@@ -1388,7 +1404,7 @@ bool Dict::LookupWithRule(GPatternSpec *pspec, glong *aIndex, int iBuffLen)
 	int iIndexCount=0;
 	for (glong i=0; i<narticles() && iIndexCount<iBuffLen-1; i++)
 		// Need to deal with same word in index? But this will slow down processing in most case.
-		if (g_pattern_match_string(pspec, idx_file->getWord(i, 0, 0)))
+		if (g_pattern_match_string(pspec, idx_file->getWord(i, CollationLevel_NONE, 0)))
 			aIndex[iIndexCount++]=i;
 	aIndex[iIndexCount]= -1; // -1 is the end.
 	return (iIndexCount>0);
@@ -1401,7 +1417,7 @@ bool Dict::LookupWithRuleSynonym(GPatternSpec *pspec, glong *aIndex, int iBuffLe
 	int iIndexCount=0;
 	for (glong i=0; i<nsynarticles() && iIndexCount<iBuffLen-1; i++)
 		// Need to deal with same word in index? But this will slow down processing in most case.
-		if (g_pattern_match_string(pspec, syn_file->getWord(i, 0, 0)))
+		if (g_pattern_match_string(pspec, syn_file->getWord(i, CollationLevel_NONE, 0)))
 			aIndex[iIndexCount++]=i;
 	aIndex[iIndexCount]= -1; // -1 is the end.
 	return (iIndexCount>0);
@@ -1412,7 +1428,7 @@ bool Dict::LookupWithRegex(GRegex *regex, glong *aIndex, int iBuffLen)
 	int iIndexCount=0;
 	for (glong i=0; i<narticles() && iIndexCount<iBuffLen-1; i++)
 		// Need to deal with same word in index? But this will slow down processing in most case.
-		if (g_regex_match(regex, idx_file->getWord(i, 0, 0), (GRegexMatchFlags)0, NULL))
+		if (g_regex_match(regex, idx_file->getWord(i, CollationLevel_NONE, 0), (GRegexMatchFlags)0, NULL))
 			aIndex[iIndexCount++]=i;
 	aIndex[iIndexCount]= -1; // -1 is the end.
 	return (iIndexCount>0);
@@ -1425,7 +1441,7 @@ bool Dict::LookupWithRegexSynonym(GRegex *regex, glong *aIndex, int iBuffLen)
 	int iIndexCount=0;
 	for (glong i=0; i<nsynarticles() && iIndexCount<iBuffLen-1; i++)
 		// Need to deal with same word in index? But this will slow down processing in most case.
-		if (g_regex_match(regex, syn_file->getWord(i, 0, 0), (GRegexMatchFlags)0, NULL))
+		if (g_regex_match(regex, syn_file->getWord(i, CollationLevel_NONE, 0), (GRegexMatchFlags)0, NULL))
 			aIndex[iIndexCount++]=i;
 	aIndex[iIndexCount]= -1; // -1 is the end.
 	return (iIndexCount>0);
@@ -1434,21 +1450,22 @@ bool Dict::LookupWithRegexSynonym(GRegex *regex, glong *aIndex, int iBuffLen)
 //===================================================================
 show_progress_t Libs::default_show_progress;
 
-Libs::Libs(show_progress_t *sp, bool create, int enablelevel, int function)
+Libs::Libs(show_progress_t *sp, bool create, CollationLevelType level, int function)
+:
+	CollationLevel(level)
 {
 #ifdef SD_SERVER_CODE
 	root_info_item = NULL;
 #endif
 	set_show_progress(sp);
 	CreateCacheFile = create;
-	EnableCollationLevel = enablelevel;
 	CollateFunction = (CollateFunctions)function;
 	iMaxFuzzyDistance  = MAX_FUZZY_DISTANCE; //need to read from cfg.
-	if (EnableCollationLevel == 0) {
-	} else if (EnableCollationLevel == 1) {
+	if (CollationLevel == CollationLevel_NONE) {
+	} else if (CollationLevel == CollationLevel_SINGLE) {
 		if (utf8_collate_init(CollateFunction))
 			printf("Init collate function failed!\n");
-	} else if (EnableCollationLevel == 2){
+	} else if (CollationLevel == CollationLevel_MULTI){
 		if (utf8_collate_init_all())
 			printf("Init collate functions failed!\n");
 	}
@@ -1468,7 +1485,7 @@ Libs::~Libs()
 bool Libs::load_dict(const std::string& url, show_progress_t *sp)
 {
 	Dict *lib=new Dict;
-	if (lib->load(url, CreateCacheFile, EnableCollationLevel,
+	if (lib->load(url, CreateCacheFile, CollationLevel,
 		      CollateFunction, sp)) {
 		oLib.push_back(lib);
 		return true;
@@ -2011,19 +2028,19 @@ bool Libs::find_lib_by_filename(const char *filename, size_t &iLib)
 	return false;
 }
 
-void Libs::load(std::list<std::string> &load_list)
+void Libs::load(const std::list<std::string> &load_list)
 {
-	for (std::list<std::string>::iterator i = load_list.begin(); i != load_list.end(); ++i) {
+	for (std::list<std::string>::const_iterator i = load_list.begin(); i != load_list.end(); ++i) {
 		load_dict(*i, show_progress);
 	}
 }
 
-void Libs::reload(std::list<std::string> &load_list, int is_coll_enb, int collf)
+void Libs::reload(const std::list<std::string> &load_list, CollationLevelType NewCollationLevel, int collf)
 {
-	if (is_coll_enb == EnableCollationLevel && collf == CollateFunction) {
+	if (NewCollationLevel == CollationLevel && collf == CollateFunction) {
 		std::vector<Dict *> prev(oLib);
 		oLib.clear();
-		for (std::list<std::string>::iterator i = load_list.begin(); i != load_list.end(); ++i) {
+		for (std::list<std::string>::const_iterator i = load_list.begin(); i != load_list.end(); ++i) {
 			std::vector<Dict *>::iterator it;
 			for (it=prev.begin(); it!=prev.end(); ++it) {
 				if ((*it)->ifofilename()==*i)
@@ -2044,13 +2061,13 @@ void Libs::reload(std::list<std::string> &load_list, int is_coll_enb, int collf)
 		for (std::vector<Dict *>::iterator it = oLib.begin(); it != oLib.end(); ++it)
 			delete *it;
 		oLib.clear();
-		EnableCollationLevel = is_coll_enb;
+		CollationLevel = NewCollationLevel;
 		CollateFunction = CollateFunctions(collf);
-		if (EnableCollationLevel == 0) {
-		} else if (EnableCollationLevel == 1) {
+		if (CollationLevel == CollationLevel_NONE) {
+		} else if (CollationLevel == CollationLevel_SINGLE) {
 			if (utf8_collate_init(CollateFunction))
 				printf("Init collate function failed!\n");
-		} else if (EnableCollationLevel == 2) {
+		} else if (CollationLevel == CollationLevel_MULTI) {
 			if (utf8_collate_init_all())
 				printf("Init collate functions failed!\n");
 		}
@@ -2061,9 +2078,9 @@ void Libs::reload(std::list<std::string> &load_list, int is_coll_enb, int collf)
 
 glong Libs::CltIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return cltidx;
-	if (EnableCollationLevel == 1) {
+	if (CollationLevel == CollationLevel_SINGLE) {
 		if (cltidx == INVALID_INDEX)
 			return cltidx;
 		return oLib[iLib]->idx_file->get_clt_file()->GetOrigIndex(cltidx);
@@ -2078,9 +2095,9 @@ glong Libs::CltIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 
 glong Libs::CltSynIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 {
-	if (EnableCollationLevel == 0)
+	if (CollationLevel == CollationLevel_NONE)
 		return cltidx;
-	if (EnableCollationLevel == 1) {
+	if (CollationLevel == CollationLevel_SINGLE) {
 		if (cltidx == UNSET_INDEX || cltidx == INVALID_INDEX)
 			return cltidx;
 		return oLib[iLib]->syn_file->get_clt_file()->GetOrigIndex(cltidx);
@@ -2115,7 +2132,7 @@ const gchar *Libs::GetSuggestWord(const gchar *sWord, CurrentIndex *iCurrent, st
 				best = back;
 				poCurrentWord = word;
 			} else if (back == best) {
-				gint x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+				gint x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 				if (x > 0) {
 					poCurrentWord = word;
 				}
@@ -2138,7 +2155,7 @@ const gchar *Libs::GetSuggestWord(const gchar *sWord, CurrentIndex *iCurrent, st
 				best = back;
 				poCurrentWord = word;
 			} else if (back == best) {
-				gint x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+				gint x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 				if (x > 0) {
 					poCurrentWord = word;
 				}
@@ -2166,7 +2183,7 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<Instant
 			poCurrentWord = poGetWord(iCurrent[iLib].idx, iRealLib, servercollatefunc);
 		} else {
 			word = poGetWord(iCurrent[iLib].idx, iRealLib, servercollatefunc);
-			gint x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+			gint x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 			if (x > 0) {
 				poCurrentWord = word;
 			}
@@ -2186,7 +2203,7 @@ const gchar *Libs::poGetCurrentWord(CurrentIndex * iCurrent, std::vector<Instant
 			poCurrentWord = poGetSynonymWord(iCurrent[iLib].synidx, iRealLib, servercollatefunc);
 		} else {
 			word = poGetSynonymWord(iCurrent[iLib].synidx, iRealLib, servercollatefunc);
-			gint x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+			gint x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 			if (x > 0) {
 				poCurrentWord = word;
 			}
@@ -2213,7 +2230,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
-			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, iCurrent[iLib].idx_suggest, EnableCollationLevel, servercollatefunc);
+			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, iCurrent[iLib].idx_suggest, CollationLevel, servercollatefunc);
 		}
 		if (iCurrent[iLib].idx==INVALID_INDEX)
 			continue;
@@ -2227,7 +2244,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 		} else {
 			gint x;
 			word = poGetWord(iCurrent[iLib].idx, iRealLib, servercollatefunc);
-			x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+			x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 			if (x > 0) {
 				poCurrentWord = word;
 				iCurrentLib = iLib;
@@ -2241,7 +2258,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
-			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, iCurrent[iLib].synidx_suggest, EnableCollationLevel, servercollatefunc);
+			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, iCurrent[iLib].synidx_suggest, CollationLevel, servercollatefunc);
 		}
 		if (iCurrent[iLib].synidx==UNSET_INDEX)
 			continue;
@@ -2257,7 +2274,7 @@ Libs::poGetNextWord(const gchar *sWord, CurrentIndex *iCurrent, std::vector<Inst
 		} else {
 			gint x;
 			word = poGetSynonymWord(iCurrent[iLib].synidx, iRealLib, servercollatefunc);
-			x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+			x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 			if (x > 0 ) {
 				poCurrentWord = word;
 				iCurrentLib = iLib;
@@ -2327,7 +2344,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
-			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, iCurrent[iLib].idx_suggest, EnableCollationLevel, servercollatefunc);
+			oLib[iRealLib]->Lookup(sWord, iCurrent[iLib].idx, iCurrent[iLib].idx_suggest, CollationLevel, servercollatefunc);
 		}
 		if (iCurrent[iLib].idx!=INVALID_INDEX) {
 			if ( iCurrent[iLib].idx>=narticles(iRealLib) || iCurrent[iLib].idx<=0)
@@ -2344,7 +2361,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 			if (GetWordPrev(iCurrent[iLib].idx, pidx, iRealLib, true, servercollatefunc)) {
 				gint x;
 				word = poGetWord(pidx, iRealLib, servercollatefunc);
-				x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+				x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 				if (x < 0 ) {
 					poCurrentWord = word;
 					iCurrentLib = iLib;
@@ -2359,7 +2376,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 			continue;
 		iRealLib = dictmask[iLib].index;
 		if (sWord) {
-			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, iCurrent[iLib].synidx_suggest, EnableCollationLevel, servercollatefunc);
+			oLib[iRealLib]->LookupSynonym(sWord, iCurrent[iLib].synidx, iCurrent[iLib].synidx_suggest, CollationLevel, servercollatefunc);
 		}
 		if (iCurrent[iLib].synidx==UNSET_INDEX)
 			continue;
@@ -2378,7 +2395,7 @@ Libs::poGetPreWord(const gchar *sWord, CurrentIndex* iCurrent, std::vector<Insta
 			if (GetWordPrev(iCurrent[iLib].synidx, pidx, iRealLib, false, servercollatefunc)) {
 				gint x;
 				word = poGetSynonymWord(pidx,iRealLib, servercollatefunc);
-				x = stardict_server_collate(poCurrentWord, word, EnableCollationLevel, CollateFunction, servercollatefunc);
+				x = stardict_server_collate(poCurrentWord, word, CollationLevel, CollateFunction, servercollatefunc);
 				if (x < 0 ) {
 					poCurrentWord = word;
 					iCurrentLib = iLib;
@@ -2451,7 +2468,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 		// to lower case.
 		casestr = g_utf8_strdown(sWord, -1);
 		if (strcmp(casestr, sWord)) {
-			bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, EnableCollationLevel, servercollatefunc);
+			bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, CollationLevel, servercollatefunc);
 			if(bLookup)
 				bFound=true;
 		}
@@ -2460,7 +2477,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 		if (!bFound) {
 			casestr = g_utf8_strup(sWord, -1);
 			if (strcmp(casestr, sWord)) {
-				bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, EnableCollationLevel, servercollatefunc);
+				bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, CollationLevel, servercollatefunc);
 				if(bLookup)
 					bFound=true;
 			}
@@ -2475,7 +2492,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 			g_free(firstchar);
 			g_free(nextchar);
 			if (strcmp(casestr, sWord)) {
-				bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, EnableCollationLevel, servercollatefunc);
+				bLookup = oLib[iLib]->LookupSynonym(casestr, iIndex, iIndex_suggest, CollationLevel, servercollatefunc);
 				if(bLookup)
 					bFound=true;
 			}
@@ -2488,7 +2505,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 			do {
 				if (GetWordPrev(iIndex, pidx, iLib, false, servercollatefunc)) {
 					cword = poGetSynonymWord(pidx, iLib, servercollatefunc);
-					if (stardict_casecmp(cword, sWord, EnableCollationLevel, CollateFunction, servercollatefunc)==0) {
+					if (stardict_casecmp(cword, sWord, CollationLevel, CollateFunction, servercollatefunc)==0) {
 						iIndex = pidx;
 						bFound=true;
 					} else {
@@ -2501,7 +2518,7 @@ bool Libs::LookupSynonymSimilarWord(const gchar* sWord, glong &iSynonymWordIndex
 			if (!bFound) {
 				if (iIndex!=INVALID_INDEX) {
 					cword = poGetSynonymWord(iIndex, iLib, servercollatefunc);
-					if (stardict_casecmp(cword, sWord, EnableCollationLevel, CollateFunction, servercollatefunc)==0) {
+					if (stardict_casecmp(cword, sWord, CollationLevel, CollateFunction, servercollatefunc)==0) {
 						bFound=true;
 					}
 				}
@@ -2525,7 +2542,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		// to lower case.
 		casestr = g_utf8_strdown(sWord, -1);
 		if (strcmp(casestr, sWord)) {
-			if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+			if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 				bFound=true;
 		}
 		g_free(casestr);
@@ -2533,7 +2550,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		if (!bFound) {
 			casestr = g_utf8_strup(sWord, -1);
 			if (strcmp(casestr, sWord)) {
-				if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 			}
 			g_free(casestr);
@@ -2547,7 +2564,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			g_free(firstchar);
 			g_free(nextchar);
 			if (strcmp(casestr, sWord)) {
-				if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 			}
 			g_free(casestr);
@@ -2559,7 +2576,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			do {
 				if (GetWordPrev(iIndex, pidx, iLib, true, servercollatefunc)) {
 					cword = poGetWord(pidx, iLib, servercollatefunc);
-					if (stardict_casecmp(cword, sWord, EnableCollationLevel, CollateFunction, servercollatefunc)==0) {
+					if (stardict_casecmp(cword, sWord, CollationLevel, CollateFunction, servercollatefunc)==0) {
 						iIndex = pidx;
 						bFound=true;
 					} else {
@@ -2572,7 +2589,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			if (!bFound) {
 				if (iIndex!=INVALID_INDEX) {
 					cword = poGetWord(iIndex, iLib, servercollatefunc);
-					if (stardict_casecmp(cword, sWord, EnableCollationLevel, CollateFunction, servercollatefunc)==0) {
+					if (stardict_casecmp(cword, sWord, CollationLevel, CollateFunction, servercollatefunc)==0) {
 						bFound=true;
 					}
 				}
@@ -2593,12 +2610,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			if (isupcase || sWord[iWordLen-1]=='s' || !strncmp(&sWord[iWordLen-2],"ed",2)) {
 				strcpy(sNewWord,sWord);
 				sNewWord[iWordLen-1]='\0'; // cut "s" or "d"
-				if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2617,13 +2634,13 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 				    bIsVowel(sNewWord[iWordLen-5])) {//doubled
 
 					sNewWord[iWordLen-3]='\0';
-					if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else {
 						if (isupcase || g_ascii_isupper(sWord[0])) {
 							casestr = g_ascii_strdown(sNewWord, -1);
 							if (strcmp(casestr, sNewWord)) {
-								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 									bFound=true;
 							}
 							g_free(casestr);
@@ -2633,12 +2650,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 					}
 				}
 				if (!bFound) {
-					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else if (isupcase || g_ascii_isupper(sWord[0])) {
 						casestr = g_ascii_strdown(sNewWord, -1);
 						if (strcmp(casestr, sNewWord)) {
-							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 								bFound=true;
 						}
 						g_free(casestr);
@@ -2657,13 +2674,13 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 				     && !bIsVowel(sNewWord[iWordLen-5]) &&
 				     bIsVowel(sNewWord[iWordLen-6])) {  //doubled
 					sNewWord[iWordLen-4]='\0';
-					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else {
 						if (isupcase || g_ascii_isupper(sWord[0])) {
 							casestr = g_ascii_strdown(sNewWord, -1);
 							if (strcmp(casestr, sNewWord)) {
-								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 									bFound=true;
 							}
 							g_free(casestr);
@@ -2673,12 +2690,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 					}
 				}
 				if( !bFound ) {
-					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else if (isupcase || g_ascii_isupper(sWord[0])) {
 						casestr = g_ascii_strdown(sNewWord, -1);
 						if (strcmp(casestr, sNewWord)) {
-							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 								bFound=true;
 						}
 						g_free(casestr);
@@ -2689,12 +2706,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 						strcat(sNewWord,"E"); // add a char "E"
 					else
 						strcat(sNewWord,"e"); // add a char "e"
-					if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else if (isupcase || g_ascii_isupper(sWord[0])) {
 						casestr = g_ascii_strdown(sNewWord, -1);
 						if (strcmp(casestr, sNewWord)) {
-							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 								bFound=true;
 						}
 						g_free(casestr);
@@ -2720,12 +2737,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			       (sWord[iWordLen-4] == 'c' || sWord[iWordLen-4] == 's'))))) {
 				strcpy(sNewWord,sWord);
 				sNewWord[iWordLen-2]='\0';
-				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2743,13 +2760,13 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 				    && !bIsVowel(sNewWord[iWordLen-4]) &&
 				    bIsVowel(sNewWord[iWordLen-5])) {//doubled
 					sNewWord[iWordLen-3]='\0';
-					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else {
 						if (isupcase || g_ascii_isupper(sWord[0])) {
 							casestr = g_ascii_strdown(sNewWord, -1);
 							if (strcmp(casestr, sNewWord)) {
-								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+								if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 									bFound=true;
 							}
 							g_free(casestr);
@@ -2759,12 +2776,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 					}
 				}
 				if (!bFound) {
-					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+					if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 						bFound=true;
 					else if (isupcase || g_ascii_isupper(sWord[0])) {
 						casestr = g_ascii_strdown(sNewWord, -1);
 						if (strcmp(casestr, sNewWord)) {
-							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+							if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 								bFound=true;
 						}
 						g_free(casestr);
@@ -2783,12 +2800,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 					strcat(sNewWord,"Y"); // add a char "Y"
 				else
 					strcat(sNewWord,"y"); // add a char "y"
-				if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if (oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2806,12 +2823,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 					strcat(sNewWord,"Y"); // add a char "Y"
 				else
 					strcat(sNewWord,"y"); // add a char "y"
-				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2825,12 +2842,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			if (isupcase || (!strncmp(&sWord[iWordLen-2],"er",2))) {
 				strcpy(sNewWord,sWord);
 				sNewWord[iWordLen-2]='\0';
-				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2844,12 +2861,12 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 			if (isupcase || (!strncmp(&sWord[iWordLen-3],"est", 3))) {
 				strcpy(sNewWord,sWord);
 				sNewWord[iWordLen-3]='\0';
-				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+				if(oLib[iLib]->Lookup(sNewWord, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 					bFound=true;
 				else if (isupcase || g_ascii_isupper(sWord[0])) {
 					casestr = g_ascii_strdown(sNewWord, -1);
 					if (strcmp(casestr, sNewWord)) {
-						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, EnableCollationLevel, servercollatefunc))
+						if(oLib[iLib]->Lookup(casestr, iIndex, idx_suggest, CollationLevel, servercollatefunc))
 							bFound=true;
 					}
 					g_free(casestr);
@@ -2874,7 +2891,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 
 bool Libs::SimpleLookupWord(const gchar* sWord, glong & iWordIndex, glong &idx_suggest, size_t iLib, int servercollatefunc)
 {
-	bool bFound = oLib[iLib]->Lookup(sWord, iWordIndex, idx_suggest, EnableCollationLevel, servercollatefunc);
+	bool bFound = oLib[iLib]->Lookup(sWord, iWordIndex, idx_suggest, CollationLevel, servercollatefunc);
 	if (!bFound)
 		bFound = LookupSimilarWord(sWord, iWordIndex, idx_suggest, iLib, servercollatefunc);
 	return bFound;
@@ -2882,7 +2899,7 @@ bool Libs::SimpleLookupWord(const gchar* sWord, glong & iWordIndex, glong &idx_s
 
 bool Libs::SimpleLookupSynonymWord(const gchar* sWord, glong & iWordIndex, glong &synidx_suggest, size_t iLib, int servercollatefunc)
 {
-	bool bFound = oLib[iLib]->LookupSynonym(sWord, iWordIndex, synidx_suggest, EnableCollationLevel, servercollatefunc);
+	bool bFound = oLib[iLib]->LookupSynonym(sWord, iWordIndex, synidx_suggest, CollationLevel, servercollatefunc);
 	if (!bFound)
 		bFound = LookupSynonymSimilarWord(sWord, iWordIndex, synidx_suggest, iLib, servercollatefunc);
 	return bFound;
