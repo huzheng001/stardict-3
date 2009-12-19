@@ -110,7 +110,7 @@ if test "x$enable_festival" = "xyes" ; then
 	AC_CHECK_HEADERS([festival/festival.h],
 		[
 			FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
-			FESTIVAL_CFLAGS="-I/usr/include/speech-tools/EST -ffriend-injection -Wno-deprecated"
+			FESTIVAL_CFLAGS="-I/usr/include/speech_tools -ffriend-injection -Wno-deprecated"
 			FESTIVAL_PLUGIN_DIR="stardict-festival-tts-plugin"
 		],
 		[
