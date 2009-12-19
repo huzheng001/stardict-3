@@ -24,6 +24,7 @@
 #include <vector>
 #include <cerrno>
 #include <cstring>
+#include <cstdlib>
 #include <cstdio>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>

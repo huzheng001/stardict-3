@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include <cstring>
+#include <cstdlib>
 #include <string>
 
 #include <glib/gi18n.h>

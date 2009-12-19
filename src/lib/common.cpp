@@ -24,7 +24,7 @@
 #endif
 
 #include <cstring>
-#include <stdlib.h>
+#include <cstdlib>
 #include "common.hpp"
 #include "../utils.h"
 

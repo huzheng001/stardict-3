@@ -1,6 +1,7 @@
 #include "stardict_html_parsedata.h"
 #include <glib/gi18n.h>
 #include <cstring>
+#include <cstdlib>
 #include <stdlib.h>
 
 #include <string.h>

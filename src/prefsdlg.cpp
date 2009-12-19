@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstdlib>
 
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>

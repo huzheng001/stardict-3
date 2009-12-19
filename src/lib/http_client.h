@@ -2,15 +2,17 @@
 #define _STARDICT_HTTP_CLIENT_H_
 
 #include <glib.h>
-#include "sigc++/sigc++.h"
 #include <string>
 #include <vector>
+#include <cstring>
 
 #ifndef _WIN32
 #  include <netdb.h>
 #else
 typedef unsigned long in_addr_t;
 #endif
+
+#include "sigc++/sigc++.h"
 
 
 typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpointer userdata);

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <string>
+#include <cstdlib>
 
 static char *build_dictdata(char type, const char *definition)
 {

@@ -2,6 +2,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <cstring>
+#include <cstdlib>
 #include <stdlib.h>
 #include <string>
 
