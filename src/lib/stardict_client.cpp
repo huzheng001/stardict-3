@@ -25,6 +25,8 @@
 #include <glib/gi18n.h>
 
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 #include <stdlib.h>
 #include <stdio.h>
 #include "sockets.hpp"

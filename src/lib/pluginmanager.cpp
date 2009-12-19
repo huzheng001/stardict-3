@@ -6,11 +6,11 @@
 #include <string.h>
 #endif
 
+#include <string>
+#include <cstring>
 
 #include "pluginmanager.h"
 #include "file.hpp"
-#include <string>
-#include <cstring>
 
 StarDictPluginBaseObject::StarDictPluginBaseObject(const char *filename, GModule *module_, plugin_configure_func_t configure_func_):
 	plugin_filename(filename), module(module_), configure_func(configure_func_)

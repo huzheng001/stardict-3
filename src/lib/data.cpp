@@ -21,7 +21,8 @@
 #  include "config.h"
 #endif
 
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #include "kmp.h"
 
