@@ -1,0 +1,9 @@
+Directory layout of Stardict source tree
+----------------------------------------
+
+- debian-upstream
+contains Debian OS specific files
+Do not name this directory "debian", that complicates Stardict packaging for
+Debian. See http://people.debian.org/~mpalmer/debian-mentors_FAQ.html,
+question "What's wrong with upstream shipping a debian/ directory?" for more
+details.
