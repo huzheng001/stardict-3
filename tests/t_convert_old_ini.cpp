@@ -26,7 +26,8 @@ private:
 };
 
 int main()
-{	
+{
+	setlocale(LC_ALL, "");
 	remove(tmpfname);
 	
 	{
@@ -41,7 +42,7 @@ int main()
 		fprintf(stderr, "Can not open: %s\n", tmpfname);
 		return EXIT_FAILURE;
 	}
-	guchar list[] = {'a', 0xFF, 'b', 0xFF, 'c', '\0' };
+	guchar list[] = {'a', 0x01, 'b', 0x01, 'c', '\0' };
 	g_fprintf(f, "[somegroup]\nsomevalue=%s\n", list);
 	fclose(f);
 	{
