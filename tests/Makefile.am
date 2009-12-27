@@ -1,4 +1,5 @@
-noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata t_convert_old_ini t_articleview t_xml
+noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata \
+	t_convert_old_ini t_articleview t_xml t_res_database
 
 EXTRA_DIST = sample1.ifo sample1.idx sample1.dict t_dict_client.cpp
 
@@ -43,6 +44,10 @@ t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 t_articleview_SOURCES = t_articleview.cpp
 
 t_xml_SOURCES = t_xml.cpp
+
+# res_database is not an automated test, do not include it in TESTS
+t_res_database_SOURCES = t_res_database.cpp
+t_res_database_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.a
 
 LDADD = @STARDICT_LIBS@ $(top_builddir)/src/lib/libstardict.a \
 	$(LOCAL_SIGCPP_LIBFILE)

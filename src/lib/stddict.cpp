@@ -44,11 +44,11 @@
 
 inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
-  gint a=g_ascii_strcasecmp(s1, s2);
-  if (a == 0)
-    return strcmp(s1, s2);
-  else
-    return a;
+	gint a=g_ascii_strcasecmp(s1, s2);
+	if (a == 0)
+		return strcmp(s1, s2);
+	else
+		return a;
 }
 
 static gint stardict_collate(const gchar *str1, const gchar *str2, CollateFunctions func)
@@ -170,13 +170,17 @@ private:
 	// See doc/StarDictFileFormat.
 	gchar wordentry_buf[MAX_INDEX_KEY_SIZE+sizeof(guint32)*2];
 	struct index_entry {
-		glong idx;
+		glong idx; // page number
 		std::string keystr;
 		void assign(glong i, const std::string& str) {
 			idx=i;
 			keystr.assign(str);
 		}
 	};
+	/* first - first word on the first page - first word in the index
+	 * last - first word on the pre-last page (last page addressing real data)
+	 * middle - first word on the middle page
+	 * read_last - last word in the index */
 	index_entry first, last, middle, real_last;
 
 	struct page_entry {
@@ -248,6 +252,7 @@ void offset_index::page_t::fill(gchar *data, gint nent, glong idx_)
 
 inline const gchar *offset_index::read_first_on_page_key(glong page_idx)
 {
+	g_assert(gulong(page_idx+1) < npages);
 	fseek(idxfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
 	guint32 page_size=oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx);
 	gulong minsize = sizeof(wordentry_buf);
@@ -412,7 +417,7 @@ bool cache_file::get_cache_filename(const std::string& url, std::string &cachefi
 	return true;
 }
 
-FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &url, int next, std::string &cfilename, CollateFunctions cltfunc)
+FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc)
 {
 	cfilename = filename;
 	struct stat oftstat;
@@ -448,11 +453,11 @@ FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &u
 		return fopen(filename, "wb");
 	}
 	std::string tmpstr(p2, p3-p2);
-	if (url == tmpstr) {
+	if (saveurl == tmpstr) {
 		return fopen(filename, "wb");
 	}
 	mf.close();
-	glib::CharStr basename(g_path_get_basename(url.c_str()));
+	glib::CharStr basename(g_path_get_basename(saveurl.c_str()));
 	p = strrchr(get_impl(basename), '.');
 	if (!p)
 		return NULL;
@@ -461,20 +466,20 @@ FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &u
 	glib::CharStr dirname(g_path_get_dirname(filename));
 	glib::CharStr nextfilename(get_next_filename(get_impl(dirname),
 		get_impl(basename), next, extendname, cltfunc));
-	return get_cache_for_save(get_impl(nextfilename), url, next+1, cfilename, cltfunc);
+	return get_cache_for_save(get_impl(nextfilename), saveurl, next+1, cfilename, cltfunc);
 }
 
-bool cache_file::save_cache(const std::string& url, CollateFunctions cltfunc, gulong npages)
+bool cache_file::save_cache(const std::string& saveurl, CollateFunctions cltfunc, gulong npages)
 {
 	std::string oftfilename;
-	get_filename(url, cltfunc, oftfilename);
+	get_filename(saveurl, cltfunc, oftfilename);
 	for (int i=0;i<2;i++) {
 		if (i==1) {
-			if (!get_cache_filename(url, oftfilename, true, cltfunc))
+			if (!get_cache_filename(saveurl, oftfilename, true, cltfunc))
 				break;
 		}
 		std::string cfilename;
-		FILE *out= get_cache_for_save(oftfilename.c_str(), url, 2, cfilename, cltfunc);
+		FILE *out= get_cache_for_save(oftfilename.c_str(), saveurl, 2, cfilename, cltfunc);
 		if (!out)
 			continue;
 		if (cachefiletype == CacheFileType_oft)
@@ -482,7 +487,7 @@ bool cache_file::save_cache(const std::string& url, CollateFunctions cltfunc, gu
 		else
 			fwrite(COLLATIONFILE_MAGIC_DATA, 1, sizeof(COLLATIONFILE_MAGIC_DATA)-1, out);
 		fwrite("url=", 1, sizeof("url=")-1, out);
-		fwrite(url.c_str(), 1, url.length(), out);
+		fwrite(saveurl.c_str(), 1, saveurl.length(), out);
 		if (cachefiletype == CacheFileType_clt) {
 #ifdef _MSC_VER
 			fprintf_s(out, "\nfunc=%d", cltfunc);
@@ -618,7 +623,6 @@ static gint sort_collation_index(gconstpointer a, gconstpointer b, gpointer user
 idxsyn_file::idxsyn_file()
 :
 	clt_file(NULL),
-	key_comp_func(stardict_strcmp),
 	wordcount(0)
 {
 	memset(clt_files, 0, sizeof(clt_files));
@@ -794,11 +798,11 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 	glong iTo=npages-2;
 	gint cmpint;
 	glong iThisIndex;
-	if (key_comp_func(str, first.keystr.c_str())<0) {
+	if (stardict_strcmp(str, first.keystr.c_str())<0) {
 		idx = 0;
 		idx_suggest = 0;
 		return false;
-	} else if (key_comp_func(str, real_last.keystr.c_str()) >0) {
+	} else if (stardict_strcmp(str, real_last.keystr.c_str()) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 		return false;
@@ -807,7 +811,7 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = key_comp_func(str, get_first_on_page_key(iThisIndex));
+			cmpint = stardict_strcmp(str, get_first_on_page_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -830,7 +834,7 @@ bool offset_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = key_comp_func(str, page.entries[iThisIndex].keystr);
+			cmpint = stardict_strcmp(str, page.entries[iThisIndex].keystr);
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -949,10 +953,10 @@ bool compressed_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 	bool bFound=false;
 	glong iTo=wordlist.size()-2;
 
-	if (key_comp_func(str, get_key(0))<0) {
+	if (stardict_strcmp(str, get_key(0))<0) {
 		idx = 0;
 		idx_suggest = 0;
-	} else if (key_comp_func(str, get_key(iTo)) >0) {
+	} else if (stardict_strcmp(str, get_key(iTo)) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 	} else {
@@ -961,7 +965,7 @@ bool compressed_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 		gint cmpint;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = key_comp_func(str, get_key(iThisIndex));
+			cmpint = stardict_strcmp(str, get_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -995,8 +999,7 @@ bool compressed_index::lookup(const char *str, glong &idx, glong &idx_suggest)
 
 //===================================================================
 index_file* index_file::Create(const std::string& filebasename, 
-		const char* mainext, std::string& fullfilename,
-		key_comp_func_t key_comp_func)
+		const char* mainext, std::string& fullfilename)
 {
 	index_file *index = NULL;
 
@@ -1007,7 +1010,6 @@ index_file* index_file::Create(const std::string& filebasename,
 		fullfilename = filebasename + "." + mainext;
 		index = new offset_index;
 	}
-	index->key_comp_func = key_comp_func;
 	return index;
 }
 
@@ -1148,11 +1150,11 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 	glong iTo=npages-2;
 	gint cmpint;
 	glong iThisIndex;
-	if (key_comp_func(str, first.keystr.c_str())<0) {
+	if (stardict_strcmp(str, first.keystr.c_str())<0) {
 		idx = 0;
 		idx_suggest = 0;
 		return false;
-	} else if (key_comp_func(str, real_last.keystr.c_str()) >0) {
+	} else if (stardict_strcmp(str, real_last.keystr.c_str()) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 		return false;
@@ -1161,7 +1163,7 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = key_comp_func(str, get_first_on_page_key(iThisIndex));
+			cmpint = stardict_strcmp(str, get_first_on_page_key(iThisIndex));
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -1183,7 +1185,7 @@ bool synonym_file::lookup(const char *str, glong &idx, glong &idx_suggest)
 		iThisIndex=0;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = key_comp_func(str, page.entries[iThisIndex].keystr);
+			cmpint = stardict_strcmp(str, page.entries[iThisIndex].keystr);
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -1267,7 +1269,7 @@ bool Dict::load(const std::string& ifofilename, bool CreateCacheFile,
 	}
 
 	gchar *dirname = g_path_get_dirname(ifofilename.c_str());
-	storage = ResourceStorage::create(dirname, sp);
+	storage = ResourceStorage::create(dirname, CreateCacheFile, sp);
 	g_free(dirname);
 
 	g_print("bookname: %s, wordcount %lu\n", bookname.c_str(), wordcount);
