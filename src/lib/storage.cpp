@@ -6,6 +6,29 @@
 #include "common.hpp"
 #include "stddict.hpp"
 #include "getuint32.h"
+#include "dictziplib.hpp"
+
+struct ResCacheItem {
+	guint32 offset;
+	guint32 size;
+	gchar *data;
+	ResCacheItem(void) { data = NULL; }
+	~ResCacheItem(void) { g_free(data); }
+};
+
+class ResDict {
+public:
+	ResDict(void);
+	~ResDict(void);
+	bool load(const std::string& base_url);
+	gchar *GetData(guint32 offset, guint32 size);
+private:
+	static const size_t RES_DICT_CACHE_SIZE = 10;
+	FILE *dictfile;
+	std::auto_ptr<dictData> dictdzfile;
+	ResCacheItem cache[RES_DICT_CACHE_SIZE];
+	gint cache_cur;
+};
 
 rindex_file::rindex_file(void)
 :
@@ -342,6 +365,61 @@ void compressed_rindex::get_data(glong idx, guint32 &entry_offset, guint32 &entr
 	entry_size = g_ntohl(get_uint32(p1));
 }
 
+ResDict::ResDict(void)
+:
+	dictfile(NULL),
+	cache_cur(0)
+{
+}
+
+ResDict::~ResDict(void)
+{
+	if(dictfile)
+		fclose(dictfile);
+}
+
+bool ResDict::load(const std::string& base_url)
+{
+	std::string url;
+	url = base_url + ".rdic.dz";
+	if (g_file_test(url.c_str(), G_FILE_TEST_EXISTS)) {
+		dictdzfile.reset(new dictData);
+		if (!dictdzfile->open(url, 0)) {
+			//g_print("open file %s failed!\n",fullfilename);
+			return false;
+		}
+	} else {
+		url = base_url + ".rdic";
+		dictfile = fopen(url.c_str(),"rb");
+		if (!dictfile) {
+			//g_print("open file %s failed!\n",fullfilename);
+			return false;
+		}
+	}
+	return true;
+}
+
+gchar *ResDict::GetData(guint32 offset, guint32 size)
+{
+	for(size_t i=0; i<RES_DICT_CACHE_SIZE; ++i)
+		if(cache[i].data && cache[i].offset == offset && cache[i].size == size)
+			return cache[i].data;
+
+	gchar *data = (gchar*)g_malloc(size + sizeof(guint32));
+	memcpy(data, &size, sizeof(guint32));
+	if(dictfile) {
+		fseek(dictfile, offset, SEEK_SET);
+		fread(data+sizeof(guint32), size, 1, dictfile);
+	} else
+		dictdzfile->read(data+sizeof(guint32), offset, size);
+	g_free(cache[cache_cur].data);
+	cache[cache_cur].data = data;
+	cache[cache_cur].offset = offset;
+	cache[cache_cur].size = size;
+	cache_cur = (cache_cur + 1) % RES_DICT_CACHE_SIZE;
+	return data;
+}
+
 ResourceStorage::ResourceStorage()
 :
 	storage_type(StorageType_UNKNOWN),
@@ -485,14 +563,15 @@ const char *File_ResourceStorage::get_file_content(const char *key)
 
 Database_ResourceStorage::Database_ResourceStorage(void)
 :
-ridx_file(NULL)
+ridx_file(NULL),
+dict(NULL)
 {
 }
 
 Database_ResourceStorage::~Database_ResourceStorage(void)
 {
-	if(ridx_file)
-		delete ridx_file;
+	delete ridx_file;
+	delete dict;
 }
 
 bool Database_ResourceStorage::load(const std::string& rifofilename,
@@ -505,8 +584,11 @@ bool Database_ResourceStorage::load(const std::string& rifofilename,
 	// rifofilename without extension - base file name
 	std::string filebasename
 		= rifofilename.substr(0, rifofilename.length()-sizeof(".rifo")+1);
-	//if(!DictBase::load(filebasename, "rdic"))
-	//return false;
+	delete dict;
+	dict = NULL;
+	dict = new ResDict;
+	if(!dict->load(filebasename))
+		return false;
 
 	std::string fullfilename;
 	if(ridx_file)
@@ -531,7 +613,7 @@ const char *Database_ResourceStorage::get_file_content(const char *key)
 	guint32 entry_offset, entry_size;
 	if(!ridx_file->lookup(key, entry_offset, entry_size))
 		return NULL; // key not found
-	return NULL;
+	return dict->GetData(entry_offset, entry_size);
 }
 
 bool Database_ResourceStorage::load_rifofile(const std::string& rifofilename,
