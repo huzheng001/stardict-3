@@ -5,6 +5,7 @@
 #include <glib.h>
 
 class rindex_file;
+class ResDict;
 class show_progress_t;
 
 class File_ResourceStorage {
@@ -31,6 +32,7 @@ private:
 		gulong& indexfilesize);
 private:
 	rindex_file *ridx_file;
+	ResDict *dict;
 };
 
 enum StorageType {
