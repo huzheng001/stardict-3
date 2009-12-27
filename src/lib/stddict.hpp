@@ -43,10 +43,7 @@ enum CollationLevelType {
 
 extern bool bIsPureEnglish(const gchar *str);
 extern gint stardict_server_collate(const gchar *str1, const gchar *str2, CollationLevelType CollationLevel, CollateFunctions func, int servercollatefunc);
-extern gint stardict_strcmp(const gchar *s1, const gchar *s2);
 
-/* function to compare keys in index */
-typedef gint (*key_comp_func_t)(const gchar *s1, const gchar *s2);
 
 class show_progress_t {
 public:
@@ -61,12 +58,26 @@ enum CacheFileType {
 	CacheFileType_server_clt,
 };
 
+/* url and saveurl parameters that appear on the same level, function parameters,
+ * for example, normally have the following meaning.
+ * url - the real file, the cache was build for. That file exists in file system.
+ * saveurl - the file that url represents. Use saveurl to construct cache file name.
+ * Often url = saveurl.
+ * They may be different in the case url is a compressed index, then saveurl
+ * names uncompressed index. For example,
+ * url = ".../mydict.idx.gz"
+ * saveurl = ".../mydict.idx"
+ *
+ * for uncompressed index:
+ * url = ".../mydict.idx"
+ * saveurl = ".../mydict.idx"
+ * */
 class cache_file {
 public:
 	cache_file(CacheFileType _cachefiletype);
 	~cache_file();
 	bool load_cache(const std::string& url, const std::string& saveurl, CollateFunctions cltfunc, glong filedatasize);
-	bool save_cache(const std::string& url, CollateFunctions cltfunc, gulong npages);
+	bool save_cache(const std::string& saveurl, CollateFunctions cltfunc, gulong npages);
 	// datasize in bytes
 	void allocate_wordoffset(glong datasize);
 	guint32& get_wordoffset(size_t ind)
@@ -84,7 +95,7 @@ private:
 	MapFile *mf;
 	bool get_cache_filename(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc);
 	MapFile* get_cache_for_load(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next);
-	FILE* get_cache_for_save(const gchar *filename, const std::string &url, int next, std::string &cfilename, CollateFunctions cltfunc);
+	FILE* get_cache_for_save(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc);
 	gchar *get_next_filename(
 		const gchar *dirname, const gchar *basename, int num,
 		const gchar *extendname, CollateFunctions cltfunc) const;
@@ -129,10 +140,6 @@ private:
 	collation_file *clt_file;
 	collation_file *clt_files[COLLATE_FUNC_NUMS];
 protected:
-	/* use this function to compare keys in the index
-	 * For all indexes but the resource database index it is stardict_strcmp
-	 * function. */
-	key_comp_func_t key_comp_func;
 	// number of words in the index
 	glong wordcount;
 };
@@ -145,8 +152,7 @@ public:
 	guint32 wordentry_size;
 
 	static index_file* Create(const std::string& filebasename,
-		const char* mainext, std::string& fullfilename,
-		key_comp_func_t key_comp_func = stardict_strcmp);
+		const char* mainext, std::string& fullfilename);
 	virtual bool load(const std::string& url, gulong wc, gulong fsize,
 			  bool CreateCacheFile, CollationLevelType CollationLevel,
 			  CollateFunctions _CollateFunction, show_progress_t *sp) = 0;
