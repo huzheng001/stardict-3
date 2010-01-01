@@ -190,8 +190,7 @@ private:
 						if(op_verbose)
 							std::cout << "done" << std::endl;
 				} else if(g_file_test(full_file_name.c_str(), G_FILE_TEST_IS_DIR)) {
-					if(TestDirNameLength(base_dir_length, full_file_name))
-						dirs.push(full_file_name);
+					dirs.push(full_file_name);
 				} else
 					std::cerr << "Unknown file type " << full_file_name << ". Skipping." 
 						<< std::endl;
@@ -208,29 +207,10 @@ private:
 		if(!FileNameToUtf8(FileEntity.fs_file_name.substr(base_dir_length), 
 			FileEntity.db_file_name))
 			return false;
-		if(FileEntity.db_file_name.length() > max_file_name_length) {
-			std::cerr << "File " << full_file_name << " exceeds limitation on the "
-				<< "maximum allowed file name length" << std::endl;
-			return false;
-		}
 		if(!AddFileToRdic(FileEntity))
 			return false;
 		FileEntityList.push_back(FileEntity);
 		return true;
-	}
-	/* Return value:
-	 * true - acceptable length */
-	bool TestDirNameLength(size_t base_dir_length, const std::string& full_file_name)
-	{
-		std::string ffn_utf8;
-		if(!FileNameToUtf8(full_file_name.substr(base_dir_length), ffn_utf8))
-			return false;
-		// 2 = G_DIR_SEPARATOR + file name in the dir will be at least 1 byte long.
-		bool success = (ffn_utf8.length() + 2 <= max_file_name_length);
-		if(!success)
-			std::cerr << "Directory " << full_file_name << " exceeds limitation on the "
-			<< "maximum allowed file name length" << std::endl;
-		return success;
 	}
 	bool AddFileToRdic(TFileEntity& FileEntity)
 	{
@@ -305,10 +285,6 @@ private:
 		return true;
 	}
 private:
-	/* max length of file name in bytes that may be stored in resource database. 
-	 * We must measure length for a string in utf-8 encoding. 
-	 * strlen(file_name) <= max_file_name_length */
-	static const size_t max_file_name_length = 255;
 	/* size of the buffer used to copy file contents into resource database. */
 	static const size_t buffer_size = 1024*1024;
 	std::vector<char> buffer;
