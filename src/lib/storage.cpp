@@ -1,12 +1,142 @@
 #include <glib.h>
 #include <string.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include "storage.h"
 #include "storage_impl.h"
 #include "common.hpp"
 #include "stddict.hpp"
 #include "getuint32.h"
 #include "dictziplib.hpp"
+
+/* permanent or temporary file */
+class FileBase
+{
+private:
+	explicit FileBase(const std::string& url_, bool temp_)
+	:
+		url(url_),
+		cnt(0),
+		temp(temp_)
+	{
+	}
+	virtual ~FileBase(void)
+	{
+		if(!url.empty() && temp)
+			if(g_remove(url.c_str()))
+				g_warning("Unable to remove temporary file: %s", url.c_str());
+	}
+public:
+	static FileBase* create(const std::string& url, bool temp)
+	{
+		return new FileBase(url, temp);
+	}
+	const std::string& get_url(void) const { return url; }
+	void AddRef(void) { ++cnt; }
+	void Release(void)
+	{ 
+		--cnt;
+		if(cnt == 0)
+			delete this;
+	}
+private:
+	std::string url;
+	size_t cnt;
+	bool temp;
+};
+
+
+FileHolder::FileHolder(void)
+:
+	pFileBase(NULL)
+{
+	
+}
+
+FileHolder::FileHolder(const std::string &url, bool temp)
+:
+	pFileBase(NULL)
+{
+	if(!url.empty()) {
+		pFileBase = FileBase::create(url, temp);
+		if(pFileBase)
+			pFileBase->AddRef();
+	}
+}
+
+FileHolder::FileHolder(const FileHolder& right)
+{
+	pFileBase = right.pFileBase;
+	if(pFileBase)
+		pFileBase->AddRef();
+}
+
+FileHolder::~FileHolder(void)
+{
+	if(pFileBase)
+		pFileBase->Release();
+}
+
+const char* FileHolder::get_url(void) const
+{
+	if(pFileBase)
+		return pFileBase->get_url().c_str();
+	else
+		return NULL;
+}
+
+FileHolder& FileHolder::operator=(const FileHolder& right)
+{
+	if(this == &right)
+		return *this;
+	if(right.pFileBase)
+		right.pFileBase->AddRef();
+	if(pFileBase)
+		pFileBase->Release();
+	pFileBase = right.pFileBase;
+	return *this;
+}
+
+bool FileHolder::operator==(const FileHolder& right) const
+{
+	if(pFileBase == right.pFileBase)
+		return true;
+	if(!pFileBase || !right.pFileBase)
+		return false;
+	return pFileBase->get_url() == right.pFileBase->get_url();
+}
+
+void FileHolder::clear(void)
+{
+	if(pFileBase)
+		pFileBase->Release();
+	pFileBase = NULL;
+}
+
+/* Open a temporary file for writing
+ * 
+ * Parameters:
+ * pattern - file name pattern
+ * 1. blank, then default pattern is used
+ * 2. may be a string with "XXXXXX" substring indicating variable part
+ * 3. may be a simple string, then "XXXXXX" will be added to the front
+ * 
+ * fh - file handle, close it with close() when not needed. 
+ * -1 if file open failed. */
+static FileHolder open_temp_file(const std::string &pattern, gint &fh)
+{
+	std::string name_pattern(pattern);
+	if(!name_pattern.empty()) {
+		if(name_pattern.find("XXXXXX")==std::string::npos)
+			name_pattern.insert(0, "XXXXXX");
+	}
+	gchar * tmp_url = NULL;
+	fh = g_file_open_tmp(name_pattern.empty() ? NULL : name_pattern.c_str(), 
+		&tmp_url, NULL);
+	FileHolder file(fh == -1 ? "" : tmp_url, true);
+	g_free(tmp_url);
+	return file;
+}
 
 struct ResCacheItem {
 	guint32 offset;
@@ -487,16 +617,16 @@ bool ResourceStorage::load_database(const char *rifofilename,
 	return true;
 }
 
-const char *ResourceStorage::get_file_path(const char *key)
+FileHolder ResourceStorage::get_file_path(const char *key)
 {
 	switch(storage_type) {
 	case StorageType_FILE:
-		return file_storage->get_file_path(key);
+		return FileHolder(file_storage->get_file_path(key), false);
 	case StorageType_DATABASE:
 		return database_storage->get_file_path(key);
 	default:
 		g_assert_not_reached();
-		return NULL;
+		return FileHolder();
 	}
 }
 
@@ -563,6 +693,7 @@ const char *File_ResourceStorage::get_file_content(const char *key)
 
 Database_ResourceStorage::Database_ResourceStorage(void)
 :
+cur_cache_ind(0),
 ridx_file(NULL),
 dict(NULL)
 {
@@ -600,12 +731,36 @@ bool Database_ResourceStorage::load(const std::string& rifofilename,
 	return true;
 }
 
-const char *Database_ResourceStorage::get_file_path(const char *key)
+FileHolder Database_ResourceStorage::get_file_path(const char *key)
 {
+	int ind = find_in_cache(key);
+	if(ind >= 0)
+		return FileCache[ind].file;
+
 	guint32 entry_offset, entry_size;
 	if(!ridx_file->lookup(key, entry_offset, entry_size))
-		return NULL; // key not found
-	return NULL;
+		return FileHolder(); // key not found
+	gchar *data = dict->GetData(entry_offset, entry_size);
+	if(!data)
+		return FileHolder();
+
+	std::string name_pattern(key);
+	std::string::size_type pos = name_pattern.find_last_of("."G_DIR_SEPARATOR_S);
+	if(pos != std::string::npos) {
+		if(name_pattern[pos] == '.')
+			name_pattern = name_pattern.substr(pos);
+		else
+			name_pattern.clear();
+	} else
+		name_pattern.clear();
+	gint fd;
+	FileHolder file(open_temp_file(name_pattern, fd));
+	if(file.empty())
+		return file;
+	write(fd, data+sizeof(guint32), entry_size);
+	close(fd);
+	ind = put_in_cache(key, file);
+	return FileCache[ind].file;
 }
 
 const char *Database_ResourceStorage::get_file_content(const char *key)
@@ -614,6 +769,31 @@ const char *Database_ResourceStorage::get_file_content(const char *key)
 	if(!ridx_file->lookup(key, entry_offset, entry_size))
 		return NULL; // key not found
 	return dict->GetData(entry_offset, entry_size);
+}
+
+void Database_ResourceStorage::clear_cache(void)
+{
+	for(size_t i=0; i<FILE_CACHE_SIZE; ++i) {
+		FileCache[i].key.clear();
+		FileCache[i].file.clear();
+	}
+}
+
+int Database_ResourceStorage::find_in_cache(const std::string& key) const
+{
+	for(size_t i=0; i<FILE_CACHE_SIZE; ++i)
+		if(FileCache[i].key == key)
+			return i;
+	return -1;
+}
+
+size_t Database_ResourceStorage::put_in_cache(const std::string& key, const FileHolder& file)
+{
+	size_t ind = cur_cache_ind;
+	FileCache[ind].key = key;
+	FileCache[ind].file = file;
+	cur_cache_ind = (ind + 1) % FILE_CACHE_SIZE;
+	return ind;
 }
 
 bool Database_ResourceStorage::load_rifofile(const std::string& rifofilename,

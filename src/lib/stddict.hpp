@@ -222,8 +222,9 @@ public:
 
 	Dict();
 	~Dict();
-	bool load(const std::string&, bool CreateCacheFile, CollationLevelType CollationLevel, CollateFunctions,
-		  show_progress_t *);
+	bool load(const std::string &ifofilename, bool CreateCacheFile,
+		CollationLevelType CollationLevel, CollateFunctions CollateFunction,
+		show_progress_t *sp);
 
 	glong narticles() { return idx_file->get_word_count(); }
 	glong nsynarticles();
@@ -354,7 +355,7 @@ public:
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
 	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);
 	StorageType GetStorageType(size_t iLib);
-	const char *GetStorageFilePath(size_t iLib, const char *key);
+	FileHolder GetStorageFilePath(size_t iLib, const char *key);
 	const char *GetStorageFileContent(size_t iLib, const char *key);
 private:
 	std::vector<Dict *> oLib; // word Libs.

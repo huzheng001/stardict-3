@@ -163,6 +163,35 @@ private:
 	int clone_last_mark_num_;
 };
 
+/* sound resource data structure
+ * A resource file is loaded only if necessary.
+ * We postpone loading sound files till a user requests to play them.
+ * That speeds up article loading, saves memory. */
+class SoundResData {
+public:
+	SoundResData(size_t iLib_, const std::string& key_)
+	:
+		iLib(iLib_),
+		key(key_)
+	{
+		
+	}
+	const char* get_url(void)
+	{
+		if(file.empty())
+			file = gpAppFrame->oLibs.GetStorageFilePath(iLib, key.c_str());
+		return file.get_url();
+	}
+	const char* get_key(void) const
+	{
+		return key.c_str();
+	}
+private:
+	size_t iLib;
+	std::string key;
+	FileHolder file;
+};
+
 struct ArticleView::ParseResultItemWithMark {
 	ParseResultItem* item;
 	std::string mark;
@@ -652,11 +681,10 @@ void ArticleView::append_data_res_image(
 		GdkPixbuf* pixbuf = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-			if (type == StorageType_DATABASE) {
-			} else if (type == StorageType_FILE) {
-				const char *filename = gpAppFrame->oLibs.GetStorageFilePath
-					(dict_index.index, it->item->res->key.c_str());
-				if (filename) {
+			if (type == StorageType_DATABASE || type == StorageType_FILE) {
+				FileHolder file(gpAppFrame->oLibs.GetStorageFilePath
+					(dict_index.index, it->item->res->key.c_str()));
+				if (const char *filename = file.get_url()) {
 					pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 				}
 			}
@@ -681,32 +709,28 @@ void ArticleView::append_data_res_sound(
 		GtkWidget *widget = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
-			if (type == StorageType_DATABASE) {
-			} else if (type == StorageType_FILE) {
-				const char *filename = gpAppFrame->oLibs.GetStorageFilePath
-					(dict_index.index, it->item->res->key.c_str());
-				if (filename) {
-					GtkWidget *button = NULL;
-					GtkWidget *image = NULL;
-					filename = g_strdup(filename);
-					image = gtk_image_new_from_pixbuf(get_impl(
-						gpAppFrame->oAppSkin.pronounce));
-					button = gtk_button_new();
-					/* We need an event box to associate a custom cursor with the
-					 * button. */
-					widget = gtk_event_box_new();
-					g_object_ref_sink(G_OBJECT(widget));
-					gtk_container_add(GTK_CONTAINER(button), image);
-					gtk_container_add(GTK_CONTAINER(widget), button);
-					gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
-					gtk_widget_show_all(widget);
-					g_signal_connect(G_OBJECT(button), "destroy",
-						G_CALLBACK(on_sound_button_destroy), (gpointer)filename);
-					g_signal_connect(G_OBJECT(button), "clicked",
-						G_CALLBACK(on_sound_button_clicked), (gpointer)filename);
-					g_signal_connect(G_OBJECT(button), "realize",
-						G_CALLBACK(on_sound_button_realize), (gpointer)widget);
-				}
+			if (type == StorageType_DATABASE || type == StorageType_FILE) {
+				SoundResData *pSoundResData
+					= new SoundResData(dict_index.index, it->item->res->key);
+				GtkWidget *button = NULL;
+				GtkWidget *image = NULL;
+				image = gtk_image_new_from_pixbuf(get_impl(
+					gpAppFrame->oAppSkin.pronounce));
+				button = gtk_button_new();
+				/* We need an event box to associate a custom cursor with the
+				 * button. */
+				widget = gtk_event_box_new();
+				g_object_ref_sink(G_OBJECT(widget));
+				gtk_container_add(GTK_CONTAINER(button), image);
+				gtk_container_add(GTK_CONTAINER(widget), button);
+				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
+				gtk_widget_show_all(widget);
+				g_signal_connect(G_OBJECT(button), "destroy",
+					G_CALLBACK(on_sound_button_destroy), (gpointer)pSoundResData);
+				g_signal_connect(G_OBJECT(button), "clicked",
+					G_CALLBACK(on_sound_button_clicked), (gpointer)pSoundResData);
+				g_signal_connect(G_OBJECT(button), "realize",
+					G_CALLBACK(on_sound_button_realize), (gpointer)widget);
 			}
 		}
 		if(widget) {
@@ -719,13 +743,16 @@ void ArticleView::append_data_res_sound(
 
 void ArticleView::on_sound_button_destroy(GtkObject *object, gpointer user_data)
 {
-	g_free(user_data);
+	delete (SoundResData*)user_data;
 }
 
 void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
 {
-	const char *filename = static_cast<const char*>(user_data);
-	play_sound_file(filename);
+	SoundResData *pSoundResData = (SoundResData*)user_data;
+	if(const char *filename = pSoundResData->get_url())
+		play_sound_file(filename);
+	else
+		g_warning("Unable to load sound resource: %s", pSoundResData->get_key());
 }
 
 void ArticleView::on_sound_button_realize(GtkObject *object, gpointer user_data)
