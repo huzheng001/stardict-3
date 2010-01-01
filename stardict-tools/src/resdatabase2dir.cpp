@@ -120,7 +120,7 @@ private:
 		RidxFileName = ResDbBase + ".ridx";
 		RifoFileName = ResDbBase + ".rifo";
 	}
-	/* Read the index file and extract all filed listed there. */
+	/* Read the index file and extract all files listed there. */
 	bool ProcessIndexFile(void)
 	{
 		ridx_fh.reset(fopen(RidxFileName.c_str(), "rb"));
@@ -140,8 +140,9 @@ private:
 	bool ReadIndexEntity(TIndexEntity& IndexEntity)
 	{
 		// read file name
-		std::vector<char> res;
-		res.reserve(max_file_name_length+1);
+		std::string &res = IndexEntity.db_file_name;
+		res.clear();
+		res.reserve(256);
 		int c;
 		while(true) {
 			c = fgetc(get_impl(ridx_fh));
@@ -153,10 +154,8 @@ private:
 			}
 			if(!c)
 				break;
-			res.push_back((char)c);
+			res += (char)c;
 		}
-		res.push_back('\0');
-		IndexEntity.db_file_name = &res[0];
 		
 		guint32 t;
 		// read offset
@@ -228,10 +227,6 @@ private:
 		return true;
 	}
 private:
-	/* max length of file name in bytes that may be stored in resource database. 
-	 * We must measure length for a string in utf-8 encoding. 
-	 * strlen(file_name) <= max_file_name_length */
-	static const size_t max_file_name_length = 255;
 	/* size of the buffer used to copy file contents into resource database. */
 	static const size_t buffer_size = 1024*1024;
 	std::vector<char> buffer;
