@@ -782,7 +782,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	GtkWidget *label;
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
 	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
-	label=gtk_label_new(_("Command for playing wav files:"));
+	label=gtk_label_new(_("Command for playing sound files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
 	GtkWidget *e = gtk_entry_new();
 	gtk_widget_set_size_request(e, 50, -1);
@@ -790,7 +790,6 @@ void PrefsDlg::setup_dictionary_sound_page()
 		conf->get_string_at("dictionary/play_command");
 	gtk_entry_set_text(GTK_ENTRY(e), playcmd.c_str());
 	gtk_box_pack_start(GTK_BOX(hbox2), e, TRUE, TRUE, 0);
-	gtk_widget_set_sensitive(hbox2, enable);
 	ePlayCommand=GTK_ENTRY(e);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 #endif

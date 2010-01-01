@@ -1486,8 +1486,7 @@ Libs::~Libs()
 bool Libs::load_dict(const std::string& url, show_progress_t *sp)
 {
 	Dict *lib=new Dict;
-	if (lib->load(url, CreateCacheFile, CollationLevel,
-		      CollateFunction, sp)) {
+	if (lib->load(url, CreateCacheFile, CollationLevel, CollateFunction, sp)) {
 		oLib.push_back(lib);
 		return true;
 	} else {
@@ -3246,10 +3245,10 @@ StorageType Libs::GetStorageType(size_t iLib)
 	return oLib[iLib]->storage->storage_type;
 }
 
-const char *Libs::GetStorageFilePath(size_t iLib, const char *key)
+FileHolder Libs::GetStorageFilePath(size_t iLib, const char *key)
 {
 	if (oLib[iLib]->storage == NULL)
-		return NULL;
+		return FileHolder();
 	return oLib[iLib]->storage->get_file_path(key);
 }
 
