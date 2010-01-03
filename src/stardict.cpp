@@ -65,7 +65,7 @@ HINSTANCE stardictexe_hInstance;
 #include "desktop.hpp"
 #include "splash.h"
 #include "conf.h"
-#include "utils.h"
+#include "lib/utils.h"
 #include "prefsdlg.h"
 #include "iskeyspressed.hpp"
 #include "class_factory.hpp"

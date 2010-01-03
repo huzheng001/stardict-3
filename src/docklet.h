@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 #include "tray.hpp"
 #include "eggtrayicon.h"
-#include "utils.h"
+#include "lib/utils.h"
 
 class AppSkin;//forward declaration
 

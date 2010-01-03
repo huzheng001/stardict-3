@@ -210,10 +210,12 @@ private:
 
 class Dict : public DictBase {
 private:
+	/* in file name encoding */
 	std::string ifo_file_name;
-	std::string bookname;
-	std::string dicttype;
+	std::string bookname; // in utf-8
+	std::string dicttype; // in utf-8
 
+	/* ifofilename in file name encoding */
 	bool load_ifofile(const std::string& ifofilename, gulong &idxfilesize, glong &wordcount, glong &synwordcount);
 public:
 	std::auto_ptr<index_file> idx_file;
@@ -222,6 +224,7 @@ public:
 
 	Dict();
 	~Dict();
+	/* ifofilename in file name encoding */
 	bool load(const std::string &ifofilename, bool CreateCacheFile,
 		CollationLevelType CollationLevel, CollateFunctions CollateFunction,
 		show_progress_t *sp);
@@ -355,8 +358,8 @@ public:
 	typedef void (*updateSearchDialog_func)(gpointer data, gdouble fraction);
 	bool LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateSearchDialog_func func, gpointer data, bool *cancel, std::vector<InstantDictIndex> &dictmask);
 	StorageType GetStorageType(size_t iLib);
-	FileHolder GetStorageFilePath(size_t iLib, const char *key);
-	const char *GetStorageFileContent(size_t iLib, const char *key);
+	FileHolder GetStorageFilePath(size_t iLib, const std::string &key);
+	const char *GetStorageFileContent(size_t iLib, const std::string &key);
 private:
 	std::vector<Dict *> oLib; // word Libs.
 	int iMaxFuzzyDistance;

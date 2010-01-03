@@ -8,7 +8,7 @@ libstardict_a_SOURCES = \
 	distance.cpp distance.h	\
 	mapfile.hpp file.hpp	\
 	kmp.cpp kmp.h	\
-	my_global.h m_ctype.h m_string.h	\
+	my_global.h m_ctype.h	\
 	ctype-mb.cpp ctype-utf8.cpp ctype-uca.cpp	\
 	collation.cpp collation.h \
 	data.hpp data.cpp \
@@ -30,8 +30,8 @@ libstardict_a_SOURCES = \
 	parsedata_plugin.cpp parsedata_plugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
 	dictmask.h	\
-	getuint32.h	\
-	xml_str.cpp xml_str.h \
+	xml_str.cpp xml_str.h	\
+	utils.cpp utils.h	\
 	stardict_libconfig.h
 
 if USE_SYSTEM_SIGCPP

@@ -24,7 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "conf.h"
-#include "utils.h"
+#include "lib/utils.h"
 
 #include "splash.h"
 

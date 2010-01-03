@@ -12,7 +12,7 @@
 
 #include "conf.h"
 #include "desktop.hpp"
-#include "utils.h"
+#include "lib/utils.h"
 #include "stardict.h"
 
 #include "readword.h"

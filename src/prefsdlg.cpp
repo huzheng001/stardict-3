@@ -34,7 +34,7 @@
 #include "stardict.h"
 #include "conf.h"
 #include "desktop.hpp"
-#include "utils.h"
+#include "lib/utils.h"
 #include "iskeyspressed.hpp"
 #include "lib/md5.h"
 #include "lib/file.hpp"

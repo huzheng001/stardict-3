@@ -6,13 +6,14 @@
 #include "storage_impl.h"
 #include "common.hpp"
 #include "stddict.hpp"
-#include "getuint32.h"
+#include "utils.h"
 #include "dictziplib.hpp"
 
 /* permanent or temporary file */
 class FileBase
 {
 private:
+	/* url_ in file name encoding */
 	explicit FileBase(const std::string& url_, bool temp_)
 	:
 		url(url_),
@@ -27,6 +28,7 @@ private:
 				g_warning("Unable to remove temporary file: %s", url.c_str());
 	}
 public:
+	/* url in file name encoding */
 	static FileBase* create(const std::string& url, bool temp)
 	{
 		return new FileBase(url, temp);
@@ -40,7 +42,7 @@ public:
 			delete this;
 	}
 private:
-	std::string url;
+	std::string url; // in file name encoding
 	size_t cnt;
 	bool temp;
 };
@@ -116,7 +118,7 @@ void FileHolder::clear(void)
 /* Open a temporary file for writing
  * 
  * Parameters:
- * pattern - file name pattern
+ * pattern - file name pattern in file name encoding
  * 1. blank, then default pattern is used
  * 2. may be a string with "XXXXXX" substring indicating variable part
  * 3. may be a simple string, then "XXXXXX" will be added to the front
@@ -566,7 +568,7 @@ ResourceStorage::~ResourceStorage()
 
 /* Create a new object and return it if resources exit.
  * Otherwise return NULL. */
-ResourceStorage* ResourceStorage::create(const char *dirname,
+ResourceStorage* ResourceStorage::create(const std::string &dirname,
 	bool CreateCacheFile, show_progress_t *sp)
 {
 	ResourceStorage *storage = NULL;
@@ -575,7 +577,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 	fullfilename += G_DIR_SEPARATOR_S "res.rifo";
 	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
 		storage = new ResourceStorage();
-		if(!storage->load_database(fullfilename.c_str(), CreateCacheFile, sp)) {
+		if(!storage->load_database(fullfilename, CreateCacheFile, sp)) {
 			delete storage;
 			storage = NULL;
 		}
@@ -584,7 +586,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 		fullfilename += G_DIR_SEPARATOR_S "res";
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
 			storage = new ResourceStorage();
-			if(!storage->load_filesdir(fullfilename.c_str(), sp)) {
+			if(!storage->load_filesdir(fullfilename, sp)) {
 				delete storage;
 				storage = NULL;
 			}
@@ -593,7 +595,7 @@ ResourceStorage* ResourceStorage::create(const char *dirname,
 	return storage;
 }
 
-bool ResourceStorage::load_filesdir(const char *resdir, show_progress_t *sp)
+bool ResourceStorage::load_filesdir(const std::string &resdir, show_progress_t *sp)
 {
 	g_assert(storage_type == StorageType_UNKNOWN);
 	g_assert(file_storage == NULL && database_storage == NULL);
@@ -602,7 +604,7 @@ bool ResourceStorage::load_filesdir(const char *resdir, show_progress_t *sp)
 	return true;
 }
 
-bool ResourceStorage::load_database(const char *rifofilename, 
+bool ResourceStorage::load_database(const std::string &rifofilename, 
 	bool CreateCacheFile, show_progress_t *sp)
 {
 	g_assert(storage_type == StorageType_UNKNOWN);
@@ -617,7 +619,7 @@ bool ResourceStorage::load_database(const char *rifofilename,
 	return true;
 }
 
-FileHolder ResourceStorage::get_file_path(const char *key)
+FileHolder ResourceStorage::get_file_path(const std::string &key)
 {
 	switch(storage_type) {
 	case StorageType_FILE:
@@ -630,7 +632,7 @@ FileHolder ResourceStorage::get_file_path(const char *key)
 	}
 }
 
-const char *ResourceStorage::get_file_content(const char *key)
+const char *ResourceStorage::get_file_content(const std::string &key)
 {
 	switch(storage_type) {
 	case StorageType_FILE:
@@ -643,7 +645,7 @@ const char *ResourceStorage::get_file_content(const char *key)
 	}
 }
 
-File_ResourceStorage::File_ResourceStorage(const char *resdir_)
+File_ResourceStorage::File_ResourceStorage(const std::string &resdir_)
 :
 	resdir(resdir_),
 	data(NULL)
@@ -652,32 +654,39 @@ File_ResourceStorage::File_ResourceStorage(const char *resdir_)
 
 File_ResourceStorage::~File_ResourceStorage(void)
 {
-	if(data)
-		g_free(data);
+	g_free(data);
 }
 
-const char *File_ResourceStorage::get_file_path(const char *key)
+const std::string& File_ResourceStorage::get_file_path(const std::string &key)
 {
+	filepath.clear();
+	if(key.empty())
+		return filepath;
+	std::string fs_key;
+	if(!utf8_to_file_name(key, fs_key))
+		return filepath;
 	filepath = resdir;
 	filepath += G_DIR_SEPARATOR;
-	filepath += key;
-	if(g_file_test(filepath.c_str(), G_FILE_TEST_EXISTS))
-		return filepath.c_str();
-	else
-		return NULL;
+	filepath += fs_key;
+	if(!g_file_test(filepath.c_str(), G_FILE_TEST_EXISTS))
+		filepath.clear();
+	return filepath;
 }
 
-const char *File_ResourceStorage::get_file_content(const char *key)
+const char *File_ResourceStorage::get_file_content(const std::string &key)
 {
-	if(key == NULL)
+	if(key.empty())
 		return NULL;
 	if(data) {
 		g_free(data);
 		data = NULL;
 	}
+	std::string fs_key;
+	if(!utf8_to_file_name(key, fs_key))
+		return NULL;
 	std::string filename = resdir;
 	filename += G_DIR_SEPARATOR;
-	filename += key;
+	filename += fs_key;
 	gchar* contents = NULL;
 	gsize length = 0;
 	if(g_file_get_contents(filename.c_str(), &contents, &length, NULL)) {
@@ -722,8 +731,7 @@ bool Database_ResourceStorage::load(const std::string& rifofilename,
 		return false;
 
 	std::string fullfilename;
-	if(ridx_file)
-		delete ridx_file;
+	delete ridx_file;
 	ridx_file = NULL;
 	ridx_file = rindex_file::Create(filebasename, "ridx", fullfilename);
 	if (!ridx_file->load(fullfilename, filecount, indexfilesize, CreateCacheFile))
@@ -731,20 +739,22 @@ bool Database_ResourceStorage::load(const std::string& rifofilename,
 	return true;
 }
 
-FileHolder Database_ResourceStorage::get_file_path(const char *key)
+FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 {
 	int ind = find_in_cache(key);
 	if(ind >= 0)
 		return FileCache[ind].file;
 
 	guint32 entry_offset, entry_size;
-	if(!ridx_file->lookup(key, entry_offset, entry_size))
+	if(!ridx_file->lookup(key.c_str(), entry_offset, entry_size))
 		return FileHolder(); // key not found
 	gchar *data = dict->GetData(entry_offset, entry_size);
 	if(!data)
 		return FileHolder();
 
-	std::string name_pattern(key);
+	std::string name_pattern; // in file name encoding
+	if(!utf8_to_file_name(key, name_pattern))
+		return FileHolder();
 	std::string::size_type pos = name_pattern.find_last_of("."G_DIR_SEPARATOR_S);
 	if(pos != std::string::npos) {
 		if(name_pattern[pos] == '.')
@@ -763,10 +773,10 @@ FileHolder Database_ResourceStorage::get_file_path(const char *key)
 	return FileCache[ind].file;
 }
 
-const char *Database_ResourceStorage::get_file_content(const char *key)
+const char *Database_ResourceStorage::get_file_content(const std::string &key)
 {
 	guint32 entry_offset, entry_size;
-	if(!ridx_file->lookup(key, entry_offset, entry_size))
+	if(!ridx_file->lookup(key.c_str(), entry_offset, entry_size))
 		return NULL; // key not found
 	return dict->GetData(entry_offset, entry_size);
 }

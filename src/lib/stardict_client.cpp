@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include "sockets.hpp"
 #include "md5.h"
-#include "getuint32.h"
+#include "utils.h"
 
 #include "stardict_client.hpp"
 

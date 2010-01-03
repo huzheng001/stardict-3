@@ -24,7 +24,7 @@
 #include <cstring>
 
 #include "conf.h"
-#include "utils.h"
+#include "lib/utils.h"
 
 #include "skin.h"
 

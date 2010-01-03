@@ -2,16 +2,22 @@
 #define STORAGE_IMPL_H_
 
 #include "stddict.hpp"
+#include "storage.h"
+
+class ResDict;
 
 class rindex_file
 {
 public:
 	rindex_file(void);
 	virtual ~rindex_file() {}
+	/* filebasename, mainext, fullfilename in file name encoding */
 	static rindex_file* Create(const std::string& filebasename,
 			const char* mainext, std::string& fullfilename);
+	/* url in file name encoding */
 	virtual bool load(const std::string& url, gulong _filecount, gulong fsize,
 		bool CreateCacheFile) = 0;
+	/* str in utf-8 */
 	virtual bool lookup(const char *str, guint32 &entry_offset, guint32 &entry_size) = 0;
 protected:
 	// number of files in the index
@@ -23,10 +29,13 @@ class offset_rindex: public rindex_file
 public:
 	offset_rindex(void);
 	~offset_rindex(void);
+	/* url in file name encoding */
 	bool load(const std::string& url, gulong _filecount, gulong fsize,
 		bool CreateCacheFile);
+	/* str in utf-8 */
 	bool lookup(const char *str, guint32 &entry_offset, guint32 &entry_size);
 private:
+	/* str in utf-8 */
 	bool lookup(const char *str, glong &idx);
 	const gchar *read_first_on_page_key(glong page_idx);
 	const gchar *get_first_on_page_key(glong page_idx);
@@ -60,7 +69,7 @@ private:
 	gulong npages;
 	struct index_entry {
 		glong page_idx;
-		std::string keystr;
+		std::string keystr; // in utf-8
 		void assign(glong i, const std::string& str) {
 			page_idx=i;
 			keystr.assign(str);
@@ -73,7 +82,7 @@ private:
 	index_entry first, last, middle, real_last;
 
 	struct page_entry {
-		gchar *keystr;
+		gchar *keystr; // in utf-8
 		guint32 off, size;
 	};
 	std::vector<gchar> page_data;
@@ -91,11 +100,15 @@ class compressed_rindex: public rindex_file
 public:
 	compressed_rindex(void);
 	~compressed_rindex(void);
+	/* url in file name encoding */
 	bool load(const std::string& url, gulong _filecount, gulong fsize,
 		bool CreateCacheFile);
+	/* str in utf-8 */
 	bool lookup(const char *str, guint32 &entry_offset, guint32 &entry_size);
 private:
+	/* str in utf-8 */
 	bool lookup(const char *str, glong &idx);
+	/* return value in utf-8 */
 	const gchar *get_key(glong idx);
 	void get_data(glong idx, guint32 &entry_offset, guint32 &entry_size);
 
@@ -105,6 +118,55 @@ private:
 	 * followed by data offset and size. See ".ridx" file format. 
 	 * filelist.size() == number of files + 1 */
 	std::vector<gchar *> filelist;
+};
+
+class File_ResourceStorage {
+public:
+	/* resdir in file name encoding */
+	explicit File_ResourceStorage(const std::string &resdir);
+	~File_ResourceStorage(void);
+	/* key in utf-8, return value in file name encoding */
+	const std::string& get_file_path(const std::string &key);
+	/* key in utf-8 */
+	const char *get_file_content(const std::string &key);
+private:
+	std::string resdir; // in file name encoding
+	/* get_file_path function result, in file name encoding */
+	std::string filepath;
+	gchar* data;
+};
+
+class Database_ResourceStorage {
+public:
+	Database_ResourceStorage(void);
+	~Database_ResourceStorage(void);
+	/* rifofilename in file name encoding */
+	bool load(const std::string& rifofilename, bool CreateCacheFile);
+	/* key in utf-8 */
+	FileHolder get_file_path(const std::string &key);
+	/* key in utf-8 */
+	const char *get_file_content(const std::string &key);
+private:
+	/* rifofilename in file name encoding */
+	bool load_rifofile(const std::string& rifofilename, gulong& filecount,
+		gulong& indexfilesize);
+	void clear_cache(void);
+	/* key in utf-8 */
+	int find_in_cache(const std::string& key) const;
+	/* key in utf-8 */
+	size_t put_in_cache(const std::string& key, const FileHolder& file);
+private:
+	static const size_t FILE_CACHE_SIZE = 20;
+	/* the entity is not used if key.empty() */
+	struct FileCacheEntity
+	{
+		std::string key; // in utf-8
+		FileHolder file;
+	};
+	FileCacheEntity FileCache[FILE_CACHE_SIZE];
+	size_t cur_cache_ind; // index to be reused
+	rindex_file *ridx_file;
+	ResDict *dict;
 };
 
 #endif /* STORAGE_IMPL_H_ */

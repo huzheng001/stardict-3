@@ -30,7 +30,7 @@
 #include <glib/gstdio.h>
 #include <stdlib.h>
 
-#include "utils.h"
+#include "lib/utils.h"
 
 #include "inifile.hpp"
 

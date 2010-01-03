@@ -32,7 +32,7 @@
 #include "conf.h"
 #include "desktop.hpp"
 #include "stardict.h"
-#include "utils.h"
+#include "lib/utils.h"
 #include "lib/distance.h"
 #include "lib/stddict.hpp"
 

@@ -24,7 +24,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
-#include "utils.h"
+#include "lib/utils.h"
 
 #include "progresswin.hpp"
 

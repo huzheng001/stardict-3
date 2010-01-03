@@ -41,7 +41,7 @@
 #  include "docklet.h"
 #endif
 
-#include "utils.h"
+#include "lib/utils.h"
 
 #include "class_factory.hpp"
 

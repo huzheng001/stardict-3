@@ -25,7 +25,7 @@
 #include <iostream>
 #include <map>
 #include "gtktextviewpango.h"
-#include "utils.h"
+#include "lib/utils.h"
 #include "skin.h"//for SkinCursor definition
 #include "lib/xml_str.h"
 

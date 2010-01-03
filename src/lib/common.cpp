@@ -26,7 +26,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "common.hpp"
-#include "../utils.h"
+#include "utils.h"
 
 static void parse_description(const char *p, long len, std::string &description)
 {
