@@ -14,7 +14,9 @@ enum DictInfoType {
 // This structure contains all information about dictionary or Resource Storage
 // database.
 struct DictInfo {
+	/* in file name encoding */
   std::string ifo_file_name;
+  /* other strings in utf-8 */
   union {
   guint32 wordcount;
   guint32 filecount;
@@ -31,6 +33,7 @@ struct DictInfo {
   std::string dicttype;
   std::string version;
   DictInfo(void);
+  /* ifofilename in file name encoding */
   bool load_from_ifo_file(const std::string& ifofilename, DictInfoType infotype);
   void clear(void);
 };

@@ -26,7 +26,7 @@
 
 #include <cstring>
 #include "file.hpp"
-#include "getuint32.h"
+#include "utils.h"
 
 #include "treedict.hpp"
 

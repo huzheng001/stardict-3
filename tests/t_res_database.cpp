@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include "storage_impl.h"
 #include "common.hpp"
-#include "getuint32.h"
+#include "utils.h"
 
 struct index_entry_t {
 	index_entry_t(void): off(0), size(0) {}

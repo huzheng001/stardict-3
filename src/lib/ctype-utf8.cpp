@@ -25,7 +25,6 @@
 #endif
 
 #include "my_global.h"
-#include "m_string.h"
 #include "m_ctype.h"
 //#include <errno.h>
 

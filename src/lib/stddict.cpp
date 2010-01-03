@@ -39,8 +39,7 @@
 #include "mapfile.hpp"
 
 #include "stddict.hpp"
-#include "getuint32.h"
-#include "../utils.h"
+#include "utils.h"
 
 inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
@@ -3242,17 +3241,17 @@ StorageType Libs::GetStorageType(size_t iLib)
 {
 	if (oLib[iLib]->storage == NULL)
 		return StorageType_UNKNOWN;
-	return oLib[iLib]->storage->storage_type;
+	return oLib[iLib]->storage->get_storage_type();
 }
 
-FileHolder Libs::GetStorageFilePath(size_t iLib, const char *key)
+FileHolder Libs::GetStorageFilePath(size_t iLib, const std::string &key)
 {
 	if (oLib[iLib]->storage == NULL)
 		return FileHolder();
 	return oLib[iLib]->storage->get_file_path(key);
 }
 
-const char *Libs::GetStorageFileContent(size_t iLib, const char *key)
+const char *Libs::GetStorageFileContent(size_t iLib, const std::string &key)
 {
 	if (oLib[iLib]->storage == NULL)
 		return NULL;

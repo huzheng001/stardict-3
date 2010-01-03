@@ -1,6 +1,12 @@
 #ifndef _global_h
 #define _global_h
 
+#include <string.h>
+
+#ifdef _WIN32
+#define bzero(p, l) memset(p, 0, l)
+#endif
+
 typedef unsigned int uint;
 typedef unsigned short  uint16; /* Short for unsigned integer >= 16 bits */
 typedef unsigned long   ulong;            /* Short for unsigned long */

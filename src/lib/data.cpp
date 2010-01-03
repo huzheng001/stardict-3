@@ -27,7 +27,7 @@
 #include "kmp.h"
 
 #include "data.hpp"
-#include "getuint32.h"
+#include "utils.h"
 
 
 DictBase::DictBase()

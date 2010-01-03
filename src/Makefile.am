@@ -70,7 +70,6 @@ stardict_SOURCES = 			                \
 	readword.cpp readword.h	                \
 	selection.cpp selection.h	            \
 	splash.cpp splash.h		                \
-	utils.cpp utils.h                       \
 	gtktextviewpango.cpp gtktextviewpango.h \
 	pangoview.cpp pangoview.h               \
 	articleview.cpp articleview.h           \

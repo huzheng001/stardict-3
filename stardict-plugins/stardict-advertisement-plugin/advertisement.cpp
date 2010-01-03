@@ -8,7 +8,7 @@
 #include <list>
 #include <vector>
 #include <cstring>
-#include "../../src/lib/getuint32.h"
+#include "../../src/lib/utils.h"
 
 #ifdef _WIN32
 #include <windows.h>

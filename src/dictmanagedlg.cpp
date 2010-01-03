@@ -15,7 +15,7 @@
 #include "conf.h"
 #include "desktop.hpp"
 #include "lib/common.hpp"
-#include "utils.h"
+#include "lib/utils.h"
 #include "lib/file.hpp"
 #include "dictmanage.h"
 

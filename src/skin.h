@@ -4,7 +4,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gtk/gtk.h>
 
-#include "utils.h"
+#include "lib/utils.h"
 
 typedef ResourceWrapper<GdkCursor, GdkCursor, gdk_cursor_unref> SkinCursor;
 typedef ResourceWrapper<GdkPixbuf, void, g_object_unref> Skin_pixbuf_1;

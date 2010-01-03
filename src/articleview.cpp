@@ -27,9 +27,8 @@
 #include <glib/gi18n.h>
 
 #include "conf.h"
-#include "utils.h"
+#include "lib/utils.h"
 #include "stardict.h"
-#include "lib/getuint32.h"
 #include "lib/xml_str.h"
 
 #include "articleview.h"
@@ -179,12 +178,12 @@ public:
 	const char* get_url(void)
 	{
 		if(file.empty())
-			file = gpAppFrame->oLibs.GetStorageFilePath(iLib, key.c_str());
+			file = gpAppFrame->oLibs.GetStorageFilePath(iLib, key);
 		return file.get_url();
 	}
-	const char* get_key(void) const
+	const std::string& get_key(void) const
 	{
-		return key.c_str();
+		return key;
 	}
 private:
 	size_t iLib;
@@ -244,7 +243,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 
 	guint32 data_size,sec_size=0;
 	data_size=get_uint32(data);
-	data+=sizeof(guint32); //Here is a bug fix of 2.4.8, which make (guint32(p - data)<data_size) become correct, when data_size is the following data size, not the whole size as 4 bytes bigger.
+	data+=sizeof(guint32);
 	const gchar *p=data;
 	bool first_time = true;
 	size_t iPlugin;
@@ -272,7 +271,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 		}
 		switch (*p) {
 			case 'm':
-			case 'l'://need more work...
+			case 'l'://TODO: convert from local encoding to utf-8
 				p++;
 				sec_size = strlen(p);
 				if (sec_size) {
@@ -342,7 +341,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 			case 'W':
 				p++;
 				sec_size=g_ntohl(get_uint32(p));
-				//enbale sound button.
+				//TODO: sound button.
 				sec_size += sizeof(guint32);
 				break;
 			case 'P':
@@ -683,7 +682,7 @@ void ArticleView::append_data_res_image(
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
 				FileHolder file(gpAppFrame->oLibs.GetStorageFilePath
-					(dict_index.index, it->item->res->key.c_str()));
+					(dict_index.index, it->item->res->key));
 				if (const char *filename = file.get_url()) {
 					pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 				}
@@ -752,7 +751,7 @@ void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
 	if(const char *filename = pSoundResData->get_url())
 		play_sound_file(filename);
 	else
-		g_warning("Unable to load sound resource: %s", pSoundResData->get_key());
+		g_warning("Unable to load sound resource: %s", pSoundResData->get_key().c_str());
 }
 
 void ArticleView::on_sound_button_realize(GtkObject *object, gpointer user_data)

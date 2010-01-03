@@ -5,10 +5,10 @@
 #include <list>
 #include <glib.h>
 
-class rindex_file;
-class ResDict;
 class show_progress_t;
 class FileBase;
+class File_ResourceStorage;
+class Database_ResourceStorage;
 
 /* a wrapper for temporary and normal files
  * For normal files it does nothing, for temporary files it manages temp file 
@@ -18,9 +18,11 @@ class FileHolder
 {
 public:
 	FileHolder(void);
+	/* url in file name encoding */
 	FileHolder(const std::string &url, bool temp);
 	FileHolder(const FileHolder& right);
 	~FileHolder(void);
+	/* return value in file name encoding */
 	const char* get_url(void) const;
 	bool empty(void) const { return !pFileBase; }
 	void clear(void);
@@ -28,45 +30,6 @@ public:
 	bool operator==(const FileHolder& right) const;
 private:
 	FileBase *pFileBase;
-};
-
-class File_ResourceStorage {
-public:
-	explicit File_ResourceStorage(const char *resdir);
-	~File_ResourceStorage(void);
-	const char *get_file_path(const char *key);
-	const char *get_file_content(const char *key);
-private:
-	std::string resdir;
-	std::string filepath;
-	gchar* data;
-};
-
-class Database_ResourceStorage {
-public:
-	Database_ResourceStorage(void);
-	~Database_ResourceStorage(void);
-	bool load(const std::string& rifofilename, bool CreateCacheFile);
-	FileHolder get_file_path(const char *key);
-	const char *get_file_content(const char *key);
-private:
-	bool load_rifofile(const std::string& rifofilename, gulong& filecount,
-		gulong& indexfilesize);
-	void clear_cache(void);
-	int find_in_cache(const std::string& key) const;
-	size_t put_in_cache(const std::string& key, const FileHolder& file);
-private:
-	static const size_t FILE_CACHE_SIZE = 20;
-	/* the entity is not used if key.empty() */
-	struct FileCacheEntity
-	{
-		std::string key;
-		FileHolder file;
-	};
-	FileCacheEntity FileCache[FILE_CACHE_SIZE];
-	size_t cur_cache_ind; // index to be reused
-	rindex_file *ridx_file;
-	ResDict *dict;
 };
 
 enum StorageType {
@@ -79,15 +42,21 @@ class ResourceStorage {
 public:
 	ResourceStorage();
 	~ResourceStorage();
-	static ResourceStorage* create(const char *dirname, bool CreateCacheFile,
+	/* dirname in file name encoding */
+	static ResourceStorage* create(const std::string &dirname, bool CreateCacheFile,
+		show_progress_t *sp);
+	/* key in utf-8 */
+	FileHolder get_file_path(const std::string& key);
+	/* key in utf-8 */
+	const char *get_file_content(const std::string &key);
+	StorageType get_storage_type(void) const { return storage_type; }
+private:
+	/* resdir in file name encoding */
+	bool load_filesdir(const std::string &resdir, show_progress_t *sp);
+	/* rifofilename in file name encoding */
+	bool load_database(const std::string &rifofilename, bool CreateCacheFile,
 		show_progress_t *sp);
 	StorageType storage_type;
-	FileHolder get_file_path(const char *key);
-	const char *get_file_content(const char *key);
-private:
-	bool load_filesdir(const char *resdir, show_progress_t *sp);
-	bool load_database(const char *rifofilename, bool CreateCacheFile,
-		show_progress_t *sp);
 	File_ResourceStorage *file_storage;
 	Database_ResourceStorage *database_storage;
 };

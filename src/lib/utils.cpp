@@ -203,3 +203,31 @@ char *common_encode_uri_string(const char *string)
 	}
 	return newURIString;
 }
+
+bool file_name_to_utf8(const std::string& str, std::string& out)
+{
+	size_t len = str.length();
+	gsize bytes_read, bytes_written;
+	glib::CharStr gstr(g_filename_to_utf8(str.c_str(), len, &bytes_read, 
+		&bytes_written, NULL));
+	if(!gstr || bytes_read != len) {
+		g_error("Unable to convert string %s into utf-8 encoding", str.c_str());
+		return false;
+	}
+	out = get_impl(gstr);
+	return true;
+}
+
+bool utf8_to_file_name(const std::string& str, std::string& out)
+{
+	size_t len = str.length();
+	gsize bytes_read, bytes_written;
+	glib::CharStr gstr(g_filename_from_utf8(str.c_str(), len, &bytes_read, 
+		&bytes_written, NULL));
+	if(!gstr || bytes_read != len) {
+		g_error("Unable to convert utf8 string %s into file name encoding", str.c_str());
+		return false;
+	}
+	out = get_impl(gstr);
+	return true;
+}
