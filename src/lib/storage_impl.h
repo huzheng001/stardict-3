@@ -125,9 +125,10 @@ public:
 	/* resdir in file name encoding */
 	explicit File_ResourceStorage(const std::string &resdir);
 	~File_ResourceStorage(void);
-	/* key in utf-8, return value in file name encoding */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator, 
+	 * return value in file name encoding */
 	const std::string& get_file_path(const std::string &key);
-	/* key in utf-8 */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator */
 	const char *get_file_content(const std::string &key);
 private:
 	std::string resdir; // in file name encoding
@@ -142,9 +143,9 @@ public:
 	~Database_ResourceStorage(void);
 	/* rifofilename in file name encoding */
 	bool load(const std::string& rifofilename, bool CreateCacheFile);
-	/* key in utf-8 */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator */
 	FileHolder get_file_path(const std::string &key);
-	/* key in utf-8 */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator */
 	const char *get_file_content(const std::string &key);
 private:
 	/* rifofilename in file name encoding */

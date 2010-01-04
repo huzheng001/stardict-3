@@ -8,6 +8,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include "resourcewrap.hpp"
+#include "stardict-utils.h"
 
 class EMain {};
 
@@ -133,6 +134,7 @@ private:
 		while(ReadIndexEntity(IndexEntity)) {
 			if(!Utf8ToFileName(IndexEntity.db_file_name, IndexEntity.fs_file_name))
 				continue;
+			IndexEntity.fs_file_name = dir_separator_db_to_fs(IndexEntity.fs_file_name);
 			ExtractResourceFile(IndexEntity);
 		}
 		return true;

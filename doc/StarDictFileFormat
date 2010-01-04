@@ -444,7 +444,7 @@ this type identifier is reserved for experimental extensions.
 Resource Storage store the external file in 'r' resource file list, the 
 image in html code, the image, media and other files in wiki tag.
 It have two forms:
-1. Direct directory and files in the "res" sub-directory.
+1. Direct directories and files in the "res" sub-directory.
 2. The res.rifo, res.ridx and res.rdic database.
 Direct files may have file name encoding problem, as Linux use UTF-8 and 
 Windows use local encoding, so you'd better just use ASCII file name, or 
@@ -469,13 +469,15 @@ The format of the res.ridx file:
 filename;	// A utf-8 string end with '\0'.
 offset;		// 32 or 64 bits unsigned number in network byte order.
 size;		// 32 bits unsigned number in network byte order.
-filename can include a path too, such as "pic/example.png". filename is 
-case sensitive, and there should have no two same filenames in all the 
-entries.
+filename can include a path too, such as "pic/example.png". Use '/' character
+as directory separator. filename is case sensitive, and there should have no 
+two same filenames in all the entries.
 if "idxoffsetbits=64", then offset is 64 bits.
 These three items are repeated as each entry.
 The entries are sorted by the strcmp() function with the filename field.
 It is possible that different filenames have the same offset and size.
+You can use gzip -9 to compress the .ridx file. See the note about compressing
+.idx files.
 
 The format of the res.rdic file:
 It is just the join of each resource files.
