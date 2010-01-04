@@ -663,7 +663,7 @@ const std::string& File_ResourceStorage::get_file_path(const std::string &key)
 	if(key.empty())
 		return filepath;
 	std::string fs_key;
-	if(!utf8_to_file_name(key, fs_key))
+	if(!utf8_to_file_name(dir_separator_db_to_fs(key), fs_key))
 		return filepath;
 	filepath = resdir;
 	filepath += G_DIR_SEPARATOR;
@@ -682,7 +682,7 @@ const char *File_ResourceStorage::get_file_content(const std::string &key)
 		data = NULL;
 	}
 	std::string fs_key;
-	if(!utf8_to_file_name(key, fs_key))
+	if(!utf8_to_file_name(dir_separator_db_to_fs(key), fs_key))
 		return NULL;
 	std::string filename = resdir;
 	filename += G_DIR_SEPARATOR;
@@ -755,7 +755,7 @@ FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 	std::string name_pattern; // in file name encoding
 	if(!utf8_to_file_name(key, name_pattern))
 		return FileHolder();
-	std::string::size_type pos = name_pattern.find_last_of("."G_DIR_SEPARATOR_S);
+	std::string::size_type pos = name_pattern.find_last_of("."DB_DIR_SEPARATOR_S);
 	if(pos != std::string::npos) {
 		if(name_pattern[pos] == '.')
 			name_pattern = name_pattern.substr(pos);

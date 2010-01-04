@@ -9,6 +9,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include "resourcewrap.hpp"
+#include "stardict-utils.h"
 
 class EMain {};
 
@@ -148,7 +149,7 @@ private:
 		RifoFileName = ResDbBase + ".rifo";
 	}
 	/* Process the directory specified, build FileEntityList list, fill .rdic 
-	 * file. */
+	 * file. base_dir in file name encoding */
 	bool ProcessDir(const std::string& base_dir)
 	{
 		if(base_dir.empty())
@@ -207,6 +208,7 @@ private:
 		if(!FileNameToUtf8(FileEntity.fs_file_name.substr(base_dir_length), 
 			FileEntity.db_file_name))
 			return false;
+		FileEntity.db_file_name = dir_separator_fs_to_db(FileEntity.db_file_name);
 		if(!AddFileToRdic(FileEntity))
 			return false;
 		FileEntityList.push_back(FileEntity);

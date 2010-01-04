@@ -45,9 +45,9 @@ public:
 	/* dirname in file name encoding */
 	static ResourceStorage* create(const std::string &dirname, bool CreateCacheFile,
 		show_progress_t *sp);
-	/* key in utf-8 */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator */
 	FileHolder get_file_path(const std::string& key);
-	/* key in utf-8 */
+	/* key in utf-8, DB_DIR_SEPARATOR path separator */
 	const char *get_file_content(const std::string &key);
 	StorageType get_storage_type(void) const { return storage_type; }
 private:
