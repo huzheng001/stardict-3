@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
-#include <string> 
-#include <string.h>
+#include <string>
+#include <cstring>
 
 
 static int hexalpha_to_int(int c)

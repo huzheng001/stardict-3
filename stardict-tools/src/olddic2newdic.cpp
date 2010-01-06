@@ -20,6 +20,10 @@
 #define LIB_WORD_BIG5 2
 #define LIB_WORD_PY 3
 
+// Fix compilation on hurd
+#ifndef MAP_NORESERVE
+#define MAP_NORESERVE 0
+#endif
 
 void vConvertEndian(unsigned int * input)
 {
@@ -214,7 +218,7 @@ void convert(char *filename,char *idxheadfilename)
 	utf8_converter = g_iconv_open("UTF-8","BIG5");
 	
 	//the locale_converter have no problem!but why it fail later?
-/*	locale_str = g_convert_with_iconv("º~­^Ãã¨å",8,locale_converter,NULL,&locale_write_size,NULL);
+/*	locale_str = g_convert_with_iconv("ï¿½~ï¿½^ï¿½ï¿½ï¿½",8,locale_converter,NULL,&locale_write_size,NULL);
 	if (!locale_str) {
 		g_print("convert fail\n");		
 	}

@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <glib/gstdio.h>
 #include <iconv.h>
-#include <string.h>
+#include <cstring>
 
 #ifdef _WIN32
 #include <io.h>

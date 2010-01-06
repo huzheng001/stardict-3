@@ -68,7 +68,7 @@ gchar *convert_fr(gchar *p, GIConv *gb2utf, GIConv *fr2utf, gint linenum)
 				if (str) {
 					string+=str;
 				} else {
-					g_print("Unkown %d : %c\n", linenum, *p);
+					g_print("Unknown %d : %c\n", linenum, *p);
 				}
 				p--;
 			}

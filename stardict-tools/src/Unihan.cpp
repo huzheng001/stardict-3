@@ -46,7 +46,7 @@ static unsigned int htoi(const char s[])
 
 std::map<std::string, std::list<std::pair<std::string, std::string> > > unihan_map;
 
-void parse_line(const char *line)
+void parse_line(char *line)
 {
 	if (line[0] == '#')
 		return;
@@ -55,7 +55,7 @@ void parse_line(const char *line)
 		g_print("Error: %s\n", line);
 		return;
 	}
-	const char *han = line+2;
+	char *han = line+2;
 
 	char *p;
 	p = strchr(han, '\t');
@@ -65,7 +65,7 @@ void parse_line(const char *line)
 	}
 	*p = '\0';
 	p++;
-	const char *key = p;
+	char *key = p;
 
 	p = strchr(key, '\t');
 	if (!p) {
@@ -74,7 +74,7 @@ void parse_line(const char *line)
 	}
 	*p = '\0';
 	p++;
-	const char *def = p;
+	char *def = p;
 
 	std::map<std::string, std::list<std::pair<std::string, std::string> > >::iterator iter = unihan_map.find(han);
 	if (iter == unihan_map.end()) {
