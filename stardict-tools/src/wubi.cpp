@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <glib.h>
 #include <string>
-#include <string.h>
+#include <cstring>
 
 void convert(const char *filename)
 {

@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <glib.h>
-#include <string.h>
+#include <cstring>
 
 #include <mysql.h>
 

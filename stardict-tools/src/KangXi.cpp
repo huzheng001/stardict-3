@@ -57,7 +57,7 @@ void parse_line(const char *line)
 	gchar utf8[7];
 	gint n = g_unichar_to_utf8(uc, utf8);
 	utf8[n] = '\0';
-	char *p;
+	const char *p;
 	p = strchr(line, '\t');
 	if (!p) {
 		g_print("Error: %s\n", line);
