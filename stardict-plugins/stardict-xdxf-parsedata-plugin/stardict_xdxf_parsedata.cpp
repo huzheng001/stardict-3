@@ -214,14 +214,16 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 			p = next + sizeof("</rref>") - 1;
 			if (type.empty()) {
 				if (g_str_has_suffix(chunk.c_str(), ".jpg") 
-					|| g_str_has_suffix(chunk.c_str(), ".png")) {
+					|| g_str_has_suffix(chunk.c_str(), ".png")
+					|| g_str_has_suffix(chunk.c_str(), ".bmp")) {
 					type = "image";
 				} else if (g_str_has_suffix(chunk.c_str(), ".wav") 
 					|| g_str_has_suffix(chunk.c_str(), ".mp3") 
 					|| g_str_has_suffix(chunk.c_str(), ".ogg")) {
 					type = "sound";
 				} else if (g_str_has_suffix(chunk.c_str(), ".avi") 
-					|| g_str_has_suffix(chunk.c_str(), ".mpeg")) {
+					|| g_str_has_suffix(chunk.c_str(), ".mpeg")
+					|| g_str_has_suffix(chunk.c_str(), ".mpg")) {
 					type = "video";
 				} else {
 					type = "attach";

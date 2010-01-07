@@ -36,7 +36,6 @@
 
 #include "desktop.hpp"
 
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 static void spawn_command(const gchar *exe, const gchar *arg)
 {
   gchar *qarg = g_shell_quote(arg);
@@ -45,7 +44,6 @@ static void spawn_command(const gchar *exe, const gchar *arg)
   g_spawn_command_line_async(cmd, NULL);
   g_free(cmd);
 }
-#endif
 
 void play_sound_file(const std::string& filename)
 {
@@ -58,9 +56,16 @@ void play_sound_file(const std::string& filename)
 	gnome_sound_play(filename.c_str());
 #else
 	const std::string &playcmd=
-		conf->get_string_at("dictionary/play_command");
+		conf->get_string_at("dictionary/sound_play_command");
 	spawn_command(playcmd.c_str(), filename.c_str());
 #endif
+}
+
+void play_video_file(const std::string& filename)
+{
+	const std::string &playcmd=
+		conf->get_string_at("dictionary/video_play_command");
+	spawn_command(playcmd.c_str(), filename.c_str());
 }
 
 void show_help(const gchar *section)

@@ -38,6 +38,8 @@ public:
 	Skin_pixbuf_1 index_dictlist;
 	Skin_pixbuf_1 index_translate;
 	Skin_pixbuf_1 pronounce;
+	Skin_pixbuf_1 video;
+	Skin_pixbuf_1 attachment;
 
 	void load();
 	void load(const std::string &path);

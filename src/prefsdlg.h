@@ -39,8 +39,9 @@ private:
   std::string register_user;
   std::string register_hex;
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
-  GtkEntry *ePlayCommand;
+  GtkEntry *eSoundPlayCommand;
 #endif
+  GtkEntry *eVideoPlayCommand;
 #ifndef CONFIG_GPE
   GtkWidget *categories_window;
 #endif
@@ -63,6 +64,7 @@ private:
   void setup_dictionary_cache_page();
   void setup_dictionary_export_page();
   void setup_dictionary_sound_page();
+  void setup_dictionary_video_page();
   void setup_dict_article_rendering();
   void setup_network_netdict();
   void setup_mainwin_input_page();

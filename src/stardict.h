@@ -80,6 +80,8 @@ public:
 	CurrentIndex *iCurrentIndex;
 	unsigned int waiting_mainwin_lookupcmd_seq;
 	unsigned int waiting_floatwin_lookupcmd_seq;
+	/* last directory selected in save/open file and similar dialogs */
+	std::string last_selected_directory;
 	GtkWidget *window;
 
 	TopWin oTopWin;

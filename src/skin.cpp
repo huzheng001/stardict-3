@@ -181,6 +181,10 @@ void AppSkin::load()
 	index_translate.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"pronounce.png";
 	pronounce.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"video.png";
+	video.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"attachment.png";
+	attachment.reset(load_image_from_file(filename));
 }
 
 void AppSkin::load(const std::string &path)
@@ -194,6 +198,8 @@ void AppSkin::load(const std::string &path)
 	storage.load_icon(index_dictlist, "index_dictlist.png");
 	storage.load_icon(index_translate, "index_translate.png");
 	storage.load_icon(pronounce, "pronounce.png");
+	storage.load_icon(video, "video.png");
+	storage.load_icon(attachment, "attachment.png");
 	GtkIconFactory *factory = gtk_icon_factory_new();
 	storage.load_stock_icons(factory);
 	gtk_icon_factory_add_default(factory);

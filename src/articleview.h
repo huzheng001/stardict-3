@@ -68,9 +68,15 @@ private:
 		bool& loaded);
 	void append_data_res_sound(std::list<ParseResultItemWithMark>::iterator it, 
 		bool& loaded);
-	static void on_sound_button_destroy(GtkObject *object, gpointer user_data);
+	void append_data_res_video(std::list<ParseResultItemWithMark>::iterator it, 
+		bool& loaded);
+	void append_data_res_attachment(std::list<ParseResultItemWithMark>::iterator it, 
+		bool& loaded);
+	static void on_resource_button_destroy(GtkObject *object, gpointer user_data);
 	static void on_sound_button_clicked(GtkObject *object, gpointer user_data);
-	static void on_sound_button_realize(GtkObject *object, gpointer user_data);
+	static void on_video_button_clicked(GtkObject *object, gpointer user_data);
+	static void on_attachment_button_clicked(GtkObject *object, gpointer user_data);
+	static void on_resource_button_realize(GtkObject *object, gpointer user_data);
 };
 
 

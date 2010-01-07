@@ -121,8 +121,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 
 #if defined(CONFIG_GTK) || defined (CONFIG_GPE) || defined(CONFIG_DARWIN)
-	add_entry("/apps/stardict/preferences/dictionary/play_command", std::string("play"));
+	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play"));
 #endif
+	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play"));
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/tts_path", std::string("C:\\Program Files\\WyabdcRealPeopleTTS\nC:\\Program Files\\OtdRealPeopleTTS\nWyabdcRealPeopleTTS\nOtdRealPeopleTTS"));
 #else

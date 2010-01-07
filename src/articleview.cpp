@@ -162,13 +162,13 @@ private:
 	int clone_last_mark_num_;
 };
 
-/* sound resource data structure
+/* resource data structure
  * A resource file is loaded only if necessary.
- * We postpone loading sound files till a user requests to play them.
+ * We postpone loading files till a user requests to use them.
  * That speeds up article loading, saves memory. */
-class SoundResData {
+class ResData {
 public:
-	SoundResData(size_t iLib_, const std::string& key_)
+	ResData(size_t iLib_, const std::string& key_)
 	:
 		iLib(iLib_),
 		key(key_)
@@ -180,6 +180,10 @@ public:
 		if(file.empty())
 			file = gpAppFrame->oLibs.GetStorageFilePath(iLib, key);
 		return file.get_url();
+	}
+	const char * get_content(void)
+	{
+		return gpAppFrame->oLibs.GetStorageFileContent(iLib, key);
 	}
 	const std::string& get_key(void) const
 	{
@@ -608,7 +612,9 @@ void ArticleView::append_data_parse_result(const gchar *real_oword,
 			} else if (it->item->res->type == "sound") {
 				append_data_res_sound(it, loaded);
 			} else if (it->item->res->type == "video") {
+				append_data_res_video(it, loaded);
 			} else {
+				append_data_res_attachment(it, loaded);
 			}
 			if (!loaded) {
 				std::string tmark;
@@ -681,10 +687,17 @@ void ArticleView::append_data_res_image(
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
-				FileHolder file(gpAppFrame->oLibs.GetStorageFilePath
-					(dict_index.index, it->item->res->key));
-				if (const char *filename = file.get_url()) {
-					pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+				if(const char* content = gpAppFrame->oLibs.GetStorageFileContent
+					(dict_index.index, it->item->res->key)) {
+					const guint32 size = get_uint32(content);
+					const guchar *data = (const guchar *)(content+sizeof(guint32));
+					GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+					gdk_pixbuf_loader_write(loader, data, size, NULL);
+					gdk_pixbuf_loader_close(loader, NULL);
+					pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+					if(pixbuf)
+						g_object_ref(G_OBJECT(pixbuf));
+					g_object_unref(loader);
 				}
 			}
 		}
@@ -709,8 +722,8 @@ void ArticleView::append_data_res_sound(
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
-				SoundResData *pSoundResData
-					= new SoundResData(dict_index.index, it->item->res->key);
+				ResData *pResData
+					= new ResData(dict_index.index, it->item->res->key);
 				GtkWidget *button = NULL;
 				GtkWidget *image = NULL;
 				image = gtk_image_new_from_pixbuf(get_impl(
@@ -722,14 +735,19 @@ void ArticleView::append_data_res_sound(
 				g_object_ref_sink(G_OBJECT(widget));
 				gtk_container_add(GTK_CONTAINER(button), image);
 				gtk_container_add(GTK_CONTAINER(widget), button);
+				/* when the tooltip appears a number of gtk-warnings are generated:
+				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
+				 * can't get coords for private windows */
+				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
+					pResData->get_key().c_str());
 				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
 				gtk_widget_show_all(widget);
 				g_signal_connect(G_OBJECT(button), "destroy",
-					G_CALLBACK(on_sound_button_destroy), (gpointer)pSoundResData);
+					G_CALLBACK(on_resource_button_destroy), (gpointer)pResData);
 				g_signal_connect(G_OBJECT(button), "clicked",
-					G_CALLBACK(on_sound_button_clicked), (gpointer)pSoundResData);
+					G_CALLBACK(on_sound_button_clicked), (gpointer)pResData);
 				g_signal_connect(G_OBJECT(button), "realize",
-					G_CALLBACK(on_sound_button_realize), (gpointer)widget);
+					G_CALLBACK(on_resource_button_realize), (gpointer)widget);
 			}
 		}
 		if(widget) {
@@ -740,21 +758,160 @@ void ArticleView::append_data_res_sound(
 	}
 }
 
-void ArticleView::on_sound_button_destroy(GtkObject *object, gpointer user_data)
+void ArticleView::append_data_res_video(
+	std::list<ParseResultItemWithMark>::iterator it,
+	bool& loaded)
 {
-	delete (SoundResData*)user_data;
+	if (for_float_win) {
+		loaded = true;
+		pango_view_->insert_widget(NULL, it->mark.c_str());
+	} else {
+		GtkWidget *widget = NULL;
+		if (dict_index.type == InstantDictType_LOCAL) {
+			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+			if (type == StorageType_DATABASE || type == StorageType_FILE) {
+				ResData *pResData
+					= new ResData(dict_index.index, it->item->res->key);
+				GtkWidget *button = NULL;
+				GtkWidget *image = NULL;
+				image = gtk_image_new_from_pixbuf(get_impl(
+					gpAppFrame->oAppSkin.video));
+				button = gtk_button_new();
+				/* We need an event box to associate a custom cursor with the
+				 * button. */
+				widget = gtk_event_box_new();
+				g_object_ref_sink(G_OBJECT(widget));
+				gtk_container_add(GTK_CONTAINER(button), image);
+				gtk_container_add(GTK_CONTAINER(widget), button);
+				/* when the tooltip appears a number of gtk-warnings are generated:
+				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
+				 * can't get coords for private windows */
+				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
+					pResData->get_key().c_str());
+				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
+				gtk_widget_show_all(widget);
+				g_signal_connect(G_OBJECT(button), "destroy",
+					G_CALLBACK(on_resource_button_destroy), (gpointer)pResData);
+				g_signal_connect(G_OBJECT(button), "clicked",
+					G_CALLBACK(on_video_button_clicked), (gpointer)pResData);
+				g_signal_connect(G_OBJECT(button), "realize",
+					G_CALLBACK(on_resource_button_realize), (gpointer)widget);
+			}
+		}
+		if(widget) {
+			loaded = true;
+			pango_view_->insert_widget(widget, it->mark.c_str());
+			g_object_unref(widget);
+		}
+	}
+}
+
+void ArticleView::append_data_res_attachment(
+	std::list<ParseResultItemWithMark>::iterator it,
+	bool& loaded)
+{
+	if (for_float_win) {
+		loaded = true;
+		pango_view_->insert_widget(NULL, it->mark.c_str());
+	} else {
+		GtkWidget *widget = NULL;
+		if (dict_index.type == InstantDictType_LOCAL) {
+			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
+			if (type == StorageType_DATABASE || type == StorageType_FILE) {
+				ResData *pResData
+					= new ResData(dict_index.index, it->item->res->key);
+				GtkWidget *button = NULL;
+				GtkWidget *image = NULL;
+				image = gtk_image_new_from_pixbuf(get_impl(
+					gpAppFrame->oAppSkin.attachment));
+				button = gtk_button_new();
+				/* We need an event box to associate a custom cursor with the
+				 * button. */
+				widget = gtk_event_box_new();
+				g_object_ref_sink(G_OBJECT(widget));
+				gtk_container_add(GTK_CONTAINER(button), image);
+				gtk_container_add(GTK_CONTAINER(widget), button);
+				/* when the tooltip appears a number of gtk-warnings are generated:
+				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
+				 * can't get coords for private windows */
+				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
+					pResData->get_key().c_str());
+				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
+				gtk_widget_show_all(widget);
+				g_signal_connect(G_OBJECT(button), "destroy",
+					G_CALLBACK(on_resource_button_destroy), (gpointer)pResData);
+				g_signal_connect(G_OBJECT(button), "clicked",
+					G_CALLBACK(on_attachment_button_clicked), (gpointer)pResData);
+				g_signal_connect(G_OBJECT(button), "realize",
+					G_CALLBACK(on_resource_button_realize), (gpointer)widget);
+			}
+		}
+		if(widget) {
+			loaded = true;
+			pango_view_->insert_widget(widget, it->mark.c_str());
+			g_object_unref(widget);
+		}
+	}
+}
+
+void ArticleView::on_resource_button_destroy(GtkObject *object, gpointer user_data)
+{
+	delete (ResData*)user_data;
 }
 
 void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
 {
-	SoundResData *pSoundResData = (SoundResData*)user_data;
-	if(const char *filename = pSoundResData->get_url())
+	ResData *pResData = (ResData*)user_data;
+	if(const char *filename = pResData->get_url())
 		play_sound_file(filename);
 	else
-		g_warning("Unable to load sound resource: %s", pSoundResData->get_key().c_str());
+		g_warning("Unable to load resource: %s", pResData->get_key().c_str());
 }
 
-void ArticleView::on_sound_button_realize(GtkObject *object, gpointer user_data)
+void ArticleView::on_video_button_clicked(GtkObject *object, gpointer user_data)
+{
+	ResData *pResData = (ResData*)user_data;
+	if(const char *filename = pResData->get_url())
+		play_video_file(filename);
+	else
+		g_warning("Unable to load resource: %s", pResData->get_key().c_str());
+}
+
+void ArticleView::on_attachment_button_clicked(GtkObject *object, gpointer user_data)
+{
+	ResData *pResData = (ResData*)user_data;
+	const std::string& key = pResData->get_key();
+	std::string::size_type pos = key.rfind(DB_DIR_SEPARATOR);
+	// in utf-8, yet a file name
+	const char* default_file_name = key.c_str() + (pos == std::string::npos ? 0 : pos+1);
+	GtkWidget *dialog;
+	dialog = gtk_file_chooser_dialog_new(_("Save File"),
+		GTK_WINDOW(gpAppFrame->window),
+		GTK_FILE_CHOOSER_ACTION_SAVE,
+		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+		NULL);
+	gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog), TRUE);
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
+		gpAppFrame->last_selected_directory.c_str());
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), default_file_name);
+	if(gtk_dialog_run(GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
+		glib::CharStr filename(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+		glib::CharStr selected_dir(g_path_get_dirname(get_impl(filename)));
+		gpAppFrame->last_selected_directory = get_impl(selected_dir);
+		if(const char* content = pResData->get_content()) {
+			const guint32 size = get_uint32(content);
+			const gchar *data = (const gchar *)(content+sizeof(guint32));
+			if(!g_file_set_contents(get_impl(filename), data, size, NULL))
+				g_warning("Fail to save file %s", get_impl(filename));
+		} else {
+			g_warning("Unable to load resource: %s", pResData->get_key().c_str());
+		}
+	}
+	gtk_widget_destroy(dialog);
+}
+
+void ArticleView::on_resource_button_realize(GtkObject *object, gpointer user_data)
 {
 	/* Event boxes are not automatically realized by GTK+, they must be realized
 	 * explicitly. You need to make sure that an event box is already added as 
