@@ -50,8 +50,9 @@ enum {
 	DICTIONARY_CACHE_SETTINGS,
 	DICTIONARY_EXPORT_SETTINGS,
 	DICTIONARY_SOUND_SETTINGS,
+	DICTIONARY_VIDEO_SETTINGS,
 	DICIONARY_ARTICLE_RENDERING,
-    NETWORK_NETDICT,
+	NETWORK_NETDICT,
 	MAINWIN_INPUT_SETTINGS,
 	MAINWIN_OPTIONS_SETTINGS,
 	MAINWIN_SEARCH_WEBSITE_SETTINGS,
@@ -82,7 +83,8 @@ static CategoriesTreeItem dictionary_behavior [] = {
 	{N_("Cache"), NULL, DICTIONARY_CACHE_SETTINGS},
 	{N_("Export"), NULL, DICTIONARY_EXPORT_SETTINGS},
 	{N_("Sound"), NULL, DICTIONARY_SOUND_SETTINGS},
-	{N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING },
+	{N_("Video"), NULL, DICTIONARY_VIDEO_SETTINGS},
+	{N_("Article rendering"), NULL, DICIONARY_ARTICLE_RENDERING},
 	{ NULL }
 };
 
@@ -118,13 +120,9 @@ static CategoriesTreeItem floatwin_behavior [] =
 static CategoriesTreeItem toplevel [] =
 {
 	{N_("Dictionary"), dictionary_behavior, LOGO},
-
 	{N_("Network"), network_behavior, LOGO},
-
 	{N_("Main window"), mainwin_behavior, LOGO},
-
 	{N_("Notification area icon"), NotificationAreaIcon_behavior, LOGO},
-
 	{N_("Floating window"), floatwin_behavior, LOGO},
 
 	{ NULL }
@@ -151,16 +149,19 @@ GtkTreeModel* PrefsDlg::create_categories_tree_model ()
 	while (category->category) {
 		CategoriesTreeItem *sub_category = category->children;
 		gtk_tree_store_append (model, &iter, NULL);
-		gtk_tree_store_set (model, &iter, CATEGORY_COLUMN, gettext (category->category), PAGE_NUM_COLUMN, category->notebook_page, -1);
+		gtk_tree_store_set (model, &iter,
+			CATEGORY_COLUMN, gettext (category->category),
+			PAGE_NUM_COLUMN, category->notebook_page,
+			-1);
 
 		while (sub_category->category) {
-	  		GtkTreeIter child_iter;
-	  		gtk_tree_store_append (model, &child_iter, &iter);
+			GtkTreeIter child_iter;
+			gtk_tree_store_append (model, &child_iter, &iter);
 			gtk_tree_store_set (model, &child_iter,
 				CATEGORY_COLUMN, gettext (sub_category->category),
 				PAGE_NUM_COLUMN, sub_category->notebook_page,
-			      -1);
-	  		sub_category++;
+				-1);
+			sub_category++;
 		}
 		category++;
 	}
@@ -787,10 +788,10 @@ void PrefsDlg::setup_dictionary_sound_page()
 	GtkWidget *e = gtk_entry_new();
 	gtk_widget_set_size_request(e, 50, -1);
 	const std::string &playcmd=
-		conf->get_string_at("dictionary/play_command");
+		conf->get_string_at("dictionary/sound_play_command");
 	gtk_entry_set_text(GTK_ENTRY(e), playcmd.c_str());
 	gtk_box_pack_start(GTK_BOX(hbox2), e, TRUE, TRUE, 0);
-	ePlayCommand=GTK_ENTRY(e);
+	eSoundPlayCommand=GTK_ENTRY(e);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 #endif
 
@@ -806,7 +807,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_ETCHED_IN);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), tts_textview);
 	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
@@ -820,7 +821,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	use_tts_program_hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1),use_tts_program_hbox,false,false,0);
 	gtk_widget_set_sensitive(use_tts_program_hbox,enable);
-	label = gtk_label_new(_("Commandline:"));
+	label = gtk_label_new(_("Command line:"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(use_tts_program_hbox),label,false,false,0);
 	GtkWidget *comboboxentry = gtk_combo_box_entry_new_text();
@@ -832,6 +833,25 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_entry_set_text(eTTSCommandline, tts_program_cmdline.c_str());
 	gtk_box_pack_start(GTK_BOX(use_tts_program_hbox),comboboxentry,true,true,0);
 #endif
+}
+
+void PrefsDlg::setup_dictionary_video_page()
+{
+	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Video"), GTK_STOCK_YES);
+	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
+
+	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *label = gtk_label_new(_("Command for playing video files:"));
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_widget_set_size_request(entry, 50, -1);
+	const std::string &playcmd=
+		conf->get_string_at("dictionary/video_play_command");
+	gtk_entry_set_text(GTK_ENTRY(entry), playcmd.c_str());
+	gtk_box_pack_start(GTK_BOX(hbox2), entry, TRUE, TRUE, 0);
+	eVideoPlayCommand=GTK_ENTRY(entry);
+	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 }
 
 void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -1888,9 +1908,10 @@ GtkWidget* PrefsDlg::create_notebook ()
 	setup_dictionary_font_page ();
 	setup_dictionary_cache_page ();
 	setup_dictionary_export_page ();
-	setup_dictionary_sound_page ();
+	setup_dictionary_sound_page();
+	setup_dictionary_video_page();
 	setup_dict_article_rendering();
-    setup_network_netdict();
+	setup_network_netdict();
 	setup_mainwin_input_page ();
 	setup_mainwin_options_page ();
 	setup_mainwin_searchwebsite_page();
@@ -2000,10 +2021,13 @@ bool PrefsDlg::ShowModal()
 		conf->set_int_at("network/port", port);
 		gpAppFrame->oStarDictClient.set_server(server, port);
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
-		ch = gtk_entry_get_text(ePlayCommand);
+		ch = gtk_entry_get_text(eSoundPlayCommand);
 		if (ch[0])
-			conf->set_string_at("dictionary/play_command", ch);
+			conf->set_string_at("dictionary/sound_play_command", ch);
 #endif
+		ch = gtk_entry_get_text(eVideoPlayCommand);
+		if (ch[0])
+			conf->set_string_at("dictionary/video_play_command", ch);
 		GtkTextBuffer *text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tts_textview));
 		GtkTextIter start_iter;
 		GtkTextIter end_iter;

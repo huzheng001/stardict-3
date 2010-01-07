@@ -295,7 +295,7 @@ elif test "x${enable_darwin_support}" = "xyes" ; then
 elif test "x${enable_gnome_support}" = "xno" ; then
   DEP_MODULES="gtk+-2.0 >= 2.12 gthread-2.0"
 else
-  DEP_MODULES="libgnomeui-2.0 >= 2.20"
+  DEP_MODULES="gtk+-2.0 >= 2.12 libgnomeui-2.0 >= 2.20"
 fi
 
 dnl
