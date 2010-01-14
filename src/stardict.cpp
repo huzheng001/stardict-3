@@ -34,6 +34,7 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <iostream>
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
@@ -57,6 +58,8 @@
 #ifdef _WIN32
 #  include <gdk/gdkwin32.h>
 #  include <windows.h>
+#  include <io.h>
+#  include <fcntl.h>
 #  include "win32/intl.h"
 
 HINSTANCE stardictexe_hInstance;
@@ -2157,7 +2160,9 @@ void AppCore::Init(gchar *queryword)
 	conf->notify_add("/apps/stardict/preferences/dictionary/scan_modifier_key",
 			 sigc::mem_fun(this, &AppCore::on_scan_modifier_key_changed));
 
+	g_debug("loading skin...");
 	oAppSkin.load(conf->get_string_at("main_window/skin"));
+	g_debug("skin loaded");
 
 	if (!hide_option)
 		stardict_splash.show();
@@ -2411,6 +2416,67 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 #endif
 
 #ifdef _WIN32
+#ifdef ATTACH_WINDOWS_CONSOLE
+static bool attach_windows_console(void)
+{
+	/* restore stdout and stderr
+	By default GUI application on Windows do not have a console associated 
+	with them, so output from printf, std::cout << "string" goes nowhere.
+	Create a console and redirect stdout and stderr to it.
+	See Microsoft article for details: http://support.microsoft.com/kb/105305.
+	
+	For g_warning and the like that is not enough.
+	"gmessages.c in 2.6 doesn't use stdio on Windows any longer,
+	but plain write() to file descriptor 1 or 2, like on Unix."
+	We dup2 descriptor 1 to stdout, and dup2 descriptor 2 to stderr.
+	Now messages from g_warning and the like go to the same console.
+	A more reliable solution is to use g_log_set_handler with a custom handler
+	that would print messages with printf, for example.
+	
+	That all is not reliable, unfortunately... It has been tested on Windows XP.
+	*/
+	bool bHaveConsole = false;
+#if (_WIN32_WINNT >= 0x0501)
+	// attach to the parent process assuming it is console
+	if(!AttachConsole((DWORD)-1)) {
+		DWORD dwError = GetLastError();
+		if(dwError == ERROR_ACCESS_DENIED) // already attached to console
+			bHaveConsole = true;
+	} else
+		bHaveConsole = true;
+#endif
+	if(!bHaveConsole) // create new console window
+		bHaveConsole = static_cast<bool>(AllocConsole());
+	if(bHaveConsole) {
+		int hCrt;
+		FILE *hf;
+		hCrt = _open_osfhandle((long) GetStdHandle(STD_OUTPUT_HANDLE), _O_TEXT);
+		dup2(hCrt, 1);
+		hf = _fdopen(hCrt, "w");
+		*stdout = *hf;
+		setvbuf(stdout, NULL, _IONBF, 0);
+		hCrt = _open_osfhandle((long) GetStdHandle(STD_ERROR_HANDLE), _O_TEXT);
+		dup2(hCrt, 2);
+		hf = _fdopen(hCrt, "w");
+		*stderr = *hf;
+		setvbuf(stderr, NULL, _IONBF, 0);
+#if 0
+		// check what works
+		printf("Hello from printf\n");
+		fprintf(stderr, "Hello from printf on stderr\n");
+		std::cout << "Hello from cout!" << std::endl;
+		std::cerr << "Hello from cerr!" << std::endl;
+		g_printf("Hello from g_printf\n");
+		g_print("Hello from g_print\n");
+		g_debug("Hello from g_debug");
+		g_message("Hello from g_message");
+		g_warning("Hello from g_warning");
+		g_critical("Hello from g_critical");
+#endif
+	}
+	return bHaveConsole;
+}
+#else // #ifdef ATTACH_WINDOWS_CONSOLE
 static void stardict_dummy_print(const gchar*)
 {
 }
@@ -2421,7 +2487,8 @@ static void stardict_dummy_log_handler(const gchar *,
 				       gpointer)
 {
 }
-#endif
+#endif // #ifdef ATTACH_WINDOWS_CONSOLE
+#endif // #ifdef _WIN32
 
 static void set_data_dir()
 {
@@ -2463,7 +2530,7 @@ int main(int argc,char **argv)
 		if (g_mkdir(userdir.c_str(), S_IRWXU)==-1)
 			g_warning("Cannot create directory %s.", userdir.c_str());
 	}
-    g_thread_init (NULL);
+	g_thread_init (NULL);
 #if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
@@ -2473,6 +2540,9 @@ int main(int argc,char **argv)
 		exit (1);
 #endif
 #if defined(_WIN32)
+#ifdef ATTACH_WINDOWS_CONSOLE
+	attach_windows_console();
+#else
 	g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
 			  stardict_dummy_log_handler, NULL);
 	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
@@ -2489,6 +2559,8 @@ int main(int argc,char **argv)
 			  stardict_dummy_log_handler, NULL);
 	g_set_print_handler(stardict_dummy_print);
 #endif
+#endif // #if defined(_WIN32)
+	g_debug("DataDir = %s", gStarDictDataDir.c_str());
 	GOptionContext *context;
 	context = g_option_context_new(_("- Lookup words"));
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
@@ -2512,14 +2584,14 @@ int main(int argc,char **argv)
 		g_free(title);
 		if (ll_winhandle > 0) {
 			if (IsIconic(ll_winhandle))
-                        	ShowWindow(ll_winhandle,SW_RESTORE);
-	                else
-        	                SetForegroundWindow(ll_winhandle);
-                	return EXIT_SUCCESS;
+				ShowWindow(ll_winhandle,SW_RESTORE);
+			else
+				SetForegroundWindow(ll_winhandle);
+			return EXIT_SUCCESS;
 		}
 	}
-#endif
-#else
+#endif // #ifdef _WIN32
+#else // #ifndef CONFIG_GNOME
 	GnomeProgram *program;
 	program = gnome_program_init ("stardict", VERSION,
 			    LIBGNOMEUI_MODULE, argc, argv,
@@ -2546,8 +2618,8 @@ int main(int argc,char **argv)
 			/* there is an instance already running, so send
 			 * commands to it if needed
 			 */
-                	stardict_handle_automation_cmdline (query_word);
-	                /* and we're done */
+			stardict_handle_automation_cmdline (query_word);
+			/* and we're done */
 			return EXIT_SUCCESS;
 		}
 	}
@@ -2557,8 +2629,10 @@ int main(int argc,char **argv)
 		g_signal_connect (client, "save_yourself", G_CALLBACK (save_yourself_cb), (gpointer) argv[0]);
 		g_signal_connect (client, "die", G_CALLBACK (client_die_cb), NULL);
 	}
-#endif
+#endif // #ifndef CONFIG_GNOME
+	g_debug("loading config...");
 	conf.reset(new AppConf);
+	g_debug("config loaded");
 	AppCore oAppCore;
 	gpAppFrame = &oAppCore;
 	oAppCore.Init(query_word);

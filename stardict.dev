@@ -1,7 +1,7 @@
 [Project]
 FileName=stardict.dev
 Name=stardict
-UnitCount=155
+UnitCount=157
 Type=0
 Ver=1
 ObjFiles=
@@ -298,326 +298,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit29]
-FileName=src\conf.h
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit28]
-FileName=src\conf.cpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit26]
-FileName=src\utils.cpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit27]
-FileName=src\utils.h
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit34]
-FileName=src\class_factory.hpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit30]
-FileName=src\pangoview.h
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit33]
-FileName=src\class_factory.cpp
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-CompileCpp=1
-
-[Unit35]
-FileName=src\config_file.hpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit36]
-FileName=src\gtktextviewpango.cpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit37]
-FileName=src\gtktextviewpango.h
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit38]
-FileName=src\inifile.cpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit39]
-FileName=src\inifile.hpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit40]
-FileName=src\iskeyspressed.hpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit41]
-FileName=src\pangoview.cpp
-CompileCpp=1
-Folder=main
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit42]
-FileName=src\win32\mouseover.h
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit43]
-FileName=src\win32\ThTypes.c
-CompileCpp=0
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c ThTypes.c -o ThTypes.o $(CFLAGS)
-
-[Unit45]
-FileName=src\win32\mouseover.cpp
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit46]
-FileName=src\win32\clipboard.h
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit47]
-FileName=src\win32\clipboard.cpp
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit48]
-FileName=src\win32\hotkey.h
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit49]
-FileName=src\win32\hotkey.cpp
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit50]
-FileName=src\win32\win32_iskeyspressed.h
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit51]
-FileName=src\win32\win32_iskeyspressed.cpp
-CompileCpp=1
-Folder=win32
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit52]
-FileName=src\lib\mapfile.hpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit53]
-FileName=src\lib\dictziplib.cpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit54]
-FileName=src\lib\dictziplib.hpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit55]
-FileName=src\lib\distance.cpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit56]
-FileName=src\lib\distance.h
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit57]
-FileName=src\lib\file.hpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit58]
-FileName=src\lib\kmp.h
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit59]
-FileName=src\lib\lib.cpp
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit60]
-FileName=src\lib\lib.h
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit31]
 FileName=src\articleview.cpp
 CompileCpp=1
 Folder=main
@@ -627,7 +307,47 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit32]
+[Unit28]
+FileName=src\pangoview.h
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=src\conf.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=src\conf.h
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit34]
+FileName=src\gtktextviewpango.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit30]
 FileName=src\articleview.h
 CompileCpp=1
 Folder=main
@@ -637,7 +357,87 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit44]
+[Unit33]
+FileName=src\config_file.hpp
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+CompileCpp=1
+
+[Unit35]
+FileName=src\gtktextviewpango.h
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit36]
+FileName=src\inifile.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit37]
+FileName=src\inifile.hpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit38]
+FileName=src\iskeyspressed.hpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit39]
+FileName=src\pangoview.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit40]
+FileName=src\win32\mouseover.h
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit41]
+FileName=src\win32\ThTypes.c
+CompileCpp=0
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c ThTypes.c -o ThTypes.o $(CFLAGS)
+
+[Unit42]
 FileName=src\win32\ThTypes.h
 CompileCpp=1
 Folder=win32
@@ -647,7 +447,157 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit61]
+[Unit43]
+FileName=src\win32\mouseover.cpp
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit45]
+FileName=src\win32\clipboard.cpp
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit46]
+FileName=src\win32\hotkey.h
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit47]
+FileName=src\win32\hotkey.cpp
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit48]
+FileName=src\win32\win32_iskeyspressed.h
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit49]
+FileName=src\win32\win32_iskeyspressed.cpp
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit50]
+FileName=src\lib\mapfile.hpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit51]
+FileName=src\lib\dictziplib.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit52]
+FileName=src\lib\dictziplib.hpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit53]
+FileName=src\lib\distance.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit54]
+FileName=src\lib\distance.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit55]
+FileName=src\lib\file.hpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit56]
+FileName=src\lib\kmp.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit57]
+FileName=src\lib\lib.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit58]
+FileName=src\lib\lib.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit59]
 FileName=src\lib\my_global.h
 CompileCpp=1
 Folder=lib
@@ -657,7 +607,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit62]
+[Unit60]
 FileName=src\lib\collation.h
 CompileCpp=1
 Folder=lib
@@ -667,7 +617,37 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit63]
+[Unit31]
+FileName=src\class_factory.cpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit32]
+FileName=src\class_factory.hpp
+CompileCpp=1
+Folder=main
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit44]
+FileName=src\win32\clipboard.h
+CompileCpp=1
+Folder=win32
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit61]
 FileName=src\lib\m_ctype.h
 CompileCpp=1
 Folder=lib
@@ -677,17 +657,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit64]
-FileName=src\lib\m_string.h
-CompileCpp=1
-Folder=lib
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit65]
+[Unit62]
 FileName=src\lib\treedict.hpp
 CompileCpp=1
 Folder=lib
@@ -697,7 +667,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit66]
+[Unit63]
 FileName=src\lib\common.cpp
 CompileCpp=1
 Folder=lib
@@ -707,7 +677,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit67]
+[Unit64]
 FileName=src\lib\common.hpp
 CompileCpp=1
 Folder=lib
@@ -717,7 +687,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit68]
+[Unit65]
 FileName=src\lib\data.cpp
 CompileCpp=1
 Folder=lib
@@ -727,7 +697,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit69]
+[Unit66]
 FileName=src\lib\data.hpp
 CompileCpp=1
 Folder=lib
@@ -737,7 +707,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit70]
+[Unit67]
 FileName=src\lib\stddict.cpp
 CompileCpp=1
 Folder=lib
@@ -747,7 +717,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit71]
+[Unit68]
 FileName=src\lib\stddict.hpp
 CompileCpp=1
 Folder=lib
@@ -757,7 +727,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit72]
+[Unit69]
 FileName=src\lib\treedict.cpp
 CompileCpp=1
 Folder=lib
@@ -767,7 +737,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit73]
+[Unit70]
 FileName=src\progresswin.hpp
 CompileCpp=1
 Folder=main
@@ -777,7 +747,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit74]
+[Unit71]
 FileName=src\progresswin.cpp
 CompileCpp=1
 Folder=main
@@ -787,7 +757,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit75]
+[Unit72]
 FileName=src\sigc++\visit_each.h
 CompileCpp=1
 Folder=libsigcpp
@@ -797,7 +767,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit76]
+[Unit73]
 FileName=src\sigc++\bind_return.h
 CompileCpp=1
 Folder=libsigcpp
@@ -807,7 +777,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit77]
+[Unit74]
 FileName=src\sigc++\class_slot.h
 CompileCpp=1
 Folder=libsigcpp
@@ -817,7 +787,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit78]
+[Unit75]
 FileName=src\sigc++\compatibility.h
 CompileCpp=1
 Folder=libsigcpp
@@ -827,7 +797,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit79]
+[Unit76]
 FileName=src\sigc++\connection.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -837,7 +807,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit80]
+[Unit77]
 FileName=src\sigc++\connection.h
 CompileCpp=1
 Folder=libsigcpp
@@ -847,7 +817,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit81]
+[Unit78]
 FileName=src\sigc++\hide.h
 CompileCpp=1
 Folder=libsigcpp
@@ -857,7 +827,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit82]
+[Unit79]
 FileName=src\sigc++\limit_reference.h
 CompileCpp=1
 Folder=libsigcpp
@@ -867,7 +837,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit83]
+[Unit80]
 FileName=src\sigc++\method_slot.h
 CompileCpp=1
 Folder=libsigcpp
@@ -877,7 +847,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit84]
+[Unit81]
 FileName=src\sigc++\object.h
 CompileCpp=1
 Folder=libsigcpp
@@ -887,7 +857,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit85]
+[Unit82]
 FileName=src\sigc++\object_slot.h
 CompileCpp=1
 Folder=libsigcpp
@@ -897,7 +867,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit86]
+[Unit83]
 FileName=src\sigc++\reference_wrapper.h
 CompileCpp=1
 Folder=libsigcpp
@@ -907,7 +877,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit87]
+[Unit84]
 FileName=src\sigc++\retype.h
 CompileCpp=1
 Folder=libsigcpp
@@ -917,7 +887,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit88]
+[Unit85]
 FileName=src\sigc++\retype_return.h
 CompileCpp=1
 Folder=libsigcpp
@@ -927,7 +897,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit89]
+[Unit86]
 FileName=src\sigc++\sigc++.h
 CompileCpp=1
 Folder=libsigcpp
@@ -937,7 +907,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit90]
+[Unit87]
 FileName=src\sigc++\signal.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -947,7 +917,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit91]
+[Unit88]
 FileName=src\sigc++\signal.h
 CompileCpp=1
 Folder=libsigcpp
@@ -957,7 +927,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit92]
+[Unit89]
 FileName=src\sigc++\signal_base.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -967,7 +937,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit93]
+[Unit90]
 FileName=src\sigc++\signal_base.h
 CompileCpp=1
 Folder=libsigcpp
@@ -977,7 +947,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit94]
+[Unit91]
 FileName=src\sigc++\slot.h
 CompileCpp=1
 Folder=libsigcpp
@@ -987,7 +957,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit95]
+[Unit92]
 FileName=src\sigc++\trackable.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -997,7 +967,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit96]
+[Unit93]
 FileName=src\sigc++\trackable.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1007,7 +977,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit97]
+[Unit94]
 FileName=src\sigc++\type_traits.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1017,7 +987,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit98]
+[Unit95]
 FileName=src\sigc++\bind.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1027,7 +997,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit99]
+[Unit96]
 FileName=src\sigc++\functors\slot_base.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1037,7 +1007,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit100]
+[Unit97]
 FileName=src\sigc++\functors\functors.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1047,7 +1017,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit101]
+[Unit98]
 FileName=src\sigc++\functors\mem_fun.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1057,7 +1027,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit102]
+[Unit99]
 FileName=src\sigc++\functors\ptr_fun.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1067,7 +1037,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit103]
+[Unit100]
 FileName=src\sigc++\functors\slot.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -1077,7 +1047,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit104]
+[Unit101]
 FileName=src\sigc++\functors\slot.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1087,7 +1057,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit105]
+[Unit102]
 FileName=src\sigc++\functors\slot_base.cc
 CompileCpp=1
 Folder=libsigcpp
@@ -1097,7 +1067,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit106]
+[Unit103]
 FileName=src\sigc++\functors\functor_trait.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1107,7 +1077,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit107]
+[Unit104]
 FileName=src\desktop.cpp
 CompileCpp=1
 Folder=main
@@ -1117,7 +1087,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit108]
+[Unit105]
 FileName=src\desktop.hpp
 CompileCpp=1
 Folder=main
@@ -1127,7 +1097,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit109]
+[Unit106]
 FileName=src\tray.hpp
 CompileCpp=1
 Folder=main
@@ -1137,7 +1107,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit110]
+[Unit107]
 FileName=src\tray.cpp
 CompileCpp=1
 Folder=main
@@ -1147,7 +1117,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit111]
+[Unit108]
 FileName=src\lib\kmp.cpp
 CompileCpp=1
 Folder=lib
@@ -1157,7 +1127,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit112]
+[Unit109]
 FileName=src\lib\ctype-uca.cpp
 CompileCpp=1
 Folder=lib
@@ -1167,7 +1137,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit113]
+[Unit110]
 FileName=src\lib\ctype-utf8.cpp
 CompileCpp=1
 Folder=lib
@@ -1177,7 +1147,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit114]
+[Unit111]
 FileName=src\lib\ctype-mb.cpp
 CompileCpp=1
 Folder=lib
@@ -1187,7 +1157,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit115]
+[Unit112]
 FileName=src\lib\collation.cpp
 CompileCpp=1
 Folder=lib
@@ -1197,7 +1167,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit116]
+[Unit113]
 FileName=stardictrc.rc
 CompileCpp=1
 Folder=lib
@@ -1207,17 +1177,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit117]
+[Unit114]
 FileName=src\lib\stardict_client.hpp
+CompileCpp=1
 Folder=lib
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
-CompileCpp=1
 
-[Unit118]
+[Unit115]
 FileName=src\lib\stardict_client.cpp
 CompileCpp=1
 Folder=lib
@@ -1227,7 +1197,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit119]
+[Unit116]
 FileName=src\lib\md5.h
 CompileCpp=1
 Folder=lib
@@ -1237,17 +1207,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit120]
+[Unit117]
 FileName=src\lib\md5.c
-CompileCpp=1
 Folder=lib
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+CompileCpp=1
 
-[Unit121]
+[Unit118]
 FileName=src\lib\sockets.hpp
 CompileCpp=1
 Folder=lib
@@ -1257,7 +1227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit122]
+[Unit119]
 FileName=src\lib\sockets.cpp
 CompileCpp=1
 Folder=lib
@@ -1267,7 +1237,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit123]
+[Unit120]
 FileName=src\sigc++config\sigc++config.h
 CompileCpp=1
 Folder=libsigcpp
@@ -1277,7 +1247,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit124]
+[Unit121]
 FileName=src\lib\plugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1287,7 +1257,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit125]
+[Unit122]
 FileName=src\lib\plugin.h
 CompileCpp=1
 Folder=lib
@@ -1297,7 +1267,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit126]
+[Unit123]
 FileName=src\lib\pluginmanager.cpp
 CompileCpp=1
 Folder=lib
@@ -1307,7 +1277,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit127]
+[Unit124]
 FileName=src\lib\pluginmanager.h
 CompileCpp=1
 Folder=lib
@@ -1317,7 +1287,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit128]
+[Unit125]
 FileName=src\lib\storage.cpp
 CompileCpp=1
 Folder=lib
@@ -1327,7 +1297,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit129]
+[Unit126]
 FileName=src\lib\storage.h
 CompileCpp=1
 Folder=lib
@@ -1337,7 +1307,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit130]
+[Unit127]
 FileName=src\lib\ttsplugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1347,7 +1317,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit131]
+[Unit128]
 FileName=src\lib\ttsplugin.h
 CompileCpp=1
 Folder=lib
@@ -1357,7 +1327,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit132]
+[Unit129]
 FileName=src\lib\virtualdictplugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1367,7 +1337,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit133]
+[Unit130]
 FileName=src\lib\virtualdictplugin.h
 CompileCpp=1
 Folder=lib
@@ -1377,7 +1347,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit134]
+[Unit131]
 FileName=src\lib\parsedata_plugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1387,7 +1357,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit135]
+[Unit132]
 FileName=src\lib\parsedata_plugin.h
 CompileCpp=1
 Folder=lib
@@ -1397,7 +1367,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit136]
+[Unit133]
 FileName=src\pluginmanagedlg.h
 CompileCpp=1
 Folder=main
@@ -1407,7 +1377,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit137]
+[Unit134]
 FileName=src\dictmanage.cpp
 CompileCpp=1
 Folder=main
@@ -1417,7 +1387,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit138]
+[Unit135]
 FileName=src\dictmanage.h
 CompileCpp=1
 Folder=main
@@ -1427,7 +1397,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit139]
+[Unit136]
 FileName=src\pluginmanagedlg.cpp
 CompileCpp=1
 Folder=main
@@ -1437,7 +1407,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit140]
+[Unit137]
 FileName=src\lib\http_client.cpp
 CompileCpp=1
 Folder=lib
@@ -1447,7 +1417,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit141]
+[Unit138]
 FileName=src\lib\http_client.h
 CompileCpp=1
 Folder=lib
@@ -1457,7 +1427,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit142]
+[Unit139]
 FileName=src\lib\httpmanager.cpp
 CompileCpp=1
 Folder=lib
@@ -1467,7 +1437,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit143]
+[Unit140]
 FileName=src\lib\httpmanager.h
 CompileCpp=1
 Folder=lib
@@ -1477,7 +1447,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit144]
+[Unit141]
 FileName=src\lib\netdictplugin.h
 CompileCpp=1
 Folder=lib
@@ -1487,7 +1457,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit145]
+[Unit142]
 FileName=src\lib\netdictplugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1497,7 +1467,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit146]
+[Unit143]
 FileName=src\lib\netdictcache.cpp
 CompileCpp=1
 Folder=lib
@@ -1507,7 +1477,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit147]
+[Unit144]
 FileName=src\lib\netdictcache.h
 CompileCpp=1
 Folder=lib
@@ -1517,7 +1487,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit148]
+[Unit145]
 FileName=src\lib\specialdictplugin.h
 CompileCpp=1
 Folder=lib
@@ -1527,7 +1497,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit149]
+[Unit146]
 FileName=src\lib\specialdictplugin.cpp
 CompileCpp=1
 Folder=lib
@@ -1537,7 +1507,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit150]
+[Unit147]
 FileName=src\globalhotkeys.h
 CompileCpp=1
 Folder=main
@@ -1547,7 +1517,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit151]
+[Unit148]
 FileName=src\globalhotkeys.cpp
 CompileCpp=1
 Folder=main
@@ -1557,7 +1527,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit152]
+[Unit149]
 FileName=src\hotkeyeditor.h
 CompileCpp=1
 Folder=main
@@ -1567,7 +1537,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit153]
+[Unit150]
 FileName=src\hotkeyeditor.c
 CompileCpp=1
 Folder=main
@@ -1577,7 +1547,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit154]
+[Unit151]
 FileName=src\lib\xml_str.h
 CompileCpp=1
 Folder=lib
@@ -1587,8 +1557,58 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit155]
+[Unit152]
 FileName=src\lib\xml_str.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit153]
+FileName=src\lib\utils.cpp
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit154]
+FileName=src\lib\utils.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit155]
+FileName=src\lib\storage_impl.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit156]
+FileName=src\lib\stardict_libconfig.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit157]
+FileName=src\lib\dictmask.h
 CompileCpp=1
 Folder=lib
 Compile=1

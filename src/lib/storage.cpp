@@ -2,6 +2,9 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
+#ifdef _WIN32
+#  include <io.h>
+#endif
 #include "storage.h"
 #include "storage_impl.h"
 #include "common.hpp"
