@@ -1,20 +1,22 @@
 StarDict can be compiled and run in windows.
 
-Please install Dev-C++,they can be found in http://www.bloodshed.net/dev/
+Please install Dev-C++, they can be found in http://www.bloodshed.net/dev/
 devcpp-4.9.9.2_setup.exe
+Use default installation directory X:\Dev-Cpp
 
 Then install developer packages, they can be found at http://www.gtk.org/download-windows.html
 These packages are needed:
-atk-dev_1.26.0-1_win32.zip cairo-dev_1.8.6-1_win32.zip gettext-runtime-dev-0.17-1.zip glib-dev_2.20.4-1_win32.zip gtk+-dev_2.16.4-1_win32.zip libiconv-1.9.1.bin.woe32.zip pango-dev_1.24.2-1_win32.zip zlib123-dll.zip
+atk-dev_1.28.0-1_win32.zip cairo-dev_1.8.8-2_win32.zip gettext-runtime-dev-0.17-1.zip glib-dev_2.22.3-1_win32.zip gtk+-dev_2.16.6-1_win32.zip libiconv-1.9.1.bin.woe32.zip pango-dev_1.26.1-1_win32.zip zlib123-dll.zip
 Just extract them into X:\Dev-Cpp\ is OK.
 Notice, for Zlib, you need to put the zlib1.dll in X:\Dev-Cpp\bin folder.
 
 Here is a stardict.dev
-use Dev-C++ to open it, then compile it. Becase the compile command is too long,it can't be compile in win98, please use win2000 or XP.
+use Dev-C++ to open it, then compile it. Becase the compile command is too long, it can't be compile in win98, please use win2000 or XP.
 
 my environment: Windows XP, Dev-Cpp 4.9.9.2
 
 After compiled, you will find stardict.exe at src/.
+You cannot start stardict.exe in place, in the src directory, since a special directory structure is needed.
 
 You can find plug-in projects at stardict-plugins/.
 
@@ -75,7 +77,49 @@ fprintf(file, "a\n");
 fclose(file);
 =====
 
-StarDict's win32 port got many experience from ReciteWord(my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
+You may simplify debugging process if you configure windows console in Stardict.
+Stardict sends debug messages, warnings, errors to console.
+Unfortunately, windows GUI applications do not attach to a console by default,
+hence all the aforementioned messages go nowhere.
+
+Stardict can attach itself to a windows console either opening a new instance or reusing
+an existing one. To enable that feature define ATTACH_WINDOWS_CONSOLE preprocessor symbol
+when compiling the project. If you use Windows XP or later, it is recommended to define
+_WIN32_WINNT=0x0501 as well. That allows to connect to an existing console, otherwise
+Stardict always opens a new console window. The later case has the disadvantage that
+if the application crushs, the console window closes so quickly you cannot read the error message.
+To reuse the existing console window, start Stardict in that console.
+All messages will go into that window.
+If you start Stardict not from console, a new console windows is opened.
+
+To set up preprocessor symbols in Dev-C++ do the following:
+main menu->Project->Project options->Parameters tab.
+Add "-DATTACH_WINDOWS_CONSOLE -D_WIN32_WINNT=0x0501" to the C and C++ compiler command line.
+
+All that windows console stuff is not much reliable, if it does not work, retreat to printing into a file.
+
+Starting stardict
+=================
+
+To start Stardict just for debugging, just to make sure it works, you need:
+1) GTK+ binaries,
+2) minumum directory structure.
+
+You need at least the following binary packages to start Stardict:
+atk_1.28.0-1_win32.zip cairo_1.8.8-2_win32.zip expat_2.0.1-1_win32.zip fontconfig_2.8.0-1_win32.zip freetype_2.3.11-1_win32.zip gettext-runtime-0.17-1.zip glib_2.22.3-1_win32.zip gtk+_2.16.6-1_win32.zip libpng_1.2.40-1_win32.zip pango_1.26.1-1_win32.zip zlib123-dll.zip
+
+Extract binaries packages into some directory, for instance, X:\Stardict-libs.
+Move zlib1.dll into bin directory.
+Add X:\Stardict-libs\bin in the path variable.
+
+Create a empty directory to start Stardict in, for instance, X:\Stardict-start
+Copy stardict.exe there.
+Create X:\Stardict-start\pixmaps directory and copy there *.png files from
+stardict-source\pixmaps and stardict-source\src\pixmaps
+Now stardict.exe is ready to start.
+
+
+StarDict's win32 port got many experience from ReciteWord (my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
 
 Note: when use fopen(), use "rb", never "r" (unless you know what you are doing).
 
