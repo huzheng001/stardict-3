@@ -2580,13 +2580,14 @@ int main(int argc,char **argv)
 #ifdef _WIN32
 	if (newinstance_option == FALSE) {
 		gchar *title=g_locale_from_utf8(_("StarDict"), -1, NULL, NULL, NULL);
-		HWND ll_winhandle = FindWindowA(0, title);
+		HWND ll_winhandle = FindWindowA("gdkWindowToplevel", title);
 		g_free(title);
 		if (ll_winhandle > 0) {
 			if (IsIconic(ll_winhandle))
 				ShowWindow(ll_winhandle,SW_RESTORE);
 			else
 				SetForegroundWindow(ll_winhandle);
+			g_message("Stardict is already running.");
 			return EXIT_SUCCESS;
 		}
 	}
