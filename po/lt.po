@@ -1,0 +1,2302 @@
+#
+# Mindaugas Baranauskas <embar@users.berlios.de>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: StarDict 3.0 beta\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-05 06:08+0800\n"
+"PO-Revision-Date: 2010-01-11 20:48+0200\n"
+"Last-Translator: Mindaugas Baranauskas <embar@users.berlios.de>\n"
+"Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<"
+"10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../data/GNOME_Stardict.server.in.h:1
+msgid "stardict application"
+msgstr "StarDict žodynas"
+
+#: ../data/GNOME_Stardict.server.in.h:2
+msgid "stardict automation factory"
+msgstr "StarDict automatinis kūrimas"
+
+#: ../data/stardict.desktop.in.h:1
+msgid "Lookup words"
+msgstr "Žodžių paieška"
+
+#. gtk_widget_set_app_paintable(window, TRUE);
+#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
+#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/splash.cpp:84
+#: ../src/stardict.cpp:270 ../src/stardict.cpp:340 ../src/stardict.cpp:2504
+#: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
+msgid "StarDict"
+msgstr "StarDict"
+
+#: ../data/stardict.schemas.in.h:1
+msgid ""
+"A custom font that will be used in StarDict. This will only take effect if "
+"the \"Use Custom Font\" option is turned on."
+msgstr ""
+"Pasirinktas šriftas, naudojamas StarDict žodyne. Jis naudojamas  "
+"tik tada, kai įgalinta parinktis „Naudoti savitą šriftą“."
+
+#: ../data/stardict.schemas.in.h:2
+msgid "Custom Font"
+msgstr "Savitas šriftas"
+
+#: ../data/stardict.schemas.in.h:3
+msgid "Dictionary configuration XML"
+msgstr "Žodyno XML konfigūracija"
+
+#: ../data/stardict.schemas.in.h:4
+msgid "Dictionary order"
+msgstr "Žodynų tvarka"
+
+#: ../data/stardict.schemas.in.h:5
+msgid "Disabled plugins list"
+msgstr "Uždraustų papildinių sąrašas"
+
+#: ../data/stardict.schemas.in.h:6
+msgid "Disabled tree dictionaries list"
+msgstr "Uždraustų medžio-žodynų sąrašas"
+
+#: ../data/stardict.schemas.in.h:7
+msgid "Enable sound event"
+msgstr "Įgalinti garsinius signalus"
+
+#: ../data/stardict.schemas.in.h:8
+msgid "Enable the use of TTS program"
+msgstr "Įgalinti TTS programos naudojimą"
+
+#: ../data/stardict.schemas.in.h:9
+#, fuzzy
+msgid "Engine index"
+msgstr "Index du moteur"
+
+#: ../data/stardict.schemas.in.h:10
+msgid "Hide floating window when modifier key is released"
+msgstr "Slėpti slankųjį langą po to, kai atleistas modifikavimo klavišas"
+
+#: ../data/stardict.schemas.in.h:11
+msgid ""
+"Hide floating window when modifier key is released. It only take effect when "
+"only_scan_while_modifier_key is turned on."
+msgstr ""
+"Slėpti slankųjį langą po to, kai atleistas modifikavimo klavišas. Ši parinktis "
+"veikia tik kai įgalinta „only_scan_while_modifier_key“."
+
+#: ../data/stardict.schemas.in.h:12
+msgid "Hide the list"
+msgstr "Slėpti sąrašą"
+
+#: ../data/stardict.schemas.in.h:13
+msgid "Hide the window on startup"
+msgstr "Nerodyti pasveikinimo lango paleidžiant žodyną"
+
+#: ../data/stardict.schemas.in.h:14
+#, fuzzy
+msgid "Hpaned 's position"
+msgstr "Position du délimiteur"
+
+#: ../data/stardict.schemas.in.h:15
+msgid "List the dictionaries in order."
+msgstr "Parodyti žodynų sąrašą."
+
+#: ../data/stardict.schemas.in.h:16
+msgid "List the plugins in order."
+msgstr "Parodyti papildinių sąrašą."
+
+#: ../data/stardict.schemas.in.h:17
+msgid "List the plugins which are disabled."
+msgstr "Parodyti uždraustų papildinių sąrašą."
+
+#: ../data/stardict.schemas.in.h:18
+msgid "List the search websites."
+msgstr "Parodyti paieškos svetainių sąrašą."
+
+#: ../data/stardict.schemas.in.h:19
+msgid "List the tree dictionaries in order."
+msgstr "Parodyti medžio-žodynų sąrašą."
+
+#: ../data/stardict.schemas.in.h:20
+msgid "List the tree dictionaries which are disabled."
+msgstr "Parodyti uždraustus medžio-žodynus."
+
+#: ../data/stardict.schemas.in.h:21
+msgid "Maximum window-height"
+msgstr "Didžiausias leistinas lango aukštis"
+
+#: ../data/stardict.schemas.in.h:22
+msgid "Maximum window-width"
+msgstr "Didžiausias leistinas lango plotis"
+
+#: ../data/stardict.schemas.in.h:23
+msgid "Only scan while modifier key is being pressed"
+msgstr "Peržvelgti tik kol nuspaustas modifikavimo klavišas"
+
+#: ../data/stardict.schemas.in.h:24
+msgid ""
+"Only scan while the modifier key is being pressed. The modifier key is set "
+"by \"scan_modifier_key\"."
+msgstr ""
+"Peržvelgti tik kol nuspaustas modifikavimo klavišas. Modifikavimo klavišas "
+"nurodomas su parametru „scan_modifier_key“."
+
+#: ../data/stardict.schemas.in.h:25
+msgid ""
+"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
+"(1), Alt(2) or Ctrl(3)."
+msgstr ""
+"Peržvelgti tik jei nuspaustas šitas modifikavimo klavišas. Šis klavišas "
+"gali Win(0), Lyg2(1), Alt(2) arba Vald(3)."
+
+#: ../data/stardict.schemas.in.h:26
+msgid "Plug-in order"
+msgstr "Įskiepių tvarka"
+
+#: ../data/stardict.schemas.in.h:27
+msgid "Pronounce the word when it pops up."
+msgstr "Ištarti pasirodantį žodį."
+
+#: ../data/stardict.schemas.in.h:28
+msgid "Pronounce the word when the floating window pops up."
+msgstr "Ištarti žodį iškilus slankiajam langui."
+
+#: ../data/stardict.schemas.in.h:29
+msgid "Query in the floating window when middle mouse button is clicked"
+msgstr "Programos ženkliuką spragtelėjus pele, užklausą pateikti slankiajame lange"
+
+#: ../data/stardict.schemas.in.h:30
+msgid "Save the dictionary management configuration."
+msgstr "Įrašyti žodyno nuostatas."
+
+#: ../data/stardict.schemas.in.h:31
+msgid "Scan selection"
+msgstr "Pažymėto teksto peržvelgimas"
+
+#: ../data/stardict.schemas.in.h:32
+msgid "Scan-modifier key"
+msgstr "Modifikavimo klavišas peržvelgimui"
+
+#: ../data/stardict.schemas.in.h:33
+msgid "Search website list"
+msgstr "Paieškos svetainės"
+
+#: ../data/stardict.schemas.in.h:34
+#, fuzzy
+msgid "Source language index"
+msgstr "Index de la langue source"
+
+#: ../data/stardict.schemas.in.h:35
+msgid "TTS program command-line"
+msgstr "TTS programos komandinė eilutė"
+
+#: ../data/stardict.schemas.in.h:36
+#, fuzzy
+msgid "Target language index"
+msgstr "Index de la langue cible"
+
+#: ../data/stardict.schemas.in.h:37
+msgid ""
+"The command-line to use in order to enable pronunciation of words via an "
+"external TTS program."
+msgstr ""
+"Komandinės eilutės įrašas, vykdomas žodžių tarimui išorine TTS "
+"programa."
+
+#: ../data/stardict.schemas.in.h:38
+msgid "The height of the main stardict window."
+msgstr "Pagrindinio StarDict lango aukštis."
+
+#: ../data/stardict.schemas.in.h:39
+#, fuzzy
+msgid "The hpaned's position, between the listview and the textview."
+msgstr "Position du délimiteur entre la liste de termes et le cadre définition."
+
+#: ../data/stardict.schemas.in.h:40
+#, fuzzy
+msgid "The index of the source language for translating."
+msgstr "L'index de la langue source de la traduction."
+
+#: ../data/stardict.schemas.in.h:41
+#, fuzzy
+msgid "The index of the target language for translating."
+msgstr "L'index de la langue cible de la traduction."
+
+#: ../data/stardict.schemas.in.h:42
+#, fuzzy
+msgid "The index of the translation engine."
+msgstr "L'index du moteur de traduction."
+
+#: ../data/stardict.schemas.in.h:43
+msgid "The maximum height of the floating stardict window."
+msgstr "Didžiausias leistinas StarDict slankiojo lango aukštis."
+
+#: ../data/stardict.schemas.in.h:44
+msgid "The maximum width of the floating stardict window."
+msgstr "Didžiausias leistinas StarDict slankiojo lango plotis."
+
+#: ../data/stardict.schemas.in.h:45
+msgid "The width of the main stardict window."
+msgstr "StarDict pagrindinio lango plotis."
+
+#: ../data/stardict.schemas.in.h:46
+msgid "Tree Dictionary order"
+msgstr "Medžio-žodynų tvarka"
+
+#: ../data/stardict.schemas.in.h:47
+msgid "Use Custom Font"
+msgstr "Naudoti savitą šriftą"
+
+#: ../data/stardict.schemas.in.h:48
+msgid "Whether the main window is maximized or not."
+msgstr "Pasirinkite, ar: pagrindinis langas išdidintas."
+
+#: ../data/stardict.schemas.in.h:49
+msgid "Whether the window is maximized or not"
+msgstr "Pasirinkite, ar langas išdidintas"
+
+#: ../data/stardict.schemas.in.h:50
+msgid ""
+"Whether to enable StartDict to use an external TTS program for "
+"pronounciation, or not."
+msgstr ""
+"Pasirinkite, ar leisti StarDict žodynui naudoti išorinę TTS programą "
+"ištarimui."
+
+#: ../data/stardict.schemas.in.h:51
+msgid ""
+"Whether to enable sound events or not. StarDict will play a sound event when "
+"a button is active or released, and when a menu pops up."
+msgstr ""
+"Pasirinkite, ar įgalinti garsinius signalus. "
+"StarDict sugros nuspaudus arba atleidus mygtuką, taip pat pasirodžius meniu."
+
+#: ../data/stardict.schemas.in.h:52
+msgid "Whether to hide the main window on startup, or not."
+msgstr "Pasirinkite, ar nerodyti pagrindinio lango paleidžiant žodyną."
+
+#: ../data/stardict.schemas.in.h:53
+msgid "Whether to hide the word-list view or not."
+msgstr "Pasirinkite, ar slėpti žodžių sąrašo peržiūrą."
+
+#: ../data/stardict.schemas.in.h:54
+msgid ""
+"Whether to lock the floating window or not. While locked, the window will "
+"not disappear."
+msgstr ""
+"Pasirinkite, ar užrakinti slankųjį langą. Jei langas užrakintas, "
+"jis nepradings."
+
+#: ../data/stardict.schemas.in.h:55
+msgid ""
+"Whether to query in the floating window, or in the main window. Query is "
+"activated by the user clicking the middle mouse button on the notification "
+"area icon."
+msgstr ""
+"Pasirinkite, ar paieškos rezultatą pateikti slankiajame lange, "
+"ar pagrindiniame lange. Paieška pradedama spragtelint viduriniu pelės klavišu "
+"ties StarDict ženkliuku sistemos dėkle."
+
+#: ../data/stardict.schemas.in.h:56
+msgid ""
+"Whether to scan the selection or not. When the user selects text, StarDict "
+"will popup a flat window showing the meaning of that text."
+msgstr ""
+"Pasirinkite, ar peržvelgti pažymėtą tekstą. Kai naudotojas pažymi kokį žodį, "
+"StarDict slankiajame lange parodo šio žodžio reikšmę."
+
+#: ../data/stardict.schemas.in.h:57
+msgid ""
+"Whether to use a user-defined font in StarDict, instead of the default "
+"system font. If this option is turned on, then the font named in the "
+"\"Custom Font\" option will be used instead of the system font."
+msgstr ""
+"Pasirinkite, ar StarDict žodyne naudoti naudotojo nurodytą savitą šriftą, "
+"ar  numatytąjį sistemos šriftą. Jei ši parinktis įgalinama, naudojamas "
+"„savitas šriftas“ vietoj sisteminio."
+
+#: ../data/stardict.schemas.in.h:58
+msgid "Window-height"
+msgstr "Lango aukštis"
+
+#: ../data/stardict.schemas.in.h:59
+msgid "Window-width"
+msgstr "Lango plotis"
+
+#: ../data/stardict.schemas.in.h:60
+msgid "lock position (x)"
+msgstr "užrakinimo padėtis (x)"
+
+#: ../data/stardict.schemas.in.h:61
+msgid "lock position (y)"
+msgstr "užrakinimo padėtis (y)"
+
+#: ../data/stardict.schemas.in.h:62
+msgid "the window's x position while locked."
+msgstr "Užrakinto lango padėtis horizontalioje ašyje (x)."
+
+#: ../data/stardict.schemas.in.h:63
+msgid "the window's y position while locked."
+msgstr "Užrakinto lango padėtis vertikalioje ašyje (y)."
+
+#: ../data/stardict.schemas.in.h:64
+msgid "whether to lock the window or not"
+msgstr "Pasirinkite, ar užrakinti langą"
+
+#: ../src/articleview.cpp:183
+msgid "XDXF data parsing plug-in is not found!"
+msgstr "Nerastas XDXF duomenų analizatoriaus papildinys!"
+
+#: ../src/articleview.cpp:188
+msgid "PowerWord data parsing plug-in is not found!"
+msgstr "Nerastas PowerWord duomenų analizatoriaus papildinys!"
+
+#: ../src/articleview.cpp:193
+msgid "Wiki data parsing plug-in is not found!"
+msgstr "Nerastas Wiki duomenų analizatoriaus papildinys!"
+
+#: ../src/articleview.cpp:198
+msgid "HTML data parsing plug-in is not found!"
+msgstr "Nerastas HTML duomenų analizatoriaus papildinys!"
+
+#: ../src/articleview.cpp:203
+msgid "WordNet data parsing plug-in is not found!"
+msgstr "Nerastas WordNet duomenų analizatoriaus papildinys!"
+
+#: ../src/articleview.cpp:254
+msgid "<span foreground=\"red\">[Load image error!]</span>"
+msgstr "<span·foreground=\"red\">[Paveikslėlio įkėlimo klaida!]</span>"
+
+#: ../src/articleview.cpp:259
+msgid "<span foreground=\"red\">[Missing Image]</span>"
+msgstr "<span·foreground=\"red\">[Trūksta paveikslėlio]</span>"
+
+#: ../src/articleview.cpp:273
+msgid "Unknown data type, please upgrade StarDict!"
+msgstr "Nežinomo tipo duomenys. Prašome atnaujinti StarDict!"
+
+#. Default stardictd server.
+#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
+msgid "dict.stardict.org"
+msgstr "dict.stardict.org"
+
+#: ../src/conf.cpp:238
+#, no-c-format
+msgid ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
+msgstr ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=lt\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
+
+#. You may translate it to "win32_use_custom_font=1" for your language.
+#: ../src/conf.cpp:265
+msgid "win32_use_custom_font=0"
+msgstr "win32_use_custom_font=0"
+
+#. You may translate it as "win32_custom_font=tahoma 9".
+#: ../src/conf.cpp:277
+msgid "win32_custom_font="
+msgstr "win32_custom_font=Palemonas 12"
+
+#. You may translate it to "darwin_use_custom_font=1" for your language.
+#: ../src/conf.cpp:290
+msgid "darwin_use_custom_font=0"
+msgstr "naudoti_savitą_šriftą=0"
+
+#. You may translate it as "darwin_custom_font=STSong 12".
+#: ../src/conf.cpp:302
+msgid "darwin_custom_font="
+msgstr "savitas_šriftas=Palemonas 12"
+
+#. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
+#: ../src/desktop.cpp:71
+#, c-format
+msgid "%s\\help\\stardict.chm"
+msgstr "%s\\help\\stardict.chm"
+
+#: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
+msgid "Default Group"
+msgstr "Pagrindinė grupė"
+
+#: ../src/dictmanagedlg.cpp:62
+#, c-format
+msgid "Only level %d user can choose this dictionary!"
+msgstr "Šį žodyną gali rinktis tik %d lygio naudotojas!"
+
+#: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
+#: ../src/dictmanagedlg.cpp:2283
+#, c-format
+msgid "You can only choose %d dictionaries."
+msgstr "Galite pasirinkti žodynų: %d."
+
+#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
+#: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
+#: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
+#: ../src/stardict.cpp:1144
+msgid "Dictionary Name"
+msgstr "Žodyno pavadinimas"
+
+#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:803
+#: ../src/dictmanagedlg.cpp:908 ../src/dictmanagedlg.cpp:980
+#: ../src/dictmanagedlg.cpp:1430 ../src/dictmanagedlg.cpp:2206
+msgid "Word count"
+msgstr "Žodžių skaičius"
+
+#: ../src/dictmanagedlg.cpp:216
+msgid "Browse Dictionaries"
+msgstr "Ieškoti žodynų"
+
+#: ../src/dictmanagedlg.cpp:412
+msgid "These settings will take effect the next time you run StarDict."
+msgstr "Šios nuostatos įsigalios StarDict paleidus kitą kartą."
+
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
+msgid "Loading..."
+msgstr "Įkeliama..."
+
+#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
+msgid "<span foreground=\"red\">Query Dict</span>"
+msgstr "<span foreground=\"red\">Paieškos žodynai</span>"
+
+#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
+msgid "<span foreground=\"red\">Scan Dict</span>"
+msgstr "<span foreground=\"red\">Žodynai peržvelgimui</span>"
+
+#: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
+msgid "Virtual Dictionary"
+msgstr "Virtualus žodynas"
+
+#: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
+msgid "Network Dictionary"
+msgstr "Tinklo žodynas"
+
+#: ../src/dictmanagedlg.cpp:783
+msgid ""
+"You can have multiple groups of dictionaries, such as \"Study English\", "
+"\"Learn German\", and switch them instantly."
+msgstr ""
+"Galite turėti keletą žodynų grupių, pvz., „Anglų k. mokymuisi“, „Lietuviški "
+"žodynai“, "
+"ir greitai tarp tarp persijungti."
+
+#: ../src/dictmanagedlg.cpp:788
+msgid ""
+"The Query Dict will show in the main window, the Scan Dict will show in the "
+"floating window."
+msgstr ""
+"Paieškos žodynas rodomas pagrindiniame lange, "
+"o peržvelgimui skirti žodynai rodomi slankiajame lange."
+
+#: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
+msgid "Author"
+msgstr "Autorius"
+
+#: ../src/dictmanagedlg.cpp:805 ../src/dictmanagedlg.cpp:2209
+msgid "Email"
+msgstr "El. paštas"
+
+#: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
+msgid "Website"
+msgstr "Svetainė"
+
+#: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
+msgid "Description"
+msgstr "Aprašymas"
+
+#: ../src/dictmanagedlg.cpp:808 ../src/dictmanagedlg.cpp:2212
+msgid "Date"
+msgstr "Data"
+
+#: ../src/dictmanagedlg.cpp:809
+msgid "File name"
+msgstr "Rinkmenos pavadinimas"
+
+#: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
+#: ../src/pluginmanagedlg.cpp:373
+msgid "Enable"
+msgstr "Įgalinti"
+
+#: ../src/dictmanagedlg.cpp:1295
+msgid "Are you sure you want to delete this group of dictionaries?"
+msgstr "Ar tikrai norite pašalinti šią žodynų grupę?"
+
+#: ../src/dictmanagedlg.cpp:1306
+msgid "Are you sure you want to delete this sub-group of dictionaries?"
+msgstr "Ar tikrai norite pašalinti šį žodynų pogrupį?"
+
+#: ../src/dictmanagedlg.cpp:1325
+msgid "New dict group"
+msgstr "Nauja žodynų grupė"
+
+#: ../src/dictmanagedlg.cpp:1328
+msgid "Group name:"
+msgstr "Grupės pavadinimas:"
+
+#: ../src/dictmanagedlg.cpp:1365
+msgid "Add dictionary"
+msgstr "Pridėti žodyną"
+
+#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
+msgid "Add"
+msgstr "Pridėti"
+
+#: ../src/dictmanagedlg.cpp:1798
+msgid "Delete"
+msgstr "Pašalinti"
+
+#: ../src/dictmanagedlg.cpp:1805
+msgid "Information"
+msgstr "Informacija"
+
+#: ../src/dictmanagedlg.cpp:1814
+msgid "Move to top"
+msgstr "Viršus"
+
+#: ../src/dictmanagedlg.cpp:1821
+msgid "Move up"
+msgstr "Aukštyn"
+
+#: ../src/dictmanagedlg.cpp:1828
+msgid "Move down"
+msgstr "Žemyn"
+
+#: ../src/dictmanagedlg.cpp:1835
+msgid "Move to bottom"
+msgstr "Apačia"
+
+#: ../src/dictmanagedlg.cpp:1917
+msgid "D_ict List"
+msgstr "Žodynų _sąrašas"
+
+#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
+msgid "Manage _Dict"
+msgstr "_Tvarkyti žodynus"
+
+#: ../src/dictmanagedlg.cpp:1946
+msgid "T_ree dictionaries"
+msgstr "_Medžio-žodynai"
+
+#: ../src/dictmanagedlg.cpp:1960
+msgid "_Network dictionaries"
+msgstr "_Tinklo žodynai"
+
+#: ../src/dictmanagedlg.cpp:1984
+msgid "_Show information"
+msgstr "_Rodyti informaciją"
+
+#: ../src/dictmanagedlg.cpp:1991
+msgid "Select _All"
+msgstr "Pasirinkti _viską"
+
+#: ../src/dictmanagedlg.cpp:1996
+msgid "_Unselect all"
+msgstr "Nesirinkti _nieko"
+
+#: ../src/dictmanagedlg.cpp:2015
+msgid "Visit "
+msgstr "Aplankykite "
+
+#: ../src/dictmanagedlg.cpp:2023
+msgid " to download dictionaries!"
+msgstr " ir parsisiųskite žodynus!"
+
+#: ../src/dictmanagedlg.cpp:2032
+msgid "Upgrade Now!"
+msgstr "Atnaujinti dabar!"
+
+#: ../src/dictmanagedlg.cpp:2053
+msgid "Manage Dictionaries"
+msgstr "Tvarkyti žodynus"
+
+#: ../src/dictmanagedlg.cpp:2200
+msgid "Dictionary Information"
+msgstr "Žodyno informacija"
+
+#: ../src/dictmanagedlg.cpp:2207
+msgid "Synonym word count"
+msgstr "Sinonimų skaičius"
+
+#: ../src/dictmanagedlg.cpp:2221
+msgid "Download Now!"
+msgstr "Parsisiųsti dabar!"
+
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
+msgid "StarDict - Scanning"
+msgstr "StarDict - peržvelgiama"
+
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:263
+msgid "StarDict - Stopped"
+msgstr "StarDict - sustabdyta"
+
+#: ../src/docklet.cpp:95 ../src/mainwin.cpp:2744
+msgid "_Scan"
+msgstr "_Peržvelgimas"
+
+#: ../src/docklet.cpp:105 ../src/mainwin.cpp:577
+msgid "_Quit"
+msgstr "_Išeiti"
+
+#: ../src/floatwin.cpp:126
+msgid "Query in the main window"
+msgstr "Paieška pagrindiniame lange"
+
+#: ../src/floatwin.cpp:135
+msgid "Save to file"
+msgstr "Įrašyti į rinkmeną"
+
+#: ../src/floatwin.cpp:143
+msgid "Pronounce the word"
+msgstr "Ištarti žodžius"
+
+#: ../src/floatwin.cpp:153
+msgid "Stop selection-scanning"
+msgstr "Sustabdyti pažymėjimo peržvelgimą"
+
+#: ../src/floatwin.cpp:165
+msgid "Help"
+msgstr "Pagalba"
+
+#: ../src/floatwin.cpp:173 ../src/mainwin.cpp:2777
+#: ../src/win32/systray.cpp:111
+msgid "Quit"
+msgstr "Išeiti"
+
+#: ../src/floatwin.cpp:187
+msgid "Lock floating window"
+msgstr "Užrakinti slankųjį langą"
+
+#: ../src/floatwin.cpp:323 ../src/floatwin.cpp:366 ../src/mainwin.cpp:1974
+#: ../src/mainwin.cpp:2004 ../src/selection.cpp:194 ../src/stardict.cpp:705
+#: ../src/stardict.cpp:850 ../src/stardict.cpp:1023 ../src/stardict.cpp:1037
+#: ../src/stardict.cpp:1042 ../src/stardict.cpp:1047 ../src/stardict.cpp:1537
+#: ../src/stardict.cpp:1664 ../src/win32/clipboard.cpp:117
+msgid "<Not Found!>"
+msgstr "<Nerasta!>"
+
+#: ../src/floatwin.cpp:445
+msgid "Fuzzy query"
+msgstr "Apytikslė paieška"
+
+#: ../src/floatwin.cpp:451
+msgid "has succeeded.\n"
+msgstr "sėkmė.\n"
+
+#: ../src/floatwin.cpp:453
+msgid "Found 1 word:\n"
+msgstr "Rastas vienas žodis:\n"
+
+#: ../src/floatwin.cpp:455
+#, c-format
+msgid "Found %d words:\n"
+msgid_plural "Found %d words:\n"
+msgstr[0] "Rastas %d žodis:\n"
+msgstr[1] "Rasti %d žodžiai:\n"
+msgstr[2] "Rasta %d žodžių:\n"
+
+#: ../src/floatwin.cpp:943
+msgid "_Copy"
+msgstr "_Kopijuoti"
+
+#: ../src/floatwin.cpp:949
+msgid "_Save"
+msgstr "Į_rašyti"
+
+#: ../src/floatwin.cpp:954 ../src/mainwin.cpp:2169
+msgid "_Query"
+msgstr "_Paieška"
+
+#: ../src/floatwin.cpp:961
+msgid "_Play"
+msgstr "S_kaityti"
+
+#: ../src/floatwin.cpp:969
+msgid "_Fuzzy Query"
+msgstr "_Apytikslė paieška"
+
+#: ../src/mainwin.cpp:91
+msgid "Clear the search box"
+msgstr "Išvalyti paieškos laukelį"
+
+#: ../src/mainwin.cpp:120
+msgid "Fuzzy Query"
+msgstr "Apytikslė paieška"
+
+#: ../src/mainwin.cpp:132
+msgid "Go Back - Right button: history (Alt+Left)"
+msgstr "Atgal - dešinysis pelės klavišas: istorija (Alt+Kairėn)"
+
+#: ../src/mainwin.cpp:147
+msgid "Show the main menu (Alt+M)"
+msgstr "Rodyti pagrindinį meniu (Alt+M)"
+
+#: ../src/mainwin.cpp:195
+msgid "Clear _history"
+msgstr "Iš_valyti istoriją"
+
+#: ../src/mainwin.cpp:496
+msgid "translator_credits"
+msgstr "Mindaugas Baranauskas : embar@users.berlios.de, 2010"
+
+#: ../src/mainwin.cpp:502
+msgid "StarDict is an international dictionary for GNOME."
+msgstr "StarDict yra tarptautinis žodynas GNOME aplinkai."
+
+#: ../src/mainwin.cpp:533
+msgid "Pr_eferences"
+msgstr "Nuo_statos"
+
+#: ../src/mainwin.cpp:546
+msgid "Manage _Plugins"
+msgstr "Tvarkyti papil_dinius"
+
+#: ../src/mainwin.cpp:555
+msgid "_New Version"
+msgstr "Nauja v_ersija"
+
+#: ../src/mainwin.cpp:563
+msgid "_Help"
+msgstr "_Pagalba"
+
+#: ../src/mainwin.cpp:569
+msgid "_About"
+msgstr "_Apie"
+
+#: ../src/mainwin.cpp:1281
+msgid "List"
+msgstr "Žodžių sąrašas"
+
+#: ../src/mainwin.cpp:1292
+msgid "Result"
+msgstr "Žodynų sąrašas"
+
+#: ../src/mainwin.cpp:1302
+msgid "Full-Text Translation"
+msgstr "Viso teksto vertimas"
+
+#: ../src/mainwin.cpp:1313
+msgid "Tree"
+msgstr "Medis"
+
+#: ../src/mainwin.cpp:1324
+msgid "Choose dict group"
+msgstr "Pasirinkite žodyno grupę"
+
+#: ../src/mainwin.cpp:1337
+msgid "Next word (Alt+Down)"
+msgstr "Sekantis žodis (Alt+Žemyn)"
+
+#: ../src/mainwin.cpp:1347
+msgid "Previous word (Alt+Up)"
+msgstr "Ankstesnis žodis (Alt+Aukštyn)"
+
+#: ../src/mainwin.cpp:1399
+msgid "Enable Net Dict"
+msgstr "Įgalinti tinklo žodynus"
+
+#: ../src/mainwin.cpp:1536
+msgid "Show the word list"
+msgstr "Rodyti žodžių sąrašą"
+
+#: ../src/mainwin.cpp:1551
+msgid "Hide the word list"
+msgstr "Slėpti žodžių sąrašą"
+
+#: ../src/mainwin.cpp:1569
+msgid "Copy"
+msgstr "Kopijuoti"
+
+#: ../src/mainwin.cpp:1583
+msgid "Pronounce the word (Enter)"
+msgstr "Ištarti žodžius (Įvesti)"
+
+#: ../src/mainwin.cpp:1597
+msgid "Save to file (Alt+E)"
+msgstr "Įrašyti į rinkmeną (Alt+E)"
+
+#: ../src/mainwin.cpp:1607
+msgid "Print"
+msgstr "Spausdinti"
+
+#: ../src/mainwin.cpp:1622
+msgid "Search in the definition text (Ctrl+F)"
+msgstr "Ieškoti apibūdinimo tekste (Ctrl+F)"
+
+#: ../src/mainwin.cpp:1808
+#, c-format
+msgid ""
+"Warning! No dictionary is loaded.\n"
+"Please go to StarDict's website, download some dictionaries:\n"
+"%s%s%s and put them in %s."
+msgstr ""
+"Dėmesio! Neįkeltas joks žodynas.\n"
+"Prašytume apsilankyti StarDict svetainėje ( %s%s%s ), "
+"iš čia parsisiųsti bent vieną žodyną \n"
+" ir jį patalpinti %s."
+
+#: ../src/mainwin.cpp:1831
+msgid ""
+"        Welcome to StarDict!\n"
+"\n"
+"   Press Ctrl+Q to quit. Press Alt+Z to iconify the window or Alt+X to hide "
+"the window.\n"
+"   Press Alt+C or ESC to clear the input entry's text.\n"
+"   Press Space key to move focus to the input entry.\n"
+"   If the query word was not found, you can press Tab key to select the "
+"first word in the word list.\n"
+"   After selected some text, clicking the middle mouse button on the main "
+"window's Definition area or on the notification area icon will look up that "
+"word.\n"
+"   StarDict can match strings against patterns containing '*' (wildcard) and "
+"'?' (joker).\n"
+"   Input a word beginning with '/' to do a Fuzzy query.\n"
+"   When the floating window reports that a word was not found, double "
+"clicking will perform a fuzzy query.\n"
+msgstr ""
+"        Jus sveikina StarDict!\n"
+"\n"
+"   Norėdami baigti programos darbą, spauskite Vald+Q. Norėdami "
+"sumažinti langą – Alt+Z, o Alt+X nuleis į ženkliuką sistemos dėkle.\n"
+"   Alt+C arba Gr(įžti) klavišu išvalysite teksto įvesties laukelį.\n"
+"   Į įvedimo laukelį pateksite nuspaudę Tarpo klavišą.\n"
+"   Jei norimas žodis nerastas, su Tab klavišu pažymėsite pirmąjį įrašą "
+"žodžių sąraše ir skaitysite jo aprašymą.\n"
+"   Pažymėję tekstą, jo apibūdinimo paiešką žodyne iškviesite nuspaudę "
+"vidurinį pelės klavišą pagrindiniame StarDict programos lange arba "
+"ant ženkliuko sistemos dėkle.\n"
+"   Žodžių paieškai gali naudoti pakaitos simbolius „*“ ir „?“.\n"
+"   Jei žodį pradėsite rašyti simboliu „/“, bus vykdoma apytikslė paieška.\n"
+"   Jei slankiajame lange pranešama, kad paieškos žodis nerastas, "
+"jį dukart spragtelėję irgi paleisite apytikslę paiešką.\n"
+
+#: ../src/mainwin.cpp:1848
+msgid ""
+"       Welcome to StarDict\n"
+"StarDict is a Cross-Platform and international dictionary written in Gtk2. "
+"It has powerful features, such as \"Glob-style pattern matching,\" \"Scan "
+"selected word,\" \"Fuzzy query\" and \"Full-text search\".\n"
+"\n"
+"       Here is an introduction to using StarDict:\n"
+"\n"
+"       1. Glob-style pattern matching\n"
+"       You can input strings containing '*' (wildcard) and '?' (joker) as "
+"the pattern. '*' matches an arbitrary, possibly empty, string, and '?' "
+"matches an arbitrary character. After pressing Enter, the words that match "
+"this pattern will be shown in the list.\n"
+"       2. Regular expressions matching\n"
+"       You can input strings as Perl-compatible regular expressions with a "
+"beginning \":\" character as the identifier. After pressing Enter, the words "
+"that match this regex will be shown in the list.\n"
+"       3. Fuzzy query\n"
+"       When you can't remember how to spell a word exactly, you can try "
+"StarDict's Fuzzy query. It uses \"Levenshtein Edit Distance\" to compute the "
+"similarity between two words, and gives the match results which are most "
+"similar to the word that you input. To create a fuzzy query, just input the "
+"word with a beginning \"/\", and then press Enter.\n"
+"       4. Full-text search\n"
+"       Full-text search searches for a word in the data. To create a Full-"
+"text search, just input the word with a beginning \"|\", and then press "
+"Enter. For example, \"|ab cd\" searches data which contain both \"ab\" and "
+"\"cd\". If the words contain Space character, you can use \"\\ \", such as "
+"\"|apple\\ pie\", other escaping characters are \"\\\\\" for '\\', \"\\t\" "
+"for Tab and \"\\n\" for new line.\n"
+"       5. Special character search\n"
+"       If your words contain special characters, you can use '\\' to escape "
+"it, for example, \"a\\*b\\?\" searches \"a*b?\", \"\\/abc\" searches \"/abc"
+"\".\n"
+"       6. Scan the selected word\n"
+"       Turn on the check button at the bottom-left corner of the StarDict "
+"window to activate this feature. When this feature is on, StarDict will "
+"automatically look up words, phrases, and Chinese characters in other "
+"applications. Just highlight a word or phrase with your mouse, and a "
+"floating window will pop up showing the definition of the selected word.\n"
+"       7. Dictionary management\n"
+"       Click the \"Manage dictionaries\" button at the bottom-right corner "
+"of the window to access the dictionary management dialog. From here, you can "
+"disable some dictionaries that you don't need, and set the dictionaries' "
+"querying order.\n"
+"\n"
+"\n"
+"       Statement: This program is distributed in the hope that it will be "
+"useful, but WITHOUT ANY WARRANTY; without the warranty that the word "
+"spelling, definition, and phonetic information are correct.\n"
+msgstr ""
+"       Jus sveikina StarDict\n"
+"StarDict yra tarptautinis ir daugiaplatformis žodynas, parašytas su Gtk2. "
+"Jis turi galingus įrankius, leidžiančius, pvz., „pažymėto teksto peržvelgimą“, "
+"„apytikslę paiešką“, „paiešką visuose apibūdinimuose“, reguliarių išraiškų "
+"naudojimą.\n"
+"\n"
+"       Trumpas StarDict naudojimo aprašymas:\n"
+"\n"
+"       1. Specialių simbolių naudojimas\n"
+"       Užklausose galite naudoti pakaitos simbolius „*“ ir „?“. "
+"„*“ atitinka bet kokių ženklų seką (net ir tuščią, t. y. žvaigždutės vietoje "
+"gali "
+"nebūti nė vieno ženklo). „?“ atitinka vieną bet kurį ženklą. Nuspaudus įvesties "
+"klavišą, bus pateiktas paieškos išraišką atitinkančių žodžių sąrašas.\n"
+"       2. Reguliariųjų išraiškų naudojimas\n"
+"       Galite įvesti Perl tipo reguliariąsias išraiškas, paieškos išraišką "
+"pradėdami "
+"„:“ simboliu. Reguliariąją išraišką atitinkantys žodžiai atvaizduojami vėlgi "
+"nuspaudus įvesties klavišą.\n"
+"       3. Apytikslė paieška\n"
+"       Kuomet tiksliai neprisimenate žodžio rašybos, bandykite atlikti StarDict "
+"apytikslę paiešką. Čia dviejų žodžių panašumo nustatymui naudojamas "
+"„Levenshtein nuotolis“ – jums pateikiami artimiausi užklausos rezultatai. "
+"Norėdami ieškoti rašyba panašių žodžių, žodžio pradžioje prirašykite „/“ "
+"ir nuspauskite įvesties klavišą.\n"
+"       4. Paieška visuose apibūdinimuose\n"
+"       Paieška apibūdinimuose leidžia ieškoti teksto visuose turimuose "
+"duomenyse. Šia galimybe pasinaudosite paieškos išraišką pradėdami „|“ "
+"simboliu. Pavyzdžiui, užklausa „|ab cd“ išrinks apibūdinimus, kuriuose yra ir "
+"„ab“, ir „cd“. Jei tekste yra tarpo simbolis, įterpkite „\\ “, pavyzdžiui, "
+"„tautų\\ pavasar“; panašiai keičiami kiti simboliai: „\\\\“ vietoj „\\“, „\\t“ "
+"vietoj "
+"tabuliavimo ženklo, o „\\n“ vietoj vedimo iš naujos eilutės.\n"
+"       5. Specialių simbolių paieška\n"
+"      Jei norimas žodis turi specialiuosius simbolius, prieš juos naudokite "
+"„\\“; "
+"pavyzdžiui, užklausa „a\\*b\\?“ ieškos „a*b?“, „\\/abc“ ras „/abc“.\n"
+"       6. Automatinis pažymėto teksto peržvelgimas\n"
+"       Norėdami įgalinti šią funkciją, spragtelėkite ties „Peržvelgimas“ "
+"StarDict žodyno pagrindinio lango apatiniame kairiame kampe."
+"Tuomet StarDict automatiškai ieškos žodžių, posakių ar kiniškų hieroglifų "
+"kitose jūsų kompiuterio programose. Tiesiog pele pažymėkite žodį, "
+"o jo apibūdinimas ar vertimas pasirodys iškylančiame slankiame lange.\n"
+"       7. Žodynų tvarkymas\n"
+"       Spustelėkite apatiniame dešiniame lango kampe esantį ženkliuką "
+"„Tvarkyti žodynus“. Čia įgalinsite arba uždrausite norimų žodynų naudojimą, "
+"nurodysite jų išdėstymo tvarką, kursite jų grupes.\n"
+"\n"
+"\n"
+"       Žinotina: Ši programa platinama su viltimi, kad ji bus naudinga, "
+"bet BE JOKIOS GARANTIJOS; be jokios garantijos, kad žodžių rašyba, apibūdinimai "
+"ir "
+"fonetinė informacija bus teisinga. \n"
+
+#: ../src/mainwin.cpp:1996 ../src/stardict.cpp:1371
+msgid "Found no words matching this pattern!"
+msgstr "Šios užklausos neatitiko nė vienas žodis!"
+
+#: ../src/mainwin.cpp:1998 ../src/stardict.cpp:1396
+msgid "Found no words matching this regular expression!"
+msgstr "Šios reguliarios išraiškos neatitiko nė vienas žodis!"
+
+#: ../src/mainwin.cpp:2000 ../src/stardict.cpp:1285
+msgid "There are too many spelling errors :-("
+msgstr "Per daug rašybos klaidų :-("
+
+#: ../src/mainwin.cpp:2002 ../src/stardict.cpp:1204 ../src/stardict.cpp:1249
+msgid "There are no dictionary articles containing this word. :-("
+msgstr "Šio žodžio žodynuose tarp apibūdinimų nėra :-("
+
+#: ../src/mainwin.cpp:2090
+#, c-format
+msgid "The text \"%s\" was not found."
+msgstr "Tekstas „%s“ nerastas."
+
+#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2428
+msgid "_Pronounce"
+msgstr "Išta_rti"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
+msgid "Arabic"
+msgstr "arabų"
+
+#: ../src/mainwin.cpp:2207
+msgid "Chinese"
+msgstr "kinų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2214 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
+msgid "Chinese (Simplified)"
+msgstr "kinų (supaprastinta)"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
+msgid "Chinese (Traditional)"
+msgstr "kinų (tradicinė)"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
+#: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
+#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
+#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2240 ../src/mainwin.cpp:2242
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250
+#: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2268 ../src/mainwin.cpp:2270
+#: ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2276 ../src/mainwin.cpp:2278
+#: ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2282 ../src/mainwin.cpp:2284
+#: ../src/mainwin.cpp:2286 ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2295 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2305
+#: ../src/mainwin.cpp:2307 ../src/mainwin.cpp:2309 ../src/mainwin.cpp:2311
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
+msgid "English"
+msgstr "anglų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
+#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2276
+#: ../src/mainwin.cpp:2278 ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2286
+#: ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2297
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
+#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
+msgid "French"
+msgstr "prancūzų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+msgid "German"
+msgstr "vokiečių"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+msgid "Italian"
+msgstr "italų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
+#: ../src/mainwin.cpp:2329
+msgid "Japanese"
+msgstr "japonų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
+#: ../src/mainwin.cpp:2327
+msgid "Korean"
+msgstr "korėjiečių"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
+#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+msgid "Portuguese"
+msgstr "portugalų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+msgid "Russian"
+msgstr "rusų"
+
+#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
+#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+msgid "Spanish"
+msgstr "ispanų"
+
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+msgid "Dutch"
+msgstr "olandų"
+
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
+#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
+#: ../src/mainwin.cpp:2301
+msgid "Greek"
+msgstr "graikų"
+
+#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+msgid "Swedish"
+msgstr "švedų"
+
+#: ../src/mainwin.cpp:2351
+msgid "Google Translate"
+msgstr "Google vertimas"
+
+#: ../src/mainwin.cpp:2352
+msgid "Yahoo Translate"
+msgstr "Yahoo vertimas"
+
+#: ../src/mainwin.cpp:2353
+msgid "Altavista Translate"
+msgstr "Altavista vertimas"
+
+#: ../src/mainwin.cpp:2354
+msgid "SystranBox Translate"
+msgstr "SystranBox vertimas"
+
+#: ../src/mainwin.cpp:2355
+msgid "Excite Japan Translate"
+msgstr "Excite japonų vertimas"
+
+#: ../src/mainwin.cpp:2450
+msgid "<b>Full-Text Translation</b>"
+msgstr "<b>Viso teksto vertimas</b>"
+
+#: ../src/mainwin.cpp:2481
+msgid "To"
+msgstr "į"
+
+#: ../src/mainwin.cpp:2514
+msgid "_Translate"
+msgstr "_Versti"
+
+#: ../src/mainwin.cpp:2536
+msgid "Powered by -"
+msgstr "Sukūrė -"
+
+#: ../src/mainwin.cpp:2661
+msgid "Please input some words to translate."
+msgstr "Nenorėtumėte įrašyti verstinų žodžių?"
+
+#: ../src/mainwin.cpp:2676
+msgid "Connecting..."
+msgstr "Jungiamasi..."
+
+#: ../src/mainwin.cpp:2753
+msgid "Scan the selection"
+msgstr "Pažymėto teksto peržvelgimas"
+
+#: ../src/mainwin.cpp:2767
+msgid "Show info"
+msgstr "Rodyti informaciją"
+
+#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:1895
+msgid "Preferences"
+msgstr "Nuostatos"
+
+#: ../src/mainwin.cpp:2829
+msgid "Manage dictionaries"
+msgstr "Tvarkyti žodynus"
+
+#: ../src/mainwin.cpp:2839
+msgid "Go to the StarDict website"
+msgstr "Eiti į StarDict svetainę"
+
+#: ../src/mainwin.cpp:2851
+msgid "Search an Internet dictionary - Right button: website list"
+msgstr "Ieškoti internetiniame - dešinysis pelės klavišas: svetainių sąrašas"
+
+#: ../src/pluginmanagedlg.cpp:119
+#, c-format
+msgid ""
+"%s\n"
+"\n"
+"<b>Author:</b>\t%s\n"
+"<b>Website:</b>\t%s\n"
+"<b>Filename:</b>\t%s"
+msgstr ""
+"%s\n"
+"\n"
+"<b>Autorius:</b>\t%s\n"
+"<b>Svetainė:</b>\t%s\n"
+"<b>Rinkmenos pavadinimas:</b>\t%s"
+
+#: ../src/pluginmanagedlg.cpp:179
+msgid "<b>Virtual Dictionary</b>"
+msgstr "<b>Virtualus žodynas</b>"
+
+#: ../src/pluginmanagedlg.cpp:184
+msgid "<b>Network Dictionary</b>"
+msgstr "<b>Tinklo žodynas</b>"
+
+#: ../src/pluginmanagedlg.cpp:189
+msgid "<b>Special Dictionary</b>"
+msgstr "<b>Specifinis žodynas</b>"
+
+#: ../src/pluginmanagedlg.cpp:194
+msgid "<b>TTS Engine</b>"
+msgstr "<b>TTS variklis</b>"
+
+#: ../src/pluginmanagedlg.cpp:199
+msgid "<b>Data Parsing Engine</b>"
+msgstr "<b>Duomenų skaitymo variklis</b>"
+
+#: ../src/pluginmanagedlg.cpp:204
+msgid "<b>Misc</b>"
+msgstr "<b>Įvairūs</b>"
+
+#: ../src/pluginmanagedlg.cpp:379
+msgid "Plug-in Name"
+msgstr "Papildinio pavadinimas"
+
+#: ../src/pluginmanagedlg.cpp:402
+msgid "Configure Pl_ug-in"
+msgstr "Derinti papildinį"
+
+#: ../src/pluginmanagedlg.cpp:412
+msgid "<b>Plug-in Details</b>"
+msgstr "<b>Papildinio savybės</b>"
+
+#: ../src/pluginmanagedlg.cpp:421
+msgid "Manage Plugins"
+msgstr "Tvarkyti papildinius"
+
+#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:398
+msgid "Scan Selection"
+msgstr "Pažymėto teksto peržvelgimas"
+
+#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:529
+msgid "Font"
+msgstr "Šriftas"
+
+#: ../src/prefsdlg.cpp:81 ../src/prefsdlg.cpp:610
+msgid "Cache"
+msgstr "Podėlis"
+
+#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:701
+msgid "Export"
+msgstr "Eksportavimas"
+
+#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:770
+msgid "Sound"
+msgstr "Garsas"
+
+#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:737
+msgid "Article rendering"
+msgstr "Apibūdinimų vaizdavimas"
+
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:1033
+msgid "Net Dict"
+msgstr "Tinklo žodynai"
+
+#: ../src/prefsdlg.cpp:95 ../src/prefsdlg.cpp:1108
+msgid "Input"
+msgstr "Įvesties laukelis"
+
+#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:111
+#: ../src/prefsdlg.cpp:1195 ../src/prefsdlg.cpp:1634 ../src/prefsdlg.cpp:1665
+msgid "Options"
+msgstr "Parinktys"
+
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1508
+msgid "Search website"
+msgstr "Paieškos svetainė"
+
+#: ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:1732
+msgid "Settings"
+msgstr "Nuostatos"
+
+#: ../src/prefsdlg.cpp:119 ../src/stardict.cpp:2522
+msgid "Dictionary"
+msgstr "Žodynas"
+
+#: ../src/prefsdlg.cpp:121
+msgid "Network"
+msgstr "Tinklas"
+
+#: ../src/prefsdlg.cpp:123
+msgid "Main window"
+msgstr "Pagrindinis langas"
+
+#: ../src/prefsdlg.cpp:125
+msgid "Notification area icon"
+msgstr "Ženkliukas sistemos dėkle"
+
+#: ../src/prefsdlg.cpp:127
+msgid "Floating window"
+msgstr "Slankusis langas"
+
+#: ../src/prefsdlg.cpp:264
+msgid "Categories"
+msgstr "Kategorijos"
+
+#: ../src/prefsdlg.cpp:401
+msgid "_Only scan while the modifier key is being pressed."
+msgstr "_Peržvelgti tik kol nuspaustas modifikavimo klavišas."
+
+#: ../src/prefsdlg.cpp:417
+msgid "H_ide floating window when modifier key released."
+msgstr "_Slėpti slankųjį langą po to, kai atleistas modifikavimo klavišas."
+
+#: ../src/prefsdlg.cpp:427
+msgid "Scan modifier _key:"
+msgstr "Modifikavimo _klavišas peržvelgimui:"
+
+#: ../src/prefsdlg.cpp:448
+msgid "_Scan clipboard."
+msgstr "_Peržvelkti iškarpinę."
+
+#: ../src/prefsdlg.cpp:458
+msgid "_Use scan hotkey: Ctrl+Alt+X."
+msgstr "_Naudoti spartųjį klavišą: Ctrl+Alt+X."
+
+#: ../src/prefsdlg.cpp:506
+msgid "Choose dictionary font"
+msgstr "Pasirinkti žodyno šriftą"
+
+#: ../src/prefsdlg.cpp:509 ../src/prefsdlg.cpp:554
+msgid "Choose"
+msgstr "Pasirinkti"
+
+#: ../src/prefsdlg.cpp:511
+msgid "Dictionary font"
+msgstr "Žodyno šriftas"
+
+#: ../src/prefsdlg.cpp:532
+msgid "_Use custom font."
+msgstr "_Naudoti savitą šriftą."
+
+#: ../src/prefsdlg.cpp:544
+msgid "Dictionary _font:"
+msgstr "Žodyno šri_ftas:"
+
+#: ../src/prefsdlg.cpp:614
+msgid "Create c_ache files to speed up loading."
+msgstr "Sukurti _podėlio rinkmenas greitesniam įkrovimui."
+
+#: ../src/prefsdlg.cpp:619
+msgid "_Sort word list by collation function."
+msgstr "_Rikiuoti žodžius pagal tam tikrą abėcėlę."
+
+#: ../src/prefsdlg.cpp:628
+msgid "\tCollation _function:"
+msgstr "\t_Abėcėlės tipas:"
+
+#: ../src/prefsdlg.cpp:660
+msgid ""
+"After enabled collation, when load the dictionaries for the first time, it "
+"will take some time for sorting, please wait for a moment."
+msgstr ""
+"Po to kai įgalinama žodžių rikiavimo taisyklė, pirmą kartą įkelti žodyną "
+"šiek tiek užtrunka. Reikia palaukti."
+
+#: ../src/prefsdlg.cpp:666
+msgid "C_lean all cache files"
+msgstr "Išva_lyti visos podėlio rinkmenas"
+
+#: ../src/prefsdlg.cpp:683
+msgid "Open file..."
+msgstr "Atverti rinkmeną..."
+
+#: ../src/prefsdlg.cpp:706
+msgid "_Only export words."
+msgstr "Eksportuoti tik _užklausos žodžius."
+
+#: ../src/prefsdlg.cpp:713
+msgid "File name:"
+msgstr "Rinkmenos pavadinimas:"
+
+#: ../src/prefsdlg.cpp:722
+msgid "_Browse..."
+msgstr "_Naršyti..."
+
+#: ../src/prefsdlg.cpp:743
+msgid "_Highlight search term"
+msgstr "Užklausą jos apibūdinime nuspalvinti"
+
+#: ../src/prefsdlg.cpp:775
+msgid "_Enable sound event."
+msgstr "Įgalinti _garsinius signalus."
+
+#: ../src/prefsdlg.cpp:784
+msgid "Command for playing wav files:"
+msgstr "Komanda wav rinkmenų grojimui:"
+
+#: ../src/prefsdlg.cpp:797
+msgid "RealPeopleTTS search path:"
+msgstr "RealPeopleTTS paieškos kelias:"
+
+#: ../src/prefsdlg.cpp:815
+msgid "Enable _TTS program."
+msgstr "Įgalinti _TTS programą."
+
+#: ../src/prefsdlg.cpp:823
+msgid "Commandline:"
+msgstr "Komandinė eilutė:"
+
+#: ../src/prefsdlg.cpp:852
+msgid "Account"
+msgstr "Paskyra"
+
+#: ../src/prefsdlg.cpp:863 ../src/prefsdlg.cpp:960
+msgid "_User Name:"
+msgstr "_Vartotojo vardas:"
+
+#: ../src/prefsdlg.cpp:869 ../src/prefsdlg.cpp:966
+msgid "_Password:"
+msgstr "_Slaptažodis:"
+
+#: ../src/prefsdlg.cpp:892 ../src/prefsdlg.cpp:991
+msgid "Please input the password."
+msgstr "Įveskite slaptažodį."
+
+#: ../src/prefsdlg.cpp:949
+msgid "Register"
+msgstr "Registruotis"
+
+#: ../src/prefsdlg.cpp:973
+msgid "_Email:"
+msgstr "_El. paštas:"
+
+#: ../src/prefsdlg.cpp:989
+msgid "Please input the user name."
+msgstr "Nurodykite vartotojo vardą."
+
+#: ../src/prefsdlg.cpp:993
+msgid "Please input the email."
+msgstr "Nurodykite elektroninio pašto adresą."
+
+#: ../src/prefsdlg.cpp:995
+msgid "Please input a valid email."
+msgstr "Nurodykite tinkamą elektroninio pašto adresą."
+
+#: ../src/prefsdlg.cpp:1039
+msgid "Enable _network dictionaries."
+msgstr "Įgalinti tinklo žodynus."
+
+#: ../src/prefsdlg.cpp:1051
+msgid "StarDict server:"
+msgstr "StarDict serveris:"
+
+#: ../src/prefsdlg.cpp:1060
+msgid "Port:"
+msgstr "Prievadas:"
+
+#: ../src/prefsdlg.cpp:1069
+msgid "Account:"
+msgstr "Paskyra:"
+
+#: ../src/prefsdlg.cpp:1080
+msgid "_Register an account"
+msgstr "_Kurti paskyrą"
+
+#: ../src/prefsdlg.cpp:1115
+msgid "_Search while typing."
+msgstr "Ieškoti žodžio vedimo klaviatūra _metu."
+
+#: ../src/prefsdlg.cpp:1124
+msgid "Word change _timeout:"
+msgstr "Sąrašo _atnaujinimo intervalas:"
+
+#: ../src/prefsdlg.cpp:1133
+msgid "(default:300 ms)"
+msgstr "(numatyta:300 ms)"
+
+#: ../src/prefsdlg.cpp:1135
+msgid "Show the _first word when not found."
+msgstr "Rodyti _pirmąjį žodį, net jei užklausa neturi atitikmens."
+
+#: ../src/prefsdlg.cpp:1202
+msgid "_Auto run StarDict after boot."
+msgstr ""
+"_StarDict automatiškai paleisti po vartotojo prisijungimo įjungus kompiuterį."
+
+#: ../src/prefsdlg.cpp:1232
+msgid "Hide main window when _starting StarDict."
+msgstr ""
+"Paleidus StarDict, nerodyti pagrindinio žodyno lango – "
+"rodyti tik žodyno ženkliuką sistemos dėkle."
+
+#: ../src/prefsdlg.cpp:1245
+msgid "_Use open main window hotkey: Ctrl+Alt+Z."
+msgstr "_Norėdami atverti pagrindinį langą, spauskite Vald+Alt+Z."
+
+#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1793
+msgid "_Transparency:"
+msgstr "_Skaidrumas:"
+
+#: ../src/prefsdlg.cpp:1356 ../src/prefsdlg.cpp:1559
+msgid "Website Name"
+msgstr "Svetainės pavadinimas"
+
+#: ../src/prefsdlg.cpp:1368 ../src/prefsdlg.cpp:1567
+msgid "Website link"
+msgstr "Svetainės adresas"
+
+#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1575
+msgid "Website search link"
+msgstr "Svetainės paieškos adresas"
+
+#: ../src/prefsdlg.cpp:1400
+msgid "Please input the website name."
+msgstr "Nurodykite svetainės pavadinimą."
+
+#: ../src/prefsdlg.cpp:1402
+msgid "Please input the website link."
+msgstr "Nurodykite svetainės adresą."
+
+#: ../src/prefsdlg.cpp:1404
+msgid "Please input the website search link."
+msgstr "Nurodykite svetainės paieškos adresą."
+
+#: ../src/prefsdlg.cpp:1406 ../src/prefsdlg.cpp:1485
+#, c-format
+msgid ""
+"The website search link should contain a \"%%s\" string for querying a word."
+msgstr "Svetainės paieškos adresas privalo turėti „%%s“ užklausos žodžiams."
+
+#: ../src/prefsdlg.cpp:1640
+msgid ""
+"_Query in the floating window when middle mouse\n"
+"button is clicked."
+msgstr ""
+"Programos ženkliuką spragtelėjus pele, "
+"_užklausą pateikti slankiajame lange."
+
+#: ../src/prefsdlg.cpp:1668
+msgid "_Pronounce the word when it pops up."
+msgstr "Iš_tarti pasirodantį žodį."
+
+#: ../src/prefsdlg.cpp:1677
+msgid "_Show floating window if word not found."
+msgstr "_Rodyti slankųjį langą, net jei užklausa neturi atitikmens."
+
+#: ../src/prefsdlg.cpp:1751
+msgid "Max window _width:"
+msgstr "Didžiausias leistinas lango _plotis:"
+
+#: ../src/prefsdlg.cpp:1761
+msgid "(default:320)"
+msgstr "(numatyta:320)"
+
+#: ../src/prefsdlg.cpp:1765
+msgid "Max window hei_ght:"
+msgstr "Didžiausias leistinas lango _aukštis:"
+
+#: ../src/prefsdlg.cpp:1773
+msgid "(default:240)"
+msgstr "(numatyta:240)"
+
+#: ../src/prefsdlg.cpp:1778
+msgid "_Use custom background color:"
+msgstr "_Naudoti savitą fono spalvą:"
+
+#: ../src/prefsdlg.cpp:1873
+msgid "Cat_egories:"
+msgstr "_Kategorijos:"
+
+#: ../src/progresswin.cpp:35 ../src/progresswin.cpp:39 ../src/splash.cpp:70
+msgid "Loading"
+msgstr "Įkeliama"
+
+#: ../src/readword.cpp:150
+msgid "Real People TTS"
+msgstr "Real People TTS"
+
+#: ../src/readword.cpp:157
+msgid "Command TTS"
+msgstr "Komandinės eilutės TTS"
+
+#: ../src/stardict.cpp:95
+msgid "Turn on all debugging messages"
+msgstr "Rodyti visus vykdymo pranešimus"
+
+#: ../src/stardict.cpp:97
+msgid "Hide the main window, do not show splash screen"
+msgstr "Slėpti pagrindinį langą, nerodyti pasveikinimo paveikslėlio"
+
+#: ../src/stardict.cpp:100
+msgid "Start a new instance of stardict"
+msgstr "Pradėti naują StarDict sesiją"
+
+#: ../src/stardict.cpp:104
+msgid "Quit an existing instance of stardict"
+msgstr "Baigti dabartinę StarDict sesiją"
+
+#: ../src/stardict.cpp:1112
+msgid "Full-text Search"
+msgstr "Paieška visuose apibūdinimuose"
+
+#: ../src/stardict.cpp:1139
+msgid "Search"
+msgstr "Ieškoti"
+
+#: ../src/stardict.cpp:1224 ../src/stardict.cpp:1641
+msgid "Full-text search..."
+msgstr "Peržvelgiami visi tekstai..."
+
+#: ../src/stardict.cpp:1344
+msgid "Fuzzy query failed, too :-("
+msgstr "Netiksli paieška taip pat nesėkminga :-("
+
+#: ../src/stardict.cpp:1630
+msgid "Press Enter to list the words that match the pattern."
+msgstr ""
+"Norėdami pamatyti užklausą atitinkančių žodžių sąrašą, "
+"spauskite įvesties klavišą."
+
+#: ../src/stardict.cpp:1633
+msgid "Press Enter to list the words that match this regular expression."
+msgstr ""
+"Norėdami pamatyti reguliariąją išraišką atitinkančių žodžių sąrašą, "
+"spauskite įvesties klavišą."
+
+#: ../src/stardict.cpp:1637
+msgid "Fuzzy query..."
+msgstr "Apytikslė paieška..."
+
+#: ../src/stardict.cpp:1905 ../src/stardict.cpp:2010
+msgid "Not found!\n"
+msgstr "Nerasta!\n"
+
+#: ../src/stardict.cpp:2006
+msgid "Conversion error!\n"
+msgstr "Konvertavimo klaida!\n"
+
+#: ../src/stardict.cpp:2354
+msgid "StarDict is already running. Using the running process."
+msgstr "StarDict jau paleistas. Naudojamas paleistasis procesas."
+
+#: ../src/stardict.cpp:2487
+msgid "- Lookup words"
+msgstr "- Žodžių paieška"
+
+#: ../src/stardict.cpp:2492
+#, c-format
+msgid "Options parsing failed: %s\n"
+msgstr "Parinkčių analizavimo klaida:%s\n"
+
+#: ../src/utils.cpp:130
+#, c-format
+msgid "Can not load image. %s"
+msgstr "Nepavyksta įkelti paveikslėlio. %s"
+
+#: ../src/lib/stardict_client.cpp:903
+#, c-format
+msgid "Authentication denied: %s"
+msgstr "Prisijungimas uždraustas:·%s"
+
+#: ../src/lib/stardict_client.cpp:916
+#, c-format
+msgid "Register failed: %s"
+msgstr "Registracijos klaida: %s"
+
+#: ../src/lib/stardict_client.cpp:921
+msgid "Register success!"
+msgstr "Registracija pavyko!"
+
+#: ../src/lib/stardict_client.cpp:956
+msgid ""
+"You haven't setup the account. Please open the \"Net Dict\" page in the "
+"Preferences dialog and register an account first."
+msgstr ""
+"Jūs nesukonfigūravote savo paskyros. Nuostatose atverkite „Tinklo žodynai“ "
+"ir sukurkite paskyrą."
+
+#: ../src/lib/stardict_client.cpp:1076
+msgid ""
+"You haven't chosen any dictionaries, please choose some by clicking \"Manage "
+"Dict\"->\"Network dictionaries\"->\"Add\"."
+msgstr ""
+"Nepasirinkote jokio žodyno. Eikite „Tvarkyti žodynus“ -> „Tinklo žodynai“ -> "
+"\"Pridėti\" ir pasirinkite kokį nors žodyną."
+
+#: ../src/lib/stddict.cpp:650
+msgid "Sorting, please wait..."
+msgstr "Rikiuojama..."
+
+#: ../src/win32/systray.cpp:107
+msgid "Scan"
+msgstr "Peržvelgti"
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:250
+msgid "User Dict"
+msgstr "Naudotojo žodynas"
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+msgid "User virtual dictionary."
+msgstr "Naudotojo virtualus žodynas."
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:235
+msgid "Show the user dictionary."
+msgstr "Rodyti naudotojo žodyną."
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+#, c-format
+msgid "User dict plug-in loaded.\n"
+msgstr "Naudotojo žodynų papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:190
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:368
+msgid "Dict.cn"
+msgstr "Dict.cn"
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:299
+msgid "Dict.cn configuration"
+msgstr "Dict.cn konfigūracija"
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
+msgid "Query by XML API."
+msgstr "Paieška pagal XML API."
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:303
+msgid "Query by HTML API."
+msgstr "Paieška pagal HTML API."
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+msgid "Dict.cn network dictionary."
+msgstr "Dict.cn tinklo žodynas"
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
+msgid "Query result from Dict.cn website."
+msgstr "Rezultatai iš paieškos per Dict.cn svetainę."
+
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:371
+#, c-format
+msgid "Dict.cn plug-in loaded.\n"
+msgstr "Dict.cn papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:31
+msgid "Espeak TTS configuration"
+msgstr "Espeak TTS derinimas"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:33
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
+msgid "Voice type:"
+msgstr "Balso tipas:"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
+msgid "Default"
+msgstr "Numatytas"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
+msgid "Espeak"
+msgstr "Espeak"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
+msgid "Espeak TTS."
+msgstr "Espeak TTS."
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
+msgid "Pronounce words by Espeak TTS engine."
+msgstr "Žodžius tarti naudojantis Espeak TTS varikliu."
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+msgid "Espeak TTS"
+msgstr "Espeak TTS"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
+#, c-format
+msgid "Espeak plug-in loaded.\n"
+msgstr "Espeak papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:30
+msgid "Festival TTS configuration"
+msgstr "Festival TTS derinimas"
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Festival"
+msgstr "Festival"
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Festival TTS."
+msgstr "Festival TTS."
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:99
+msgid "Pronounce words by Festival TTS engine."
+msgstr "Žodžius tarti naudojantis Festival TTS varikliu."
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:131
+msgid "Festival TTS"
+msgstr "Festival·TTS"
+
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:132
+#, c-format
+msgid "Festival plug-in loaded.\n"
+msgstr "Festival papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:217
+msgid "[not a printable character]"
+msgstr "[nespausdinamas simbolis]"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:234
+msgid "General Character Properties"
+msgstr "Bendrosios simbolių savybės"
+
+#. character category
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
+msgid "Unicode category:"
+msgstr "Unikodo kategorija:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:243
+msgid "Canonical decomposition:"
+msgstr "Kanoninis dekomponavimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:256
+msgid "Various Useful Representations"
+msgstr "Įvairūs naudingi atvaizdavimai"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:269
+msgid "UTF-8:"
+msgstr "UTF-8:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
+msgid "UTF-16:"
+msgstr "UTF-16:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
+msgid "C octal escaped UTF-8:"
+msgstr ""
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
+msgid "XML decimal entity:"
+msgstr "Dešimtainis XML formatas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
+msgid "XML hexadecimal entity:"
+msgstr "Šešioliktainis XML formatas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:306
+msgid "Alias names:"
+msgstr "Pavadinimai:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
+msgid "Notes:"
+msgstr "Pastabos:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:319
+msgid "See also:"
+msgstr "Taip pat žiūrėkite:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
+msgid "Approximate equivalents:"
+msgstr "Panašūs atitikmenys:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
+msgid "Equivalents:"
+msgstr "Atitikmenys:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:336
+msgid "Annotations and Cross References"
+msgstr "Pastabos ir nuorodos"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:343
+msgid "Definition in English:"
+msgstr "Angliškas apibūdinimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:346
+msgid "Mandarin Pronunciation:"
+msgstr "Mandarinų tarimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:349
+msgid "Cantonese Pronunciation:"
+msgstr "Tarimas kinų Kantono tarme:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:352
+msgid "Japanese On Pronunciation:"
+msgstr "Japonų On tarimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
+msgid "Japanese Kun Pronunciation:"
+msgstr "Japonų Kun tarimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:358
+msgid "Tang Pronunciation:"
+msgstr "Tang tarimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:361
+msgid "Korean Pronunciation:"
+msgstr "Korėjietiškas tarimas:"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:364
+msgid "CJK Ideograph Information"
+msgstr "Informacija apie CJK ideogramą"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:409
+msgid "Gucharmap"
+msgstr "Gucharmap - simbolių informacija"
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+msgid "Gucharmap virtual dictionary."
+msgstr "Gucharmap simbolių virtualus žodynas."
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+msgid "Show information about Unicode characters."
+msgstr "Rodyti informaciją apie unikodo simbolius."
+
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
+#, c-format
+msgid "Gucharmap plug-in loaded.\n"
+msgstr "Gucharmap simbolių informacijos papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+msgid "HTML data parsing"
+msgstr "HTML duomenų analizavimas"
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+msgid "HTML data parsing engine."
+msgstr "HTML duomenų analizavimo variklis."
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+msgid "Parse the HTML data."
+msgstr "Skaityti HTML duomenis."
+
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:476
+#, c-format
+msgid "HTML data parsing plug-in loaded.\n"
+msgstr "HTML duomenų analizavimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:155
+msgid "Man configuration"
+msgstr "„man“ derinimas"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:157
+msgid "_Input string requires the \"man \" prefix."
+msgstr "Į_vesties eilutė turi prasidėti „man “."
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:200
+msgid "Man"
+msgstr "„Man“ žinynai"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+msgid "Man virtual dictionary."
+msgstr "Virtualus „man“ žinynų žodynas"
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+msgid "Show the man pages."
+msgstr "Rodyti „man“ puslapius."
+
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:215
+#, c-format
+msgid "Man plug-in loaded.\n"
+msgstr "„man“ žinynų papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
+msgid "PowerWord data parsing"
+msgstr "PowerWord duomenų analizavimas"
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
+msgid "PowerWord data parsing engine."
+msgstr "PowerWord duomenų analizavimo variklis."
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:679
+msgid "Parse the PowerWord data."
+msgstr "Skaityti PowerWord duomenis."
+
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:691
+#, c-format
+msgid "PowerWord data parsing plug-in loaded.\n"
+msgstr "HTML duomenų analizavimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:167
+#, c-format
+msgid "Error: Open file %s failed!"
+msgstr "Klaida: nepavyko atverti rinkmenos %s!"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:211
+msgid "QQWry configuration"
+msgstr "QQWry derinimas"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+msgid ""
+"You can update the QQWry.Dat file from this website:\n"
+"http://www.cz88.net"
+msgstr ""
+"QQWry.Dat rinkmenos atnaujinimą rasite svetainėje: \n"
+" http://www.cz88.net"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:219
+#, c-format
+msgid ""
+"Error: File %s not found!\n"
+"You can download it from this website:\n"
+"http://www.cz88.net"
+msgstr ""
+"Klaida:·rinkmena·%s·nerasta!\n"
+"Ją galite parsisiųsti iš svetainės:\n"
+"http://www.cz88.net"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
+msgid "QQWry"
+msgstr "QQWry"
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+msgid "Show QQWry IP information."
+msgstr "Rodyti QQWry IP informaciją."
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+msgid "Show address information by IP."
+msgstr "Rodyti adreso informaciją pagal IP."
+
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
+#, c-format
+msgid "QQWry plug-in loaded.\n"
+msgstr "QQWry papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:74
+msgid "SAPI TTS configuration"
+msgstr "SAPI TTS derinimas"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:78
+msgid "TTS voice engine"
+msgstr "TTS garso variklis"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:83
+msgid "Voice :"
+msgstr "Balsas :"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:132
+msgid "Volume :"
+msgstr "Garsumas :"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:141
+msgid "Rate :"
+msgstr "Greitis :"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:153
+msgid "Input the test text:"
+msgstr "Įveskite bandomąjį tekstą:"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:161
+msgid "Test"
+msgstr "Bandyti"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:269
+msgid "SAPI TTS"
+msgstr "SAPI·TTS"
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+msgid "SAPI TTS."
+msgstr "SAPI·TTS."
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:209
+msgid "Pronounce words by SAPI TTS engine."
+msgstr "Žodžius tarti naudojantis SAPI TTS varikliu."
+
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:270
+#, c-format
+msgid "SAPI tts plug-in loaded.\n"
+msgstr "SAPI TTS papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:256
+#, c-format
+msgid ""
+"Warning: failure when requesting a spellchecking dictionary for %s "
+"language.\n"
+msgstr ""
+"Dėmesio: užklausiant rašybos tikrinimo žodyną %s kalbai, "
+"įvyko klaida.\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:305
+#, c-format
+msgid "Error, no spellchecking dictionary available!\n"
+msgstr "Klaida: nerasta jokių rašybos tikrinimo žodynų!\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:320
+msgid "Spell check configuration"
+msgstr "Rašybos tikrinimo derinimas."
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:322
+msgid "_Use custom languages."
+msgstr "_Naudoti savitas kalbas."
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:325
+msgid "For example: \"en_US de\""
+msgstr "Pavyzdžiui:·\"lt_LT·ru\""
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:331
+msgid "Custom languages:"
+msgstr "Savitos kalbos:"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
+msgid "Spell Check"
+msgstr "Rašybos tikrinimas"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
+msgid "Spell check virtual dictionary."
+msgstr "Rašybos tikrinimo virtualus žodynas."
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:381
+msgid "Spell check the input words and show the correct suggestion."
+msgstr ""
+"Įvesties žodžių rašybos tikrinimas ir galimos teisingos rašybos pateikimas."
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:404
+msgid "Spelling Suggestion"
+msgstr "Rašybos spėjimas"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:434
+#, c-format
+msgid "Spelling plugin loaded.\n"
+msgstr "Rašybos tikrinimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:39
+msgid "You are using an old version of StarDict!"
+msgstr "Naudojate seną StarDict versiją!"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:41
+msgid "You are using the newest version of StarDict!"
+msgstr "Naudojate naujausią StarDict versiją!"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:44
+msgid "Latest version information:"
+msgstr "Informacija apie naujausią versiją:"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:50
+msgid "Latest news:"
+msgstr "Paskutinės naujienos:"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:55
+msgid "Update information"
+msgstr "Atnaujinti informaciją"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
+msgid "Update Info"
+msgstr "Atnaujinti informaciją"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
+msgid "Update information."
+msgstr "Atnaujinti informaciją."
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
+msgid "Get the update information from the Internet."
+msgstr "Gauti naujausią informaciją iš žiniatinklio."
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:177
+msgid "Visit StarDict website now?"
+msgstr "Norėtumėte StarDict svetainę aplankyti dabar?"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:179
+msgid "_Don't show this until the next update."
+msgstr "Šio pranešimo _nerodyti iki sekančio atnaujinimo."
+
+#. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
+#. g_idle_add(get_update_info, NULL);
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:259
+#, c-format
+msgid "Update info plug-in loaded.\n"
+msgstr "Informacijos atnaujinimo įskiepis įkeltas.\n"
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
+msgid "Wiki data parsing"
+msgstr "Wiki duomenų analizavimas"
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
+msgid "Wiki data parsing engine."
+msgstr "Wiki duomenų analizavimo variklis."
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:40
+msgid "Parse the wiki data."
+msgstr "Skaityti wiki duomenis."
+
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:52
+#, c-format
+msgid "Wiki data parsing plug-in loaded.\n"
+msgstr "Wiki duomenų analizavimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:58
+msgid "WordNet configuration"
+msgstr "WordNet derinimas"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:60
+msgid "Graphic mode."
+msgstr "Grafinė veiksena."
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:62
+msgid "Text mode."
+msgstr "Tekstinė veiksena."
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+msgid "WordNet dict rendering"
+msgstr "WordNet žodyno atvaizdavimas"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+msgid "WordNet dict rendering engine."
+msgstr "WordNet žodyno atvaizdavimo veiksena."
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+msgid ""
+"Render the WordNet dictionary.\n"
+"Statement: The engine of this plugin comes from dedict (http://sevenpie."
+"net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
+"thanks for his open source sharing!"
+msgstr ""
+"Atvaizduoti WordNet žodyną.\n"
+"Žinotina: šio papildinio variklis iš dedict (http://sevenpie.net), "
+"kurį sukūrė Bian Peng &lt;tianpmoon@gmail.com&gt;, "
+"dėkojame jam už dalinimąsi atviru kodu!"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:129
+#, c-format
+msgid "WordNet dict rendering plug-in loaded.\n"
+msgstr "WordNet žodyno vaizdavimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
+msgid "WordNet data parsing"
+msgstr "WordNet duomenų analizavimas"
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
+msgid "WordNet data parsing engine."
+msgstr "WordNet duomenų analizavimo variklis."
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:134
+msgid "Parse the WordNet data."
+msgstr "Skaityri WordNet duomenis."
+
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:146
+#, c-format
+msgid "WordNet data parsing plug-in loaded.\n"
+msgstr "WordNet duomenų analizavimo papildinys įkeltas.\n"
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+msgid "XDXF data parsing"
+msgstr "XDFX duomenų analizavimas"
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+msgid "XDXF data parsing engine."
+msgstr "XDFX duomenų analizavimo variklis."
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+msgid "Parse the XDXF data."
+msgstr "Skaityti XDXF duomenis."
+
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
+#, c-format
+msgid "XDXF data parsing plug-in loaded.\n"
+msgstr "XDFX duomenų analizavimo papildinys įkeltas.\n"
+
+
