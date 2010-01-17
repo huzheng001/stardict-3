@@ -21,6 +21,7 @@ You cannot start stardict.exe in place, in the src directory, since a special di
 You can find plug-in projects at stardict-plugins/.
 
 You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/TextOutHook.dev.
+They implement mouseover scanning feature.
 
 For the sapi-tts plugin, you need to compile it by vs2005, see mvsc/readme.txt.
 
@@ -31,6 +32,7 @@ Grab and install NSIS: http://www.nullsoft.com/free/nsis
 I was using the 2.44 version.
 
 I use linux commmand to illustrate the steps, but you cann't do it in this way :)
+You may use stardict-prepare-installer.bat to build win32-install-dir directory structure provided you already have all the required files in place.
 
 ===============
 cd stardict-3.0.0
@@ -40,6 +42,7 @@ cp src/stardict.exe win32-install-dir
 cp src/win32/TextOutSpy.dll win32-install-dir
 cp src/win32/TextOutHook.dll win32-install-dir
 
+po/*.gmo file must be prepared in linux and copied in po beforehand?
 mkdir -p win32-install-dir/locale/zh_CN/LC_MESSAGES/
 cp po/zh_CN.gmo win32-install-dir/locale/zh_CN/LC_MESSAGES/stardict.mo
 mkdir -p win32-install-dir/locale/ru/LC_MESSAGES/
@@ -51,9 +54,10 @@ mkdir -p win32-install-dir/pixmaps
 cp pixmaps/stardict.png win32-install-dir/pixmaps
 cp src/pixmaps/* win32-install-dir/pixmaps //Notice: docklet_*.png needn't copy!!!
 mkdir -p win32-install-dir/sounds
-cp src/pixmaps/*.wav win32-install-dir/sounds
+cp src/sounds/*.wav win32-install-dir/sounds
 mkdir -p win32-install-dir/dic
 mkdir -p win32-install-dir/treedict
+mkdir -p win32-install-dir/skins
 
 mkdir -p win32-install-dir/help
 
@@ -63,6 +67,11 @@ replace "ghelp:stardict.xml?" to "./stardict.html#"
 replace "ghelp:stardict.xml" to "./stardict.html#id2772190"  //id2772190 is "<b>Table of Contents</b>" 's previous name.
 replace "file://./figures/" to "./figures/"
 And build the chm file by Visual CHM.
+
+mkdir -p win32-install-dir/plugins
+cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins
+
+cp src/win32/acrobat/win32/Release/StarDict.api win32-install-dir
 
 Download gtk-runtime-*.exe from pidgin project and put it into gtk_installer/.
 
