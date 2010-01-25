@@ -18,9 +18,9 @@ src/readword.cpp
 src/selection.cpp
 src/splash.cpp
 src/stardict.cpp
-src/utils.cpp
 src/lib/stardict_client.cpp
 src/lib/stddict.cpp
+src/lib/utils.cpp
 src/win32/clipboard.cpp
 src/win32/systray.cpp
 stardict-plugins/stardict-advertisement-plugin/advertisement.cpp

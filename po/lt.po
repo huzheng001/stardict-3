@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: StarDict 3.0 beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-05 06:08+0800\n"
-"PO-Revision-Date: 2010-01-11 20:48+0200\n"
+"PO-Revision-Date: 2010-01-25 18:43+0200\n"
 "Last-Translator: Mindaugas Baranauskas <embar@users.berlios.de>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,9 +72,8 @@ msgid "Enable the use of TTS program"
 msgstr "Įgalinti TTS programos naudojimą"
 
 #: ../data/stardict.schemas.in.h:9
-#, fuzzy
 msgid "Engine index"
-msgstr "Index du moteur"
+msgstr "Variklio numeris"
 
 #: ../data/stardict.schemas.in.h:10
 msgid "Hide floating window when modifier key is released"
@@ -97,9 +96,8 @@ msgid "Hide the window on startup"
 msgstr "Nerodyti pasveikinimo lango paleidžiant žodyną"
 
 #: ../data/stardict.schemas.in.h:14
-#, fuzzy
 msgid "Hpaned 's position"
-msgstr "Position du délimiteur"
+msgstr "Lango skyriklio padėtis"
 
 #: ../data/stardict.schemas.in.h:15
 msgid "List the dictionaries in order."
@@ -186,18 +184,16 @@ msgid "Search website list"
 msgstr "Paieškos svetainės"
 
 #: ../data/stardict.schemas.in.h:34
-#, fuzzy
 msgid "Source language index"
-msgstr "Index de la langue source"
+msgstr "Šaltinio kalbos numeris"
 
 #: ../data/stardict.schemas.in.h:35
 msgid "TTS program command-line"
 msgstr "TTS programos komandinė eilutė"
 
 #: ../data/stardict.schemas.in.h:36
-#, fuzzy
 msgid "Target language index"
-msgstr "Index de la langue cible"
+msgstr "Paskirties kalbos numeris"
 
 #: ../data/stardict.schemas.in.h:37
 msgid ""
@@ -212,24 +208,20 @@ msgid "The height of the main stardict window."
 msgstr "Pagrindinio StarDict lango aukštis."
 
 #: ../data/stardict.schemas.in.h:39
-#, fuzzy
 msgid "The hpaned's position, between the listview and the textview."
-msgstr "Position du délimiteur entre la liste de termes et le cadre définition."
+msgstr "Skyriklio, esančio tarp žodžių sąrašo ir apibūdinimo teksto, padėtis"
 
 #: ../data/stardict.schemas.in.h:40
-#, fuzzy
 msgid "The index of the source language for translating."
-msgstr "L'index de la langue source de la traduction."
+msgstr "Vertimo šaltinio kalbos numeris."
 
 #: ../data/stardict.schemas.in.h:41
-#, fuzzy
 msgid "The index of the target language for translating."
-msgstr "L'index de la langue cible de la traduction."
+msgstr "Vertimo paskirties kalbos numeris."
 
 #: ../data/stardict.schemas.in.h:42
-#, fuzzy
 msgid "The index of the translation engine."
-msgstr "L'index du moteur de traduction."
+msgstr "Vertimo variklio numeris."
 
 #: ../data/stardict.schemas.in.h:43
 msgid "The maximum height of the floating stardict window."
@@ -712,11 +704,11 @@ msgstr "<Nerasta!>"
 
 #: ../src/floatwin.cpp:445
 msgid "Fuzzy query"
-msgstr "Apytikslė paieška"
+msgstr "Žodžio"
 
 #: ../src/floatwin.cpp:451
 msgid "has succeeded.\n"
-msgstr "sėkmė.\n"
+msgstr "apytikslė paieška buvo sėkminga.\n"
 
 #: ../src/floatwin.cpp:453
 msgid "Found 1 word:\n"
@@ -725,10 +717,7 @@ msgstr "Rastas vienas žodis:\n"
 #: ../src/floatwin.cpp:455
 #, c-format
 msgid "Found %d words:\n"
-msgid_plural "Found %d words:\n"
-msgstr[0] "Rastas %d žodis:\n"
-msgstr[1] "Rasti %d žodžiai:\n"
-msgstr[2] "Rasta %d žodžių:\n"
+msgstr "Surasta žodžių: %d\n"
 
 #: ../src/floatwin.cpp:943
 msgid "_Copy"
@@ -970,9 +959,9 @@ msgstr ""
 "„*“ atitinka bet kokių ženklų seką (net ir tuščią, t. y. žvaigždutės vietoje "
 "gali "
 "nebūti nė vieno ženklo). „?“ atitinka vieną bet kurį ženklą. Nuspaudus įvesties "
-"klavišą, bus pateiktas paieškos išraišką atitinkančių žodžių sąrašas.\n"
+"klavišą, bus pateiktas paieškos reiškinį atitinkančių žodžių sąrašas.\n"
 "       2. Reguliariųjų išraiškų naudojimas\n"
-"       Galite įvesti Perl tipo reguliariąsias išraiškas, paieškos išraišką "
+"       Galite įvesti Perl tipo reguliariąsias išraiškas, paieškos reiškinį "
 "pradėdami "
 "„:“ simboliu. Reguliariąją išraišką atitinkantys žodžiai atvaizduojami vėlgi "
 "nuspaudus įvesties klavišą.\n"
@@ -984,7 +973,7 @@ msgstr ""
 "ir nuspauskite įvesties klavišą.\n"
 "       4. Paieška visuose apibūdinimuose\n"
 "       Paieška apibūdinimuose leidžia ieškoti teksto visuose turimuose "
-"duomenyse. Šia galimybe pasinaudosite paieškos išraišką pradėdami „|“ "
+"duomenyse. Šia galimybe pasinaudosite paieškos reiškinį pradėdami „|“ "
 "simboliu. Pavyzdžiui, užklausa „|ab cd“ išrinks apibūdinimus, kuriuose yra ir "
 "„ab“, ir „cd“. Jei tekste yra tarpo simbolis, įterpkite „\\ “, pavyzdžiui, "
 "„tautų\\ pavasar“; panašiai keičiami kiti simboliai: „\\\\“ vietoj „\\“, „\\t“ "
@@ -1653,7 +1642,7 @@ msgstr "Peržvelgiami visi tekstai..."
 
 #: ../src/stardict.cpp:1344
 msgid "Fuzzy query failed, too :-("
-msgstr "Netiksli paieška taip pat nesėkminga :-("
+msgstr "Apytikslė paieška taip pat nesėkminga :-("
 
 #: ../src/stardict.cpp:1630
 msgid "Press Enter to list the words that match the pattern."
@@ -1875,7 +1864,7 @@ msgstr "UTF-16:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
 msgid "C octal escaped UTF-8:"
-msgstr ""
+msgstr "C aštuntainis grįžtamasis UTF-8:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
 msgid "XML decimal entity:"
