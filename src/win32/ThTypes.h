@@ -8,11 +8,15 @@ extern "C"
 {
 #endif				/* __cplusplus */
 
+/* Maximum size of scanned text: strlen(text) < STARDICT_MAX_INDEX_KEY_SIZE. */
+#define MAX_SCAN_TEXT_SIZE 256
+
 typedef struct TCurrentMode {
 	HWND WND;
 	POINT Pt;
 	size_t WordLen;
-	char MatchedWord[256];
+	/* in utf-8 */
+	char MatchedWord[MAX_SCAN_TEXT_SIZE];
 	int BeginPos;
 } TCurrentMode;
 
@@ -23,7 +27,7 @@ typedef struct TGlobalDLLData {
 	HWND LastWND;
 	POINT LastPt;
 	TCurrentMode CurMod;
-	char LibName[256];
+	TCHAR LibName[MAX_PATH];
 } TGlobalDLLData;
 
 extern TGlobalDLLData *GlobalData;

@@ -6,7 +6,8 @@ TGlobalDLLData *GlobalData = NULL;
 void ThTypes_Init()
 {
 	if (!MMFHandle)
-		MMFHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(TGlobalDLLData), "StarDictTextOutHookSharedMem");
+		MMFHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0,
+			sizeof(TGlobalDLLData), TEXT("StarDictTextOutHookSharedMem"));
 	if (!GlobalData)
 		GlobalData = MapViewOfFile(MMFHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 }
