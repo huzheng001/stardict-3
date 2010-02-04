@@ -1,3 +1,4 @@
+#include <shlwapi.h>
 #include "TextOutSpy.h"
 #include "ThTypes.h"
 
@@ -64,13 +65,13 @@ LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam)
 			WND = WindowFromPoint(((PMOUSEHOOKSTRUCT)lParam)->pt);
 			
 			if (GetClassName(WND, wClassName, sizeof(wClassName) / sizeof(TCHAR))) {
-					const char* DisableClasses[] = {
-						"gdkWindowChild",
-						"gdkWindowTemp",
+					const TCHAR* DisableClasses[] = {
+						TEXT("gdkWindowChild"),
+						TEXT("gdkWindowTemp"),
 					};
 					int i;
 					for (i=0; i<2; i++) {
-						if (strcmp(wClassName, DisableClasses[i])==0)
+						if (StrCmp(wClassName, DisableClasses[i])==0)
 							break;
 					}
 					if (i<2) {
@@ -115,39 +116,40 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
                        DWORD reason        /* Reason this function is being called. */ ,
                        LPVOID reserved     /* Not used. */ )
 {
-    switch (reason)
-    {
-      case DLL_PROCESS_ATTACH:
-			g_hInstance = hInst;
-			hSynhroMutex = CreateMutex(NULL, FALSE, "StarDictTextOutSpyMutex");
-			ThTypes_Init();
-        break;
+	switch (reason)
+	{
+	case DLL_PROCESS_ATTACH:
+		g_hInstance = hInst;
+		hSynhroMutex = CreateMutex(NULL, FALSE, TEXT("StarDictTextOutSpyMutex"));
+		ThTypes_Init();
+		break;
 
-      case DLL_PROCESS_DETACH:
-			WaitForSingleObject(hSynhroMutex, INFINITE);
-			if (GlobalData->TimerID) {
-				if (KillTimer(0, GlobalData->TimerID))
-					GlobalData->TimerID=0;
-			}
-			ReleaseMutex(hSynhroMutex);
-			CloseHandle(hSynhroMutex);
-			{
-			MSG msg ;
-			while (PeekMessage (&msg, 0, WM_TIMER, WM_TIMER, PM_REMOVE)) {}
-			}
-			if ((hGetWordLib != 0)&&(hGetWordLib != (HINSTANCE)(-1))) {
-				FreeLibrary(hGetWordLib);
-			}
-			Thtypes_End();
-        break;
+	case DLL_PROCESS_DETACH:
+		WaitForSingleObject(hSynhroMutex, INFINITE);
+		if (GlobalData->TimerID) {
+			if (KillTimer(0, GlobalData->TimerID))
+				GlobalData->TimerID=0;
+		}
+		ReleaseMutex(hSynhroMutex);
+		CloseHandle(hSynhroMutex);
+		{
+			MSG msg;
+			while (PeekMessage (&msg, 0, WM_TIMER, WM_TIMER, PM_REMOVE))
+				;
+		}
+		if ((hGetWordLib != 0)&&(hGetWordLib != (HINSTANCE)(-1))) {
+			FreeLibrary(hGetWordLib);
+		}
+		Thtypes_End();
+		break;
 
-      case DLL_THREAD_ATTACH:
-        break;
+	case DLL_THREAD_ATTACH:
+		break;
 
-      case DLL_THREAD_DETACH:
-        break;
-    }
+	case DLL_THREAD_DETACH:
+		break;
+	}
 
-    /* Returns TRUE on success, FALSE on failure */
-    return TRUE;
+	/* Returns TRUE on success, FALSE on failure */
+	return TRUE;
 }
