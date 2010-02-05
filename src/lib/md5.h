@@ -7,10 +7,11 @@ extern "C"
 #endif                          /* __cplusplus */
 
 #ifdef HAVE_CONFIG_H
-#include <stdint.h>
+#  include "config.h"
 #endif
 
 #ifdef HAVE_STDINT_H
+	#include <stdint.h>
 	typedef uint32_t uint32;
 #else
 	/* A.Leo.: this wont work on 16 bits platforms ;) */

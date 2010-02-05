@@ -1172,16 +1172,26 @@ void PrefsDlg::on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button
 	HKEY hKEY;
 	LONG lRet;
 	if (b) {
-		lRet =RegOpenKeyEx(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Run",0,KEY_ALL_ACCESS,&hKEY);
+		lRet =RegOpenKeyEx(HKEY_CURRENT_USER,
+			TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), 0,
+			KEY_ALL_ACCESS, &hKEY);
 		if(lRet==ERROR_SUCCESS) {
 			std::string path = gStarDictDataDir+ G_DIR_SEPARATOR_S "stardict.exe";
-			RegSetValueEx(hKEY, "StarDict", 0, REG_SZ, (const BYTE*)path.c_str(), path.length()+1);
+			std::string path_utf8;
+			std::win_string path_win;
+			if(file_name_to_utf8(path, path_utf8) 
+			&& utf8_to_windows(path_utf8, path_win)) {
+				RegSetValueEx(hKEY, TEXT("StarDict"), 0, REG_SZ, 
+					(const BYTE*)path_win.c_str(), sizeof(TCHAR)*(path_win.length()+1));
+			}
 			RegCloseKey(hKEY);
 		}
 	} else {
-		lRet =RegOpenKeyEx(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Run",0,KEY_ALL_ACCESS,&hKEY);
+		lRet =RegOpenKeyEx(HKEY_CURRENT_USER,
+			TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), 0,
+			KEY_ALL_ACCESS, &hKEY);
 		if(lRet==ERROR_SUCCESS) {
-			RegDeleteValue(hKEY, "StarDict");
+			RegDeleteValue(hKEY, TEXT("StarDict"));
 			RegCloseKey(hKEY);
 		}
 	}
@@ -1280,21 +1290,29 @@ void PrefsDlg::setup_mainwin_options_page()
 	gboolean autorun;
 
 	HKEY hKEY;
-	LONG lRet =RegOpenKeyEx(HKEY_CURRENT_USER,"Software\\Microsoft\\Windows\\CurrentVersion\\Run",0,KEY_QUERY_VALUE,&hKEY);
+	LONG lRet =RegOpenKeyEx(HKEY_CURRENT_USER,
+		TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), 0,
+		KEY_QUERY_VALUE, &hKEY);
 	if(lRet!=ERROR_SUCCESS) {
 		autorun = false;
 	} else {
-		char owner_Get[80];
-		DWORD cbData_1=80;
+		const size_t buf_size_c=MAX_PATH;
+		const size_t buf_size_b=buf_size_c*sizeof(TCHAR);
+		TCHAR run_path_win[buf_size_c];
+		DWORD cbData_1=buf_size_b;
 		DWORD type_1=REG_SZ;
-		lRet=RegQueryValueEx(hKEY,"StarDict",NULL,&type_1,(LPBYTE)owner_Get,&cbData_1);
+		lRet=RegQueryValueEx(hKEY, TEXT("StarDict"), NULL, &type_1,
+			(LPBYTE)run_path_win, &cbData_1);
 		RegCloseKey(hKEY);
-		if((lRet!=ERROR_SUCCESS)||(cbData_1 > 80)) {
+		if((lRet!=ERROR_SUCCESS)||(cbData_1 > buf_size_b)) {
 			autorun = false;
 		} else {
 			std::string path = gStarDictDataDir+ G_DIR_SEPARATOR_S "stardict.exe";
-			if (strcmp(path.c_str(), owner_Get)==0)
-				autorun = true;
+			std::string run_path_utf8;
+			std::string run_path;
+			if(windows_to_utf8(run_path_win, run_path_utf8)
+			&& utf8_to_file_name(run_path_utf8, run_path))
+				autorun = path == run_path;
 			else
 				autorun = false;
 		}

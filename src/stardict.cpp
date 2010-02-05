@@ -35,6 +35,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <iostream>
+#include <sstream>
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
@@ -110,6 +111,89 @@ static const GOptionEntry options [] =
 	{NULL}
 };
 
+#ifdef ENABLE_LOG_WINDOW
+/* Log window that show output from g_print, g_message, g_debug and the like 
+We need such a window because windows console does not show all unicode characters. */
+class LogWindow {
+public:
+	LogWindow(void):
+		window(NULL),
+		textview(NULL),
+		scrolled_window(NULL)
+	{
+	}
+	void Init(void)
+	{
+		if(window)
+			return;
+
+		window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+		gtk_window_set_title(GTK_WINDOW(window), _("Log window"));
+		gtk_window_set_default_size(GTK_WINDOW(window), 400, 400);
+		g_signal_connect(window, "destroy", G_CALLBACK(on_destroy), this);
+
+		scrolled_window = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
+		gtk_container_set_border_width(GTK_CONTAINER (scrolled_window), 5);
+		gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+			GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+		gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolled_window), GTK_SHADOW_IN);
+		gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(scrolled_window));
+
+		textview = GTK_TEXT_VIEW(gtk_text_view_new());
+		gtk_text_view_set_editable(textview, FALSE);
+		gtk_text_view_set_cursor_visible(textview, FALSE);
+		gtk_text_view_set_wrap_mode(textview, GTK_WRAP_CHAR);
+		gtk_container_add(GTK_CONTAINER(scrolled_window), GTK_WIDGET(textview));
+
+		append_in_window(text_buf.c_str());
+		text_buf.clear();
+
+		gtk_widget_show_all(window);
+	}
+	void End(void)
+	{
+		if(window)
+			gtk_widget_destroy(window);
+		window = NULL;
+		textview = NULL;
+		scrolled_window = NULL;
+	}
+	void append(const gchar* str)
+	{
+		if(window)
+			append_in_window(str);
+		else
+			text_buf.append(str);
+	}
+private:
+	void append_in_window(const gchar* str)
+	{
+		g_assert(window);
+		GtkTextBuffer *buffer = gtk_text_view_get_buffer(textview);
+		GtkTextIter iter;
+		gtk_text_buffer_get_end_iter(buffer, &iter);
+		gtk_text_buffer_insert(buffer, &iter, str, -1);
+		/* scroll window to show the last line */
+		GtkAdjustment* vadj = gtk_scrolled_window_get_vadjustment(scrolled_window);
+		gtk_adjustment_set_value(vadj, vadj->upper - vadj->page_size);
+	}
+	static void on_destroy(GtkObject *object, gpointer userdata)
+	{
+		LogWindow *log_win = static_cast<LogWindow *>(userdata);
+		log_win->window = NULL;
+		log_win->textview = NULL;
+		log_win->scrolled_window = NULL;
+	}
+private:
+	GtkWidget *window;
+	GtkTextView *textview;
+	GtkScrolledWindow *scrolled_window;
+	/* store text while window is not available */
+	std::string text_buf;
+};
+
+LogWindow gLogWindow;
+#endif
 
 /********************************************************************/
 class change_cursor {
@@ -378,6 +462,9 @@ void AppCore::Create(gchar *queryword)
 	oMouseover.Init();
 #endif
 	oHotkey.Init();
+#ifdef ENABLE_LOG_WINDOW
+	gLogWindow.Init();
+#endif
 
 	if (scan) {
 		oSelection.start();
@@ -1283,7 +1370,7 @@ void AppCore::LookupWithFuzzyToMainWin(const gchar *sWord)
 		for (int i=0; i<MAX_FUZZY_MATCH_ITEM && fuzzy_reslist[i]; i++) {
 			oMidWin.oIndexWin.oListWin.InsertLast(fuzzy_reslist[i]);
 			g_free(fuzzy_reslist[i]);
-			//printf("fuzzy %s,%d\n",oFuzzystruct[i].pMatchWord,oFuzzystruct[i].iMatchWordDistance);
+			//g_print("fuzzy %s,%d\n",oFuzzystruct[i].pMatchWord,oFuzzystruct[i].iMatchWordDistance);
 		}
 		oMidWin.oIndexWin.oListWin.ReScroll();
 	} else {
@@ -2129,6 +2216,9 @@ void AppCore::End()
 	oClipboard.End();
 	oMouseover.End();
 #endif
+#ifdef ENABLE_LOG_WINDOW
+	gLogWindow.End();
+#endif
 	oHotkey.End();
 	oFloatWin.End();
 
@@ -2422,16 +2512,16 @@ static bool attach_windows_console(void)
 	/* restore stdout and stderr
 	By default GUI application on Windows do not have a console associated 
 	with them, so output from printf, std::cout << "string" goes nowhere.
+	(printf may not work for other reasons too, see mvsc/readme.txt.)
 	Create a console and redirect stdout and stderr to it.
 	See Microsoft article for details: http://support.microsoft.com/kb/105305.
 	
 	For g_warning and the like that is not enough.
 	"gmessages.c in 2.6 doesn't use stdio on Windows any longer,
 	but plain write() to file descriptor 1 or 2, like on Unix."
-	We dup2 descriptor 1 to stdout, and dup2 descriptor 2 to stderr.
-	Now messages from g_warning and the like go to the same console.
-	A more reliable solution is to use g_log_set_handler with a custom handler
-	that would print messages with printf, for example.
+	We may dup2 descriptor 1 to stdout, and dup2 descriptor 2 to stderr.
+	That works when we use Dev-Cpp to compile the project, but does not work with MSVC.
+	For that reason a custom log handler was set up (with g_log_set_handler).
 	
 	That all is not reliable, unfortunately... It has been tested on Windows XP.
 	*/
@@ -2451,43 +2541,77 @@ static bool attach_windows_console(void)
 		int hCrt;
 		FILE *hf;
 		hCrt = _open_osfhandle((long) GetStdHandle(STD_OUTPUT_HANDLE), _O_TEXT);
-		dup2(hCrt, 1);
 		hf = _fdopen(hCrt, "w");
 		*stdout = *hf;
 		setvbuf(stdout, NULL, _IONBF, 0);
 		hCrt = _open_osfhandle((long) GetStdHandle(STD_ERROR_HANDLE), _O_TEXT);
-		dup2(hCrt, 2);
 		hf = _fdopen(hCrt, "w");
 		*stderr = *hf;
 		setvbuf(stderr, NULL, _IONBF, 0);
 #if 0
 		// check what works
+		puts("Hello from puts");
+#ifdef _MSC_VER
+		printf_s("Hello from printf_s\n");
+#endif
 		printf("Hello from printf\n");
-		fprintf(stderr, "Hello from printf on stderr\n");
+#ifdef _MSC_VER
+		fprintf_s(stderr, "Hello from fprintf_s on stderr\n");
+#endif
+#ifndef _WIN32
+		// crashs on Windows
+		fprintf(stderr, "Hello from fprintf on stderr\n");
+#endif
 		std::cout << "Hello from cout!" << std::endl;
 		std::cerr << "Hello from cerr!" << std::endl;
 		g_printf("Hello from g_printf\n");
 		g_print("Hello from g_print\n");
 		g_debug("Hello from g_debug");
-		g_message("Hello from g_message");
+		g_message("Hello from g_message. 1 = %d", 1);
 		g_warning("Hello from g_warning");
 		g_critical("Hello from g_critical");
 #endif
 	}
 	return bHaveConsole;
 }
-#else // #ifdef ATTACH_WINDOWS_CONSOLE
-static void stardict_dummy_print(const gchar*)
+#endif // #ifdef ATTACH_WINDOWS_CONSOLE
+static void stardict_print(const gchar* message)
 {
+	if(message)
+		std::cout << message;
+#ifdef ENABLE_LOG_WINDOW
+	gLogWindow.append(message);
+#endif
 }
 
-static void stardict_dummy_log_handler(const gchar *,
-				       GLogLevelFlags,
-				       const gchar *,
-				       gpointer)
+static void stardict_log_handler(const gchar * log_domain,
+				       GLogLevelFlags log_level,
+				       const gchar *message,
+				       gpointer user_data)
 {
+	std::stringstream buf;
+	if(log_domain && log_domain[0])
+		buf << "(" << log_domain << ") ";
+	if(log_level & G_LOG_LEVEL_ERROR)
+		buf << "[error] ";
+	else if(log_level & G_LOG_LEVEL_CRITICAL)
+		buf << "[critical] ";
+	else if(log_level & G_LOG_LEVEL_WARNING)
+		buf << "[warning] ";
+	else if(log_level & G_LOG_LEVEL_MESSAGE)
+		buf << "[message] ";
+	else if(log_level & G_LOG_LEVEL_INFO)
+		buf << "[info] ";
+	else if(log_level & G_LOG_LEVEL_DEBUG)
+		buf << "[debug] ";
+	if(message)
+		buf << message;
+	buf << "\n";
+	std::cout << buf.str();
+#ifdef ENABLE_LOG_WINDOW
+	gLogWindow.append(buf.str().c_str());
+#endif
 }
-#endif // #ifdef ATTACH_WINDOWS_CONSOLE
 #endif // #ifdef _WIN32
 
 static void set_data_dir()
@@ -2498,13 +2622,18 @@ static void set_data_dir()
 
 	if ((hmod = GetModuleHandle(NULL))==0)
 		exit(EXIT_FAILURE);
-	char tmp_buf[256];
-	if (GetModuleFileName(hmod, tmp_buf, sizeof(tmp_buf))==0)
+	TCHAR path_win[MAX_PATH];
+	DWORD dwRes = GetModuleFileName(hmod, path_win, MAX_PATH);
+	if(dwRes == 0 || dwRes == MAX_PATH)
 		exit(EXIT_FAILURE);
-
-	gchar* buf = g_path_get_dirname(tmp_buf);
-	gStarDictDataDir=buf;
-	g_free(buf);
+	std::string path_utf8;
+	std::string path;
+	if(windows_to_utf8(path_win, path_utf8) && utf8_to_file_name(path_utf8, path)) {
+		gchar* buf = g_path_get_dirname(path.c_str());
+		gStarDictDataDir=buf;
+		g_free(buf);
+	} else
+		exit(EXIT_FAILURE);
 #else
 	gStarDictDataDir = STARDICT_DATA_DIR;
 #endif
@@ -2540,24 +2669,23 @@ int main(int argc,char **argv)
 		exit (1);
 #endif
 #if defined(_WIN32)
+	g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("GModule", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("GLib-GObject", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_log_set_handler("GThread", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
+			  stardict_log_handler, NULL);
+	g_set_print_handler(stardict_print);
 #ifdef ATTACH_WINDOWS_CONSOLE
 	attach_windows_console();
-#else
-	g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("Gdk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("Gtk", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("GLib", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("GModule", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("GLib-GObject", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_log_set_handler("GThread", (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
-			  stardict_dummy_log_handler, NULL);
-	g_set_print_handler(stardict_dummy_print);
 #endif
 #endif // #if defined(_WIN32)
 	g_debug("DataDir = %s", gStarDictDataDir.c_str());

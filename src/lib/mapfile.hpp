@@ -15,6 +15,7 @@
 #  include <windows.h>
 #endif
 #include <glib.h>
+#include "utils.h"
 
 class MapFile {
 public:
@@ -29,6 +30,7 @@ public:
 	{
 	}
   ~MapFile();
+  /* file_name in file name encoding */
   inline bool open(const char *file_name, unsigned long file_size);
   inline void close();
   inline gchar *begin(void) { return data; }
@@ -58,8 +60,14 @@ inline bool MapFile::open(const char *file_name, unsigned long file_size)
     data=NULL;
     return false;
   }
-#elif defined( _WIN32)
-  hFile = CreateFile(file_name, GENERIC_READ, 0, NULL, OPEN_ALWAYS, 
+#elif defined(_WIN32)
+	std::string file_name_utf8;
+	std::win_string file_name_win;
+	if(!file_name_to_utf8(file_name, file_name_utf8))
+		return false;
+	if(!utf8_to_windows(file_name_utf8, file_name_win))
+		return false;
+  hFile = CreateFile(file_name_win.c_str(), GENERIC_READ, 0, NULL, OPEN_ALWAYS, 
 		     FILE_ATTRIBUTE_NORMAL, 0);
   hFileMap = CreateFileMapping(hFile, NULL, PAGE_READONLY, 0,  
 			       file_size, NULL);
@@ -70,7 +78,7 @@ inline bool MapFile::open(const char *file_name, unsigned long file_size)
     return false;
 
   if (read_len!=file_size)
-    return false;		
+    return false;
 #endif
 
   return true;

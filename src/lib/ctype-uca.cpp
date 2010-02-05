@@ -7843,7 +7843,7 @@ static my_bool create_tailoring(CHARSET_INFO *cs, void *(*alloc)(uint))
   {
     /* 
       TODO: add error message reporting.
-      printf("Error: %d '%s'\n", rc, errstr);
+      g_print("Error: %d '%s'\n", rc, errstr);
     */
     return 1;
   }
