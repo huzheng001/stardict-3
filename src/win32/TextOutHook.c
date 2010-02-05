@@ -1,3 +1,6 @@
+#include <shlwapi.h>
+#include <assert.h>
+#include <math.h>
 #include "TextOutHook.h"
 #include "GetWord.h"
 #include "HookImportFunction.h"
@@ -12,19 +15,26 @@ ExtTextOutANextHook_t ExtTextOutANextHook = NULL;
 typedef BOOL (WINAPI *ExtTextOutWNextHook_t)(HDC hdc, int nXStart, int nYStart, UINT fuOptions, CONST RECT *lprc, LPCWSTR lpszString, UINT cbString, CONST INT *lpDx);
 ExtTextOutWNextHook_t ExtTextOutWNextHook = NULL;
 
+#define MATCHED_WORD_BUF_SIZE 256
+
 typedef struct TEverythingParams {
 	HWND WND;
 	POINT Pt;
 	int Active;
 	int WordLen;
 	int Unicode;
+	/* index of the char the mouse pointed to */
 	int BeginPos;
-	char MatchedWordA[256];
-	wchar_t MatchedWordW[256];
+	char MatchedWordA[MATCHED_WORD_BUF_SIZE]; // in utf-8 or CP_ACP
+	wchar_t MatchedWordW[MATCHED_WORD_BUF_SIZE]; // in utf-16
 } TEverythingParams;
 
 TEverythingParams *CurParams = NULL;
 
+/* convert from TP->MatchedWordA in CP_ACP to TP->MatchedWordW if not TP->Unicode,
+convert from TP->MatchedWordW to TP->MatchedWordA in CP_UTF8
+After convertion, TP->WordLen - length of the utf-8 string,
+TP->BeginPos position in the utf-8 string */
 static void ConvertToMatchedWordA(TEverythingParams *TP)
 {
 	if (TP->WordLen>0) {
@@ -32,14 +42,17 @@ static void ConvertToMatchedWordA(TEverythingParams *TP)
 		if (!TP->Unicode) {
 			BeginPos = TP->BeginPos;
 			if (BeginPos) {
-				TP->BeginPos = MultiByteToWideChar(CP_ACP, 0, TP->MatchedWordA, BeginPos, TP->MatchedWordW, sizeof(TP->MatchedWordW)/sizeof(TP->MatchedWordW[0]) - 1);
+				TP->BeginPos = MultiByteToWideChar(CP_ACP, 0, TP->MatchedWordA,
+					BeginPos, TP->MatchedWordW, sizeof(TP->MatchedWordW)/sizeof(TP->MatchedWordW[0]) - 1);
 				if (TP->BeginPos == 0) {
 					TP->WordLen=0;
 					TP->MatchedWordA[0] = '\0';
 					return;
 				}
 			}
-			TP->WordLen = MultiByteToWideChar(CP_ACP, 0, TP->MatchedWordA + BeginPos, TP->WordLen - BeginPos, TP->MatchedWordW + TP->BeginPos, sizeof(TP->MatchedWordW)/sizeof(TP->MatchedWordW[0]) - 1 - TP->BeginPos);
+			TP->WordLen = MultiByteToWideChar(CP_ACP, 0, TP->MatchedWordA + BeginPos,
+				TP->WordLen - BeginPos, TP->MatchedWordW + TP->BeginPos,
+				sizeof(TP->MatchedWordW)/sizeof(TP->MatchedWordW[0]) - 1 - TP->BeginPos);
 			if (TP->WordLen == 0) {
 				TP->WordLen=TP->BeginPos;
 				TP->MatchedWordA[TP->WordLen] = '\0';
@@ -51,7 +64,8 @@ static void ConvertToMatchedWordA(TEverythingParams *TP)
 		if (BeginPos) {
 			wchar_t temp = TP->MatchedWordW[BeginPos];
 			TP->MatchedWordW[BeginPos] = 0;
-			TP->BeginPos = WideCharToMultiByte(CP_UTF8, 0, TP->MatchedWordW, BeginPos + 1, TP->MatchedWordA, sizeof(TP->MatchedWordA), NULL, NULL);
+			TP->BeginPos = WideCharToMultiByte(CP_UTF8, 0, TP->MatchedWordW,
+				BeginPos + 1, TP->MatchedWordA, sizeof(TP->MatchedWordA), NULL, NULL);
 			TP->MatchedWordW[BeginPos] = temp;
 			TP->BeginPos--;
 			if (TP->BeginPos<=0) {
@@ -65,7 +79,9 @@ static void ConvertToMatchedWordA(TEverythingParams *TP)
 			}
 		}
 		TP->MatchedWordW[TP->WordLen] = 0;
-		TP->WordLen = WideCharToMultiByte(CP_UTF8, 0, TP->MatchedWordW + BeginPos, TP->WordLen - BeginPos + 1, TP->MatchedWordA + TP->BeginPos, sizeof(TP->MatchedWordA) - TP->BeginPos, NULL, NULL);
+		TP->WordLen = WideCharToMultiByte(CP_UTF8, 0, TP->MatchedWordW + BeginPos,
+			TP->WordLen - BeginPos + 1, TP->MatchedWordA + TP->BeginPos,
+			sizeof(TP->MatchedWordA) - TP->BeginPos, NULL, NULL);
 		TP->WordLen--;
 		if (TP->WordLen<=0) {
 			TP->WordLen=TP->BeginPos;
@@ -79,12 +95,13 @@ static void ConvertToMatchedWordA(TEverythingParams *TP)
 	}
 }
 
-static int MyCopyMemory(char *a, const char *b, int len)
+/* copy from b to a skipping '&' characters */
+static int MyCopyMemory(TCHAR *a, const TCHAR *b, int len)
 {
 	int count = 0;
 	int i;
 	for (i=0; i<len; i++) {
-		if (*b != '&') {
+		if (*b != TEXT('&')) {
 			count++;
 			*a = *b;
 			a++;
@@ -100,24 +117,30 @@ static void IterateThroughItems(HWND WND, HMENU menu, POINT *p)
 	RECT rec;
 	MENUITEMINFO info;
 	int i;
+	TCHAR buf[MATCHED_WORD_BUF_SIZE];
 	for (i=0; i<count; i++) {
-		if (GetMenuItemRect(WND, menu, i, &rec) && (rec.left<=p->x) && (p->x<=rec.right) && (rec.top<=p->y) && (p->y<=rec.bottom)) {
+		if (GetMenuItemRect(WND, menu, i, &rec) && (rec.left<=p->x) 
+			&& (p->x<=rec.right) && (rec.top<=p->y) && (p->y<=rec.bottom)) {
 			ZeroMemory(&info, sizeof(info));
 			info.cbSize = sizeof(info);
 			info.fMask = MIIM_TYPE | MIIM_SUBMENU;
-			info.cch = 256;
-			info.dwTypeData = malloc(256);
+			info.cch = MATCHED_WORD_BUF_SIZE;
+			info.dwTypeData = buf;
 			GetMenuItemInfo(menu, i, TRUE, &info);
 			if (info.cch>0) {
-				if (info.cch > 255)
-					CurParams->WordLen = 255;
+				if (info.cch >= MATCHED_WORD_BUF_SIZE)
+					CurParams->WordLen = MATCHED_WORD_BUF_SIZE-1;
 				else
 					CurParams->WordLen = info.cch;
+#ifdef UNICODE
+				CurParams->Unicode = TRUE;
+				CurParams->WordLen = MyCopyMemory(CurParams->MatchedWordW, info.dwTypeData, CurParams->WordLen);
+#else
 				CurParams->Unicode = FALSE;
 				CurParams->WordLen = MyCopyMemory(CurParams->MatchedWordA, info.dwTypeData, CurParams->WordLen);
+#endif
 				CurParams->BeginPos = 0;
 			}
-			free(info.dwTypeData);
 			break;
 		}
 	}
@@ -127,22 +150,22 @@ static void GetWordTextOutHook (TEverythingParams *TP)
 {
 	CurParams = TP;
 	ScreenToClient(TP->WND, &(TP->Pt));
-	if (TP->Pt.y<0) {
-		char buffer[256];
+	if (TP->Pt.y<0) { // point is outside the client area
+		TCHAR buffer[256];
 		HMENU menu;
-		char buffer2[256];
+		TCHAR buffer2[256];
 
-		GetWindowText(TP->WND, buffer, sizeof(buffer)-1);
-		SetWindowText(TP->WND, "");
-		
-		GetWindowText(TP->WND, buffer2, sizeof(buffer2)-1);
+		/* Reset window title to make some of the hooked function to be invoked */
+		GetWindowText(TP->WND, buffer, sizeof(buffer)/sizeof(buffer[0]));
+		SetWindowText(TP->WND, TEXT(""));
+		GetWindowText(TP->WND, buffer2, sizeof(buffer2)/sizeof(buffer2[0]));
 		if (buffer2[0]) { // MDI window.
-			char *p = strstr(buffer, buffer2);
+			TCHAR *p = StrStr(buffer, buffer2);
 			if (p) {
 				if (p == buffer) { // FWS_PREFIXTITLE
-					strcpy(buffer, buffer+strlen(buffer2));
+					StrCpy(buffer, buffer+lstrlen(buffer2));
 				} else {
-					*p = '\0';
+					*p = TEXT('\0');
 				}
 			}
 		}
@@ -156,6 +179,7 @@ static void GetWordTextOutHook (TEverythingParams *TP)
 		}
 	}
 	else {
+		/* redraw a part of the window to make some of the hooked functions to be invoked */
 		RECT UpdateRect;
 		GetClientRect(TP->WND, &UpdateRect);
 		UpdateRect.top = TP->Pt.y;
@@ -201,7 +225,7 @@ static void IsInsidePointA(const HDC DC, int X, int Y, LPCSTR Str, int Count)
 			Pt.x-=Size.cx;
 		}
 		if (Flags & TA_BASELINE) {
-			TEXTMETRIC tm;
+			TEXTMETRICA tm;
 			GetTextMetricsA(DC, &tm);
 			Pt.y-=tm.tmAscent;
 		} else if (Flags & TA_BOTTOM) {
@@ -220,7 +244,7 @@ static void IsInsidePointA(const HDC DC, int X, int Y, LPCSTR Str, int Count)
 		//if (PtInRect(&Rect, CurParams->Pt)) {
 			CurParams->Active = !PtInRect(&Rect, CurParams->Pt);
 			//CurParams->Active = FALSE;
-			BegPos = (int)((abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1)) + 0.5);
+			BegPos = (int)((fabs((CurParams->Pt.x - Rect.left) / (double)(Rect.right - Rect.left)) * (Count - 1)) + 0.5);
 			while ((BegPos < Count - 1) && GetTextExtentPoint32A(DC, Str, BegPos + 1, &Size) && (Size.cx < CurParams->Pt.x - Rect.left))
 				BegPos++;
 			while ((BegPos >= 0) && GetTextExtentPoint32A(DC, Str, BegPos + 1, &Size) && (Size.cx > CurParams->Pt.x - Rect.left))
@@ -228,8 +252,8 @@ static void IsInsidePointA(const HDC DC, int X, int Y, LPCSTR Str, int Count)
 			if (BegPos < Count - 1)
 				BegPos++;
 			CurParams->BeginPos = BegPos;
-			if (Count > 255)
-				CurParams->WordLen = 255;
+			if (Count > MATCHED_WORD_BUF_SIZE - 1)
+				CurParams->WordLen = MATCHED_WORD_BUF_SIZE - 1;
 			else
 				CurParams->WordLen = Count;
 			CurParams->Unicode = FALSE;
@@ -281,7 +305,7 @@ static void IsInsidePointW(const HDC DC, int X, int Y, LPCWSTR Str, int Count)
 		//if (PtInRect(&Rect, CurParams->Pt)) {
 			CurParams->Active = !PtInRect(&Rect, CurParams->Pt);
 			//CurParams->Active = FALSE;
-			BegPos = (int)((abs((CurParams->Pt.x - Rect.left) / (Rect.right - Rect.left)) * (Count - 1)) + 0.5);
+			BegPos = (int)((fabs((CurParams->Pt.x - Rect.left) / (double)(Rect.right - Rect.left)) * (Count - 1)) + 0.5);
 			while ((BegPos < Count - 1) && GetTextExtentPoint32W(DC, Str, BegPos + 1, &Size) && (Size.cx < CurParams->Pt.x - Rect.left))
 				BegPos++;
 			while ((BegPos >= 0) && GetTextExtentPoint32W(DC, Str, BegPos + 1, &Size) && (Size.cx > CurParams->Pt.x - Rect.left))
@@ -289,8 +313,8 @@ static void IsInsidePointW(const HDC DC, int X, int Y, LPCWSTR Str, int Count)
 			if (BegPos < Count - 1)
 				BegPos++;
 			CurParams->BeginPos = BegPos;
-			if (Count > 255)
-				CurParams->WordLen = 255;
+			if (Count > MATCHED_WORD_BUF_SIZE - 1)
+				CurParams->WordLen = MATCHED_WORD_BUF_SIZE - 1;
 			else
 				CurParams->WordLen = Count;
 			CurParams->Unicode = TRUE;
@@ -315,14 +339,14 @@ BOOL WINAPI TextOutWCallbackProc(HDC hdc, int nXStart, int nYStart, LPCWSTR lpsz
 
 BOOL WINAPI ExtTextOutACallbackProc(HDC hdc, int nXStart, int nYStart, UINT fuOptions, CONST RECT *lprc, LPCSTR lpszString, UINT cbString, CONST INT *lpDx)
 {
-	if (CurParams && CurParams->Active)
+	if (CurParams && CurParams->Active && (fuOptions & ETO_GLYPH_INDEX) == 0)
 		IsInsidePointA(hdc, nXStart, nYStart, lpszString, cbString);
 	return ExtTextOutANextHook(hdc, nXStart, nYStart, fuOptions, lprc, lpszString, cbString, lpDx);
 }
 
 BOOL WINAPI ExtTextOutWCallbackProc(HDC hdc, int nXStart, int nYStart, UINT fuOptions, CONST RECT *lprc, LPCWSTR lpszString, UINT cbString, CONST INT *lpDx)
 {
-	if (CurParams && CurParams->Active)
+	if (CurParams && CurParams->Active && (fuOptions & ETO_GLYPH_INDEX) == 0)
 		IsInsidePointW(hdc, nXStart, nYStart, lpszString, cbString);
 	return ExtTextOutWNextHook(hdc, nXStart, nYStart, fuOptions, lprc, lpszString, cbString, lpDx);
 }
@@ -353,16 +377,18 @@ DLLIMPORT void GetWord (TCurrentMode *P)
 	TKnownWndClass WndClass;
 	char *p;
 
-	if (GetClassName(P->WND, wClassName, sizeof(wClassName) / sizeof(TCHAR))==0)
-		wClassName[0] = '\0';
+	if (GetClassName(P->WND, wClassName, sizeof(wClassName) / sizeof(wClassName[0]))==0)
+		wClassName[0] = TEXT('\0');
 	WndClass = GetWindowType(P->WND, wClassName);
 	p = TryGetWordFromAnyWindow(WndClass, P->WND, P->Pt, &(P->BeginPos));
 	if (p) {
-	    P->WordLen = strlen(p);
+		P->WordLen = strlen(p);
+		assert(P->WordLen < MAX_SCAN_TEXT_SIZE);
 		strcpy(P->MatchedWord, p);
 		free(p);
 	} else {
 		P->WordLen = 0;
+		P->MatchedWord[0] = '\0';
 	}
 }
 
@@ -371,25 +397,25 @@ BOOL APIENTRY DllMain (HINSTANCE hInst     /* Library instance handle. */ ,
                        DWORD reason        /* Reason this function is being called. */ ,
                        LPVOID reserved     /* Not used. */ )
 {
-    switch (reason)
-    {
-      case DLL_PROCESS_ATTACH:
+	switch (reason)
+	{
+		case DLL_PROCESS_ATTACH:
 			//ThTypes_Init();
 			InstallTextOutHooks();
-        break;
+			break;
 
-      case DLL_PROCESS_DETACH:
+		case DLL_PROCESS_DETACH:
 			UninstallTextOutHooks();
 			//Thtypes_End();
-        break;
+			break;
 
-      case DLL_THREAD_ATTACH:
-        break;
+		case DLL_THREAD_ATTACH:
+			break;
 
-      case DLL_THREAD_DETACH:
-        break;
-    }
+		case DLL_THREAD_DETACH:
+			break;
+	}
 
-    /* Returns TRUE on success, FALSE on failure */
-    return TRUE;
+	/* Returns TRUE on success, FALSE on failure */
+	return TRUE;
 }

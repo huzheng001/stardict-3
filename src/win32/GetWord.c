@@ -1,16 +1,17 @@
+#include <shlwapi.h>
 #include "GetWord.h"
 #include "TextOutHook.h"
 
-TKnownWndClass GetWindowType(HWND WND, const char* WNDClass)
+TKnownWndClass GetWindowType(HWND WND, const TCHAR* WNDClass)
 {
-	const char* StrKnownClasses[] = {
-		"RICHEDIT20A",
-		"RICHEDIT20W",
-		"RICHEDIT",
-		"EDIT",
-		"INTERNET EXPLORER_SERVER",
-		"CONSOLEWINDOWCLASS", // NT
-		"TTYGRAB", // 9x
+	const TCHAR* StrKnownClasses[] = {
+		TEXT("RICHEDIT20A"),
+		TEXT("RICHEDIT20W"),
+		TEXT("RICHEDIT"),
+		TEXT("EDIT"),
+		TEXT("INTERNET EXPLORER_SERVER"),
+		TEXT("CONSOLEWINDOWCLASS"), // NT
+		TEXT("TTYGRAB"), // 9x
 		};
 	TKnownWndClass KnownClasses[] = {
 		kwcRichEdit,
@@ -23,7 +24,7 @@ TKnownWndClass GetWindowType(HWND WND, const char* WNDClass)
 	};
 	int i;
 	for (i=0; i<7; i++) {
-		if (_stricmp(WNDClass, StrKnownClasses[i])==0)
+		if (StrCmpI(WNDClass, StrKnownClasses[i])==0)
 			break;
 	}
 	if (i<7) {
@@ -36,86 +37,11 @@ TKnownWndClass GetWindowType(HWND WND, const char* WNDClass)
 		return kwcUnknown;
 }
 
-static char* ExtractWordFromRichEditPos(HWND WND, POINT Pt, int *BeginPos)
-{
-	return ExtractFromEverything(WND, Pt, BeginPos);
-}
-/*
-typedef struct TEditParams {
-	HWND WND;
-	POINT Pt;
-	char Buffer[256];
-} TEditParams;
-
-static int ExtractWordFromEditPosPack(TEditParams *params)
-{
-	int Result = 0;
-	int BegPos;
-	BegPos = SendMessage(params->WND, EM_CHARFROMPOS, 0, params->Pt.x | params->Pt.y << 16);
-	if (BegPos == -1)
-		return Result;
-	int MaxLength;
-	MaxLength = SendMessage(params->WND, EM_LINELENGTH, BegPos & 0xFFFF, 0);
-	if (MaxLength <= 0)
-		return Result;
-	char *Buf;
-	Buf = GlobalAlloc(GMEM_FIXED, MaxLength + 1);
-	if (Buf) {
-		*Buf = MaxLength;
-		MaxLength = SendMessage(params->WND, EM_GETLINE, BegPos >> 16, (int)Buf);
-		Buf[MaxLength] = '\0';
-		BegPos = (BegPos & 0xFFFF) - SendMessage(params->WND, EM_LINEINDEX, BegPos >> 16, 0) - 1;
-		int EndPos;
-		EndPos = BegPos;
-		while ((BegPos >= 0) && IsCharAlpha(Buf[BegPos]))
-			BegPos--;
-		while ((EndPos < MaxLength) && IsCharAlpha(Buf[EndPos]))
-			EndPos++;
-		MaxLength = EndPos - BegPos - 1;
-		if (MaxLength >= 0) {
-			if (255 >= MaxLength) {
-				Buf[EndPos] = '\0';
-				lstrcpy(params->Buffer, Buf + BegPos + 1);
-				Result = MaxLength;
-			}
-		}
-		GlobalFree(Buf);
-	}
-	return Result;
-}
-*/
-static char* ExtractWordFromEditPos(HWND hEdit, POINT Pt, int *BeginPos)
-{
-	return ExtractFromEverything(hEdit, Pt, BeginPos);
-/*	TEditParams *TP;
-	TP = malloc(sizeof(TEditParams));
-	TP->WND = hEdit;
-	TP->Pt = Pt;
-	TP->Buffer[0] = '\0';
-	ScreenToClient(hEdit, &(TP->Pt));
-	int MaxLength;
-	MaxLength = ExtractWordFromEditPosPack(TP);
-	char *Result;
-	if (MaxLength>0) {
-		Result = strdup(TP->Buffer);
-	} else {
-		Result = NULL;
-	}
-	free(TP);
-	return Result;
-*/
-}
-
-static char* ExtractWordFromIE(HWND WND, POINT Pt, int *BeginPos)
-{	
-	return ExtractFromEverything(WND, Pt, BeginPos);
-}
-
 typedef struct TConsoleParams {
 	HWND WND;
 	POINT Pt;
 	RECT ClientRect;
-	char Buffer[256];
+	TCHAR Buffer[256];
 } TConsoleParams;
 
 static int GetWordFromConsolePack(TConsoleParams *params)
@@ -129,22 +55,24 @@ static int GetWordFromConsolePack(TConsoleParams *params)
 			CurPos.Y = csbi.srWindow.Top + (SHORT)(params->Pt.y * (csbi.srWindow.Bottom - csbi.srWindow.Top + 1) / params->ClientRect.bottom);
 			if ((CurPos.X >= 0) && (CurPos.X <= csbi.dwSize.X - 1) && (CurPos.Y >= 0) && (CurPos.Y <= csbi.dwSize.Y - 1)) {
 				int BegPos;
-				char *Buf;
+				TCHAR *Buf;
 
 				BegPos = CurPos.X;
-				CurPos.X = 0;
-				Buf = GlobalAlloc(GMEM_FIXED, csbi.dwSize.X + 1);
+				CurPos.X = 0; // read all the line
+				Buf = GlobalAlloc(GMEM_FIXED, (csbi.dwSize.X + 1)*sizeof(TCHAR));
 				if (Buf) {
 					DWORD ActualRead;
-					if ((ReadConsoleOutputCharacter(hStdOut, Buf, csbi.dwSize.X, CurPos, &ActualRead)) && (ActualRead == csbi.dwSize.X)) {
+					if ((ReadConsoleOutputCharacter(hStdOut, Buf, csbi.dwSize.X, CurPos, &ActualRead))
+						&& (ActualRead == csbi.dwSize.X)) {
 						int WordLen;
-
-						OemToCharBuff(Buf, Buf, csbi.dwSize.X);
+						
+						// TODO: check the first parameter
+						OemToCharBuff((LPCSTR)Buf, Buf, csbi.dwSize.X);
 						if (csbi.dwSize.X > 255)
 							WordLen = 255;
 						else
 							WordLen = csbi.dwSize.X;
-						strncpy(params->Buffer, Buf, WordLen);
+						StrCpyN(params->Buffer, Buf, WordLen);
 						GlobalFree(Buf);
 						return WordLen;
 					}
@@ -193,6 +121,11 @@ static BOOL RemoteExecute(HANDLE hProcess, void *RemoteThread, size_t RemoteSize
 	}
 }
 
+/* return value in utf-8 
+BUG:
+On Windows XP hook dlls are not loaded into a console process (cmd.exe).
+Search for "SetWindowsHookEx WH_MOUSE cmd.exe" in Internet.
+This function always returns NULL. */
 static char* GetWordFromConsole(HWND WND, POINT Pt, int *BeginPos)
 {
 	TConsoleParams *TP;
@@ -209,10 +142,14 @@ static char* GetWordFromConsole(HWND WND, POINT Pt, int *BeginPos)
 	GetWindowThreadProcessId(GetParent(WND), &pid);
 
 	if (pid != GetCurrentProcessId()) {
+		HANDLE ph;
+		MaxWordSize = 0;
 		// The next line will fail in Win2k, but OK in Windows XP.
-		HANDLE ph = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, pid);
+		ph = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, pid);
 		if (ph) {
-			if (!RemoteExecute(ph, GetWordFromConsolePack, (size_t)GetWordFromConsolePackEnd - (size_t)GetWordFromConsolePack, TP, sizeof(TConsoleParams), &MaxWordSize))
+			if (!RemoteExecute(ph, GetWordFromConsolePack,
+				(size_t)GetWordFromConsolePackEnd - (size_t)GetWordFromConsolePack, TP,
+				sizeof(TConsoleParams), &MaxWordSize))
 				MaxWordSize = 0;
 			CloseHandle(ph);
 		}
@@ -221,7 +158,8 @@ static char* GetWordFromConsole(HWND WND, POINT Pt, int *BeginPos)
 	}
 
 	if (MaxWordSize > 0) {
-		Result = _strdup(TP->Buffer);
+		// TODO: fix this
+		Result = NULL; // _strdup(TP->Buffer);
 	} else {
 		Result = NULL;
 	}
@@ -234,10 +172,10 @@ char* TryGetWordFromAnyWindow(TKnownWndClass WndType, HWND WND, POINT Pt, int *B
 	typedef char* (*GetWordFunction_t)(HWND, POINT, int*);
 	const GetWordFunction_t GetWordFunction[]= {
 		ExtractFromEverything,
-		ExtractWordFromRichEditPos,
-		ExtractWordFromEditPos,
-		ExtractWordFromEditPos,
-		ExtractWordFromIE,
+		ExtractFromEverything,
+		ExtractFromEverything,
+		ExtractFromEverything,
+		ExtractFromEverything,
 		GetWordFromConsole,
 	};
 	return GetWordFunction[WndType](WND, Pt, BeginPos);

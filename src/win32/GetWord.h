@@ -12,7 +12,8 @@ typedef enum TKnownWndClass {
 	kwcConsole,
 } TKnownWndClass;
 
-TKnownWndClass GetWindowType(HWND WND, const char* WNDClass);
+TKnownWndClass GetWindowType(HWND WND, const TCHAR* WNDClass);
+/* return value in utf-8 */
 char* TryGetWordFromAnyWindow(TKnownWndClass WndType, HWND WND, POINT Pt, int *BeginPos);
 
 #endif
