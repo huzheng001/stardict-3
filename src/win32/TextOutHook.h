@@ -9,6 +9,7 @@
 
 #include "ThTypes.h"
 
+/* return value in utf-8 */
 char* ExtractFromEverything(HWND WND, POINT Pt, int *BeginPos);
 
 DLLIMPORT void GetWord (TCurrentMode *P);
