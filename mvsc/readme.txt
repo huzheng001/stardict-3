@@ -30,6 +30,10 @@ There are two crash bug with vs2005, which you need to notice.
 1. Use my_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
 2. Use fprintf_s instead of fprintf, or it will crash. This is a little strange.
 
+libintl.h redefines *printf functions to libintl_*printf functions.
+That may be the cause of the crash.
+printf outputs nothing with console attached. Use printf_s instead, or better g_print.
+
 There are two builds in vs2005: Debug and Release, you should choose Release version in most case.
 
 You should can compile and run stardict successfully now.

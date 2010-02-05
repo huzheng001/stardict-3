@@ -869,9 +869,9 @@ int StarDictClient::parse_banner(gchar *line)
     status = atoi(line);
     if (status != CODE_HELLO) {
         if (status == CODE_TEMPORARILY_UNAVAILABLE) {
-            printf("Server temporarily unavailable!\n");
+            g_print("Server temporarily unavailable!\n");
         } else {
-            printf("Unexpected status code %d\n", status);
+            g_print("Unexpected status code %d\n", status);
         }
         return 0;
     }

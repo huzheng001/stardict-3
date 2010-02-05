@@ -50,7 +50,11 @@ void play_sound_file(const std::string& filename)
 #ifdef _WIN32
 //TODO: more good solution?
 #if !defined(_MSC_VER)
-	PlaySound(filename.c_str(), 0, SND_ASYNC | SND_FILENAME);
+	std::string filename_utf8;
+	std::win_string filename_win;
+	if(file_name_to_utf8(filename, filename_utf8) 
+		&& utf8_to_windows(filename_utf8, filename_win))
+		PlaySound(filename_win.c_str(), 0, SND_ASYNC | SND_FILENAME);
 #endif
 #elif defined(CONFIG_GNOME)
 	gnome_sound_play(filename.c_str());
@@ -71,12 +75,19 @@ void play_video_file(const std::string& filename)
 void show_help(const gchar *section)
 {
 #ifdef _WIN32
-  // You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
-  gchar *filename = g_strdup_printf(_("%s\\help\\stardict.chm"), gStarDictDataDir.c_str());
-  ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", filename, NULL, NULL, SW_SHOWNORMAL);
-  g_free(filename);
+	std::string datadir_utf8;
+	if(!file_name_to_utf8(gStarDictDataDir, datadir_utf8))
+		return ;
+	// You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
+	glib::CharStr filename_utf8(
+		g_strdup_printf(_("%s\\help\\stardict.chm"), datadir_utf8.c_str()));
+	std::win_string filename_win;
+	if(!utf8_to_windows(get_impl(filename_utf8), filename_win))
+		return ;
+	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), 
+		TEXT("OPEN"), filename_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
 #elif defined(CONFIG_GNOME)
-  gnome_help_display ("stardict.xml", section, NULL);
+	gnome_help_display ("stardict.xml", section, NULL);
 #endif
 }
 
@@ -85,7 +96,11 @@ void show_url(const char *url)
 	if (!url)
 		return;
 #ifdef _WIN32
-	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), "OPEN", url, NULL, NULL, SW_SHOWNORMAL);
+	std::win_string url_win;
+	if(!utf8_to_windows(url, url_win))
+		return ;
+	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)),
+		TEXT("OPEN"), url_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
 #elif defined(CONFIG_GNOME)
 	gnome_url_show(url, NULL);
 #elif defined(CONFIG_GPE)

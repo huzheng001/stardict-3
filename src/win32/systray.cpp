@@ -4,10 +4,12 @@
 
 #include <gdk/gdkwin32.h>
 #include <glib/gi18n.h>
+#include <shlwapi.h>
 #include "resource.h"
 #include "MinimizeToTray.h"
 
 #include "systray.h"
+#include "lib/utils.h"
 
 #ifndef LR_VGACOLOR
 //if use gcc on windows this constant not defined
@@ -73,9 +75,7 @@ void DockLet::create()
 HWND DockLet::create_hiddenwin()
 {
 	WNDCLASSEX wcex;
-	TCHAR wname[32];
-
-	strcpy(wname, "StarDictSystray");
+	const TCHAR wname[] = TEXT("StarDictSystray");
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -93,23 +93,24 @@ HWND DockLet::create_hiddenwin()
 
 	RegisterClassEx(&wcex);
 
-	// Create the window
-	return (CreateWindow(wname, "", 0, 0, 0, 0, 0, GetDesktopWindow(), NULL, stardictexe_hInstance, 0));
+	return CreateWindow(wname, TEXT(""), 0, 0, 0, 0, 0, GetDesktopWindow(),
+		NULL, stardictexe_hInstance, 0);
 }
 
 void DockLet::create_menu()
 {
-	char* locenc = NULL;
-
 	/* create popup menu */
 	if((systray_menu = CreatePopupMenu())) {
+		std::win_string menu_item_win;
+		if(!utf8_to_windows(_("Scan"), menu_item_win))
+			return ;
 		AppendMenu(systray_menu, MF_CHECKED, SYSTRAY_CMND_MENU_SCAN,
-			       (locenc=g_locale_from_utf8(_("Scan"), -1, NULL, NULL, NULL)));
-		g_free(locenc);
+			menu_item_win.c_str());
 		AppendMenu(systray_menu, MF_SEPARATOR, 0, 0);
+		if(!utf8_to_windows(_("Quit"), menu_item_win))
+			return ;
 		AppendMenu(systray_menu, MF_STRING, SYSTRAY_CMND_MENU_QUIT,
-			       (locenc=g_locale_from_utf8(_("Quit"), -1, NULL, NULL, NULL)));
-		g_free(locenc);
+			menu_item_win.c_str());
 	}
 }
 
@@ -157,7 +158,7 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 
 	switch (msg) {
 	case WM_CREATE:
-		taskbarRestartMsg = RegisterWindowMessage("TaskbarCreated");
+		taskbarRestartMsg = RegisterWindowMessage(TEXT("TaskbarCreated"));
 		break;
 
 	case WM_COMMAND:
@@ -208,8 +209,6 @@ LRESULT CALLBACK DockLet::mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LP
 
 void DockLet::init_icon(HWND hWnd, HICON icon)
 {
-	char* locenc=NULL;
-
 	ZeroMemory(&stardict_nid,sizeof(stardict_nid));
 	stardict_nid.cbSize=sizeof(NOTIFYICONDATA);
 	stardict_nid.hWnd=hWnd;
@@ -217,20 +216,18 @@ void DockLet::init_icon(HWND hWnd, HICON icon)
 	stardict_nid.uFlags=NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	stardict_nid.uCallbackMessage=WM_TRAYMESSAGE;
 	stardict_nid.hIcon=icon;
-	locenc=g_locale_from_utf8(_("StarDict"), -1, NULL, NULL, NULL);
-	strcpy(stardict_nid.szTip, locenc);
-	g_free(locenc);
+	std::win_string tip_win;
+	if(!utf8_to_windows(_("StarDict"), tip_win))
+		return;
+	StrCpy(stardict_nid.szTip, tip_win.c_str());
 	Shell_NotifyIcon(NIM_ADD,&stardict_nid);
 }
 
-void DockLet::change_icon(HICON icon, char* text)
+void DockLet::change_icon(HICON icon, const TCHAR* text)
 {
-	char *locenc=NULL;
 	stardict_nid.hIcon = icon;
-	locenc = g_locale_from_utf8(text, -1, NULL, NULL, NULL);
-	lstrcpy(stardict_nid.szTip, locenc);
-	g_free(locenc);
-	Shell_NotifyIcon(NIM_MODIFY,&stardict_nid);
+	StrCpy(stardict_nid.szTip, text);
+	Shell_NotifyIcon(NIM_MODIFY, &stardict_nid);
 }
 
 DockLet::~DockLet()
@@ -255,15 +252,24 @@ void DockLet::maximize_from_tray()
 
 void DockLet::scan_on()
 {
-        change_icon(scan_icon_, _("StarDict - Scanning"));
+	std::win_string str;
+	if(!utf8_to_windows(_("StarDict - Scanning"), str))
+		return;
+	change_icon(scan_icon_, str.c_str());
 }
 
 void DockLet::scan_off()
 {
-        change_icon(stop_icon_, _("StarDict - Stopped"));
+	std::win_string str;
+	if(!utf8_to_windows(_("StarDict - Stopped"), str))
+		return;
+	change_icon(stop_icon_, str.c_str());
 }
 
 void DockLet::show_normal_icon()
 {
-        change_icon(normal_icon_, _("StarDict"));
+	std::win_string str;
+	if(!utf8_to_windows(_("StarDict"), str))
+		return;
+	change_icon(normal_icon_, str.c_str());
 }

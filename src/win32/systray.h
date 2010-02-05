@@ -34,7 +34,7 @@ private:
 	void create_menu();
 	void show_menu(int x, int y);
 	void init_icon(HWND hWnd, HICON icon);
-	void change_icon(HICON icon, char* text);
+	void change_icon(HICON icon, const TCHAR* text);
 	static LRESULT CALLBACK mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 	void create();
 	void scan_on();

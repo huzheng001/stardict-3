@@ -9,7 +9,7 @@ class Mouseover
 private:
 	typedef void (*ActivateSpy_func_t)(bool);
 	ActivateSpy_func_t ActivateSpy_func;
-	HINSTANCE  fSpyDLL;
+	HMODULE fSpyDLL;
 	void NeedSpyDll();
 	HWND Create_hiddenwin();
 	static void ShowTranslation();

@@ -272,7 +272,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func2;
 		func2.stardict_virtualdict_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_virtualdict_plugin_init", (gpointer *)&(func2.stardict_virtualdict_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_virtualdict_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_virtualdict_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
@@ -294,7 +294,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func2;
 		func2.stardict_netdict_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_netdict_plugin_init", (gpointer *)&(func2.stardict_netdict_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_netdict_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_netdict_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
@@ -316,7 +316,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func2;
 		func2.stardict_specialdict_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_specialdict_plugin_init", (gpointer *)&(func2.stardict_specialdict_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_specialdict_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_specialdict_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
@@ -338,7 +338,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func2;
 		func2.stardict_tts_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_tts_plugin_init", (gpointer *)&(func2.stardict_tts_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_tts_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_tts_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
@@ -360,7 +360,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func3;
 		func3.stardict_parsedata_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_parsedata_plugin_init", (gpointer *)&(func3.stardict_parsedata_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_parsedata_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_parsedata_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;
@@ -382,7 +382,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		} func4;
 		func4.stardict_misc_plugin_init = 0;
 		if (!g_module_symbol (module, "stardict_misc_plugin_init", (gpointer *)&(func4.stardict_misc_plugin_init_avoid_warning))) {
-			printf("Load %s failed: No stardict_misc_plugin_init func!\n", filename);
+			g_print("Load %s failed: No stardict_misc_plugin_init func!\n", filename);
 			g_module_close (module);
 			delete baseobj;
 			return;

@@ -21,11 +21,15 @@
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
+#include <shlwapi.h>
 
 #include "../stardict.h"
 
 #include "mouseover.h"
 #include "ThTypes.h"
+
+#define STARDICT_DLL_DIR gStarDictDataDir
+//#define DEBUG
 
 // StarDict's Mouseover feature get the example delphi source code from Mueller Electronic Dicionary.
 // Homepage: http://vertal1.narod.ru/mueldic.html E-mail: svv_soft@mail.ru
@@ -36,21 +40,28 @@ void Mouseover::NeedSpyDll()
 {
 	if (fSpyDLL == 0) {
 		// Notice, the path must be absolute!
-		fSpyDLL = LoadLibrary((gStarDictDataDir+ G_DIR_SEPARATOR_S "TextOutSpy.dll").c_str());
-		if (fSpyDLL==0) {
+		std::string path = STARDICT_DLL_DIR + G_DIR_SEPARATOR_S "TextOutSpy.dll";
+		std::string path_utf8;
+		std::win_string path_win;
+		if(file_name_to_utf8(path, path_utf8) && utf8_to_windows(path_utf8, path_win)) {
+			fSpyDLL = LoadLibrary(path_win.c_str());
+			if (fSpyDLL==0) {
+				g_warning("Unable to load TextOutSpy.dll");
+				fSpyDLL = (HINSTANCE)-1;
+			} else {
+				ActivateSpy_func = (ActivateSpy_func_t)GetProcAddress(fSpyDLL, "ActivateTextOutSpying");
+				if(!ActivateSpy_func)
+					g_warning("Unable to find an entry point in TextOutSpy.dll");
+			}
+		} else
 			fSpyDLL = (HINSTANCE)-1;
-		} else {
-			ActivateSpy_func = (ActivateSpy_func_t)GetProcAddress(fSpyDLL, "ActivateTextOutSpying");
-		}
 	}
 }
 
 HWND Mouseover::Create_hiddenwin()
 {
 	WNDCLASSEX wcex;
-	TCHAR wname[32];
-
-	strcpy(wname, "StarDictMouseover");
+	const TCHAR wname[] = TEXT("StarDictMouseover");
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -59,7 +70,7 @@ HWND Mouseover::Create_hiddenwin()
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= stardictexe_hInstance;
-	wcex.hIcon		= NULL;
+	wcex.hIcon			= NULL;
 	wcex.hCursor		= NULL,
 	wcex.hbrBackground	= NULL;
 	wcex.lpszMenuName	= NULL;
@@ -68,22 +79,39 @@ HWND Mouseover::Create_hiddenwin()
 
 	RegisterClassEx(&wcex);
 
-	// Create the window
-	return (CreateWindow(wname, "", 0, 0, 0, 0, 0, GetDesktopWindow(), NULL, stardictexe_hInstance, 0));
+	return CreateWindow(wname, TEXT(""), 0, 0, 0, 0, 0, GetDesktopWindow(), NULL,
+		stardictexe_hInstance, 0);
 }
 
 void Mouseover::ShowTranslation()
 {
+#ifdef DEBUG
+	{
+		const char * utf8_marker = (
+			g_utf8_validate(GlobalData->CurMod.MatchedWord, -1, NULL) ? "" : "!!!"
+		);
+		std::string buf(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos);
+		buf += "[";
+		const char *p = GlobalData->CurMod.MatchedWord + GlobalData->CurMod.BeginPos;
+		const char *q = g_utf8_next_char(p);
+		buf.append(p, q-p);
+		buf += "]";
+		buf.append(q);
+		g_debug("ShowTranslation: %s (%d) %s", utf8_marker,
+			GlobalData->CurMod.BeginPos, buf.c_str());
+	}
+#endif
 	if (!conf->get_bool_at("dictionary/scan_selection")) // Needed by acrobat plugin.
 		return;
 	if (conf->get_bool_at("dictionary/only_scan_while_modifier_key")) {
-    	bool do_scan = gpAppFrame->unlock_keys->is_pressed();
+		bool do_scan = gpAppFrame->unlock_keys->is_pressed();
 		if (!do_scan)
 			return;
 	}
 	if (g_utf8_validate(GlobalData->CurMod.MatchedWord, -1, NULL)) {
 		gpAppFrame->SmartLookupToFloat(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos, true);
 	} else {
+		g_warning("ShowTranslation: incorrect encoding of the word!");
 		char *str1 = g_locale_to_utf8(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos, NULL, NULL, NULL);
 		if (!str1)
 			return;
@@ -124,7 +152,12 @@ void Mouseover::Init()
 {
 	ThTypes_Init();
 	ZeroMemory(GlobalData, sizeof(TGlobalDLLData));
-	strcpy(GlobalData->LibName, (gStarDictDataDir+ G_DIR_SEPARATOR_S "TextOutHook.dll").c_str());
+	std::string path = STARDICT_DLL_DIR + G_DIR_SEPARATOR_S "TextOutHook.dll";
+	std::string path_utf8;
+	std::win_string path_win;
+	file_name_to_utf8(path, path_utf8);
+	utf8_to_windows(path_utf8, path_win);
+	StrCpy(GlobalData->LibName, path_win.c_str());
 	GlobalData->ServerWND = Create_hiddenwin();
 }
 
@@ -134,7 +167,10 @@ void Mouseover::End()
 		stop();
 		FreeLibrary(fSpyDLL);
 	}
+	fSpyDLL = NULL;
+	ActivateSpy_func = NULL;
 	DestroyWindow(GlobalData->ServerWND);
+	GlobalData->ServerWND = NULL;
 	Thtypes_End();
 }
 

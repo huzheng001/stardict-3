@@ -4,6 +4,8 @@
 #include <glib/gstdio.h>
 #ifdef _WIN32
 #  include <io.h>
+#else
+#  include <unistd.h>
 #endif
 #include "storage.h"
 #include "storage_impl.h"

@@ -62,7 +62,7 @@ EditDistance::EditDistance()
 
 EditDistance::~EditDistance()
 {
-//    printf("size:%d\n",currentelements);
+//    g_print("size:%d\n",currentelements);
     if (d) free(d);
 }
 

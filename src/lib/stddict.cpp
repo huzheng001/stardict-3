@@ -1464,10 +1464,10 @@ Libs::Libs(show_progress_t *sp, bool create, CollationLevelType level, int funct
 	if (CollationLevel == CollationLevel_NONE) {
 	} else if (CollationLevel == CollationLevel_SINGLE) {
 		if (utf8_collate_init(CollateFunction))
-			printf("Init collate function failed!\n");
+			g_print("Init collate function failed!\n");
 	} else if (CollationLevel == CollationLevel_MULTI){
 		if (utf8_collate_init_all())
-			printf("Init collate functions failed!\n");
+			g_print("Init collate functions failed!\n");
 	}
 }
 
@@ -2065,10 +2065,10 @@ void Libs::reload(const std::list<std::string> &load_list, CollationLevelType Ne
 		if (CollationLevel == CollationLevel_NONE) {
 		} else if (CollationLevel == CollationLevel_SINGLE) {
 			if (utf8_collate_init(CollateFunction))
-				printf("Init collate function failed!\n");
+				g_print("Init collate function failed!\n");
 		} else if (CollationLevel == CollationLevel_MULTI) {
 			if (utf8_collate_init_all())
-				printf("Init collate functions failed!\n");
+				g_print("Init collate functions failed!\n");
 		}
 		load(load_list);
 	}

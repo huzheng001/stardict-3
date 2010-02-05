@@ -15,9 +15,7 @@ static LRESULT CALLBACK hotkey_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wpara
 HWND Create_hiddenwin()
 {
 	WNDCLASSEX wcex;
-	TCHAR wname[32];
-
-	strcpy(wname, "StarDictHotkey");
+	TCHAR wname[32] = TEXT("StarDictHotkey");
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
@@ -36,7 +34,8 @@ HWND Create_hiddenwin()
 	RegisterClassEx(&wcex);
 
 	// Create the window
-	return (CreateWindow(wname, "", 0, 0, 0, 0, 0, GetDesktopWindow(), NULL, stardictexe_hInstance, 0));
+	return CreateWindow(wname, TEXT(""), 0, 0, 0, 0, 0, GetDesktopWindow(), NULL,
+		stardictexe_hInstance, 0);
 }
 
 void hotkey_gdk2winapi(guint gdk_key, guint gdk_modifiers, UINT &winapi_key, UINT &winapi_modifiers)
@@ -432,13 +431,17 @@ void win32hotkey_Init(int nhotkey)
 {
 	HotkeyCount = nhotkey;
 	hotkeylist = new Entry[HotkeyCount];
-	char AtomName[100];
+	TCHAR AtomName[100];
 	for (int i = 0; i < HotkeyCount; i++) {
 		hotkeylist[i].registered = false;
-		sprintf(AtomName, "StarDictHotKey%d", i+1);
+#ifdef UNICODE
+		swprintf(AtomName, TEXT("StarDictHotKey%d"), i+1);
+#else
+		sprintf(AtomName, TEXT("StarDictHotKey%d"), i+1);
+#endif
 		hotkeylist[i].id = GlobalAddAtom(AtomName);
 		hotkeylist[i].handler = NULL;
-        }
+	}
 	ServerWND = Create_hiddenwin();
 }
 

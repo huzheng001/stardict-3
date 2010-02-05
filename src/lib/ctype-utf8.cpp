@@ -4118,14 +4118,14 @@ static void test_mb(CHARSET_INFO *cs, uchar *s)
       int len=my_mbcharlen_utf8(cs,*s);
       while(len--)
       {
-        printf("%c",*s);
+        g_print("%c",*s);
         s++;
       }
-      printf("\n");
+      g_print("\n");
     }
     else
     {
-      printf("%c\n",*s);
+      g_print("%c\n",*s);
       s++;
     }
   }
@@ -4138,19 +4138,19 @@ int main()
 
   test_mb(cs,(uchar*)str);
 
-  printf("orig      :'%s'\n",str);
+  g_print("orig      :'%s'\n",str);
 
   my_caseup_utf8(cs,str,15);
-  printf("caseup    :'%s'\n",str);
+  g_print("caseup    :'%s'\n",str);
 
   my_caseup_str_utf8(cs,str);
-  printf("caseup_str:'%s'\n",str);
+  g_print("caseup_str:'%s'\n",str);
 
   my_casedn_utf8(cs,str,15);
-  printf("casedn    :'%s'\n",str);
+  g_print("casedn    :'%s'\n",str);
 
   my_casedn_str_utf8(cs,str);
-  printf("casedn_str:'%s'\n",str);
+  g_print("casedn_str:'%s'\n",str);
 
   return 0;
 }

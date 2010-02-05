@@ -20,7 +20,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -39,6 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/DATTACH_WINDOWS_CONSOLE /D_WIN32_WINNT=0x0501 /DENABLE_LOG_WINDOW"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;;&quot;gtk\include\atk-1.0&quot;;gtk\include\cairo;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\pango-1.0&quot;;gtk\include;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
@@ -48,7 +49,6 @@
 				DisableLanguageExtensions="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib shlwapi.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="gtk\lib"
 				GenerateDebugInformation="true"
@@ -124,7 +124,6 @@
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -138,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gettextpo.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib"
+				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib shlwapi.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="gtk\lib"
 				GenerateDebugInformation="true"
@@ -222,11 +221,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\globalhotkeys.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\gtk_iskeyspressed.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\src\gtktextviewpango.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\hotkeyeditor.c"
 				>
 			</File>
 			<File
@@ -279,10 +286,6 @@
 			</File>
 			<File
 				RelativePath="..\src\tray.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils.cpp"
 				>
 			</File>
 			<Filter
@@ -413,7 +416,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\utils.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\virtualdictplugin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\xml_str.cpp"
 					>
 				</File>
 			</Filter>
@@ -452,6 +463,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\globalhotkeys.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\gtk_iskeyspressed.hpp"
 				>
 			</File>
@@ -461,6 +476,10 @@
 			</File>
 			<File
 				RelativePath="..\src\win32\hotkey.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\hotkeyeditor.h"
 				>
 			</File>
 			<File
@@ -517,10 +536,6 @@
 			</File>
 			<File
 				RelativePath="..\src\tray.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\utils.h"
 				>
 			</File>
 			<Filter
@@ -671,7 +686,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\utils.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\virtualdictplugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\xml_str.h"
 					>
 				</File>
 			</Filter>
