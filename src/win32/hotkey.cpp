@@ -431,11 +431,16 @@ void win32hotkey_Init(int nhotkey)
 {
 	HotkeyCount = nhotkey;
 	hotkeylist = new Entry[HotkeyCount];
-	TCHAR AtomName[100];
+	const size_t buf_size = 100;
+	TCHAR AtomName[buf_size];
 	for (int i = 0; i < HotkeyCount; i++) {
 		hotkeylist[i].registered = false;
 #ifdef UNICODE
+#  ifdef _MSC_VER
+		swprintf(AtomName, buf_size, TEXT("StarDictHotKey%d"), i+1);
+#  else
 		swprintf(AtomName, TEXT("StarDictHotKey%d"), i+1);
+#  endif
 #else
 		sprintf(AtomName, TEXT("StarDictHotKey%d"), i+1);
 #endif
