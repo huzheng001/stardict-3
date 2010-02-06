@@ -10,9 +10,9 @@ Libs=
 PrivateResource=
 ResourceIncludes=
 MakeIncludes=
-Compiler=-DBUILDING_DLL=1 -mms-bitfields -Wall_@@_
-CppCompiler=-DBUILDING_DLL=1 -mms-bitfields -Wall_@@_
-Linker=--no-export-all-symbols --add-stdcall-alias -mms-bitfields -lgdi32_@@_
+Compiler=-DBUILDING_DLL=1 -mms-bitfields -Wall -DUNICODE_@@_
+CppCompiler=-DBUILDING_DLL=1 -mms-bitfields -Wall -DUNICODE_@@_
+Linker=--no-export-all-symbols --add-stdcall-alias -mms-bitfields -lgdi32 -lshlwapi_@@_
 IsCpp=0
 Icon=
 ExeOutput=
