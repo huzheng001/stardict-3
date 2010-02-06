@@ -10,9 +10,9 @@ Libs=
 PrivateResource=stardict_private.rc
 ResourceIncludes=
 MakeIncludes=
-Compiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall -DSIGC_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD="template operator()"_@@_
-CppCompiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall_@@_
-Linker=-lcairo -lgtk-win32-2.0 -lgdk-win32-2.0 -limm32 -lshell32 -lole32 -luuid -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangowin32-1.0 -lgdi32 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lgthread-2.0 -lintl -lzdll -lwinmm -mno-cygwin -mwindows -mms-bitfields -lws2_32_@@_
+Compiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall -DSIGC_GCC_TEMPLATE_SPECIALIZATION_OPERATOR_OVERLOAD="template operator()" -DUNICODE_@@_
+CppCompiler=-I"<INCLUDE>\cairo" -I"<INCLUDE>\gtk-2.0" -I"<INCLUDE>\gtkdeps-2.0" -I"<LIB>\gtk-2.0\include" -I"<INCLUDE>\atk-1.0" -I"<INCLUDE>\pango-1.0" -I"<INCLUDE>\glib-2.0" -I"<LIB>\glib-2.0" -I"<LIB>\glib-2.0\include" -DENABLE_NLS -mno-cygwin -mwindows -mms-bitfields -Wall -DUNICODE_@@_
+Linker=-lcairo -lgtk-win32-2.0 -lgdk-win32-2.0 -limm32 -lshell32 -lole32 -luuid -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangowin32-1.0 -lgdi32 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lgthread-2.0 -lintl -lzdll -lwinmm -mno-cygwin -mwindows -mms-bitfields -lws2_32 -lshlwapi_@@_
 IsCpp=1
 Icon=stardict.ico
 ExeOutput=src
