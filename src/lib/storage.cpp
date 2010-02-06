@@ -772,8 +772,13 @@ FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 	FileHolder file(open_temp_file(name_pattern, fd));
 	if(file.empty())
 		return file;
+#ifdef _MSC_VER
+	_write(fd, data+sizeof(guint32), entry_size);
+	_close(fd);
+#else
 	write(fd, data+sizeof(guint32), entry_size);
 	close(fd);
+#endif
 	ind = put_in_cache(key, file);
 	return FileCache[ind].file;
 }
