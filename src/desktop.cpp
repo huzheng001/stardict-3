@@ -29,6 +29,7 @@
 #  include <libgnomeui/libgnomeui.h>
 #elif defined(_WIN32)
 #  include <gdk/gdkwin32.h>
+#  include <windows.h>
 #endif
 
 #include "conf.h"
@@ -48,14 +49,44 @@ static void spawn_command(const gchar *exe, const gchar *arg)
 void play_sound_file(const std::string& filename)
 {
 #ifdef _WIN32
-//TODO: more good solution?
-#if !defined(_MSC_VER)
 	std::string filename_utf8;
 	std::win_string filename_win;
 	if(file_name_to_utf8(filename, filename_utf8) 
-		&& utf8_to_windows(filename_utf8, filename_win))
+		&& utf8_to_windows(filename_utf8, filename_win)) {
+		/* for playing wav files only:
 		PlaySound(filename_win.c_str(), 0, SND_ASYNC | SND_FILENAME);
-#endif
+
+		mciSendString does not play ogg files.
+		The function returns 0, but no sound produced.
+		DirectShow based decoder from http://www.vorbis.com/ installed.
+		Test environment: Windows XP sp3. */
+		g_debug("play sound %s", filename_utf8.c_str());
+		bool done=false;
+		if(!conf->get_bool_at("dictionary/always_use_sound_play_command")) {
+			MCIERROR mcierr;
+			std::win_string cmd;
+			if((mcierr = mciSendString(TEXT("close all"), NULL, 0, NULL)))
+				goto mci_error;
+			cmd = TEXT("open \"");
+			cmd += filename_win;
+			cmd += TEXT("\" alias stardict_sound");
+			if((mcierr = mciSendString(cmd.c_str(), NULL, 0, NULL)))
+				goto mci_error;
+			if((mcierr = mciSendString(TEXT("play stardict_sound"), NULL, 0, NULL)))
+				goto mci_error;
+			done = true;
+			goto mci_end;
+mci_error:
+			g_warning("Play sound command failed.");
+mci_end:
+			;
+		}
+		if(!done) {
+			const std::string &playcmd=
+			conf->get_string_at("dictionary/sound_play_command");
+			spawn_command(playcmd.c_str(), filename_utf8.c_str());
+		}
+	}
 #elif defined(CONFIG_GNOME)
 	gnome_sound_play(filename.c_str());
 #else

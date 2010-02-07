@@ -38,7 +38,7 @@ private:
   GtkButton *bAccount;
   std::string register_user;
   std::string register_hex;
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN) || defined(_WIN32)
   GtkEntry *eSoundPlayCommand;
 #endif
   GtkEntry *eVideoPlayCommand;
@@ -103,6 +103,9 @@ private:
   static void on_setup_dictionary_export_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#ifdef _WIN32
+	static void on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#endif
 #ifndef _WIN32
   static void on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
