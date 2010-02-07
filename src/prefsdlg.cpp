@@ -756,6 +756,14 @@ void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *butto
   conf->set_bool_at("dictionary/enable_sound_event",enable);
 }
 
+#ifdef _WIN32
+void PrefsDlg::on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+  gboolean enable = gtk_toggle_button_get_active(button);
+  conf->set_bool_at("dictionary/always_use_sound_play_command",enable);
+}
+#endif
+
 #ifndef _WIN32
 void PrefsDlg::on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
@@ -781,7 +789,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_sound_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 	GtkWidget *label;
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN) || defined(_WIN32)
 	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
 	label=gtk_label_new(_("Command for playing sound files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
@@ -793,6 +801,13 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(hbox2), e, TRUE, TRUE, 0);
 	eSoundPlayCommand=GTK_ENTRY(e);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
+#endif
+#ifdef _WIN32
+	check_button = gtk_check_button_new_with_mnemonic(_("Always use sound play command."));
+	enable = conf->get_bool_at("dictionary/always_use_sound_play_command");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
+	g_signal_connect(G_OBJECT (check_button), "toggled", G_CALLBACK(on_setup_dictionary_always_sound_cmd_ckbutton_toggled), (gpointer)this);
+	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 #endif
 
 	label = gtk_label_new(_("RealPeopleTTS search path:"));
@@ -2038,7 +2053,7 @@ bool PrefsDlg::ShowModal()
 			port = 2628;
 		conf->set_int_at("network/port", port);
 		gpAppFrame->oStarDictClient.set_server(server, port);
-#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN)
+#if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN) || defined(_WIN32)
 		ch = gtk_entry_get_text(eSoundPlayCommand);
 		if (ch[0])
 			conf->set_string_at("dictionary/sound_play_command", ch);
