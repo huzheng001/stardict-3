@@ -275,7 +275,6 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 		}
 		switch (*p) {
 			case 'm':
-			case 'l'://TODO: convert from local encoding to utf-8
 				p++;
 				sec_size = strlen(p);
 				if (sec_size) {
@@ -342,40 +341,15 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 				}
 				sec_size++;
 				break;
-			case 'W':
+			case 'r':
 				p++;
-				sec_size=g_ntohl(get_uint32(p));
-				//TODO: sound button.
-				sec_size += sizeof(guint32);
-				break;
-			case 'P':
-				{
-				p++;
-				sec_size=g_ntohl(get_uint32(p));
-				if (sec_size) {
-					if (for_float_win) {
-						append_and_mark_orig_word(mark, real_oword, LinksPosList());
-						mark.clear();
-						append_pixbuf(NULL);
-					} else {
-						GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
-						gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
-						gdk_pixbuf_loader_close(loader, NULL);
-						GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
-						if (pixbuf) {
-							append_and_mark_orig_word(mark, real_oword, LinksPosList());
-							mark.clear();
-							append_pixbuf(pixbuf);
-						} else {
-							mark += _("<span foreground=\"red\">[Load image error!]</span>");
-						}
-						g_object_unref(loader);
-					}
-				} else {
-					mark += _("<span foreground=\"red\">[Missing Image]</span>");
+				sec_size = strlen(p);
+				if(sec_size) {
+					append_and_mark_orig_word(mark, real_oword, LinksPosList());
+					mark.clear();
+					append_resource_file_list(p);
 				}
-				sec_size += sizeof(guint32);
-				}
+				sec_size++;
 				break;
 			default:
 				if (g_ascii_isupper(*p)) {
@@ -466,6 +440,59 @@ void ArticleView::AppendWord(const gchar *word)
 void ArticleView::connect_on_link(const sigc::slot<void, const std::string &>& s)
 {
 	pango_view_->on_link_click_.connect(s);
+}
+
+void ArticleView::append_resource_file_list(const gchar *p)
+{
+	const gchar *b = p, *e;
+	std::string type, key;
+	bool new_line_before = true, new_line_after;
+	bool loaded;
+	while(*b) {
+		e = strchr(b, ':');
+		if(!e) {
+			pango_view_->append_pango_text(
+				_("<span foreground=\"red\">[Resource file list: incorrect format!]</span>"));
+			break;
+		}
+		type.assign(b, e-b);
+		b = e+1;
+		e = strchr(b, '\n');
+		if(!e)
+			e = strchr(b, '\0');
+		key.assign(b, e-b);
+		b = (*e) ? e + 1 : e;
+		loaded = false;
+		new_line_after = false;
+		if(type == "img") {
+			if(!new_line_before)
+				pango_view_->append_text("\n");
+			new_line_after = true;
+			append_data_res_image(key, "", loaded);
+		} else if(type == "snd") {
+			append_data_res_sound(key, "", loaded);
+		} else if(type == "vdo") {
+			append_data_res_video(key, "", loaded);
+		} else if(type == "att") {
+			append_data_res_attachment(key, "", loaded);
+		} else {
+			pango_view_->append_pango_text(
+				_("<span foreground=\"red\">[Resource file list: incorrect format!]</span>"));
+			break;
+		}
+		if(!loaded) {
+			glib::CharStr str(g_markup_escape_text(key.c_str(), -1));
+			std::string mark;
+			mark += "\n<span foreground=\"red\">";
+			mark += get_impl(str);
+			mark += "</span>";
+			pango_view_->append_pango_text(mark.c_str());
+			new_line_after = true;
+		}
+		if(new_line_after)
+			pango_view_->append_text("\n");
+		new_line_before = new_line_after;
+	}
 }
 
 void ArticleView::append_data_parse_result(const gchar *real_oword, 
@@ -608,13 +635,13 @@ void ArticleView::append_data_parse_result(const gchar *real_oword,
 		{
 			bool loaded = false;
 			if (it->item->res->type == "image") {
-				append_data_res_image(it, loaded);
+				append_data_res_image(it->item->res->key, it->mark, loaded);
 			} else if (it->item->res->type == "sound") {
-				append_data_res_sound(it, loaded);
+				append_data_res_sound(it->item->res->key, it->mark, loaded);
 			} else if (it->item->res->type == "video") {
-				append_data_res_video(it, loaded);
+				append_data_res_video(it->item->res->key, it->mark, loaded);
 			} else {
-				append_data_res_attachment(it, loaded);
+				append_data_res_attachment(it->item->res->key, it->mark, loaded);
 			}
 			if (!loaded) {
 				std::string tmark;
@@ -675,20 +702,22 @@ void ArticleView::append_data_parse_result(const gchar *real_oword,
 }
 
 void ArticleView::append_data_res_image(
-	std::list<ParseResultItemWithMark>::iterator it,
+	const std::string& key, const std::string& mark,
 	bool& loaded)
 {
 	if (for_float_win) {
 		loaded = true;
-		pango_view_->insert_pixbuf(NULL, it->item->res->key.c_str(), 
-			it->mark.c_str());
+		if(mark.empty())
+			pango_view_->append_pixbuf(NULL, key.c_str());
+		else
+			pango_view_->insert_pixbuf(NULL, key.c_str(), mark.c_str());
 	} else {
 		GdkPixbuf* pixbuf = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
 				if(const char* content = gpAppFrame->oLibs.GetStorageFileContent
-					(dict_index.index, it->item->res->key)) {
+					(dict_index.index, key)) {
 					const guint32 size = get_uint32(content);
 					const guchar *data = (const guchar *)(content+sizeof(guint32));
 					GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
@@ -703,27 +732,32 @@ void ArticleView::append_data_res_image(
 		}
 		if (pixbuf) {
 			loaded = true;
-			pango_view_->insert_pixbuf(pixbuf, it->item->res->key.c_str(), 
-				it->mark.c_str());
+			if(mark.empty())
+				pango_view_->append_pixbuf(pixbuf, key.c_str());
+			else
+				pango_view_->insert_pixbuf(pixbuf, key.c_str(), mark.c_str());
 			g_object_unref(pixbuf);
 		}
 	}
 }
 
 void ArticleView::append_data_res_sound(
-	std::list<ParseResultItemWithMark>::iterator it,
+	const std::string& key, const std::string& mark,
 	bool& loaded)
 {
 	if (for_float_win) {
 		loaded = true;
-		pango_view_->insert_widget(NULL, it->mark.c_str());
+		if(mark.empty())
+			pango_view_->append_widget(NULL);
+		else
+			pango_view_->insert_widget(NULL, mark.c_str());
 	} else {
 		GtkWidget *widget = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
 				ResData *pResData
-					= new ResData(dict_index.index, it->item->res->key);
+					= new ResData(dict_index.index, key);
 				GtkWidget *button = NULL;
 				GtkWidget *image = NULL;
 				image = gtk_image_new_from_pixbuf(get_impl(
@@ -752,26 +786,32 @@ void ArticleView::append_data_res_sound(
 		}
 		if(widget) {
 			loaded = true;
-			pango_view_->insert_widget(widget, it->mark.c_str());
+			if(mark.empty())
+				pango_view_->append_widget(widget);
+			else
+				pango_view_->insert_widget(widget, mark.c_str());
 			g_object_unref(widget);
 		}
 	}
 }
 
 void ArticleView::append_data_res_video(
-	std::list<ParseResultItemWithMark>::iterator it,
+	const std::string& key, const std::string& mark,
 	bool& loaded)
 {
 	if (for_float_win) {
 		loaded = true;
-		pango_view_->insert_widget(NULL, it->mark.c_str());
+		if(mark.empty())
+			pango_view_->append_widget(NULL);
+		else
+			pango_view_->insert_widget(NULL, mark.c_str());
 	} else {
 		GtkWidget *widget = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
 				ResData *pResData
-					= new ResData(dict_index.index, it->item->res->key);
+					= new ResData(dict_index.index, key);
 				GtkWidget *button = NULL;
 				GtkWidget *image = NULL;
 				image = gtk_image_new_from_pixbuf(get_impl(
@@ -800,26 +840,32 @@ void ArticleView::append_data_res_video(
 		}
 		if(widget) {
 			loaded = true;
-			pango_view_->insert_widget(widget, it->mark.c_str());
+			if(mark.empty())
+				pango_view_->append_widget(widget);
+			else
+				pango_view_->insert_widget(widget, mark.c_str());
 			g_object_unref(widget);
 		}
 	}
 }
 
 void ArticleView::append_data_res_attachment(
-	std::list<ParseResultItemWithMark>::iterator it,
+	const std::string& key, const std::string& mark,
 	bool& loaded)
 {
 	if (for_float_win) {
 		loaded = true;
-		pango_view_->insert_widget(NULL, it->mark.c_str());
+		if(mark.empty())
+			pango_view_->append_widget(NULL);
+		else
+			pango_view_->insert_widget(NULL, mark.c_str());
 	} else {
 		GtkWidget *widget = NULL;
 		if (dict_index.type == InstantDictType_LOCAL) {
 			StorageType type = gpAppFrame->oLibs.GetStorageType(dict_index.index);
 			if (type == StorageType_DATABASE || type == StorageType_FILE) {
 				ResData *pResData
-					= new ResData(dict_index.index, it->item->res->key);
+					= new ResData(dict_index.index, key);
 				GtkWidget *button = NULL;
 				GtkWidget *image = NULL;
 				image = gtk_image_new_from_pixbuf(get_impl(
@@ -848,7 +894,10 @@ void ArticleView::append_data_res_attachment(
 		}
 		if(widget) {
 			loaded = true;
-			pango_view_->insert_widget(widget, it->mark.c_str());
+			if(mark.empty())
+				pango_view_->append_widget(widget);
+			else
+				pango_view_->insert_widget(widget, mark.c_str());
 			g_object_unref(widget);
 		}
 	}

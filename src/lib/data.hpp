@@ -12,7 +12,6 @@
 struct cacheItem {
   guint32 offset;
 	gchar *data;
-  //write code here to make it inline
   cacheItem() {data= NULL;}
   ~cacheItem() {g_free(data);}
 };
@@ -20,6 +19,8 @@ struct cacheItem {
 const int WORDDATA_CACHE_NUM = 10;
 const int UNSET_INDEX = -1;
 const int INVALID_INDEX=-100;
+extern const gchar* const DICT_DATA_TYPE_SEARCH_DATA_STR;
+
 
 class DictBase {
 public:
@@ -31,7 +32,7 @@ public:
 		if (sametypesequence.empty())
 			return true;
 
-		return sametypesequence.find_first_of("mlgxtykwh") !=
+		return sametypesequence.find_first_of(DICT_DATA_TYPE_SEARCH_DATA_STR) !=
 			std::string::npos;
 	}
 	bool SearchData(std::vector<std::string> &SearchWords, guint32 idxitem_offset, guint32 idxitem_size, gchar *origin_data);

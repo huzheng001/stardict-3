@@ -63,14 +63,15 @@ private:
 	void append_and_mark_orig_word(const std::string& mark,
 				       const gchar *origword,
 				       const LinksPosList& links);
+	void append_resource_file_list(const gchar *p);
 	void append_data_parse_result(const gchar *real_oword, ParseResult& parse_result);
-	void append_data_res_image(std::list<ParseResultItemWithMark>::iterator it, 
+	void append_data_res_image(const std::string& key, const std::string& mark,
 		bool& loaded);
-	void append_data_res_sound(std::list<ParseResultItemWithMark>::iterator it, 
+	void append_data_res_sound(const std::string& key, const std::string& mark,
 		bool& loaded);
-	void append_data_res_video(std::list<ParseResultItemWithMark>::iterator it, 
+	void append_data_res_video(const std::string& key, const std::string& mark,
 		bool& loaded);
-	void append_data_res_attachment(std::list<ParseResultItemWithMark>::iterator it, 
+	void append_data_res_attachment(const std::string& key, const std::string& mark,
 		bool& loaded);
 	static void on_resource_button_destroy(GtkObject *object, gpointer user_data);
 	static void on_sound_button_clicked(GtkObject *object, gpointer user_data);

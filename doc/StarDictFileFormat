@@ -360,17 +360,11 @@ dict file itself if the "sametypesequence" option is not used.
 Lower-case characters signify that a field's size is determined by a
 terminating '\0', while upper-case characters indicate that the data
 begins with a network byte-ordered guint32 that gives the length of 
-the following data's size(NOT the whole size which is 4 bytes bigger).
+the following data's size (NOT the whole size which is 4 bytes bigger).
 
 'm'
 Word's pure text meaning.
 The data should be a utf-8 string ending with '\0'.
-
-'l'
-Word's pure text meaning.
-The data is NOT a utf-8 string, but is instead a string in locale
-encoding, ending with '\0'.  Sometimes using this type will save disk
-space, but its use is discouraged.
 
 'g'
 A utf-8 string which is marked up with the Pango text markup language.
@@ -424,16 +418,8 @@ More than one line is supported as a list of available files.
 StarDict will find the files in the Resource Storage.
 The image will be shown, the sound file will have a play button.
 You can "save as" the attachment file and so on.
-
-'W'
-wav file.
-The data begins with a network byte-ordered guint32 to identify the wav
-file's size, immediately followed by the file's content.
-
-'P'
-Picture file.
-The data begins with a network byte-ordered guint32 to identify the picture
-file's size, immediately followed by the file's content.
+The file list must be a utf-8 string ending with '\0'.
+Use '\n' for separating new lines.
 
 'X'
 this type identifier is reserved for experimental extensions.
