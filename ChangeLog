@@ -1,4 +1,5 @@
 2010.
+Removed 'l', 'W', 'P' dictionary content type identifiers. Use 'm' instead of 'l', 'r' instead of 'W' and 'P'.
 Thanks Mindaugas Baranauskas <embar@users.berlios.de> for Lithuanian translation.
 
 2009.
