@@ -372,6 +372,8 @@ For more information about this markup language, See the "Pango
 Reference Manual."
 You might have it installed locally at:
 file:///usr/share/gtk-doc/html/pango/PangoMarkupFormat.html
+Online:
+http://library.gnome.org/devel/pango/stable/PangoMarkupFormat.html
 
 't'
 English phonetic string.
@@ -420,6 +422,7 @@ The image will be shown, the sound file will have a play button.
 You can "save as" the attachment file and so on.
 The file list must be a utf-8 string ending with '\0'.
 Use '\n' for separating new lines.
+Use '/' character as directory separator.
 
 'X'
 this type identifier is reserved for experimental extensions.
