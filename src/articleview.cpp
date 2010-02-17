@@ -211,23 +211,30 @@ struct ArticleView::ParseResultItemWithMark {
 void ArticleView::append_and_mark_orig_word(const std::string& mark,
 					    const gchar *origword,
 					    const LinksPosList& links)
-{	
+{
+	if(mark.empty())
+		return;
 	if (conf->get_bool_at("dictionary/markup_search_word") &&
 	    origword && *origword) {
 		std::string res;
-		size_t olen = strlen(origword);
-		glib::CharStr markoword(g_markup_escape_text(origword, olen));
-		std::string::size_type pos, prev_pos = 0;
-//TODO: mark word even if it looks like w<b>o</b>rd, or contains special xml
-//characters, like &quote;
-		while ((pos = mark.find(origword, prev_pos)) != std::string::npos) {
-			res.append(mark, prev_pos, pos - prev_pos);
-			res.append("<span background=\"yellow\">");
-			res.append(get_impl(markoword));
-			res.append("</span>");
-			prev_pos = pos + olen;
-		}
-		res.append(mark, prev_pos, mark.length() - prev_pos);
+		XMLCharData xmlcd;
+		xmlcd.assign_xml(mark.c_str());
+		const char* const cd_str = xmlcd.get_char_data_str();
+		if(cd_str) {
+			const size_t cd_str_len = xmlcd.get_char_data_str_length();
+			const size_t olen = strlen(origword);
+			const char* cd_b, *cd_p;
+			const char* const start_tag = "<span background=\"yellow\">";
+			const char* const end_tag = "</span>";
+			cd_b = cd_str;
+			while(cd_b < cd_str + cd_str_len && (cd_p = strstr(cd_b, origword))) {
+				xmlcd.copy_xml(res, cd_b - cd_str, cd_p - cd_str);
+				xmlcd.mark_substring(res, start_tag, end_tag, cd_p - cd_str, olen);
+				cd_b = cd_p + olen;
+			}
+			xmlcd.copy_xml(res, cd_b - cd_str, cd_str_len);
+		} else // mark does not contain char data, only markup
+			res = mark;
 		if (links.empty())
 			append_pango_text(res.c_str());
 		else
