@@ -50,7 +50,7 @@ void play_sound_file(const std::string& filename)
 {
 #ifdef _WIN32
 	std::string filename_utf8;
-	std::win_string filename_win;
+	std_win_string filename_win;
 	if(file_name_to_utf8(filename, filename_utf8) 
 		&& utf8_to_windows(filename_utf8, filename_win)) {
 		/* for playing wav files only:
@@ -64,7 +64,7 @@ void play_sound_file(const std::string& filename)
 		bool done=false;
 		if(!conf->get_bool_at("dictionary/always_use_sound_play_command")) {
 			MCIERROR mcierr;
-			std::win_string cmd;
+			std_win_string cmd;
 			if((mcierr = mciSendString(TEXT("close all"), NULL, 0, NULL)))
 				goto mci_error;
 			cmd = TEXT("open \"");
@@ -112,7 +112,7 @@ void show_help(const gchar *section)
 	// You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
 	glib::CharStr filename_utf8(
 		g_strdup_printf(_("%s\\help\\stardict.chm"), datadir_utf8.c_str()));
-	std::win_string filename_win;
+	std_win_string filename_win;
 	if(!utf8_to_windows(get_impl(filename_utf8), filename_win))
 		return ;
 	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), 
@@ -127,7 +127,7 @@ void show_url(const char *url)
 	if (!url)
 		return;
 #ifdef _WIN32
-	std::win_string url_win;
+	std_win_string url_win;
 	if(!utf8_to_windows(url, url_win))
 		return ;
 	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)),

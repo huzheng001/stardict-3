@@ -101,7 +101,7 @@ void DockLet::create_menu()
 {
 	/* create popup menu */
 	if((systray_menu = CreatePopupMenu())) {
-		std::win_string menu_item_win;
+		std_win_string menu_item_win;
 		if(!utf8_to_windows(_("Scan"), menu_item_win))
 			return ;
 		AppendMenu(systray_menu, MF_CHECKED, SYSTRAY_CMND_MENU_SCAN,
@@ -216,7 +216,7 @@ void DockLet::init_icon(HWND hWnd, HICON icon)
 	stardict_nid.uFlags=NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	stardict_nid.uCallbackMessage=WM_TRAYMESSAGE;
 	stardict_nid.hIcon=icon;
-	std::win_string tip_win;
+	std_win_string tip_win;
 	if(!utf8_to_windows(_("StarDict"), tip_win))
 		return;
 	StrCpy(stardict_nid.szTip, tip_win.c_str());
@@ -252,7 +252,7 @@ void DockLet::maximize_from_tray()
 
 void DockLet::scan_on()
 {
-	std::win_string str;
+	std_win_string str;
 	if(!utf8_to_windows(_("StarDict - Scanning"), str))
 		return;
 	change_icon(scan_icon_, str.c_str());
@@ -260,7 +260,7 @@ void DockLet::scan_on()
 
 void DockLet::scan_off()
 {
-	std::win_string str;
+	std_win_string str;
 	if(!utf8_to_windows(_("StarDict - Stopped"), str))
 		return;
 	change_icon(stop_icon_, str.c_str());
@@ -268,7 +268,7 @@ void DockLet::scan_off()
 
 void DockLet::show_normal_icon()
 {
-	std::win_string str;
+	std_win_string str;
 	if(!utf8_to_windows(_("StarDict"), str))
 		return;
 	change_icon(normal_icon_, str.c_str());

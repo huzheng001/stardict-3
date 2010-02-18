@@ -62,7 +62,7 @@ inline bool MapFile::open(const char *file_name, unsigned long file_size)
   }
 #elif defined(_WIN32)
 	std::string file_name_utf8;
-	std::win_string file_name_win;
+	std_win_string file_name_win;
 	if(!file_name_to_utf8(file_name, file_name_utf8))
 		return false;
 	if(!utf8_to_windows(file_name_utf8, file_name_win))
