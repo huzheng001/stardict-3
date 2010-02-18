@@ -81,11 +81,9 @@ extern char *common_encode_uri_string(const char *string);
 extern bool file_name_to_utf8(const std::string& str, std::string& out);
 extern bool utf8_to_file_name(const std::string& str, std::string& out);
 #ifdef _WIN32
-namespace std {
-	typedef std::basic_string<TCHAR> win_string;
-}
-extern bool utf8_to_windows(const std::string& str_utf8, std::win_string& out);
-extern bool windows_to_utf8(const std::win_string& str, std::string& out_utf8);
+typedef std::basic_string<TCHAR> std_win_string;
+extern bool utf8_to_windows(const std::string& str_utf8, std_win_string& out);
+extern bool windows_to_utf8(const std_win_string& str, std::string& out_utf8);
 #endif
 #define DB_DIR_SEPARATOR '/'
 #define DB_DIR_SEPARATOR_S "/"

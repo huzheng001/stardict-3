@@ -200,7 +200,7 @@ void XMLCharData::assign_xml(const char *xml_str_)
 			const char* p = g_utf8_next_char(xml_str + xml_ind);
 			const size_t nbytes = p - (xml_str + xml_ind);
 			strncpy(char_data_str + cd_ind, xml_str + xml_ind, nbytes);
-			std::fill_n(byte_inds + cd_ind, nbytes, xml_ind);
+			std::fill(byte_inds + cd_ind, byte_inds + cd_ind + nbytes, xml_ind);
 			xml_ind += nbytes;
 			cd_ind += nbytes;
 		}

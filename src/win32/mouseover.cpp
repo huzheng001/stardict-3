@@ -42,7 +42,7 @@ void Mouseover::NeedSpyDll()
 		// Notice, the path must be absolute!
 		std::string path = STARDICT_DLL_DIR + G_DIR_SEPARATOR_S "TextOutSpy.dll";
 		std::string path_utf8;
-		std::win_string path_win;
+		std_win_string path_win;
 		if(file_name_to_utf8(path, path_utf8) && utf8_to_windows(path_utf8, path_win)) {
 			fSpyDLL = LoadLibrary(path_win.c_str());
 			if (fSpyDLL==0) {
@@ -154,7 +154,7 @@ void Mouseover::Init()
 	ZeroMemory(GlobalData, sizeof(TGlobalDLLData));
 	std::string path = STARDICT_DLL_DIR + G_DIR_SEPARATOR_S "TextOutHook.dll";
 	std::string path_utf8;
-	std::win_string path_win;
+	std_win_string path_win;
 	file_name_to_utf8(path, path_utf8);
 	utf8_to_windows(path_utf8, path_win);
 	StrCpy(GlobalData->LibName, path_win.c_str());

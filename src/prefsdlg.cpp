@@ -1193,7 +1193,7 @@ void PrefsDlg::on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button
 		if(lRet==ERROR_SUCCESS) {
 			std::string path = gStarDictDataDir+ G_DIR_SEPARATOR_S "stardict.exe";
 			std::string path_utf8;
-			std::win_string path_win;
+			std_win_string path_win;
 			if(file_name_to_utf8(path, path_utf8) 
 			&& utf8_to_windows(path_utf8, path_win)) {
 				RegSetValueEx(hKEY, TEXT("StarDict"), 0, REG_SZ, 

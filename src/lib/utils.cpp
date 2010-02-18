@@ -233,7 +233,7 @@ bool utf8_to_file_name(const std::string& str, std::string& out)
 }
 
 #ifdef _WIN32
-bool utf8_to_windows(const std::string& str_utf8, std::win_string& out)
+bool utf8_to_windows(const std::string& str_utf8, std_win_string& out)
 {
 #ifdef UNICODE
 	const int buf_size = MultiByteToWideChar(
@@ -278,7 +278,7 @@ bool utf8_to_windows(const std::string& str_utf8, std::win_string& out)
 #endif
 }
 
-bool windows_to_utf8(const std::win_string& str, std::string& out_utf8)
+bool windows_to_utf8(const std_win_string& str, std::string& out_utf8)
 {
 #ifdef UNICODE
 	const int buf_size = WideCharToMultiByte(
