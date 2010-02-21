@@ -84,7 +84,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/scan_hotkey", std::string("<Ctrl><Alt>x"));
  	add_entry("/apps/stardict/preferences/dictionary/mainwindow_hotkey", std::string("<Ctrl><Alt>z"));
 #endif
-	add_entry("/apps/stardict/preferences/notification_area_icon/query_in_floatwin", true);
+	add_entry("/apps/stardict/preferences/notification_area_icon/middle_click_action", int(namclaQueryFloatWindow));
 	add_entry("/apps/stardict/preferences/dictionary/only_scan_while_modifier_key", false);
 	add_entry("/apps/stardict/preferences/dictionary/hide_floatwin_when_modifier_key_released", true);
 	add_entry("/apps/stardict/preferences/floating_window/pronounce_when_popup", false);

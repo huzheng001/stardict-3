@@ -129,7 +129,7 @@ private:
   static void on_setup_mainwin_searchwebsite_movedown_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchwebsite_remove_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
-  static void on_setup_NotificationAreaIcon_QueryInFloatWin_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  static void on_setup_NotificationAreaIcon_MiddleButtonClickAction_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_pronounce_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 	static void on_setup_show_float_if_not_found(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #ifndef CONFIG_GPE

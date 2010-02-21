@@ -28,6 +28,12 @@ struct Type2Type {
 	typedef T OriginType;
 };
 
+enum TNotifAreaMiddleClickAction {
+	namclaQueryFloatWindow,
+	namclaQueryMainWindow,
+	namclaDoNothing,
+};
+
 /*
  * AppConf class encapsulate
  * all preference of stardict.
