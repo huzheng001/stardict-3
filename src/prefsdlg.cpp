@@ -1338,10 +1338,9 @@ void PrefsDlg::setup_mainwin_options_page()
 									 G_CALLBACK(on_setup_mainwin_autorun_ckbutton_toggled), this);
 #endif
 	hbox = gtk_hbox_new(false, 12);
-	gtk_box_pack_start(GTK_BOX(vbox1), hbox,false,false,0);
-	GtkWidget *lbl = gtk_label_new(NULL);
-	gtk_label_set_markup_with_mnemonic(GTK_LABEL(lbl), _("Skin:"));
-	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(lbl),false,false,0);
+	gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
+	GtkWidget *lbl = gtk_label_new(_("Skin:"));
+	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(lbl),FALSE,FALSE,0);
 	GtkWidget *cb = gtk_combo_box_new_text();
 	std::string current_skin_path = conf->get_string_at("main_window/skin");
 	find_skins();
@@ -1746,31 +1745,31 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, false, false, 0);
 }
 
-void PrefsDlg::on_setup_NotificationAreaIcon_QueryInFloatWin_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+void PrefsDlg::on_setup_NotificationAreaIcon_MiddleButtonClickAction_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
 {
-	gboolean queryin = gtk_toggle_button_get_active(button);
-  conf->set_bool_at("notification_area_icon/query_in_floatwin",
-								 queryin);
+	int index = gtk_combo_box_get_active(combobox);
+	conf->set_int_at("notification_area_icon/middle_click_action", index);
 }
 
 void PrefsDlg::setup_NotificationAreaIcon_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_DND);
-	GtkWidget *hbox1;
-	hbox1 = gtk_hbox_new(false,0);
-	gtk_box_pack_start(GTK_BOX(vbox),hbox1,false,false,0);
 
-	GtkWidget *check_button;
-	check_button = gtk_check_button_new_with_mnemonic(_("_Query in the floating window when middle mouse\nbutton is clicked."));
-	bool query_in_floatwin=
-	conf->get_bool_at("notification_area_icon/query_in_floatwin");
-
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button),
-															 query_in_floatwin);
-	g_signal_connect(G_OBJECT(check_button), "toggled",
-									 G_CALLBACK(on_setup_NotificationAreaIcon_QueryInFloatWin_ckbutton_toggled), this);
-	gtk_box_pack_start(GTK_BOX(hbox1),check_button,false,false,0);
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 12);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	GtkWidget *label = gtk_label_new(_("When middle mouse button is clicked:"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	GtkWidget *cb = gtk_combo_box_new_text();
+	/* order of items must match the TNotifAreaMiddleClickAction enum */
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Query selection in floating window"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Query selection in main window"));
+	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Do nothing"));
+	gtk_box_pack_start(GTK_BOX(hbox), cb, TRUE, TRUE, 0);
+	int action = conf->get_int_at("notification_area_icon/middle_click_action");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(cb), action);
+	g_signal_connect(G_OBJECT(cb), "changed", G_CALLBACK(on_setup_NotificationAreaIcon_MiddleButtonClickAction_changed), this);
 }
+
 
 void PrefsDlg::on_setup_floatwin_pronounce_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {

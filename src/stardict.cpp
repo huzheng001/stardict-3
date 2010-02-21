@@ -268,12 +268,14 @@ void AppCore::on_maximize()
 
 void AppCore::on_middle_button_click()
 {
-	if (conf->get_bool_at("notification_area_icon/query_in_floatwin")) {
+	TNotifAreaMiddleClickAction action = TNotifAreaMiddleClickAction(
+		conf->get_int_at("notification_area_icon/middle_click_action"));
+	if (action == namclaQueryFloatWindow) {
 		oSelection.LastClipWord.clear();
 		gtk_selection_convert(oSelection.selection_widget,
 				      GDK_SELECTION_PRIMARY,
 				      oSelection.UTF8_STRING_Atom, GDK_CURRENT_TIME);
-	} else {
+	} else if(action == namclaQueryMainWindow){
 		oDockLet->maximize_from_tray();
 		gtk_selection_convert(oMidWin.oTextWin.view->widget(),
 				      GDK_SELECTION_PRIMARY,
