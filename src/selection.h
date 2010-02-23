@@ -8,7 +8,7 @@ const int SELECTION_INTERVAL=300; 		    // check selection interval.
 
 class Selection {
 private:
-    gint IsBusy;
+	gint IsBusy;
 	gint timeout;
 
 	void create_selection_widget();

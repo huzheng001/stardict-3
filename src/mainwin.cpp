@@ -99,7 +99,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
-	gtk_entry_set_max_length(GTK_ENTRY(GTK_BIN(WordCombo)->child), 255);
+	gtk_entry_set_max_length(GTK_ENTRY(GTK_BIN(WordCombo)->child), MAX_INDEX_KEY_SIZE-1);
 	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "changed",
 			  G_CALLBACK (on_entry_changed), this);
 	g_signal_connect (G_OBJECT (GTK_BIN(WordCombo)->child), "activate",
