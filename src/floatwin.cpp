@@ -723,23 +723,23 @@ void FloatWin::Hide()
 
 gint FloatWin::vTimeOutCallback(gpointer data)
 {
-  FloatWin *oFloatWin = static_cast<FloatWin *>(data);
+	FloatWin *oFloatWin = static_cast<FloatWin *>(data);
 	bool lock=
 		conf->get_bool_at("floating_window/lock");
-  if(!lock && !oFloatWin->ismoving && 
-     GTK_WIDGET_VISIBLE(oFloatWin->FloatWindow)) {
-    GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(oFloatWin->FloatWindow));
-    GdkDisplay *display = gdk_screen_get_display(screen);
+	if(!lock && !oFloatWin->ismoving && 
+		GTK_WIDGET_VISIBLE(oFloatWin->FloatWindow)) {
+		GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(oFloatWin->FloatWindow));
+		GdkDisplay *display = gdk_screen_get_display(screen);
 
-    gint iCurrentX,iCurrentY;
-    gdk_display_get_pointer(display, NULL, &iCurrentX, &iCurrentY, NULL);
+		gint iCurrentX,iCurrentY;
+		gdk_display_get_pointer(display, NULL, &iCurrentX, &iCurrentY, NULL);
 		bool only_scan_while_modifier_key=
 			conf->get_bool_at("dictionary/only_scan_while_modifier_key");
 		bool hide_floatwin_when_modifier_key_released=
 			conf->get_bool_at("dictionary/hide_floatwin_when_modifier_key_released");
-    if (only_scan_while_modifier_key && 
-				hide_floatwin_when_modifier_key_released) {
-      if (iCurrentX == oFloatWin->popup_pointer_x && iCurrentY==oFloatWin->popup_pointer_y) {
+		if (only_scan_while_modifier_key && 
+			hide_floatwin_when_modifier_key_released) {
+			if (iCurrentX == oFloatWin->popup_pointer_x && iCurrentY==oFloatWin->popup_pointer_y) {
 				bool released = !gpAppFrame->unlock_keys->is_pressed();
 
 				if (released) {
@@ -747,44 +747,44 @@ gint FloatWin::vTimeOutCallback(gpointer data)
 					gpAppFrame->oSelection.LastClipWord.clear(); //so press modifier key again will pop up the floatwin.
 					return true;
 				}
-      }
-    }
+			}
+		}
 		
-    int distance;
-    gint window_x,window_y,window_width,window_height;
-    gtk_window_get_position(GTK_WINDOW(oFloatWin->FloatWindow),&window_x,&window_y);
-    //notice: gtk_window_get_size() is not really uptodate,don't use it! see "gtk reference".
-    //gtk_window_get_size(GTK_WINDOW(oFloatWin->FloatWindow),&window_width,&window_height);
-    window_width = oFloatWin->now_window_width;
-    window_height = oFloatWin->now_window_height;
-    
-    if (iCurrentX < window_x) {
-	distance = (iCurrentX-window_x)*(iCurrentX-window_x);
-	if (iCurrentY < window_y)
-	  distance += (iCurrentY-window_y)*(iCurrentY-window_y);
-	else if (iCurrentY > window_y+window_height)
-	  distance += (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
-    } else if (iCurrentX > window_x+window_width) {
-      distance = (iCurrentX-window_x-window_width)*(iCurrentX-window_x-window_width);
-      if (iCurrentY < window_y)
-	distance += (iCurrentY-window_y)*(iCurrentY-window_y);
-      else if ( iCurrentY > window_y+window_height )
-	distance += (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
-    } else {
-      if (iCurrentY < window_y)
-	distance = (window_y - iCurrentY)*(window_y - iCurrentY);
-      else if (iCurrentY > window_y+window_height)
-	distance = (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
-      else
-	distance = 0; //in the floating window.
-    }
-    if (distance > DISAPPEAR_DISTANCE){
-      oFloatWin->Hide();
-    }
-  } // to be hidden
-  
-  
-  return true;
+		int distance;
+		gint window_x,window_y,window_width,window_height;
+		gtk_window_get_position(GTK_WINDOW(oFloatWin->FloatWindow),&window_x,&window_y);
+		//notice: gtk_window_get_size() is not really uptodate,don't use it! see "gtk reference".
+		//gtk_window_get_size(GTK_WINDOW(oFloatWin->FloatWindow),&window_width,&window_height);
+		window_width = oFloatWin->now_window_width;
+		window_height = oFloatWin->now_window_height;
+
+		if (iCurrentX < window_x) {
+			distance = (iCurrentX-window_x)*(iCurrentX-window_x);
+			if (iCurrentY < window_y)
+				distance += (iCurrentY-window_y)*(iCurrentY-window_y);
+			else if (iCurrentY > window_y+window_height)
+				distance += (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
+		} else if (iCurrentX > window_x+window_width) {
+			distance = (iCurrentX-window_x-window_width)*(iCurrentX-window_x-window_width);
+			if (iCurrentY < window_y)
+				distance += (iCurrentY-window_y)*(iCurrentY-window_y);
+			else if ( iCurrentY > window_y+window_height )
+				distance += (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
+		} else {
+			if (iCurrentY < window_y)
+				distance = (window_y - iCurrentY)*(window_y - iCurrentY);
+			else if (iCurrentY > window_y+window_height)
+				distance = (iCurrentY-window_y-window_height)*(iCurrentY-window_y-window_height);
+			else
+				distance = 0; //in the floating window.
+		}
+		if (distance > DISAPPEAR_DISTANCE){
+			oFloatWin->Hide();
+		}
+	} // to be hidden
+
+
+	return true;
 }
 
 gboolean FloatWin::vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, FloatWin *oFloatWin)

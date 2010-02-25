@@ -174,7 +174,7 @@ void Selection::SelectionReceived(gchar* sToken)
 	a = sToken;
 	while(*a) {
 		a2 = g_utf8_next_char(a);
-		if(sToken + MAX_INDEX_KEY_SIZE < a2)
+		if(a2 < sToken + MAX_INDEX_KEY_SIZE)
 			a = a2;
 		else
 			break;
