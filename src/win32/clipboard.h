@@ -9,7 +9,7 @@ const int CLIPBOARD_INTERVAL=300; 		    // check clipboard interval.
 class Clipboard
 {
 private:
-    gint IsBusy;
+	gint IsBusy;
 	gint timeout;
 	GtkClipboard* clipboard;
 

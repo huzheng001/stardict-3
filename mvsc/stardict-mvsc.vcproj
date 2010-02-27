@@ -542,6 +542,10 @@
 				Name="win32"
 				>
 				<File
+					RelativePath="..\src\win32\clipboard.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\win32\mouseover.h"
 					>
 				</File>

@@ -2,9 +2,9 @@
 #  include "config.h"
 #endif
 
-#include "../stardict.h"
 #include <glib/gi18n.h>
 
+#include "../stardict.h"
 #include "clipboard.h"
 
 
@@ -14,6 +14,7 @@ Clipboard::Clipboard()
 {
 	IsBusy = 0;
 	timeout = 0;
+	clipboard = NULL;
 }
 
 void Clipboard::Init()
@@ -34,19 +35,19 @@ void Clipboard::start()
 
 void Clipboard::stop()
 {
-        if (timeout) {
-                g_source_remove(timeout);
-                timeout = 0;
-        }
+	if (timeout) {
+		g_source_remove(timeout);
+		timeout = 0;
+	}
 	LastClipWord.clear();
 }
 
 gint Clipboard::TimeOutCallback(gpointer data)
 {
 	Clipboard *oClipboard = (Clipboard *)data;
-	if (oClipboard->IsBusy ) {
+	if (oClipboard->IsBusy) {
 		oClipboard->IsBusy++;
-		if (oClipboard->IsBusy*CLIPBOARD_INTERVAL > 8000 ) {
+		if (oClipboard->IsBusy*CLIPBOARD_INTERVAL > 8000) {
 			oClipboard->IsBusy = 0;
 		}
 	} else {
@@ -71,60 +72,56 @@ void Clipboard::ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *
 	}
 }
 
+/* sToken in utf-8 encoding. */
 void Clipboard::ClipboardReceived(gchar* sToken)
 {
-    if(sToken[0] == '\0') {
-        LastClipWord.clear();
-        return;
-    }
-
-	gint len = 0;
-	gchar *a = sToken;
-	while ((*a) && len < 256) {
-		a = g_utf8_next_char (a);
-		++len;
-	}
-	*a = '\0';
-	
-    while (g_ascii_isspace(*sToken))
+	gchar *a, *a2;
+	while (g_ascii_isspace(*sToken))
 		sToken++;
-	if(sToken[0] == '\0') {
-		LastClipWord.clear();
-        return;
-    }
-
 	a=strchr(sToken,'\n');
 	if (a)
 		*a='\0';
-	
-    if (g_str_has_prefix(sToken,"http://") || g_str_has_prefix(sToken,"ftp://")) {
-        LastClipWord.clear();
-        return;
-    }
-    
-    if (LastClipWord != sToken)     // not equal
-    {
+	if(sToken[0] == '\0') {
+		LastClipWord.clear();
+		return;
+	}
+
+	if (g_str_has_prefix(sToken,"http://") || g_str_has_prefix(sToken,"ftp://")) {
+		LastClipWord.clear();
+		return;
+	}
+
+	a = sToken;
+	while(*a) {
+		a2 = g_utf8_next_char(a);
+		if(a2 < sToken + MAX_INDEX_KEY_SIZE)
+			a = a2;
+		else
+			break;
+	}
+	*a = '\0';
+
+	if (LastClipWord != sToken)     // not equal
+	{
 		LastClipWord = sToken;
-        if(bIsPureEnglish(sToken))
-        {
-			//if ( g_str_has_suffix(sToken,".pdf") || g_str_has_suffix(sToken,".txt") || g_str_has_suffix(sToken,".cpp") )
-				//return;
+		if(bIsPureEnglish(sToken))
+		{
 			if ( gpAppFrame->SimpleLookupToFloat(sToken,false) )  //found
 				return;
 			a = GetPureEnglishAlpha(sToken);
 			if (*a) {
 				if (LastClipWord == a) {
 					gpAppFrame->ShowNotFoundToFloatWin(a, _("<Not Found!>"), false);
-        			gpAppFrame->oTopWin.InsertHisList(a); //really need?
+					gpAppFrame->oTopWin.InsertHisList(a); //really need?
 				}
 				else
 					gpAppFrame->SimpleLookupToFloat(a,true);
 			}
 			// else the string is too strange, don't show any thing.
-        }
+		}
 		else
 		{
 			gpAppFrame->SimpleLookupToFloat(sToken,true);
 		}
-    }
+	}
 }
