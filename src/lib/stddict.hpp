@@ -361,6 +361,10 @@ public:
 	FileHolder GetStorageFilePath(size_t iLib, const std::string &key);
 	const char *GetStorageFileContent(size_t iLib, const std::string &key);
 private:
+	bool LookupSimilarWordTryWord(const gchar *sTryWord, const gchar *sWord,
+		int servercollatefunc, size_t iLib,
+		glong &iIndex, glong &idx_suggest, gint &best_match);
+
 	std::vector<Dict *> oLib; // word Libs.
 	int iMaxFuzzyDistance;
 	show_progress_t *show_progress;
