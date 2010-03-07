@@ -34,5 +34,6 @@ extern void LoadDictInfo(const std::list<std::string> &plugin_new_install_list);
 extern void GetDictList(std::list<std::string> &dict_list);
 extern void UpdateDictMask();
 extern void UpdatePluginList(std::list<std::string> &plugin_new_install_list);
+extern void RemoveCacheFiles(void);
 
 #endif

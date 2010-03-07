@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 	dirs.push_back("/usr/share/stardict/dic");
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
 #endif
-	for_each_file(dirs, ".ifo", List(), List(), dict_loader(dicts));
+	for_each_file_restricted(dirs, ".ifo", List(), List(), dict_loader(dicts));
 	t=clock()-t;
 	std::cout<<double(t)/CLOCKS_PER_SEC<<std::endl;
 	t=clock();

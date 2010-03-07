@@ -579,32 +579,9 @@ void PrefsDlg::on_setup_dictionary_collation_combobox_changed(GtkComboBox *combo
 	conf->set_int_at("dictionary/collate_function", key);
 }
 
-static void clean_dir(const gchar *dirname)
-{
-	GDir *dir = g_dir_open(dirname, 0, NULL);
-	if (dir) {
-		const gchar *filename;
-		gchar fullfilename[256];
-		while ((filename = g_dir_read_name(dir))!=NULL) {
-			sprintf(fullfilename, "%s" G_DIR_SEPARATOR_S "%s", dirname, filename);
-			if (g_file_test(fullfilename, G_FILE_TEST_IS_DIR)) {
-				clean_dir(fullfilename);
-			} else if (g_str_has_suffix(filename,".oft") || g_str_has_suffix(filename,".clt")) {
-				g_unlink(fullfilename);
-			}
-		}
-		g_dir_close(dir);
-	}
-}
-
 void PrefsDlg::on_setup_dictionary_cache_cleanbutton_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
-	std::string dirname = gStarDictDataDir+ G_DIR_SEPARATOR_S "dic";
-	clean_dir(dirname.c_str());
-	dirname = g_get_user_cache_dir();
-	dirname += G_DIR_SEPARATOR_S "stardict";
-	clean_dir(dirname.c_str());
-	g_rmdir(dirname.c_str());
+	RemoveCacheFiles();
 }
 
 void PrefsDlg::setup_dictionary_cache_page()

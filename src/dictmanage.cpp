@@ -1,6 +1,8 @@
+#include <glib.h>
+#include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include "dictmanage.h"
 #include "lib/file.hpp"
-#include <glib/gi18n.h>
 #include "conf.h"
 #include "stardict.h"
 
@@ -31,8 +33,9 @@ static void get_all_dict_list(std::list<std::string> &dict_all_list)
 {
 	std::list<std::string> dict_order_list;
 	std::list<std::string> dict_disable_list;
-	for_each_file(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
-				dict_order_list, dict_disable_list, GetAllDictList(dict_all_list));
+	for_each_file_restricted(
+		conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
+		dict_order_list, dict_disable_list, GetAllDictList(dict_all_list));
 }
 
 /* List of plugins that are present on the hard disk in known directories. */
@@ -488,4 +491,37 @@ void UpdatePluginList(std::list<std::string> &plugin_new_install_list)
 	remove_list_items(plugin_disable_list, plugin_all_list);
 	conf->set_strlist("/apps/stardict/manage_plugins/plugin_disable_list",
 		plugin_disable_list);
+}
+
+void RemoveCacheFiles(void)
+{
+	/* We may not simply remove all ".oft" and ".clt" files in all known
+	 * directories, there are resource storage directories! */
+	const std::list<std::string>& dict_list = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+	std::list<std::string> dir_list;
+	glib::CharStr gdir;
+	/* Collect a list of directories where to remove cache files. */
+	for(std::list<std::string>::const_iterator it = dict_list.begin(); it != dict_list.end(); ++it) {
+		gdir.reset(g_path_get_dirname(it->c_str()));
+		if(dir_list.end() == std::find(dir_list.begin(), dir_list.end(), std::string(get_impl(gdir))))
+			dir_list.push_back(get_impl(gdir));
+	}
+	dir_list.push_back(std::string(g_get_user_cache_dir()) + G_DIR_SEPARATOR_S "stardict");
+	// remove cache files
+	const gchar *filename;
+	GDir *dir;
+	for(std::list<std::string>::const_iterator it = dir_list.begin(); it != dir_list.end(); ++it) {
+		dir = g_dir_open(it->c_str(), 0, NULL);
+		if(!dir)
+			continue;
+		while ((filename = g_dir_read_name(dir))!=NULL) {
+			if(!g_str_has_suffix(filename, ".oft") && !g_str_has_suffix(filename, ".clt"))
+				continue;
+			std::string fullfilename(std::string(*it)+G_DIR_SEPARATOR_S+filename);
+			if (!g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
+				g_unlink(fullfilename.c_str());
+			}
+		}
+		g_dir_close(dir);
+	}
 }

@@ -1459,8 +1459,8 @@ bool IndexWin::Create(GtkWidget *hpaned)
 
 	gtk_paned_pack1(GTK_PANED(hpaned),notebook,true,false);
 
-	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
-	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),FALSE);
 	oListWin.Create(notebook);
 	oResultWin.Create(notebook);
 
@@ -1809,12 +1809,19 @@ void TextWin::ShowInitFailed()
 	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
 				 sizeof("http://stardict.sourceforge.net") - 1, "http://stardict.sourceforge.net"));
 	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
+	std::string dirs_str;
+	const std::list<std::string>& dirs = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+	for(std::list<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it) {
+		if(!dirs_str.empty())
+			dirs_str += ", ";
+		dirs_str += *it;
+	}
 	glib::CharStr mes(
 		g_strdup_printf(get_impl(esc_fmt),
 				"<span foreground=\"blue\" underline=\"single\">",
 				"http://stardict.sourceforge.net",
 				"</span>",
-				(gStarDictDataDir + G_DIR_SEPARATOR_S "dic").c_str()));
+				dirs_str.c_str()));
 	view->clear();
 	view->append_pango_text_with_links(get_impl(mes), links);
 	view->scroll_to(0);
@@ -2683,8 +2690,8 @@ void MidWin::Create(GtkWidget *vbox)
 
 	notebook = gtk_notebook_new();
 	gtk_widget_show(notebook);
-	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
-	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),false);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),FALSE);
 
 	hpaned = gtk_hpaned_new();
 	gtk_widget_show(hpaned);

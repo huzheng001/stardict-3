@@ -535,9 +535,10 @@ GtkTreeModel* DictManageDlg::create_tree_model(int istreedict)
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 		std::list<std::string> dict_disable_list;
-		for_each_file(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
-				conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
-				dict_disable_list, GetInfo(model, 0));
+		for_each_file_restricted(
+			conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
+			conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
+			dict_disable_list, GetInfo(model, 0));
 		size_t n = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.ndicts();
 		const char *dictname, *dictid;
 		GtkTreeIter iter;
