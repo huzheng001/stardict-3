@@ -9,7 +9,9 @@
 #include <windows.h>
 #endif
 
-#ifdef ARM
+#include <string.h>
+
+#if defined(ARM) || defined(__sparc__)
 static inline guint32 get_uint32(const gchar *addr)
 {
 	guint32 result;
