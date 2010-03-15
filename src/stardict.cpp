@@ -210,6 +210,29 @@ class gtk_show_progress_t : public show_progress_t {
 public:
 	void notify_about_work() { ProcessGtkEvent(); }
 } gtk_show_progress;
+
+/********************************************************************/
+class reload_show_progress_t : public show_progress_t {
+public:
+	reload_show_progress_t(progress_win &pw_) : pw(pw_) {}
+	void notify_about_start(const std::string& title) {
+		pw.display_action(title);
+	}
+	void notify_about_work() {
+		ProcessGtkEvent();
+	}
+private:
+	progress_win &pw;
+};
+
+/********************************************************************/
+class load_show_progress_t : public show_progress_t {
+public:
+	void notify_about_start(const std::string& title) {
+		stardict_splash.display_action(title);
+	}
+} load_show_progress;
+
 /********************************************************************/
 AppCore::AppCore() :
 	oLibs(&gtk_show_progress,
@@ -242,13 +265,6 @@ AppCore::~AppCore()
 	delete oStarDictPlugins;
 	// window?
 }
-
-class load_show_progress_t : public show_progress_t {
-public:
-	void notify_about_start(const std::string& title) {
-		stardict_splash.display_action(title);
-	}
-} load_show_progress;
 
 void AppCore::on_change_scan(bool val)
 {
@@ -2106,16 +2122,6 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 	oHttpManager.Remove(http_client);
 }
 
-class reload_show_progress_t : public show_progress_t {
-public:
-	reload_show_progress_t(progress_win &pw_) : pw(pw_) {}
-	void notify_about_start(const std::string& title) {
-		pw.display_action(title);
-	}
-private:
-	progress_win &pw;
-};
-
 void AppCore::PopupPrefsDlg()
 {
 	if (!prefs_dlg) {
@@ -2134,11 +2140,12 @@ void AppCore::PopupPrefsDlg()
 		if (enbcol == conf->get_bool_at("dictionary/enable_collation") &&
 		    colf == conf->get_int_at("dictionary/collate_function"))
 			return;
-		progress_win pw;
+		progress_win pw(GTK_WINDOW(gpAppFrame->window));
 		reload_show_progress_t rsp(pw);
+		show_progress_t *old_progress = oLibs.get_show_progress();
 		oLibs.set_show_progress(&rsp);
 		reload_dicts();
-		oLibs.set_show_progress(&gtk_show_progress);
+		oLibs.set_show_progress(old_progress);
 	}
 }
 
@@ -2166,11 +2173,12 @@ void AppCore::PopupDictManageDlg()
 	if (dict_manage_dlg->Show(dictmanage_config_changed))
 		return;
 	if (dictmanage_config_changed) {
-		progress_win pw;
+		progress_win pw(GTK_WINDOW(gpAppFrame->window));
 		reload_show_progress_t rsp(pw);
+		show_progress_t *old_progress = oLibs.get_show_progress();
 		oLibs.set_show_progress(&rsp);
 		reload_dicts();
-		oLibs.set_show_progress(&gtk_show_progress);
+		oLibs.set_show_progress(old_progress);
 		oMidWin.oLeftWin.UpdateChooseGroup();
 	}
 }

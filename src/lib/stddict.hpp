@@ -281,6 +281,10 @@ public:
 		else
 			show_progress = &default_show_progress;
 	}
+	show_progress_t *get_show_progress(void) const
+	{
+		return show_progress;
+	}
 	bool load_dict(const std::string& url, show_progress_t *sp);
 #ifdef SD_SERVER_CODE
 	void LoadFromXML();
