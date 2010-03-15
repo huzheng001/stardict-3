@@ -28,11 +28,19 @@
 
 #include "progresswin.hpp"
 
-progress_win::progress_win()
+progress_win::progress_win(GtkWindow *parent_win)
 {
-	win = gtk_window_new(GTK_WINDOW_POPUP);
+	win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_add_events(win, GDK_BUTTON_PRESS_MASK | GDK_BUTTON1_MOTION_MASK);
+	g_signal_connect (G_OBJECT (win), "button_press_event", G_CALLBACK (vButtonPressCallback), this);
+	g_signal_connect (G_OBJECT (win), "motion_notify_event", G_CALLBACK (vMotionNotifyCallback), this);
+	gtk_window_set_decorated(GTK_WINDOW(win), FALSE);
+	gtk_window_set_modal(GTK_WINDOW(win), TRUE);
+	//gtk_window_set_keep_above(GTK_WINDOW(win), TRUE);
+	if(parent_win)
+		gtk_window_set_transient_for(GTK_WINDOW(win), parent_win);
 	gtk_window_set_title(GTK_WINDOW(win), _("Loading"));
-	gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
+	gtk_window_set_position(GTK_WINDOW(win), parent_win ? GTK_WIN_POS_CENTER_ON_PARENT : GTK_WIN_POS_CENTER);
 	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(win), vbox);
 	text = GTK_LABEL(gtk_label_new(_("Loading")));
@@ -43,9 +51,44 @@ progress_win::progress_win()
 	ProcessGtkEvent();
 }
 
+progress_win::~progress_win(void)
+{
+	gtk_widget_destroy(win);
+}
+
 void progress_win::display_action(const std::string& actname)
 {
 	gtk_label_set_text(text, actname.c_str());
 	gtk_progress_bar_pulse(progress);
 	ProcessGtkEvent();
+}
+
+gboolean progress_win::vButtonPressCallback (GtkWidget * widget, GdkEventButton * event , progress_win *oWin)
+{
+	if (event->type == GDK_BUTTON_PRESS && event->button == 1
+		/* check that this event is not redirected due to a grab enforced by a modal window */
+		&& widget == gtk_get_event_widget((GdkEvent*)event)) {
+		gtk_window_get_position(GTK_WINDOW(widget),&(oWin->press_window_x),&(oWin->press_window_y));
+		oWin->press_x_root = (gint)(event->x_root);
+		oWin->press_y_root = (gint)(event->y_root);
+	}
+	return TRUE;
+}
+
+gboolean progress_win::vMotionNotifyCallback (GtkWidget * widget, GdkEventMotion * event , progress_win *oWin)
+{
+	if (event->state & GDK_BUTTON1_MASK 
+		/* check that this event is not redirected due to a grab enforced by a modal window */
+		&& widget == gtk_get_event_widget((GdkEvent*)event)) {
+		gint x,y;
+		x = oWin->press_window_x + (gint)(event->x_root) - oWin->press_x_root;
+		y = oWin->press_window_y + (gint)(event->y_root) - oWin->press_y_root;
+		if (x<0)
+			x = 0;
+		if (y<0)
+			y = 0;
+		gtk_window_move(GTK_WINDOW(oWin->win), x, y);
+	}
+
+	return TRUE;
 }
