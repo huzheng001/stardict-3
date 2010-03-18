@@ -42,6 +42,7 @@ private:
   GtkEntry *eSoundPlayCommand;
 #endif
   GtkEntry *eVideoPlayCommand;
+  GtkEntry *eURLOpenCommand;
 #ifndef CONFIG_GPE
   GtkWidget *categories_window;
 #endif
@@ -67,6 +68,7 @@ private:
   void setup_dictionary_video_page();
   void setup_dict_article_rendering();
   void setup_network_netdict();
+  void setup_network_web_browser();
   void setup_mainwin_input_page();
   void setup_mainwin_options_page();
   void setup_mainwin_searchwebsite_page();
@@ -111,6 +113,9 @@ private:
 #endif
   static void on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+  static void on_setup_dictionary_always_url_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+#endif
   static void on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_input_timeout_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg);

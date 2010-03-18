@@ -127,6 +127,14 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif
 	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play"));
+#if defined(CONFIG_GPE)
+	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("gpe-mini-browser"));
+#else
+	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("firefox"));
+#endif
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+	add_entry("/apps/stardict/preferences/dictionary/always_use_open_url_command", false);
+#endif
 #ifdef _WIN32
 	add_entry("/apps/stardict/preferences/dictionary/tts_path", std::string("C:\\Program Files\\WyabdcRealPeopleTTS\nC:\\Program Files\\OtdRealPeopleTTS\nWyabdcRealPeopleTTS\nOtdRealPeopleTTS"));
 #else
