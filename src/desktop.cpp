@@ -127,20 +127,23 @@ void show_url(const char *url)
 	if (!url)
 		return;
 #ifdef _WIN32
-	std_win_string url_win;
-	if(!utf8_to_windows(url, url_win))
-		return ;
-	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)),
-		TEXT("OPEN"), url_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
+	if(!conf->get_bool_at("dictionary/always_use_open_url_command")) {
+		std_win_string url_win;
+		if(!utf8_to_windows(url, url_win))
+			return ;
+		ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)),
+			TEXT("OPEN"), url_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
+		return;
+	}
 #elif defined(CONFIG_GNOME)
-	gnome_url_show(url, NULL);
-#elif defined(CONFIG_GPE)
-	gchar *command = g_strdup_printf("gpe-mini-browser %s", url);
-	system(command);
-	g_free(command);
-#else
-	spawn_command("firefox", url);
+	if(!conf->get_bool_at("dictionary/always_use_open_url_command")) {
+		gnome_url_show(url, NULL);
+		return;
+	}
 #endif
+	
+	const std::string &cmd = conf->get_string_at("dictionary/url_open_command");
+	spawn_command(cmd.c_str(), url);
 }
 
 void play_sound_on_event(const gchar *eventname)

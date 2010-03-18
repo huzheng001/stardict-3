@@ -53,6 +53,7 @@ enum {
 	DICTIONARY_VIDEO_SETTINGS,
 	DICIONARY_ARTICLE_RENDERING,
 	NETWORK_NETDICT,
+	NETWORK_WEB_BROWSER,
 	MAINWIN_INPUT_SETTINGS,
 	MAINWIN_OPTIONS_SETTINGS,
 	MAINWIN_SEARCH_WEBSITE_SETTINGS,
@@ -90,6 +91,7 @@ static CategoriesTreeItem dictionary_behavior [] = {
 
 static CategoriesTreeItem network_behavior [] = {
     {N_("Net Dict"), NULL, NETWORK_NETDICT},
+    {N_("Web browser"), NULL, NETWORK_WEB_BROWSER},
     { NULL }
 };
 
@@ -1096,6 +1098,44 @@ void PrefsDlg::setup_network_netdict()
     gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
 }
 
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+void PrefsDlg::on_setup_dictionary_always_url_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
+{
+	conf->set_bool_at("dictionary/always_use_open_url_command",
+		gtk_toggle_button_get_active(button));
+}
+#endif
+
+void PrefsDlg::setup_network_web_browser()
+{
+	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Web browser"), GTK_STOCK_EXECUTE);
+	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
+
+	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *label = gtk_label_new(_("Command for opening URLs:"));
+	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_widget_set_size_request(entry, 50, -1);
+	const std::string &cmd=
+		conf->get_string_at("dictionary/url_open_command");
+	gtk_entry_set_text(GTK_ENTRY(entry), cmd.c_str());
+	gtk_box_pack_start(GTK_BOX(hbox2), entry, TRUE, TRUE, 0);
+	eURLOpenCommand=GTK_ENTRY(entry);
+	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
+
+#if defined(_WIN32) || defined(CONFIG_GNOME)
+	GtkWidget *check_button 
+		= gtk_check_button_new_with_mnemonic(_("Always use this command for opening URLs."));
+	gboolean enable
+		= conf->get_bool_at("dictionary/always_use_open_url_command");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
+	g_signal_connect(G_OBJECT (check_button), "toggled", 
+		G_CALLBACK(on_setup_dictionary_always_url_cmd_ckbutton_toggled), (gpointer)this);
+	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
+#endif
+}
+
 void PrefsDlg::on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   conf->set_bool_at("main_window/search_while_typing",
@@ -1921,6 +1961,7 @@ GtkWidget* PrefsDlg::create_notebook ()
 	setup_dictionary_video_page();
 	setup_dict_article_rendering();
 	setup_network_netdict();
+	setup_network_web_browser();
 	setup_mainwin_input_page ();
 	setup_mainwin_options_page ();
 	setup_mainwin_searchwebsite_page();
@@ -2005,25 +2046,25 @@ bool PrefsDlg::ShowModal()
 	if (result != GTK_RESPONSE_NONE) {
 		const gchar *ch;
 		ch = gtk_entry_get_text(eExportFile);
-		if (ch[0])
+		if (ch)
 			conf->set_string_at("dictionary/export_file", ch);
 #ifndef _WIN32
 		ch = gtk_entry_get_text(eTTSCommandline);
-		if (ch[0]) {
+		if (ch) {
 			conf->set_string("/apps/stardict/preferences/dictionary/tts_program_cmdline", ch);
 			gpAppFrame->oReadWord.tts_program_cmdline = ch;
 		}
 #endif
 		const gchar *server;
 		ch = gtk_entry_get_text(eStarDictServer);
-		if (ch[0])
+		if (ch && ch[0])
 			server = ch;
 		else
 			server = _("dict.stardict.org");
 		conf->set_string_at("network/server", server);
 		int port;
 		ch = gtk_entry_get_text(eStarDictServerPort);
-		if (ch[0])
+		if (ch && ch[0])
 			port = atoi(ch);
 		else
 			port = 2628;
@@ -2031,12 +2072,15 @@ bool PrefsDlg::ShowModal()
 		gpAppFrame->oStarDictClient.set_server(server, port);
 #if defined(CONFIG_GTK) || defined(CONFIG_GPE) || defined(CONFIG_DARWIN) || defined(_WIN32)
 		ch = gtk_entry_get_text(eSoundPlayCommand);
-		if (ch[0])
+		if (ch)
 			conf->set_string_at("dictionary/sound_play_command", ch);
 #endif
 		ch = gtk_entry_get_text(eVideoPlayCommand);
-		if (ch[0])
+		if (ch)
 			conf->set_string_at("dictionary/video_play_command", ch);
+		ch = gtk_entry_get_text(eURLOpenCommand);
+		if (ch)
+			conf->set_string_at("dictionary/url_open_command", ch);
 		GtkTextBuffer *text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tts_textview));
 		GtkTextIter start_iter;
 		GtkTextIter end_iter;
