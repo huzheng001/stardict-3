@@ -356,6 +356,7 @@ public:
 	void Destroy();
 	void Create(GtkWidget *vbox);
 	void set_news(const char *news, const char *links);
+	static void InternetSearch(const std::string& website);
 };
 
 #endif
