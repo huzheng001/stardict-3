@@ -48,11 +48,9 @@ StarDict search for dictionaries in the following predefined directories:
 Where gStarDictDataDir is the directory of the stardict.exe file under Windows,
 and the value of the STARDICT_DATA_DIR config variable otherwise.
 
-StarDict searchs for .ifo files in each predefined directory and subdirectories thereof,
-stopping descending into subdirectories as soon an .ifo file is found.
-I.e. if an .ifo file is found in a directory, the subdirectories of that directory
-are not searched. The last rule is very important. A dictionary may contain a resource
-subdirectory with arbitrary files in it (see "Resource Storage" section).
+StarDict searchs for .ifo files in each predefined directory and subdirectories thereof.
+StarDict does not descend into "res" subdirectory of a directory containing .ifo files.
+For "res" directory see "Resource Storage" section.
 
 Found an .ifo file, StarDict opens the .idx or .idx.gz file and the .dict.dz or 
 .dict file which is in the same directory and has the same base name.
