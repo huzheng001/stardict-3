@@ -3037,18 +3037,7 @@ gboolean BottomWin::on_internetsearch_button_press(GtkWidget * widget, GdkEventB
 
 void BottomWin::on_internetsearch_menu_item_activate(GtkMenuItem *menuitem, const gchar *website)
 {
-	std::vector<std::string> weblist = split(website, '\t');
-
-	if (weblist[2].find("%s")==std::string::npos)
-		return;
-
-	const gchar *text = gpAppFrame->oTopWin.get_text();
-	if (text[0]) {
-	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
-	  show_url(url);
-		g_free(url);
-	} else
-	  show_url(weblist[1].c_str());
+	InternetSearch(website);
 }
 
 void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
@@ -3058,22 +3047,7 @@ void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
 	if (search_website_list.empty())
 		return;
 
-	std::vector<std::string> weblist =
-		split(search_website_list.front(), '\t');
-
-	if (weblist.size()!=3)
-		return;
-
-	if (weblist[2].find("%s")==std::string::npos)
-		return;
-
-	const gchar *text = gpAppFrame->oTopWin.get_text();
-	if (text[0]) {
-	  gchar *url = g_strdup_printf(weblist[2].c_str(), text);
-	  show_url(url);
-		g_free(url);
-	} else
-	  show_url(weblist[1].c_str());
+	InternetSearch(search_website_list.front());
 }
 
 #ifndef CONFIG_GPE
@@ -3092,3 +3066,22 @@ void BottomWin::PreferenceCallback(GtkButton *button, BottomWin *oBottomWin)
 	gpAppFrame->PopupPrefsDlg();
 }
 #endif
+
+void BottomWin::InternetSearch(const std::string& website)
+{
+	std::vector<std::string> weblist = split(website.c_str(), '\t');
+
+	if (weblist.size()!=3)
+		return;
+
+	if (weblist[2].find("%s")==std::string::npos)
+		return;
+
+	const gchar *text = gpAppFrame->oTopWin.get_text();
+	if (text[0]) {
+		glib::CharStr esc_text(g_uri_escape_string(text, NULL, FALSE));
+		glib::CharStr url(g_strdup_printf(weblist[2].c_str(), get_impl(esc_text)));
+		show_url(get_impl(url));
+	} else
+		show_url(weblist[1].c_str());
+}
