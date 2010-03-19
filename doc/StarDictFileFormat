@@ -243,9 +243,11 @@ The items must be sorted by stardict_strcmp() with synonym_word.
 StarDict-2.4.8 start to support cache files, this feature can speed up 
 loading and save memory as mmap() the cache file. The cache file names 
 are .idx.oft and .syn.oft, the format is:
-First a utf-8 string terminated by '\0', then many 32-bits numbers as 
-the wordoffset index, this index is sparse, and "ENTR_PER_PAGE=32", 
-they are not stored in network byte order.
+- a 32-bits number - the number of index entries;
+- many 32-bits numbers as the wordoffset index, this index is sparse, and "ENTR_PER_PAGE=32";
+- a utf-8 string terminated by '\0'.
+All numbers are stored in machine byte order.
+Placing index entries at the head of the file helps to avoid an alignment problem.
 The string must begin with:
 =====
 StarDict's oft file
@@ -261,7 +263,7 @@ the .ifo file first, if failed, then try to create it at
 If two or more dictionaries have the same file name, StarDict will 
 create somedict.idx.oft, somedict(2).idx.oft, somedict(3).idx.oft, 
 etc. for them respectively, each with different "url=" in the 
-beginning string.
+string.
 
 
 {6}. The collation file's format.
@@ -269,9 +271,11 @@ StarDict-2.4.8 start to support collation, that sort the word
 list by collate function. It will create collation file which 
 names .idx.clt and .syn.clt, the format is a little like offset 
 cache file:
-First a utf-8 string terminated by '\0', then many 32-bits numbers as
-the index that sorted by the collate function, they are not stored 
-in network byte order.
+- a 32-bits number - the number of index entries;
+- many 32-bits numbers as the index that sorted by the collate function;
+- a utf-8 string terminated by '\0'.
+All numbers are stored in machine byte order.
+Placing index entries at the head of the file helps to avoid an alignment problem.
 The string must begin with:
 =====
 StarDict's clt file
