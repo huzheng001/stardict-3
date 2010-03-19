@@ -5,6 +5,7 @@
 #include <glib.h>
 #include <list>
 #include <string>
+#include <cstring>
 
 
 typedef std::list<std::string> List;
@@ -71,13 +72,13 @@ void __for_each_file_restricted(const std::string& dirname, const std::string& s
 		}
 	}
 	g_dir_close(dir);
-	if(found)
-		return;
 	// descend into subdirectories
 	dir = g_dir_open(dirname.c_str(), 0, NULL);
 	if(!dir)
 		return;
 	while ((filename = g_dir_read_name(dir))!=NULL) {
+		if(found && strcmp(filename, "res") == 0)
+			continue;
 		std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR))
 			__for_each_file_restricted(fullfilename, suff, order_list, disable_list, f);
@@ -85,7 +86,7 @@ void __for_each_file_restricted(const std::string& dirname, const std::string& s
 	g_dir_close(dir);
 }
 
-/* like for_each_file, but does not descend into subdirectories of 
+/* like for_each_file, but does not descend into "res" subdirectory of 
  * a directory where a file with suff suffix is found. */
 template<typename Function>
 void for_each_file_restricted(const List& dirs_list, const std::string& suff,
