@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2010-03-26 10:13+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: C/stardict.xml:23(title) C/stardict.xml:73(revnumber)
+msgid "StarDict Manual V2.4.2"
+msgstr "StarDict Manual V2.4.2"
+
+#: C/stardict.xml:25(year)
+msgid "2003"
+msgstr ""
+
+#: C/stardict.xml:26(holder) C/stardict.xml:76(para)
+msgid "Hu Zheng"
+msgstr ""
+
+#: C/stardict.xml:37(publishername) C/stardict.xml:45(orgname) C/stardict.xml:77(para)
+msgid "GNOME Documentation Project"
+msgstr "GNOME Documentatie Project"
+
+#: C/stardict.xml:42(firstname) C/stardict.xml:669(firstname)
+msgid "Hu"
+msgstr ""
+
+#: C/stardict.xml:43(surname) C/stardict.xml:670(surname)
+msgid "Zheng"
+msgstr ""
+
+#: C/stardict.xml:81(releaseinfo)
+msgid "This manual describes version 2.4.2 of StarDict."
+msgstr "Deze handleiding beschrijft versie 2.4.2 van StarDict."
+
+#: C/stardict.xml:84(title)
+msgid "Feedback"
+msgstr ""
+
+#: C/stardict.xml:85(para)
+msgid "To report a bug or make a suggestion regarding the <application>StarDict</application> application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr "Om een bug te rapporten of om een suggestie te maken betreffende de <application>StarDict</application> aapplicatie of deze handleiding, volg hiervoor de aanwijzingen in de <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+
+#: C/stardict.xml:92(primary)
+msgid "StarDict"
+msgstr ""
+
+#: C/stardict.xml:93(primary) C/stardict.xml:349(title)
+msgid "Dictionary"
+msgstr "Woordenboek"
+
+#: C/stardict.xml:99(title)
+msgid "Introduction"
+msgstr "Inleiding"
+
+#: C/stardict.xml:100(para)
+msgid "<application>StarDict</application> is a Cross-Platform and international dictionary written in Gtk2. It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc."
+msgstr "<application>StarDict</application> is een cross-platform, internationaal woordenboek geschreven in Gtk2. Het heeft krachtige onderdelen zoals \"Glob-stijl patroonherkenning\", \"Geselecteerd woord opzoeken\", \"Vaag zoeken\" etc."
+
+#: C/stardict.xml:107(title)
+msgid "Getting Started"
+msgstr "Aan de slag"
+
+#: C/stardict.xml:110(title)
+msgid "Starting StarDict"
+msgstr "Opstarten StarDict"
+
+#: C/stardict.xml:112(para)
+msgid "You can start <application>StarDict</application> in the following ways:"
+msgstr "U kunt <application>StarDict</application> op de volgende manieren starten:"
+
+#: C/stardict.xml:116(term)
+msgid "<guimenu>Applications</guimenu> menu"
+msgstr "<guimenu>Applicaties </guimenu> menu"
+
+#: C/stardict.xml:118(para)
+msgid "Choose <menuchoice><guisubmenu>Accessories</guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+msgstr "Kies <menuchoice><guisubmenu>Accessories</guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+
+#: C/stardict.xml:122(term)
+msgid "Command line"
+msgstr "Command regel"
+
+#: C/stardict.xml:124(para)
+msgid "Type <command>stardict</command>, then press <keycap>Return</keycap>."
+msgstr "Type <command>stardict</command>, druk hierna op <keycap>Enter</keycap>."
+
+#: C/stardict.xml:125(para)
+msgid "You can specify a word to query too :"
+msgstr "Naar n woord zoeken gaat als volgt:"
+
+#: C/stardict.xml:129(replaceable)
+msgid "word"
+msgstr "woord"
+
+#: C/stardict.xml:129(command) C/stardict.xml:135(command) C/stardict.xml:141(command)
+msgid "stardict <placeholder-1/>"
+msgstr ""
+
+#: C/stardict.xml:131(para)
+msgid "or a Glob-style pattern matching string :"
+msgstr "of gebruik een Glob-stijl patroonherkenning:"
+
+#: C/stardict.xml:135(replaceable)
+msgid "wo?d*"
+msgstr "woo?d*"
+
+#: C/stardict.xml:137(para)
+msgid "or do a fuzzy query :"
+msgstr "of doe een 'vaag zoeken':"
+
+#: C/stardict.xml:141(replaceable)
+msgid "/word"
+msgstr "/woord"
+
+#: C/stardict.xml:147(para)
+msgid "If <application>StarDict</application> is already running, it will perform the query in the existing StarDict window."
+msgstr "Als <application>StarDict</application> al actief is, zal de zoekopdracht uitgevoerd worden in het bestaande StarDict venster."
+
+#: C/stardict.xml:155(title)
+msgid "When You Start StarDict"
+msgstr "Als u StarDict opstart"
+
+#: C/stardict.xml:157(para)
+msgid "When you start <application>StarDict</application>, the following window is displayed."
+msgstr "Als u <application>StarDict</application> opstart zal het volgende venster getoond worden."
+
+#: C/stardict.xml:161(title)
+msgid "StarDict Main Window"
+msgstr "StarDict hoofdvenster"
+
+#: C/stardict.xml:168(phrase)
+msgid "Shows StarDict main window. Contains Search input combo, Tool buttons, Word list, Definition area and Setting buttons."
+msgstr "StarDict laat het hoofdvenster zien. Het bevat een zoek invoerveld, gereedschap knoppen, Woordenlijst, Definitie gebied en de instellingen knoppen."
+
+#: C/stardict.xml:175(para)
+msgid "The <guilabel>StarDict</guilabel> main window consists of the following elements:"
+msgstr "Het <guilabel>StarDict</guilabel> hoofdvenster bestaat uit de volgende items:"
+
+#: C/stardict.xml:178(term)
+msgid "<guilabel>Search</guilabel> input combo"
+msgstr "<guilabel>Zoek</guilabel> invoerveld"
+
+#: C/stardict.xml:180(para)
+msgid "Use this field to enter the word that you want to look up. You can also access recently-queried words through the dropdown box."
+msgstr "Type het woord dat u zoek in dit veld. U kunt ook zoeken naar de recent opgezochte woorden door gebruik te maken van het dropdown box."
+
+#: C/stardict.xml:185(term) C/stardict.xml:271(term)
+msgid "Tool buttons"
+msgstr "Gereedschap knoppen"
+
+#: C/stardict.xml:187(para)
+msgid "You can click these buttons to do fuzzy quering, look up the previously queried word, look up the next and previous words from the list on the left, and pop up the main menu."
+msgstr "U kunt op deze knoppen klikken om een 'vaag zoeken' te starten, te zoeken naar de vorige zoekopdracht, te zoeken naar een volgend of vorig woord van de lijst aan de linkerzijde of u kunt het hoofmenu laten verschijnen."
+
+#: C/stardict.xml:192(term)
+msgid "Word list"
+msgstr "Woordenlijst"
+
+#: C/stardict.xml:194(para)
+msgid "Shows the words that have been found in this search."
+msgstr "Laat de gevonden woorden zien bij de zoekopdracht."
+
+#: C/stardict.xml:200(para)
+msgid "<application>StarDict</application> displays the definition of a word in this area of the window."
+msgstr "<application>StarDict</application> laat de betekenis van het woord in dit gebied van het venster zien."
+
+#: C/stardict.xml:204(term)
+msgid "Setting buttons"
+msgstr "Instellingen knoppen"
+
+#: C/stardict.xml:206(para)
+msgid "The bottom-left of the window contains the <guibutton>Scan selection</guibutton> check button, the <guibutton>Info</guibutton> button and the <guibutton>Quit</guibutton> button. Checking the <guibutton>Scan selection</guibutton> check button will cause <application>StarDict</application> to automatically look up words that you highlight in any application. The bottom-right of the window contains the <guibutton>Internet search</guibutton> button, the <guibutton>StarDict project website</guibutton> button, the <guibutton>Dictionary management</guibutton> button and the <guibutton>Preferences</guibutton> button."
+msgstr "Linksonder in het venster staat de <guibutton>Zoek selectie</guibutton> aanvinkknop, de <guibutton>Info</guibutton> knop en de <guibutton>Afsluiten</guibutton> knop. Als de <guibutton>zoek selectie</guibutton> aanvink knop actief is zal <application>StarDict</application> automatisch zoeken naar woorden welke geselecteerd zijn. Rechtsonder in het venster staat de <guibutton>Internet zoek</guibutton> knop, de <guibutton>StarDict project website</guibutton> knop, de <guibutton>Woordenboek beheer</guibutton> knop en de <guibutton>Voorkeuren</guibutton> knop."
+
+#: C/stardict.xml:221(title) C/stardict.xml:427(title)
+msgid "Notification area icon"
+msgstr "Mededelingengebied pictogram"
+
+#: C/stardict.xml:222(para)
+msgid "<application>StarDict</application> will also add an icon to the notification area. When you iconify the main window, the window will be hiden. After you click the icon, the window will be shown again. If you right click this icon, it will popup a menu where you can choose to toggle <guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</guimenuitem>. You can toggle <guimenuitem>Scan selection</guimenuitem> directly by ctrl-clicking the icon. Clicking the middle mouse button on the icon will query the selected word."
+msgstr "<application>StarDict</application> zet ook een pictogram in het mededelingengebied. Als u het programma minimaliseerd zal het hoofdvenster verborgen worden. Als u met de rechtermuis knop op dit pictogram klikt, zal er een menu verschijnen waar u kunt kiezen tussen <guimenuitem>Zoeken</guimenuitem>, of <guimenuitem>Afsluiten</guimenuitem>. U kunt <guimenuitem>Zoek selectie</guimenuitem> direct aanzetten door met ctrl toets op het pictogram te klikken. Klikken met de middelste muis knop op het pictogram zorgt ervoor dat er gezocht wordt met het geselecteerde woord."
+
+#: C/stardict.xml:230(title)
+msgid "<application>StarDict</application>'s notification area icon"
+msgstr "<application>StarDict</application>'s Mededelingengebied pictogram"
+
+#: C/stardict.xml:236(phrase)
+msgid "<application>StarDict</application>'s notification area icon."
+msgstr "<application>StarDict</application>Mededelingengebied pictogram."
+
+#: C/stardict.xml:244(title)
+msgid "Scan selection"
+msgstr "Zoek selectie"
+
+#: C/stardict.xml:246(para)
+msgid "<application>StarDict</application> can automatically scan selections. This means that when you select a word or phrase in <application>StarDict</application> or in any other application, <application>StarDict</application> will get the text that you selected and search for it, then display a floating window containing the result of the search."
+msgstr "<application>StarDict</application> kan automatisch selecties zoeken. Hiermee wordt bedoeld dat u een woord of een zin in <application>StarDict</application> of in een andere applicatie kunt selecteren, <application>StarDict</application> zal naar de tekst zoeken welke geselecteerd is en laat in een zwevend venster de resultaten van deze zoekopdracht zien."
+
+#: C/stardict.xml:253(title)
+msgid "StarDict Floating Window"
+msgstr "StarDict Zwevend Venster"
+
+#: C/stardict.xml:260(phrase)
+msgid "Shows StarDict floating window. Contains Tool buttons and Definition area."
+msgstr "Laat StarDict Zwevend Venster zien welke gereedschap knoppen en het definitiegebied bevat."
+
+#: C/stardict.xml:267(para)
+msgid "You can drag the window to move it. The floating window will disappear when you move your pointer some distance away."
+msgstr "U kunt door middel van slepen het venster verplaatsen. Het zwevende venster zal verdwijnen als u de muisaanwijzer van het zwevende venster verwijderd."
+
+#: C/stardict.xml:268(para)
+msgid "The <guilabel>StarDict</guilabel> floating window consists of the following elements:"
+msgstr "Het <guilabel>StarDict</guilabel> zwevende venster bevat de volgende items:"
+
+#: C/stardict.xml:273(para)
+msgid "The buttons will be hidden automatically to save display space. When your mouse pointer enters the floating window, the buttons will appear immediately, and disappear again as the mouse pointer leaves."
+msgstr "De knoppen worden automatisch verborgen om meer weergave ruimte te hebben. Als u met de muisaanwijzer het zwevende venster binnenkomt worden deze knoppen automatisch zichtbaar en wanneer de muisaanwijzer weer uit het venster gaat verdwijnen ze."
+
+#: C/stardict.xml:275(para)
+msgid "You can click these buttons to <guibutton>query</guibutton> a word in the main window, <guibutton>copy</guibutton> the query result to clipboard, <guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. To the far right is the <guibutton>Lock floating window</guibutton> button. If the floating window is locked, it will always be shown there."
+msgstr "U kunt op deze knoppen klikken om een woord in het hoofdvenster te <guibutton>zoeken</guibutton>, het resultaat naar het klembord te <guibutton>kopiren</guibutton> het woord <guibutton>uitspreken</guibutton> het <guibutton>stoppen</guibutton> van de selectie zoeken, etc. Uiterst rechts is de <guibutton>Vergrendel het zwevende venster</guibutton> knop. Het venster zal altijd worden weergegeven als het zwevende venster is vergrendeld."
+
+#: C/stardict.xml:198(term) C/stardict.xml:283(term)
+msgid "Definition area"
+msgstr "Definitie gebied"
+
+#: C/stardict.xml:285(para)
+msgid "The query result is displayed in this area."
+msgstr "Het resultaat van de zoek opdracht zal in dit gebied worden weergegeven."
+
+#: C/stardict.xml:296(title)
+msgid "Usage"
+msgstr "Gebruik"
+
+#: C/stardict.xml:299(title)
+msgid "Looking Up a Word"
+msgstr "Zoeken naar een woord"
+
+#: C/stardict.xml:300(para)
+msgid "To look up the definition of a word, perform the following steps:"
+msgstr "Om de vertaling van een woord te verkrijgen dient u de volgende stappen uit te voeren:"
+
+#: C/stardict.xml:302(para)
+msgid "Type the word that you want to look up in the <guilabel>Search</guilabel> combo box."
+msgstr "Type het woord welk opgezocht dient te worden in het <guilabel>Zoek</guilabel> combo box."
+
+#: C/stardict.xml:304(para)
+msgid "<application>StarDict</application> will show the definition immediately. If not found, you can press <keycap>Return</keycap> to do a fuzzy query or just click the <guibutton>Fuzzy query</guibutton> button."
+msgstr "<application>StarDict</application> laat meteen alle vertalingen zien. Als er niets gevonden is kunt u op <keycap>Enter</keycap> drukken om een 'vaag zoeken' opdracht te starten of klikken op de <guibutton>'Vaag zoeken'</guibutton> knop."
+
+#: C/stardict.xml:306(para)
+msgid "Use the scrollbar to scroll through the definition. Select the words in the word list to view the related words."
+msgstr "Gebruik de scrollbars om door de definities te scrollen. Selecteer het woord in de woordenlijst om de gerelateerde woorden te zien."
+
+#: C/stardict.xml:312(title)
+msgid "Clearing the Display Area"
+msgstr "Wissen van het weergave gebied"
+
+#: C/stardict.xml:313(para)
+msgid "To clear the text of the <guilabel>Search</guilabel> input combo, click the <guibutton>Clear</guibutton> button on the left, or just press <keycap>Alt-C</keycap> or <keycap>ESC</keycap>."
+msgstr "Om de tekst te wissen uit de <guilabel>Zoek </guilabel> invoer combo, klikt u op de <guibutton>Wis</guibutton> knop aan de linkerzijde, of u drukt <keycap>Alt-C</keycap> of <keycap>ESC</keycap>."
+
+#: C/stardict.xml:318(title)
+msgid "To Copy Text to Another Application"
+msgstr "Tekst kopiren naar een andere applicatie"
+
+#: C/stardict.xml:319(para)
+msgid "There are two ways to copy the text in the display area to another application:"
+msgstr "Er zijn twee methodes om de tekst van het weergave gebied naar een andere applicatie te kopiren:"
+
+#: C/stardict.xml:321(para)
+msgid "To copy all of the text, click the <guibutton>Copy</guibutton> button by the top of the <guilabel>Defintion area</guilabel>."
+msgstr "Om alle tekst te kopieren klikt u op de <guibutton>Kopieer</guibutton> knop welke bovenin het <guilabel>Defintie gebied</guilabel> zit."
+
+#: C/stardict.xml:322(para)
+msgid "To copy some of the text, select the text that you want to copy, then click your mouse's right button and choose <guimenuitem>Copy</guimenuitem>."
+msgstr "Om een bepaalde tekst te kopieren, dient u de tekst te selecteren die u wilt kopieren. Hierna klikt u met de rechtermuisknop en kiest u voor de optie <guimenuitem>Kopieer</guimenuitem>."
+
+#: C/stardict.xml:328(title)
+msgid "To Find Text in the Display Area"
+msgstr "Hoe men tekst kan vinden in het weergave gebied"
+
+#: C/stardict.xml:329(para)
+msgid "To find text in the display area, perform the following steps:"
+msgstr "Om tekst te vinden in het weergave gebied dient u de volgende stappen te doorlopen:"
+
+#: C/stardict.xml:331(para)
+msgid "click the <guibutton>Find</guibutton> button by the top of the <guilabel>Definition area</guilabel>."
+msgstr "cKlik op de <guibutton>In de definitie zoeken </guibutton> knop welke bovenin het <guilabel>Definitie gebied</guilabel> staat."
+
+#: C/stardict.xml:332(para)
+msgid "Type the string that you want to find in the <guilabel>Find</guilabel> text box, then press <keycap>Return</keycap>. You cannot use wildcards."
+msgstr "Type de tekst waar u naar wilt zoeken en klik op <guilabel>Zoeken</guilabel> of u drukt op <keycap>Enter</keycap>. U kunt geen wildcards gebruiken."
+
+#: C/stardict.xml:334(para)
+msgid "To find the next occurrence of the word, press <keycap>Return</keycap> again."
+msgstr "Om de volgende overeenkomst te vinden drukt u weer op <keycap>Enter</keycap>."
+
+#: C/stardict.xml:343(title)
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: C/stardict.xml:344(para)
+msgid "To configure <application>StarDict</application>, click the <guibutton>Preferences</guibutton> button at the right-bottom corner of the main window or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Preferences</guimenuitem>."
+msgstr "Om <application>StarDict</application> in te stellen klikt u op de <guibutton>Voorkeuren</guibutton> knop welke rechtsonder in het hoofdvenster staat of u klikt op de <guibutton>Hoofd menu</guibutton> knop en u kiest <guimenuitem>Voorkeuren</guimenuitem>."
+
+#: C/stardict.xml:351(title)
+msgid "Startup"
+msgstr "Opstarten"
+
+#: C/stardict.xml:354(guilabel)
+msgid "Hide main window when starting StarDict."
+msgstr "Verberg het hoofdvenster als StarDict wordt gestart."
+
+#: C/stardict.xml:356(para)
+msgid "Controls whether the main window appears when you first start the program. If you select this option, you will only see an icon in the notification area after starting <application>StarDict</application>. You may still get to the main window by clicking on this icon."
+msgstr "Gereedschap of het hoofdvenster moet verschijnen als het programma gestart wordt. Als u deze optie selecteert zult u alleen een pictogram in het medelingengebied zien als u <application>StarDict</application> start. U kunt het hoofdvenster zichtbaar maken door op het pictogram te klikken."
+
+#: C/stardict.xml:360(para) C/stardict.xml:373(para) C/stardict.xml:388(para)
+msgid "Default: FALSE."
+msgstr "Standaard: UIT."
+
+#: C/stardict.xml:366(title)
+msgid "Scan Selection"
+msgstr "Zoek Selectie"
+
+#: C/stardict.xml:369(guilabel)
+msgid "Only do scanning while modifier key being pressed."
+msgstr "Alleen maar zoeken als de optietoets is ingedrukt."
+
+#: C/stardict.xml:371(para)
+msgid "Only do scanning while the modifier key being pressed. The modifier key is set by \"Scan modifier key\"."
+msgstr "Alleen maar zoeken als de optietoets is ingedrukt. De optietoest wordt ingesteld door de \"Zoek optietoets\"."
+
+#: C/stardict.xml:379(title)
+msgid "Font"
+msgstr "Lettertype"
+
+#: C/stardict.xml:382(guilabel)
+msgid "Use custom font."
+msgstr "Aangepast lettertype gebruiken."
+
+#: C/stardict.xml:384(para)
+msgid "Allows you to override the system's default font when running <application>StarDict</application>. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
+msgstr "Hiermee kunt u een ander lettertype instellen dan het standaard systeem lettertype als <application>StarDict</application> actief is. Als deze optie is aangezet zal het lettertype wat is ingevuld bij \"Aangepast Lettertype\" gebruikt worden in plaats van het standaard systeem lettertype."
+
+#: C/stardict.xml:389(para)
+msgid "Font settings will take effect the next time you run <application>StarDict</application>."
+msgstr "Lettertype aanpassingen worden pas bij de volgende keer dat <application>StarDict</application> wordt gestart actief."
+
+#: C/stardict.xml:395(title)
+msgid "Sound"
+msgstr "Geluid"
+
+#: C/stardict.xml:398(guilabel)
+msgid "Enable sound event."
+msgstr "Geluidsgebeurtenissen aanzetten."
+
+#: C/stardict.xml:400(para)
+msgid "Whether enable sound event. <application>StarDict</application> will play sound event when button is active, released, and when pop up menu."
+msgstr "Of de geluidsgebeurtenissen aangezet moeten worden. <application>StarDict</application> zal geluidsgebeurtenissen afspelen als deze knop actief is en het menu tevoorschijn komt."
+
+#: C/stardict.xml:402(para) C/stardict.xml:436(para)
+msgid "Default: TRUE."
+msgstr "Standaard: AAN."
+
+#: C/stardict.xml:411(title)
+msgid "Main Window"
+msgstr "Hoofdvenster"
+
+#: C/stardict.xml:413(title)
+msgid "Search Website"
+msgstr "Zoekwebsite"
+
+#: C/stardict.xml:416(guilabel)
+msgid "Search website list area"
+msgstr "De websitelijst doorzoeken"
+
+#: C/stardict.xml:418(para)
+msgid "You can search the websites in this list when you right-click the <guibutton>Internet search</guibutton> button in the main window."
+msgstr "U kunt een internetvertaling doen door met de rechtermuisknop op de <guibutton>Internet zoek</guibutton> knop in het hoofdvenster te klikken."
+
+#: C/stardict.xml:429(title)
+msgid "Options"
+msgstr "Opties"
+
+#: C/stardict.xml:432(guilabel)
+msgid "Query in the floating window when middle mouse button clicked."
+msgstr "Zoeken in het zwevende venster als de middelste muisknop is ingedrukt."
+
+#: C/stardict.xml:434(para)
+msgid "Whether query in the floating window, or the main window. This happens when user clicks the middle mouse button on the notification area icon."
+msgstr "Zoeken in het zwevende venster of in het hoofdvenster als de gebruiker met de middelste muisknop op het mededelingengebied pictogram klikt."
+
+#: C/stardict.xml:444(title)
+msgid "Floating Window"
+msgstr "Zwevend Venster"
+
+#: C/stardict.xml:446(title)
+msgid "Size"
+msgstr "Grootte"
+
+#: C/stardict.xml:449(guilabel)
+msgid "Max window width."
+msgstr "Max venster breedte."
+
+#: C/stardict.xml:451(para)
+msgid "Sets the floating window's max width."
+msgstr "Bepaal de maximale breedte van het zwevende venster."
+
+#: C/stardict.xml:452(para)
+msgid "Default: 320."
+msgstr "Standaard: 320."
+
+#: C/stardict.xml:458(guilabel)
+msgid "Max window height."
+msgstr "Max venster hoogte."
+
+#: C/stardict.xml:460(para)
+msgid "Sets the floating window's max height."
+msgstr "Bepaal de maximalte hoogte van het zwevende venster."
+
+#: C/stardict.xml:461(para)
+msgid "Default: 240."
+msgstr "Standaard: 240."
+
+#: C/stardict.xml:470(title)
+msgid "Dictionary Management"
+msgstr "Woordenboek Beheer"
+
+#: C/stardict.xml:471(para)
+msgid "To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the main window, or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict manage</guimenuitem>."
+msgstr "Om de woordenboeken te beheren klik op de <guibutton>Beheer woordenboeken</guibutton> knop welke rechtsonder in het hoofdvenster staat, of klik op de <guibutton>Hoofdmenu</guibutton> knop en kies <guimenuitem>Woordenboek beheer</guimenuitem>."
+
+#: C/stardict.xml:474(para)
+msgid "In the dictionary management dialog, you can disable dictionaries that you don't need, and you can set the order in which the dictonaries are queried."
+msgstr "In het woordenboek beheer venster kunt u aangeven welke woordenboeken u niet gebruikt. Ook kunt u de woordenboek volgorde bepalen waarin gezocht wordt."
+
+#: C/stardict.xml:477(para)
+msgid "<application>StarDict</application> will search the dictionary files at \"~/.stardict/dic\" and \"/usr/share/stardict/dic\", and search tree dictionary files at \"~/.stardict/treedict\" and \"/usr/share/stardict/treedict\""
+msgstr "<application>StarDict</application> zal alleen zoeken naar woordenboeken bestanden in \"~/.stardict/dic\" en \"/usr/share/stardict/dic\", en zoek boom woordenboeken in \"~/.stardict/treedict\" en \"/usr/share/stardict/treedict\""
+
+#: C/stardict.xml:482(title)
+msgid "Related Projects"
+msgstr "Gerelateerde projecten"
+
+#: C/stardict.xml:483(para)
+msgid "<application>StarDict</application> would not be possible without many other projects' contributions. Here is a short list of projects that helped <application>StarDict</application>."
+msgstr "<application>StarDict</application> zou niet mogelijk zijn gemaakt zonder hulp van vele andere projecten. Hier is een kleine lijst van projecten welke hebben geholpen met <application>StarDict</application>."
+
+#: C/stardict.xml:492(firstname)
+msgid "Ma"
+msgstr ""
+
+#: C/stardict.xml:493(surname)
+msgid "Su'an"
+msgstr ""
+
+#: C/stardict.xml:495(email)
+msgid "msa@wri.com.cn"
+msgstr ""
+
+#: C/stardict.xml:500(title)
+msgid "StarDict 1.31"
+msgstr ""
+
+#: C/stardict.xml:501(para)
+msgid "The original Motif/LessTif-based StarDict 1.31 written in 1999. <application>StarDict</application> 2 got many good ideas from StarDict1.31 such as \"Scan selection.\" Many of <application>StarDict</application> 2's features, like \"Fuzzy query,\" come from StarDict1.31."
+msgstr "De orginele Motif/LessTif-gebaseerd StarDict 1.31 is geschreven in 1999. <application>StarDict</application> 2 heeft veel goede idee van StarDict1.31 zoals \"Zoek selectie.\" Veel van de uit <application>StarDict</application> 2's mogelijkheden, zoals \"Vaag zoeken,\" komen van StarDict1.31."
+
+#: C/stardict.xml:510(firstname)
+msgid "Opera"
+msgstr ""
+
+#: C/stardict.xml:511(surname)
+msgid "Wang"
+msgstr ""
+
+#: C/stardict.xml:513(email)
+msgid "Opera.Wang@motorola.com"
+msgstr ""
+
+#: C/stardict.xml:518(title)
+msgid "StarDict 1.33+"
+msgstr ""
+
+#: C/stardict.xml:519(para)
+msgid "StarDict1.33+ is a big enhancement of StarDict1.31. It added many dictionaries, and so it made me realize that dictionary data was not a barrier to a new, GTK2-based dictionary program. If there had been no StarDict1.33+, I would not have started the <application>StarDict</application> 2 project. The author also helped me to port the StarDict 1.3 dictionary data files to <application>StarDict</application> 2."
+msgstr "StarDict1.33+ is een grote vooruitgang ten opzichte van StarDict1.31. Het voegde veel woordenboeken toe, hierdoor realiseerde ik me dat woordenboekdata geen opstakel mocht zijn voor de nieuwe GTK2-gebaseerd woordenboek programma. Als er geen StarDict1.33+ was geweest, dan was ik geen <application>StarDict</application> 2 project begonnen. De auteur heeft me ook geholpen om de StarDict 1.3 woordenboek data naar <application>StarDict</application> 2 te converteren."
+
+#: C/stardict.xml:526(title)
+msgid "The DICT Project"
+msgstr "Het DICT Project"
+
+#: C/stardict.xml:527(para)
+msgid "Many dictd dictionaries have been ported to <application>StarDict</application>. dictzip, which came from dictd, is also used by <application>StarDict</application>."
+msgstr "Veel dictd woordenboeken zijn omgezet naar <application>StarDict</application>. dictzip, welke bij dictd zit is ook gebruikt door <application>StarDict</application>."
+
+#: C/stardict.xml:529(para)
+msgid "To find more information about the DICT Project, please visit <ulink url=\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>."
+msgstr "Bezoek om meer informatie over het DICT project te vinden de volgende website <ulink url=\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>."
+
+#: C/stardict.xml:536(title)
+msgid "*Quick"
+msgstr ""
+
+#: C/stardict.xml:537(para)
+msgid "Many wquick dictionaries have been ported to <application>StarDict</application>."
+msgstr "Veel wquick woordenboeken zijn geconverteerd naar <application>StarDict</application>."
+
+#: C/stardict.xml:538(para)
+msgid "To find more information about *Quick, please visit <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+msgstr "Meer info over *Quick vindt u hier: <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+
+#: C/stardict.xml:548(firstname)
+msgid "Terrence"
+msgstr ""
+
+#: C/stardict.xml:549(surname)
+msgid "Miao"
+msgstr ""
+
+#: C/stardict.xml:551(email)
+msgid "terence_miao@email.com"
+msgstr ""
+
+#: C/stardict.xml:556(title)
+msgid "The Blowfish Project"
+msgstr "Het Blowfish Project"
+
+#: C/stardict.xml:557(para)
+msgid "The Blowfish Project provided the Oxford English-Chinese dictionary."
+msgstr "Het Blowfish Project heeft de Oxford Engels-Chinees woordenboek aangeboden."
+
+#: C/stardict.xml:558(para)
+msgid "To find more information about the Blowfish Project, please visit the <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish Project Web site</ulink>."
+msgstr "Meer info over het Blowfish Project vindt u hier: <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish Project Web site</ulink>."
+
+#: C/stardict.xml:568(firstname)
+msgid "Fu"
+msgstr ""
+
+#: C/stardict.xml:569(surname)
+msgid "Jianjun"
+msgstr ""
+
+#: C/stardict.xml:571(email)
+msgid "fujianjun@163.net"
+msgstr ""
+
+#: C/stardict.xml:576(title)
+msgid "XDICT"
+msgstr ""
+
+#: C/stardict.xml:577(para)
+msgid "XDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "De XDICT woordenboeken zijn geconverteerd naar <application>StarDict</application>."
+
+#: C/stardict.xml:581(title)
+msgid "cdict5"
+msgstr ""
+
+#: C/stardict.xml:582(para)
+msgid "cdict5's dictionary has been ported to <application>StarDict</application>."
+msgstr "cdict5 woordenboeken zijn geconverteerd naar <application>StarDict</application>."
+
+#: C/stardict.xml:588(firstname)
+msgid "Leon"
+msgstr ""
+
+#: C/stardict.xml:589(surname)
+msgid "Liang"
+msgstr ""
+
+#: C/stardict.xml:591(email)
+msgid "Liang.Lu@CERN.CH"
+msgstr ""
+
+#: C/stardict.xml:596(title)
+msgid "xcdict-tcltk"
+msgstr ""
+
+#: C/stardict.xml:597(ulink)
+msgid "xcdict-tcltk Web site"
+msgstr ""
+
+#: C/stardict.xml:604(firstname)
+msgid "Borg"
+msgstr ""
+
+#: C/stardict.xml:605(surname)
+msgid "LU"
+msgstr ""
+
+#: C/stardict.xml:607(email)
+msgid "dystopia@iname.com"
+msgstr ""
+
+#: C/stardict.xml:612(title)
+msgid "cdict5 v1.3"
+msgstr ""
+
+#: C/stardict.xml:613(para)
+msgid "To find more information about the cdict5 Project, please visit the <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 on freshports</ulink>."
+msgstr "Meer info over het cdict5 Project vindt u hier: <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 on freshports</ulink>."
+
+#: C/stardict.xml:624(firstname)
+msgid "Paul"
+msgstr ""
+
+#: C/stardict.xml:625(surname)
+msgid "Denisowski"
+msgstr ""
+
+#: C/stardict.xml:627(email)
+msgid "cedict@chinesetools.com"
+msgstr ""
+
+#: C/stardict.xml:632(title)
+msgid "CEDICT"
+msgstr ""
+
+#: C/stardict.xml:633(para)
+msgid "CEDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "CEDICT woordenboeken zijn geconverteerd naar <application>StarDict</application>."
+
+#: C/stardict.xml:634(para)
+msgid "To find more information about the CEDICT Project, please visit the <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT Project Web site</ulink>."
+msgstr "Meer info over het CEDICT Project vindt u hier: <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT Project Web site</ulink>."
+
+#: C/stardict.xml:644(firstname)
+msgid "Kong"
+msgstr ""
+
+#: C/stardict.xml:645(surname)
+msgid "Hui"
+msgstr ""
+
+#: C/stardict.xml:647(email)
+msgid "konghui@xinhuanet.com"
+msgstr ""
+
+#: C/stardict.xml:652(title)
+msgid "CFFD"
+msgstr ""
+
+#: C/stardict.xml:653(para)
+msgid "<application>StarDict</application>'s icon was created with this software. CFFD also provided some useful information to me."
+msgstr "Het <application>StarDict</application> pictogram is gemaakt met deze software. CFFD heeft mij nuttige informatie geleverd."
+
+#: C/stardict.xml:655(para)
+msgid "To find more information about the CFFD Project, please visit the <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\">CFFD Project Web site</ulink>."
+msgstr "Meer info over het CFFD Project vindt u hier: <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\">CFFD Project Web site</ulink>."
+
+#: C/stardict.xml:46(email) C/stardict.xml:672(email)
+msgid "huzheng_001@163.com"
+msgstr ""
+
+#: C/stardict.xml:677(title)
+msgid "Developers"
+msgstr "Ontwikkelaars"
+
+#: C/stardict.xml:678(para)
+msgid "To find more information about <application>StarDict</application>, please visit the <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">StarDict Web site</ulink>."
+msgstr "Meer info over <application>StarDict</application> vindt u hier: <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">StarDict Website</ulink>."
+
+#: C/stardict.xml:684(para)
+msgid "Send all comments, suggestions, and bug reports to Hu Zheng (<email>huzheng_001@163.com</email>)."
+msgstr "Stuur al u commentaar, suggesties, fout rapporten naar Hu Zheng (<email>huzheng_001@163.com</email>)."
+

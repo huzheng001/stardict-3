@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_wiki_parsedata.v stardict_wiki_parsedata.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wiki_parsedata.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_wiki_parsedata.v"
 endif
 
 noinst_HEADERS = stardict_wiki_parsedata.h
@@ -23,4 +23,4 @@ stardict_wiki_parsedata_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src

@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_xdxf_parsedata.v stardict_xdxf_parsedata.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_xdxf_parsedata.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_xdxf_parsedata.v"
 endif
 
 noinst_HEADERS = stardict_xdxf_parsedata.h
@@ -19,4 +19,4 @@ stardict_xdxf_parsedata_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src

@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_update_info.v stardict_update_info.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_update_info.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_update_info.v"
 endif
 
 noinst_HEADERS = stardict_update_info.h
@@ -19,4 +19,4 @@ stardict_update_info_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src

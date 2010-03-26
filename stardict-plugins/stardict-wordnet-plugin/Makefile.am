@@ -5,7 +5,7 @@ EXTRA_DIST = stardict_wordnet.v stardict_wordnet.dev	\
 if DARWIN_SUPPORT
 WORDNET_LD_VERSION_SCRIPT_OPTION=
 else
-WORDNET_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wordnet.v"
+WORDNET_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_wordnet.v"
 endif
 
 stardict_wordnet_LTLIBRARIES = stardict_wordnet.la
@@ -23,7 +23,7 @@ stardict_wordnet_la_LDFLAGS = 	-avoid-version \
 if DARWIN_SUPPORT
 WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION=
 else
-WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_wordnet_parsedata.v"
+WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_wordnet_parsedata.v"
 endif
 
 stardict_wordnet_parsedata_LTLIBRARIES = stardict_wordnet_parsedata.la
@@ -36,4 +36,4 @@ stardict_wordnet_parsedata_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@
+AM_CPPFLAGS = @STARDICT_CFLAGS@

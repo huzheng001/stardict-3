@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_festival.v
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_festival.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_festival.v"
 endif
 
 noinst_HEADERS = stardict_festival.h
@@ -21,4 +21,4 @@ stardict_festival_la_LDFLAGS = 	-avoid-version \
 
 stardict_festival_la_LIBADD  = $(FESTIVAL_LIBS)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(FESTIVAL_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(FESTIVAL_CFLAGS)

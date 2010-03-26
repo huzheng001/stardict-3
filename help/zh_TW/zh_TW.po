@@ -1,0 +1,676 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2010-03-26 10:50+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: C/stardict.xml:23(title) C/stardict.xml:73(revnumber)
+msgid "StarDict Manual V2.4.2"
+msgstr "星際譯王 使用手冊 V2.4.2"
+
+#: C/stardict.xml:25(year)
+msgid "2003"
+msgstr ""
+
+#: C/stardict.xml:26(holder) C/stardict.xml:76(para)
+msgid "Hu Zheng"
+msgstr "胡正"
+
+#: C/stardict.xml:37(publishername) C/stardict.xml:45(orgname) C/stardict.xml:77(para)
+msgid "GNOME Documentation Project"
+msgstr ""
+
+
+#: C/stardict.xml:81(releaseinfo)
+msgid "This manual describes version 2.4.2 of StarDict."
+msgstr "這本手冊描述了2.4.2版本的星際譯王。"
+
+#: C/stardict.xml:84(title)
+msgid "Feedback"
+msgstr "提出意見"
+
+#: C/stardict.xml:85(para)
+msgid "To report a bug or make a suggestion regarding the <application>StarDict</application> application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr "提出關於<application>星際譯王</application>或本文件的建議或者報告臭蟲請與下面地址聯絡： <ulink url=\"ghelp:gnome-feedback\" type=\"help\"> GNOME 意見頁</ulink>。"
+
+#: C/stardict.xml:92(primary)
+msgid "StarDict"
+msgstr "星際譯王"
+
+#: C/stardict.xml:93(primary) C/stardict.xml:349(title)
+msgid "Dictionary"
+msgstr "辭典"
+
+#: C/stardict.xml:99(title)
+msgid "Introduction"
+msgstr "簡介"
+
+#: C/stardict.xml:100(para)
+msgid "<application>StarDict</application> is a Cross-Platform and international dictionary written in Gtk2. It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc."
+msgstr "<application>星際譯王</application>是一個用Gtk2開發的跨平台的國際化的辭典軟體。她具有強大的功能，如“萬用字元匹配”，“掃描選擇”，“模糊查詢”，等等。"
+
+#: C/stardict.xml:107(title)
+msgid "Getting Started"
+msgstr "啟動"
+
+#: C/stardict.xml:110(title)
+msgid "Starting StarDict"
+msgstr "啟動星際譯王"
+
+#: C/stardict.xml:112(para)
+msgid "You can start <application>StarDict</application> in the following ways:"
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:116(term)
+msgid "<guimenu>Applications</guimenu> menu"
+msgstr "<guimenu>應用程式</guimenu>選單"
+
+#: C/stardict.xml:118(para)
+msgid "Choose <menuchoice><guisubmenu>Accessories</guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+msgstr "選擇<menuchoice><guisubmenu>附屬應用程式</guisubmenu><guimenuitem>星際譯王</guimenuitem></menuchoice>。"
+
+#: C/stardict.xml:122(term)
+msgid "Command line"
+msgstr "指令行"
+
+#: C/stardict.xml:124(para)
+msgid "Type <command>stardict</command>, then press <keycap>Return</keycap>."
+msgstr "輸入<command>stardict</command>，然後按<keycap>回車鍵</keycap>。"
+
+#: C/stardict.xml:125(para)
+msgid "You can specify a word to query too :"
+msgstr "你也可以指定一個單詞來查詢："
+
+#: C/stardict.xml:129(replaceable)
+msgid "word"
+msgstr ""
+
+#: C/stardict.xml:129(command) C/stardict.xml:135(command) C/stardict.xml:141(command)
+msgid "stardict <placeholder-1/>"
+msgstr ""
+
+#: C/stardict.xml:131(para)
+msgid "or a Glob-style pattern matching string :"
+msgstr "或者使用萬用字元查詢："
+
+#: C/stardict.xml:135(replaceable)
+msgid "wo?d*"
+msgstr ""
+
+#: C/stardict.xml:137(para)
+msgid "or do a fuzzy query :"
+msgstr "或者進行模糊查詢："
+
+#: C/stardict.xml:141(replaceable)
+msgid "/word"
+msgstr ""
+
+#: C/stardict.xml:147(para)
+msgid "If <application>StarDict</application> is already running, it will perform the query in the existing StarDict window."
+msgstr "如果<application>星際譯王</application>已經運行，她將會在已有的星際譯王視窗中進行查詢。"
+
+#: C/stardict.xml:155(title)
+msgid "When You Start StarDict"
+msgstr "當你啟動了星際譯王"
+
+#: C/stardict.xml:157(para)
+msgid "When you start <application>StarDict</application>, the following window is displayed."
+msgstr "當你啟動了<application>星際譯王</application>，就會出現下面的視窗。"
+
+#: C/stardict.xml:161(title)
+msgid "StarDict Main Window"
+msgstr "星際譯王 主視窗"
+
+#: C/stardict.xml:168(phrase)
+msgid "Shows StarDict main window. Contains Search input combo, Tool buttons, Word list, Definition area and Setting buttons."
+msgstr "顯示 星際譯王 的主視窗，包含了查詢輸入框，工具按鈕，單詞列表，釋義區和設定按鈕。"
+
+#: C/stardict.xml:175(para)
+msgid "The <guilabel>StarDict</guilabel> main window consists of the following elements:"
+msgstr "<guilabel>星際譯王</guilabel>主視窗包含了下面的元素："
+
+#: C/stardict.xml:178(term)
+msgid "<guilabel>Search</guilabel> input combo"
+msgstr "<guilabel>查詢</guilabel>輸入框"
+
+#: C/stardict.xml:180(para)
+msgid "Use this field to enter the word that you want to look up. You can also access recently-queried words through the dropdown box."
+msgstr "在這裡輸入你想查詢的單詞。你也可以通過用下拉選單來選取最近查過的單詞。"
+
+#: C/stardict.xml:185(term) C/stardict.xml:271(term)
+msgid "Tool buttons"
+msgstr "工具按鈕"
+
+#: C/stardict.xml:187(para)
+msgid "You can click these buttons to do fuzzy quering, look up the previously queried word, look up the next and previous words from the list on the left, and pop up the main menu."
+msgstr "你可以通過按一下這些按鈕來進行模糊查詢、查詢先前查過的單詞、查詢位於左邊的列表中的前後單詞和彈出主視窗選單。"
+
+#: C/stardict.xml:192(term)
+msgid "Word list"
+msgstr "單詞列表"
+
+#: C/stardict.xml:194(para)
+msgid "Shows the words that have been found in this search."
+msgstr "顯示了所有這次查到的單詞。"
+
+#: C/stardict.xml:198(term) C/stardict.xml:283(term)
+msgid "Definition area"
+msgstr "釋義區"
+
+#: C/stardict.xml:200(para)
+msgid "<application>StarDict</application> displays the definition of a word in this area of the window."
+msgstr "<application>星際譯王</application>在視窗的這塊區域列出了本單詞的所有釋義。"
+
+#: C/stardict.xml:204(term)
+msgid "Setting buttons"
+msgstr "設定按鈕"
+
+#: C/stardict.xml:206(para)
+msgid "The bottom-left of the window contains the <guibutton>Scan selection</guibutton> check button, the <guibutton>Info</guibutton> button and the <guibutton>Quit</guibutton> button. Checking the <guibutton>Scan selection</guibutton> check button will cause <application>StarDict</application> to automatically look up words that you highlight in any application. The bottom-right of the window contains the <guibutton>Internet search</guibutton> button, the <guibutton>StarDict project website</guibutton> button, the <guibutton>Dictionary management</guibutton> button and the <guibutton>Preferences</guibutton> button."
+msgstr "位於視窗左下角的按鈕包含了<guibutton>取詞</guibutton>核取方塊，<guibutton>顯示訊息</guibutton>按鈕和<guibutton>離開</guibutton>按鈕。選上<guibutton>取詞</guibutton>後會讓 <application>星際譯王</application>自動查詢你在任何應用程式中的選中選擇了的單詞。視窗的右下部包含了<guibutton>搜尋網絡辭典</guibutton>按鈕，<guibutton>瀏覽“星際譯王”網站</guibutton>按鈕，<guibutton>辭典管理</guibutton>按鈕和<guibutton>偏好設定</guibutton>按鈕。"
+
+#: C/stardict.xml:222(para)
+msgid "<application>StarDict</application> will also add an icon to the notification area. When you iconify the main window, the window will be hiden. After you click the icon, the window will be shown again. If you right click this icon, it will popup a menu where you can choose to toggle <guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</guimenuitem>. You can toggle <guimenuitem>Scan selection</guimenuitem> directly by ctrl-clicking the icon. Clicking the middle mouse button on the icon will query the selected word."
+msgstr "<application>星際譯王</application>也會在狀態通知區中加入一個圖示。當你最小化視窗後，視窗就會被隱藏。當你按一下圖示後，視窗就會出現。如果右擊鼠標，會彈出一個選單讓你選擇切換<guimenuitem>取詞</guimenuitem>狀態，或者<guimenuitem>離開</guimenuitem>。你可以按下Ctrl鍵後按一下圖示來直接切換取詞狀態。在圖示上點鼠標中鍵可以查詢選擇中的文字。"
+
+#: C/stardict.xml:230(title)
+msgid "<application>StarDict</application>'s notification area icon"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:236(phrase)
+msgid "<application>StarDict</application>'s notification area icon."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#: C/stardict.xml:244(title)
+msgid "Scan selection"
+msgstr "選擇取詞"
+
+#: C/stardict.xml:246(para)
+msgid "<application>StarDict</application> can automatically scan selections. This means that when you select a word or phrase in <application>StarDict</application> or in any other application, <application>StarDict</application> will get the text that you selected and search for it, then display a floating window containing the result of the search."
+msgstr "<application>星際譯王</application>能夠自動掃描選擇區。這意味著當你在<application>星際譯王</application>中或其它應用程式中選擇了一個單詞或詞組時，<application>星際譯王</application> 就會取得你要選中的單詞或詞組，然後彈出一個浮動視窗顯示查詢結果。"
+
+#: C/stardict.xml:253(title)
+msgid "StarDict Floating Window"
+msgstr "星際譯王 浮動視窗"
+
+#: C/stardict.xml:260(phrase)
+msgid "Shows StarDict floating window. Contains Tool buttons and Definition area."
+msgstr "顯示 星際譯王 浮動視窗。包含了工具按鈕和釋義區。"
+
+#: C/stardict.xml:267(para)
+msgid "You can drag the window to move it. The floating window will disappear when you move your pointer some distance away."
+msgstr "你能夠拖動視窗。當把鼠標指針移出浮動視窗一定距離後，它就會消失。"
+
+#: C/stardict.xml:268(para)
+msgid "The <guilabel>StarDict</guilabel> floating window consists of the following elements:"
+msgstr "<guilabel>星際譯王</guilabel>浮動視窗包含下列元素："
+
+#: C/stardict.xml:273(para)
+msgid "The buttons will be hidden automatically to save display space. When your mouse pointer enters the floating window, the buttons will appear immediately, and disappear again as the mouse pointer leaves."
+msgstr "這些按鈕會自動隱藏以節省顯示空間。當把鼠標移入浮動視窗時，這些按鈕會立即出現，當鼠標離開後又會再度隱藏。"
+
+#: C/stardict.xml:275(para)
+msgid "You can click these buttons to <guibutton>query</guibutton> a word in the main window, <guibutton>copy</guibutton> the query result to clipboard, <guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. To the far right is the <guibutton>Lock floating window</guibutton> button. If the floating window is locked, it will always be shown there."
+msgstr "你可以通過按一下這些按鈕來在主視窗<guibutton>查詢</guibutton>單詞，把查詢結果<guibutton>複製</guibutton>到剪貼板，<guibutton>朗讀</guibutton>單詞，<guibutton>停止</guibutton>選中區掃描等等。在最右邊是<guibutton>鎖定浮動視窗</guibutton>按鈕。如果浮動視窗被鎖定，她就會一直在那裡顯示。"
+
+#: C/stardict.xml:285(para)
+msgid "The query result is displayed in this area."
+msgstr "查詢的結果會顯示在這個區域。"
+
+#: C/stardict.xml:296(title)
+msgid "Usage"
+msgstr "使用方法"
+
+#: C/stardict.xml:299(title)
+msgid "Looking Up a Word"
+msgstr "查詢單詞"
+
+#: C/stardict.xml:300(para)
+msgid "To look up the definition of a word, perform the following steps:"
+msgstr "要查詢一個單詞的釋義，可以按照下列步驟進行："
+
+#: C/stardict.xml:302(para)
+msgid "Type the word that you want to look up in the <guilabel>Search</guilabel> combo box."
+msgstr "在<guilabel>搜索</guilabel>框中輸入你想要查找的單詞。"
+
+#: C/stardict.xml:304(para)
+msgid "<application>StarDict</application> will show the definition immediately. If not found, you can press <keycap>Return</keycap> to do a fuzzy query or just click the <guibutton>Fuzzy query</guibutton> button."
+msgstr "<application>星際譯王</application>會立即顯示所有的釋義。如果沒有找到，你可以按<keycap>回車鍵</keycap>來進行模糊查詢或者按一下<guibutton>模糊查詢</guibutton>按鈕。"
+
+#: C/stardict.xml:306(para)
+msgid "Use the scrollbar to scroll through the definition. Select the words in the word list to view the related words."
+msgstr "你可以利用捲動列來查看釋義區的內容，在單詞列表中選擇相關的單詞。"
+
+#: C/stardict.xml:312(title)
+msgid "Clearing the Display Area"
+msgstr "清除單字輸入框內容"
+
+#: C/stardict.xml:313(para)
+msgid "To clear the text of the <guilabel>Search</guilabel> input combo, click the <guibutton>Clear</guibutton> button on the left, or just press <keycap>Alt-C</keycap> or <keycap>ESC</keycap>."
+msgstr "要清除<guilabel>查找</guilabel>輸入框中的內容，按一下位於左邊的<guibutton>清除</guibutton>按鈕或直接按<keycap>Alt-C</keycap> 或 <keycap>ESC</keycap>。"
+
+#: C/stardict.xml:318(title)
+msgid "To Copy Text to Another Application"
+msgstr "複製文本"
+
+#: C/stardict.xml:319(para)
+msgid "There are two ways to copy the text in the display area to another application:"
+msgstr "複製釋義區的內容到另一個應用程式有兩種方式："
+
+#: C/stardict.xml:321(para)
+msgid "To copy all of the text, click the <guibutton>Copy</guibutton> button by the top of the <guilabel>Defintion area</guilabel>."
+msgstr "複製所有的內容：按一下位於<guilabel>釋義區</guilabel>頂部的<guibutton>複製</guibutton>按鈕。"
+
+#: C/stardict.xml:322(para)
+msgid "To copy some of the text, select the text that you want to copy, then click your mouse's right button and choose <guimenuitem>Copy</guimenuitem>."
+msgstr "選擇你想複製的文本，然後按一下鼠標的右鍵並選擇<guimenuitem>複製</guimenuitem>。"
+
+#: C/stardict.xml:328(title)
+msgid "To Find Text in the Display Area"
+msgstr "查找釋義區文本"
+
+#: C/stardict.xml:329(para)
+msgid "To find text in the display area, perform the following steps:"
+msgstr "要查找位於釋義區的文本，可以按照下面的步驟進行："
+
+#: C/stardict.xml:331(para)
+msgid "click the <guibutton>Find</guibutton> button by the top of the <guilabel>Definition area</guilabel>."
+msgstr "按一下位於<guilabel>釋義區</guilabel>頂部的<guibutton>查找</guibutton>按鈕。"
+
+#: C/stardict.xml:332(para)
+msgid "Type the string that you want to find in the <guilabel>Find</guilabel> text box, then press <keycap>Return</keycap>. You cannot use wildcards."
+msgstr "在<guilabel>查找</guilabel>文本框中輸入你想要查找的單詞或詞組，然後按<keycap>回車鍵</keycap>。但不可以使用萬用字元。"
+
+#: C/stardict.xml:334(para)
+msgid "To find the next occurrence of the word, press <keycap>Return</keycap> again."
+msgstr "要查找下一個單詞，再按<keycap>回車鍵</keycap>即可。"
+
+#: C/stardict.xml:343(title)
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: C/stardict.xml:344(para)
+msgid "To configure <application>StarDict</application>, click the <guibutton>Preferences</guibutton> button at the right-bottom corner of the main window or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Preferences</guimenuitem>."
+msgstr "要設定<application>星際譯王</application>，按一下位於主視窗右下部的<guibutton>偏好設定</guibutton>按鈕或者按一下<guibutton>主選單</guibutton>按鈕並選擇<guimenuitem>偏好設定</guimenuitem>。"
+
+#: C/stardict.xml:351(title)
+msgid "Startup"
+msgstr "啟動"
+
+#: C/stardict.xml:354(guilabel)
+msgid "Hide main window when starting StarDict."
+msgstr "啟動星際譯王時隱藏主視窗。"
+
+#: C/stardict.xml:356(para)
+msgid "Controls whether the main window appears when you first start the program. If you select this option, you will only see an icon in the notification area after starting <application>StarDict</application>. You may still get to the main window by clicking on this icon."
+msgstr "控制啟動本軟體時是否顯示主視窗。如果你選擇了這一項，啟動<application>星際譯王</application>後你只會看到位於狀態通知區的圖示。但你可以通過按一下圖示來顯示主視窗。"
+
+#: C/stardict.xml:360(para) C/stardict.xml:373(para) C/stardict.xml:388(para)
+msgid "Default: FALSE."
+msgstr "預設：否。"
+
+#: C/stardict.xml:366(title)
+msgid "Scan Selection"
+msgstr "選擇區取詞"
+
+#: C/stardict.xml:369(guilabel)
+msgid "Only do scanning while modifier key being pressed."
+msgstr "在修飾鍵被按下時才進行取詞。"
+
+#: C/stardict.xml:371(para)
+msgid "Only do scanning while the modifier key being pressed. The modifier key is set by \"Scan modifier key\"."
+msgstr "是否在作用鍵被按下時才進行取詞。作用鍵由“取詞作用鍵”選項來設定。"
+
+#: C/stardict.xml:379(title)
+msgid "Font"
+msgstr "字型"
+
+#: C/stardict.xml:382(guilabel)
+msgid "Use custom font."
+msgstr "使用自訂的字型。"
+
+#: C/stardict.xml:384(para)
+msgid "Allows you to override the system's default font when running <application>StarDict</application>. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
+msgstr "當運行<application>星際譯王</application>時允許你覆蓋掉系統的預設字型設定。如果這個選項是打開的，那麼在“辭典字型”中的字型就會取代系統預設的設定。"
+
+#: C/stardict.xml:389(para)
+msgid "Font settings will take effect the next time you run <application>StarDict</application>."
+msgstr "下次運行<application>星際譯王</application>時字型設定就生效了。"
+
+#: C/stardict.xml:395(title)
+msgid "Sound"
+msgstr "音效"
+
+#: C/stardict.xml:398(guilabel)
+msgid "Enable sound event."
+msgstr "開啟事件音效。"
+
+#: C/stardict.xml:400(para)
+msgid "Whether enable sound event. <application>StarDict</application> will play sound event when button is active, released, and when pop up menu."
+msgstr "是否開啟事件音效。在選取了，按下按扭，彈起，選單彈出時<application>星際譯王</application>將播放音效。"
+
+#: C/stardict.xml:402(para) C/stardict.xml:436(para)
+msgid "Default: TRUE."
+msgstr "預設：是。"
+
+#: C/stardict.xml:411(title)
+msgid "Main Window"
+msgstr "主視窗"
+
+#: C/stardict.xml:413(title)
+msgid "Search Website"
+msgstr "搜尋網站"
+
+#: C/stardict.xml:416(guilabel)
+msgid "Search website list area"
+msgstr "搜尋網站的列表"
+
+#: C/stardict.xml:418(para)
+msgid "You can search the websites in this list when you right-click the <guibutton>Internet search</guibutton> button in the main window."
+msgstr "通過右鍵按一下位於主視窗的<guibutton>搜尋網路辭典</guibutton>按鈕就出現這些搜尋網站的列表選單。"
+
+#: C/stardict.xml:221(title) C/stardict.xml:427(title)
+msgid "Notification area icon"
+msgstr "狀態通知區圖示"
+
+#: C/stardict.xml:429(title)
+msgid "Options"
+msgstr "選項"
+
+#: C/stardict.xml:432(guilabel)
+msgid "Query in the floating window when middle mouse button clicked."
+msgstr "當點擊鼠標中鍵時在浮動視窗進行查詢。"
+
+#: C/stardict.xml:434(para)
+msgid "Whether query in the floating window, or the main window. This happens when user clicks the middle mouse button on the notification area icon."
+msgstr "是否在浮動視窗中進行查詢，否則為在主視窗查詢。這在當用戶在通知區圖示上點鼠標中鍵時發生。"
+
+#: C/stardict.xml:444(title)
+msgid "Floating Window"
+msgstr "浮動視窗"
+
+#: C/stardict.xml:446(title)
+msgid "Size"
+msgstr "大小"
+
+#: C/stardict.xml:449(guilabel)
+msgid "Max window width."
+msgstr "最大視窗寬度。"
+
+#: C/stardict.xml:451(para)
+msgid "Sets the floating window's max width."
+msgstr "設定浮動視窗寬度的最大值。"
+
+#: C/stardict.xml:452(para)
+msgid "Default: 320."
+msgstr "預設：320。"
+
+#: C/stardict.xml:458(guilabel)
+msgid "Max window height."
+msgstr "最大視窗高度。"
+
+#: C/stardict.xml:460(para)
+msgid "Sets the floating window's max height."
+msgstr "設定浮動視窗高度的最大值。"
+
+#: C/stardict.xml:461(para)
+msgid "Default: 240."
+msgstr "預設：240。"
+
+#: C/stardict.xml:470(title)
+msgid "Dictionary Management"
+msgstr "辭典管理"
+
+#: C/stardict.xml:471(para)
+msgid "To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the main window, or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict manage</guimenuitem>."
+msgstr "要管理辭典，按一下位於主視窗右下角的<guibutton>辭典管理</guibutton>按鈕，或者按一下<guibutton>主選單</guibutton>按鈕並選擇<guimenuitem>辭典管理</guimenuitem>。"
+
+#: C/stardict.xml:474(para)
+msgid "In the dictionary management dialog, you can disable dictionaries that you don't need, and you can set the order in which the dictonaries are queried."
+msgstr "在辭典管理對話框中，你可以關掉不需要的辭典，你也可以設定辭典查詢的順序。"
+
+#: C/stardict.xml:477(para)
+msgid "<application>StarDict</application> will search the dictionary files at \"~/.stardict/dic\" and \"/usr/share/stardict/dic\", and search tree dictionary files at \"~/.stardict/treedict\" and \"/usr/share/stardict/treedict\""
+msgstr "<application>星際譯王</application>將在 \"/usr/share/stardict/dic\" 和 \"~/.stardict/dic\" 目錄查找辭典檔案，在 \"/usr/share/stardict/treedict\" 和 \"~/.stardict/treedict\" 目錄查找樹型辭典檔案。"
+
+#: C/stardict.xml:482(title)
+msgid "Related Projects"
+msgstr "相關專案"
+
+#: C/stardict.xml:483(para)
+msgid "<application>StarDict</application> would not be possible without many other projects' contributions. Here is a short list of projects that helped <application>StarDict</application>."
+msgstr "沒有其它專案的支持和幫助<application>星際譯王</application>不會出現。下面是幫助了<application>星際譯王</application>的專案的簡短列表。"
+
+#: C/stardict.xml:492(firstname)
+msgid "Ma"
+msgstr "馬"
+
+#: C/stardict.xml:493(surname)
+msgid "Su'an"
+msgstr "蘇安"
+
+#: C/stardict.xml:495(email)
+msgid "msa@wri.com.cn"
+msgstr ""
+
+#: C/stardict.xml:500(title)
+msgid "StarDict 1.31"
+msgstr "星際譯王 1.31"
+
+#: C/stardict.xml:501(para)
+msgid "The original Motif/LessTif-based StarDict 1.31 written in 1999. <application>StarDict</application> 2 got many good ideas from StarDict1.31 such as \"Scan selection.\" Many of <application>StarDict</application> 2's features, like \"Fuzzy query,\" come from StarDict1.31."
+msgstr "最初寫於1999年的星際譯王1.31版是基於 Motif/LessTif 開發的。<application>星際譯王</application> 2 吸收了星際譯王1.31版的許多好想法，比如\"掃描選擇區\"。許多 <application>星際譯王</application> 2的重要特色，比如“模糊查詢”就來源於星際譯王1.31版。"
+
+#: C/stardict.xml:510(firstname)
+msgid "Opera"
+msgstr "王"
+
+#: C/stardict.xml:511(surname)
+msgid "Wang"
+msgstr "煒"
+
+#: C/stardict.xml:513(email)
+msgid "Opera.Wang@motorola.com"
+msgstr ""
+
+#: C/stardict.xml:518(title)
+msgid "StarDict 1.33+"
+msgstr "星際譯王 1.33+"
+
+#: C/stardict.xml:519(para)
+msgid "StarDict1.33+ is a big enhancement of StarDict1.31. It added many dictionaries, and so it made me realize that dictionary data was not a barrier to a new, GTK2-based dictionary program. If there had been no StarDict1.33+, I would not have started the <application>StarDict</application> 2 project. The author also helped me to port the StarDict 1.3 dictionary data files to <application>StarDict</application> 2."
+msgstr "星際譯王1.33+版是對1.31的極大改進。她增加了許多辭典，這使我意識到辭典數據對於一個全新的、基於GTK2的辭典專案已經不再是一個障礙。如果沒有星際譯王1.33+版，我也不會開始<application>星際譯王</application> 2 專案。作者還幫助我把辭典的數據轉換到了<application>星際譯王</application>2。"
+
+#: C/stardict.xml:526(title)
+msgid "The DICT Project"
+msgstr "DICT 專案"
+
+#: C/stardict.xml:527(para)
+msgid "Many dictd dictionaries have been ported to <application>StarDict</application>. dictzip, which came from dictd, is also used by <application>StarDict</application>."
+msgstr "很多編撰好的 dictd 辭典已經被轉換加入了<application>星際譯王</application>。來自 DICT 專案的 dictzip 也用在了<application>星際譯王</application>。"
+
+#: C/stardict.xml:529(para)
+msgid "To find more information about the DICT Project, please visit <ulink url=\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>."
+msgstr "要獲得更多關於 DICT 專案的訊息，請訪問 <ulink url=\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>。"
+
+#: C/stardict.xml:536(title)
+msgid "*Quick"
+msgstr ""
+
+#: C/stardict.xml:537(para)
+msgid "Many wquick dictionaries have been ported to <application>StarDict</application>."
+msgstr "wquick的許多辭典都轉換加入到了 <application>星際譯王</application>。"
+
+#: C/stardict.xml:538(para)
+msgid "To find more information about *Quick, please visit <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+msgstr "要獲得更多關於*Quick專案的訊息，請訪問 <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>。"
+
+#: C/stardict.xml:548(firstname)
+msgid "Terrence"
+msgstr ""
+
+#: C/stardict.xml:549(surname)
+msgid "Miao"
+msgstr ""
+
+#: C/stardict.xml:551(email)
+msgid "terence_miao@email.com"
+msgstr ""
+
+#: C/stardict.xml:556(title)
+msgid "The Blowfish Project"
+msgstr "Blowfish 專案"
+
+#: C/stardict.xml:557(para)
+msgid "The Blowfish Project provided the Oxford English-Chinese dictionary."
+msgstr "Blowfish 專案提供了牛津現代英漢雙解辭典。"
+
+#: C/stardict.xml:558(para)
+msgid "To find more information about the Blowfish Project, please visit the <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish Project Web site</ulink>."
+msgstr "要獲得更多關於 Blowfish 專案的訊息，請訪問 <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish 專案網站</ulink>。"
+
+#: C/stardict.xml:568(firstname)
+msgid "Fu"
+msgstr "伏"
+
+#: C/stardict.xml:569(surname)
+msgid "Jianjun"
+msgstr "建軍"
+
+#: C/stardict.xml:571(email)
+msgid "fujianjun@163.net"
+msgstr ""
+
+#: C/stardict.xml:576(title)
+msgid "XDICT"
+msgstr ""
+
+#: C/stardict.xml:577(para)
+msgid "XDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:581(title)
+msgid "cdict5"
+msgstr ""
+
+#: C/stardict.xml:582(para)
+msgid "cdict5's dictionary has been ported to <application>StarDict</application>."
+msgstr "cdict5 的辭典已被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:588(firstname)
+msgid "Leon"
+msgstr ""
+
+#: C/stardict.xml:589(surname)
+msgid "Liang"
+msgstr ""
+
+#: C/stardict.xml:591(email)
+msgid "Liang.Lu@CERN.CH"
+msgstr ""
+
+#: C/stardict.xml:596(title)
+msgid "xcdict-tcltk"
+msgstr ""
+
+#: C/stardict.xml:597(ulink)
+msgid "xcdict-tcltk Web site"
+msgstr "xcdict-tcltk 網站"
+
+#: C/stardict.xml:604(firstname)
+msgid "Borg"
+msgstr ""
+
+#: C/stardict.xml:605(surname)
+msgid "LU"
+msgstr ""
+
+#: C/stardict.xml:607(email)
+msgid "dystopia@iname.com"
+msgstr ""
+
+#: C/stardict.xml:612(title)
+msgid "cdict5 v1.3"
+msgstr ""
+
+#: C/stardict.xml:613(para)
+msgid "To find more information about the cdict5 Project, please visit the <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 on freshports</ulink>."
+msgstr "要獲得更多關於 cdict5 專案的訊息，請訪問 <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 專案網站</ulink>。"
+
+#: C/stardict.xml:624(firstname)
+msgid "Paul"
+msgstr ""
+
+#: C/stardict.xml:625(surname)
+msgid "Denisowski"
+msgstr ""
+
+#: C/stardict.xml:627(email)
+msgid "cedict@chinesetools.com"
+msgstr ""
+
+#: C/stardict.xml:632(title)
+msgid "CEDICT"
+msgstr ""
+
+#: C/stardict.xml:633(para)
+msgid "CEDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "CEDICT 的辭典已經被匯入了<application>星際譯王</application>。"
+
+#: C/stardict.xml:634(para)
+msgid "To find more information about the CEDICT Project, please visit the <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT Project Web site</ulink>."
+msgstr "要獲得更多關於 CEDICT 專案的訊息，請訪問 <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT 專案網站</ulink>。"
+
+#: C/stardict.xml:644(firstname)
+msgid "Kong"
+msgstr "孔"
+
+#: C/stardict.xml:645(surname)
+msgid "Hui"
+msgstr "暉"
+
+#: C/stardict.xml:647(email)
+msgid "konghui@xinhuanet.com"
+msgstr ""
+
+#: C/stardict.xml:652(title)
+msgid "CFFD"
+msgstr ""
+
+#: C/stardict.xml:653(para)
+msgid "<application>StarDict</application>'s icon was created with this software. CFFD also provided some useful information to me."
+msgstr "<application>星際譯王</application>的圖示是從這個軟體得來的。CFFD 同樣也為我提供了一些有用的訊息。"
+
+#: C/stardict.xml:655(para)
+msgid "To find more information about the CFFD Project, please visit the <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\">CFFD Project Web site</ulink>."
+msgstr "要獲得更多關於 CFFD 專案的訊息，請訪問 <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\"> CFFD 專案網站</ulink>。"
+
+#: C/stardict.xml:42(firstname) C/stardict.xml:669(firstname)
+msgid "Hu"
+msgstr "胡"
+
+#: C/stardict.xml:43(surname) C/stardict.xml:670(surname)
+msgid "Zheng"
+msgstr "正"
+
+#: C/stardict.xml:46(email) C/stardict.xml:672(email)
+msgid "huzheng_001@163.com"
+msgstr ""
+
+#: C/stardict.xml:677(title)
+msgid "Developers"
+msgstr "開發者"
+
+#: C/stardict.xml:678(para)
+msgid "To find more information about <application>StarDict</application>, please visit the <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">StarDict Web site</ulink>."
+msgstr "要獲得更多的關於 <application>星際譯王</application>的訊息，請訪問 <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">星際譯王網站</ulink>。"
+
+#: C/stardict.xml:684(para)
+msgid "Send all comments, suggestions, and bug reports to Hu Zheng (<email>huzheng_001@163.com</email>)."
+msgstr "請把所有該軟體的評論、建議、錯誤報告發送給胡正 (<email>huzheng_001@163.com</email>)。"
+

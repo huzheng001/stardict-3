@@ -9,6 +9,7 @@ src/desktop.cpp
 src/dictmanage.cpp
 src/dictmanagedlg.cpp
 src/docklet.cpp
+src/eggtrayicon.c
 src/floatwin.cpp
 src/mainwin.cpp
 src/pluginmanagedlg.cpp

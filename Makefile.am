@@ -15,10 +15,12 @@ EXTRA_DIST = \
 	stardict.spec.in stardict-withoutgnome.spec.in \
 	dictionary.spec	\
 	treedict.spec	\
-	stardict.dev stardict.ico stardict-uninst.ico stardict-installer.nsi \
+	stardict.dev stardict.ico stardict-uninst.ico stardict-installer.nsi stardict-prepare-installer.bat \
 	omf.make		\
-	xmldocs.make 		\
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in	\
-	stardictrc.rc
+	stardictrc.rc	\
+	gnome-doc-utils.make
+
+DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --disable-schemas-install

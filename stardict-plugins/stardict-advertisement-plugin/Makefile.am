@@ -5,7 +5,7 @@ EXTRA_DIST = advertisement.v advertisement.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=advertisement.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/advertisement.v"
 endif
 
 noinst_HEADERS = advertisement.h
@@ -20,4 +20,4 @@ advertisement_la_LDFLAGS = 	-avoid-version \
 				-module \
 				$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src

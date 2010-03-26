@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2010-03-26 09:46+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: C/stardict.xml:23(title) C/stardict.xml:73(revnumber)
+msgid "StarDict Manual V2.4.2"
+msgstr "StarDict Прирачник V2.4.2"
+
+#: C/stardict.xml:25(year)
+msgid "2003"
+msgstr ""
+
+#: C/stardict.xml:26(holder) C/stardict.xml:76(para)
+msgid "Hu Zheng"
+msgstr ""
+
+#: C/stardict.xml:37(publishername) C/stardict.xml:45(orgname) C/stardict.xml:77(para)
+msgid "GNOME Documentation Project"
+msgstr "GNOME документационен проект"
+
+#: C/stardict.xml:46(email) C/stardict.xml:672(email)
+msgid "huzheng_001@163.com"
+msgstr ""
+
+#: C/stardict.xml:81(releaseinfo)
+msgid "This manual describes version 2.4.2 of StarDict."
+msgstr "Овој прирачник ја опишува верзијата 2.4.2 на StarDict."
+
+#: C/stardict.xml:84(title)
+msgid "Feedback"
+msgstr "Контакт"
+
+#: C/stardict.xml:85(para)
+msgid "To report a bug or make a suggestion regarding the <application>StarDict</application> application or this manual, follow the directions in the <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr "За да известиш за бубачка или да дадеш предлог за оваа<application>StarDict</application> апликација или прирачник, следи ги упатствата на <ulink url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+
+#: C/stardict.xml:92(primary)
+msgid "StarDict"
+msgstr ""
+
+#: C/stardict.xml:99(title)
+msgid "Introduction"
+msgstr "Вовед"
+
+#: C/stardict.xml:100(para)
+msgid "<application>StarDict</application> is a Cross-Platform and international dictionary written in Gtk2. It has powerful features such as \"Glob-style pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc."
+msgstr "<application>StarDict</application>е повеќе платформски и интернационален речник напишан во Gtk2. Има моќни можности како „Глобално пребарување“, „Скенирање на избран збор“, „Слободно пребарување“, итн."
+
+#: C/stardict.xml:107(title)
+msgid "Getting Started"
+msgstr "Започнување со работа"
+
+#: C/stardict.xml:110(title)
+msgid "Starting StarDict"
+msgstr "Стартување на StarDict"
+
+#: C/stardict.xml:112(para)
+msgid "You can start <application>StarDict</application> in the following ways:"
+msgstr "<application>StarDict</application> може да се стартува на следниве начини:"
+
+#: C/stardict.xml:116(term)
+msgid "<guimenu>Applications</guimenu> menu"
+msgstr "Од менито <guimenu>Applications</guimenu>"
+
+#: C/stardict.xml:118(para)
+msgid "Choose <menuchoice><guisubmenu>Accessories</guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+msgstr "избери <menuchoice><guisubmenu>Accessories</guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+
+#: C/stardict.xml:122(term)
+msgid "Command line"
+msgstr "Командна линија"
+
+#: C/stardict.xml:124(para)
+msgid "Type <command>stardict</command>, then press <keycap>Return</keycap>."
+msgstr "Искуцај <command>stardict</command> и стисни <keycap>Enter</keycap>."
+
+#: C/stardict.xml:125(para)
+msgid "You can specify a word to query too :"
+msgstr "Можеш да наведеш и збор за кој сакаш да пребаруваш:"
+
+#: C/stardict.xml:129(replaceable)
+msgid "word"
+msgstr "збор"
+
+#: C/stardict.xml:129(command) C/stardict.xml:135(command) C/stardict.xml:141(command)
+msgid "stardict <placeholder-1/>"
+msgstr ""
+
+#: C/stardict.xml:131(para)
+msgid "or a Glob-style pattern matching string :"
+msgstr "или стринг за глобално пребарување:"
+
+#: C/stardict.xml:135(replaceable)
+msgid "wo?d*"
+msgstr "зб?р*"
+
+#: C/stardict.xml:137(para)
+msgid "or do a fuzzy query :"
+msgstr "или да направиш слободно пребарување:"
+
+#: C/stardict.xml:141(replaceable)
+msgid "/word"
+msgstr "/збор"
+
+#: C/stardict.xml:147(para)
+msgid "If <application>StarDict</application> is already running, it will perform the query in the existing StarDict window."
+msgstr "Ако <application>StarDict</application> е веќе вклучен, пребарувањето ќе се изврши во постоечкиот StarDict прозорец."
+
+#: C/stardict.xml:155(title)
+msgid "When You Start StarDict"
+msgstr "Кога ќе го стартуваш StarDict"
+
+#: C/stardict.xml:157(para)
+msgid "When you start <application>StarDict</application>, the following window is displayed."
+msgstr "Кога ќе го стартуваш <application>StarDict</application>, ќе се појави следниов прозорец."
+
+#: C/stardict.xml:161(title)
+msgid "StarDict Main Window"
+msgstr "StarDict Главен прозорец"
+
+#: C/stardict.xml:168(phrase)
+msgid "Shows StarDict main window. Contains Search input combo, Tool buttons, Word list, Definition area and Setting buttons."
+msgstr "Го покажува главниот прозорец на StarDict. Содржи лента за пребарување, копчиња со алатки, листа на зборови, област за дефиниции и копчиња за подесување."
+
+#: C/stardict.xml:175(para)
+msgid "The <guilabel>StarDict</guilabel> main window consists of the following elements:"
+msgstr "Главниот прозорец на <guilabel>StarDict</guilabel> се состои од следниве елементи:"
+
+#: C/stardict.xml:178(term)
+msgid "<guilabel>Search</guilabel> input combo"
+msgstr "Лента за <guilabel>пребарување</guilabel>"
+
+#: C/stardict.xml:180(para)
+msgid "Use this field to enter the word that you want to look up. You can also access recently-queried words through the dropdown box."
+msgstr "Користи го ова поле за да внесеш збор за кој сакаш да пребаруваш. Исто така, со клик на стрелката десно можеш да пристапиш до зборови за кои скоро си пребарувал(а)."
+
+#: C/stardict.xml:185(term) C/stardict.xml:271(term)
+msgid "Tool buttons"
+msgstr "Копчиња со алатки"
+
+#: C/stardict.xml:187(para)
+msgid "You can click these buttons to do fuzzy quering, look up the previously queried word, look up the next and previous words from the list on the left, and pop up the main menu."
+msgstr "Можеш да кликнеш на овие копчиња за да направиш слободно пребарување, да пронајдеш претходно баран збор, да ги видиш претходниот и следниот збор од листата лево и да го видиш главното мени."
+
+#: C/stardict.xml:192(term)
+msgid "Word list"
+msgstr "Листа со зборови"
+
+#: C/stardict.xml:194(para)
+msgid "Shows the words that have been found in this search."
+msgstr "Ги покажува зборовите најдени во ова пребарување."
+
+#: C/stardict.xml:200(para)
+msgid "<application>StarDict</application> displays the definition of a word in this area of the window."
+msgstr "Во овој дел од прозорецот <application>StarDict</application> прикажува дефиниција за збор."
+
+#: C/stardict.xml:204(term)
+msgid "Setting buttons"
+msgstr "Копчиња за подесување"
+
+#: C/stardict.xml:206(para)
+msgid "The bottom-left of the window contains the <guibutton>Scan selection</guibutton> check button, the <guibutton>Info</guibutton> button and the <guibutton>Quit</guibutton> button. Checking the <guibutton>Scan selection</guibutton> check button will cause <application>StarDict</application> to automatically look up words that you highlight in any application. The bottom-right of the window contains the <guibutton>Internet search</guibutton> button, the <guibutton>StarDict project website</guibutton> button, the <guibutton>Dictionary management</guibutton> button and the <guibutton>Preferences</guibutton> button."
+msgstr "Во долниот лев ќош на прозорецот се наоѓа копчето <guibutton>Скенирај за избор</guibutton>, копчето <guibutton>Информации</guibutton> и копчето <guibutton>Излези</guibutton>. Со избирање на опцијата <guibutton>Скенирај за избор</guibutton><application>StarDict</application> автоматски ќе бара зборови кои ги избираш во било која апликација. Десниот долен ќош на прозорецот ги содржи копчињата за <guibutton>Интернет пребарување</guibutton>, <guibutton>Веб странта на StarDict проектот</guibutton>, <guibutton>Уредување на речниците</guibutton> и <guibutton>Преференции</guibutton>."
+
+#: C/stardict.xml:221(title) C/stardict.xml:427(title)
+msgid "Notification area icon"
+msgstr "Икона за областа за известување"
+
+#: C/stardict.xml:222(para)
+msgid "<application>StarDict</application> will also add an icon to the notification area. When you iconify the main window, the window will be hiden. After you click the icon, the window will be shown again. If you right click this icon, it will popup a menu where you can choose to toggle <guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</guimenuitem>. You can toggle <guimenuitem>Scan selection</guimenuitem> directly by ctrl-clicking the icon. Clicking the middle mouse button on the icon will query the selected word."
+msgstr "<application>StarDict</application> ќе додаде икона во областа за известување. Кога ќе го иконифицираш главниот прозорец, прозорецот ќе биде скриен. По кликањето на иконата прозорецот повторно ќе се појави. Со десен клик на оваа икона, ќе се појави мени од кое што можеш да избереш <guimenuitem>Скенирање за избор</guimenuitem>, или <guimenuitem>Излез</guimenuitem>. Опцијата <guimenuitem>Скенирај за избор</guimenuitem> можеш да ја вклучиш директно со ctrl-клик на иконата. Со кликање со средното копче од глушецот на иконата, ќе извршиш пребарување за избраниот збор."
+
+#: C/stardict.xml:230(title)
+msgid "<application>StarDict</application>'s notification area icon"
+msgstr "Икона за областа за известување на <application>StarDict</application>."
+
+#: C/stardict.xml:236(phrase)
+msgid "<application>StarDict</application>'s notification area icon."
+msgstr "Икона за областа за известување на <application>StarDict</application>."
+
+#: C/stardict.xml:244(title)
+msgid "Scan selection"
+msgstr "Скенирај за избор"
+
+#: C/stardict.xml:246(para)
+msgid "<application>StarDict</application> can automatically scan selections. This means that when you select a word or phrase in <application>StarDict</application> or in any other application, <application>StarDict</application> will get the text that you selected and search for it, then display a floating window containing the result of the search."
+msgstr "<application>StarDict</application> може автоматски да скенира за избрани зборови. Ова значи дека кога ќе избереш збор или фраза во <application>StarDict</application> или во било која друга апликација, <application>StarDict</application> ќе го земе избраниот текст, ќе пребара за него и потоа ќе прикаже прозорец со резултатите од пребарувањето."
+
+#: C/stardict.xml:253(title)
+msgid "StarDict Floating Window"
+msgstr "StarDict прозорец"
+
+#: C/stardict.xml:260(phrase)
+msgid "Shows StarDict floating window. Contains Tool buttons and Definition area."
+msgstr "Го покажува прозорецот на StarDict. Содржи копчиња со алатки и област за дефиниција."
+
+#: C/stardict.xml:267(para)
+msgid "You can drag the window to move it. The floating window will disappear when you move your pointer some distance away."
+msgstr "Можеш да го влечеш прозорецот за да го поместиш. Тој ќе исчезне кога ќе го поместиш глушецот на одредена оддалеченост."
+
+#: C/stardict.xml:268(para)
+msgid "The <guilabel>StarDict</guilabel> floating window consists of the following elements:"
+msgstr "Прозорецот на <guilabel>StarDict</guilabel> се состои од следниве елементи:"
+
+#: C/stardict.xml:273(para)
+msgid "The buttons will be hidden automatically to save display space. When your mouse pointer enters the floating window, the buttons will appear immediately, and disappear again as the mouse pointer leaves."
+msgstr "За да се зачува место на екранот овие копчиња се скриени. Кога глушецот ќе дојде во прозорецот, копчињата веднаш ќе се појават, и ќе исчезнат штом ќе замине глушецот."
+
+#: C/stardict.xml:275(para)
+msgid "You can click these buttons to <guibutton>query</guibutton> a word in the main window, <guibutton>copy</guibutton> the query result to clipboard, <guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. To the far right is the <guibutton>Lock floating window</guibutton> button. If the floating window is locked, it will always be shown there."
+msgstr "Можеш да кликнеш на овие копчиња за да <guibutton>побараш</guibutton> збор во главниот прозорец, за да го <guibutton>копираш</guibutton> добиениот резултат на клипбордот, за чуеш како се <guibutton>изговара</guibutton> тој збор, за да <guibutton>стопираш</guibutton> скенирање за избор итн. На десно е копчето <guibutton>Заклучи го постоечкиот прозорец</guibutton>. Ако тој е заклучен, постојано ќе стои на исто место."
+
+#: C/stardict.xml:198(term) C/stardict.xml:283(term)
+msgid "Definition area"
+msgstr "Област за дефиниција"
+
+#: C/stardict.xml:285(para)
+msgid "The query result is displayed in this area."
+msgstr "Овде се прикажува резултатот од пребарувањето."
+
+#: C/stardict.xml:296(title)
+msgid "Usage"
+msgstr "Употреба"
+
+#: C/stardict.xml:299(title)
+msgid "Looking Up a Word"
+msgstr "Барање збор"
+
+#: C/stardict.xml:300(para)
+msgid "To look up the definition of a word, perform the following steps:"
+msgstr "За да побараш дефиниција на некој збор, направи го следново:"
+
+#: C/stardict.xml:302(para)
+msgid "Type the word that you want to look up in the <guilabel>Search</guilabel> combo box."
+msgstr "Внеси го саканиот збор во лентата за <guilabel>пребарување</guilabel> ."
+
+#: C/stardict.xml:304(para)
+msgid "<application>StarDict</application> will show the definition immediately. If not found, you can press <keycap>Return</keycap> to do a fuzzy query or just click the <guibutton>Fuzzy query</guibutton> button."
+msgstr "<application>StarDict</application> веднаш ќе ја покаже дефиницијата. Ако нема резултати, со стискање на <keycap>Enter</keycap> можеш да направиш слободно пребарување, или пак можеш едноставно да кликнеш на копчето <guibutton>Слободно пребарување</guibutton>."
+
+#: C/stardict.xml:306(para)
+msgid "Use the scrollbar to scroll through the definition. Select the words in the word list to view the related words."
+msgstr "Користи го лизгачот за да ја видиш целата дефиниција. Избирај зборови од листата со зборови за да ги видиш сличните зборови."
+
+#: C/stardict.xml:312(title)
+msgid "Clearing the Display Area"
+msgstr "Чистење на областа за приказ"
+
+#: C/stardict.xml:313(para)
+msgid "To clear the text of the <guilabel>Search</guilabel> input combo, click the <guibutton>Clear</guibutton> button on the left, or just press <keycap>Alt-C</keycap> or <keycap>ESC</keycap>."
+msgstr "За да го исчистиш текстот од лентата за <guilabel>пребарување</guilabel>, кликни на копчето<guibutton>Исчисти</guibutton> на лево, или стисни <keycap>Alt-C</keycap> или <keycap>ESC</keycap>."
+
+#: C/stardict.xml:318(title)
+msgid "To Copy Text to Another Application"
+msgstr "За да копираш текст во друга апликација"
+
+#: C/stardict.xml:319(para)
+msgid "There are two ways to copy the text in the display area to another application:"
+msgstr "Има два начини за прикажаниот текст да се копира во друга апликација:"
+
+#: C/stardict.xml:321(para)
+msgid "To copy all of the text, click the <guibutton>Copy</guibutton> button by the top of the <guilabel>Defintion area</guilabel>."
+msgstr "За да го копираш целиот текст, кликни на копчето <guibutton>Копирај</guibutton> до врвот на <guilabel>Областа за дефиниција</guilabel>."
+
+#: C/stardict.xml:322(para)
+msgid "To copy some of the text, select the text that you want to copy, then click your mouse's right button and choose <guimenuitem>Copy</guimenuitem>."
+msgstr "За да копираш само дел од текстот, избери го посакуваниот текст, потоа кликни со десното копче на твојот глушец и избери <guimenuitem>Копирај</guimenuitem>."
+
+#: C/stardict.xml:328(title)
+msgid "To Find Text in the Display Area"
+msgstr "За да најдеш текст во областа за приказ"
+
+#: C/stardict.xml:329(para)
+msgid "To find text in the display area, perform the following steps:"
+msgstr "За да најдеш текст во об ласта за приказ, направи го следново:"
+
+#: C/stardict.xml:331(para)
+msgid "click the <guibutton>Find</guibutton> button by the top of the <guilabel>Definition area</guilabel>."
+msgstr "Кликни на копчето <guibutton>Пронајди</guibutton> на врвот на <guilabel>Областа за дефиниција</guilabel>."
+
+#: C/stardict.xml:332(para)
+msgid "Type the string that you want to find in the <guilabel>Find</guilabel> text box, then press <keycap>Return</keycap>. You cannot use wildcards."
+msgstr "Во дијалогот за <guilabel>пребарување</guilabel> внеси го саканиот стринг и потоа стисни <keycap>Enter</keycap>. Не можеш да користиш џокери."
+
+#: C/stardict.xml:334(para)
+msgid "To find the next occurrence of the word, press <keycap>Return</keycap> again."
+msgstr "За да го најдеш следното појавување на зборот, повторно стисни <keycap>Enter</keycap>."
+
+#: C/stardict.xml:343(title)
+msgid "Preferences"
+msgstr "Преференции"
+
+#: C/stardict.xml:344(para)
+msgid "To configure <application>StarDict</application>, click the <guibutton>Preferences</guibutton> button at the right-bottom corner of the main window or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Preferences</guimenuitem>."
+msgstr "За да го конфигурираш <application>StarDict</application>, кликни на копчето <guibutton>Преференции</guibutton> во десниот долен ќош на главниот прозорец или кликни на копчето за <guibutton>Главното мени</guibutton> и избери <guimenuitem>Преференции</guimenuitem>."
+
+#: C/stardict.xml:93(primary) C/stardict.xml:349(title)
+msgid "Dictionary"
+msgstr "Речник"
+
+#: C/stardict.xml:351(title)
+msgid "Startup"
+msgstr "Стартување"
+
+#: C/stardict.xml:354(guilabel)
+msgid "Hide main window when starting StarDict."
+msgstr "При стартување на StarDict скриј го главниот прозорец ."
+
+#: C/stardict.xml:356(para)
+msgid "Controls whether the main window appears when you first start the program. If you select this option, you will only see an icon in the notification area after starting <application>StarDict</application>. You may still get to the main window by clicking on this icon."
+msgstr "Контролира дали главниот прозорец се појавува при прво стартување на програмата. Ако ја избереш оваа опција, по стартување на <application>StarDict</application>, ќе видиш само икона во областа за известување. Можеш да дојдеш до главниот прозорец со кликање на оваа икона."
+
+#: C/stardict.xml:360(para) C/stardict.xml:373(para) C/stardict.xml:388(para)
+msgid "Default: FALSE."
+msgstr "Преддефинирано: ОНЕВОЗМОЖЕНО."
+
+#: C/stardict.xml:366(title)
+msgid "Scan Selection"
+msgstr "Скенирај за избор"
+
+#: C/stardict.xml:369(guilabel)
+msgid "Only do scanning while modifier key being pressed."
+msgstr "Скенирај само додека е стиснато копчето за скенирање."
+
+#: C/stardict.xml:371(para)
+msgid "Only do scanning while the modifier key being pressed. The modifier key is set by \"Scan modifier key\"."
+msgstr "Скенирај само додека е стиснато копчето за скенирање. Тоа копче се подесува со „Копче за пребарување„."
+
+#: C/stardict.xml:379(title)
+msgid "Font"
+msgstr "Фонт"
+
+#: C/stardict.xml:382(guilabel)
+msgid "Use custom font."
+msgstr "Користи сопствен фонт."
+
+#: C/stardict.xml:384(para)
+msgid "Allows you to override the system's default font when running <application>StarDict</application>. If this option is turned on, then the font named in the \"Custom Font\" option will be used instead of the system font."
+msgstr "Ти овозможува да не го користиш основниот фонт на системот кога работиш со <application>StarDict</application>. Ако оваа опција е вклучена, наместо системскиот фонт, ќе се користи фонтот именуван во опцијата „Сопствен фонт“,."
+
+#: C/stardict.xml:389(para)
+msgid "Font settings will take effect the next time you run <application>StarDict</application>."
+msgstr "Подесувањата за фонтот ќе се примената при следното стартување на <application>StarDict</application>."
+
+#: C/stardict.xml:395(title)
+msgid "Sound"
+msgstr "Звук"
+
+#: C/stardict.xml:398(guilabel)
+msgid "Enable sound event."
+msgstr "Овозможи звучни настани."
+
+#: C/stardict.xml:400(para)
+msgid "Whether enable sound event. <application>StarDict</application> will play sound event when button is active, released, and when pop up menu."
+msgstr "Дали да се овозможат звучни настани. <application>StarDict</application> ќе испушта звук кога има активно копче, кога копчето се пушта и на поп-ап мени."
+
+#: C/stardict.xml:402(para) C/stardict.xml:436(para)
+msgid "Default: TRUE."
+msgstr "Преддефинирано: ОВОЗМОЖЕНО."
+
+#: C/stardict.xml:411(title)
+msgid "Main Window"
+msgstr "Главен прозорец"
+
+#: C/stardict.xml:413(title)
+msgid "Search Website"
+msgstr "Пребарај на веб страна"
+
+#: C/stardict.xml:416(guilabel)
+msgid "Search website list area"
+msgstr "Област за пребарување на веб страни"
+
+#: C/stardict.xml:418(para)
+msgid "You can search the websites in this list when you right-click the <guibutton>Internet search</guibutton> button in the main window."
+msgstr "Можеш да ги пребаруваш веб страните од овој список со десен клик на копчето <guibutton>Интернет пребарување</guibutton>во главниот прозорец."
+
+#: C/stardict.xml:429(title)
+msgid "Options"
+msgstr "Опции"
+
+#: C/stardict.xml:432(guilabel)
+msgid "Query in the floating window when middle mouse button clicked."
+msgstr "Пребарувај во постоечкиот прозорец при кликање на средното копче на глушецот."
+
+#: C/stardict.xml:434(para)
+msgid "Whether query in the floating window, or the main window. This happens when user clicks the middle mouse button on the notification area icon."
+msgstr "Дали да се пребарува во постоечкиот или главниот прозорец. Ова се случува кога корисникот ќе кликне со среднот копче од глушецот на иконата за областа за известување."
+
+#: C/stardict.xml:444(title)
+msgid "Floating Window"
+msgstr "Постоечки прозорец"
+
+#: C/stardict.xml:446(title)
+msgid "Size"
+msgstr "Големина"
+
+#: C/stardict.xml:449(guilabel)
+msgid "Max window width."
+msgstr "Максимална ширина на прозорецот."
+
+#: C/stardict.xml:451(para)
+msgid "Sets the floating window's max width."
+msgstr "Ја поставува неговата максимална ширина."
+
+#: C/stardict.xml:452(para)
+msgid "Default: 320."
+msgstr "Преддефинирано: 320."
+
+#: C/stardict.xml:458(guilabel)
+msgid "Max window height."
+msgstr "Максимална висиина на прозорецот."
+
+#: C/stardict.xml:460(para)
+msgid "Sets the floating window's max height."
+msgstr "Ја поставува неговата максимална висина."
+
+#: C/stardict.xml:461(para)
+msgid "Default: 240."
+msgstr "Преддефинирано: 240."
+
+#: C/stardict.xml:470(title)
+msgid "Dictionary Management"
+msgstr "Уредување на речниците"
+
+#: C/stardict.xml:471(para)
+msgid "To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the main window, or click the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict manage</guimenuitem>."
+msgstr "За да ги уредуваш речниците, кликни на копчето <guibutton>Уреди ги речниците</guibutton> кое се наоѓа во десниот долен ќош на главниот прозорец, или кликни на копчето <guibutton>Главно мени</guibutton> и избери <guimenuitem>Уреди ги речниците</guimenuitem>."
+
+#: C/stardict.xml:474(para)
+msgid "In the dictionary management dialog, you can disable dictionaries that you don't need, and you can set the order in which the dictonaries are queried."
+msgstr "Во дијалогот за уредување на речниците, можеш да ги оневозможиш речниците кои не ти требаат, и можеш да го подесиш редоследот по кој се пребарува во речниците."
+
+#: C/stardict.xml:477(para)
+msgid "<application>StarDict</application> will search the dictionary files at \"~/.stardict/dic\" and \"/usr/share/stardict/dic\", and search tree dictionary files at \"~/.stardict/treedict\" and \"/usr/share/stardict/treedict\""
+msgstr "<application>StarDict</application> ќе бара датотеки со речници во \"~/.stardict/dic\" и \"/usr/share/stardict/dic\", и датотеки со дрво речници во \"~/.stardict/treedict\" и \"/usr/share/stardict/treedict\""
+
+#: C/stardict.xml:482(title)
+msgid "Related Projects"
+msgstr "Проекти кои се поврзани со овој"
+
+#: C/stardict.xml:483(para)
+msgid "<application>StarDict</application> would not be possible without many other projects' contributions. Here is a short list of projects that helped <application>StarDict</application>."
+msgstr "<application>StarDict</application> немаше да биде возможен без придонесе од многу други проекти. Еве кратка листа на проекти кои му помогнаа на <application>StarDict</application>."
+
+#: C/stardict.xml:492(firstname)
+msgid "Ma"
+msgstr ""
+
+#: C/stardict.xml:493(surname)
+msgid "Su'an"
+msgstr ""
+
+#: C/stardict.xml:495(email)
+msgid "msa@wri.com.cn"
+msgstr ""
+
+#: C/stardict.xml:500(title)
+msgid "StarDict 1.31"
+msgstr ""
+
+#: C/stardict.xml:501(para)
+msgid "The original Motif/LessTif-based StarDict 1.31 written in 1999. <application>StarDict</application> 2 got many good ideas from StarDict1.31 such as \"Scan selection.\" Many of <application>StarDict</application> 2's features, like \"Fuzzy query,\" come from StarDict1.31."
+msgstr "Оригиналниот Motif/LessTif-базиран StarDict 1.31 напишан во 1999. <application>StarDict</application> 2 зема многу добри идеи од StarDict1.31 како на пример „Скенирање на избран збор“. Многу од можностите на <application>StarDict</application> 2', како „Слободно пребарување“ доаѓаат од StarDict1.31."
+
+#: C/stardict.xml:510(firstname)
+msgid "Opera"
+msgstr ""
+
+#: C/stardict.xml:511(surname)
+msgid "Wang"
+msgstr ""
+
+#: C/stardict.xml:513(email)
+msgid "Opera.Wang@motorola.com"
+msgstr ""
+
+#: C/stardict.xml:518(title)
+msgid "StarDict 1.33+"
+msgstr ""
+
+#: C/stardict.xml:519(para)
+msgid "StarDict1.33+ is a big enhancement of StarDict1.31. It added many dictionaries, and so it made me realize that dictionary data was not a barrier to a new, GTK2-based dictionary program. If there had been no StarDict1.33+, I would not have started the <application>StarDict</application> 2 project. The author also helped me to port the StarDict 1.3 dictionary data files to <application>StarDict</application> 2."
+msgstr "StarDict1.33+ е големо подобрување на StarDict1.31. Додаде многу речници, и ме натера да сватам дека податоците за речници не се бариера за нова, GTK2-базирана програма за речници. Ако не беше StarDict1.33+, јас немаше да го започнам <application>StarDict</application> 2 проектот. Авторот исто така ми помогна да ги портувам речницте од StarDict 1.3 во формат за <application>StarDict</application> 2."
+
+#: C/stardict.xml:526(title)
+msgid "The DICT Project"
+msgstr "DICT проект"
+
+#: C/stardict.xml:527(para)
+msgid "Many dictd dictionaries have been ported to <application>StarDict</application>. dictzip, which came from dictd, is also used by <application>StarDict</application>."
+msgstr "Многу dictd се портирани за <application>StarDict</application>. dictzip, кој дојде од dictd, исто така се користи од <application>StarDict</application>."
+
+#: C/stardict.xml:529(para)
+msgid "To find more information about the DICT Project, please visit <ulink url=\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>."
+msgstr "За да најдеш повеќе информации за DICT проектот, посети ja <ulink url=\"http://www.dict.org\" type=\"http\">веб страната www.dict.org</ulink>."
+
+#: C/stardict.xml:536(title)
+msgid "*Quick"
+msgstr ""
+
+#: C/stardict.xml:537(para)
+msgid "Many wquick dictionaries have been ported to <application>StarDict</application>."
+msgstr "Многу wquick речници се портирани за <application>StarDict</application>."
+
+#: C/stardict.xml:538(para)
+msgid "To find more information about *Quick, please visit <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+msgstr "За да најдеш повеќе информации за *Quick, посети го <ulink url=\"http://www.futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+
+#: C/stardict.xml:548(firstname)
+msgid "Terrence"
+msgstr ""
+
+#: C/stardict.xml:549(surname)
+msgid "Miao"
+msgstr ""
+
+#: C/stardict.xml:551(email)
+msgid "terence_miao@email.com"
+msgstr ""
+
+#: C/stardict.xml:556(title)
+msgid "The Blowfish Project"
+msgstr "Blowfish проект"
+
+#: C/stardict.xml:557(para)
+msgid "The Blowfish Project provided the Oxford English-Chinese dictionary."
+msgstr "Blowfish проектот го овозможи оксфордскиот англиско-кинески речник."
+
+#: C/stardict.xml:558(para)
+msgid "To find more information about the Blowfish Project, please visit the <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish Project Web site</ulink>."
+msgstr "За да најдеш повеќе информации за проектот Blowfish, посети ја <ulink url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">веб страната на Blowfish проектот</ulink>."
+
+#: C/stardict.xml:568(firstname)
+msgid "Fu"
+msgstr ""
+
+#: C/stardict.xml:569(surname)
+msgid "Jianjun"
+msgstr ""
+
+#: C/stardict.xml:571(email)
+msgid "fujianjun@163.net"
+msgstr ""
+
+#: C/stardict.xml:576(title)
+msgid "XDICT"
+msgstr ""
+
+#: C/stardict.xml:577(para)
+msgid "XDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "Речниците на XDICT се портирани за <application>StarDict</application>."
+
+#: C/stardict.xml:581(title)
+msgid "cdict5"
+msgstr ""
+
+#: C/stardict.xml:582(para)
+msgid "cdict5's dictionary has been ported to <application>StarDict</application>."
+msgstr "Речниците на cdict5 се портирани за <application>StarDict</application>."
+
+#: C/stardict.xml:588(firstname)
+msgid "Leon"
+msgstr ""
+
+#: C/stardict.xml:589(surname)
+msgid "Liang"
+msgstr ""
+
+#: C/stardict.xml:591(email)
+msgid "Liang.Lu@CERN.CH"
+msgstr ""
+
+#: C/stardict.xml:596(title)
+msgid "xcdict-tcltk"
+msgstr ""
+
+#: C/stardict.xml:597(ulink)
+msgid "xcdict-tcltk Web site"
+msgstr "Веб страна на xcdict-tcltk"
+
+#: C/stardict.xml:604(firstname)
+msgid "Borg"
+msgstr ""
+
+#: C/stardict.xml:605(surname)
+msgid "LU"
+msgstr ""
+
+#: C/stardict.xml:607(email)
+msgid "dystopia@iname.com"
+msgstr ""
+
+#: C/stardict.xml:612(title)
+msgid "cdict5 v1.3"
+msgstr ""
+
+#: C/stardict.xml:613(para)
+msgid "To find more information about the cdict5 Project, please visit the <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 on freshports</ulink>."
+msgstr "За да најдеш повеќе информации за проектот cdict5, посети го <ulink url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 на freshports</ulink>."
+
+#: C/stardict.xml:624(firstname)
+msgid "Paul"
+msgstr ""
+
+#: C/stardict.xml:625(surname)
+msgid "Denisowski"
+msgstr ""
+
+#: C/stardict.xml:627(email)
+msgid "cedict@chinesetools.com"
+msgstr ""
+
+#: C/stardict.xml:632(title)
+msgid "CEDICT"
+msgstr ""
+
+#: C/stardict.xml:633(para)
+msgid "CEDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "Речниците на CEDICT се портирани за <application>StarDict</application>."
+
+#: C/stardict.xml:634(para)
+msgid "To find more information about the CEDICT Project, please visit the <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT Project Web site</ulink>."
+msgstr "За да најдеш повеќе информации за проектот CEDICT, посети ја <ulink url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">веб страната на CEDICT проектот</ulink>."
+
+#: C/stardict.xml:644(firstname)
+msgid "Kong"
+msgstr ""
+
+#: C/stardict.xml:645(surname)
+msgid "Hui"
+msgstr ""
+
+#: C/stardict.xml:647(email)
+msgid "konghui@xinhuanet.com"
+msgstr ""
+
+#: C/stardict.xml:652(title)
+msgid "CFFD"
+msgstr ""
+
+#: C/stardict.xml:653(para)
+msgid "<application>StarDict</application>'s icon was created with this software. CFFD also provided some useful information to me."
+msgstr "Иконата на <application>StarDict</application> е креирана со овој софтвер. Исто така CFFD ме снабди со некои корисни информации."
+
+#: C/stardict.xml:655(para)
+msgid "To find more information about the CFFD Project, please visit the <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\">CFFD Project Web site</ulink>."
+msgstr "За да најдеш повеќе информации за проектот CFFD, посети ја <ulink url=\"http://cffd.cosoft.org.cn\" type=\"http\">веб страната на CFFD проектот</ulink>."
+
+#: C/stardict.xml:42(firstname) C/stardict.xml:669(firstname)
+msgid "Hu"
+msgstr ""
+
+#: C/stardict.xml:43(surname) C/stardict.xml:670(surname)
+msgid "Zheng"
+msgstr ""
+
+#: C/stardict.xml:677(title)
+msgid "Developers"
+msgstr ""
+
+#: C/stardict.xml:678(para)
+msgid "To find more information about <application>StarDict</application>, please visit the <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">StarDict Web site</ulink>."
+msgstr "За да најдеш повеќе информации за <application>StarDict</application>, посети ја <ulink url=\"http://stardict.sourceforge.net/\" type=\"http\">веб страната на StarDict </ulink>."
+
+#: C/stardict.xml:684(para)
+msgid "Send all comments, suggestions, and bug reports to Hu Zheng (<email>huzheng_001@163.com</email>)."
+msgstr "Сите коментари, предлози, и извештаи за бубачки испраќајте ги до Hu Zheng (<email>huzheng_001@163.com</email>)."
+

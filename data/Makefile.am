@@ -4,7 +4,7 @@ desktop_DATA 	 = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 if GNOME_SUPPORT
-schemasdir	 = $(sysconfdir)/gconf/schemas
+schemasdir	 = @GCONF_SCHEMA_FILE_DIR@
 schemas_in_files = stardict.schemas.in
 schemas_DATA 	 = $(schemas_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
