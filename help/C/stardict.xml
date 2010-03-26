@@ -20,37 +20,29 @@
 <article id="index" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-	<articleinfo>
+<articleinfo>
 	<title>&app; Manual V&manrevision;</title>
 	<copyright> 
 		<year>2003</year>
 		<holder>Hu Zheng</holder>
 	</copyright>
 
-<!-- translators: uncomment this:
-
-  <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-  </copyright>
-
-   -->
-	<publisher> 
+	<publisher>
 		<publishername> GNOME Documentation Project </publishername>
 	</publisher>
 	&legal; 
 	<authorgroup> 
-		<author> 
+		<author role="maintainer"> 
 			<firstname>Hu</firstname>
 			<surname>Zheng</surname> 
 			<affiliation> 
 				<orgname>GNOME Documentation Project</orgname>
-				<address> <email>huzheng_001@163.com</email> </address>
+				<address> <email>huzheng001@gmail.com</email> </address>
 			</affiliation>
-		</author> 
+		</author>
 
 <!-- This is appropriate place for other contributors: translators,
-      maintainers,  etc. Commented out by default.-->
+	maintainers,  etc. -->
 
 		<othercredit role="translator">
 			<firstname>Will</firstname> 
@@ -61,19 +53,58 @@
 			</affiliation>
 			<contrib>Cleaning up English</contrib>
 		</othercredit>
-<!-- -->
 
+		<othercredit role="translator">
+			<firstname>Новица</firstname> 
+			<surname>Наков</surname> 
+			<affiliation> 
+				<orgname>Слободен софтвер Македонија</orgname> 
+				<address> <email>acivon@mail.com.mk</email> </address>
+			</affiliation>
+			<contrib>Македонски превод</contrib>
+		</othercredit>
+
+		<othercredit role="translator">
+			<firstname>Ruud</firstname> 
+			<surname>Slaats</surname> 
+			<affiliation> 
+			<orgname>Eurotech Group</orgname> 
+				<address> <email>ruudslaats@eurotechgroup.nl</email> </address> 
+			</affiliation>
+			<contrib>Nederlandse vertaling</contrib>
+		</othercredit>
+		
+		<othercredit role="translator">
+			<firstname>Александр</firstname>
+			<surname>Мурыгин</surname>
+			<affiliation>
+			<orgname>AITOC</orgname>
+				<address> <email>murygin@aitoc.com</email> </address>
+			</affiliation>
+			<contrib>Русский перевод</contrib>
+		</othercredit>
+
+		<othercredit role="translator">
+			<firstname>Сергій</firstname>
+			<surname>Дубик</surname>
+			<affiliation>
+				<orgname>ЛНБ</orgname>
+				<address> <email>dubyk@library.lviv.ua</email> </address>
+			</affiliation>
+			<contrib>український переклад</contrib>
+		</othercredit>
+		
 	</authorgroup>
 
 
 <!-- According to GNU FDL, revision history is mandatory if you are -->
 <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
-	 <revhistory>
+	<revhistory>
 <!-- Remember to remove the &manrevision; entity from the revision entries other
    than the current revision. -->
-		<revision> 
+		<revision>
 			<revnumber>&app; Manual V2.4.2</revnumber>
-			<date>Nov 2003</date> 
+			<date>Nov 2003</date>
 			<revdescription> 
 				<para role="author">Hu Zheng</para>
 				<para role="publisher">GNOME Documentation Project</para>
@@ -90,9 +121,13 @@
 		</para>
 <!-- Translators may also add here feedback address for translations -->
 	</legalnotice>
-  </articleinfo>
-  <indexterm><primary>StarDict</primary></indexterm>
-  <indexterm><primary>Dictionary</primary></indexterm>
+	<abstract role="description">
+		<para>User manual for the &app; dictionary.</para>
+	</abstract>
+</articleinfo>
+
+	<indexterm><primary>StarDict</primary></indexterm>
+	<indexterm><primary>Dictionary</primary></indexterm>
 
 <!-- ============= Document Body ============================= -->
 <!-- ============= Introduction ============================== -->
@@ -1133,7 +1168,7 @@
 			The text to search is incorporated into <acronym>URL</acronym>. 
 			Normally, the text is assigned to a GET request parameter.
 			For example, to search for word <emphasis>stardict</emphasis> in 
-			<ulink url="http://www.google.com">Google search engine</ulink> you may use the following
+			<ulink url="http://www.google.com" type="http">Google search engine</ulink> you may use the following
 			<acronym>URL</acronym>
 			<uri>http://www.google.com/search?q=<replaceable>stardict</replaceable></uri>.
 			You can search the websites in <application>&app;</application>
@@ -1491,7 +1526,7 @@
          <firstname>Hu</firstname>
            <surname>Zheng</surname>
            <affiliation>
-             <address><email>huzheng_001@163.com</email></address>
+             <address><email>huzheng001@gmail.com</email></address>
            </affiliation>
        </author>
      </authorgroup>
@@ -1505,10 +1540,43 @@
    </para>
    <para>
      Send all comments, suggestions, and bug reports to 
-     Hu Zheng (<email>huzheng_001@163.com</email>).
+     Hu Zheng (<email>huzheng001@gmail.com</email>).
    </para>
 
-   <!-- For translations: uncomment this:
+   <para>
+     Македонскиот превод е направен од Новица Наков
+     (<email>acivon@mail.com.mk</email>). Сите коментари
+     и предлози околу овој превод праќајте ги на горната адреса.
+   </para>
+
+   <para>
+     Nederlandse vertaling is gedaan door Ruud Slaats
+     (<email>ruudslaats@eurotechgroup.nl</email>). Stuur al u commentaar, suggesties betreffende deze vertaling naar <email>ruudslaats@eurotechgroup.nl</email>.
+   </para>
+
+   <para>
+     На русский язык переведено Александром Мурыгиным
+     (<email>murygin@aitoc.com</email>). Пожалуйста присылайте все комментарии и
+     предложения относящиеся к этому переводу на этот адрес.
+   </para>
+
+   <para>
+     На українську мову перекладено Сергієм Дубиком
+     (<email>dubyk@library.lviv.ua</email>). Будь ласка присилайте всі коментарі та
+     пропозиції, що відносяться до цього перекладу, на цю адресу.
+   </para>
+
+   <para>
+     中文翻译由耿军军完成
+     (<email>geng82@163.com</email>)。请将有关本翻译的评论和建议发到我的邮箱。
+   </para>
+
+   <para>
+     繁體中文翻譯由陳曉陽完成
+     (<email>roy.chan@debian.org.hk</email>)。請將有關本翻譯的評論和建議電郵給我。
+   </para>
+
+	<!-- For translations: uncomment this:
 
    <para>
      Latin translation was done by ME
@@ -1519,5 +1587,23 @@
    -->
 
  </sect1>
+
+<!--
+Terminology
+
+main window
+floating window
+search field
+word list = word index ? - left panel
+definition area = display area = article area?
+notification area icon
+main menu
+scan mode
+top bar
+bottom bar
+left bar
+display area top bar
+display area bar (search bar)
+-->
 
 </article>

@@ -3,7 +3,7 @@ EXTRA_DIST = stardict_dictdotcn.v dictdotcn.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_dictdotcn.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_dictdotcn.v"
 endif
 
 noinst_HEADERS = stardict_dictdotcn.h
@@ -18,4 +18,4 @@ stardict_dictdotcn_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@
+AM_CPPFLAGS = @STARDICT_CFLAGS@

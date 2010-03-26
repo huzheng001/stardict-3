@@ -16,6 +16,7 @@ PKG_PROG_PKG_CONFIG
 
 AC_CONFIG_MACRO_DIR(m4)
 LT_INIT
+GNOME_DOC_INIT
 
 AC_ISC_POSIX
 AC_PROG_CC
@@ -306,7 +307,6 @@ PKG_CHECK_MODULES(STARDICT, $DEP_MODULES)
 if test "x${enable_gpe_support}" = "xyes" ; then
         echo "Enable gpe suppport";
 	AC_DEFINE([CONFIG_GPE],[], [Compile with gpe support])
-	AM_CONDITIONAL(SCHEMAS_INSTALL, test "x${enable_gpe_support}" != "xyes")
 	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_gpe_support}" != "xyes")
 elif test "x${enable_maemo_support}" = "xyes" ; then
         echo "Enable maemo suppport";
@@ -316,16 +316,13 @@ elif test "x${enable_maemo_support}" = "xyes" ; then
         	AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
 	fi
 	AM_GCONF_SOURCE_2
-	AM_CONDITIONAL(SCHEMAS_INSTALL, test x$schemas_install = xtrue)
 elif test "x${enable_darwin_support}" = "xyes" ; then
         echo "Enable darwin suppport";
 	AC_DEFINE([CONFIG_DARWIN],[], [Compile with darwin support])
-	AM_CONDITIONAL(SCHEMAS_INSTALL, test "x${enable_darwin_support}" != "xyes")
 	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_darwin_support}" != "xyes")
 elif test "x${enable_gnome_support}" = "xno" ; then
 	echo "Disable gnome support";
 	AC_DEFINE([CONFIG_GTK],[], [Compile without gnome support])
-	AM_CONDITIONAL(SCHEMAS_INSTALL, test "x${enable_gnome_support}" != "xno")
 	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_gnome_support}" != "xno")
 else
 	echo "Enable gnome suppport";
@@ -341,7 +338,6 @@ dnl *********************************************
 	fi
 	AM_GCONF_SOURCE_2
 
-	AM_CONDITIONAL(SCHEMAS_INSTALL, test x$schemas_install = xtrue)
 dnl ==========================================================================
 dnl stuff for the CORBA interface
 
@@ -476,13 +472,6 @@ stardict-plugins/stardict-sapi-tts-plugin/Makefile
 tests/Makefile
 pixmaps/Makefile
 help/Makefile
-help/C/Makefile
-help/zh_CN/Makefile
-help/zh_TW/Makefile
-help/ru/Makefile
-help/mk/Makefile
-help/nl/Makefile
-help/uk/Makefile
 ])
 AC_OUTPUT
 

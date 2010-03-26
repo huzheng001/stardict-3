@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_spell.v
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_spell.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_spell.v"
 endif
 
 noinst_HEADERS = stardict_spell.h
@@ -21,4 +21,4 @@ stardict_spell_la_LDFLAGS = 	-avoid-version \
 
 stardict_spell_la_LIBADD  = $(ENCHANT_LIBS)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(ENCHANT_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(ENCHANT_CFLAGS)

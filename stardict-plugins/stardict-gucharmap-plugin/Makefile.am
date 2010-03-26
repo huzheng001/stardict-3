@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_gucharmap.v
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_gucharmap.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_gucharmap.v"
 endif
 
 noinst_HEADERS = stardict_gucharmap.h
@@ -21,4 +21,4 @@ stardict_gucharmap_la_LDFLAGS = 	-avoid-version \
 
 stardict_gucharmap_la_LIBADD  = $(GUCHARMAP_LIBS)
 
-INCLUDES = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(GUCHARMAP_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(GUCHARMAP_CFLAGS)

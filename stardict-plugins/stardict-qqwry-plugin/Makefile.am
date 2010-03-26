@@ -4,7 +4,7 @@ EXTRA_DIST = stardict_qqwry.v stardict_qqwry.dev
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=
 else
-LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=stardict_qqwry.v"
+LD_VERSION_SCRIPT_OPTION="-Wl,--version-script=$(srcdir)/stardict_qqwry.v"
 endif
 
 noinst_HEADERS = stardict_qqwry.h
@@ -19,4 +19,4 @@ stardict_qqwry_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-INCLUDES = @STARDICT_CFLAGS@
+AM_CPPFLAGS = @STARDICT_CFLAGS@
