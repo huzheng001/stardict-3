@@ -6,6 +6,7 @@
   <!ENTITY manrevision "3.0.2">
   <!ENTITY date "Mar 2010">
   <!ENTITY app "StarDict">
+  <!ENTITY app_t "<application>StarDict</application>">
   <!ENTITY winedition "Windows edition">
 ]>
 <!-- 
@@ -115,7 +116,7 @@
 	</releaseinfo>
 	<legalnotice> 
 		<title>Feedback</title>
-		<para>To report a bug or make a suggestion regarding the <application>&app;</application> application or
+		<para>To report a bug or make a suggestion regarding the &app_t; application or
 		this manual, follow the directions in the 
 		<ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
 		</para>
@@ -135,7 +136,7 @@
   <sect1 id="stardict-introduction"> 
     <title>Introduction</title> 
     <para>
-	  <application>StarDict</application> is a Cross-Platform and international dictionary written in Gtk2.
+	  &app_t; is a Cross-Platform and international dictionary written in Gtk2.
       It has powerful features such as "Glob-style pattern matching," "Scan selected word," "Fuzzy query," etc.
 	</para> 
   </sect1>
@@ -144,9 +145,9 @@
     <title>Getting Started</title> 
     
     <sect2 id="stardict-to-start">
-    <title>Starting <application>&app;</application></title>	
+    <title>Starting &app_t;</title>	
 
-    <para>You can start <application>&app;</application> in the following ways:
+    <para>You can start &app_t; in the following ways:
     </para> 
     <variablelist>
     	<varlistentry>
@@ -182,264 +183,244 @@
     </variablelist>
     <note>
       <para>
-      If <application>&app;</application> is already running, it will perform the query in the existing StarDict window. 
+      If &app_t; is already running, it will perform the query in the existing StarDict window. 
       </para>
     </note>
 
     </sect2>
     
-    <sect2 id="stardict-when-you-start">
-    <title>When You Start <application>&app;</application></title>
+    <sect2 id="stardict-main-window">
+    <title>&app_t; Main window</title>
 	
-    <para>When you start <application>&app;</application>, the following window is displayed.</para>
+    <para>When you start &app_t;, the following window appears.</para>
 
     <!-- ==== Figure ==== -->
       <figure id="stardict-main-window-fig"> 
-	<title><application>&app;</application> Main Window</title> 
+	<title>&app_t; Main Window</title> 
 	<screenshot> 
 	  <mediaobject> 
 	    <imageobject><imagedata
 		fileref="figures/stardict_main_window.png" format="PNG"/> 
 	    </imageobject>
 	    <textobject> 
-	      <phrase>Shows <application>&app;</application> main window. Contains Search input combo, Tool buttons, Word list, Definition area and Setting buttons. </phrase> 
+	      <phrase>Shows &app_t; main window. Contains Search field, Tool buttons, Word list, Definition area and Setting buttons.</phrase>
 	    </textobject> 
 	  </mediaobject> 
 	</screenshot> 
       </figure>
     <!-- ==== End of Figure ==== -->
     
-    <para>The <application>&app;</application> main window consists of the following elements:</para>
+    <para>The &app_t; <firstterm>Main window</firstterm> consists of the following elements:</para>
     <variablelist>
 		<varlistentry>
-		<term><guilabel>Search</guilabel> input combo </term>
+		<term>Top bar</term>
 		<listitem>
-		<para>Use this field to enter the word that you want to look up.
-		You can also access recently-queried words through the dropdown box. </para>
+		<para>The top bar consists of the <firstterm>Search field</firstterm> and a number of buttons. Here they are in the order from left to right.
+		</para>
+		<variablelist>
+			<varlistentry>
+			<term><guilabel>Clear</guilabel></term>
+			<listitem>
+			<para>Clears the Search field.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><firstterm>Search field</firstterm></term>
+			<listitem>
+			<para>Use the Search field to enter the word that you want to look up.
+			You can also access recently-queried words through the dropdown box.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><firstterm><guilabel>Fuzzy Query</guilabel></firstterm></term>
+			<listitem>
+			<para>Fuzzy queries the word entered into the Search field.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Go Back</guilabel></term>
+			<listitem>
+			<para>Go back to the word you queried before. Right-click to see a list of words you queried earlier.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Main menu</guilabel></term>
+			<listitem>
+			<para>A button on the right end of the Top bar.
+			It pops up the &app_t; Main menu.
+			</para>
+			</listitem>
+			</varlistentry>
+		</variablelist>
 		</listitem>
 		</varlistentry>
+		
 		<varlistentry>
-		<term>Tool buttons </term>
+		<term>Left bar</term>
 		<listitem>
-		<para>You can click these buttons to do fuzzy quering, look up the previously queried word, 
-		look up the next and previous words from the list on the left, and pop up the main menu.</para>
+		<para>The Left bar contains a number of buttons, here they are in the order from  top to bottom:
+		</para>
+		<variablelist>
+			<varlistentry>
+			<term><firstterm><guilabel>Word list</guilabel></firstterm></term>
+			<listitem>
+			<para>Opens a list words that have been found in search.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><firstterm><guilabel>Results list</guilabel></firstterm></term>
+			<listitem>
+			<para>Opens a list of sources, mainly dictionaries, where the current word has been found. The Definition area combines results from all the sources. Clicking a source in the list scrolls the Definition area window to the definition from that source.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Full-Text Translation</guilabel></term>
+			<listitem>
+			<para>Switches to the Full-text translation mode that allows to translate blocks of text.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Dictionary groups</guilabel></term>
+			<listitem>
+			<para>Shows a pop-up menu that allows to select a group of dictionaries where to search words. The menu also contains a checkbox to enable network dictionaries.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Previous word</guilabel> and <guilabel>Next word</guilabel></term>
+			<listitem>
+			<para>These buttons are at the bottom part of the Left bar. They work with the Word list and allow to switch to previous and next words in the Word list.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+		</variablelist>
+		
 		</listitem>
 		</varlistentry>
+		
 		<varlistentry>
-		<term>Word list</term>
+		<term>Bottom bar</term>
 		<listitem>
-		<para>Shows the words that have been found in this search.</para>
+		<para>The left part of the bar in the order from left to right:
+		</para>
+		<variablelist>
+			<varlistentry>
+			<term><guilabel>Scan selection</guilabel> checkbox</term>
+			<listitem>
+			<para>Enable and disables the Scan mode.
+			Checking the <guibutton>Scan selection</guibutton> check button will cause &app_t;
+			to automatically look up words that you highlight in any application.
+			See <xref linkend="stardict-scan-selection"/> for more details about the Scan mode.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Info</guilabel></term>
+			<listitem>
+			<para>Shows an introduction to using &app_t; in the Definition area.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Quit</guilabel></term>
+			<listitem>
+			<para>Quits &app_t;.
+			</para>
+			</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<para>The right part of the bar in the order from left to right:
+		</para>
+		<variablelist>
+			<varlistentry>
+			<term><firstterm><guilabel>Internet search</guilabel></firstterm></term>
+			<listitem>
+			<para>Click the button to initiate Internet search. By default, the first website is used, but you may select any configured website right-clicking the button. &app_t; queries the word in the Search field sending a GET request to the configured web page. Result are shown in a web browser. To configure the list of websites see <xref linkend="stardict-prefs-main-window-searchwebsite"/>.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>&app; project website</guilabel></term>
+			<listitem>
+			<para>Opens &app_t; project website in a web browser.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Manage dictionaries</guilabel></term>
+			<listitem>
+			<para>Opens <firstterm>Manage dictionaries</firstterm> dialog that allows to configure dictionaries to use, organize them in groups and more.
+			</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><guilabel>Preferences</guilabel></term>
+			<listitem>
+			<para>Opens the <firstterm>Preferences</firstterm> dialog that allows to configuration a multitude of parameters pertaining to &app_t;. See <xref linkend="stardict-prefs"/>.
+			</para>
+			</listitem>
+			</varlistentry>
+		</variablelist>
 		</listitem>
 		</varlistentry>
+		
 		<varlistentry>
-		<term>Definition area</term>
+		<term><firstterm>Word list</firstterm></term>
 		<listitem>
-		<para><application>&app;</application> displays the definition of a word in this area of the window.</para>
+		<para>The smallest half of the &app_t; Main window on the left.
+		It contains a list of words that have been found in search.
+		Click a word to show the related articles in the Definition area.
+		You may use a spliter in the middle of the &app_t; Main window to divide the space between the Word list and the Definition area.
+		</para>
 		</listitem>
 		</varlistentry>
+		
 		<varlistentry>
-		<term>Setting buttons </term>
+		<term><firstterm>Definition area</firstterm></term>
 		<listitem>
-		<para>The bottom-left of the window contains the <guibutton>Scan selection</guibutton> check button,
-        the <guibutton>Info</guibutton> button and 
-		the <guibutton>Quit</guibutton> button.
-        Checking the <guibutton>Scan selection</guibutton> check button will cause <application>&app;</application>
-        to automatically look up words that you highlight in any application.
-		The bottom-right of the window contains the <guibutton>Internet search</guibutton> button, 
-		the <guibutton>StarDict project website</guibutton> button, 
-		the <guibutton>Dictionary management</guibutton> button and the <guibutton>Preferences</guibutton> button. </para>
+		<para>The largest half of the &app_t; Main window on the right.
+		&app_t; displays definition of a word in this area of the window.
+		You may use a spliter in the middle of the &app; main window to divide the space between the Word list and the Definition area. 
+		The Definition area has its own bars: a top toolbar (see <xref linkend="stardict-definition-aria-toolbar"/>)  and a bottom search bar (only visible when you search in the Definition area).
+		</para>
 		</listitem>
 		</varlistentry>
 	</variablelist>
 	
     </sect2>
 
-    <sect2 id="stardict-notification-area">
-    <title>Notification area icon</title>
-	<para>
-	<application>&app;</application> will also add an icon to the notification area.  When you iconify the main window, the 
-	window will be hiden.  After you click the icon, the window will be shown again.  If you right click this icon, it 
-	will popup a menu where you can choose to toggle <guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</guimenuitem>.
-	You can toggle <guimenuitem>Scan selection</guimenuitem> directly by ctrl-clicking the icon. Clicking the middle mouse button on 
-	the icon will query the selected word.
-	</para>
-	<figure id="stardict-notification-area-fig"> 
-	<title><application>&app;</application>'s notification area icon</title> 
-	<screenshot> 
-		<mediaobject> 
-			<imageobject><imagedata fileref="figures/stardict_notification_area.png" format="PNG"/> 
-			</imageobject>
-			<textobject> 
-				<phrase><application>&app;</application>'s notification area icon.</phrase> 
-			</textobject> 
-		</mediaobject> 
-	</screenshot> 
-	</figure> 
-	</sect2>
-
-    <sect2 id="stardict-scan-selection">
-    <title>Scan selection</title>
-
-     <para><application>&app;</application> can automatically scan selections. This means that when you select a word or phrase
-     in <application>&app;</application> or in any other application, 
- 	<application>&app;</application> will get the text that you selected and search for it, then display a floating window containing
-     the result of the search. </para>
-	<para>
-	In Windows the scan mode works differently. It has nothing to do with selection in fact.
-	<application>&app;</application> extracts the text under the pointer when you pause the mouse for a while.
-	Normally <application>&app;</application> looks up a space-separated word under the pointer, if the pointer is over a blank,
-	then two space-separated words are used, the one to the left and the one to the right of the blank.
-	If the word or the word pair is not found, <application>&app;</application> proceeds looking up words consisting of only capitals or
-	of only lower case letters and do some other tricks in order to extract the word to translate.
-	You may help <application>&app;</application> to extract the right word or a part of a word selecting it.
-	Although <application>&app;</application> does not work with selections, selection may effect the text <application>&app;</application> extracts.
-	</para>
-	<para>
-	Scanning in Windows may not work with some applications.
-	For example, it's known that scanning does not work
-	with <application>FireFox 3.x</application> and <application>Windows Console</application> (cmd.exe process).
-	The scanning feature depends on the way application outputs text.
-	If scanning does not work, you may harness another <application>&app;</application> feature &mdash; 
-	<emphasis>Clipboard scanning</emphasis>, see 
-	<xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-clipboard"/>.
-	</para>
-
-    <!-- ==== Figure ==== -->
-      <figure id="stardict-float-window-fig"> 
- 	<title><application>&app;</application> Floating Window</title>
-	<screenshot> 
-	  <mediaobject> 
-	    <imageobject><imagedata
-		fileref="figures/stardict_float_window.png" format="PNG"/> 
-	    </imageobject>
-	    <textobject> 
- 	      <phrase>Shows <application>&app;</application> floating window. Contains Tool buttons and Definition area. </phrase>
-	    </textobject> 
-	  </mediaobject> 
-	</screenshot> 
-      </figure>
-    <!-- ==== End of Figure ==== -->
-
-	<itemizedlist>
-	<title>Usage tips</title>
-	<listitem>
-	<para>You may drag the window to move it.</para>
-	</listitem>
-	<listitem>
-	<para>The floating window will disappear when you move your pointer some distance away.</para>
-	</listitem>
-	<listitem>
-	<para>You may configure <application>&app;</application> so it will do scanning only when a special modifier key is held down.</para>
-	</listitem>
-	<listitem>
-	<para>You may switch scan mode on and off by pressing the
-	<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></keycombo>
-	shortcut.</para>
-	</listitem>
-	<listitem>
-	<para><application>&app;</application> remembers the last text looked up in the floating window and will not lookup it again.
-	If you need to see the translation again, you should lookup another word first 
-	(it's not enough to simply change selection) and then lookup the original word.
-	Another possibility is to middle-click on the notification area icon, 
-	<application>&app;</application> will lookup the selection unconditionally.</para>
-	</listitem>
-	</itemizedlist>
-    <para>The <application>&app;</application> floating window consists of the following elements:</para>
-    <variablelist>
-		<varlistentry>
-		<term>Tool buttons </term>
-		<listitem>
- 		<para>The buttons will be hidden automatically to save display space. When your mouse pointer enters the floating window, 
- 		the buttons will appear immediately, and disappear again as the mouse pointer leaves. </para>
- 		<para>You can click these buttons to <guibutton>query</guibutton> a word in the main window,
-        <guibutton>copy</guibutton> the query result to clipboard, 
- 		<guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. 
- 		To the far right is the <guibutton>Lock floating window</guibutton> button.  If the 
- 		floating window is locked, it will always be shown there. </para>
-		</listitem>
-		</varlistentry>
-		<varlistentry>
- 		<term>Definition area </term>
-		<listitem>
-		<para>The query result is displayed in this area. </para>
-		</listitem>
-		</varlistentry>
-    </variablelist>
-    </sect2>
-
-  </sect1>
-
-<!-- ================ Usage ================================ -->
-
-  <sect1 id="stardict-usage"> 
-    <title>Usage</title>
-
-    <sect2 id="stardict-usage-lookup">
-    	<title>Looking Up a Word</title>
-    	<para>To look up the definition of a word, perform the following steps:</para>
-    	<orderedlist>
-    		<listitem><para>Type the word that you want to look up in the <guilabel>Search</guilabel>
-    		combo box. </para></listitem>
-			<listitem><para><application>&app;</application> will show the definition immediately. If not found, you can 
-			press <keycap>Return</keycap> to do a fuzzy query or just click the <guibutton>Fuzzy query</guibutton> button. </para></listitem>
-    		<listitem><para>Use the scrollbar to scroll through the definition. Select the words in the word list to view the 
-			related words. </para></listitem>
-    	</orderedlist>
-    </sect2>
-        
-    <sect2 id="stardict-usage-clear">
-    	<title>Clearing the Display Area</title>
-    	<para>To clear the text of the <guilabel>Search</guilabel> input combo, click the <guibutton>Clear</guibutton> button on the 
-		left, or just press <keycap>Alt-C</keycap> or <keycap>ESC</keycap>.</para> 
-    </sect2>
-    
-    <sect2 id="stardict-usage-select">
-    	<title>To Copy Text to Another Application</title>
-    	<para>There are two ways to copy the text in the display area to another application:</para>
-    	<itemizedlist>
-    		<listitem><para>To copy all of the text, click the <guibutton>Copy</guibutton> button by the top of the <guilabel>Definition area</guilabel>.</para></listitem>
-    		<listitem><para>To copy some of the text, select the text that you want to copy, then click your mouse's right 
-			button and choose <guimenuitem>Copy</guimenuitem>.</para></listitem>
-    	</itemizedlist> 
-    </sect2>
-    
-    <sect2 id="stardict-usage-find">
-    	<title>To Find Text in the Display Area</title>
-    	<para>To find text in the display area, perform the following steps:</para>
-    	<orderedlist>
-    		<listitem><para>click the <guibutton>Find</guibutton> button by the top of the <guilabel>Definition area</guilabel>. </para> </listitem>
-    		<listitem><para>Type the string that you want to find in the <guilabel>Find</guilabel> text box,
-    		then press <keycap>Return</keycap>. You cannot use wildcards.</para></listitem>
-    		<listitem><para>To find the next occurrence of the word, press <keycap>Return</keycap> again.</para></listitem>
-    	</orderedlist>	
-    </sect2>
-
-	<sect2 id="stardict-usage-scan-mode">
-		<title>Toggle scan mode</title>
-		<para>There are a number of ways to enable or disable the scan selection mode.
-		When in scan mode, <application>&app;</application> shows translation of the text you select in different windows.</para>
-		<itemizedlist>
-		<title>Ways to enable the scan mode</title>
-		<listitem><para>Toggle a checkbox at the bottom left corner of the <application>&app;</application> main window.</para></listitem>
-		<listitem><para>Right-click the notification area icon and check <guimenuitem>Scan</guimenuitem> 
-			in the pop-up menu.</para></listitem>
-		<listitem><para>Use 
-		<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></keycombo>
-		shortcut (it toggles scan mode). 
-		See <xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-when-modifier"/>.</para></listitem>
-		</itemizedlist>
-	</sect2>
-	
-	<sect2 id="stardict-usage-definition-aria-toolbar">
-		<title>Definition area toolbar</title>
-		<para>The difinition area toolbar is at the top of the <guilabel>Definition aria</guilabel>.
-		It contains a number of buttons. We describe them in left-to-right order.
+	<sect2 id="stardict-definition-aria-toolbar">
+		<title><firstterm>Definition area toolbar</firstterm></title>
+		<para>The Definition area toolbar is at the top of the <guilabel>Definition area</guilabel>.
+		It contains a number of buttons. Here they are in the left-to-right order.
 		</para>
 		<variablelist>
 			<varlistentry>
-			<term><guilabel>Hide(Show) the word list</guilabel></term>
+			<term><guilabel>Hide(Show) the Word list</guilabel></term>
 			<listitem>
-			<para>Hide or show the word list to the left.</para>
+			<para>Hide or show the Word list or the Results list, depending on what is active now.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -447,7 +428,7 @@
 			<term><guilabel>Copy</guilabel></term>
 			<listitem>
 			<para>
-			Copy definition area text into clipboard.
+			Copy the Definition area text into clipboard, all the text.
 			</para>
 			</listitem>
 			</varlistentry>
@@ -456,7 +437,7 @@
 			<term><guilabel>Pronounce the word</guilabel></term>
 			<listitem>
 			<para>This is a button with an additional dropdown menu.
-			Clicking the button you make <application>&app;</application> pronounce the current word using the first TTS engine that can do it. The dropdown menu allows you to select the TTS engine to use.
+			Clicking the button you make &app_t; pronounce the current word using the first TTS engine that can do that. The dropdown menu allows you to select the TTS engine to use.
 			</para>
 			<variablelist>
 				<title>TTS engines</title>
@@ -498,7 +479,7 @@
 				</varlistentry>
 			</variablelist>
 			<para>
-			Depending on cofiguration settings, installed plugins and other factors, the list of TTS engines may be shorter.
+			Depending on configuration settings, installed plugins and other factors, the list of TTS engines may be shorter.
 			</para>
 			</listitem>
 			</varlistentry>
@@ -507,13 +488,13 @@
 			<term><guilabel>Save to file</guilabel></term>
 			<listitem>
 			<para>
-			Save definition text into a file. The new text is appended to the end of the file.
+			Save Definition area text into a file. The new text is appended to the end of the file.
 			The file to use is specified in the <xref linkend="stardict-prefs-dictionary-export"/>
 			section of the <guilabel>Preferences</guilabel> dialog. You may also specify to export
 			only the found word, not its definition. 
-			<application>&app;</application> exports not the word you searched for but the word that was found, the one which translation is shown in the definition area.
+			&app_t; exports not the word you searched for but the word that was found, the one which translation is shown in the Definition area.
 			When "export only word" is not specified, selection is taken into account.
-			When text is selected in the definition aria, the selected text is exported prepended with the found word. When there are no selected text, all text of the definition area is exported.
+			When text is selected in the Definition area, the selected text is exported prepended with the found word. When there are no selected text, all text of the Definition area is exported.
 			</para>
 			<para>Hotkey: <keycombo><keycap>Alt</keycap><keycap>e</keycap></keycombo>
 			</para>
@@ -521,16 +502,192 @@
 			</varlistentry>
 			
 			<varlistentry>
-			<term><guilabel>Search in the definition text</guilabel></term>
+			<term><guilabel>Search in the Definition text</guilabel></term>
 			<listitem>
 			<para>
-			Search for text in the definition area. This button opens a search bar at the bottom of the definition area where you may type a word to search.
+			Search for text in the Definition area. This button opens the Definitiona area Search bar at the bottom of the Definition area where you may type a word to search.
 			</para>
 			<para>Hotkey: <keycombo><keycap>Ctrl</keycap><keycap>f</keycap></keycombo>
 			</para>
 			</listitem>
 			</varlistentry>
 		</variablelist>
+	</sect2>
+	
+    <sect2 id="stardict-notification-area">
+    <title>Notification area icon</title>
+	<para>
+	&app_t; will also add an icon to the Notification area.  When you iconify the Main window, the 
+	window will be hiden.  After you click the icon, the window will be shown again.  If you right click this icon, it 
+	will popup a menu where you can choose to toggle <guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</guimenuitem>.
+	You can toggle <guimenuitem>Scan selection</guimenuitem> directly by ctrl-clicking the icon. Clicking the middle mouse button on 
+	the icon will query the selected word.
+	</para>
+	<figure id="stardict-notification-area-fig"> 
+	<title>&app_t;'s notification area icon</title> 
+	<screenshot> 
+		<mediaobject> 
+			<imageobject><imagedata fileref="figures/stardict_notification_area.png" format="PNG"/> 
+			</imageobject>
+			<textobject> 
+				<phrase>&app_t;'s notification area icon.</phrase> 
+			</textobject> 
+		</mediaobject> 
+	</screenshot> 
+	</figure> 
+	</sect2>
+
+    <sect2 id="stardict-scan-selection">
+    <title>Scan selection</title>
+
+     <para>&app_t; can automatically scan selections. This means that when you select a word or phrase
+     in &app_t; or in any other application, 
+ 	&app_t; will get the text that you selected and search for it, then display the Floating window containing
+     the result of the search. </para>
+	<para>
+	In Windows the Scan mode works differently. It has nothing to do with selection in fact.
+	&app_t; extracts the text under the pointer when you pause the mouse for a while.
+	Normally &app_t; looks up a space-separated word under the pointer, if the pointer is over a blank,
+	then two space-separated words are used, the one to the left and the one to the right of the blank.
+	If the word or the word pair is not found, &app_t; proceeds looking up words consisting of only capitals or
+	of only lower case letters and do some other tricks in order to extract the word to translate.
+	You may help &app_t; to extract the right word or a part of a word selecting it.
+	Although &app_t; does not work with selections, selection may effect the text &app_t; gets.
+	</para>
+	<para>
+	Scanning in Windows may not work with some applications.
+	For example, it's known that scanning does not work
+	with <application>FireFox 3.x</application> and <application>Windows Console</application> (cmd.exe process).
+	The scanning feature depends on the way application outputs text.
+	If scanning does not work, you may harness another &app_t; feature &mdash; 
+	<firstterm>Clipboard scanning</firstterm>, see 
+	<xref linkend="stardict-prefs-dictionary-scan"/>.
+	</para>
+
+    <!-- ==== Figure ==== -->
+      <figure id="stardict-float-window-fig"> 
+ 	<title>&app_t; Floating Window</title>
+	<screenshot> 
+	  <mediaobject> 
+	    <imageobject><imagedata
+		fileref="figures/stardict_float_window.png" format="PNG"/> 
+	    </imageobject>
+	    <textobject> 
+ 	      <phrase>Shows &app_t; the Floating window. Contains Tool buttons and Definition area. </phrase>
+	    </textobject> 
+	  </mediaobject> 
+	</screenshot> 
+      </figure>
+    <!-- ==== End of Figure ==== -->
+
+	<itemizedlist>
+	<title>Usage tips</title>
+	<listitem>
+	<para>You may drag the Floating window to move it.</para>
+	</listitem>
+	<listitem>
+	<para>The Floating window will disappear when you move your pointer some distance away.</para>
+	</listitem>
+	<listitem>
+	<para>You may configure &app_t; so it will do scanning only when a special modifier key is held down. See <xref linkend="stardict-prefs-dictionary-scan"/>.</para>
+	</listitem>
+	<listitem>
+	<para>You may switch the Scan mode on and off by pressing the
+	<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></keycombo>
+	shortcut. See <xref linkend="stardict-prefs-dictionary-scan"/>.</para>
+	</listitem>
+	<listitem>
+	<para>&app_t; remembers the last text looked up in the Floating window and will not lookup it again.
+	If you need to see the translation again, you should lookup another word first 
+	(it's not enough to simply change selection) and then lookup the original word.
+	Another possibility is to middle-click on the Notification area icon, 
+	&app_t; will lookup the selection unconditionally.</para>
+	</listitem>
+	</itemizedlist>
+    <para>The &app_t; Floating window consists of the following elements:</para>
+    <variablelist>
+		<varlistentry>
+		<term>Tool buttons bar</term>
+		<listitem>
+ 		<para>A bar at the top of the Floating window. The bar will be hidden automatically to save display space. When your mouse pointer enters the Floating window, 
+ 		the Tool buttons bar will appear immediately, and disappear again as the mouse pointer leaves. </para>
+ 		<para>You can click these buttons to <guibutton>query</guibutton> a word in the Main window,
+        <guibutton>copy</guibutton> the query result to clipboard, 
+ 		<guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. 
+ 		To the far right is the <guibutton>Lock floating window</guibutton> button.  If the 
+ 		Floating window is locked, it will always be shown there. </para>
+		</listitem>
+		</varlistentry>
+		<varlistentry>
+ 		<term>Definition area</term>
+		<listitem>
+		<para>The query result is displayed in this area. </para>
+		</listitem>
+		</varlistentry>
+    </variablelist>
+    </sect2>
+
+  </sect1>
+
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="stardict-usage"> 
+    <title>Usage</title>
+
+    <sect2 id="stardict-usage-lookup">
+    	<title>Looking Up a Word</title>
+    	<para>To look up the definition of a word, perform the following steps:</para>
+    	<orderedlist>
+    		<listitem><para>Type the word that you want to look up in the Search
+    		field.</para></listitem>
+			<listitem><para>&app_t; will show the definition immediately. If not found, you can 
+			press <keycap>Return</keycap> to do a fuzzy query or just click the <guibutton>Fuzzy query</guibutton> button. </para></listitem>
+    		<listitem><para>Use the scrollbar to scroll through the definition. Select the words in the Word list to view the 
+			related words. </para></listitem>
+    	</orderedlist>
+    </sect2>
+        
+    <sect2 id="stardict-usage-clear">
+    	<title>Clearing the Display Area</title>
+    	<para>To clear the text of the Search field, click the <guibutton>Clear</guibutton> button on the 
+		left, or just press <keycap>Alt-C</keycap> or <keycap>ESC</keycap>.</para> 
+    </sect2>
+    
+    <sect2 id="stardict-usage-select">
+    	<title>To Copy Text to Another Application</title>
+    	<para>There are two ways to copy the text in the Definition area to another application:</para>
+    	<itemizedlist>
+    		<listitem><para>To copy all of the text, click the <guibutton>Copy</guibutton> button by the top of the <guilabel>Definition area</guilabel>.</para></listitem>
+    		<listitem><para>To copy some of the text, select the text that you want to copy, then click your mouse's right 
+			button and choose <guimenuitem>Copy</guimenuitem>.</para></listitem>
+    	</itemizedlist> 
+    </sect2>
+    
+    <sect2 id="stardict-usage-find">
+    	<title>To Find Text in the Definition Area</title>
+    	<para>To find text in the Definition area, perform the following steps:</para>
+    	<orderedlist>
+    		<listitem><para>click the <guibutton>Find</guibutton> button by the top of the <guilabel>Definition area</guilabel>. </para> </listitem>
+    		<listitem><para>Type the string that you want to find in the <guilabel>Find</guilabel> text box,
+    		then press <keycap>Return</keycap>. You cannot use wildcards.</para></listitem>
+    		<listitem><para>To find the next occurrence of the word, press <keycap>Return</keycap> again.</para></listitem>
+    	</orderedlist>	
+    </sect2>
+
+	<sect2 id="stardict-usage-scan-mode">
+		<title>Toggle Scan Mode</title>
+		<para>There are a number of ways to enable or disable the Scan selection mode.
+		When in Scan mode, &app_t; shows translation of the text you select in different windows. See <xref linkend="stardict-scan-selection"/>.</para>
+		<itemizedlist>
+		<title>Ways to enable the Scan mode</title>
+		<listitem><para>Toggle the <guilabel>Scan selection</guilabel> checkbox at the bottom left corner of the &app_t; Main window.</para></listitem>
+		<listitem><para>Right-click the Notification area icon and check <guimenuitem>Scan</guimenuitem> 
+			in the pop-up menu.</para></listitem>
+		<listitem><para>Press 
+		<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></keycombo>
+		shortcut (it toggles the Scan mode). To configure the shortcut see 
+		<xref linkend="stardict-prefs-dictionary-scan"/>.</para></listitem>
+		</itemizedlist>
 	</sect2>
 	
 	<sect2 id="stardict-usage-hotkeys">
@@ -540,7 +697,7 @@
 			<term><keycombo><keycap>Ctrl</keycap><keycap>q</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Quit <application>&app;</application>.</para>
+			<para>Quit &app_t;.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -548,7 +705,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>x</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Minimize to tray. <application>&app;</application> main window is closed, taskbar item disappears, but the application continues to run. You may open the main window again clicking on the notification area icon.</para>
+			<para>Minimize to tray. &app_t; Main window is closed, taskbar item disappears, but the application continues to run. You may open the Main window again clicking on the Notification area icon.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -556,7 +713,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>z</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Iconify the application. The main window is hidden, the taskbar item remains.</para>
+			<para>Iconify the application. The Main window is hidden, the taskbar item remains.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -564,7 +721,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>e</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Save word definition to a file. See <xref linkend="stardict-usage-definition-aria-toolbar"/> for more details.</para>
+			<para>Save word definition to a file. See <xref linkend="stardict-definition-aria-toolbar"/> for more details.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -580,7 +737,7 @@
 			<term><keycombo><keycap>Ctrl</keycap><keycap>f</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Search in the definition text. See <xref linkend="stardict-usage-definition-aria-toolbar"/> for more details.</para>
+			<para>Search in the Definition area. See <xref linkend="stardict-definition-aria-toolbar"/> for more details.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -596,7 +753,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>Up</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Previous word. Query the previous word in the index.</para>
+			<para>Previous word. Query the previous word in the Word index.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -604,7 +761,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>Down</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Next word. Query the next word in the index.</para>
+			<para>Next word. Query the next word in the Word index.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -612,7 +769,7 @@
 			<term><keycombo><keycap>Alt</keycap><keycap>m</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Menu. Show the main menu.</para>
+			<para>Menu. Show the Main menu.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -620,7 +777,7 @@
 			<term><keycombo><keycap>Ctrl</keycap><keycap>v</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Query clipboard text in <application>&app;</application>.</para>
+			<para>Query clipboard text in &app_t;.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -628,7 +785,7 @@
 			<term><keycombo><keycap>BackSpace</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Clear the search field and focus it.</para>
+			<para>Clear the Search field and focus it.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -638,14 +795,14 @@
 			<listitem>
 				<orderedlist>
 				<listitem>
-				<para>The focus is in the index window.</para>
+				<para>The focus is in the Word list.</para>
 				<para>If the selected index item has children, expand or collapse the item.
 				If the selected index item has no children, query the item in the main window.</para>
 				</listitem>
 				
 				<listitem>
-				<para>The focus is in the definition area.</para>
-				<para>Requery the text in the search field.</para>
+				<para>The focus is in the Definition area.</para>
+				<para>Requery the text in the Search field.</para>
 				</listitem>
 				</orderedlist>
 			</listitem>
@@ -655,7 +812,7 @@
 			<term><keycombo><keycap>Space</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Focus the search field.</para>
+			<para>Focus the Search field.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -663,7 +820,7 @@
 			<term><keycombo><keycap>Escape</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Clear the search field and focus it.</para>
+			<para>Clear the Search field and focus it.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -671,9 +828,9 @@
 			<term><keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>z</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Open the main window of <application>&app;</application>. 
-			The main window may be iconified, or <application>&app;</application> may only exist as a notification area icon.
-			In all the cases pressing this hotkey presents the main window to the user.
+			<para>Open the Main window of &app_t;. 
+			The Main window may be iconified, or &app_t; may only exist as a Notification area icon.
+			In all the cases pressing this hotkey presents the Main window to the user.
 			You may change the hotkey in the Preferences dialog, see 
 			<xref linkend="stardict-prefs-main-window-options"/>.
 			</para>
@@ -684,7 +841,7 @@
 			<term><keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Toggle scan mode.
+			<para>Toggle the Scan mode.
 			You may change the hotkey in the Preferences dialog, see 
 			<xref linkend="stardict-prefs-dictionary-scan"/>.
 			</para>
@@ -699,8 +856,8 @@
 <!-- ============= Preferences  ================================ -->
   <sect1 id="stardict-prefs">
 	<title>Preferences</title>
-	<para>To configure <application>&app;</application>, click the <guibutton>Preferences</guibutton> button at the 
-	right-bottom corner of the main window or click the <guibutton>Main menu</guibutton> button and choose 
+	<para>To configure &app_t;, click the <guibutton>Preferences</guibutton> button at the 
+	right-bottom corner of the Main window or click the <guibutton>Main menu</guibutton> button and choose 
 	<guimenuitem>Preferences</guimenuitem>. </para>
 
 	<sect2 id="stardict-prefs-dictionary">
@@ -713,7 +870,7 @@
 					<guilabel>Only scan while modifier key is being pressed.</guilabel> </term>
 				<listitem>
 				<para>Only do scanning while the modifier key being pressed. The modifier key is set 
-				by <xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-key"/>.</para>
+				by the <xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-key"/> option.</para>
 				<para>Default: FALSE.</para>
 				</listitem>
 				</varlistentry>
@@ -722,11 +879,11 @@
 				<term id="stardict-prefs-dictionary-scan-hide-when-modifier-released">
 					<guilabel>Hide floating window when modifier key released.</guilabel></term>
 				<listitem>
-				<para>When this option is set, the floating window is hidden when user releases the modifier key.
+				<para>When this option is set, the Floating window is hidden when user releases the modifier key.
 				Note: the window is hidden only if the pointer has the same position it had when the window was shown.
 				In addition to hiding the window, the last selected text is forgotten, which allow you to lookup
 				the same text again simply pressing the modifier key.
-				When this option is not set, releasing the modifier key has no effect on the floating window.
+				When this option is not set, releasing the modifier key has no effect on the Floating window.
 				</para>
 				<para>This option has effect only if <xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-when-modifier"/>
 				is checked.</para>
@@ -740,16 +897,16 @@
 				<para>This option allows to choose a modifier keys or a key combination that enables scanning.</para>
 				<para>This option has effect only if <xref linkend="stardict-prefs-dictionary-scan" endterm="stardict-prefs-dictionary-scan-scan-when-modifier"/>
 				is checked.</para>
-				<para>Default key: <keycap>Win</keycap> (depends on configuration).</para>
+				<para>Default key: <keycap>Win</keycap> (depends on &app_t; edition).</para>
 				</listitem>
 				</varlistentry>
 				
 				<varlistentry>
 				<term id="stardict-prefs-dictionary-scan-scan-clipboard"><guilabel>Scan clipboard.</guilabel></term>
 				<listitem>
-				<para>Enables clipboard scanning. If enabled, when new text is copied into the clipboard,
-				<application>&app;</application> lookup the text into the floating window.</para>
-				<para>This option is only available in <emphasis>&winedition;</emphasis> of <application>&app;</application>.</para>
+				<para>Enables Clipboard scanning. If enabled, when new text is copied into the clipboard,
+				&app_t; lookup the text into the Floating window.</para>
+				<para>This option is only available in <emphasis>&winedition;</emphasis> of &app_t;.</para>
 				<para>Default: FALSE.</para>
 				</listitem>
 				</varlistentry>
@@ -757,7 +914,7 @@
 				<varlistentry>
 				<term>Scan mode shortcut</term>
 				<listitem>
-				<para>The scan mode shortcut enables or disables the scan mode.
+				<para>The Scan mode shortcut enables or disables the Scan mode.
 				Check the <guilabel>Use scan hotkey</guilabel> checkbox to enable this shortcut.
 				You may change the shortcut in the field to the right of the label.
 				Click inside the field and press the key combination you want to assign to this action.</para>
@@ -775,9 +932,8 @@
 				<varlistentry>
 				<term><guilabel>Use custom font.</guilabel> </term>
 				<listitem>
-				<para>Allows you to override the system's default font
-				when running <application>&app;</application>.
-				If this option is turned on, then the font named in the "Custom Font" option will be
+				<para>Allows you to override the system's default for &app_t;.
+				If this option is turned on, the font selelected in the <guilabel>Dictionary font</guilabel> option will be
 				used instead of the system font.</para>
 				<para>Font settings apply immediately.</para>
 				<para>Default: FALSE.</para>
@@ -791,14 +947,14 @@
 				<varlistentry>
 				<term><guilabel id="stardict-prefs-dictionary-scan-create-cache-files">Create cache files to speed up loading.</guilabel></term>
 				<listitem>
-				<para>Opening a dictionary the first time, <application>&app;</application> does some calculations
+				<para>Opening a dictionary the first time, &app_t; does some calculations
 				to access dictionary contents speedily. 
-				<application>&app;</application> may save the results in special cache files that will be used the next time
-				<application>&app;</application> starts. With cache files <application>&app;</application> starts quicker, since it does not need to do
+				&app_t; may save the results in special cache files that will be used the next time
+				&app_t; starts. With cache files &app_t; starts quicker, since it does not need to do
 				the same calculations again. It's highly recommended to enable caching.
-				In the first place, <application>&app;</application> tries to save a cache file along with the dictionary.
+				In the first place, &app_t; tries to save a cache file along with the dictionary.
 				If it fails, for example, because the directory is write-protected,
-				<application>&app;</application> creates a file in the user home directory, in <application>&app;</application>'s directory.</para>
+				&app_t; creates a file under the user home directory, in &app_t;'s directory.</para>
 				<para>Default: TRUE.</para>
 				</listitem>
 				</varlistentry>
@@ -806,10 +962,10 @@
 				<varlistentry>
 				<term><guilabel id="stardict-prefs-dictionary-scan-use-collation">Sort word list by collation function.</guilabel></term>
 				<listitem>
-				<para>Normally, <application>&app;</application> uses an index of words to look up a word in a dictionary.
+				<para>Normally, &app_t; uses an index of words to look up a word in a dictionary.
 				When the word is present in the index, the corresponding article is shown.
 				Otherwise adjacent words will be checked and may be used as result.
-				<application>&app;</application> uses heuristic algorithms to decide whether the particular word may be suggested as
+				&app_t; uses heuristic algorithms to decide whether the particular word may be suggested as
 				result of the search or not.
 				The order of words in an index is very important and
 				it would be handy if index items were sorted by alphabet or according to other rules.
@@ -827,7 +983,7 @@
 				</para>
 				<para>It's highly recommended to enable the 
 				<xref linkend="stardict-prefs-dictionary-cache" endterm="stardict-prefs-dictionary-scan-create-cache-files"/>
-				option, otherwise <application>&app;</application> will do sorting each time the application starts.
+				option, otherwise &app_t; will do sorting each time the application starts.
 				</para>
 				<para>Default: FALSE.</para>
 				</listitem>
@@ -836,7 +992,7 @@
 				<varlistentry>
 				<term><guilabel>Clean all cache files</guilabel></term>
 				<listitem>
-				<para>Remove all <application>&app;</application> cache files.
+				<para>Remove all &app_t; cache files.
 				</para>
 				</listitem>
 				</varlistentry>
@@ -844,15 +1000,14 @@
 		</sect3>
 		<sect3 id="stardict-prefs-dictionary-export">
 		<title>Export</title>
-			<para><application>&app;</application> may export search results into a file.
-			You have two options: export only the found word or export the entire search result,
-			the word article.
+			<para>&app_t; may export search results into a file.
+			You have two options: export only the found word or export the entire search result, the contents of the Definition area.
 			</para>
 			<variablelist>
 				<varlistentry>
 				<term><guilabel>Only export words.</guilabel></term>
 				<listitem>
-				<para>When this option is set, <application>&app;</application> exports only the found word,
+				<para>When this option is set, &app_t; exports only the found word,
 				otherwise exports the complete article.</para>
 				<para>Default: TRUE.</para>
 				</listitem>
@@ -870,13 +1025,13 @@
 		</sect3>
 		<sect3 id="stardict-prefs-dictionary-sound">
 		<title>Sound</title>
-			<para>There are a number of cases when <application>&app;</application> needs to play sound files.
-			<application>&app;</application> may accompany GUI actions with sounds.
-			<application>&app;</application> may pronounce the words you search in the dictionary.
+			<para>There are a number of cases when &app_t; needs to play sound files.
+			&app_t; may accompany GUI actions with sounds.
+			&app_t; may pronounce the words you search in the dictionary.
 			Some articles may contain linked sound files you can play.
 			</para>
 			<para>
-			To play sound files <application>&app;</application> may harness platform-specific services or use commands you specify on this page.
+			To play sound files &app_t; may harness platform-specific services or use commands you specify on this page.
 			</para>
 			<para>
 			This page allows to configure some aspects of the TTS subsystem.
@@ -886,8 +1041,8 @@
 				<varlistentry>
 				<term><guilabel>Enable sound event.</guilabel> </term>
 				<listitem>
-				<para>Whether enable sound event. <application>&app;</application> will play sound event when button is 
-	active, released, and when pop up menu.</para>
+				<para>Whether to enable sound events. &app_t; will play sound event when button is 
+	active, released, and when a menu pops up.</para>
 				<para>Default: TRUE.</para>
 				</listitem>
 				</varlistentry>
@@ -904,7 +1059,7 @@
 				<varlistentry>
 				<term><guilabel>Always use sound play command</guilabel></term>
 				<listitem>
-				<para>On some platforms <application>&app;</application> use platform-specific services to play sound files first, then retreat to the custom command provided by the user if the service is unable to play the file. You may specify to always use the custom command selecting this option.
+				<para>On some platforms &app_t; use platform-specific services to play sound files first, then retreats to the custom command provided by the user if the service is unable to play the file. You may specify to always use the custom command selecting this option.
 				</para>
 				<para>Default: FALSE.</para>
 				</listitem>
@@ -915,12 +1070,12 @@
 				<listitem>
 				<para>
 				Allows to specify locations of RealPeopleTTS bundles.
-				RealPeopleTTS bundle is a collection of sound files containing speech samples performed by real people. Normally, one file contains one recoded word, the file is named after that word. Sound files are organized into a number of directories. In the text field you must specify a path to the top level directory of the bundle. The order of paths in the text field is important. <application>&app;</application> checks directories from top to bottom, the first found file will be used.
+				RealPeopleTTS bundle is a collection of sound files containing speech samples performed by real people. Normally, one file contains one recoded word, the file is named after that word. Sound files are organized into a number of directories. In the text field you must specify a path to the top level directory of the bundle. The order of paths in the text field is important. &app_t; checks directories from top to bottom, the first found file will be used.
 				</para>
 					<variablelist>
 						<title>Default:</title>
 						<varlistentry>
-						<term>In &winedition; of <application>&app;</application></term>
+						<term>In &winedition; of &app_t;</term>
 						<listitem>
 						<para>
 						<filename class='directory'>C:\Program Files\WyabdcRealPeopleTTS</filename>,
@@ -932,7 +1087,7 @@
 						</varlistentry>
 
 						<varlistentry>
-						<term>In other editions of <application>&app;</application></term>
+						<term>In other editions of &app_t;</term>
 						<listitem>
 						<para>
 						<filename class='directory'>/usr/share/WyabdcRealPeopleTTS</filename>,
@@ -949,7 +1104,7 @@
 				<listitem>
 				<para>
 				Allows to use the command below to read words.
-				You need to restart <application>&app;</application> for changes to take effect.
+				You need to restart &app_t; for changes to take effect.
 				</para>
 				<para>Default: FALSE.</para>
 				</listitem>
@@ -961,7 +1116,7 @@
 				<para>
 				This field allows to specify a command to use to pronounce words.
 				You need to provide a print-like string, with "%s" specifing the place where the word (or phrase) to pronounce will be inserted.
-				You need to restart <application>&app;</application> for changes to take effect.
+				You need to restart &app_t; for changes to take effect.
 				Do not forget to check the checkbox above if you want to use this command.
 				</para>
 				<para>Default: <emphasis>nothing</emphasis>.</para>
@@ -994,7 +1149,7 @@
 			<term><guilabel>Highlight search term</guilabel></term>
 			<listitem>
 				<para>
-				Whether to highlight the search term in the definition area.
+				Whether to highlight the search term in the Definition area.
 				A search term is a word that was found in dictionaries, a head word of an article.
 				</para>
 				<para>Default: FALSE.</para>
@@ -1009,7 +1164,7 @@
 	<title>Network</title>
 		<sect3 id="stardict-prefs-network-net-dict">
 		<title>Net Dict</title>
-		<para><application>&app;</application> may look up words in network dictionaries using a custom <application>&app;</application> network protocol.
+		<para>&app_t; may look up words in network dictionaries using a custom &app_t; network protocol.
 		This configuration page allows you to register an account, select a server to use, and specify other related parameters.
 		</para>
 			<variablelist>
@@ -1027,7 +1182,7 @@
 		<sect3 id="stardict-prefs-network-web-browser">
 		<title>Web browser</title>
 		<para>
-		<application>&app;</application> may need to open a web link to start Internet search, show <application>&app;</application> home page, show a web page to download new dictionaries, new version of the application and for other reasons. This configuration page allows to specify how a web link should be opened.
+		&app_t; may need to open a web link to start Internet search, show &app_t; project website, show a web page to download new dictionaries, new version of the application and for other reasons. This configuration page allows to specify how a web link should be opened.
 		</para>
 			<variablelist>
 				<varlistentry>
@@ -1035,7 +1190,7 @@
 				<listitem>
 				<para>
 				This option allows you to specify a command to use for opening <acronym>URL</acronym>s.
-				Some editions of <application>&app;</application> use platform-specific services for opening <acronym>URL</acronym>s by default. To use the custom command you need to check the checkbox below. For other editions of <application>&app;</application> the custom command is the only way to open a web link.
+				Some editions of &app_t; use platform-specific services for opening <acronym>URL</acronym>s by default. To use the custom command you need to check the checkbox below. For other editions of &app_t; the custom command is the only way to open a web link.
 				</para>
 				<para>
 				You may specify a program name (with or without full path) accompaned with any options required. The <acronym>URL</acronym> to open will be appended to this command at run time.
@@ -1048,7 +1203,7 @@
 				<term><guilabel>Always use this command for opening URLs.</guilabel></term>
 				<listitem>
 				<para>
-				This option is only available in editions of <application>&app;</application> that can use other ways to open a web link.
+				This option is only available in editions of &app_t; that can use other ways to open a web link.
 				</para>
 				<para>
 				Check this option to use the custom command to open web links instead of platform-specific services.
@@ -1069,12 +1224,12 @@
 				<term><guilabel>Search while typing</guilabel></term>
 				<listitem>
 				<para>
-				When this option is checked, <application>&app;</application> search for the word you are typing in the search field automatically. <application>&app;</application> monitors key-press events, it starts searching the word entered as soon as there is no activity for more than a specified amount of time. The time span can be changed in the field below.
+				When this option is checked, &app_t; search for the word you are typing in the search field automatically. &app_t; monitors key-press events, it starts searching the word entered as soon as there is no activity for more than a specified amount of time. The time span can be changed in the field below.
 				</para>
 				<para>
 				When this option is not checked, you need to press 
 				<keycombo><keycap>Enter</keycap></keycombo>
-				in order for <application>&app;</application> to start searching the word.
+				in order for &app_t; to start searching the word.
 				</para>
 				<para>Default: TRUE</para>
 				</listitem>
@@ -1094,7 +1249,7 @@
 				<term><guilabel>Show the first word when not found.</guilabel></term>
 				<listitem>
 				<para>
-				When <application>&app;</application> is unable to find the exact word requested, the application may propose another word that is close to the original. When this option is checked, the closest word will be shown in the definition area, otherwise, <application>&app;</application> tells that the original word is not found. Note, that this option applies to simple queries only, that is the queries that do not use regular expressions, patterns, fuzzy matchs and so on.
+				When &app_t; is unable to find the exact word requested, the application may propose another word that is close to the original. When this option is checked, the closest word will be shown in the Definition area, otherwise, &app_t; tells that the original word is not found. Note, that this option applies to simple queries only, that is the queries that do not use regular expressions, patterns, fuzzy matchs and so on.
 				</para>
 				<para>Default: TRUE</para>
 				</listitem>
@@ -1110,10 +1265,10 @@
 				<listitem>
 				<para>
 				Allows to customize graphical appearance of the application.
-				Select the <emphasis>Default</emphasis> item to restore the original appearance of <application>&app;</application>,
+				Select the <emphasis>Default</emphasis> item to restore the original appearance of &app_t;,
 				no skins applied.
 				You need to restart the application in order for changes to take effect.
-				For instructions on how to prepare a custom skin see the <filename>doc/Skins</filename> file in <application>&app;</application> sources.
+				For instructions on how to prepare a custom skin see the <filename>doc/Skins</filename> file in &app_t; sources.
 				</para>
 				<para>Default: <emphasis>Default</emphasis>.</para>
 				</listitem>
@@ -1122,9 +1277,9 @@
 				<varlistentry>
 				<term><guilabel>Hide main window when starting StarDict.</guilabel></term>
 				<listitem>
-				<para>Controls whether the main window appears when you first start the program.
-                If you select this option, you will only see an icon in the notification area 
-				after starting <application>&app;</application>.  You may still get to the main
+				<para>Controls whether the Main window appears when you first start the program.
+                If you select this option, you will only see the Notification area icon
+				after starting &app_t;.  You may still get to the Main
                 window by clicking on this icon.</para>
 				<para>Default: FALSE.</para>
 				</listitem>
@@ -1133,8 +1288,8 @@
 				<varlistentry>
 				<term><guilabel>Use open main window hotkey</guilabel></term>
 				<listitem>
-				<para>This option enable the open main window hotkey, and allows to change that hotkey.
-				When enabled, when user presses the hotkey, the main window is presented to the user.
+				<para>This option enable the hotkey that opens the Main window, and allows to change that hotkey.
+				When enabled, when user presses the hotkey, the Main window is presented to the user.
 				</para>
 				<para>Default: TRUE.</para>
 				<para>Default hotkey: 
@@ -1147,7 +1302,7 @@
 				<term><guilabel>Transparency</guilabel></term>
 				<listitem>
 				<para>
-				Allows to make the main window transparent.
+				Allows to make the Main window transparent.
 				Moving the slider you may change transparency degree.
 				Transparency is measured in percents, it can range from 0 to 80,
 				where 0 &mdash; fully opaque, 80 &mdash; almost fully transparent.
@@ -1164,21 +1319,21 @@
 		</sect3>
 		<sect3 id="stardict-prefs-main-window-searchwebsite">
 		<title>Search website</title>
-			<para><application>&app;</application> may use Web search engines, Web dictionaries, databases providing web-based interface and other web sites providing information by request.
+			<para>&app_t; may use Web search engines, Web dictionaries, databases providing web-based interface and other web sites providing information by request.
 			The text to search is incorporated into <acronym>URL</acronym>. 
 			Normally, the text is assigned to a GET request parameter.
 			For example, to search for word <emphasis>stardict</emphasis> in 
 			<ulink url="http://www.google.com" type="http">Google search engine</ulink> you may use the following
 			<acronym>URL</acronym>
 			<uri>http://www.google.com/search?q=<replaceable>stardict</replaceable></uri>.
-			You can search the websites in <application>&app;</application>
-			right-clicking the <guibutton>Internet search</guibutton> button in the main window.
+			You can search websites in &app_t;
+			right-clicking the <guibutton>Internet search</guibutton> button in the Main window.
 			</para>
 			<para>
-			<application>&app;</application> does not handle the web request itself, it only composes a <acronym>URL</acronym> and invokes an external program like a web browser or use platform-specific services to open the <acronym>URL</acronym>.
+			&app_t; does not handle the web request itself, it only composes a <acronym>URL</acronym> and invokes an external program like a web browser or use platform-specific services to open the <acronym>URL</acronym>.
 			</para>
 			<para>
-			On this page you may see a list of web site. Use <guilabel>Add</guilabel> and 
+			On this page you may see a list of websites. Use <guilabel>Add</guilabel> and 
 			<guilabel>Remove</guilabel> buttons to add new sites and remove existing records.
 			Use <guilabel>Up</guilabel> and <guilabel>Down</guilabel> arrow buttons to reorder records in the list. Each record consists of three items:
 			</para>
@@ -1195,7 +1350,7 @@
 				<term><guilabel>Website link</guilabel></term>
 				<listitem>
 				<para>Link to the main page of the website.
-				This link is opened when there is nothing to search for, the search field is empty.
+				This link is opened when there is nothing to search for, the Search field is empty.
 				</para>
 				</listitem>
 				</varlistentry>
@@ -1220,7 +1375,7 @@
 				<varlistentry>
 				<term><guilabel>When middle mouse button is clicked:</guilabel> </term>
 				<listitem>
-				<para>Specifies an action to perform when user clicks the middle mouse button on the notification
+				<para>Specifies an action to perform when user clicks the middle mouse button on the Notification
 				area icon. There are the following choices:</para>
 				<itemizedlist>
 					<listitem>
@@ -1233,16 +1388,16 @@
 					<para><guilabel>Do nothing</guilabel></para>
 					</listitem>
 				</itemizedlist>
-				<para>In the <guilabel>Do nothing</guilabel> case <application>&app;</application> simply ignores middle button clicks,
-				otherwise <application>&app;</application> get text of the current selection, search for it and displays
-				the results either in a floating window or in the main window.
+				<para>In the <guilabel>Do nothing</guilabel> case &app_t; simply ignores middle button clicks,
+				otherwise &app_t; get text of the current selection, search for it and displays
+				the results either in the Floating window or in the Main window.
 				</para>
 				<para>In case there are a number of windows on desktop having text selected,
 				there might be a confusion what text will be used.
-				<application>&app;</application> works with the <emphasis>X</emphasis> <emphasis>Primary</emphasis> selection.
+				&app_t; works with the <emphasis>X</emphasis> <emphasis>Primary</emphasis> selection.
 				Only one application can own a selection at a time, so when you select something in 
 				an application that application becomes the selection owner, the previous owner loses
-				selection ownership. Now back to the question. <application>&app;</application> will use the text that was selected last.
+				selection ownership. Now back to the question. &app_t; will use the text that was selected last.
 				</para>
 				<para>Default: <guilabel>Query selection in floating window</guilabel>.</para>
 				</listitem>
@@ -1259,7 +1414,7 @@
 				<varlistentry>
 				<term><guilabel>Pronounce the word when it pops up.</guilabel> </term>
 				<listitem>
-				<para>When set, pronounce the word when the floating windows shows translation.</para>
+				<para>When set, pronounce the word when the Floating window shows translation.</para>
 				<para>Default: FALSE.</para>
 				</listitem>
 				</varlistentry>
@@ -1267,7 +1422,7 @@
 				<varlistentry>
 				<term><guilabel>Show floating window if word not found.</guilabel></term>
 				<listitem>
-				<para>This option allows to configure what to do if the word to be shown in the floating window is not found. You have two choices: 1) do not show the floating window at all &mdash; this option is unset, 2) show the floating window with text indicating that the word was not found &mdash; this option is set.</para>
+				<para>This option allows to configure what to do if the word to be shown in the Floating window is not found. You have two choices: 1) do not show the Floating window at all &mdash; this option is unset, 2) show the Floating window with text indicating that the word was not found &mdash; this option is set.</para>
 				<para>Default: TRUE.</para>
 				</listitem>
 				</varlistentry>
@@ -1280,7 +1435,7 @@
 				<varlistentry>
 				<term><guilabel>Max window width.</guilabel> </term>
 				<listitem>
-				<para>Sets the floating window's max width.</para>
+				<para>Sets the Floating window's max width.</para>
 				<para>Default: 320.</para>
 				</listitem>
 				</varlistentry>
@@ -1288,7 +1443,7 @@
 				<varlistentry>
 				<term><guilabel>Max window height.</guilabel> </term>
 				<listitem>
-				<para>Sets the floating window's max height.</para>
+				<para>Sets the Floating window's max height.</para>
 				<para>Default: 240.</para>
 				</listitem>
 				</varlistentry>
@@ -1296,7 +1451,7 @@
 				<varlistentry>
 				<term><guilabel>Use custom background color:</guilabel></term>
 				<listitem>
-				<para>Enables to use custom color for background in the floating window and select that color.</para>
+				<para>Enables to use custom color for background in the Floating window and select that color.</para>
 				<para>Default: FALSE.</para>
 				</listitem>
 				</varlistentry>
@@ -1305,7 +1460,7 @@
 				<term><guilabel>Transparency</guilabel></term>
 				<listitem>
 				<para>
-				Allows to make the floating window transparent.
+				Allows to make the Floating window transparent.
 				Moving the slider you may change transparency degree.
 				Transparency is measured in percents, it can range from 0 to 80,
 				where 0 &mdash; fully opaque, 80 &mdash; almost fully transparent.
@@ -1325,21 +1480,21 @@
 
   <sect1 id="stardict-dictmanage">
 	<title>Dictionary Management</title>
-	<para>To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the main window, or click 
+	<para>To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the Main window, or click 
 	the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict manage</guimenuitem>. 
 	</para>
 	<para>In the dictionary management dialog, you can disable dictionaries that you don't need, 
 	and you can set the order in which the dictonaries are queried. 
 	</para>
-	<para><application>&app;</application> will search the dictionary files at "~/.stardict/dic" and "/usr/share/stardict/dic", and 
+	<para>&app_t; will search the dictionary files at "~/.stardict/dic" and "/usr/share/stardict/dic", and 
 	search tree dictionary files at "~/.stardict/treedict" and "/usr/share/stardict/treedict"</para>
   </sect1>
 
  <sect1 id="stardict-projects">
    <title>Related Projects</title>
    <para>
-     <application>&app;</application> would not be possible without many other projects' contributions. Here is a short list of
-     projects that helped <application>&app;</application>.
+     &app_t; would not be possible without many other projects' contributions. Here is a short list of
+     projects that helped &app_t;.
    </para>
 
 	<sect2 id="stardict-projects-stardict1.3">
@@ -1355,8 +1510,8 @@
 		</authorgroup>
 		</sect2info>
 		<title>StarDict 1.31</title>
-		<para>The original Motif/LessTif-based StarDict 1.31 written in 1999. <application>&app;</application> 2 got many 
-		good ideas from StarDict1.31 such as "Scan selection." Many of <application>&app;</application> 2's features, like
+		<para>The original Motif/LessTif-based StarDict 1.31 written in 1999. &app_t; 2 got many 
+		good ideas from StarDict1.31 such as "Scan selection." Many of &app_t; 2's features, like
 		"Fuzzy query," come from StarDict1.31.</para> 
     </sect2>
 
@@ -1375,14 +1530,14 @@
 		<title>StarDict 1.33+</title>
 		<para>StarDict1.33+ is a big enhancement of StarDict1.31. It added many dictionaries, and so it made me realize that dictionary
 		data was not a barrier to a new, GTK2-based dictionary program.  If there had been no StarDict1.33+, I would not have
-		started the <application>&app;</application> 2 project. The author also helped me to port the StarDict 1.3 dictionary
-		data files to <application>&app;</application> 2.</para> 
+		started the &app_t; 2 project. The author also helped me to port the StarDict 1.3 dictionary
+		data files to &app_t; 2.</para> 
 	</sect2>
 
 	<sect2 id="stardict-projects-dictd">
      	<title>The DICT Project</title>
-     	<para>Many dictd dictionaries have been ported to <application>&app;</application>. 
-		dictzip, which came from dictd, is also used by <application>&app;</application>.</para> 
+     	<para>Many dictd dictionaries have been ported to &app_t;. 
+		dictzip, which came from dictd, is also used by &app_t;.</para> 
 	    <para>
      	To find more information about the DICT Project, please visit 
 		<ulink url="http://www.dict.org" type="http">www.dict.org</ulink>.  
@@ -1391,7 +1546,7 @@
 
 	<sect2 id="stardict-projects-quick">
      	<title>*Quick</title>
-     	<para>Many wquick dictionaries have been ported to <application>&app;</application>.</para> 
+     	<para>Many wquick dictionaries have been ported to &app_t;.</para> 
 	    <para>
      	To find more information about *Quick, please visit 
 		<ulink url="http://www.futureware.at/quick.htm" type="http">*Quick</ulink>.  
@@ -1431,12 +1586,12 @@
 		</authorgroup>
 		</sect2info>
 		<title>XDICT</title>
-		<para>XDICT's dictionary has been ported to <application>&app;</application>.</para> 
+		<para>XDICT's dictionary has been ported to &app_t;.</para> 
 	</sect2>
 
 	<sect2 id="stardict-projects-cdict">
 		<title>cdict5</title>
-		<para>cdict5's dictionary has been ported to <application>&app;</application>.</para> 
+		<para>cdict5's dictionary has been ported to &app_t;.</para> 
 
 		<sect3 id="stardict-projects-cdict-xcdict-tcltk">
 		<sect3info>
@@ -1487,7 +1642,7 @@
 		</authorgroup>
 		</sect2info>
 		<title>CEDICT</title>
-		<para>CEDICT's dictionary has been ported to <application>&app;</application>.</para> 
+		<para>CEDICT's dictionary has been ported to &app_t;.</para> 
 		<para>
 		To find more information about the CEDICT Project, please visit the
 		<ulink url="http://www.mandarintools.com/cedict.html" type="http">CEDICT Project Web site</ulink>.  
@@ -1507,7 +1662,7 @@
 		</authorgroup>
 		</sect2info>
 		<title>CFFD</title>
-		<para><application>&app;</application>'s icon was created with this software.  CFFD also provided some useful 
+		<para>&app_t;'s icon was created with this software.  CFFD also provided some useful 
 		information to me. </para> 
 		<para>
 		To find more information about the CFFD Project, please visit the
@@ -1534,7 +1689,7 @@
    <title>Developers</title>
    <para>
      To find more information about
-     <application>&app;</application>, please visit the <ulink
+     &app_t;, please visit the <ulink
      url="http://stardict.sourceforge.net/" type="http">StarDict Web
      site</ulink>.  
    </para>
@@ -1587,23 +1742,4 @@
    -->
 
  </sect1>
-
-<!--
-Terminology
-
-main window
-floating window
-search field
-word list = word index ? - left panel
-definition area = display area = article area?
-notification area icon
-main menu
-scan mode
-top bar
-bottom bar
-left bar
-display area top bar
-display area bar (search bar)
--->
-
 </article>
