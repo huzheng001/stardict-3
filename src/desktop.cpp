@@ -37,6 +37,80 @@
 
 #include "desktop.hpp"
 
+#if ! (defined(_WIN32) || defined(CONFIG_GNOME))
+const char* const gHelpDirBase = STARDICT_DATA_DIR G_DIR_SEPARATOR_S "help";
+
+/* Guess value of current locale from value of the environment variables
+   or system-dependent defaults.
+   This is a simplified version of the guess_category_value function from the
+   gettext package. */
+static const char * guess_locale(void)
+{
+	const char *locale = setlocale(LC_MESSAGES, NULL);
+	if (strcmp (locale, "C") == 0)
+		return locale;
+	const char *language = getenv ("LANGUAGE");
+	if (language != NULL && language[0] != '\0')
+		return language;
+	return locale;
+}
+
+static std::string guess_html_help_dir(void)
+{
+	const char* locale_list = guess_locale();
+	std::string locale;
+	std::string dir;
+	while(locale_list && locale_list[0]) {
+		const char* t = strchr(locale_list, ':');
+		if(t) {
+			locale.assign(locale_list, t-locale_list);
+			locale_list = t + 1;
+		} else {
+			locale.assign(locale_list);
+			locale_list = NULL;
+		}
+		size_t pos = locale.find('.');
+		if(pos != std::string::npos)
+			locale.resize(pos);
+		dir = gHelpDirBase;
+		dir += G_DIR_SEPARATOR;
+		dir += locale;
+		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
+			return dir;
+		pos = locale.find('_');
+		if(pos != std::string::npos)
+			locale.resize(pos);
+		dir = gHelpDirBase;
+		dir += G_DIR_SEPARATOR;
+		dir += locale;
+		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
+			return dir;
+	}
+	dir = gHelpDirBase;
+	dir += G_DIR_SEPARATOR_S "C";
+	if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
+		return dir;
+	return "";
+}
+
+/* show error in modal dialog */
+void show_error(const char* message)
+{
+	GtkWidget *message_dlg = 
+	gtk_message_dialog_new(
+		gpAppFrame ? GTK_WINDOW(gpAppFrame->window) : NULL,
+		GtkDialogFlags(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+		GTK_MESSAGE_ERROR,
+		GTK_BUTTONS_OK,
+		"%s", message);
+
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	gtk_dialog_run(GTK_DIALOG(message_dlg));
+	gtk_widget_destroy(message_dlg);
+}
+#endif
+
 static void spawn_command(const gchar *exe, const gchar *arg)
 {
   gchar *qarg = g_shell_quote(arg);
@@ -122,6 +196,24 @@ void show_help(const gchar *section)
 		TEXT("OPEN"), filename_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
 #elif defined(CONFIG_GNOME)
 	gnome_help_display ("stardict.xml", section, NULL);
+#else
+	std::string dir = guess_html_help_dir();
+	if(dir.empty()) {
+		std::string index_file = std::string(gHelpDirBase) 
+			+ G_DIR_SEPARATOR_S "C" G_DIR_SEPARATOR_S "index.html";
+		glib::CharStr message(g_strdup_printf(_("Unable to find help file %s."),
+			index_file.c_str()));
+		show_error(get_impl(message));
+	} else {
+		std::string index_file = dir + G_DIR_SEPARATOR_S "index.html";
+		if(g_file_test(index_file.c_str(), G_FILE_TEST_EXISTS))
+			show_url(index_file.c_str());
+		else {
+			glib::CharStr message(g_strdup_printf(_("Unable to find help file %s."),
+				index_file.c_str()));
+			show_error(get_impl(message));
+		}
+	}
 #endif
 }
 
