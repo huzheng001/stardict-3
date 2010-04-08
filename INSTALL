@@ -16,6 +16,12 @@ to build the "gtk library only" version of StarDict.
 You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
 You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
 
+StarDict does not support staged installs, that is you may not use DESTDIR variable to install the application into a custom place like this:
+============
+make DESTDIR=/custom/path install
+============
+StarDict needs to know at compile time all details of the installation otherwise it would not be able to find its data and it'd fail to start. If you need to change installation dirs use configure parameters like --prefix.
+
 For windows version, read doc/README_windows.txt.
 For Mac OS X version, read doc/Readme.mac.
 
