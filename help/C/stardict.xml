@@ -1478,7 +1478,9 @@
 	</sect2>
   </sect1>
 
-  <sect1 id="stardict-dictmanage">
+	<sect1 id="stardict-details">
+	<title>Details</title>
+	<sect2 id="stardict-details-dictmanage">
 	<title>Dictionary Management</title>
 	<para>To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the Main window, or click 
 	the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict manage</guimenuitem>. 
@@ -1488,7 +1490,21 @@
 	</para>
 	<para>&app_t; will search the dictionary files at "~/.stardict/dic" and "/usr/share/stardict/dic", and 
 	search tree dictionary files at "~/.stardict/treedict" and "/usr/share/stardict/treedict"</para>
-  </sect1>
+	</sect2>
+	
+	<sect2 id="stardict-details-help">
+	<title>Help</title>
+	<para>Inside &app_t; you may open the documentation either by pressing the <keycombo><keycap>F1</keycap></keycombo> key or by clicking the <guibutton>Main menu</guibutton> button, then the <guimenuitem>Help</guimenuitem> item in the popup menu. &app_t; documentation may have different formats depending on application edition. The primary documentation format is DocBook. &app_t; installs documentation in DocBook format only in Gnome edition. In this edition documentation seamlessly integrates with Gnome documentation system. It can be read through <application>Help Browser</application>. Documentation was translated to a number of languages. You'll be presented with localized version if it's available. Gnome allows to configure the prefered language.
+	</para>
+	<para>
+	In &winedition; of &app_t; you can find documentation in a chm file in the <filename>help</filename> subdirectory of the application directory. The file is named <filename>stardict.chm</filename>. Normally, the full path is <filename>C:\Program Files\StarDict\help\stardict.chm</filename>. You may substitute the file with localized version if you have one.
+	</para>
+	<para>In other editions of &app_t; documentation is available in html format. You need to configure Web browser to view documentation, see <xref linkend="stardict-prefs-network-web-browser"/>. Choosing documentation langauge, &app_t; roughly follows gettext package locale selection algorithm. The LANGUAGE enviroment variable is checked first. It's expected to contain a list of langauge code in the order of preference. If the LANGUAGE variable is not set, the current locale is inspected. Finally, if documentation in prefered langauges is not available, the english documentation is shown.
+	</para>
+	<para>
+	</para>
+	</sect2>
+	</sect1>
 
  <sect1 id="stardict-projects">
    <title>Related Projects</title>
