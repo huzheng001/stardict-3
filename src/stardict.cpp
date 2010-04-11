@@ -2023,7 +2023,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 
 	bool found = false;
 	std::string result_text;
-	if (engine_index == 4) {
+	if (engine_index == TranslateEngine_ExciteJapan) {
 		#define ExicuteTranslateStartMark "name=\"after\""
 		char *p_E = g_strstr_len(buffer, buffer_len, ExicuteTranslateStartMark);
 		if(p_E){
@@ -2037,7 +2037,7 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 				}
 			}
 		}
-	} else if (engine_index == 3) {
+	/*} else if (engine_index == TranslateEngine_SystranBox) {
 		#define SystranBoxTranslateStartMark "<textarea name=\"translation\" rows=\"10\" cols=\"3\" style=\"float:left; clear:none; background-color:#FFFFFF; color:#000000; border-color:#FFFFFF;\">"
 		char *p_S = g_strstr_len(buffer, buffer_len, SystranBoxTranslateStartMark);
 		if(p_S){
@@ -2047,32 +2047,21 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 				result_text.assign(p_S, p2_S-p_S);
 				found = true;
 			}
-		}
-	} else if (engine_index == 2) {
-		#define AltaVistaTranslateStartMark "<td bgcolor=white class=s><div style=padding:10px;>"
-		char *p_A = g_strstr_len(buffer, buffer_len, AltaVistaTranslateStartMark);
-		if(p_A){
-			p_A += sizeof(AltaVistaTranslateStartMark) -1;
-			char *p2_A = g_strstr_len(p_A, buffer_len - (p_A - buffer), "</div>");
-			if(p2_A){
-				result_text.assign(p_A, p2_A-p_A);
-				found = true;
-			}
-		}
-	} else if (engine_index == 1) {
-		#define YahooTranslateStartMark "<div class=\"result\">"
-		char *p_y = g_strstr_len(buffer, buffer_len, YahooTranslateStartMark);
-		if(p_y){
+		} */
+	} else if (engine_index == TranslateEngine_Yahoo) {
+		#define YahooTranslateStartMark "<div id=\"result\">"
+		const char *p_y = g_strstr_len(buffer, buffer_len, YahooTranslateStartMark);
+		if(p_y) {
 			p_y += sizeof(YahooTranslateStartMark) -1;
-			char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
-			char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "class=\"pd\">");
-			if(p2_y && p3_y){
-				p3_y += sizeof("class=\"pd\">") -1;
+			const char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
+			const char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), ">");
+			if(p2_y && p3_y) {
+				p3_y += 1;
 				result_text.assign(p3_y, p2_y-p3_y);
 				found = true;
 			}
 		}
-	} else if (engine_index == 0) {
+	} else if (engine_index == TranslateEngine_Google) {
 		static const char * const GoogleTranslateStartMark = "<span id=result_box ";
 		static const char * const GoogleTranslateEndMark = "</div>";
 		
