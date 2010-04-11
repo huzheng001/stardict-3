@@ -29,6 +29,16 @@ enum TextWinQueryResult
 	TEXT_WIN_NET_SHOW_FIRST,
 };
 
+enum TranslateEngineCode {
+	TranslateEngine_Google,
+	TranslateEngine_Yahoo,
+	// TranslateEngine_Altavista,
+	//TranslateEngine_SystranBox,
+	TranslateEngine_ExciteJapan,
+	TranslateEngine_Size // number of active engines. Must be the last item.
+};
+
+
 enum ListWinListWordType {
 	LIST_WIN_NORMAL_LIST,
 	LIST_WIN_FUZZY_LIST,

@@ -2212,15 +2212,15 @@ static const char *google_intolangs[] = {N_("Afrikaans"), N_("Albanian"), N_("Ar
 static const char *google_fromlangs_code[] = {"af", "sq", "ar", "be", "bg", "ca", "zh-CN", "hr", "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de", "el", "ht", "iw", "hi", "hu", "is", "id", "ga", "it", "ja", "ko", "lv", "lt", "mk", "ms", "mt", "no", "fa", "pl", "pt", "ro", "ru", "sr", "sk", "sl", "es", "sw", "sv", "th", "tr", "uk", "vi", "cy", "yi", NULL};
 static const char *google_intolangs_code[] = {"af", "sq", "ar", "be", "bg", "ca", "zh-CN", "zh-TW", "hr", "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de", "el", "ht", "iw", "hi", "hu", "is", "id", "ga", "it", "ja", "ko", "lv", "lt", "mk", "ms", "mt", "no", "fa", "pl", "pt", "ro", "ru", "sr", "sk", "sl", "es", "sw", "sv", "th", "tr", "uk", "vi", "cy", "yi", NULL};
 
-static const char *yahoo_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
-static const char *yahoo_chinese_simplified_tolangs[] = {N_("English"), NULL};
-static const char *yahoo_chinese_simplified_code[] = { "zh_en" };
-static const char *yahoo_chinese_traditional_tolangs[] = {N_("English"), NULL};
-static const char *yahoo_chinese_traditional_code[] = { "zt_en" };
-static const char *yahoo_dutch_tolangs[] = {N_("English"), N_("French"), NULL};
-static const char *yahoo_dutch_code[] = { "nl_en" , "nl_fr"};
+static const char *yahoo_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("English"), N_("Dutch"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
+static const char *yahoo_chinese_simplified_tolangs[] = {N_("English"), N_("Chinese (Traditional)"), NULL};
+static const char *yahoo_chinese_simplified_code[] = { "zh_en", "zh_zt" };
+static const char *yahoo_chinese_traditional_tolangs[] = {N_("English"), N_("Chinese (Simplified)"), NULL};
+static const char *yahoo_chinese_traditional_code[] = { "zt_en", "zt_zh" };
 static const char *yahoo_english_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
 static const char *yahoo_english_code[] = { "en_zh", "en_zt", "en_nl", "en_fr", "en_de", "en_el", "en_it", "en_ja", "en_ko", "en_pt", "en_ru", "en_es" };
+static const char *yahoo_dutch_tolangs[] = {N_("English"), N_("French"), NULL};
+static const char *yahoo_dutch_code[] = { "nl_en" , "nl_fr"};
 static const char *yahoo_french_tolangs[] = {N_("Dutch"), N_("English"), N_("German"), N_("Greek"), N_("Italian"), N_("Portuguese"), N_("Spanish"), NULL };
 static const char *yahoo_french_code[] = { "fr_nl", "fr_en", "fr_de", "fr_el", "fr_it", "fr_pt", "fr_es"};
 static const char *yahoo_german_tolangs[] = {N_("English"), N_("French"), NULL};
@@ -2235,11 +2235,14 @@ static const char *yahoo_korean_tolangs[] = {N_("English"), NULL};
 static const char *yahoo_korean_code[] = { "ko_en" };
 static const char *yahoo_portuguese_tolangs[] = {N_("English"), N_("French"), NULL};
 static const char *yahoo_portuguese_code[] = { "pt_en", "pt_fr" };
+static const char *yahoo_russian_tolangs[] = {N_("English"), NULL};
+static const char *yahoo_russian_code[] = { "ru_en" };
 static const char *yahoo_spanish_tolangs[] = {N_("English"), N_("French"), NULL};
 static const char *yahoo_spanish_code[] = { "es_en", "es_fr" };
-static const char **yahoo_tolangs[] = {yahoo_chinese_simplified_tolangs, yahoo_chinese_traditional_tolangs, yahoo_dutch_tolangs, yahoo_english_tolangs, yahoo_french_tolangs, yahoo_german_tolangs, yahoo_greek_tolangs, yahoo_italian_tolangs, yahoo_japanese_tolangs, yahoo_korean_tolangs, yahoo_portuguese_tolangs, yahoo_spanish_tolangs};
-static const char **yahoo_code[] = {yahoo_chinese_simplified_code,yahoo_chinese_traditional_code,yahoo_dutch_code,yahoo_english_code, yahoo_french_code, yahoo_german_code, yahoo_greek_code, yahoo_italian_code, yahoo_japanese_code, yahoo_korean_code, yahoo_portuguese_code, yahoo_spanish_code};
+static const char **yahoo_tolangs[] = {yahoo_chinese_simplified_tolangs, yahoo_chinese_traditional_tolangs, yahoo_english_tolangs, yahoo_dutch_tolangs, yahoo_french_tolangs, yahoo_german_tolangs, yahoo_greek_tolangs, yahoo_italian_tolangs, yahoo_japanese_tolangs, yahoo_korean_tolangs, yahoo_portuguese_tolangs, yahoo_russian_tolangs, yahoo_spanish_tolangs};
+static const char **yahoo_code[] = {yahoo_chinese_simplified_code, yahoo_chinese_traditional_code, yahoo_english_code, yahoo_dutch_code,yahoo_french_code, yahoo_german_code, yahoo_greek_code, yahoo_italian_code, yahoo_japanese_code, yahoo_korean_code, yahoo_portuguese_code, yahoo_russian_code, yahoo_spanish_code};
 
+/*
 static const char *altavista_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
 static const char *altavista_chinese_simplified_tolangs[] = {N_("English"), NULL};
 static const char *altavista_chinese_simplified_code[] = { "zh_en" };
@@ -2267,6 +2270,8 @@ static const char *altavista_spanish_tolangs[] = {N_("English"), N_("French"), N
 static const char *altavista_spanish_code[] = { "es_en", "es_fr" };
 static const char **altavista_tolangs[] = {altavista_chinese_simplified_tolangs, altavista_chinese_traditional_tolangs, altavista_dutch_tolangs, altavista_english_tolangs, altavista_french_tolangs, altavista_german_tolangs, altavista_greek_tolangs, altavista_italian_tolangs, altavista_japanese_tolangs, altavista_korean_tolangs, altavista_portuguese_tolangs, altavista_spanish_tolangs};
 static const char **altavista_code[] = {altavista_chinese_simplified_code,altavista_chinese_traditional_code,altavista_dutch_code,altavista_english_code, altavista_french_code, altavista_german_code, altavista_greek_code, altavista_italian_code, altavista_japanese_code, altavista_korean_code, altavista_portuguese_code, altavista_spanish_code};
+*/
+/*
 static const char *systranbox_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Swedish"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
 static const char *systranbox_chinese_simplified_tolangs[] = {N_("English"), NULL};
 static const char *systranbox_chinese_simplified_code[] = { "zh_en" };
@@ -2294,6 +2299,7 @@ static const char *systranbox_spanish_tolangs[] = {N_("English"), N_("French"), 
 static const char *systranbox_spanish_code[] = { "es_en", "es_fr" };
 static const char **systranbox_tolangs[] = {systranbox_chinese_simplified_tolangs, systranbox_chinese_traditional_tolangs, systranbox_dutch_tolangs, systranbox_english_tolangs, systranbox_french_tolangs, systranbox_german_tolangs, systranbox_swedish_tolangs, systranbox_italian_tolangs, systranbox_japanese_tolangs, systranbox_korean_tolangs, systranbox_portuguese_tolangs, systranbox_spanish_tolangs};
 static const char **systranbox_code[] = {systranbox_chinese_simplified_code,systranbox_chinese_traditional_code,systranbox_dutch_code,systranbox_english_code, systranbox_french_code, systranbox_german_code, systranbox_swedish_code, systranbox_italian_code, systranbox_japanese_code, systranbox_korean_code, systranbox_portuguese_code, systranbox_spanish_code};
+*/
 
 static const char *excite_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("English"), N_("Japanese"), N_("Korean"), NULL};
 static const char *excite_chinese_simplified_tolangs[] = {N_("Japanese"), NULL};
@@ -2329,12 +2335,14 @@ struct TranslateEngine {
 	const char * website_name;
 	const char * website;
 };
+
+/* keep in sync with enum TranslateEngineCode! */
 static TranslateEngine trans_engines[] = {
 	// name,                        fromlangs,            tolangs,            tolangs2,         code,            fromcode,              tocode,                website_name,   website
 	{N_("Google Translate"),        google_fromlangs,     NULL,               google_intolangs, NULL,            google_fromlangs_code, google_intolangs_code, "Google",       "http://translate.google.com"}, 
-	{ N_("Yahoo Translate"),        yahoo_fromlangs,      yahoo_tolangs,      NULL,             yahoo_code,      NULL,                  NULL,                  "Yahoo",        "http://fanyi.cn.yahoo.com"}, 
-	{ N_("Altavista Translate"),    altavista_fromlangs,  altavista_tolangs,  NULL,             altavista_code,  NULL,                  NULL,                  "Altavista",    "http://babelfish.altavista.com"},
-	{ N_("SystranBox Translate"),   systranbox_fromlangs, systranbox_tolangs, NULL,             systranbox_code, NULL,                  NULL,                  "SystranBox",   "http://www.systranbox.com"},
+	{ N_("Yahoo Translate"),        yahoo_fromlangs,      yahoo_tolangs,      NULL,             yahoo_code,      NULL,                  NULL,                  "Yahoo",        "http://babelfish.yahoo.com"}, 
+	//{ N_("Altavista Translate"),    altavista_fromlangs,  altavista_tolangs,  NULL,             altavista_code,  NULL,                  NULL,                  "Altavista",    "http://babelfish.altavista.com"},
+	//{ N_("SystranBox Translate"),   systranbox_fromlangs, systranbox_tolangs, NULL,             systranbox_code, NULL,                  NULL,                  "SystranBox",   "http://www.systranbox.com"},
 	{ N_("Excite Japan Translate"), excite_fromlangs,     excite_tolangs,     NULL,             excite_code,     NULL,                  NULL,                  "Excite Japan", "http://www.excite.co.jp"}
 	//{ N_("KingSoft Translate"), kingsoft_fromlangs, kingsoft_tolangs, NULL}
 };
@@ -2472,6 +2480,8 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(tolang_combobox), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox), tolang_combobox, false, false, 0);
 	gint engine_index = conf->get_int_at("translate/engine");
+	if(engine_index >= TranslateEngine_Size)
+		engine_index = 0;
 	gint fromlang_index = conf->get_int_at("translate/fromlang");
 	gint tolang_index = conf->get_int_at("translate/tolang");
 	g_signal_connect(G_OBJECT(engine_combobox),"changed", G_CALLBACK(on_engine_combobox_changed), this);
@@ -2580,29 +2590,26 @@ void TransWin::SetText(const char *text, int len)
 void TransWin::GetHostFile(std::string &host, std::string &file, const char *text)
 {
 	gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
-	if(engine_index==0){
+	if(engine_index==TranslateEngine_Google){
 		host = "translate.google.com";
 		file = "/translate_t?ie=UTF-8";
-	}else if(engine_index==1){
-		host = "fanyi.cn.yahoo.com";
+	}else if(engine_index==TranslateEngine_Yahoo){
+		host = "babelfish.yahoo.com";
 		file = "/translate_txt?ei=UTF-8&lp=";
-	}else if(engine_index==2){
-		host = "babelfish.altavista.com";
-		file = "/tr?ienc=utf-8&lp=";
-	}else if(engine_index==3){
+	/*}else if(engine_index==TranslateEngine_SystranBox){
 		host = "www.systranbox.com";
-		file = "/systran/box?systran_id=SystranSoft-en&systran_charset=UTF-8&systran_lp=";
-	}else if(engine_index==4){
+		file = "/systran/box?systran_id=SystranSoft-en&systran_charset=UTF-8&systran_lp="; */
+	}else if(engine_index==TranslateEngine_ExciteJapan){
 		host = "www.excite.co.jp";
 		file = "/world";
-	}else if(engine_index==5){
+	} /*else if(engine_index==5){
 		host = "fy.iciba.com";
 		file = "/?langpair=";
-	}
+	} */
 
 	gint fromlang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(fromlang_combobox));
 	gint tolang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(tolang_combobox));
-	if(engine_index==0) {
+	if(engine_index==TranslateEngine_Google) {
 		g_assert(trans_engines[engine_index].fromcode);
 		g_assert(trans_engines[engine_index].tocode);
 		file += "&sl=";
@@ -2612,7 +2619,7 @@ void TransWin::GetHostFile(std::string &host, std::string &file, const char *tex
 	} else {
 		g_assert(trans_engines[engine_index].code);
 		const char *lang_code = trans_engines[engine_index].code[fromlang_index][tolang_index];
-		if(engine_index==4){
+		if(engine_index==TranslateEngine_ExciteJapan) {
 			if(strcmp(lang_code,"KOJA")==0 || strcmp(lang_code,"JAKO")==0){
 				file += "/korean?wb_lp=";
 			}else if(strcmp(lang_code,"ENJA")==0 || strcmp(lang_code,"JAEN")==0){
@@ -2625,16 +2632,13 @@ void TransWin::GetHostFile(std::string &host, std::string &file, const char *tex
 		}
 		file += lang_code;
 	}
-	if (engine_index == 0 || engine_index == 1) {
+	if (engine_index == TranslateEngine_Google || engine_index == TranslateEngine_Yahoo) {
 		file += "&text=";
 		file += text;
-	} else if (engine_index == 2){
-		file += "&trtext=";
-		file += text;
-	}else if(engine_index == 3 ){
+	/*}else if(engine_index == TranslateEngine_SystranBox) {
 		file += "&systran_text=";
-		file += text;
-	}else if(engine_index == 4 ){
+		file += text; */
+	}else if(engine_index == TranslateEngine_ExciteJapan) {
 		file += "&before=";
 		file += text;
 	}
