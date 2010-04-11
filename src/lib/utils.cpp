@@ -349,3 +349,73 @@ std::string dir_separator_db_to_fs(const std::string& path)
 }
 #endif
 
+static const char* html_entrs[] =     { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };
+static const int html_entrs_len[] =   { 3,     3,     4,      5,       5,       0 };
+static const char html_raw_entrs[] =  { '<',   '>',   '&',    '\'',    '\"',    0 };
+
+static const char* html_tags[] =     { "br>", 0 };
+static const int html_tags_len[] =   { 3,     0 };
+static const char html_raw_tags[] =  { '\n',  0 };
+
+void html_decode(const char *str, std::string& decoded)
+{
+	decoded.clear();
+	decoded.reserve(strlen(str));
+	int ind;
+
+	const char* p = str;
+	while (*p)
+		if (*p == '&') {
+			if(*(p+1) == '#') {
+				const char *q = strchr(p+2, ';');
+				if(q) {
+					long code = atol(p+2);
+					char buf[10]; // must be at least 6 bytes long
+					buf[g_unichar_to_utf8(gunichar(code), buf)] = '\0';
+					decoded += buf;
+					p = q + 1;
+				} else {
+					g_debug("unknown entry %s", p);
+					break;
+				}
+			} else {
+				for(ind = 0; html_entrs[ind] != 0; ++ind)
+					if(strncmp(p + 1, html_entrs[ind], html_entrs_len[ind]) == 0) {
+						decoded += html_raw_entrs[ind];
+						p += html_entrs_len[ind]+1;
+						break;
+					}
+				if (html_entrs[ind] == 0) { // unrecognized sequence
+					const char *q = strchr(p+1, ';');
+					if(q) {
+						++q;
+						g_debug("unknown entry %s", std::string(p, q-p).c_str());
+						p = q;
+					} else {
+						g_debug("unknown entry %s", p);
+						break;
+					}
+				}
+			}
+		} else if(*p == '<') {
+			for(ind = 0; html_tags[ind] != 0; ++ind)
+				if(strncmp(p + 1, html_tags[ind], html_tags_len[ind]) == 0) {
+					decoded += html_raw_tags[ind];
+					p += html_tags_len[ind]+1;
+					break;
+				}
+			if (html_tags[ind] == 0) { // unrecognized sequence
+				const char *q = strchr(p+1, '>');
+				if(q) {
+					++q;
+					g_debug("unknown tag %s", std::string(p, q-p).c_str());
+					p = q;
+				} else {
+					g_debug("unknown tag %s", p);
+					break;
+				}
+			}
+		} else {
+			decoded += *p++;
+		}
+}
