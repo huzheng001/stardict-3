@@ -106,4 +106,6 @@ extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
 
+void html_decode(const char *str, std::string& decoded);
+
 #endif/*UTILS_H*/

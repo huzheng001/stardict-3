@@ -422,7 +422,8 @@ void AppCore::Create(gchar *queryword)
 	oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
 	oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
 
-	// If the plugin send http request before this, then the response won't be processed, you neeed to always use gtk_init_add() instead of g_idle_add() in this case.
+	// If the plugin send http request before this, then the response won't be processed,
+	// you need to always use gtk_init_add() instead of g_idle_add() in this case.
 	HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
 	HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
 
@@ -2072,16 +2073,59 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 			}
 		}
 	} else if (engine_index == 0) {
-		#define GoogleTranslateStartMark "<div id=result_box dir=\"ltr\">"
-
-		char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
-		if (p) {
-			p += sizeof(GoogleTranslateStartMark) -1;
-			char *p2 = g_strstr_len(p, buffer_len - (p - buffer), "</div>");
-			if (p2) {
-				result_text.assign(p, p2-p);
-				found = true;
+		static const char * const GoogleTranslateStartMark = "<span id=result_box ";
+		static const char * const GoogleTranslateEndMark = "</div>";
+		
+		do {
+			char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
+			if(!p)
+				break;
+			char *p1 = g_strstr_len(p, buffer_len - (p - buffer) , ">");
+			if(!p1)
+				break;
+			p = p1 + 1;
+			p1 = g_strstr_len(p, buffer_len - (p - buffer) , GoogleTranslateEndMark);
+			if(!p1)
+				break;
+			result_text.assign(p, p1-p);
+			found = true;
+		} while(false);
+		// remove spans
+		if(found) {
+			std::string temp;
+			temp.reserve(result_text.length());
+			size_t pos1, pos2, pos3;
+			pos1 = 0;
+			while(true) {
+				pos2 = result_text.find('<', pos1);
+				if(pos2 == std::string::npos) {
+					temp.append(result_text, pos1, std::string::npos);
+					break;
+				}
+				if(0 == result_text.compare(pos2, sizeof("<span")-1, "<span")) {
+					temp.append(result_text, pos1, pos2-pos1);
+					pos3 = result_text.find('>', pos2);
+					if(pos3 == std::string::npos) {
+						break;
+					} else {
+						pos1 = pos3 + 1;
+					}
+				} else if(0 == result_text.compare(pos2, sizeof("</span>")-1, "</span>")) {
+					temp.append(result_text, pos1, pos2-pos1);
+					pos1 = pos2 + sizeof("</span>") - 1;
+				} else {
+					pos3 = result_text.find('>', pos2);
+					if(pos3 == std::string::npos) {
+						temp.append(result_text, pos1, std::string::npos);
+						break;
+					} else {
+						pos3 += 1;
+						temp.append(result_text, pos1, pos3-pos1);
+						pos1 = pos3;
+					}
+				}
 			}
+			result_text.swap(temp);
 		}
 	}
 
@@ -2108,10 +2152,10 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 		if (charset.empty()) {
 			oMidWin.oTransWin.SetText(result_text.c_str());
 		} else {
-			gchar *text = g_convert(result_text.c_str(), result_text.length(), "UTF-8", charset.c_str(), NULL, NULL, NULL);
+			glib::CharStr text(g_convert(result_text.c_str(), result_text.length(), "UTF-8", charset.c_str(), NULL, NULL, NULL));
 			if (text) {
-				oMidWin.oTransWin.SetText(text);
-				g_free(text);
+				html_decode(get_impl(text), result_text);
+				oMidWin.oTransWin.SetText(result_text.c_str());
 			} else {
 				oMidWin.oTransWin.SetText(_("Conversion error!\n"));
 			}
