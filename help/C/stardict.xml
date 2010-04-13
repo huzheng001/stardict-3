@@ -288,7 +288,7 @@
 			<varlistentry>
 			<term><guilabel>Full-Text Translation</guilabel></term>
 			<listitem>
-			<para>Switches to the Full-text translation mode that allows to translate blocks of text.
+			<para>Switches to the Full-text translation mode that allows to translate blocks of text, see <xref linkend="stardict-translation"/>.
 			</para>
 			</listitem>
 			</varlistentry>
@@ -626,6 +626,42 @@
 		</varlistentry>
     </variablelist>
     </sect2>
+
+	<sect2 id="stardict-translation">
+	<title>Full-Text Translation</title>
+	
+	<para>&app_t; provides full-text translation service. It allows you to translate short texts with up to 2000 characters approximately. The exact limit depends on the translation engine and other factors. To switch to Full-Text Translation mode click the <guilabel>Full-Text Translation</guilabel> button on the Left bar in &app_t; Main window.
+	</para>
+	<para>
+	&app_t; uses online translation services available for free on the Web to perform translation. &app_t; collects text, source and target languages, constructs an HTTP request and sends it to online translation service. The application receives response of the service and shows results in a window. You may see &app_t; interface to Full-Text Translation service below.
+	</para>
+	
+	<!-- ==== Figure ==== -->
+	<figure id="stardict-full-text-translation-fig"> 
+	<title>Full-Text Translation Mode</title>
+	<screenshot> 
+		<mediaobject>
+		<imageobject>
+			<imagedata fileref="figures/stardict_full_text_translation.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>Shows &app_t; in Full-Text Translation mode.</phrase>
+		</textobject>
+		</mediaobject>
+	</screenshot>
+	</figure>
+	<!-- ==== End of Figure ==== -->
+
+	<para>
+	The top line of the window from left to right contains: engine selection combobox, source language combobox, and target language combobox. Below you see a text area for the text to translate. The bottom part of the window contains a text area for translation results. The <guilabel>Translate</guilabel> button in the middle of the window initiates translation request. The bottom line of the window provides a link to the online translation engine. It opens in a web browser.
+	</para>
+	<para>
+	To translate something, first select a translation engine. You have the following choice: Google, Yahoo, Excite Japan. Select source and target languages. Available source and target languages depend on selected engine. Available target languages depend on source language as well.
+	Type the text to translate into the source text area. Click the <guilabel>Translate</guilabel> button to start translation. You'll see results in the result text area. Sometimes it may show you <guilabel>Not found!</guilabel> text. It means that translation failed. There can be a number of reasons: source text is too long, the online service is down, the service has changed output format and &app_t; is unable to parse it. You may see other errors in the results area.
+	</para>
+	
+	</sect2>
+
 
   </sect1>
 

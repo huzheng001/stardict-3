@@ -15,7 +15,8 @@ DOC_INCLUDES =
 DOC_FIGURES = \
 	figures/stardict_float_window.png	\
 	figures/stardict_main_window.png	\
-	figures/stardict_notification_area.png
+	figures/stardict_notification_area.png	\
+	figures/stardict_full_text_translation.png
 
 DOC_LINGUAS = mk nl ru uk zh_CN zh_TW
 
