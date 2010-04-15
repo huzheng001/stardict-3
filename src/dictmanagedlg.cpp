@@ -51,7 +51,7 @@ void NetworkAddDlg::on_network_adddlg_add_button_clicked(GtkWidget *widget, Netw
                         break;
                     }
                     g_free(uid2);
-                } while (gtk_tree_model_iter_next(oNetworkAddDlg->dictdlg->network_tree_model, &iter2) == TRUE);
+                } while (gtk_tree_model_iter_next(oNetworkAddDlg->dictdlg->network_tree_model, &iter2));
             }
             if (!added) {
                 gchar *msg;

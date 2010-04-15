@@ -3,19 +3,13 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <cstring>
-#include <string>
 #include <map>
 #include <list>
 #include <vector>
-#include <cstring>
 #include "../../src/lib/utils.h"
 
 #ifdef _WIN32
 #include <windows.h>
-#ifdef _MSC_VER
-// gtk's g_fopen have compatible problem with vs2005.
-#  define g_fopen fopen
-#endif
 #endif
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
@@ -83,7 +77,13 @@ static char *build_dictdata(char type, const char *definition)
 			}
 			struct stat stats;
 			FILE *file;
-			if (g_stat (filename.c_str(), &stats) == 0 && (file = g_fopen(filename.c_str(), "rb"))!=NULL) {
+			if (g_stat (filename.c_str(), &stats) == 0
+#ifdef _MSC_VER
+				&& fopen_s(&file, filename.c_str(), "rb") == 0)
+#else
+				&& (file = g_fopen(filename.c_str(), "rb"))!=NULL)
+#endif
+			{
 				size = sizeof(char) + sizeof(guint32) + stats.st_size;
 				data = (char *)g_malloc(sizeof(guint32) + size);
 				char *p = data;

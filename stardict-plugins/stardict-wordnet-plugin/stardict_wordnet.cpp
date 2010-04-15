@@ -10,7 +10,7 @@
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static const StarDictPluginSystemService *plugin_service;
 static gint widget_width, widget_height;
-static bool text_or_graphic_mode;
+static gboolean text_or_graphic_mode;
 
 static std::string get_cfg_filename()
 {
