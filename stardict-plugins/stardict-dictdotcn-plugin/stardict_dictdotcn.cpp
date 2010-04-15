@@ -98,7 +98,7 @@ struct QueryInfo {
 };
 
 static std::list<QueryInfo *> keyword_list;
-static bool use_html_or_xml;
+static gboolean use_html_or_xml;
 
 static std::string get_cfg_filename()
 {

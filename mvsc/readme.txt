@@ -1,28 +1,37 @@
 You need to install developer packages into "gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
 
 These packages are needed:
-glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zip cairo-dev-1.4.8.zip gettext-dev-0.14.5.zip  Zlib 1.2.3
+glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zip cairo-dev-1.4.8.zip gettext-dev-0.14.5.zip zlib123-dll.zip
 
 Just extract them into "mvsc\gtk\" is OK.
 
-Then download libsigc++ (http://libsigc.sourceforge.net/) and compile it. Copy sigc-2.0d.lib to "mvsc\gtk\lib\".
+Then download libsigc++ (http://libsigc.sourceforge.net/) and compile it. Copy sigc-vc80-2_0.lib to "mvsc\gtk\lib\sigc-2.0d.lib".
 libsigc++ have static link problem on vs2005 presently.
 
 For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
 For wordnet plugin files, they are the same.
 
-For sapi-tts plugin, you need to install Microsoft Speech SDK at C:\Programe Files\ and fix these compile error of sphelper.h:
+For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSDK51.exe file. Install it into "C:\Program Files\Microsoft Speech SDK 5.1". Fix these compile errors in sphelper.h:
 =====
-1) line 2560
-    SPPHONEID* pphoneId = (SPPHONEID*)((WCHAR *)dsPhoneId);
-2) line 2634
-    pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
-3) line 2372 and 2373
-    const WCHAR *psz;
-    for (psz = (const WCHAR *)lParam; *psz; psz++) {}
-4) add to the top of the file to prevent all the other errors...
+1) add to the top of the file to prevent many errors
 #pragma warning( disable : 4430 )
 #pragma warning( disable : 4996 )
+2) line 2372
+	replace
+        for (const WCHAR * psz = (const WCHAR *)lParam; *psz; psz++) {}
+	with
+        const WCHAR * psz;
+        for (psz = (const WCHAR *)lParam; *psz; psz++) {}
+3) line 2560
+	replace
+    SPPHONEID* pphoneId = dsPhoneId;
+	with
+    SPPHONEID* pphoneId = (SPPHONEID*)((WCHAR *)dsPhoneId);
+4) line 2634
+	replace 
+	pphoneId += wcslen(pphoneId) + 1;
+	with
+    pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
 =====
 
 

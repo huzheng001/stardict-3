@@ -2361,7 +2361,7 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval)
 	bool scan = static_cast<const confval<bool> *>(scanval)->val_;
 
 	gtk_widget_set_sensitive(oFloatWin.StopButton, scan);
-	if (scan != gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton)))
+	if (scan != static_cast<bool>(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton))))
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton), scan);
 
 	oDockLet->set_scan_mode(scan);

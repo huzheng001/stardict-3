@@ -327,7 +327,7 @@ MapFile* cache_file::get_cache_for_load(const gchar *filename,
 	if (!mf->open(filename, cachestat.st_size))
 		return NULL;
  	guint32  word_off_size = (get_uint32(mf->begin()) + 1) * sizeof(guint32);
- 	if (word_off_size >= cachestat.st_size ||
+ 	if (word_off_size >= static_cast<guint32>(cachestat.st_size) ||
  	    *(mf->begin() + cachestat.st_size - 1) != '\0')
  		return NULL;
  	
@@ -367,7 +367,8 @@ MapFile* cache_file::get_cache_for_load(const gchar *filename,
 				return NULL;
 		}
 
-		if (cachestat.st_size != static_cast<gulong>(filedatasize + sizeof(guint32) + strlen(mf->begin() + word_off_size) +1))
+		if (static_cast<gulong>(cachestat.st_size)
+			!= static_cast<gulong>(filedatasize + sizeof(guint32) + strlen(mf->begin() + word_off_size) +1))
 			return NULL;
 		struct stat idxstat;
 		if (g_stat(url.c_str(), &idxstat)!=0)
@@ -449,7 +450,7 @@ FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &s
 		return fopen(filename, "wb");
 	}
 	guint32  word_off_size = (get_uint32(mf.begin()) + 1) * sizeof(guint32);
-	if (word_off_size >= oftstat.st_size ||
+	if (word_off_size >= static_cast<guint32>(oftstat.st_size) ||
 	    *(mf.begin() + oftstat.st_size - 1) != '\0')
 		return fopen(filename, "wb");
 

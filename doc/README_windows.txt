@@ -1,5 +1,8 @@
 StarDict can be compiled and run in windows.
 
+Building StarDict
+=================
+
 Please install Dev-C++, they can be found in http://www.bloodshed.net/dev/
 devcpp-4.9.9.2_setup.exe
 Use default installation directory X:\Dev-Cpp
@@ -25,8 +28,12 @@ They implement mouseover scanning feature.
 
 For the sapi-tts plugin, you need to compile it by vs2005, see mvsc/readme.txt.
 
-========
-To build the installer.
+Unicode
+=======
+It's recommended to build Unicode (versus ANSI) version of StarDict. That's done by default. You need to define UNICODE macro in compiler command line to build Unicode version.
+
+Build the installer
+===================
 
 Grab and install NSIS: http://www.nullsoft.com/free/nsis
 I was using the 2.44 version.
@@ -78,6 +85,9 @@ Download gtk-runtime-*.exe from pidgin project and put it into gtk_installer/.
 Double click the stardict-installer.nsi :) NSIS will build the installer.
 
 
+Debugging
+=========
+
 For debug, use these codes:
 =====
 FILE *file;
@@ -101,11 +111,16 @@ To reuse the existing console window, start Stardict in that console.
 All messages will go into that window.
 If you start Stardict not from console, a new console windows is opened.
 
+Windows console has a limitation, it cannot show all unicode characters.
+To overcome this limitation StarDict can show output in a log window.
+The log window has no problems with showing unicode characters, but it can not fully
+duplicate console output. StarDict can show output of g_debug, g_error, g_warning and the like, g_print, g_printf(?) functions. I'll not see output from printf in the log window, for example. To enable the log window define ENABLE_LOG_WINDOW preprocessor symbol.
+
 To set up preprocessor symbols in Dev-C++ do the following:
 main menu->Project->Project options->Parameters tab.
-Add "-DATTACH_WINDOWS_CONSOLE -D_WIN32_WINNT=0x0501" to the C and C++ compiler command line.
+Add "-DATTACH_WINDOWS_CONSOLE -D_WIN32_WINNT=0x0501 -DENABLE_LOG_WINDOW" to the C and C++ compiler command line.
 
-All that windows console stuff is not much reliable, if it does not work, retreat to printing into a file.
+All that windows console stuff is not much reliable, if it does not work, retreat to printing into a file or to the log window.
 
 Starting stardict
 =================
@@ -127,7 +142,7 @@ Create X:\Stardict-start\pixmaps directory and copy there *.png files from
 stardict-source\pixmaps and stardict-source\src\pixmaps
 Now stardict.exe is ready to start.
 
-
+============
 StarDict's win32 port got many experience from ReciteWord (my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
 
 Note: when use fopen(), use "rb", never "r" (unless you know what you are doing).
