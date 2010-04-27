@@ -80,7 +80,7 @@ cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins
 
 cp src/win32/acrobat/win32/Release/StarDict.api win32-install-dir
 
-Download gtk-runtime-*.exe from pidgin project and put it into gtk_installer/.
+Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into gtk_installer/.
 
 Double click the stardict-installer.nsi :) NSIS will build the installer.
 
