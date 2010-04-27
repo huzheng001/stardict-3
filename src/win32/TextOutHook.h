@@ -7,7 +7,7 @@
 # define DLLIMPORT __declspec (dllimport)
 #endif /* Not BUILDING_DLL */
 
-#include "ThTypes.h"
+#include "InterProcessCommunication.h"
 
 /* return value in utf-8 */
 char* ExtractFromEverything(HWND WND, POINT Pt, int *BeginPos);

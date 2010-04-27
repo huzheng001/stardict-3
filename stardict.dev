@@ -428,17 +428,17 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit41]
-FileName=src\win32\ThTypes.c
+FileName=src\win32\InterProcessCommunication.c
 CompileCpp=0
 Folder=win32
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c ThTypes.c -o ThTypes.o $(CFLAGS)
+BuildCmd=$(CC) -c InterProcessCommunication.c -o InterProcessCommunication.o $(CFLAGS)
 
 [Unit42]
-FileName=src\win32\ThTypes.h
+FileName=src\win32\InterProcessCommunication.h
 CompileCpp=1
 Folder=win32
 Compile=1

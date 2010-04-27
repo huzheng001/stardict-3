@@ -27,7 +27,7 @@
 #include "PIHeaders.h"
 #include "PIRequir.h"
 #include "wordPickUI.h"
-#include "../../ThTypes.h"
+#include "../../InterProcessCommunication.h"
 
 /*-------------------------------------------------------
 	Constants/Declarations

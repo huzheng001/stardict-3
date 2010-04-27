@@ -26,15 +26,13 @@
 #include "../stardict.h"
 
 #include "mouseover.h"
-#include "ThTypes.h"
+#include "InterProcessCommunication.h"
 
 #define STARDICT_DLL_DIR gStarDictDataDir
 //#define DEBUG
 
-// StarDict's Mouseover feature get the example delphi source code from Mueller Electronic Dicionary.
+// StarDict's Mouseover feature get the example delphi source code from Mueller Electronic Dictionary.
 // Homepage: http://vertal1.narod.ru/mueldic.html E-mail: svv_soft@mail.ru
-
-const int WM_MY_SHOW_TRANSLATION = WM_USER + 300;
 
 void Mouseover::NeedSpyDll()
 {
@@ -132,7 +130,7 @@ void Mouseover::ShowTranslation()
 LRESULT CALLBACK Mouseover::mouseover_mainmsg_handler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	switch (msg) {
-		case WM_MY_SHOW_TRANSLATION:
+		case WM_STARDICT_SHOW_TRANSLATION:
 			ShowTranslation();
 			break;
 		default:

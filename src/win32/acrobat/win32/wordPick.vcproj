@@ -199,11 +199,11 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
-				RelativePath="..\Acrobat_Headers\Api\PIMain.c"
+				RelativePath="..\..\InterProcessCommunication.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ThTypes.c"
+				RelativePath="..\Acrobat_Headers\Api\PIMain.c"
 				>
 			</File>
 			<File
@@ -244,11 +244,11 @@
 			Filter=".h"
 			>
 			<File
-				RelativePath="resource.h"
+				RelativePath="..\..\InterProcessCommunication.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\ThTypes.h"
+				RelativePath="resource.h"
 				>
 			</File>
 			<File

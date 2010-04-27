@@ -29,7 +29,7 @@
 #include "PIRequir.h"
 #include "PIMain.h" // for gHINSTANCE
 #include "wordPickUI.h"
-#include "../../ThTypes.h"
+#include "../../InterProcessCommunication.h"
 #include "../win32/resource.h"
 
 
@@ -49,9 +49,6 @@ static AVExecuteProc		cbActivateTool;
 static AVComputeEnabledProc	cbIsEnabled;
 static AVComputeMarkedProc	cbIsMarked;
 
-const int MOUSEOVER_INTERVAL = 300;
-const int WM_MY_SHOW_TRANSLATION = WM_USER + 300;
-	
 /*-------------------------------------------------------
 	Utility Methods
 -------------------------------------------------------*/
@@ -86,16 +83,6 @@ static bool ConvertBufferToUTF8(void)
 		}
 	}
 	return false;
-}
-
-static void NotifyStarDict(void)
-{
-	HWND stardictWND = GlobalData->ServerWND;
-	if(!stardictWND)
-		return;
-	DWORD SendMsgAnswer;
-	SendMessageTimeout(stardictWND, WM_MY_SHOW_TRANSLATION, 0, 0,
-		SMTO_ABORTIFHUNG, MOUSEOVER_INTERVAL, &SendMsgAnswer);
 }
 
 /*-------------------------------------------------------
@@ -156,8 +143,10 @@ static ACCB1 void ACCB2 wordPickAVDocDidSetSelection(
 	ASCallbackDestroy(enumProc);
 	if(!ConvertBufferToUTF8())
 		return;
+	GlobalData->CurMod.BeginPos = 0;
+	GlobalData->CurMod.WordLen = strlen(buffer);
 	strcpy_s(GlobalData->CurMod.MatchedWord, MAX_SCAN_TEXT_SIZE, buffer);
-	NotifyStarDict();
+	NotifyStarDictNewScanWord(1000);
 }
 
 static void SetUpToolButton(void)

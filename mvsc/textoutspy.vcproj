@@ -179,7 +179,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\ThTypes.c"
+				RelativePath="..\src\win32\InterProcessCommunication.c"
 				>
 			</File>
 		</Filter>
@@ -193,7 +193,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\ThTypes.h"
+				RelativePath="..\src\win32\InterProcessCommunication.h"
 				>
 			</File>
 		</Filter>
