@@ -68,7 +68,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=ThTypes.c
+FileName=InterProcessCommunication.c
 CompileCpp=0
 Folder=TextOutSpy
 Compile=1
@@ -78,7 +78,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=ThTypes.h
+FileName=InterProcessCommunication.h
 CompileCpp=0
 Folder=TextOutSpy
 Compile=1

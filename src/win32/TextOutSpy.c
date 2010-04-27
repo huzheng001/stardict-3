@@ -1,10 +1,9 @@
 #include <shlwapi.h>
 #include "TextOutSpy.h"
-#include "ThTypes.h"
+#include "InterProcessCommunication.h"
 
 
 const int MOUSEOVER_INTERVAL = 300;
-const int WM_MY_SHOW_TRANSLATION = WM_USER + 300;
 
 HINSTANCE g_hInstance = NULL;
 HANDLE hSynhroMutex = 0;
@@ -27,10 +26,7 @@ static void SendWordToServer()
 		GlobalData->CurMod.WND = GlobalData->LastWND;
 		GlobalData->CurMod.Pt = GlobalData->LastPt;
 		GetWordProc(&(GlobalData->CurMod));
-		if (GlobalData->CurMod.WordLen > 0) {
-			DWORD SendMsgAnswer;
-			SendMessageTimeout(GlobalData->ServerWND, WM_MY_SHOW_TRANSLATION, 0, 0, SMTO_ABORTIFHUNG, MOUSEOVER_INTERVAL, &SendMsgAnswer);
-		}
+		NotifyStarDictNewScanWord(MOUSEOVER_INTERVAL);
 	}
 }
 

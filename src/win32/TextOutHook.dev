@@ -78,7 +78,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=ThTypes.h
+FileName=InterProcessCommunication.h
 CompileCpp=0
 Folder=TextOutHook
 Compile=1
