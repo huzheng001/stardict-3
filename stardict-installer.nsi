@@ -55,7 +55,7 @@ SetDateSave on
 !define GTK_REG_KEY			"SOFTWARE\GTK\2.0"
 !define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
 !define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
-!define GTK_RUNTIME_INSTALLER			"gtk_installer\gtk-runtime*.exe"
+!define GTK_RUNTIME_INSTALLER			"gtk_installer\gtk2-runtime*.exe"
 
 
 ;--------------------------------
@@ -322,7 +322,7 @@ Section SecStarDict
     SetOverwrite on
     File /r /x StarDict.api .\win32-install-dir\*.*
 
-    Call InstallWordPick
+    Call InstallWordPickAcrobatPlugin
 
     ; If we don't have install rights and no hklm GTK install.. then Start in lnk property should
     ; remain stardict dir.. otherwise it should be set to the GTK lib dir. (to avoid dll hell)
@@ -394,7 +394,7 @@ Section Uninstall
     ;Try to remove StarDict install dir .. if empty
     RMDir "$INSTDIR"
 
-    Call un.DeleteWordPick
+    Call un.DeleteWordPickAcrobatPlugin
 
     ; Shortcuts..
     RMDir /r "$SMPROGRAMS\StarDict"
@@ -713,7 +713,7 @@ Function .onInit
 
 FunctionEnd
 
-Function InstallWordPick
+Function InstallWordPickAcrobatPlugin
   ReadRegStr $R9 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Acrobat.exe" "Path"
   StrCmp $R9 "" next2 copyfile2
   copyfile2:
@@ -724,7 +724,7 @@ Function InstallWordPick
   SetOutPath "$INSTDIR"
 FunctionEnd
 
-Function un.DeleteWordPick
+Function un.DeleteWordPickAcrobatPlugin
   ReadRegStr $R9 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Acrobat.exe" "Path"
   StrCmp $R9 "" next2 deletefile2
   deletefile2:
