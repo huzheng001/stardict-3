@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wordnet_parsedata", "wordne
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qqwry", "qqwry.vcproj", "{73609C3E-3265-4B12-9B23-36703ECF5577}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wordPick", "..\src\win32\acrobat\win32\wordPick.vcproj", "{92275426-815E-464B-B804-F07CB4863038}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -91,6 +93,10 @@ Global
 		{73609C3E-3265-4B12-9B23-36703ECF5577}.Debug|Win32.Build.0 = Debug|Win32
 		{73609C3E-3265-4B12-9B23-36703ECF5577}.Release|Win32.ActiveCfg = Release|Win32
 		{73609C3E-3265-4B12-9B23-36703ECF5577}.Release|Win32.Build.0 = Release|Win32
+		{92275426-815E-464B-B804-F07CB4863038}.Debug|Win32.ActiveCfg = Debug|Win32
+		{92275426-815E-464B-B804-F07CB4863038}.Debug|Win32.Build.0 = Debug|Win32
+		{92275426-815E-464B-B804-F07CB4863038}.Release|Win32.ActiveCfg = Release|Win32
+		{92275426-815E-464B-B804-F07CB4863038}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

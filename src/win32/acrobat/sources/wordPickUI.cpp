@@ -24,77 +24,78 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
 *********************************************************************/
-//#include <windows.h>
-//#include <process.h>
+#include <Shlwapi.h>
 #include "PIHeaders.h"
 #include "PIRequir.h"
 #include "PIMain.h" // for gHINSTANCE
 #include "wordPickUI.h"
-#include "ThTypes.h"
+#include "../../ThTypes.h"
+#include "../win32/resource.h"
 
 
 /*-------------------------------------------------------
 	Constants/Declarations
 -------------------------------------------------------*/
-
-char buffer[128];
+const size_t buffer_size = MAX_SCAN_TEXT_SIZE;
+char buffer[buffer_size];
+wchar_t wbuffer[buffer_size];
 static bool boolPickWords = false;
 
-//extern ASAtom WordPick_K;
-extern AVToolButton handButton;
-
-static AVToolRec WordPickTool;
-static AVIdleProc idleProc;
-static AVPageViewCursorProc cursorProc;
-//ASBool gWordPickToolSelected;
-//static AVCursor WordPickCursor;
-//static AVCursor orgSysCursor;
+static AVDocDidSetSelectionNPROTO setSelectionProc;
 static AVToolButton wordPickToolButton;
-
-static AVMenuItem menuItem = NULL;
 
 // UI Callbacks
 static AVExecuteProc		cbActivateTool;
 static AVComputeEnabledProc	cbIsEnabled;
 static AVComputeMarkedProc	cbIsMarked;
 
-// For mac
-#define CURSWordPickCursor			150
-#define SICNWordPickToolIcon		150
-#define cicnWordPickIcon			150
-
-// For windows
-#define IDC_CURSOR1                 101
-#define IDI_ICON1                   102
-#define IDB_BITMAP1                 103
-#define IDB_BITMAP2                 104
-
 const int MOUSEOVER_INTERVAL = 300;
 const int WM_MY_SHOW_TRANSLATION = WM_USER + 300;
 	
-static AVDevCoord oldxpoint=-1, oldypoint=-1;
-static AVCursor HandCursor=NULL;
-
 /*-------------------------------------------------------
 	Utility Methods
 -------------------------------------------------------*/
 
 void *GetToolButtonIcon(void)
 {
-	return (AVCursor)LoadBitmapA(gHINSTANCE, MAKEINTRESOURCE(IDB_BITMAP1));
-}
-static ACCB1 ASBool ACCB2 RedrawCurrentPage (AVDoc doc, void* clientData)
-{
-	AVPageView page = AVDocGetPageView(doc);
-	AVPageViewInvalidateRect (page, NULL);
-	AVPageViewDrawNow(page);
-
-	return true;
+	return (AVCursor)LoadBitmap(gHINSTANCE, MAKEINTRESOURCE(IDB_BITMAP1));
 }
 
-static void RedrawAllVisibleAnnots()
+/* Convert the string in wbuffer in UCS-2 encoding to string in buffer in UTF-8 encoding
+	return value: true - success */
+static bool ConvertBufferToUTF8(void)
 {
-	AVAppEnumDocs (RedrawCurrentPage, NULL);
+	for(int wlen = wcslen(wbuffer); wlen > 0; --wlen) {
+		int res = WideCharToMultiByte(
+			CP_UTF8, // __in   UINT CodePage,
+			0, // __in   DWORD dwFlags,
+			wbuffer, // __in   LPCWSTR lpWideCharStr,
+			wlen, // __in   int cchWideChar,
+			buffer, //__out  LPSTR lpMultiByteStr,
+			buffer_size - 1, // __in   int cbMultiByte,
+			NULL, // __in   LPCSTR lpDefaultChar,
+			NULL //__out  LPBOOL lpUsedDefaultChar
+		);
+		if(res) {
+			buffer[res] = 0;
+			return true;
+		} else {
+			DWORD dwErr = GetLastError();
+			if(dwErr != ERROR_INSUFFICIENT_BUFFER && dwErr != ERROR_NO_UNICODE_TRANSLATION)
+				return false;
+		}
+	}
+	return false;
+}
+
+static void NotifyStarDict(void)
+{
+	HWND stardictWND = GlobalData->ServerWND;
+	if(!stardictWND)
+		return;
+	DWORD SendMsgAnswer;
+	SendMessageTimeout(stardictWND, WM_MY_SHOW_TRANSLATION, 0, 0,
+		SMTO_ABORTIFHUNG, MOUSEOVER_INTERVAL, &SendMsgAnswer);
 }
 
 /*-------------------------------------------------------
@@ -103,10 +104,15 @@ static void RedrawAllVisibleAnnots()
 static ACCB1 ASBool ACCB2 PDTextSelectEnumTextProcCB(void* procObj, PDFont font, ASFixed size, 
 											   PDColorValue color, char* text, ASInt32 textLen)
 {
-	if (strlen(buffer) + strlen(text) < 127)
-	{
-		strcat(buffer, text);
+	/* The text parameter contains text in UCS-2 encoding.
+	Experimentally detected that it is in big-endian format.
+	Append the text to wbuffer converting to little-endian format. */
+	int text_ind = 0;
+	size_t wbuffer_ind = wcslen(wbuffer);
+	for(; text_ind + 1 < textLen && wbuffer_ind < buffer_size-1; text_ind += 2, wbuffer_ind++) {
+		wbuffer[wbuffer_ind] = (((unsigned char)text[text_ind] << 8) | (unsigned char)text[text_ind + 1]);
 	}
+	wbuffer[wbuffer_ind] = 0;
 	return true;
 }
 
@@ -118,7 +124,7 @@ static ACCB1 ASBool ACCB2 IsEnabled (void *permRequired)
 	else
 	{
 		PDPerms docPerms = PDDocGetPermissions(AVDocGetPDDoc(avDoc));
-		return (!permRequired || (((PDPerms)permRequired & docPerms) != 0));
+		return (!permRequired || (((PDPerms)permRequired | docPerms) != 0));
 	}
 }
 
@@ -127,14 +133,31 @@ static ACCB1 ASBool ACCB2 IsMarked (void *clientData)
 	return boolPickWords;
 }
 
-static ACCB1 void ACCB2 avtiveWordPickButton(void *clientData)
+static ACCB1 void ACCB2 ActivateWordPickTool(void *clientData)
 {
-	AVCursor tmp = AVSysGetCursor();
-	AVSysSetCursor (AVSysGetStandardCursor(HAND_CURSOR));
-	HandCursor = AVSysGetCursor();
-	AVSysSetCursor (tmp);
-
 	boolPickWords = !boolPickWords;
+}
+
+static ACCB1 void ACCB2 wordPickAVDocDidSetSelection(
+	AVDoc doc, ASAtom selType, void * selData, void * clientData)
+{
+	if(!boolPickWords)
+		return;
+	if(selType != ASAtomFromString("Text"))
+		return;
+	wbuffer[0] = 0;
+	PDTextSelect Text = static_cast<PDTextSelect>(selData);
+	/* NOTE
+	Acrobat enumerates text in the order it appears in the PDF file, 
+	which is often not the same as the order in which a person would read the text. */
+	PDTextSelectEnumTextProc enumProc 
+		= ASCallbackCreateProto(PDTextSelectEnumTextProc, &PDTextSelectEnumTextProcCB);
+	PDTextSelectEnumTextUCS(Text, enumProc, NULL);
+	ASCallbackDestroy(enumProc);
+	if(!ConvertBufferToUTF8())
+		return;
+	strcpy_s(GlobalData->CurMod.MatchedWord, MAX_SCAN_TEXT_SIZE, buffer);
+	NotifyStarDict();
 }
 
 static void SetUpToolButton(void)
@@ -144,21 +167,30 @@ static void SetUpToolButton(void)
 	AVToolButton separator = AVToolBarGetButtonByName (toolBar, ASAtomFromString("Hand"));
 
 	wordPickToolButton = AVToolButtonNew (ASAtomFromString("ADBE:WordPick"), WordPickIcon, true, false);
-	AVToolButtonSetExecuteProc (wordPickToolButton, ASCallbackCreateProto(AVExecuteProc, avtiveWordPickButton), NULL);
-	AVToolButtonSetComputeEnabledProc (wordPickToolButton, cbIsEnabled, (void *)pdPermEdit);
+	cbActivateTool = ASCallbackCreateProto(AVExecuteProc, &ActivateWordPickTool);
+	AVToolButtonSetExecuteProc (wordPickToolButton, cbActivateTool, NULL);
+	AVToolButtonSetComputeEnabledProc (wordPickToolButton, cbIsEnabled, (void *)0); // pdPermEdit
 	AVToolButtonSetComputeMarkedProc (wordPickToolButton, cbIsMarked, NULL);
 	AVToolButtonSetHelpText (wordPickToolButton, "Toggle StarDict");
 
 	AVToolBarAddButton(toolBar, wordPickToolButton, true, separator);
 }
 
+static void DestroyToolButton(void)
+{
+	AVToolButtonDestroy (wordPickToolButton);
+	wordPickToolButton = NULL;
+	ASCallbackDestroy(cbActivateTool);
+	cbActivateTool = NULL;
+}
+
 void SetUpUI(void)
 {
-	idleProc = ASCallbackCreateProto(AVIdleProc, wordPickAVAppRegisterForPageViewIdleProc);
-	AVAppRegisterIdleProc (idleProc, NULL, 30);
-	
-	cbIsEnabled		= ASCallbackCreateProto (AVComputeEnabledProc,	&IsEnabled);
-	cbIsMarked		= ASCallbackCreateProto (AVComputeMarkedProc,	&IsMarked);
+	setSelectionProc = ASCallbackCreateNotification(AVDocDidSetSelection, &wordPickAVDocDidSetSelection);
+	AVAppRegisterNotification(AVDocDidSetSelectionNSEL, gExtensionID, setSelectionProc, NULL);
+
+	cbIsEnabled		= ASCallbackCreateProto (AVComputeEnabledProc, &IsEnabled);
+	cbIsMarked		= ASCallbackCreateProto (AVComputeMarkedProc, &IsMarked);
 
 	if (ASGetConfiguration(ASAtomFromString("CanEdit")))
 		SetUpToolButton();
@@ -166,118 +198,14 @@ void SetUpUI(void)
 
 void CleanUpUI(void)
 {
-	AVAppUnregisterIdleProc(idleProc, NULL);
+	AVAppUnregisterNotification(AVDocDidSetSelectionNSEL, gExtensionID, setSelectionProc, NULL);
+	ASCallbackDestroy(setSelectionProc);
+	setSelectionProc = NULL;
 
 	if(wordPickToolButton)
-		AVToolButtonDestroy (wordPickToolButton);
-}
-
-ACCB1 void ACCB2 wordPickAVAppRegisterForPageViewIdleProc(void * clientData)
-{
-	if (boolPickWords)
-	{
-		//_beginthread(getCurWords, 0, NULL);
-		getCurWords(NULL);
-	}
-	return;
-}
-
-static bool bIsPureEnglish(const char *str) 
-{ 
-	for (int i=0; str[i]!=0; i++) 
-		if (!isascii(str[i]))
-			return false;
-	return true;	
-}
-
-void getCurWords(PVOID parm)
-{
-	POINT Pt;
-	GetCursorPos(&Pt);
-	HWND WND = WindowFromPoint(Pt);
-	TCHAR wClassName[64];
-	if (GetClassName(WND, wClassName, sizeof(wClassName) / sizeof(TCHAR))) 
-	{
-		if (strcmp(wClassName, "AVL_AVView")!=0)
-			return;
-	}
-	AVDoc avDoc = AVAppGetActiveDoc();
-	if (!avDoc)
-	{
-		return;
-	}
-	AVPageView pageView = AVDocGetPageView(avDoc);
-	if (!pageView)
-	{
-		return;
-	}
-	AVCursor acur = AVSysGetCursor ();
-	if (HandCursor != acur)
-	{
-		return;
-	}
-	
-	AVDevCoord xpoint, ypoint;
-	AVPageViewGetMousePosition (pageView, &xpoint, &ypoint);
-
-	if (oldxpoint == xpoint && oldypoint == ypoint)
-        return;
-	oldxpoint = xpoint;
-	oldypoint = ypoint;
-
-	PDDoc pdDoc = AVDocGetPDDoc(avDoc);
-
-	buffer[0] = 0;
-	if (AVPageViewGetPageNum(pageView) > PDBeforeFirstPage) 
-	{
-		// First of all U have to capture mouse position x,y and do the following code.
-		AVDevRect resultRect;
-		resultRect.left   = xpoint-10;
-		resultRect.right  = xpoint+10;
-		resultRect.top    = ypoint;
-		resultRect.bottom = ypoint-1;
-		AVPageViewDrawRectOutlineWithHandles(pageView, &resultRect, true, true, NULL, NULL);
-
-		ASFixedRect fixedRect;
-		AVPageViewDeviceRectToPage(pageView,&resultRect,&fixedRect);
-		PDTextSelect pdtext=PDDocCreateTextSelect (pdDoc,AVPageViewGetPageNum(pageView),&fixedRect);
-		
-		AVPageViewInvalidateRect (pageView, NULL);
-		AVPageViewDrawNow(pageView);
-		//AVDocSetSelection(avDoc,ASAtomFromString("Text"),(void *)pdtext, true);
-		//AVDocShowSelection(avDoc);
-		if (PDTextSelectGetRangeCount(pdtext) > 0)
-		{
-			PDTextSelectEnumTextProc enumProc 
-				= ASCallbackCreateProto(PDTextSelectEnumTextProc, &PDTextSelectEnumTextProcCB);
-			// Enumerate the text runs in PDText
-			PDTextSelectEnumText(pdtext, enumProc, NULL);
-			ASCallbackDestroy(enumProc);
-			HWND stardictWND = FindWindow((LPCTSTR)"StarDictMouseover", NULL);
-			if (stardictWND == NULL)
-			{
-				//didn't find the window, barf here...
-				//AVAlertNote("The dict is down.\nWordPick's doing stuff.");
-			}
-			else
-			{
-				strcpy(GlobalData->CurMod.MatchedWord, buffer);
-				if (bIsPureEnglish(buffer))
-				{
-					char *p = strchr(buffer, ' ');
-					if (p)
-						GlobalData->CurMod.BeginPos = p-buffer;
-					else
-						GlobalData->CurMod.BeginPos = 0;
-				} else
-				{
-					GlobalData->CurMod.BeginPos = 0;
-				}
-
-				DWORD SendMsgAnswer;
-				SendMessageTimeout(stardictWND, WM_MY_SHOW_TRANSLATION, 0, 0, SMTO_ABORTIFHUNG, MOUSEOVER_INTERVAL, &SendMsgAnswer);
-			}
-		}
-	}
-	return;
+		DestroyToolButton();
+	ASCallbackDestroy(cbIsEnabled);
+	cbIsEnabled = NULL;
+	ASCallbackDestroy(cbIsMarked);
+	cbIsMarked = NULL;
 }

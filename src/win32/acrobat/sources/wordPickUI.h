@@ -33,7 +33,5 @@
 */
 void SetUpUI(void);
 void CleanUpUI(void);
-void getCurWords(PVOID parm);
-void resetWordPick(void);
-ACCB1 void ACCB2 wordPickAVAppRegisterForPageViewIdleProc(void * clientData);
+
 #endif /* !_WordPickUI_H */
