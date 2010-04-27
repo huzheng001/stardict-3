@@ -27,13 +27,11 @@
 #include "PIHeaders.h"
 #include "PIRequir.h"
 #include "wordPickUI.h"
-//#include "DebugWindowHFT.h"
-#include "ThTypes.h"
+#include "../../ThTypes.h"
 
 /*-------------------------------------------------------
 	Constants/Declarations
 -------------------------------------------------------*/
-//ASAtom WordPick_K;
 
 /*-------------------------------------------------------
 	Core Handshake Callbacks
@@ -59,12 +57,6 @@ ACCB1 ASBool ACCB2 PluginImportReplaceAndRegister(void)
  **   */
 ACCB1 ASBool ACCB2 PluginInit(void)
 {
-	//handButton = AVToolBarGetButtonByName (toolBar, ASAtomFromString("Hand"));
-	//if (!handButton)
-	//{
-	//	AVAlertNote("Show \"Hand\" Button fist.");
-	//	return false;
-	//}
 	ThTypes_Init();
 	SetUpUI();
 	return true;
@@ -158,4 +150,3 @@ ACCB1 ASBool ACCB2 PIHandshake(Uns32 handshakeVersion, void *handshakeData)
 	AVAlertNote("Error in hand shake");
 	return false;
 }
-

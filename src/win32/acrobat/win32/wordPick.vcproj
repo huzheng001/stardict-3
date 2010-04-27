@@ -1,150 +1,194 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="8.00"
 	Name="wordPick"
 	ProjectGUID="{92275426-815E-464B-B804-F07CB4863038}"
-	SccProjectName=""
-	SccLocalPath="">
+	RootNamespace="wordPick"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory=".\Debug"
-			IntermediateDirectory=".\Debug"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="@&quot;..\..\AcroDspOptions.rsp&quot; "
-				Optimization="0"
-				AdditionalIncludeDirectories="&quot;D:\startdict\stardict-2.4.6\src\win32&quot;"
-				PreprocessorDefinitions="_DEBUG;WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV"
-				RuntimeLibrary="5"
-				BufferSecurityCheck="TRUE"
-				PrecompiledHeaderFile=".\Debug/wordPick.pch"
-				AssemblerListingLocation=".\Debug/"
-				ObjectFile=".\Debug/"
-				ProgramDataBaseFileName=".\wordPick.pdb"
-				BrowseInformation="1"
-				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				DebugInformationFormat="4"/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				AdditionalOptions="/EXPORT:PlugInMain"
-				OutputFile="Debug/wordPick.api"
-				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\Debug/wordPick.pdb"
-				SubSystem="2"
-				ImportLibrary=".\Debug/wordPick.lib"/>
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
 				TargetEnvironment="1"
 				TypeLibraryName=".\Debug/wordPick.tlb"
-				HeaderFileName=""/>
+				HeaderFileName=""
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Copy to Acrobat Plug-ins..."
-				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;
-if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;
-if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.
-if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.
-"/>
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/D ACRO_SDK_LEVEL=0x00060000&#x0D;&#x0A;/D READER_PLUGIN=1"
+				Optimization="0"
+				AdditionalIncludeDirectories="..\Acrobat_Headers;..\Acrobat_Headers\API;..\Acrobat_Headers\ADM;..\Acrobat_Headers\SDK"
+				PreprocessorDefinitions="_DEBUG;WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV;DEBUG=1"
+				RuntimeLibrary="1"
+				BufferSecurityCheck="true"
+				BrowseInformation="1"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="4"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
-			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
+				Culture="1033"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory=".\Release"
-			IntermediateDirectory=".\Release"
-			ConfigurationType="2"
-			CharacterSet="0">
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/D ACRO_SDK_LEVEL=0x00060000
-/D READER_PLUGIN=1"
-				Optimization="0"
-				AdditionalIncludeDirectories="..\Acrobat_Headers\ADM;..\Acrobat_Headers\SDK;..\Acrobat_Headers\API;&quot;..\..\&quot;"
-				PreprocessorDefinitions="WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV"
-				RuntimeLibrary="4"
-				EnableEnhancedInstructionSet="0"
-				PrecompiledHeaderFile=".\Release/wordPick.pch"
-				AssemblerListingLocation=".\Release/"
-				ObjectFile=".\Release/"
-				ProgramDataBaseFileName=".\wordPick.pdb"
-				BrowseInformation="1"
-				WarningLevel="1"/>
-			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
+				IgnoreImportLibrary="true"
 				AdditionalOptions="/EXPORT:PlugInMain"
-				ShowProgress="0"
-				OutputFile=".\Release/StarDict.api"
-				Version="0.0.2"
-				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				IgnoreAllDefaultLibraries="FALSE"
+				OutputFile="C:\Program Files\Adobe\Acrobat 7.0\Acrobat\plug_ins\StarDict.api"
+				Version="1.0"
+				LinkIncremental="2"
+				SuppressStartupBanner="true"
+				GenerateDebugInformation="true"
 				SubSystem="2"
-				ImportLibrary=".\Release/wordPick.lib"/>
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copy to Acrobat Plug-ins..."
-				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;
-if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;
-if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.
-if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.
-"
-				ExcludedFromBuild="FALSE"/>
+				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.&#x0D;&#x0A;if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="1"
+			>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/D ACRO_SDK_LEVEL=0x00060000&#x0D;&#x0A;/D READER_PLUGIN=1"
+				Optimization="0"
+				AdditionalIncludeDirectories="..\Acrobat_Headers;..\Acrobat_Headers\API;..\Acrobat_Headers\ADM;..\Acrobat_Headers\SDK"
+				PreprocessorDefinitions="WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV"
+				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="0"
+				BrowseInformation="1"
+				WarningLevel="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				Culture="2052"/>
+				Culture="2052"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalOptions="/EXPORT:PlugInMain"
+				OutputFile="$(OutDir)\StarDict.api"
+				Version="1.0"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				IgnoreAllDefaultLibraries="false"
+				SubSystem="2"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy to Acrobat Plug-ins..."
+				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.&#x0D;&#x0A;if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.&#x0D;&#x0A;"
+				ExcludedFromBuild="false"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -152,57 +196,72 @@ if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90">
+			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
+			>
 			<File
-				RelativePath="..\Acrobat_Headers\Api\PIMain.c">
+				RelativePath="..\Acrobat_Headers\Api\PIMain.c"
+				>
 			</File>
 			<File
-				RelativePath="..\..\ThTypes.c">
+				RelativePath="..\..\ThTypes.c"
+				>
 			</File>
 			<File
-				RelativePath="wordPick.rc">
+				RelativePath="wordPick.rc"
+				>
 			</File>
 			<File
-				RelativePath="..\sources\wordPickInit.cpp">
+				RelativePath="..\sources\wordPickInit.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="_DEBUG;WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV;$(NoInherit)"
-						BrowseInformation="1"/>
+						BrowseInformation="1"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\sources\wordPickUI.cpp">
+				RelativePath="..\sources\wordPickUI.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="_DEBUG;WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV;$(NoInherit)"
-						BrowseInformation="1"/>
+						BrowseInformation="1"
+					/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter=".h">
+			Filter=".h"
+			>
 			<File
-				RelativePath="resource.h">
+				RelativePath="resource.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\ThTypes.h">
+				RelativePath="..\..\ThTypes.h"
+				>
 			</File>
 			<File
-				RelativePath="..\sources\wordPickUI.h">
+				RelativePath="..\sources\wordPickUI.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resources"
-			Filter="">
+			>
 			<File
-				RelativePath="wordPick.bmp">
+				RelativePath="wordPick.bmp"
+				>
 			</File>
 		</Filter>
 	</Files>
