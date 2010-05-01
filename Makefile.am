@@ -15,7 +15,7 @@ EXTRA_DIST = \
 	stardict.spec.in stardict-withoutgnome.spec.in \
 	dictionary.spec	\
 	treedict.spec	\
-	stardict.dev stardict.ico stardict-uninst.ico stardict-installer.nsi stardict-prepare-installer.bat \
+	stardict.dev stardict.ico stardict-uninst.ico stardict-installer.nsi stardict-prepare-installer.js \
 	omf.make		\
 	intltool-extract.in 	\
 	intltool-merge.in 	\
