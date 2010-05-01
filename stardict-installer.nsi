@@ -56,6 +56,7 @@ SetDateSave on
 !define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
 !define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
 !define GTK_RUNTIME_INSTALLER			"gtk_installer\gtk2-runtime*.exe"
+!define LIB_SIGC_DLL	"sigc-*.dll"
 
 
 ;--------------------------------
@@ -173,17 +174,17 @@ Section -SecUninstallOldStarDict
           IfErrors uninstall_problem
             ; Ready to uninstall..
             ClearErrors
-	    ExecWait '"$TEMP\${STARDICT_UNINST_EXE}" /S _?=$R1'
-	    IfErrors exec_error
+      ExecWait '"$TEMP\${STARDICT_UNINST_EXE}" /S _?=$R1'
+      IfErrors exec_error
               Delete "$TEMP\${STARDICT_UNINST_EXE}"
-	      Goto done
+        Goto done
 
 	    exec_error:
               Delete "$TEMP\${STARDICT_UNINST_EXE}"
               Goto uninstall_problem
 
         uninstall_problem:
-	  ; In this case just wipe out previous StarDict install dir..
+    ; In this case just wipe out previous StarDict install dir..
           MessageBox MB_YESNO $(STARDICT_PROMPT_WIPEOUT) IDYES do_wipeout IDNO cancel_install
           cancel_install:
             Quit
@@ -387,9 +388,11 @@ Section Uninstall
     RMDir /r "$INSTDIR\pixmaps"
     RMDir /r "$INSTDIR\plugins"
     RMDir /r "$INSTDIR\data"
+    RMDir /r "$INSTDIR\skins"
     Delete "$INSTDIR\stardict.exe"
     Delete "$INSTDIR\TextOutSpy.dll"
     Delete "$INSTDIR\TextOutHook.dll"
+    Delete "$INSTDIR\${LIB_SIGC_DLL}"
     Delete "$INSTDIR\${STARDICT_UNINST_EXE}"
     ;Try to remove StarDict install dir .. if empty
     RMDir "$INSTDIR"

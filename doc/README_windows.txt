@@ -39,7 +39,7 @@ Grab and install NSIS: http://www.nullsoft.com/free/nsis
 I was using the 2.44 version.
 
 I use linux commmand to illustrate the steps, but you cann't do it in this way :)
-You may use stardict-prepare-installer.bat to build win32-install-dir directory structure provided you already have all the required files in place.
+You may use stardict-prepare-installer.js to build win32-install-dir directory structure provided you already have all the required files in place. See comment at the head of the file for details of running the script.
 
 ===============
 cd stardict-3.0.0
