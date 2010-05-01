@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="utf-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
@@ -18,8 +18,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -40,7 +40,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS;_CRT_SECURE_NO_DEPRECATE;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -94,8 +93,8 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -202,11 +201,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\TextOutHook.h"
+				RelativePath="..\src\win32\InterProcessCommunication.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\InterProcessCommunication.h"
+				RelativePath="..\src\win32\TextOutHook.h"
 				>
 			</File>
 		</Filter>

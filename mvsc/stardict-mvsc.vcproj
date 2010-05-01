@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="utf-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
@@ -18,8 +18,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/DATTACH_WINDOWS_CONSOLE /D_WIN32_WINNT=0x0501 /DENABLE_LOG_WINDOW"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;;&quot;gtk\include\atk-1.0&quot;;gtk\include\cairo;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\pango-1.0&quot;;gtk\include;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;"
+				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,9 +63,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="gtk\lib"
+				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -98,8 +98,8 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;;&quot;gtk\include\atk-1.0&quot;;gtk\include\cairo;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\pango-1.0&quot;;gtk\include;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;"
+				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -139,9 +139,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="gtk\lib"
+				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -306,6 +306,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\win32\InterProcessCommunication.c"
+					>
+				</File>
+				<File
 					RelativePath="..\src\win32\MinimizeToTray.cpp"
 					>
 				</File>
@@ -319,10 +323,6 @@
 				</File>
 				<File
 					RelativePath="..\src\win32\systray.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win32\InterProcessCommunication.c"
 					>
 				</File>
 				<File
@@ -548,15 +548,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\win32\InterProcessCommunication.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\win32\mouseover.h"
 					>
 				</File>
 				<File
 					RelativePath="..\src\win32\systray.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win32\InterProcessCommunication.h"
 					>
 				</File>
 				<File

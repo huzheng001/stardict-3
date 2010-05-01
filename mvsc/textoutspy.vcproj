@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="utf-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
@@ -18,8 +18,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -93,8 +93,8 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -175,11 +175,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\src\win32\TextOutSpy.c"
+				RelativePath="..\src\win32\InterProcessCommunication.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\InterProcessCommunication.c"
+				RelativePath="..\src\win32\TextOutSpy.c"
 				>
 			</File>
 		</Filter>
@@ -189,11 +189,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\src\win32\TextOutSpy.h"
+				RelativePath="..\src\win32\InterProcessCommunication.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\win32\InterProcessCommunication.h"
+				RelativePath="..\src\win32\TextOutSpy.h"
 				>
 			</File>
 		</Filter>
