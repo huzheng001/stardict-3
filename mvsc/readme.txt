@@ -5,7 +5,7 @@ glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zi
 
 Just extract them into "mvsc\gtk\" is OK.
 
-Then download libsigc++ (http://libsigc.sourceforge.net/) and compile it. Copy sigc-vc80-2_0.lib to "mvsc\gtk\lib\sigc-2.0d.lib".
+Then download libsigc++ (http://libsigc.sourceforge.net/) and compile it. Copy sigc-vc80-2_0.lib to "mvsc\libsigc++\sigc-2.0d.lib", and sigc-vc80-2_0.dll to "mvsc\libsigc++\".
 libsigc++ have static link problem on vs2005 presently.
 
 For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
