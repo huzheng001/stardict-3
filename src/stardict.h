@@ -64,9 +64,6 @@ private:
 	void reload_dicts();
 	void on_main_win_hide_list_changed(const baseconfval*);
 	void on_dict_scan_select_changed(const baseconfval*);
-	void on_floatwin_lock_changed(const baseconfval*);
-	void on_floatwin_lock_x_changed(const baseconfval*);
-	void on_floatwin_lock_y_changed(const baseconfval*);
 	void on_scan_modifier_key_changed(const baseconfval*);
 	static gboolean on_word_change_timeout(gpointer data);
 	void stop_word_change_timer();

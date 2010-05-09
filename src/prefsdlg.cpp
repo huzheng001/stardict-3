@@ -1837,15 +1837,6 @@ void PrefsDlg::on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, 
 {
 	gboolean use = gtk_toggle_button_get_active(button);
 	conf->set_bool_at("floating_window/use_custom_bg", use);
-	if (use) {
-		GdkColor color;
-		color.red = conf->get_int_at("floating_window/bg_red");
-		color.green = conf->get_int_at("floating_window/bg_green");
-		color.blue = conf->get_int_at("floating_window/bg_blue");
-		gpAppFrame->oFloatWin.set_bg(&color);
-	} else {
-		gpAppFrame->oFloatWin.set_bg(NULL);
-	}
 }
 
 void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPrefsDlg)
@@ -1855,16 +1846,12 @@ void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPr
 	conf->set_int_at("floating_window/bg_red", color.red);
 	conf->set_int_at("floating_window/bg_green", color.green);
 	conf->set_int_at("floating_window/bg_blue", color.blue);
-	if (conf->get_bool_at("floating_window/use_custom_bg")) {
-		gpAppFrame->oFloatWin.set_bg(&color);
-	}
 }
 
 void PrefsDlg::on_setup_floatwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg)
 {
 	gint transparent = (gint)gtk_range_get_value(range);
 	conf->set_int_at("floating_window/transparent", transparent);
-	gtk_window_set_opacity(GTK_WINDOW(gpAppFrame->oFloatWin.FloatWindow), (100-transparent)/100.0);
 }
 
 void PrefsDlg::setup_floatwin_size_page()

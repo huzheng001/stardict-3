@@ -329,7 +329,7 @@ void AppCore::show_netdict_resp(NetDictResponse *resp, bool ismainwin)
 	if (ismainwin)
 		gpAppFrame->oMidWin.oTextWin.Show(resp);
 	else
-		gpAppFrame->oFloatWin.ShowText(resp);
+		gpAppFrame->oFloatWin.ShowTextNetDict(resp);
 }
 
 void AppCore::lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData)
@@ -787,7 +787,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
-			oFloatWin.ShowText(pppWord, ppppWordData, SearchWord);
+			oFloatWin.ShowTextLocal(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
 			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
@@ -841,6 +841,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 		return false;
 	char *SearchWord = g_strdup(sWord);
 	char *P1 = SearchWord + BeginPos;
+	// cut first word
 	P1 = g_utf8_next_char(P1);
 	while (*P1 && !g_unichar_isspace(g_utf8_get_char(P1)))
 		P1 = g_utf8_next_char(P1);
@@ -865,7 +866,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 			BuildVirtualDictData(scan_dictmask, P1, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
-			oFloatWin.ShowText(pppWord, ppppWordData, P1);
+			oFloatWin.ShowTextLocal(pppWord, ppppWordData, P1);
 			oTopWin.InsertHisList(P1);
 			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
@@ -1401,7 +1402,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 {
 	if (sWord[0] == '\0')
 		return;
-	change_cursor busy(oFloatWin.FloatWindow->window,
+	change_cursor busy(oFloatWin.getFloatWindow()->window,
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 	gchar *fuzzy_reslist[MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM];
@@ -1439,7 +1440,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 				ppppWord[i]=NULL;
 			}
 		}
-		oFloatWin.ShowText(ppppWord, pppppWordData, ppOriginWord, count, sWord);
+		oFloatWin.ShowTextFuzzy(ppppWord, pppppWordData, ppOriginWord, count, sWord);
 		for (i=0; i<count; i++) {
 			if (ppppWord[i])
 				FreeResultData(scan_dictmask.size(), ppppWord[i], pppppWordData[i]);
@@ -1452,7 +1453,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 		for (i=0;i<count;i++)
 			g_free(fuzzy_reslist[i]);
 	} else
-		ShowNotFoundToFloatWin(sWord,_("Fuzzy query failed, too :-("), true);
+		ShowNotFoundToFloatWin(sWord, _("Fuzzy query failed, too :-("), true);
 }
 
 void AppCore::LookupWithRuleToMainWin(const gchar *word)
@@ -1606,7 +1607,7 @@ void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextW
 	gtk_widget_set_sensitive(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton), oMidWin.oTextWin.readwordtype != READWORD_CANNOT);
 }
 
-void AppCore::ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboolean fuzzy)
+void AppCore::ShowNotFoundToFloatWin(const char* sWord, const char* sReason, gboolean fuzzy)
 {
 	oFloatWin.ShowNotFound(sWord, sReason, fuzzy);
 }
@@ -1973,9 +1974,9 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
 
 void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq)
 {
-    if (seq != 0 && waiting_floatwin_lookupcmd_seq != seq)
-	    return;
-    oFloatWin.ShowText(&(lookup_response->dict_response));
+	if (seq != 0 && waiting_floatwin_lookupcmd_seq != seq)
+		return;
+	oFloatWin.ShowTextStarDictNet(&(lookup_response->dict_response));
 }
 
 void AppCore::on_http_client_error(HttpClient *http_client, const char *error_msg)
@@ -2284,12 +2285,6 @@ void AppCore::Init(gchar *queryword)
 			 sigc::mem_fun(this, &AppCore::on_main_win_hide_list_changed));
 	conf->notify_add("/apps/stardict/preferences/dictionary/scan_selection",
 			 sigc::mem_fun(this, &AppCore::on_dict_scan_select_changed));
-	conf->notify_add("/apps/stardict/preferences/floating_window/lock",
-			 sigc::mem_fun(this, &AppCore::on_floatwin_lock_changed));
-	conf->notify_add("/apps/stardict/preferences/floating_window/lock_x",
-			 sigc::mem_fun(this, &AppCore::on_floatwin_lock_x_changed));
-	conf->notify_add("/apps/stardict/preferences/floating_window/lock_y",
-			 sigc::mem_fun(this, &AppCore::on_floatwin_lock_y_changed));
 	conf->notify_add("/apps/stardict/preferences/dictionary/scan_modifier_key",
 			 sigc::mem_fun(this, &AppCore::on_scan_modifier_key_changed));
 
@@ -2312,31 +2307,23 @@ void AppCore::Init(gchar *queryword)
 
 void AppCore::Quit()
 {
-
 	if (!conf->get_bool_at("main_window/maximized")) {
 		gint width, height;
 		gtk_window_get_size(GTK_WINDOW(window), &width, &height);
-    conf->set_int_at("main_window/window_width", width);
-    conf->set_int_at("main_window/window_height", height);
+		conf->set_int_at("main_window/window_width", width);
+		conf->set_int_at("main_window/window_height", height);
 	}
 	gint pos = gtk_paned_get_position(GTK_PANED(oMidWin.hpaned));
-  conf->set_int_at("main_window/hpaned_pos", pos);
-
-	if (conf->get_bool_at("floating_window/lock")) {
-		gint x, y;
-		gtk_window_get_position(GTK_WINDOW(oFloatWin.FloatWindow), &x, &y);
-    conf->set_int_at("floating_window/lock_x", x);
-    conf->set_int_at("floating_window/lock_y", y);
-	}
+	conf->set_int_at("main_window/hpaned_pos", pos);
 
 	End();
 
 #ifdef CONFIG_GNOME
 	bonobo_object_unref (stardict_app_server);
 #endif
-   unlock_keys.reset(0);
-	 conf.reset(0);
-	 gtk_main_quit();
+	unlock_keys.reset(0);
+	conf.reset(0);
+	gtk_main_quit();
 }
 
 void AppCore::on_main_win_hide_list_changed(const baseconfval* hideval)
@@ -2360,7 +2347,6 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval)
 {
 	bool scan = static_cast<const confval<bool> *>(scanval)->val_;
 
-	gtk_widget_set_sensitive(oFloatWin.StopButton, scan);
 	if (scan != static_cast<bool>(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton))))
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton), scan);
 
@@ -2369,7 +2355,7 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval)
 		oDockLet->hide_state();
 	if (scan) {
 		bool lock=conf->get_bool_at("floating_window/lock");
-		if (lock && !oFloatWin.QueryingWord.empty())
+		if (lock && !oFloatWin.getQueryingWord().empty())
 			oFloatWin.Show();
 		oSelection.start();
 #ifdef _WIN32
@@ -2387,40 +2373,6 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval)
 		}
 		oMouseover.stop();
 #endif
-	}
-}
-
-void AppCore::on_floatwin_lock_changed(const baseconfval* lockval)
-{
-	bool lock = static_cast<const confval<bool> *>(lockval)->val_;
-	if (lock)
-		gtk_image_set_from_stock(GTK_IMAGE(oFloatWin.lock_image),
-					 GTK_STOCK_GOTO_LAST, GTK_ICON_SIZE_MENU);
-	else
-		gtk_image_set_from_stock(GTK_IMAGE(oFloatWin.lock_image),
-					 GTK_STOCK_GO_FORWARD, GTK_ICON_SIZE_MENU);
-}
-
-void AppCore::on_floatwin_lock_x_changed(const baseconfval* lock_x_val)
-{
-	int lock_x=static_cast<const confval<int> *>(lock_x_val)->val_;
-	if (conf->get_bool_at("floating_window/lock")) {
-		gint old_x, old_y;
-		gtk_window_get_position(GTK_WINDOW(oFloatWin.FloatWindow), &old_x, &old_y);
-		if (lock_x!=old_x)
-			gtk_window_move(GTK_WINDOW(oFloatWin.FloatWindow), lock_x, old_y);
-	}
-}
-
-void AppCore::on_floatwin_lock_y_changed(const baseconfval* lock_y_val)
-{
-	int lock_y=static_cast<const confval<int> *>(lock_y_val)->val_;
-
-	if (conf->get_bool_at("floating_window/lock")) {
-		gint old_x,old_y;
-		gtk_window_get_position(GTK_WINDOW(oFloatWin.FloatWindow), &old_x, &old_y);
-		if (lock_y!=old_y)
-			gtk_window_move(GTK_WINDOW(oFloatWin.FloatWindow), old_x, lock_y);
 	}
 }
 

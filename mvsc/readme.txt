@@ -5,11 +5,16 @@ glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zi
 
 Just extract them into "mvsc\gtk\" is OK.
 
-Then download libsigc++ (http://libsigc.sourceforge.net/) and compile it. Copy sigc-vc80-2_0.lib to "mvsc\libsigc++\sigc-2.0d.lib", and sigc-vc80-2_0.dll to "mvsc\libsigc++\".
+Download libsigc++ (http://libsigc.sourceforge.net/) and build it with MS Visual Studio 2005 (do Release and Debug builds). Copy 
+Release\sigc-vc80-2_0.lib to "mvsc\libsigc++\sigc-2_0.lib", 
+Release\sigc-vc80-2_0.dll to "mvsc\libsigc++\", 
+Debug\sigc-vc80-d-2_0.lib to "mvsc\libsigc++\sigc-d-2_0.lib", 
+Debug\sigc-vc80-d-2_0.dll to "mvsc\libsigc++\".
 libsigc++ have static link problem on vs2005 presently.
 
 For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
 For wordnet plugin files, they are the same.
+(8 May 2010. Compilation succeeds without the fix. It is not needed anymore?)
 
 For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSDK51.exe file. Install it into "C:\Program Files\Microsoft Speech SDK 5.1". Fix these compile errors in sphelper.h:
 =====
@@ -43,6 +48,6 @@ libintl.h redefines *printf functions to libintl_*printf functions.
 That may be the cause of the crash.
 printf outputs nothing with console attached. Use printf_s instead, or better g_print.
 
-There are two builds in vs2005: Debug and Release, you should choose Release version in most case.
+There are two builds in vs2005: Debug and Release, you should choose Release version if you plan to distribute the result, you should choose Debug version for debugging the project.
 
-You should can compile and run stardict successfully now.
+You should can compile and run stardict successfully now. You cannot start stardict.exe in place, since a special directory structure is needed.
