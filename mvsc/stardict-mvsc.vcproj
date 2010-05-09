@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-d-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-2.0d.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
