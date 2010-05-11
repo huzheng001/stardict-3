@@ -1,7 +1,7 @@
 noinst_PROGRAMS = t_config_file t_dict t_fuzzy t_query t_lookupdata \
 	t_convert_old_ini t_articleview t_xml t_res_database
 
-EXTRA_DIST = sample1.ifo sample1.idx sample1.dict t_dict_client.cpp
+EXTRA_DIST = sample1.ifo sample1.idx sample1.dict t_dict_client.cpp t_str.cpp
 
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_LIBFILE =

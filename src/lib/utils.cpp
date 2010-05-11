@@ -34,6 +34,7 @@
 #  include <gdk/gdkwin32.h>
 #endif
 
+#include "my_global.h"
 #include "utils.h"
 
 
@@ -418,4 +419,253 @@ void html_decode(const char *str, std::string& decoded)
 		} else {
 			decoded += *p++;
 		}
+}
+
+/* extract first pure english word (or a sequence of words separated by spaces)
+	src in utf-8,
+	dst must point to a buffer of size enough to hold the src string */
+void GetPureEnglishAlpha(char *dst, const char *src)
+{
+	while(*src && (uchar(*src) >= 128 || !isalpha(*src)))
+		src++;
+	while(*src && uchar(*src) < 128 && (isalpha(*src) || *src == ' '))
+		*dst++ = *src++;
+	*dst = '\0';
+}
+
+bool IsASCII(const char *str)
+{
+	// works with UTF-8 strings (bytes of a multi-byte character has the highest 
+	// bit set)
+	for(; *str; ++str)
+		if(uchar(*str) >= 128)
+			return false;
+	return true;
+}
+
+/* returns pointer to the first non-space unichar in the string */
+const char* skip_spaces(const char *str)
+{
+	while(*str && g_unichar_isspace(g_utf8_get_char(str)))
+		str = g_utf8_next_char(str);
+	return str;
+}
+
+/* copy src to dst converting adjacent unicode spaces into one ASCII space ' ' 
+	return value - new '\0' character */
+char* copy_normalize_spaces(char *dst, const char *src)
+{
+	while(*src) {
+		if (g_unichar_isspace(g_utf8_get_char(src))) {
+			*dst++=' ';
+			src = g_utf8_next_char(src);
+			while(g_unichar_isspace(g_utf8_get_char(src)))
+				src = g_utf8_next_char(src);
+		} else {
+			g_utf8_strncpy(dst,src,1);
+			src = g_utf8_next_char(src);
+			dst = g_utf8_next_char(dst);
+		}
+	}
+	*dst='\0';
+	return dst;
+}
+
+/* copy src to dst converting adjacent unicode spaces into one ASCII space ' ',
+	remove leading and trailing unicode spaces */
+void copy_normalize_trim_spaces(char *dst, const char *src)
+{
+	src = skip_spaces(src);
+	char* end = copy_normalize_spaces(dst, src);
+	delete_trailing_spaces_ASCII(dst, end);
+}
+
+/* delete trailing ASCII spaces. 
+begin - beginning of the string, end - '\0' character 
+return value - new '\0' character */
+char* delete_trailing_spaces_ASCII(const char *begin, char *end)
+{
+	while(begin < end && *(end - 1) == ' ')
+		--end;
+	*end = '\0';
+	return end;
+}
+
+/* delete the last word separated by ASCII space
+In other word we replace the last ASCII space with '\0'.
+begin - beginning of the string, end - '\0' character 
+return value - new '\0' character */
+char* delete_trailing_word_ASCII(const char *begin, char *end)
+{
+	while(begin < end && *(end-1) != ' ')
+		--end;
+	if(begin < end)
+		--end;
+	*end = '\0';
+	return end;
+}
+
+/* return value - new '\0' character */
+char* delete_trailing_char(char *begin, char *end)
+{
+	char* p = g_utf8_find_prev_char(begin, end);
+	if(p) {
+		*p = '\0';
+		return p;
+	} else {
+		*begin = '\0';
+		return begin;
+	}
+}
+
+/* like extract_word but does not copy the extracted word
+instead assignes begin and end to the first and next to last chars in the source string */
+void extract_word_in_place(const char **begin, const char **end, const char* src, 
+	int BeginPos, gboolean (*is_splitter)(gunichar c))
+{
+	g_assert(begin);
+	g_assert(end);
+	g_assert(BeginPos >= 0);
+	*begin = *end = NULL;
+	const char* const pointer = src + BeginPos;
+	const char *word_begin = NULL;
+	while(true) {
+		while(*src && is_splitter(g_utf8_get_char(src)))
+			src = g_utf8_next_char(src);
+		if(!*src)
+			break;
+		if(src <= pointer || !word_begin)
+			word_begin = src;
+		if(pointer <= src)
+			break;
+		while(*src && !is_splitter(g_utf8_get_char(src)))
+			src = g_utf8_next_char(src);
+		if(!*src)
+			break;
+	}
+	if(!word_begin)
+		return;
+	src = word_begin;
+	while(*src && !is_splitter(g_utf8_get_char(src))) {
+		src = g_utf8_next_char(src);
+	}
+	*begin = word_begin;
+	*end = src;
+}
+
+/* extract the word at position BeginPos
+word separator chars are identified by is_splitter function
+If BeginPos points to a splitter, get the word to the left of the point.
+If there is no word to the left, get the word to the right of the point.
+copy result into dst */
+void extract_word(char *dst, const char* src, int BeginPos, gboolean (*is_splitter)(gunichar c))
+{
+	g_assert(BeginPos >= 0);
+	const char *begin, *end;
+	extract_word_in_place(&begin, &end, src, BeginPos, is_splitter);
+	if(!begin || !end) {
+		*dst = '\0';
+		return;
+	}
+	const int num = end - begin;
+	strncpy(dst, begin, num);
+	dst[num] = '\0';
+}
+
+/* Extract a capitalized word
+	the word must look like Word 
+	where the first letter satisfies the is_first_letter function,
+	the first letter must be followed by at least one letter satisfing the is_second_letter function */
+void extract_capitalized_word_in_place(const char **begin, const char **end,
+	const char* src, int BeginPos, 
+	gboolean (*is_first_letter)(gunichar c), gboolean (*is_second_letter)(gunichar c))
+{
+	g_assert(begin);
+	g_assert(end);
+	g_assert(BeginPos >= 0);
+	*begin = *end = NULL;
+	const char* const pointer = src + BeginPos;
+	const char *word_begin = NULL;
+	while(true) {
+		while(*src && !is_first_letter(g_utf8_get_char(src)))
+			src = g_utf8_next_char(src);
+		if(!*src)
+			break;
+		const char *cur_word_begin = src;
+		src = g_utf8_next_char(src);
+		if(!is_second_letter(g_utf8_get_char(src)))
+			continue;
+		if(cur_word_begin <= pointer || !word_begin)
+			word_begin = cur_word_begin;
+		if(pointer <= cur_word_begin)
+			break;
+		while(*src && is_second_letter(g_utf8_get_char(src)))
+			src = g_utf8_next_char(src);
+		if(!*src)
+			break;
+	}
+	if(!word_begin)
+		return;
+	// skip the first letter
+	src = g_utf8_next_char(word_begin);
+	while(*src && is_second_letter(g_utf8_get_char(src))) {
+		src = g_utf8_next_char(src);
+	}
+	*begin = word_begin;
+	*end = src;
+}
+
+void extract_capitalized_word(char *dst, const char* src, int BeginPos, 
+	gboolean (*is_first_letter)(gunichar c), gboolean (*is_second_letter)(gunichar c))
+{
+	g_assert(BeginPos >= 0);
+	const char *begin, *end;
+	extract_capitalized_word_in_place(&begin, &end, src, BeginPos, is_first_letter, is_second_letter);
+	if(!begin || !end) {
+		*dst = '\0';
+		return;
+	}
+	const int num = end - begin;
+	strncpy(dst, begin, num);
+	dst[num] = '\0';
+}
+
+const char* find_first(const char* src, gboolean (*isfunc)(gunichar c))
+{
+	while(*src && !isfunc(g_utf8_get_char(src)))
+		src = g_utf8_next_char(src);
+	if(isfunc(g_utf8_get_char(src)))
+		return src;
+	else
+		return NULL;
+}
+
+const char* find_first_not(const char* src, gboolean (*isfunc)(gunichar c))
+{
+	while(*src && isfunc(g_utf8_get_char(src)))
+		src = g_utf8_next_char(src);
+	if(isfunc(g_utf8_get_char(src)))
+		return NULL;
+	else
+		return src;
+}
+
+gboolean is_space_or_punct(gunichar c)
+{
+	return g_unichar_isspace(c) || g_unichar_ispunct(c);
+}
+
+gboolean is_not_alpha(gunichar c)
+{
+	return !g_unichar_isalpha(c);
+}
+
+gboolean is_not_upper(gunichar c)
+{
+	return !g_unichar_isupper(c);
+}
+
+gboolean is_not_lower(gunichar c)
+{
+	return !g_unichar_islower(c);
 }

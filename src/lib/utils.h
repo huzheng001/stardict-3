@@ -107,5 +107,27 @@ extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
 
 void html_decode(const char *str, std::string& decoded);
+void GetPureEnglishAlpha(char *dst, const char *src); // not used
+bool IsASCII(const char *str);
+const char* skip_spaces(const char *str);
+char* copy_normalize_spaces(char *dst, const char *src);
+void copy_normalize_trim_spaces(char *dst, const char *src);
+char* delete_trailing_spaces_ASCII(const char *begin, char *end);
+char* delete_trailing_word_ASCII(const char *begin, char *end);
+char* delete_trailing_char(char *begin, char *end);
+void extract_word(char *dst, const char* src, int BeginPos, gboolean (*is_splitter)(gunichar c));
+void extract_word_in_place(const char **begin, const char **end, 
+	const char* src, int BeginPos, gboolean (*is_splitter)(gunichar c));
+void extract_capitalized_word(char *dst, const char* src, int BeginPos, 
+	gboolean (*is_first_letter)(gunichar c), gboolean (*is_second_letter)(gunichar c));
+void extract_capitalized_word_in_place(const char **begin, const char **end,
+	const char* src, int BeginPos, 
+	gboolean (*is_first_letter)(gunichar c), gboolean (*is_second_letter)(gunichar c));
+const char* find_first(const char* src, gboolean (*isfunc)(gunichar c));
+const char* find_first_not(const char* src, gboolean (*isfunc)(gunichar c));
+gboolean is_space_or_punct(gunichar c);
+gboolean is_not_alpha(gunichar c);
+gboolean is_not_upper(gunichar c);
+gboolean is_not_lower(gunichar c);
 
 #endif/*UTILS_H*/

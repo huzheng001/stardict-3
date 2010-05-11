@@ -101,27 +101,9 @@ void Clipboard::ClipboardReceived(gchar* sToken)
 	}
 	*a = '\0';
 
-	if (LastClipWord != sToken)     // not equal
+	if (LastClipWord != sToken)
 	{
 		LastClipWord = sToken;
-		if(bIsPureEnglish(sToken))
-		{
-			if ( gpAppFrame->SimpleLookupToFloat(sToken,false) )  //found
-				return;
-			a = GetPureEnglishAlpha(sToken);
-			if (*a) {
-				if (LastClipWord == a) {
-					gpAppFrame->ShowNotFoundToFloatWin(a, _("<Not Found!>"), false);
-					gpAppFrame->oTopWin.InsertHisList(a); //really need?
-				}
-				else
-					gpAppFrame->SimpleLookupToFloat(a,true);
-			}
-			// else the string is too strange, don't show any thing.
-		}
-		else
-		{
-			gpAppFrame->SimpleLookupToFloat(sToken,true);
-		}
+		gpAppFrame->SimpleLookupToFloat(sToken);
 	}
 }

@@ -83,20 +83,24 @@ HWND Mouseover::Create_hiddenwin()
 
 void Mouseover::ShowTranslation()
 {
+	char MatchedWord[MAX_SCAN_TEXT_SIZE];
+	/* GlobalData->CurMod is shared by multiple processes, copy data ASAP. */
+	strcpy(MatchedWord, GlobalData->CurMod.MatchedWord);
+	int BeginPos = GlobalData->CurMod.BeginPos;
 #ifdef DEBUG
 	{
 		const char * utf8_marker = (
-			g_utf8_validate(GlobalData->CurMod.MatchedWord, -1, NULL) ? "" : "!!!"
+			g_utf8_validate(MatchedWord, -1, NULL) ? "" : "!!!"
 		);
-		std::string buf(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos);
+		std::string buf(MatchedWord, BeginPos);
 		buf += "[";
-		const char *p = GlobalData->CurMod.MatchedWord + GlobalData->CurMod.BeginPos;
+		const char *p = MatchedWord + BeginPos;
 		const char *q = g_utf8_next_char(p);
 		buf.append(p, q-p);
 		buf += "]";
 		buf.append(q);
 		g_debug("ShowTranslation: %s (%d) %s", utf8_marker,
-			GlobalData->CurMod.BeginPos, buf.c_str());
+			BeginPos, buf.c_str());
 	}
 #endif
 	if (!conf->get_bool_at("dictionary/scan_selection")) // Needed by acrobat plugin.
@@ -106,23 +110,23 @@ void Mouseover::ShowTranslation()
 		if (!do_scan)
 			return;
 	}
-	if (g_utf8_validate(GlobalData->CurMod.MatchedWord, -1, NULL)) {
-		gpAppFrame->SmartLookupToFloat(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos, true);
+	if (g_utf8_validate(MatchedWord, -1, NULL)) {
+		gpAppFrame->SmartLookupToFloat(MatchedWord, BeginPos, true);
 	} else {
 		g_warning("ShowTranslation: incorrect encoding of the word!");
-		char *str1 = g_locale_to_utf8(GlobalData->CurMod.MatchedWord, GlobalData->CurMod.BeginPos, NULL, NULL, NULL);
+		char *str1 = g_locale_to_utf8(MatchedWord, BeginPos, NULL, NULL, NULL);
 		if (!str1)
 			return;
-		char *str2 = g_locale_to_utf8(GlobalData->CurMod.MatchedWord + GlobalData->CurMod.BeginPos, -1, NULL, NULL, NULL);
+		char *str2 = g_locale_to_utf8(MatchedWord + BeginPos, -1, NULL, NULL, NULL);
 		if (!str2) {
 			g_free(str1);
 			return;
 		}
-		GlobalData->CurMod.BeginPos = strlen(str1);
+		BeginPos = strlen(str1);
 		char *str = g_strdup_printf("%s%s", str1, str2);
 		g_free(str1);
 		g_free(str2);
-		gpAppFrame->SmartLookupToFloat(str, GlobalData->CurMod.BeginPos, true);
+		gpAppFrame->SmartLookupToFloat(str, BeginPos, true);
 		g_free(str);
 	}
 }
