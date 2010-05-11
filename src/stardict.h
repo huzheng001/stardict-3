@@ -122,7 +122,8 @@ public:
 	void BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
 	void BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
 	static void FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData);
-	bool SimpleLookupToFloat(const gchar* sWord, bool bShowIfNotFound);
+	void SimpleLookupToFloat(const char* sToken);
+	bool SimpleLookupToFloatLocal(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
 	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
 #endif

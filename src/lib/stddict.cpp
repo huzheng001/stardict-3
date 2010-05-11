@@ -134,20 +134,6 @@ static inline bool bIsVowel(gchar inputchar)
   return( ch=='A' || ch=='E' || ch=='I' || ch=='O' || ch=='U' );
 }
 
-
-bool bIsPureEnglish(const gchar *str)
-{
-  // works with UTF-8 strings (bytes of a multi-byte character has the highest 
-  // bit set)
-  for (int i=0; str[i]!=0; i++)
-    //if(str[i]<0)
-    //if(str[i]<32 || str[i]>126) // tab equal 9,so this is not OK.
-    // Better use isascii() but not str[i]<0 while char is default unsigned in arm
-    if (!isascii(str[i]))
-            return false;
-  return true;
-}
-
 class offset_index : public index_file {
 public:
 	offset_index();
@@ -2696,7 +2682,7 @@ bool Libs::LookupSimilarWord(const gchar* sWord, glong & iWordIndex, glong &idx_
 		}
 	}
 
-	if (bIsPureEnglish(sWord)) {
+	if (IsASCII(sWord)) {
 		// If not Found, try other status of sWord.
 		size_t iWordLen=strlen(sWord);
 		bool isupcase;

@@ -740,36 +740,30 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	return return_val;
 }
 
-bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
+void AppCore::SimpleLookupToFloat(const char* sWord)
+{
+	SimpleLookupToFloatLocal(sWord, true);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, sWord);
+		if (!oStarDictClient.try_cache(c)) {
+			waiting_floatwin_lookupcmd_seq = c->seq;
+			oStarDictClient.send_commands(1, c);
+		}
+	}
+	LookupNetDict(sWord, false);
+}
+
+bool AppCore::SimpleLookupToFloatLocal(const char* sWord, bool bShowIfNotFound)
 {
 	if (sWord==NULL || sWord[0]=='\0')
 		return true;
 	char *SearchWord = (char *)g_malloc(strlen(sWord)+1);
-	const char *P1;
-	char *P2, *EndPointer;
-	P1=sWord;
-	P2=SearchWord;
-	// delete chinese space at the begining
-	while (*P1 && g_unichar_isspace(g_utf8_get_char(P1)))
-		P1 = g_utf8_next_char(P1);
-	//format word, delete any spilth blanks.
-	while(*P1) {
-		if (g_unichar_isspace(g_utf8_get_char(P1))) {
-			*P2++=' ';
-			P1 = g_utf8_next_char(P1);
-			while(g_unichar_isspace(g_utf8_get_char(P1)))
-				P1 = g_utf8_next_char(P1);
-		} else {
-			g_utf8_strncpy(P2,P1,1);
-			P1 = g_utf8_next_char(P1);
-			P2 = g_utf8_next_char(P2);
-		}
-	}
-	*P2='\0';
+	copy_normalize_trim_spaces(SearchWord, sWord);
 	if (SearchWord[0]=='\0') {
 		strcpy(SearchWord, sWord);
 	}
-	EndPointer=SearchWord+strlen(SearchWord);
+	char *EndPointer = SearchWord+strlen(SearchWord);
 
 	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * scan_dictmask.size());
 	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * scan_dictmask.size());
@@ -777,9 +771,7 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 
 	//find the word use most biggest length
 	while (EndPointer>SearchWord) {
-		// delete end spaces
-		while (EndPointer>SearchWord && *EndPointer==' ')
-			*EndPointer--='\0';
+		EndPointer = delete_trailing_spaces_ASCII(SearchWord, EndPointer);
 
 		bool bFound = false;
 		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
@@ -794,18 +786,10 @@ bool AppCore::SimpleLookupToFloat(const char* sWord, bool bShowIfNotFound)
 			g_free(SearchWord);
 			return true;
 		}
-		// delete last word
-		if (bIsPureEnglish(SearchWord)) {
-			while (EndPointer>=SearchWord && *EndPointer!=' ')
-				EndPointer--;
-			if (EndPointer>=SearchWord)
-				*EndPointer='\0';
-		}	else {// delete one character per time
-			EndPointer = g_utf8_find_prev_char(SearchWord,EndPointer);
-			if (EndPointer)
-				*EndPointer='\0';
-			else
-				EndPointer = SearchWord-1; // so < SearchWord
+		if (IsASCII(SearchWord)) {
+			EndPointer = delete_trailing_word_ASCII(SearchWord, EndPointer);
+		} else {
+			EndPointer = delete_trailing_char(SearchWord, EndPointer);
 		}
 	}
 	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
@@ -839,130 +823,96 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 {
 	if (sWord==NULL || sWord[0]=='\0')
 		return false;
-	char *SearchWord = g_strdup(sWord);
-	char *P1 = SearchWord + BeginPos;
-	// cut first word
-	P1 = g_utf8_next_char(P1);
-	while (*P1 && !g_unichar_isspace(g_utf8_get_char(P1)))
-		P1 = g_utf8_next_char(P1);
-	*P1='\0';
-	P1 = SearchWord + BeginPos;
-	if (BeginPos) {
-		if (g_unichar_isspace(g_utf8_get_char(P1)))
-			P1 = g_utf8_prev_char(P1);
-		while (P1>SearchWord && !g_unichar_isspace(g_utf8_get_char(g_utf8_prev_char(P1))))
-			P1 = g_utf8_prev_char(P1);
-	}
+	char *SearchWord = (char *)g_malloc(strlen(sWord)+1);
+	std::string TriedSearchWord;
 
 	gchar ***pppWord = (gchar ***)g_malloc(sizeof(gchar **) * scan_dictmask.size());
 	gchar ****ppppWordData = (gchar ****)g_malloc(sizeof(gchar ***) * scan_dictmask.size());
 	CurrentIndex *iIndex = (CurrentIndex *)g_malloc(sizeof(CurrentIndex) * scan_dictmask.size());
 
-	int SearchTimes = 2;
-	while (SearchTimes) {
+	int try_cnt = 0;
+	while(true) {
+		bool skip_try = false;
+		switch(try_cnt)
+		{
+			case 0:
+				extract_word(SearchWord, sWord, BeginPos, is_space_or_punct);
+				TriedSearchWord = SearchWord;
+				++try_cnt;
+				break;
+			case 1:
+				extract_word(SearchWord, sWord, BeginPos, is_not_alpha);
+				if(SearchWord[0])
+					TriedSearchWord = SearchWord;
+				++try_cnt;
+				break;
+			case 2:
+				{
+					gunichar c = g_utf8_get_char(sWord + BeginPos);
+					if(g_unichar_islower(c))
+						extract_word(SearchWord, sWord, BeginPos, is_not_lower);
+					else if(g_unichar_isupper(c))
+						extract_word(SearchWord, sWord, BeginPos, is_not_upper);
+					else
+						skip_try = true;
+					if(SearchWord[0])
+						TriedSearchWord = SearchWord;
+					++try_cnt;
+					break;
+				}
+			case 3:
+				extract_capitalized_word(SearchWord, sWord, BeginPos,
+					g_unichar_isupper, g_unichar_islower);
+				if(SearchWord[0])
+					TriedSearchWord = SearchWord;
+				++try_cnt;
+				break;
+			case 4:
+				strcpy(SearchWord, TriedSearchWord.c_str());
+				++try_cnt;
+				skip_try = true;
+			case 5:
+				{ // cut last char
+					char *end = SearchWord + strlen(SearchWord);
+					end = g_utf8_prev_char(end);
+					*end = '\0';
+					if(!SearchWord[0]) {
+						++try_cnt;
+						skip_try = true;
+					}
+					break;
+				}
+			default:
+				goto loop_end;
+		}
+		if(!SearchWord[0] || skip_try)
+			continue;
+		
 		bool bFound = false;
 		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
-			BuildResultData(scan_dictmask, P1, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+			BuildResultData(scan_dictmask, SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
-			BuildVirtualDictData(scan_dictmask, P1, iLib, pppWord, ppppWordData, bFound);
+			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
+		
 		if (bFound) {
-			oFloatWin.ShowTextLocal(pppWord, ppppWordData, P1);
-			oTopWin.InsertHisList(P1);
+			oFloatWin.ShowTextLocal(pppWord, ppppWordData, SearchWord);
+			oTopWin.InsertHisList(SearchWord);
 			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
 			g_free(SearchWord);
 			return true;
 		}
-		SearchTimes--;
-		if (!SearchTimes)
-			break;
-		if (bIsPureEnglish(P1)) {
-			char *P2 = SearchWord + BeginPos;
-			if (g_ascii_isupper(*P2)) {
-				char *P3 = SearchWord + BeginPos;
-				P2++;
-				if (*P2) {
-					if (g_ascii_isupper(*P2)) {
-						P2++;
-						while (*P1 && g_ascii_isupper(*P2))
-							P2++;
-						while (P3>SearchWord && g_ascii_isupper(*(P3-1)))
-							P3--;
-					} else if (g_ascii_islower(*P2)){
-						P2++;
-						while (*P2 && g_ascii_islower(*P2))
-							P2++;
-					}
-					if (*P2) {
-						*P2='\0';
-					} else {
-						if (P3==P1)
-							break;
-					}
-					P1=P3;
-				} else {
-					while (P3>SearchWord && g_ascii_isupper(*(P3-1)))
-						P3--;
-					if (P3==P1)
-						break;
-					P1=P3;
-				}
-			} else if (g_ascii_islower(*P2)) {
-				char *P3 = SearchWord + BeginPos;
-				while (P3>SearchWord && g_ascii_islower(*(P3-1)))
-					P3--;
-				if (P3>SearchWord && g_ascii_isupper(*(P3-1)))
-					P3--;
-				P2++;
-				while (*P2 && g_ascii_islower(*P2))
-					P2++;
-				if (*P2) {
-					*P2='\0';
-				} else {
-					if (P3==P1)
-						break;
-				}
-				P1=P3;
-			} else if (*P2 == '-') {
-				*P2=' ';
-				SearchTimes = 2;
-			} else {
-				char *P3 = SearchWord + BeginPos;
-				while (P3>SearchWord && g_ascii_isalpha(*(P3-1)))
-					P3--;
-				if (P3!=P2) {
-					*P2='\0';
-					P1=P3;
-				}
-				else
-					break;
-			}
-		} else {
-			if (P1==SearchWord + BeginPos) {
-				char *EndPointer=P1+strlen(P1);
-				EndPointer = g_utf8_prev_char(EndPointer);
-				if (EndPointer!=P1) {
-					*EndPointer='\0';
-					SearchTimes = 2;
-				}
-				else {
-					break;
-				}
-			} else {
-				P1 = SearchWord + BeginPos;
-				SearchTimes = 2;
-			}
-		}
 	}
+loop_end:
 	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 	g_free(iIndex);
+	g_free(SearchWord);
 
 	// not found
 	if (bShowIfNotFound) {
-		ShowNotFoundToFloatWin(P1,_("<Not Found!>"), false);
-		oTopWin.InsertHisList(P1); //really need?
+		ShowNotFoundToFloatWin(TriedSearchWord.c_str(), _("<Not Found!>"), false);
+		oTopWin.InsertHisList(TriedSearchWord.c_str()); //really need?
 	}
-	g_free(SearchWord);
 	return false;
 }
 #endif

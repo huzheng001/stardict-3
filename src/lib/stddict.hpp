@@ -41,7 +41,6 @@ enum CollationLevelType {
 	CollationLevel_MULTI = 2,
 };
 
-extern bool bIsPureEnglish(const gchar *str);
 extern gint stardict_server_collate(const gchar *str1, const gchar *str2, CollationLevelType CollationLevel, CollateFunctions func, int servercollatefunc);
 
 

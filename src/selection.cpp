@@ -181,35 +181,8 @@ void Selection::SelectionReceived(gchar* sToken)
 	}
 	*a = '\0';
 
-	if (LastClipWord != sToken) {	// not equal
+	if (LastClipWord != sToken) {
 		LastClipWord = sToken;
-		if(bIsPureEnglish(sToken))
-		{
-			if ( gpAppFrame->SimpleLookupToFloat(sToken,false) ) {
-				//found
-			} else {
-				a = GetPureEnglishAlpha(sToken);
-				if (*a) {
-					if (LastClipWord == a) {
-						gpAppFrame->ShowNotFoundToFloatWin(a, _("<Not Found!>"), false);
-						gpAppFrame->oTopWin.InsertHisList(a); //really need?
-					} else {
-						gpAppFrame->SimpleLookupToFloat(a,true);
-					}
-				}
-				// else the string is too strange, don't show any thing.
-			}
-		} else {
-			gpAppFrame->SimpleLookupToFloat(sToken,true);
-		}
-		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
-		if (enable_netdict) {
-			STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, LastClipWord.c_str());
-			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
-				gpAppFrame->waiting_floatwin_lookupcmd_seq = c->seq;
-				gpAppFrame->oStarDictClient.send_commands(1, c);
-			}
-		}
-		gpAppFrame->LookupNetDict(LastClipWord.c_str(), false);
+		gpAppFrame->SimpleLookupToFloat(sToken);
 	}
 }

@@ -2942,7 +2942,7 @@ void BottomWin::set_news(const char *news, const char *links)
 {
 	if (news) {
 		news_text = news;
-		if (bIsPureEnglish(news))
+		if (IsASCII(news))
 			news_move_len = 30;
 		else
 			news_move_len = 20;
