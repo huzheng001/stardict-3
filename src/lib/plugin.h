@@ -32,7 +32,7 @@ struct StarDictPluginSystemService {
 	encode_uri_string_func_t encode_uri_string;
 	typedef void (*netdict_save_cache_resp_func_t)(const char *dict, const char *key, NetDictResponse *resp);
 	netdict_save_cache_resp_func_t netdict_save_cache_resp;
-	typedef void (*show_netdict_resp_func_t)(NetDictResponse *resp, bool ismainwin);
+	typedef void (*show_netdict_resp_func_t)(const char *dict, NetDictResponse *resp, bool ismainwin);
 	show_netdict_resp_func_t show_netdict_resp;
 	typedef void (*lookup_dict_func_t)(size_t dictid, const char *word, char ****Word, char *****WordData);
 	lookup_dict_func_t lookup_dict;

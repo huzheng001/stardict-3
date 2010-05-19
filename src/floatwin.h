@@ -7,40 +7,40 @@
 #include "readword.h"
 
 const int FLOAT_TIMEOUT=300;		        // interval used by floating window.
+/* If lookup results do not come promptly, we show a message that the request is being processed.
+This variable specifies a timeout for that message. */
+const int LOOKUP_RUNNING_TIMEOUT=2000;
 const int DISAPPEAR_DISTANCE=400; // it is the square of the distance.
 const int FLOATWIN_BORDER_WIDTH=4;
 const int FLOATWIN_OFFSET_X=8;
 const int FLOATWIN_OFFSET_Y=8; //when the window is too right,the x will change,so make offset_y not equal to 0 will make button box not show all the same.
-
-enum FloatWinQueryResult
-{
-	FLOAT_WIN_FOUND,
-	FLOAT_WIN_FUZZY_FOUND,
-	FLOAT_WIN_NOT_FOUND,
-	FLOAT_WIN_FUZZY_NOT_FOUND,
-	FLOAT_WIN_NET_FOUND,
-	FLOAT_WIN_NET_NOT_FOUND,
-};
 
 class FloatWin {
 public:
 	FloatWin();
 	void Create();
 	void End();
-	void ShowTextLocal(gchar ***pppWord, gchar **** ppppWordData, const gchar * sOriginWord);
-	void ShowTextFuzzy(gchar ****ppppWord, gchar ***** pppppWordData, const gchar ** ppOriginWord, gint count, const gchar * sOriginWord);
-	void ShowTextStarDictNet(const struct STARDICT::LookupResponse::DictResponse *dict_response);
-	void ShowTextNetDict(NetDictResponse *resp);
-	void ShowNotFound(const char* sWord, const char* sReason, gboolean fuzzy);
+	void StartLookup(const char* sWord);
+	void EndLookup(void);
+	void AppendTextLocalDict(gchar ***pppWord, gchar **** ppppWordData, const gchar * sOriginWord);
+	void AppendTextFuzzy(gchar ****ppppWord, gchar ***** pppppWordData, const gchar ** ppOriginWord, gint count, const gchar * sOriginWord);
+	void AppendTextStarDictNet(const struct STARDICT::LookupResponse::DictResponse *dict_response);
+	void AppendTextNetDict(NetDictResponse *resp);
 	void ShowPangoTips(const char *word, const char *text);
 	void Show();
 	void Hide();
 	const std::string& getQueryingWord(void) const { return QueryingWord; }
-	GtkWidget *getFloatWindow(void) const { return FloatWindow; }
 private:
+	enum ContentState {
+		ContentState_Empty,
+		ContentState_Waiting,
+		ContentState_Found,
+		ContentState_NotFound
+	};
 	gint press_x_root,press_y_root,press_window_x,press_window_y;
 	gint popup_pointer_x, popup_pointer_y;
-	gint timeout;
+	gint hide_window_timer;
+	gint lookup_running_timer;
 	gint now_window_width,now_window_height;
 	gboolean button_box_once_shown;
 	gboolean ismoving;
@@ -52,7 +52,13 @@ private:
 	std::string QueryingWord;
 	std::string PronounceWord;
 	ReadWordType readwordtype;
-	FloatWinQueryResult found_result;
+	ContentState content_state;
+	/* have content besides messages "Not found" and "Looking up" */
+	bool have_real_content;
+	/* The Float window has been shown and positioned properly.
+	We need this flag to avoid repositioning the window multiple times 
+	when responses from different sources arrive. */
+	bool window_positioned;
 	std::auto_ptr<ArticleView> view;
 	
 	static void on_query_click(GtkWidget *widget, FloatWin *oFloatWin);
@@ -64,7 +70,8 @@ private:
 	static void on_quit_click(GtkWidget *widget, FloatWin *oFloatWin);
 #endif
 	static void vLockCallback(GtkWidget *widget, FloatWin *oFloatWin);
-	static gint vTimeOutCallback(gpointer data);
+	static gint vHideWindowTimeOutCallback(gpointer data);
+	static gint vLookupRunningTimeOutCallback(gpointer data);
 	static gboolean vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, FloatWin *oFloatWin);
 	static gboolean vLeaveNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, FloatWin *oFloatWin);
 	static gboolean vButtonPressCallback (GtkWidget * widget, GdkEventButton * event , FloatWin *oFloatWin);
@@ -101,7 +108,14 @@ private:
 	static const gchar* get_lock_image_stock_id(void);
 	void restore_locked_position(void);
 	static std::string get_not_found_markup(const gchar* sWord, const gchar* sReason);
+	static std::string get_looking_up_markup(const gchar* sWord);
 	static std::string get_head_word_markup(const gchar* sWord);
+	void set_busy_cursor(void);
+	void set_normal_cursor(void);
+	void start_hide_window_timer(void);
+	void destroy_hide_window_timer(void);
+	void start_lookup_running_timer(void);
+	void destroy_lookup_running_timer(void);
 };
 
 #endif

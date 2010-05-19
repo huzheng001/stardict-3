@@ -32,6 +32,7 @@ libstardict_a_SOURCES = \
 	dictmask.h	\
 	xml_str.cpp xml_str.h	\
 	utils.cpp utils.h	\
+	compositelookup.cpp compositelookup.h \
 	stardict_libconfig.h
 
 if USE_SYSTEM_SIGCPP

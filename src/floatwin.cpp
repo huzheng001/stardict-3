@@ -38,12 +38,16 @@
 
 FloatWin::FloatWin()
 {
-	timeout = 0;
+	hide_window_timer = 0;
+	lookup_running_timer = 0;
 	now_window_width = 0;
 	now_window_height = 0;
 	button_box_once_shown = false;
 	ismoving = false;
 	menu = NULL;
+	content_state = ContentState_Empty;
+	have_real_content = false;
+	window_positioned = false;
 }
 
 void FloatWin::Create()
@@ -105,25 +109,53 @@ void FloatWin::End()
 		conf->set_int_at("floating_window/lock_y", y);
 	}
 
-	if (timeout)
-		g_source_remove(timeout);
-	timeout = 0;
+	destroy_hide_window_timer();
 	if (menu)
 		gtk_widget_destroy(menu);
 	menu = NULL;
 	if (FloatWindow)
 		gtk_widget_destroy(FloatWindow);
 	FloatWindow = NULL;
+	content_state = ContentState_Empty;
+	have_real_content = false;
 }
 
-void FloatWin::ShowTextLocal(gchar ***Word, gchar ****WordData, const gchar *sOriginWord)
+void FloatWin::StartLookup(const char* sWord)
 {
-	QueryingWord = sOriginWord;
-	found_result = FLOAT_WIN_FOUND;
+	QueryingWord = sWord;
+	content_state = ContentState_Waiting;
+	/* Set the text telling that lookup is running, but do not show the window. 
+	The window will be shown when a response arrives or when LOOKUP_RUNNING_TIMEOUT
+	elapses. */
+	const std::string markup = get_looking_up_markup(QueryingWord.c_str());
+	view->set_pango_text(markup.c_str());
+	set_busy_cursor();
+	have_real_content = false;
+	window_positioned = false;
+	start_lookup_running_timer();
+}
 
+void FloatWin::EndLookup(void)
+{
+	content_state = have_real_content ? ContentState_Found : ContentState_NotFound;
+	if(!have_real_content) {
+		const std::string markup = get_not_found_markup(QueryingWord.c_str(), _("<Not Found!>"));
+		view->set_pango_text(markup.c_str());
+		if (conf->get_bool_at("floating_window/show_if_not_found")) {
+			Popup(!window_positioned);
+			window_positioned = true;
+		}
+	}
+	set_normal_cursor();
+	destroy_lookup_running_timer();
+}
+
+void FloatWin::AppendTextLocalDict(gchar ***Word, gchar ****WordData, const gchar *sOriginWord)
+{
 	view->begin_update();
-	view->clear();
-	std::string mark = get_head_word_markup(sOriginWord);
+	if(!have_real_content)
+		view->clear();
+	const std::string mark = get_head_word_markup(sOriginWord);
 	view->append_pango_text(mark.c_str());
 	int j,k;
 	for (size_t i=0; i<gpAppFrame->scan_dictmask.size(); i++) {
@@ -160,6 +192,8 @@ void FloatWin::ShowTextLocal(gchar ***Word, gchar ****WordData, const gchar *sOr
 		}
 	}
 	view->end_update();
+	have_real_content = true;
+	destroy_lookup_running_timer();
 
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sOriginWord);
@@ -184,50 +218,34 @@ void FloatWin::ShowTextLocal(gchar ***Word, gchar ****WordData, const gchar *sOr
 	}
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
-	Popup(true);
+	Popup(!window_positioned);
+	window_positioned = true;
 	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
-void FloatWin::ShowTextNetDict(NetDictResponse *resp)
+void FloatWin::AppendTextNetDict(NetDictResponse *resp)
 {
+	if(!resp->data)
+		return;
+
 	view->begin_update();
-	bool do_append;
-	if (found_result == FLOAT_WIN_FOUND || found_result == FLOAT_WIN_NET_FOUND) {
-		do_append = true;
-		view->goto_end();
-	} else {
-		do_append = false;
+	if(!have_real_content)
 		view->clear();
-		view->goto_begin();
+	if (!have_real_content) {
+		std::string mark = get_head_word_markup(resp->word);
+		view->append_pango_text(mark.c_str());
 	}
-	if (resp->data) {
-		found_result = FLOAT_WIN_NET_FOUND;
-		if (!do_append) {
-			std::string mark = get_head_word_markup(resp->word);
-			view->append_pango_text(mark.c_str());
-		}
-		InstantDictIndex dict_index;
-		dict_index.type = InstantDictType_UNKNOWN;
-		view->SetDictIndex(dict_index);
-		view->AppendNewline();
-		view->AppendHeader(resp->bookname);
-		view->AppendWord(resp->word);
-		view->AppendData(resp->data, resp->word, resp->word);
-	} else {
-		if (do_append) {
-			view->end_update();
-			return;
-		}
-		found_result = FLOAT_WIN_NET_NOT_FOUND;
-		if (!conf->get_bool_at("floating_window/show_if_not_found")) {
-			view->end_update();
-			return;
-		}
-		const std::string markup = get_not_found_markup(resp->word, _("<Not Found!>"));
-		view->set_pango_text(markup.c_str());
-	}
+	InstantDictIndex dict_index;
+	dict_index.type = InstantDictType_UNKNOWN;
+	view->SetDictIndex(dict_index);
+	view->AppendNewline();
+	view->AppendHeader(resp->bookname);
+	view->AppendWord(resp->word);
+	view->AppendData(resp->data, resp->word, resp->word);
 	view->end_update();
+	have_real_content = true;
+	destroy_lookup_running_timer();
 
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(resp->word);
@@ -239,67 +257,51 @@ void FloatWin::ShowTextNetDict(NetDictResponse *resp)
 	}
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
-	Popup(true);
+	Popup(!window_positioned);
+	window_positioned = true;
 	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
-void FloatWin::ShowTextStarDictNet(const struct STARDICT::LookupResponse::DictResponse *dict_response)
+void FloatWin::AppendTextStarDictNet(const struct STARDICT::LookupResponse::DictResponse *dict_response)
 {
+	if(dict_response->dict_result_list.empty())
+		return;
+
 	view->begin_update();
-	bool do_append;
-	if (found_result == FLOAT_WIN_FOUND || found_result == FLOAT_WIN_NET_FOUND) {
-		do_append = true;
-		view->goto_end();
-	} else {
-		do_append = false;
+	if(!have_real_content)
 		view->clear();
-		view->goto_begin();
+	if (!have_real_content) {
+		std::string mark = get_head_word_markup(dict_response->oword);
+		view->append_pango_text(mark.c_str());
 	}
-	if (dict_response->dict_result_list.empty()) {
-		if (do_append) {
-			view->end_update();
-			return;
-		}
-		found_result = FLOAT_WIN_NET_NOT_FOUND;
-		if (!conf->get_bool_at("floating_window/show_if_not_found")) {
-			view->end_update();
-			return;
-		}
-		const std::string markup = get_not_found_markup(dict_response->oword, _("<Not Found!>"));
-		view->set_pango_text(markup.c_str());
-	} else {
-		found_result = FLOAT_WIN_NET_FOUND;
-		if (!do_append) {
-			std::string mark = get_head_word_markup(dict_response->oword);
-			view->append_pango_text(mark.c_str());
-		}
-		InstantDictIndex dict_index;
-		dict_index.type = InstantDictType_UNKNOWN;
-		view->SetDictIndex(dict_index);
-		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-			view->AppendNewline();
-			view->AppendHeader((*i)->bookname);
-			for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
-				if (j == (*i)->word_result_list.begin()) {
-					if (strcmp((*j)->word, dict_response->oword)) {
-						view->AppendWord((*j)->word);
-					}
-				} else {
-					view->AppendNewline();
+	InstantDictIndex dict_index;
+	dict_index.type = InstantDictType_UNKNOWN;
+	view->SetDictIndex(dict_index);
+	for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
+		view->AppendNewline();
+		view->AppendHeader((*i)->bookname);
+		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult::WordResult *>::iterator j = (*i)->word_result_list.begin(); j != (*i)->word_result_list.end(); ++j) {
+			if (j == (*i)->word_result_list.begin()) {
+				if (strcmp((*j)->word, dict_response->oword)) {
 					view->AppendWord((*j)->word);
 				}
-				std::list<char *>::iterator k = (*j)->datalist.begin();
+			} else {
+				view->AppendNewline();
+				view->AppendWord((*j)->word);
+			}
+			std::list<char *>::iterator k = (*j)->datalist.begin();
+			view->AppendData(*k, (*j)->word, dict_response->oword);
+			for (++k; k != (*j)->datalist.end(); ++k) {
+				view->AppendNewline();
+				view->AppendDataSeparate();
 				view->AppendData(*k, (*j)->word, dict_response->oword);
-				for (++k; k != (*j)->datalist.end(); ++k) {
-					view->AppendNewline();
-					view->AppendDataSeparate();
-					view->AppendData(*k, (*j)->word, dict_response->oword);
-				}
 			}
 		}
 	}
 	view->end_update();
+	have_real_content = true;
+	destroy_lookup_running_timer();
 
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(dict_response->oword);
@@ -325,19 +327,17 @@ void FloatWin::ShowTextStarDictNet(const struct STARDICT::LookupResponse::DictRe
 	}
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
-	Popup(true);
+	Popup(!window_positioned);
+	window_positioned = true;
 	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
 		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
 }
 
-void FloatWin::ShowTextFuzzy(gchar ****ppppWord, gchar *****pppppWordData, const gchar ** ppOriginWord, gint count, const gchar *sOriginWord)
+void FloatWin::AppendTextFuzzy(gchar ****ppppWord, gchar *****pppppWordData, const gchar ** ppOriginWord, gint count, const gchar *sOriginWord)
 {
-	QueryingWord = sOriginWord;
-	found_result = FLOAT_WIN_FUZZY_FOUND;
-
 	view->begin_update();
-	view->clear();
-	view->goto_begin();
+	if(!have_real_content)
+		view->clear();
 
 	std::string mark;
 	gchar *m_str;
@@ -411,6 +411,8 @@ void FloatWin::ShowTextFuzzy(gchar ****ppppWord, gchar *****pppppWordData, const
 		}
 	}
 	view->end_update();
+	have_real_content = true;
+	destroy_lookup_running_timer();
 
 	readwordtype = gpAppFrame->oReadWord.canRead(sOriginWord);
 	if (readwordtype != READWORD_CANNOT)
@@ -418,7 +420,8 @@ void FloatWin::ShowTextFuzzy(gchar ****ppppWord, gchar *****pppppWordData, const
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
  
-	Popup(false);
+	Popup(!window_positioned);
+	window_positioned = true;
 	/*bool pronounce_when_popup=
 		conf->get_bool_at("floating_window/pronounce_when_popup");
 
@@ -426,56 +429,12 @@ void FloatWin::ShowTextFuzzy(gchar ****ppppWord, gchar *****pppppWordData, const
 		gpAppFrame->oReadWord.read(PronounceWord.c_str());*/
 }
 
-void FloatWin::ShowNotFound(const char* sWord, const char* sReason, gboolean fuzzy)
-{
-	QueryingWord = sWord;
-	if (fuzzy)
-		found_result = FLOAT_WIN_FUZZY_NOT_FOUND;
-	else
-		found_result = FLOAT_WIN_NOT_FOUND;
-
-	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
-	if (enable_netdict)
-		return;
-	bool have_netdict = false;
-	for (size_t iLib=0; iLib< gpAppFrame->scan_dictmask.size(); iLib++) {
-		if (gpAppFrame->scan_dictmask[iLib].type == InstantDictType_NET) {
-			have_netdict = true;
-			break;
-		}
-	}
-	if (have_netdict)
-		return;
-	if (!conf->get_bool_at("floating_window/show_if_not_found"))
-		return;
-
-	const std::string markup = get_not_found_markup(sWord, sReason);
-	view->set_pango_text(markup.c_str());
-	
-	gboolean pronounced = false;
-	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
-	if (readwordtype != READWORD_CANNOT) {
-		if (PronounceWord == sWord)
-			pronounced = true;
-		else
-			PronounceWord = sWord;
-	}
-	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
-
-	if (fuzzy)
-		Popup(false);
-	else
-		Popup(true);
-
-	if ((readwordtype != READWORD_CANNOT) && (!pronounced) && conf->get_bool_at("floating_window/pronounce_when_popup"))
-		gpAppFrame->oReadWord.read(PronounceWord.c_str(), readwordtype);
-}
-
 void FloatWin::ShowPangoTips(const char *sWord, const char *text)
 {
 	QueryingWord = sWord;
-	found_result = FLOAT_WIN_FOUND;
 	view->set_pango_text(text);
+	have_real_content = true;
+	destroy_lookup_running_timer();
 
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
@@ -488,6 +447,7 @@ void FloatWin::ShowPangoTips(const char *sWord, const char *text)
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 
 	Popup(true);
+	window_positioned = true;
 }
 
 void FloatWin::Show()
@@ -496,17 +456,14 @@ void FloatWin::Show()
 #ifdef _WIN32
 	gtk_window_present(GTK_WINDOW(FloatWindow));
 #endif
-	if (!timeout)
-		timeout = g_timeout_add(FLOAT_TIMEOUT,vTimeOutCallback,this);
+	start_hide_window_timer();
 }
 
 void FloatWin::Hide()
 {
-	if (timeout) {
-		g_source_remove(timeout);
-		timeout = 0;
-	}
+	destroy_hide_window_timer();
 	button_box_once_shown = false;
+	window_positioned = false;
 	PronounceWord.clear();
 	gtk_widget_hide(FloatWindow);
 }
@@ -575,7 +532,7 @@ void FloatWin::vLockCallback(GtkWidget *widget, FloatWin *oFloatWin)
 		!conf->get_bool_at("floating_window/lock"));
 }
 
-gint FloatWin::vTimeOutCallback(gpointer data)
+gint FloatWin::vHideWindowTimeOutCallback(gpointer data)
 {
 	FloatWin *oFloatWin = static_cast<FloatWin *>(data);
 	bool lock=
@@ -611,6 +568,18 @@ gint FloatWin::vTimeOutCallback(gpointer data)
 	return true;
 }
 
+gint FloatWin::vLookupRunningTimeOutCallback(gpointer data)
+{
+	FloatWin *oFloatWin = static_cast<FloatWin *>(data);
+	if(!oFloatWin->have_real_content) {
+		if (conf->get_bool_at("floating_window/show_if_not_found")) {
+			oFloatWin->Popup(!oFloatWin->window_positioned);
+			oFloatWin->window_positioned = true;
+		}
+	}
+	oFloatWin->lookup_running_timer = 0;
+	return FALSE;
+}
 
 gboolean FloatWin::vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *event, FloatWin *oFloatWin)
 {
@@ -656,9 +625,10 @@ gboolean FloatWin::vButtonPressCallback (GtkWidget * widget, GdkEventButton * ev
 			oFloatWin->show_popup_menu(event);
 		}
 	} else if (event->type == GDK_2BUTTON_PRESS) {
-		if (oFloatWin->found_result == FLOAT_WIN_NOT_FOUND)
-			gpAppFrame->LookupWithFuzzyToFloatWin(oFloatWin->QueryingWord.c_str());
-		else
+		if (oFloatWin->content_state == ContentState_NotFound) {
+			std::string QueryingWord(oFloatWin->QueryingWord);
+			gpAppFrame->LookupWithFuzzyToFloatWin(QueryingWord.c_str());
+		} else
 			oFloatWin->Hide();
 	}
 
@@ -713,7 +683,10 @@ void FloatWin::on_menu_play_activate(GtkWidget * widget, FloatWin *oFloatWin)
 
 void FloatWin::on_menu_fuzzyquery_activate(GtkWidget * widget, FloatWin *oFloatWin)
 {
-	gpAppFrame->LookupWithFuzzyToFloatWin(oFloatWin->QueryingWord.c_str());
+	/* do not use oFloatWin->QueryingWord directly,
+	LookupWithFuzzyToFloatWin overwrite oFloatWin->QueryingWord */
+	const std::string tQueryingWord(oFloatWin->QueryingWord);
+	gpAppFrame->LookupWithFuzzyToFloatWin(tQueryingWord.c_str());
 }
 
 void FloatWin::on_lock_changed(const baseconfval* )
@@ -862,7 +835,7 @@ void FloatWin::remember_pointer_position(void)
 		gdk_display_get_pointer(display, NULL, &popup_pointer_x, &popup_pointer_y, NULL);
 	} else {
 		// popup by middle click on the notification area icon, 
-		// so never hiden the floating window even mouse didn't moved as in FloatWin::vTimeOutCallback().
+		// so never hiden the floating window even mouse didn't moved as in FloatWin::vHideWindowTimeOutCallback().
 		popup_pointer_x = -1;
 		popup_pointer_y = -1;
 	}
@@ -886,7 +859,7 @@ void FloatWin::Popup(gboolean updatePosition)
 			remember_pointer_position();
 		}
 		// don't use gdk_window_resize,it make the window can't be smaller latter!
-		// note: must do resize before move should be better,as the vTimeOutCallback() may hide it.
+		// note: must do resize before move should be better,as the vHideWindowTimeOutCallback() may hide it.
 		gtk_window_resize(GTK_WINDOW(FloatWindow),window_width,window_height);
 		gtk_window_move(GTK_WINDOW(FloatWindow),iCurrentX,iCurrentY);
 	}
@@ -1072,13 +1045,11 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	}
 
-	if ((found_result != FLOAT_WIN_FUZZY_FOUND) && (found_result != FLOAT_WIN_FUZZY_NOT_FOUND)) {
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Fuzzy Query"));
-		image = gtk_image_new_from_stock(GTK_STOCK_FIND_AND_REPLACE, GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
-		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_fuzzyquery_activate), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	}
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Fuzzy Query"));
+	image = gtk_image_new_from_stock(GTK_STOCK_FIND_AND_REPLACE, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_fuzzyquery_activate), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	
 	gtk_widget_show_all(menu);
 	gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL, event->button, event->time);
@@ -1159,6 +1130,13 @@ std::string FloatWin::get_not_found_markup(const gchar* sWord, const gchar* sRea
 	return get_impl(str);
 }
 
+std::string FloatWin::get_looking_up_markup(const gchar* sWord)
+{
+	glib::CharStr str(g_markup_printf_escaped(
+		"<b><big>%s</big></b>\n<span foreground=\"blue\">%s</span>", sWord, _("Looking up...")));
+	return get_impl(str);
+}
+
 std::string FloatWin::get_head_word_markup(const gchar* sWord)
 {
 	std::string markup = "<b><span size=\"x-large\">";
@@ -1166,4 +1144,42 @@ std::string FloatWin::get_head_word_markup(const gchar* sWord)
 	markup += get_impl(str);
 	markup += "</span></b>";
 	return markup;
+}
+
+void FloatWin::set_busy_cursor(void)
+{
+	gdk_window_set_cursor(FloatWindow->window, get_impl(gpAppFrame->oAppSkin.watch_cursor));
+}
+
+void FloatWin::set_normal_cursor(void)
+{
+	gdk_window_set_cursor(FloatWindow->window, get_impl(gpAppFrame->oAppSkin.normal_cursor));
+}
+
+void FloatWin::start_hide_window_timer(void)
+{
+	if (!hide_window_timer)
+		hide_window_timer = g_timeout_add(FLOAT_TIMEOUT, vHideWindowTimeOutCallback, this);
+}
+
+void FloatWin::destroy_hide_window_timer(void)
+{
+	if (hide_window_timer) {
+		g_source_remove(hide_window_timer);
+		hide_window_timer = 0;
+	}
+}
+
+void FloatWin::start_lookup_running_timer(void)
+{
+	if (!lookup_running_timer)
+		lookup_running_timer = g_timeout_add(LOOKUP_RUNNING_TIMEOUT, vLookupRunningTimeOutCallback, this);
+}
+
+void FloatWin::destroy_lookup_running_timer(void)
+{
+	if (lookup_running_timer) {
+		g_source_remove(lookup_running_timer);
+		lookup_running_timer = 0;
+	}
 }

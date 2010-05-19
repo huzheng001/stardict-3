@@ -2112,7 +2112,8 @@ gboolean TextWin::on_button_press(GtkWidget * widget, GdkEventButton * event, Te
 					      gpAppFrame->oSelection.UTF8_STRING_Atom,
 					      GDK_CURRENT_TIME);
 		} else {
-			gtk_clipboard_request_text(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD), gpAppFrame->oTopWin.ClipboardReceivedCallback, &(gpAppFrame->oTopWin));
+			gtk_clipboard_request_text(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD),
+				gpAppFrame->oTopWin.ClipboardReceivedCallback, &(gpAppFrame->oTopWin));
 		}
 #else
 		gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
