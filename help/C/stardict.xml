@@ -409,6 +409,32 @@
 		</varlistentry>
 	</variablelist>
 	
+	<para>The following hotkeys are available in the Main window.
+	</para>
+	
+	<variablelist>
+		<title>Hotkeys</title>
+		<varlistentry>
+		<term><mousebutton>middle</mousebutton> mouse button</term>
+		<listitem>
+		<para>
+		This hotkey applies to the Definition area only.
+		</para>
+		<para>Query the text selected in the Definition area into the Main window.
+		In &winedition; of &app_t;, if there is no selected text, query clipboard content into the Main window.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term><mousebutton>right</mousebutton> mouse button</term>
+		<listitem>
+		<para>Show pop-up menu.
+		</para>
+		</listitem>
+		</varlistentry>
+	</variablelist>
+	
     </sect2>
 
 	<sect2 id="stardict-definition-aria-toolbar">
@@ -540,17 +566,17 @@
     <sect2 id="stardict-scan-selection">
     <title>Scan selection</title>
 
-     <para>&app_t; can automatically scan selections. This means that when you select a word or phrase
-     in &app_t; or in any other application, 
- 	&app_t; will get the text that you selected and search for it, then display the Floating window containing
-     the result of the search. </para>
+	<para>&app_t; can automatically scan selections. This means that when you select a word or phrase
+	in &app_t; or in any other application, 
+	&app_t; will get the text that you selected and search for it, then display the Floating window containing the result of the search. </para>
 	<para>
 	In Windows the Scan mode works differently. It has nothing to do with selection in fact.
 	&app_t; extracts the text under the pointer when you pause the mouse for a while.
-	Normally &app_t; looks up a space-separated word under the pointer, if the pointer is over a blank,
-	then two space-separated words are used, the one to the left and the one to the right of the blank.
-	If the word or the word pair is not found, &app_t; proceeds looking up words consisting of only capitals or
-	of only lower case letters and do some other tricks in order to extract the word to translate.
+	Normally &app_t; looks up a word under the pointer, if the pointer is not over a word,
+	then words to the left and the right of the pointer are considered.
+	It is time to say what &app_t; considers as a word. &app_t; gives a number of tries.
+	First, it considers a word may include anything but spaces and punctuations;
+	second, a word consisting of only letters; a word of lower case letters; a word of upper case letters; a capitalized word of letters. Finally, &app_t; uses one of the tried word to find the longest prefix making a word.
 	You may help &app_t; to extract the right word or a part of a word selecting it.
 	Although &app_t; does not work with selections, selection may effect the text &app_t; gets.
 	</para>
@@ -562,6 +588,10 @@
 	If scanning does not work, you may harness another &app_t; feature &mdash; 
 	<firstterm>Clipboard scanning</firstterm>, see 
 	<xref linkend="stardict-prefs-dictionary-scan"/>.
+	</para>
+	<para>
+	In Windows &app_t; works specially with some applications. First, &app_t; itself.
+	To scan a word in &app_t; Main window you need to select it. The Scan mode in &app_t; Main window works exactly as it should in general case, the fact that it's Windows does not matter. You can not scan in other &app_t; windows however.
 	</para>
 
     <!-- ==== Figure ==== -->
