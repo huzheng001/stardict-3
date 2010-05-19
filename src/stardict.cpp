@@ -282,7 +282,7 @@ void AppCore::on_maximize()
 	}
 }
 
-void AppCore::on_middle_button_click()
+void AppCore::on_docklet_middle_button_click()
 {
 	TNotifAreaMiddleClickAction action = TNotifAreaMiddleClickAction(
 		conf->get_int_at("notification_area_icon/middle_click_action"));
@@ -324,12 +324,16 @@ void AppCore::set_news(const char *news, const char *links)
 	gpAppFrame->oBottomWin.set_news(news, links);
 }
 
-void AppCore::show_netdict_resp(NetDictResponse *resp, bool ismainwin)
+void AppCore::show_netdict_resp(const char *dict, NetDictResponse *resp, bool ismainwin)
 {
 	if (ismainwin)
 		gpAppFrame->oMidWin.oTextWin.Show(resp);
-	else
-		gpAppFrame->oFloatWin.ShowTextNetDict(resp);
+	else {
+		if(gpAppFrame->composite_lookup_float_win.got_net_dict_responce(dict, resp->word))
+			gpAppFrame->oFloatWin.AppendTextNetDict(resp);
+		if(gpAppFrame->composite_lookup_float_win.is_got_all_responses())
+			gpAppFrame->oFloatWin.EndLookup();
+	}
 }
 
 void AppCore::lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData)
@@ -474,7 +478,7 @@ void AppCore::Create(gchar *queryword)
 	oDockLet->on_maximize_.connect(
 		sigc::mem_fun(this, &AppCore::on_maximize));
 	oDockLet->on_middle_btn_click_.connect(
-		sigc::mem_fun(this, &AppCore::on_middle_button_click));
+		sigc::mem_fun(this, &AppCore::on_docklet_middle_button_click));
 	oSelection.Init();
 #ifdef _WIN32
 	oClipboard.Init();
@@ -742,19 +746,24 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 
 void AppCore::SimpleLookupToFloat(const char* sWord)
 {
-	SimpleLookupToFloatLocal(sWord, true);
+	oFloatWin.StartLookup(sWord);
+	composite_lookup_float_win.new_lookup();
+	SimpleLookupToFloatLocal(sWord);
 	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
 	if (enable_netdict) {
 		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, sWord);
 		if (!oStarDictClient.try_cache(c)) {
-			waiting_floatwin_lookupcmd_seq = c->seq;
+			composite_lookup_float_win.send_StarDict_net_request(c->seq);
 			oStarDictClient.send_commands(1, c);
 		}
 	}
 	LookupNetDict(sWord, false);
+	composite_lookup_float_win.done_lookup();
+	if(composite_lookup_float_win.is_got_all_responses())
+		oFloatWin.EndLookup();
 }
 
-bool AppCore::SimpleLookupToFloatLocal(const char* sWord, bool bShowIfNotFound)
+bool AppCore::SimpleLookupToFloatLocal(const char* sWord)
 {
 	if (sWord==NULL || sWord[0]=='\0')
 		return true;
@@ -779,7 +788,7 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord, bool bShowIfNotFound)
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
-			oFloatWin.ShowTextLocal(pppWord, ppppWordData, SearchWord);
+			oFloatWin.AppendTextLocalDict(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
 			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
@@ -794,12 +803,6 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord, bool bShowIfNotFound)
 	}
 	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 	g_free(iIndex);
-
-	// not found
-	if (bShowIfNotFound) {
-		ShowNotFoundToFloatWin(sWord,_("<Not Found!>"), false);
-		oTopWin.InsertHisList(sWord); //really need?
-	}
 	g_free(SearchWord);
 	return false;
 }
@@ -807,19 +810,16 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord, bool bShowIfNotFound)
 #ifdef _WIN32
 void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
 {
-	LocalSmartLookupToFloat(sWord, BeginPos, bShowIfNotFound);
-	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
-	if (enable_netdict) {
-		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SMART_QUERY, sWord, BeginPos);
-		if (!oStarDictClient.try_cache(c)) {
-			waiting_floatwin_lookupcmd_seq = c->seq;
-			oStarDictClient.send_commands(1, c);
-		}
-	}
-	LookupNetDict(sWord, false);
+	oFloatWin.StartLookup(sWord);
+	composite_lookup_float_win.new_lookup();
+	LocalSmartLookupToFloat(sWord, BeginPos);
+	/* sWord is not a candidate to search in net dictionaries */
+	composite_lookup_float_win.done_lookup();
+	if(composite_lookup_float_win.is_got_all_responses())
+		oFloatWin.EndLookup();
 }
 
-bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
+bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos)
 {
 	if (sWord==NULL || sWord[0]=='\0')
 		return false;
@@ -895,7 +895,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bSh
 			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		
 		if (bFound) {
-			oFloatWin.ShowTextLocal(pppWord, ppppWordData, SearchWord);
+			oFloatWin.AppendTextLocalDict(pppWord, ppppWordData, SearchWord);
 			oTopWin.InsertHisList(SearchWord);
 			FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 			g_free(iIndex);
@@ -907,12 +907,6 @@ loop_end:
 	FreeResultData(scan_dictmask.size(), pppWord, ppppWordData);
 	g_free(iIndex);
 	g_free(SearchWord);
-
-	// not found
-	if (bShowIfNotFound) {
-		ShowNotFoundToFloatWin(TriedSearchWord.c_str(), _("<Not Found!>"), false);
-		oTopWin.InsertHisList(TriedSearchWord.c_str()); //really need?
-	}
 	return false;
 }
 #endif
@@ -1352,9 +1346,9 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 {
 	if (sWord[0] == '\0')
 		return;
-	change_cursor busy(oFloatWin.getFloatWindow()->window,
-			   get_impl(oAppSkin.watch_cursor),
-			   get_impl(oAppSkin.normal_cursor));
+
+	oFloatWin.StartLookup(sWord);
+	composite_lookup_float_win.new_lookup();
 	gchar *fuzzy_reslist[MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM];
 	bool Found = oLibs.LookupWithFuzzy(sWord, fuzzy_reslist, MAX_FLOAT_WINDOW_FUZZY_MATCH_ITEM, scan_dictmask);
 	if (Found) {
@@ -1390,7 +1384,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 				ppppWord[i]=NULL;
 			}
 		}
-		oFloatWin.ShowTextFuzzy(ppppWord, pppppWordData, ppOriginWord, count, sWord);
+		oFloatWin.AppendTextFuzzy(ppppWord, pppppWordData, ppOriginWord, count, sWord);
 		for (i=0; i<count; i++) {
 			if (ppppWord[i])
 				FreeResultData(scan_dictmask.size(), ppppWord[i], pppppWordData[i]);
@@ -1402,8 +1396,10 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 
 		for (i=0;i<count;i++)
 			g_free(fuzzy_reslist[i]);
-	} else
-		ShowNotFoundToFloatWin(sWord, _("Fuzzy query failed, too :-("), true);
+	}
+	composite_lookup_float_win.done_lookup();
+	if(composite_lookup_float_win.is_got_all_responses())
+		oFloatWin.EndLookup();
 }
 
 void AppCore::LookupWithRuleToMainWin(const gchar *word)
@@ -1472,10 +1468,12 @@ void AppCore::LookupNetDict(const char *sWord, bool ismainwin)
 		if ((*dictmask)[iLib].type == InstantDictType_NET) {
 			const char *dict_cacheid = oStarDictPlugins->NetDictPlugins.dict_cacheid((*dictmask)[iLib].index);
 			NetDictResponse *resp = netdict_get_cache_resp(dict_cacheid, sWord);
+			if(!ismainwin)
+				composite_lookup_float_win.send_net_dict_request(dict_cacheid, sWord);
 			if (!resp) {
 				oStarDictPlugins->NetDictPlugins.lookup((*dictmask)[iLib].index, sWord, ismainwin);
-			} else if (!(resp->data)) {
-				show_netdict_resp(resp, ismainwin);
+			} else {
+				show_netdict_resp(dict_cacheid, resp, ismainwin);
 			}
 		}
 	}
@@ -1555,11 +1553,6 @@ void AppCore::ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextW
 	if (oMidWin.oTextWin.readwordtype != READWORD_CANNOT)
 		oMidWin.oTextWin.pronounceWord = sWord;
 	gtk_widget_set_sensitive(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton), oMidWin.oTextWin.readwordtype != READWORD_CANNOT);
-}
-
-void AppCore::ShowNotFoundToFloatWin(const char* sWord, const char* sReason, gboolean fuzzy)
-{
-	oFloatWin.ShowNotFound(sWord, sReason, fuzzy);
 }
 
 void AppCore::TopWinEnterWord()
@@ -1924,9 +1917,11 @@ void AppCore::on_stardict_client_lookup_end(const struct STARDICT::LookupRespons
 
 void AppCore::on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq)
 {
-	if (seq != 0 && waiting_floatwin_lookupcmd_seq != seq)
-		return;
-	oFloatWin.ShowTextStarDictNet(&(lookup_response->dict_response));
+	if(seq == 0 || composite_lookup_float_win.got_StarDict_net_responce(seq)) {
+		oFloatWin.AppendTextStarDictNet(&(lookup_response->dict_response));
+		if(composite_lookup_float_win.is_got_all_responses())
+			oFloatWin.EndLookup();
+	}
 }
 
 void AppCore::on_http_client_error(HttpClient *http_client, const char *error_msg)

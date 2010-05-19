@@ -34,6 +34,7 @@ class AppCore;
 #include "iskeyspressed.hpp"
 #include "dictmanage.h"
 #include "globalhotkeys.h"
+#include "lib/compositelookup.h"
 
 extern AppCore *gpAppFrame;
 
@@ -55,6 +56,7 @@ private:
 	PrefsDlg *prefs_dlg;
 	guint word_change_timeout_id;
 	std::string delayed_word_;
+	CompositeLookup composite_lookup_float_win;
 
 	static int MatchWordCompare(const void * s1, const void * s2);
 	static void on_mainwin_show_event(GtkWidget * window, AppCore *app);
@@ -69,14 +71,14 @@ private:
 	void stop_word_change_timer();
 	void on_change_scan(bool val);
 	void on_maximize();
-	void on_middle_button_click();
+	void on_docklet_middle_button_click();
+	bool SimpleLookupToFloatLocal(const gchar* sWord);
 #ifdef _WIN32
-	bool LocalSmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
+	bool LocalSmartLookupToFloat(const gchar* sWord, int BeginPos);
 #endif
 public:
 	CurrentIndex *iCurrentIndex;
 	unsigned int waiting_mainwin_lookupcmd_seq;
-	unsigned int waiting_floatwin_lookupcmd_seq;
 	/* last directory selected in save/open file and similar dialogs */
 	std::string last_selected_directory;
 	GtkWidget *window;
@@ -123,7 +125,6 @@ public:
 	void BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
 	static void FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData);
 	void SimpleLookupToFloat(const char* sToken);
-	bool SimpleLookupToFloatLocal(const gchar* sWord, bool bShowIfNotFound);
 #ifdef _WIN32
 	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
 #endif
@@ -138,7 +139,6 @@ public:
 	void ShowDataToTextWin(gchar ***pppWord, gchar ****ppppWordData,const gchar * sOriginWord, bool isShowFirst);
 	void ShowTreeDictDataToTextWin(guint32 offset, guint32 size, gint iTreeDict);
 	void ShowNotFoundToTextWin(const char* sWord,const char* sReason, TextWinQueryResult query_result);
-	void ShowNotFoundToFloatWin(const char* sWord,const char* sReason, gboolean fuzzy);
 
 	void TopWinEnterWord();
 	void TopWinWordChange(const gchar* sWord);
@@ -167,7 +167,7 @@ public:
 	void on_http_client_response(HttpClient*);
 	static void do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata);
 	static void set_news(const char *news, const char *links);
-	static void show_netdict_resp(NetDictResponse *resp, bool ismainwin);
+	static void show_netdict_resp(const char *dict, NetDictResponse *resp, bool ismainwin);
 	static void lookup_dict(size_t dictid, const char *sWord, char ****Word, char *****WordData);
 	static void ShowPangoTips(const char *word, const char *text);
 };

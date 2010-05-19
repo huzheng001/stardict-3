@@ -342,6 +342,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\compositelookup.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\data.cpp"
 					>
 				</File>
@@ -573,6 +577,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\common.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\compositelookup.h"
 					>
 				</File>
 				<File

@@ -270,7 +270,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		}
 	}
 	plugin_service->netdict_save_cache_resp(DICTDOTCN, qi->word, resp);
-	plugin_service->show_netdict_resp(resp, qi->ismainwin);
+	plugin_service->show_netdict_resp(DICTDOTCN, resp, qi->ismainwin);
 	delete qi;
 	keyword_list.remove(qi);
 }
