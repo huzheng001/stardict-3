@@ -126,7 +126,7 @@ public:
 	static void FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData);
 	void SimpleLookupToFloat(const char* sToken);
 #ifdef _WIN32
-	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound);
+	void SmartLookupToFloat(const gchar* sWord, int BeginPos);
 #endif
 	bool SimpleLookupToTextWin(const gchar* sWord, CurrentIndex* piIndex, const gchar *piIndexValidStr = NULL, bool bTryMoreIfNotFound = false, bool bShowNotfound = true, bool isShowFirst = false);
 	void LookupDataToMainWin(const gchar *sWord);

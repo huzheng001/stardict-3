@@ -387,6 +387,7 @@ DLLIMPORT void GetWord (TCurrentMode *P)
 		free(p);
 	} else {
 		P->MatchedWord[0] = '\0';
+		P->BeginPos = 0;
 	}
 }
 
