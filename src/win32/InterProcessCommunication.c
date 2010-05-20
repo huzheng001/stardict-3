@@ -27,7 +27,7 @@ void Thtypes_End()
 void NotifyStarDictNewScanWord(UINT timeout)
 {
 	DWORD SendMsgAnswer;
-	if(!GlobalData || !GlobalData->ServerWND || GlobalData->CurMod.WordLen <= 0)
+	if(!GlobalData || !GlobalData->ServerWND || GlobalData->CurMod.MatchedWord[0] == '\0')
 		return;
 	SendMessageTimeout(GlobalData->ServerWND, WM_STARDICT_SHOW_TRANSLATION, 0, 0,
 		SMTO_ABORTIFHUNG, timeout, &SendMsgAnswer);
