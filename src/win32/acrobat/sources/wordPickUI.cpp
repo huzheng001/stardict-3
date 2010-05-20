@@ -143,7 +143,7 @@ static ACCB1 void ACCB2 wordPickAVDocDidSetSelection(
 	ASCallbackDestroy(enumProc);
 	if(!ConvertBufferToUTF8())
 		return;
-	GlobalData->CurMod.BeginPos = 0;
+	GlobalData->CurMod.BeginPos = -1;
 	strcpy_s(GlobalData->CurMod.MatchedWord, MAX_SCAN_TEXT_SIZE, buffer);
 	NotifyStarDictNewScanWord(1000);
 }

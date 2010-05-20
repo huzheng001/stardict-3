@@ -808,7 +808,7 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord)
 }
 
 #ifdef _WIN32
-void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool bShowIfNotFound)
+void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos)
 {
 	oFloatWin.StartLookup(sWord);
 	composite_lookup_float_win.new_lookup();

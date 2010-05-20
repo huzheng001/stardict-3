@@ -85,20 +85,24 @@ void Mouseover::ShowTranslation()
 {
 	char MatchedWord[MAX_SCAN_TEXT_SIZE];
 	/* GlobalData->CurMod is shared by multiple processes, copy data ASAP. */
-	strcpy(MatchedWord, GlobalData->CurMod.MatchedWord);
+	strcpy_s(MatchedWord, MAX_SCAN_TEXT_SIZE, GlobalData->CurMod.MatchedWord);
 	int BeginPos = GlobalData->CurMod.BeginPos;
 #ifdef DEBUG
 	{
 		const char * utf8_marker = (
 			g_utf8_validate(MatchedWord, -1, NULL) ? "" : "!!!"
 		);
-		std::string buf(MatchedWord, BeginPos);
-		buf += "[";
-		const char *p = MatchedWord + BeginPos;
-		const char *q = g_utf8_next_char(p);
-		buf.append(p, q-p);
-		buf += "]";
-		buf.append(q);
+		std::string buf;
+		if(BeginPos >= 0) {
+			buf.assign(MatchedWord, BeginPos);
+			buf += "[";
+			const char *p = MatchedWord + BeginPos;
+			const char *q = g_utf8_next_char(p);
+			buf.append(p, q-p);
+			buf += "]";
+			buf.append(q);
+		} else
+			buf = MatchedWord;
 		g_debug("ShowTranslation: %s (%d) %s", utf8_marker,
 			BeginPos, buf.c_str());
 	}
@@ -111,23 +115,28 @@ void Mouseover::ShowTranslation()
 			return;
 	}
 	if (g_utf8_validate(MatchedWord, -1, NULL)) {
-		gpAppFrame->SmartLookupToFloat(MatchedWord, BeginPos, true);
+		if(BeginPos >= 0)
+			gpAppFrame->SmartLookupToFloat(MatchedWord, BeginPos);
+		else
+			gpAppFrame->SimpleLookupToFloat(MatchedWord);
 	} else {
 		g_warning("ShowTranslation: incorrect encoding of the word!");
-		char *str1 = g_locale_to_utf8(MatchedWord, BeginPos, NULL, NULL, NULL);
-		if (!str1)
-			return;
-		char *str2 = g_locale_to_utf8(MatchedWord + BeginPos, -1, NULL, NULL, NULL);
-		if (!str2) {
-			g_free(str1);
-			return;
+		if(BeginPos >= 0) {
+			glib::CharStr str1(g_locale_to_utf8(MatchedWord, BeginPos, NULL, NULL, NULL));
+			if (!str1)
+				return;
+			glib::CharStr str2(g_locale_to_utf8(MatchedWord + BeginPos, -1, NULL, NULL, NULL));
+			if (!str2)
+				return;
+			BeginPos = strlen(get_impl(str1));
+			glib::CharStr str(g_strdup_printf("%s%s", get_impl(str1), get_impl(str2)));
+			gpAppFrame->SmartLookupToFloat(get_impl(str), BeginPos);
+		} else {
+			glib::CharStr str(g_locale_to_utf8(MatchedWord, -1, NULL, NULL, NULL));
+			if (!str)
+				return;
+			gpAppFrame->SimpleLookupToFloat(get_impl(str));
 		}
-		BeginPos = strlen(str1);
-		char *str = g_strdup_printf("%s%s", str1, str2);
-		g_free(str1);
-		g_free(str2);
-		gpAppFrame->SmartLookupToFloat(str, BeginPos, true);
-		g_free(str);
 	}
 }
 

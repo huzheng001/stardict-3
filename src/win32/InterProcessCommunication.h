@@ -18,6 +18,12 @@ typedef struct TCurrentMode {
 	POINT Pt;
 	/* in utf-8 */
 	char MatchedWord[MAX_SCAN_TEXT_SIZE];
+	/* MatchedWord may contain arbitrary text that was extracted.
+	BeginPos specifies position in that text.
+	It points to the first byte of the character the mouse was over. 
+	StarDict should extract the word under the pointer. 
+	If mouse position is irrelevant and complete MatchedWord should be looked up as whole,
+	set BeginPos to -1. */
 	int BeginPos;
 } TCurrentMode;
 
