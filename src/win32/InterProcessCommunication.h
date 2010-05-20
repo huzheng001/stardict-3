@@ -16,7 +16,6 @@ extern "C"
 typedef struct TCurrentMode {
 	HWND WND;
 	POINT Pt;
-	size_t WordLen;
 	/* in utf-8 */
 	char MatchedWord[MAX_SCAN_TEXT_SIZE];
 	int BeginPos;
