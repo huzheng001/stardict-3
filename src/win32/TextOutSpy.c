@@ -28,6 +28,7 @@ static void SendWordToServer()
 		GetWordProc(&(GlobalData->CurMod));
 		if(GlobalData->CurMod.BeginPos < 0)
 			GlobalData->CurMod.BeginPos = 0;
+		GlobalData->CurMod.IgnoreScanModifierKey = FALSE;
 		NotifyStarDictNewScanWord(MOUSEOVER_INTERVAL);
 	}
 }

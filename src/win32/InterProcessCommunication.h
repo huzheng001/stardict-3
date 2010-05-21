@@ -25,6 +25,11 @@ typedef struct TCurrentMode {
 	If mouse position is irrelevant and complete MatchedWord should be looked up as whole,
 	set BeginPos to -1. */
 	int BeginPos;
+	/* StarDict may be configured to scan only when a specified modifier key is being pressed,
+	Ctrl, for example. This is useful for mouse-hover scanning.
+	Modifier key is unnecessary for Acrobat plugin. 
+	This flag allows to specify whether the modifier key should be taken into account or not. */
+	int IgnoreScanModifierKey;
 } TCurrentMode;
 
 typedef struct TGlobalDLLData {

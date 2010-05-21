@@ -87,6 +87,7 @@ void Mouseover::ShowTranslation()
 	/* GlobalData->CurMod is shared by multiple processes, copy data ASAP. */
 	strcpy_s(MatchedWord, MAX_SCAN_TEXT_SIZE, GlobalData->CurMod.MatchedWord);
 	int BeginPos = GlobalData->CurMod.BeginPos;
+	bool IgnoreScanModifierKey = static_cast<bool>(GlobalData->CurMod.IgnoreScanModifierKey);
 #ifdef DEBUG
 	{
 		const char * utf8_marker = (
@@ -109,16 +110,17 @@ void Mouseover::ShowTranslation()
 #endif
 	if (!conf->get_bool_at("dictionary/scan_selection")) // Needed by acrobat plugin.
 		return;
-	if (conf->get_bool_at("dictionary/only_scan_while_modifier_key")) {
+	if (conf->get_bool_at("dictionary/only_scan_while_modifier_key")
+		&& !IgnoreScanModifierKey) {
 		bool do_scan = gpAppFrame->unlock_keys->is_pressed();
 		if (!do_scan)
 			return;
 	}
 	if (g_utf8_validate(MatchedWord, -1, NULL)) {
 		if(BeginPos >= 0)
-			gpAppFrame->SmartLookupToFloat(MatchedWord, BeginPos);
+			gpAppFrame->SmartLookupToFloat(MatchedWord, BeginPos, IgnoreScanModifierKey);
 		else
-			gpAppFrame->SimpleLookupToFloat(MatchedWord);
+			gpAppFrame->SimpleLookupToFloat(MatchedWord, IgnoreScanModifierKey);
 	} else {
 		g_warning("ShowTranslation: incorrect encoding of the word!");
 		if(BeginPos >= 0) {
@@ -130,12 +132,12 @@ void Mouseover::ShowTranslation()
 				return;
 			BeginPos = strlen(get_impl(str1));
 			glib::CharStr str(g_strdup_printf("%s%s", get_impl(str1), get_impl(str2)));
-			gpAppFrame->SmartLookupToFloat(get_impl(str), BeginPos);
+			gpAppFrame->SmartLookupToFloat(get_impl(str), BeginPos, IgnoreScanModifierKey);
 		} else {
 			glib::CharStr str(g_locale_to_utf8(MatchedWord, -1, NULL, NULL, NULL));
 			if (!str)
 				return;
-			gpAppFrame->SimpleLookupToFloat(get_impl(str));
+			gpAppFrame->SimpleLookupToFloat(get_impl(str), IgnoreScanModifierKey);
 		}
 	}
 }

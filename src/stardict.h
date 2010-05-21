@@ -124,9 +124,9 @@ public:
 	void BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
 	void BuildVirtualDictData(std::vector<InstantDictIndex> &dictmask, const char* sWord, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound);
 	static void FreeResultData(size_t dictmask_size, gchar ***pppWord, gchar ****ppppWordData);
-	void SimpleLookupToFloat(const char* sToken);
+	void SimpleLookupToFloat(const char* sToken, bool IgnoreScanModifierKey = false);
 #ifdef _WIN32
-	void SmartLookupToFloat(const gchar* sWord, int BeginPos);
+	void SmartLookupToFloat(const gchar* sWord, int BeginPos, bool IgnoreScanModifierKey);
 #endif
 	bool SimpleLookupToTextWin(const gchar* sWord, CurrentIndex* piIndex, const gchar *piIndexValidStr = NULL, bool bTryMoreIfNotFound = false, bool bShowNotfound = true, bool isShowFirst = false);
 	void LookupDataToMainWin(const gchar *sWord);

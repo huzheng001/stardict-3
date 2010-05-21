@@ -744,9 +744,9 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 	return return_val;
 }
 
-void AppCore::SimpleLookupToFloat(const char* sWord)
+void AppCore::SimpleLookupToFloat(const char* sWord, bool IgnoreScanModifierKey)
 {
-	oFloatWin.StartLookup(sWord);
+	oFloatWin.StartLookup(sWord, IgnoreScanModifierKey);
 	composite_lookup_float_win.new_lookup();
 	SimpleLookupToFloatLocal(sWord);
 	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
@@ -808,9 +808,9 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord)
 }
 
 #ifdef _WIN32
-void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos)
+void AppCore::SmartLookupToFloat(const gchar* sWord, int BeginPos, bool IgnoreScanModifierKey)
 {
-	oFloatWin.StartLookup(sWord);
+	oFloatWin.StartLookup(sWord, IgnoreScanModifierKey);
 	composite_lookup_float_win.new_lookup();
 	LocalSmartLookupToFloat(sWord, BeginPos);
 	/* sWord is not a candidate to search in net dictionaries */
