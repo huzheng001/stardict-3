@@ -48,6 +48,7 @@ FloatWin::FloatWin()
 	content_state = ContentState_Empty;
 	have_real_content = false;
 	window_positioned = false;
+	IgnoreScanModifierKey = false;
 }
 
 void FloatWin::Create()
@@ -120,7 +121,7 @@ void FloatWin::End()
 	have_real_content = false;
 }
 
-void FloatWin::StartLookup(const char* sWord)
+void FloatWin::StartLookup(const char* sWord, bool IgnoreScanModifierKey)
 {
 	QueryingWord = sWord;
 	content_state = ContentState_Waiting;
@@ -132,6 +133,7 @@ void FloatWin::StartLookup(const char* sWord)
 	set_busy_cursor();
 	have_real_content = false;
 	window_positioned = false;
+	this->IgnoreScanModifierKey = IgnoreScanModifierKey;
 	start_lookup_running_timer();
 }
 
@@ -434,6 +436,7 @@ void FloatWin::ShowPangoTips(const char *sWord, const char *text)
 	QueryingWord = sWord;
 	view->set_pango_text(text);
 	have_real_content = true;
+	IgnoreScanModifierKey = false;
 	destroy_lookup_running_timer();
 
 	gboolean pronounced = false;
@@ -544,8 +547,9 @@ gint FloatWin::vHideWindowTimeOutCallback(gpointer data)
 		conf->get_bool_at("dictionary/only_scan_while_modifier_key");
 	bool hide_floatwin_when_modifier_key_released=
 		conf->get_bool_at("dictionary/hide_floatwin_when_modifier_key_released");
-	if (only_scan_while_modifier_key && 
-		hide_floatwin_when_modifier_key_released) {
+	if (only_scan_while_modifier_key
+		&& hide_floatwin_when_modifier_key_released
+		&& !oFloatWin->IgnoreScanModifierKey) {
 		GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(oFloatWin->FloatWindow));
 		GdkDisplay *display = gdk_screen_get_display(screen);
 		gint iCurrentX,iCurrentY;

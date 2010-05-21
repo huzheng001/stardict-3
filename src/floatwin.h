@@ -20,7 +20,7 @@ public:
 	FloatWin();
 	void Create();
 	void End();
-	void StartLookup(const char* sWord);
+	void StartLookup(const char* sWord, bool IgnoreScanModifierKey = false);
 	void EndLookup(void);
 	void AppendTextLocalDict(gchar ***pppWord, gchar **** ppppWordData, const gchar * sOriginWord);
 	void AppendTextFuzzy(gchar ****ppppWord, gchar ***** pppppWordData, const gchar ** ppOriginWord, gint count, const gchar * sOriginWord);
@@ -59,6 +59,7 @@ private:
 	We need this flag to avoid repositioning the window multiple times 
 	when responses from different sources arrive. */
 	bool window_positioned;
+	bool IgnoreScanModifierKey;
 	std::auto_ptr<ArticleView> view;
 	
 	static void on_query_click(GtkWidget *widget, FloatWin *oFloatWin);

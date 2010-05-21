@@ -145,6 +145,7 @@ static ACCB1 void ACCB2 wordPickAVDocDidSetSelection(
 		return;
 	GlobalData->CurMod.BeginPos = -1;
 	strcpy_s(GlobalData->CurMod.MatchedWord, MAX_SCAN_TEXT_SIZE, buffer);
+	GlobalData->CurMod.IgnoreScanModifierKey = true;
 	NotifyStarDictNewScanWord(1000);
 }
 
