@@ -111,7 +111,8 @@ static ACCB1 ASBool ACCB2 IsEnabled (void *permRequired)
 	else
 	{
 		PDPerms docPerms = PDDocGetPermissions(AVDocGetPDDoc(avDoc));
-		return (!permRequired || (((PDPerms)permRequired | docPerms) != 0));
+		PDPerms reqPerms = (PDPerms)permRequired;
+		return ((reqPerms & docPerms) == reqPerms);
 	}
 }
 
@@ -139,7 +140,12 @@ static ACCB1 void ACCB2 wordPickAVDocDidSetSelection(
 	which is often not the same as the order in which a person would read the text. */
 	PDTextSelectEnumTextProc enumProc 
 		= ASCallbackCreateProto(PDTextSelectEnumTextProc, &PDTextSelectEnumTextProcCB);
-	PDTextSelectEnumTextUCS(Text, enumProc, NULL);
+	DURING
+		PDTextSelectEnumTextUCS(Text, enumProc, NULL);
+	HANDLER
+		ASCallbackDestroy(enumProc);
+		return;
+	END_HANDLER
 	ASCallbackDestroy(enumProc);
 	if(!ConvertBufferToUTF8())
 		return;
@@ -158,7 +164,12 @@ static void SetUpToolButton(void)
 	wordPickToolButton = AVToolButtonNew (ASAtomFromString("ADBE:WordPick"), WordPickIcon, true, false);
 	cbActivateTool = ASCallbackCreateProto(AVExecuteProc, &ActivateWordPickTool);
 	AVToolButtonSetExecuteProc (wordPickToolButton, cbActivateTool, NULL);
-	AVToolButtonSetComputeEnabledProc (wordPickToolButton, cbIsEnabled, (void *)0); // pdPermEdit
+	/* pdPermCopy - permissions required to extract text from a document.
+	In Document Properties this property is named "Content Copy or Extration".
+	To see Document Restrictions go to Main menu -> File -> Document properties -> Security tab.
+	If we ignore permissions here (use 0), PDTextSelectEnumTextUCS throws an exception.
+	We will not get text anyway. */
+	AVToolButtonSetComputeEnabledProc (wordPickToolButton, cbIsEnabled, (void *)pdPermCopy);
 	AVToolButtonSetComputeMarkedProc (wordPickToolButton, cbIsMarked, NULL);
 	AVToolButtonSetHelpText (wordPickToolButton, "Toggle StarDict");
 
