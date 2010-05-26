@@ -634,28 +634,30 @@
 	&app_t; will lookup the selection unconditionally.</para>
 	</listitem>
 	</itemizedlist>
-    <para>The &app_t; Floating window consists of the following elements:</para>
-    <variablelist>
+	
+	<para>The &app_t; Floating window consists of the following elements:</para>
+	<variablelist>
 		<varlistentry>
 		<term>Tool buttons bar</term>
 		<listitem>
- 		<para>A bar at the top of the Floating window. The bar will be hidden automatically to save display space. When your mouse pointer enters the Floating window, 
- 		the Tool buttons bar will appear immediately, and disappear again as the mouse pointer leaves. </para>
- 		<para>You can click these buttons to <guibutton>query</guibutton> a word in the Main window,
+		<para>A bar at the top of the Floating window. The bar will be hidden automatically to save display space. When your mouse pointer enters the Floating window, 
+		the Tool buttons bar will appear immediately, and disappear again as the mouse pointer leaves. </para>
+		<para>You can click these buttons to <guibutton>query</guibutton> a word in the Main window,
         <guibutton>copy</guibutton> the query result to clipboard, 
- 		<guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. 
- 		To the far right is the <guibutton>Lock floating window</guibutton> button.  If the 
- 		Floating window is locked, it will always be shown there. </para>
+		<guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> selection scanning, etc. 
+		To the far right is the <guibutton>Lock floating window</guibutton> button.  If the 
+		Floating window is locked, it will always be shown there. </para>
 		</listitem>
 		</varlistentry>
 		<varlistentry>
- 		<term>Definition area</term>
+		<term>Definition area</term>
 		<listitem>
 		<para>The query result is displayed in this area. </para>
 		</listitem>
 		</varlistentry>
     </variablelist>
-    </sect2>
+
+	</sect2>
 
 	<sect2 id="stardict-translation">
 	<title>Full-Text Translation</title>
@@ -740,6 +742,143 @@
     	</orderedlist>	
     </sect2>
 
+	<sect2 id="stardict-usage-scanning">
+	<title>Scanning: operation guide</title>
+	
+	<itemizedlist>
+	<listitem>
+	<para>Scenarios below assume that you make selection with mouse.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Scan key is the modifier set by the "Scan modifier key" option,
+	see <xref linkend="stardict-prefs-dictionary-scan"/>.
+	</para>
+	</listitem>
+	</itemizedlist>
+	
+	<sect3 id="stardict-usage-scanning-linux">
+	<title>Scanning in Linux and Unix</title>
+	
+	<orderedlist>
+	<title>Case 1. "Only scan while modifier key is being pressed" option is off</title>
+	<listitem>
+	<para>Select text to translate.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Wait for a few seconds. The Floating Window pops up.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+
+	<orderedlist>
+	<title>Case 2. "Only scan while modifier key is being pressed" option is on</title>
+	<listitem>
+	<para>Press and hold the Scan key.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Select the text.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Wait for a few seconds. The Floating Window pops up.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Release the Scan key.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
+	<orderedlist>
+	<title>Case 2.1. "Only scan while modifier key is being pressed" option is on. A variation</title>
+	<listitem>
+	<para>Select the text and do not release the mouse button yet.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Press and hold the Scan key.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Release the mouse button.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Wait for a few seconds. The Floating Window pops up.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Release the Scan key.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
+	<para>
+	Selection is made when you release mouse button. 
+	This is the time when the Scan key must be pressed down. It takes some time for StarDict to inspect selection, you must hold the Scan key all this time. What is why you need to hold the key for a few seconds after selection.
+	</para>
+	
+	</sect3>
+	
+	<sect3 id="stardict-usage-scanning-windows">
+	<title>Scanning in Windows</title>
+	
+	<orderedlist>
+	<title>Case 1. "Only scan while modifier key is being pressed" option is off</title>
+	<listitem>
+	<para>Place the mouse pointer over the word you want to traslate.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Do not move the mouse for a few seconds. The Floating Window pops up.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+
+	<orderedlist>
+	<title>Case 2. "Only scan while modifier key is being pressed" option is on</title>
+	<listitem>
+	<para>Place the mouse pointer over the word you want to traslate.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Press and hold the Scan key.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Do not move the mouse for a few seconds. The Floating Window pops up.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Release the Scan key.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
+	</sect3>
+	</sect2>
+	
 	<sect2 id="stardict-usage-scan-mode">
 		<title>Toggle Scan Mode</title>
 		<para>There are a number of ways to enable or disable the Scan selection mode.
