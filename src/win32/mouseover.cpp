@@ -85,7 +85,7 @@ void Mouseover::ShowTranslation()
 {
 	char MatchedWord[MAX_SCAN_TEXT_SIZE];
 	/* GlobalData->CurMod is shared by multiple processes, copy data ASAP. */
-	strcpy_s(MatchedWord, MAX_SCAN_TEXT_SIZE, GlobalData->CurMod.MatchedWord);
+	strcpy(MatchedWord, GlobalData->CurMod.MatchedWord);
 	int BeginPos = GlobalData->CurMod.BeginPos;
 	bool IgnoreScanModifierKey = static_cast<bool>(GlobalData->CurMod.IgnoreScanModifierKey);
 #ifdef DEBUG

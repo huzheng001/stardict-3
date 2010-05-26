@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/DATTACH_WINDOWS_CONSOLE /D_WIN32_WINNT=0x0501 /DENABLE_LOG_WINDOW"
 				Optimization="0"
-				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;"
+				AdditionalIncludeDirectories=".;&quot;libsigc++-src&quot;;../src;&quot;../src/sigc++config&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-d-2_0.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-vc80-d-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".;../src;&quot;../src/sigc++config&quot;"
+				AdditionalIncludeDirectories=".;&quot;libsigc++-src&quot;;../src;&quot;../src/sigc++config&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-2_0.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="zdll.lib sigc-vc80-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
@@ -673,6 +673,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\specialdictplugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\stardict-sigc++.h"
 					>
 				</File>
 				<File

@@ -12,7 +12,7 @@
 typedef unsigned long in_addr_t;
 #endif
 
-#include "sigc++/sigc++.h"
+#include "stardict-sigc++.h"
 
 
 typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpointer userdata);

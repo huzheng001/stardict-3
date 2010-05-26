@@ -103,7 +103,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copy to Acrobat Plug-ins..."
-				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.&#x0D;&#x0A;if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.&#x0D;&#x0A;"
+				CommandLine="if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a if not exist &quot;%AcroSDKPIDir%&quot; mkdir &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a copy &quot;$(targetpath)&quot; &quot;%AcroSDKPIDir%&quot;&#x0D;&#x0A;if not &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo &quot;$(targetname)&quot; copied to &quot;%AcroSDKPIDir%&quot;.&#x0D;&#x0A;if &quot;%AcroSDKPIDir%&quot;a == &quot;&quot;a echo not performed. AcroSDKPIDir environment variable not set.&#x0D;&#x0A;copy &quot;$(TargetPath)&quot;  &quot;$(OutDir)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration

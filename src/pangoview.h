@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include <memory>
 
-#include "sigc++/sigc++.h"
+#include "lib/stardict-sigc++.h"
 #include "lib/parsedata_plugin.h"
 
 //#define DEBUG

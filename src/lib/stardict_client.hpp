@@ -2,16 +2,17 @@
 #define _STARDICT_CLIENT_HPP_
 
 #include <glib.h>
+#include <list>
+#include <vector>
+
 #ifndef _WIN32
 #  include <netdb.h>
 #else
 typedef unsigned long in_addr_t;
 #endif
 
-#include "sigc++/sigc++.h"
+#include "stardict-sigc++.h"
 
-#include <list>
-#include <vector>
 
 namespace STARDICT {
 	enum {

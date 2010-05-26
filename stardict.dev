@@ -1,7 +1,7 @@
 [Project]
 FileName=stardict.dev
 Name=stardict
-UnitCount=159
+UnitCount=160
 Type=0
 Ver=1
 ObjFiles=
@@ -1629,6 +1629,16 @@ BuildCmd=
 
 [Unit159]
 FileName=src\lib\compositelookup.h
+CompileCpp=1
+Folder=lib
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit160]
+FileName=src\lib\stardict-sigc++.h
 CompileCpp=1
 Folder=lib
 Compile=1
