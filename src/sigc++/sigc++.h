@@ -20,6 +20,10 @@
 #ifndef SIGCXX_SIGCXX_H
 #define SIGCXX_SIGCXX_H
 
+#ifdef _MSC_VER
+#error You are building the project with sigc++ library distributed with StarDict. Please, install libsigc++ as described in mvsc\readme.txt.
+#endif
+
 #include <sigc++/signal.h>
 #include <sigc++/connection.h>
 #include <sigc++/trackable.h>

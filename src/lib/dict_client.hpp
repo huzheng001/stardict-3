@@ -7,7 +7,7 @@
 #include <map>
 #include <vector>
 
-#include "sigc++/sigc++.h"
+#include "stardict-sigc++.h"
 
 namespace DICT {
 	struct Definition {

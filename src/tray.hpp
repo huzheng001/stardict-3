@@ -2,7 +2,7 @@
 #define _TRAY_HPP_
 
 #include <gtk/gtk.h>
-#include "sigc++/sigc++.h"
+#include "lib/stardict-sigc++.h"
 
 /**
  * Base class for platform specific implementation of tray
