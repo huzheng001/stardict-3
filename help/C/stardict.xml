@@ -591,7 +591,14 @@
 	</para>
 	<para>
 	In Windows &app_t; works specially with some applications. First, &app_t; itself.
-	To scan a word in &app_t; Main window you need to select it. The Scan mode in &app_t; Main window works exactly as it should in general case, the fact that it's Windows does not matter. You can not scan in other &app_t; windows however.
+	To scan a word in &app_t; Main window you need to select it. 
+	The Scan mode in &app_t; Main window works exactly as it should in general case, 
+	the fact that it's Windows does not matter. 
+	You can not scan in other &app_t; windows however. 
+	</para>
+	
+	<para>
+	Second, there is special plugin to scan in PDF documents, see <xref linkend="stardict-acrobat-plugin"/>.
 	</para>
 
     <!-- ==== Figure ==== -->
@@ -657,6 +664,85 @@
 		</varlistentry>
     </variablelist>
 
+	</sect2>
+	
+	<sect2 id="stardict-acrobat-plugin">
+	<title>WordPick Adobe Acrobat plugin</title>
+	<para>&app_t; includes an Abode Acrobat plugin that can be used to extract and translate text from Portable Document Format (PDF) documents. The WordPick plugin is available in &winedition; of &app_t; only. The main text extration mechanism does not work with PDF documents in Windows.
+	</para>
+
+	<note>
+	<title>Limitations</title>
+	<para>
+	WordPick plugin requires non-free edition of Acrobat like Acrobat Stardard, Pro or richer, 
+	it does not work with the free Acrobat Reader product. 
+	The plugin is know to work with versions 7-9 of Acrobat. 
+	PDF document security restrictions must allow extracting document content.
+	</para>
+	</note>
+	
+	<para>WordPick plugin embeds an icon into the stardard Acrobat toolbar near the Hand Tool.
+	In Acrobat Reader you will not see that icon &mdash; plugin is not available.
+	If the current document does not allow for text extraction, the icon is disabled, 
+	the plugin is not operational.
+	</para>
+
+	<!-- ==== Figure ==== -->
+	<figure id="stardict-acrobat-toolbar-fig"> 
+	<title>Adobe Acrobat Toolbar with WordPick plugin icon</title>
+	<screenshot>
+		<mediaobject>
+		<imageobject>
+			<imagedata fileref="figures/acrobat_toolbar.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>Shows Adobe Acrobat Toolbar with WordPick plugin icon.</phrase>
+		</textobject>
+		</mediaobject>
+	</screenshot>
+	</figure>
+	<!-- ==== End of Figure ==== -->
+
+	<tip>
+	<title>How to inspect document security permissions</title>
+	<para>
+	In the main menu open <guimenu>File</guimenu>, <guimenuitem>Document properties</guimenuitem>.
+	<guilabel>Document properties</guilabel> dialog pops up. Proceed to <guilabel>Security</guilabel> tab. Look into <guilabel>Document Restrictions Summary</guilabel> group. <guilabel>Content Copying or Extraction</guilabel> must be allowed.
+	</para>
+	</tip>
+	
+	<orderedlist>
+	<title>Translate text with WordPick plugin</title>
+	<listitem>
+	<para>Select WordPick and Select tools. Cursor changes to a vertical bar.
+	Now you can select text with mouse.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Start &app_t; if you have not already done that, and enable Scan mode.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>Select a word in the PDF document, 
+	&app_t; shows the Floating window with translation if the word is found.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
+	<para>
+	You may select consecutive words and phrases. 
+	If &app_t; is unable to find the phrase, it tries to cut words from the end.
+	You will be shown translation of the first word if nothing else has been found.
+	</para>
+	
+	<para>Note that the Scan modifier key (<xref linkend="stardict-prefs-dictionary-scan"/>) has no effect in Acrobat.
+	WordPick search for text when you select something in the document regardless of the state of modifiers.
+	To turn off the text translation mode, deselect the WordPick tool on the toolbar, deselecting the Select tool is not necessary.
+	</para>
+	
 	</sect2>
 
 	<sect2 id="stardict-translation">
@@ -875,6 +961,9 @@
 	</listitem>
 	
 	</orderedlist>
+	
+	<para>For scanning in PDF documents see <xref linkend="stardict-acrobat-plugin"/>.
+	</para>
 	
 	</sect3>
 	</sect2>
