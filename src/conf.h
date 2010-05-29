@@ -196,5 +196,8 @@ extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
 extern std::string gStarDictDataDir;
 
 std::string GetStardictPluginDir(void);
+#ifndef CONFIG_GNOME
+std::string GetStarDictHelpDir(void);
+#endif
 
 #endif
