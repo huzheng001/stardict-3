@@ -1,7 +1,7 @@
 #ifndef _global_h
 #define _global_h
 
-#include <string.h>
+#include <cstring>
 
 #ifdef _WIN32
 #define bzero(p, l) memset(p, 0, l)
@@ -16,11 +16,6 @@ typedef char    pchar;          /* Mixed prototypes can take char */
 typedef char    pbool;          /* Mixed prototypes can take char */
 typedef unsigned char   uchar;  /* Short for unsigned char */
 typedef char            my_bool; /* Small bool */
-
-#ifndef min
-#  define min(a, b)       ((a) < (b) ? (a) : (b))
-#endif
-
 
 #endif /* my_global_h */
 

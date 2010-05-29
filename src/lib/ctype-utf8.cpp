@@ -24,9 +24,10 @@
 #  include "config.h"
 #endif
 
+#include <algorithm>
+
 #include "my_global.h"
 #include "m_ctype.h"
-//#include <errno.h>
 
 using namespace stardict_collation;
 
@@ -1951,7 +1952,7 @@ static inline int bincmp(const uchar *s, const uchar *se,
                          const uchar *t, const uchar *te)
 {
   int slen= (int) (se-s), tlen= (int) (te-t);
-  int len=min(slen,tlen);
+  int len=std::min(slen,tlen);
   int cmp= memcmp(s,t,len);
   return cmp ? cmp : slen-tlen;
 }
