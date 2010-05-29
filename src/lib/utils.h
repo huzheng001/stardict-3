@@ -4,12 +4,12 @@
 #include <glib.h>
 #include <string>
 #include <vector>
+#include <cstring>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-#include <string.h>
 
 #if defined(ARM) || defined(__sparc__)
 static inline guint32 get_uint32(const gchar *addr)

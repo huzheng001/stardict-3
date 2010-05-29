@@ -18,6 +18,8 @@
 #  include "config.h"
 #endif
 
+#include <algorithm>
+
 #include "my_global.h"
 #include "m_ctype.h"
 
@@ -363,7 +365,7 @@ static int my_strnncoll_mb_bin(CHARSET_INFO * cs __attribute__((unused)),
 				const uchar *t, uint tlen,
                                 my_bool t_is_prefix)
 {
-  uint len=min(slen,tlen);
+  uint len=std::min(slen,tlen);
   int cmp= memcmp(s,t,len);
   return cmp ? cmp : (int) ((t_is_prefix ? len : slen) - tlen);
 }
