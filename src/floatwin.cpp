@@ -997,7 +997,7 @@ void FloatWin::button_box_show_first_time(void)
 	requisition.width += get_window_border_width();
 	if (requisition.width > now_window_width)
 		now_window_width = requisition.width;
-	gboolean changed=false;
+	bool changed=false;
 	if (iCurrentX < 0) {
 		iCurrentX = 0;
 		changed = true;

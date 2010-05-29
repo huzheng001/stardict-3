@@ -6,9 +6,9 @@ this script must run in the root StarDict directory
 
 // options
 /* use Dev-C++ output files - true, or use MS Visual Studio output files - false */
-var UseDevC = false; 
+var UseDevC = true; 
 var InstallDirMustNotExist = false;
-var MSVSConfig = "Release"; // Release or Debug
+var MSVSConfig = "Debug"; // Release or Debug
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
@@ -28,6 +28,28 @@ function CopyFile(src, target) {
 	}
 	//WScript.Echo("src: " + src + ", target: " + target);
 	fso.CopyFile(src, target);
+}
+
+/* copy content of the folder SrcDir into TargetDir. 
+TargetDir must exist. */
+function CopyFolderContent(SrcDir, TargetDir) {
+	/* fix TargetDir to end with "\\" */
+	if(!TargetDir.match(/.*\\$/)) {
+		TargetDir += "\\";
+	}
+	var oFolder = fso.GetFolder(SrcDir);
+	var oFolders = new Enumerator(oFolder.SubFolders);
+	for(; !oFolders.atEnd(); oFolders.moveNext())
+	{
+		//WScript.Echo("folder: " + oFolders.item().path);
+		fso.CopyFolder(oFolders.item().path, TargetDir);
+	}
+	var oFiles = new Enumerator(oFolder.Files);
+	for(; !oFiles.atEnd(); oFiles.moveNext()) 
+	{
+		//WScript.Echo("file: " + oFiles.item().path);
+		fso.CopyFile(oFiles.item().path, TargetDir);
+	}
 }
 
 function CreateFolder(path) {
@@ -125,7 +147,35 @@ if(UseDevC) {
 CreateFolder(InstallDir + "dic\\");
 CreateFolder(InstallDir + "treedict\\");
 CreateFolder(InstallDir + "skins\\");
-CreateFolder(InstallDir + "help\\");
+
+{
+	var InstallHelpDir = InstallDir + "help\\";
+	CreateFolder(InstallHelpDir);
+	var oFolder = fso.GetFolder(BaseDir + "\\help\\");
+	var oFolders = new Enumerator(oFolder.SubFolders);
+	var cnt = 0;
+	for(; !oFolders.atEnd(); oFolders.moveNext())
+	{
+		var oLocaleFolder = oFolders.item();
+		if(oLocaleFolder.name == ".svn") {
+			continue;
+		}
+		var HtmlDir = oLocaleFolder.path + "\\html\\";
+		if(!fso.FolderExists(HtmlDir)) {
+			WScript.Echo("Html help folder is not found: " + HtmlDir);
+			WScript.Quit(1);
+		}
+		var InstallLocaleDir = InstallHelpDir + oLocaleFolder.name + "\\";
+		CreateFolder(InstallLocaleDir);
+		CopyFolderContent(HtmlDir, InstallLocaleDir);
+		++cnt;
+	}
+	if(cnt == 0) {
+		WScript.Echo("Html help is not found: " + oFolder.Path + "\\C\\html");
+		WScript.Quit(1);
+	}
+}
+
 {
 	var PluginsDir = InstallDir + "plugins\\";
 	CreateFolder(PluginsDir);

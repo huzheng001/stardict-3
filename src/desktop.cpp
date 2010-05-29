@@ -37,16 +37,22 @@
 
 #include "desktop.hpp"
 
-#if ! (defined(_WIN32) || defined(CONFIG_GNOME))
-const char* const gHelpDirBase = STARDICT_DATA_DIR G_DIR_SEPARATOR_S "help";
-
-/* Guess value of current locale from value of the environment variables
-   or system-dependent defaults.
-   This is a simplified version of the guess_category_value function from the
-   gettext package. */
-static const char * guess_locale(void)
+#ifndef CONFIG_GNOME
+/* Guess value of the current locale from values of environment variables
+	and system-dependent defaults.
+	This function works as a simplified version of the guess_category_value
+	function from the gettext package.
+*/
+static std::string guess_locale(void)
 {
+#ifdef _WIN32
+	/* LC_MESSAGES is not defined on Windows. It compiles but produces a runtime error.
+	We may try gtk_set_locale() to get the effective locale. */
+	glib::CharStr locale_wrap(g_win32_getlocale());
+	const char* locale = get_impl(locale_wrap);
+#else
 	const char *locale = setlocale(LC_MESSAGES, NULL);
+#endif
 	if (strcmp (locale, "C") == 0)
 		return locale;
 	const char *language = getenv ("LANGUAGE");
@@ -57,7 +63,8 @@ static const char * guess_locale(void)
 
 static std::string guess_html_help_dir(void)
 {
-	const char* locale_list = guess_locale();
+	const std::string std_locale_list = guess_locale();
+	const char* locale_list = std_locale_list.c_str();
 	std::string locale;
 	std::string dir;
 	while(locale_list && locale_list[0]) {
@@ -72,7 +79,7 @@ static std::string guess_html_help_dir(void)
 		size_t pos = locale.find('.');
 		if(pos != std::string::npos)
 			locale.resize(pos);
-		dir = gHelpDirBase;
+		dir = GetStarDictHelpDir();
 		dir += G_DIR_SEPARATOR;
 		dir += locale;
 		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
@@ -80,13 +87,13 @@ static std::string guess_html_help_dir(void)
 		pos = locale.find('_');
 		if(pos != std::string::npos)
 			locale.resize(pos);
-		dir = gHelpDirBase;
+		dir = GetStarDictHelpDir();
 		dir += G_DIR_SEPARATOR;
 		dir += locale;
 		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
 			return dir;
 	}
-	dir = gHelpDirBase;
+	dir = GetStarDictHelpDir();
 	dir += G_DIR_SEPARATOR_S "C";
 	if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
 		return dir;
@@ -182,24 +189,12 @@ void play_video_file(const std::string& filename)
 
 void show_help(const gchar *section)
 {
-#ifdef _WIN32
-	std::string datadir_utf8;
-	if(!file_name_to_utf8(gStarDictDataDir, datadir_utf8))
-		return ;
-	// You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
-	glib::CharStr filename_utf8(
-		g_strdup_printf(_("%s\\help\\stardict.chm"), datadir_utf8.c_str()));
-	std_win_string filename_win;
-	if(!utf8_to_windows(get_impl(filename_utf8), filename_win))
-		return ;
-	ShellExecute((HWND)(GDK_WINDOW_HWND(gpAppFrame->window->window)), 
-		TEXT("OPEN"), filename_win.c_str(), NULL, NULL, SW_SHOWNORMAL);
-#elif defined(CONFIG_GNOME)
+#if defined(CONFIG_GNOME)
 	gnome_help_display ("stardict.xml", section, NULL);
 #else
 	std::string dir = guess_html_help_dir();
 	if(dir.empty()) {
-		std::string index_file = std::string(gHelpDirBase) 
+		std::string index_file = GetStarDictHelpDir()
 			+ G_DIR_SEPARATOR_S "C" G_DIR_SEPARATOR_S "index.html";
 		glib::CharStr message(g_strdup_printf(_("Unable to find help file %s."),
 			index_file.c_str()));

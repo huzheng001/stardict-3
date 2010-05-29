@@ -327,3 +327,14 @@ std::string GetStardictPluginDir(void)
 	return STARDICT_LIB_DIR"/plugins";
 #endif
 }
+
+#ifndef CONFIG_GNOME
+std::string GetStarDictHelpDir(void)
+{
+#ifdef _WIN32
+	return gStarDictDataDir + G_DIR_SEPARATOR_S "help";
+#else
+	return STARDICT_DATA_DIR G_DIR_SEPARATOR_S "help";
+#endif
+}
+#endif

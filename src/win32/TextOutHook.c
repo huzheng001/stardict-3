@@ -383,7 +383,7 @@ DLLIMPORT void GetWord (TCurrentMode *P)
 	p = TryGetWordFromAnyWindow(WndClass, P->WND, P->Pt, &(P->BeginPos));
 	if (p) {
 		assert(strlen(p) < MAX_SCAN_TEXT_SIZE);
-		strcpy_s(P->MatchedWord, MAX_SCAN_TEXT_SIZE, p);
+		strcpy(P->MatchedWord, p);
 		free(p);
 	} else {
 		P->MatchedWord[0] = '\0';

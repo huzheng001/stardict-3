@@ -43,6 +43,15 @@ I was using the 2.44 version.
 I use linux commmand to illustrate the steps, but you cann't do it in this way :)
 You may use stardict-prepare-installer.js to build win32-install-dir directory structure provided you already have all the required files in place. See comment at the head of the file for details of running the script.
 
+You need to prepare some files manually before proceeding the steps below.
+
+po/*.gmo file must be prepared in linux and copied into po
+
+Html documentation you may find in linux version of StarDict distribution.
+Copy <linux-StarDict-distr>/help over the help directory, overwrite all files.
+As result you'll get help/*/html directories containing html help.
+You may copy only help/*/html directories if you like.
+
 ===============
 cd stardict-3.0.0
 mkdir win32-install-dir
@@ -51,31 +60,28 @@ cp src/stardict.exe win32-install-dir
 cp src/win32/TextOutSpy.dll win32-install-dir
 cp src/win32/TextOutHook.dll win32-install-dir
 
-po/*.gmo file must be prepared in linux and copied in po beforehand?
 mkdir -p win32-install-dir/locale/zh_CN/LC_MESSAGES/
 cp po/zh_CN.gmo win32-install-dir/locale/zh_CN/LC_MESSAGES/stardict.mo
 mkdir -p win32-install-dir/locale/ru/LC_MESSAGES/
 cp po/ru.gmo win32-install-dir/locale/ru/LC_MESSAGES/stardict.mo
 mkdir -p win32-install-dir/locale/cs/LC_MESSAGES/
 cp po/cs.gmo win32-install-dir/locale/cs/LC_MESSAGES/stardict.mo
+# repeat for all po/*.gmo files
 
 mkdir -p win32-install-dir/pixmaps
 cp pixmaps/stardict.png win32-install-dir/pixmaps
-cp src/pixmaps/* win32-install-dir/pixmaps //Notice: docklet_*.png needn't copy!!!
+cp src/pixmaps/* win32-install-dir/pixmaps # except docklet_*.png
 mkdir -p win32-install-dir/sounds
 cp src/sounds/*.wav win32-install-dir/sounds
 mkdir -p win32-install-dir/dic
 mkdir -p win32-install-dir/treedict
 mkdir -p win32-install-dir/skins
 
-mkdir -p win32-install-dir/help
-
-You can create stardict.html file by "yelp-pregenerate stardict.xml", yelp-pregenerate is included in yelp-2.4.2, the newer version don't have this tool anymore. Then do some string replacing:
-replace "file:///usr/share/sgml/docbook/yelp/docbook/images/" to "../"
-replace "ghelp:stardict.xml?" to "./stardict.html#"
-replace "ghelp:stardict.xml" to "./stardict.html#id2772190"  //id2772190 is "<b>Table of Contents</b>" 's previous name.
-replace "file://./figures/" to "./figures/"
-And build the chm file by Visual CHM.
+mkdir -p win32-install-dir/help/C
+cp help/C/html/* win32-install-dir/help/C
+mkdir -p win32-install-dir/help/ru
+cp help/ru/html/* win32-install-dir/help/ru
+# repeat for all help/*/html directories
 
 mkdir -p win32-install-dir/plugins
 cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins
