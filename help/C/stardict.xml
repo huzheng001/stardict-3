@@ -8,6 +8,7 @@
   <!ENTITY app "StarDict">
   <!ENTITY app_t "<application>StarDict</application>">
   <!ENTITY winedition "Windows edition">
+  <!ENTITY gnomeedition "Gnome edition">
 ]>
 <!-- 
       (Do not remove this comment block.)
@@ -1810,6 +1811,121 @@
 	Normally, help files can be found in the <filename>C:\Program Files\StarDict\help</filename> directory. Each directory corresponds to one language. Directories are named after language codes.
 	</para>
 	</sect2>
+	
+	<sect2 id="stardict-details-dirs">
+	<title>&app; directories</title>
+	<para>&app_t; installs data files into a number of directories.
+	Default directories are assigned at build time, but some of them 
+	can be overriden with <filename>stardict-dirs.cfg</filename> file.
+	Overriding &app; directories is useful for debugging, 
+	an ordinary user does not need this.
+	</para>
+	
+	<para>
+	&app_t; searches for the <filename>stardict-dirs.cfg</filename> file in the <varname>user_config_dir</varname> directory. You may override location of the <filename>stardict-dirs.cfg</filename> file with <varname>STARDICT_DIRS_CONFIG_FILE</varname> environment variable.
+	</para>
+	
+	<para>The <filename>stardict-dirs.cfg</filename> file is a .ini-like config file. The syntax of .ini files is described in detail in the <ulink url="http://freedesktop.org/wiki/Specifications/desktop-entry-spec">Desktop Entry Specification</ulink>.
+	All keys must belong to <quote>general</quote> group. 
+	</para>
+	
+	<tip>
+	<para>Do not forget to double backslash characters in values. Backslash is used as path separator in Windows.
+	</para>
+	</tip>
+	
+	<para>Example of <filename>stardict-dirs.cfg</filename> file for Windows:
+	<programlisting>
+<![CDATA[
+[general]
+data_dir=C:\\Program Files\\StarDict
+dll_dir=C:\\StarDict\\mvsc\\Debug
+plugin_dir=C:\\StarDict\\mvsc\\Debug
+]]>
+	</programlisting>
+	</para>
+	
+	<variablelist>
+	<title>&app; directories</title>
+		<varlistentry>
+		<term>user_config_dir
+		</term>
+		<listitem>
+		<para>A directory of configuration files.</para>
+		<para>Windows default: <filename>C:\Documents and Settings\%USERNAME%\Application Data\StarDict</filename>.
+		</para>
+		<para>Other default: <filename>~/.stardict</filename>.
+		</para>
+		<para>Environment variable: <varname>STARDICT_CONFIG_PATH</varname>.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term>data_dir
+		</term>
+		<listitem>
+		<para>Data directory.
+		</para>
+		<para>Windows default: <filename>C:\Program Files\StarDict</filename>.
+		</para>
+		<para>Other default: <filename>/usr/share/stardict</filename>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: data_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term>dll_dir
+		</term>
+		<listitem>
+		<para>A directory of hook dlls, in &winedition; only.
+		</para>
+		<para>Windows default: <varname>data_dir</varname>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: dll_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term>plugin_dir
+		</term>
+		<listitem>
+		<para>A directory of &app; plugins.
+		</para>
+		<para>Windows default: <varname>data_dir</varname> + <filename>"/plugins"</filename>.
+		</para>
+		<para>Other default: <filename>/usr/lib/stardict/plugins</filename>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: plugins_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term>help_dir
+		</term>
+		<listitem>
+		<para>A directory of help files, in all editions except &gnomeedition;.
+		</para>
+		<para>Default: <varname>data_dir</varname> + <filename>"/help"</filename>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: help_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+	</variablelist>
+	
+	<note>
+	<para>Default values in the list above are given for the purpose of illustrating possible values of variables. Actual default value depends on a number of factors and cannot be computed easily. See AppDirs class in the <filename>conf.h</filename> file for details on how the default value is calculated.
+	</para>
+	</note>
+	
+	</sect2>
+	
 	</sect1>
 
  <sect1 id="stardict-projects">
