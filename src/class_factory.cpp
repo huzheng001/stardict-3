@@ -21,6 +21,8 @@
 #  include "config.h"
 #endif
 
+#include <cstdlib>
+
 #include "tray.hpp"
 
 #if defined(CONFIG_GNOME) || defined(CONFIG_MAEMO)
@@ -42,7 +44,7 @@
 #endif
 
 #include "lib/utils.h"
-
+#include "conf.h"
 #include "class_factory.hpp"
 
 void *PlatformFactory::create_class_by_name(const std::string& name, void *param)
@@ -51,7 +53,10 @@ void *PlatformFactory::create_class_by_name(const std::string& name, void *param
 #if defined(CONFIG_GNOME) || defined(CONFIG_MAEMO)
 		return new gconf_file("/apps/stardict");
 #else
-		return new inifile(get_user_config_dir()+ G_DIR_SEPARATOR_S "stardict.cfg");
+		inifile *iniconf = new inifile();
+		if(!iniconf->load(conf_dirs->get_user_config_dir()+ G_DIR_SEPARATOR_S "stardict.cfg"))
+			exit(EXIT_FAILURE);
+		return iniconf;
 #endif
 	} else if (name=="hotkeys") {
 #ifdef _WIN32

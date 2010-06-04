@@ -11,6 +11,8 @@
 #include <iostream>
 #include <gtk/gtk.h>
 #include <memory>
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include "config_file.hpp"
 #include "inifile.hpp"
@@ -33,8 +35,7 @@ struct tmp_file {
 	string fname;
 	tmp_file(const string& fn) : fname(fn) {}
 	~tmp_file() { 
-		if (remove(fname.c_str())==-1) 
-			std::cerr<<"can not remove: "<<fname<<". "<<strerror(errno)<<std::endl;
+		remove(fname.c_str());
 	}
 };
 
@@ -95,17 +96,55 @@ static bool test_gconf()
 
 static bool test_inifile()
 {
-	std::auto_ptr<config_file> cf;
+	std::auto_ptr<inifile> cf;
 	string fname("/tmp/stardict.cfg");
 	tmp_file tf(fname);
-	cf.reset(new inifile(fname));
-	bool res = is_test_passed(cf.get());
+	
+	// normal config
+	remove(fname.c_str());
+	cf.reset(new inifile());
+	if(!cf->load(fname))
+		return false;
+	if(!is_test_passed(cf.get()))
+		return false;
+	// destroy inifile and make sure that fname will not be changed by inifile
 	cf.reset(0);
-	return res;
+	
+	// read-only config
+	remove(fname.c_str());
+	{	// create an empty file, but the file must contain at least 1 byte
+		FILE *f = g_fopen(fname.c_str(), "w");
+		if (!f)
+			return false;
+		fwrite(" ", 1, 1, f);
+		fclose(f);
+	}
+	cf.reset(new inifile());
+	if(!cf->load(fname, true, false))
+		return false;
+	if(!is_test_passed(cf.get()))
+		return false;
+	cf.reset(0);
+	
+	// custom test 1
+	if(!g_file_set_contents(fname.c_str(),
+		"[general]\nkey=value\n", -1, NULL))
+		return false;
+	cf.reset(new inifile());
+	if(!cf->load(fname, true, false))
+		return false;
+	std::string val;
+	if(!cf->read_string("general", "key", val))
+		return false;
+	if(val != "value")
+		return false;
+	
+	return true;
 }
 
 int main(int argc, char *argv[])
 {
+	gtk_set_locale();
 	if (!test_inifile()) {
 		std::cerr<<"ini file test failed"<<std::endl;
 		return EXIT_FAILURE;

@@ -36,7 +36,7 @@ enum TNotifAreaMiddleClickAction {
 
 /*
  * AppConf class encapsulate
- * all preference of stardict.
+ * all preference of StarDict.
 */
 
 class AppConf {
@@ -149,7 +149,7 @@ static void *memrchr(const void *mem, int c, size_t len) {
 		cfgval->val_ = val;
 
 		size_t len = strlen(name);
-		//TODO: do not user memrchr
+		//TODO: do not use memrchr
 		const char *key = (char *)memrchr(name, '/', len);
 		if (!key)
 			key = name + len;
@@ -192,12 +192,65 @@ static void *memrchr(const void *mem, int c, size_t len) {
 	}
 };
 
-extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
-extern std::string gStarDictDataDir;
-
-std::string GetStardictPluginDir(void);
-#ifndef CONFIG_GNOME
-std::string GetStarDictHelpDir(void);
+/* Collection of StarDict directories.
+ * Most of the dirs can overridden with stardict-dirs.cfg file.
+ * 
+ * Implementation note
+ * 
+ * An object of this class is created very early in application initialization
+ * process. Be careful implementing this class, restrict used library objects
+ * to minimum. If it's found out that inifile class can not be used, we may
+ * retreat to environment variables. For example, STARDICT_DATA_DIR for 
+ * data_dir.
+ * */
+class AppDirs
+{
+public:
+	AppDirs(void);
+	std::string get_user_config_dir(void) const { return user_config_dir; }
+	std::string get_data_dir(void) const { return data_dir; }
+#ifdef _WIN32
+	std::string get_dll_dir(void) const { return dll_dir; }
 #endif
+	std::string get_plugin_dir(void) const { return plugin_dir; }
+#ifndef CONFIG_GNOME
+	std::string get_help_dir(void) const { return help_dir; }
+#endif
+	std::string get_locale_dir(void) const { return locale_dir; }
+#ifndef _WIN32
+	std::string get_system_icon_dir(void) const { return SYSTEM_ICON_DIR; }
+#endif
+#ifdef CONFIG_GNOME
+	std::string get_system_data_dir(void) const { return SYSTEM_DATA_DIR; }
+#endif
+	
+private:
+	std::string get_default_user_config_dir(void) const;
+	std::string get_default_data_dir(void) const;
+	std::string get_default_plugin_dir(void) const;
+	std::string get_default_help_dir(void) const;
+	std::string get_default_locale_dir(void) const;
+	
+private:
+	std::string user_config_dir;
+	/* contains subdirs: dic, treedict, sounds, skins, pixmaps, locale */
+	std::string data_dir;
+#ifdef _WIN32
+	/* dir with TextOutSpy.dll and TextOutHook.dll */
+	std::string dll_dir;
+#endif
+	/* StarDict plugins dir */
+	std::string plugin_dir;
+#ifndef CONFIG_GNOME
+	/* help dir, contains subdirs: C, mk, nl,... with localized manuals. */
+	std::string help_dir;
+#endif
+	/* dir containing getgext translated messages */
+	std::string locale_dir;
+};
+
+
+extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
+extern std::auto_ptr<AppDirs> conf_dirs;
 
 #endif

@@ -49,7 +49,7 @@ const char *StarDictPluginBase::get_filename()
 	return baseobj->plugin_filename.c_str();
 }
 
-StarDictPlugins::StarDictPlugins(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
+StarDictPlugins::StarDictPlugins(const std::string& dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
 {
 	plugindirpath = dirpath;
 	load(dirpath, order_list, disable_list);
@@ -70,7 +70,7 @@ private:
 	StarDictPlugins& plugins;
 };
 
-void StarDictPlugins::load(const char *dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
+void StarDictPlugins::load(const std::string& dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list)
 {
 	std::list<std::string> plugins_dirs;
 	plugins_dirs.push_back(dirpath);

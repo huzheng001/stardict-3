@@ -74,7 +74,7 @@ void ReadWord::LoadRealTtsPath(const gchar *path)
 			if (g_file_test(it->c_str(), G_FILE_TEST_EXISTS))
 				ttspath.push_back(*it);
 		} else {
-			str = gStarDictDataDir + G_DIR_SEPARATOR_S + *it;
+			str = conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S + *it;
 			if (g_file_test(str.c_str(), G_FILE_TEST_EXISTS))
 				ttspath.push_back(str);
 		}

@@ -28,7 +28,6 @@
 #include <cstdio>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
-#include <stdlib.h>
 
 #include "lib/utils.h"
 
@@ -38,122 +37,184 @@ static const guchar NEW_STRING_SEP = 1;
 static const guchar OLD_STRING_SEP = 0xFF;
 static const gchar *myversion = "1.0";
 
-typedef ResourceWrapper<GError, GError, g_error_free> MyGError;
-
-void inifile::create_empty()
+bool inifile::save()
 {
-	g_key_file_set_string(gkeyfile_, "stardict-private", "version",
-			      myversion);
-	save();
-	g_key_file_free(gkeyfile_);
-}
-
-void inifile::convert_from_locale_enc()
-{
-	MyGError err;
-	glib::CharStr data;
-
-	if (!g_file_get_contents(fname_.c_str(), get_addr(data), NULL,
-				 get_addr(err))) {
-		g_error(("Can not read %s, reason %s\n"), fname_.c_str(),
-			err->message);		
-		exit(EXIT_SUCCESS);
-	}
-
-	glib::CharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
-					  NULL));
-	if (!utfdata) {
-		g_error(("Can not convert ini file content to current locale\n"));
-		exit(EXIT_SUCCESS);
-	}
-
-	if (!g_file_set_contents(fname_.c_str(), get_impl(utfdata), -1, get_addr(err))) {
-		g_error("can not save content of ini file %s, reason %s\n",
-			fname_.c_str(), err->message);
-		exit(EXIT_SUCCESS);
-	}
-}
-
-inifile::inifile(const std::string& path)
-{
-	fname_ = path;
-	bool done = false;
-	while (!done) {
-		gkeyfile_ = g_key_file_new();
-		g_key_file_set_list_separator(gkeyfile_, NEW_STRING_SEP);
-/* create file if not exist, because of g_key_file can not do that */
-		if (!g_file_test(path.c_str(),
-				 GFileTest(G_FILE_TEST_EXISTS |
-					   G_FILE_TEST_IS_REGULAR))) {
-			create_empty();
-			continue;
-		}
-
-		MyGError err;
-		if (!g_key_file_load_from_file(gkeyfile_, path.c_str(),
-					       GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS |
-							     G_KEY_FILE_KEEP_TRANSLATIONS),
-					       get_addr(err))) {
-			if (err->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
-				g_key_file_free(gkeyfile_);
-				convert_from_locale_enc();
-				continue;
-			}
-			g_error(("Can not open config file: %s, reason: %s\n"),
-				path.c_str(), err->message);
-			exit(EXIT_FAILURE);//just in case
-		}
-
-		glib::CharStr version(g_key_file_get_string(gkeyfile_, "stardict-private",
-						       "version", get_addr(err)));
-		if (err) {
-			if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
-			    err->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
-				g_error(("internal error, reason: %s\n"),
-					err->message);
-				exit(EXIT_FAILURE);//just in case
-			}
-			create_empty();
-			continue;
-		}
-		if (strcmp(get_impl(version), myversion)) {
-			g_error(("unsupported ini file format\n"));
-			exit(EXIT_FAILURE);
-		}
-		done = true;
-	}
-
-}
-
-void inifile::save()
-{
+	g_assert(!read_only_);
 	gsize len;
-	MyGError err;
+	glib::Error err;
 	glib::CharStr data(
 		g_key_file_to_data(gkeyfile_, &len, get_addr(err)));
 
 	if (err) {
 		g_warning(("internal error, reason: %s\n"),
 			  err->message);
-		return;
+		return false;
 	}
 	FILE *f = g_fopen(fname_.c_str(), "w");
 	if (!f) {
-		g_warning(("can not open file: %s\n"),
+		g_warning(("can not open file for writing: %s\n"),
 			  fname_.c_str());
-		return;
+		return false;
 	}
 	size_t writeb = fwrite(get_impl(data), 1, len, f);
 	fclose(f);
-	if (writeb < len)
+	if (writeb < len) {
 		g_warning(("write to %s failed, instead of %lu,"
 			    " we wrote %lu\n"), fname_.c_str(), gulong(len), gulong(writeb));
+		return false;
+	}
+	return true;
+}
+
+bool inifile::fix_and_save()
+{
+	g_assert(!read_only_);
+	g_assert(gkeyfile_);
+	g_key_file_set_string(gkeyfile_, "stardict-private", "version",
+			      myversion);
+	if(!save())
+		return false;
+	g_key_file_free(gkeyfile_);
+	gkeyfile_ = NULL;
+	return true;
+}
+
+bool inifile::convert_from_locale_enc()
+{
+	g_assert(!read_only_);
+	glib::Error err;
+	glib::CharStr data;
+
+	if (!g_file_get_contents(fname_.c_str(), get_addr(data), NULL,
+				 get_addr(err))) {
+		g_error(("Can not read %s, reason %s\n"), fname_.c_str(),
+			err->message);
+		return false;
+	}
+
+	glib::CharStr utfdata(g_locale_to_utf8(get_impl(data), -1, NULL, NULL,
+					  NULL));
+	if (!utfdata) {
+		g_error(("ini file %s was saved in incorrect encoding, must be utf-8\n"), 
+			fname_.c_str());
+		return false;
+	}
+
+	if (!g_file_set_contents(fname_.c_str(), get_impl(utfdata), -1, get_addr(err))) {
+		g_error("Can not save content of ini file %s, reason %s\n",
+			fname_.c_str(), err->message);
+		return false;
+	}
+	return true;
+}
+
+inifile::CheckResult inifile::check_config_version()
+{
+	glib::Error err;
+	glib::CharStr version(g_key_file_get_string(gkeyfile_, "stardict-private",
+		"version", get_addr(err)));
+	if (err) {
+		if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND &&
+		    err->code != G_KEY_FILE_ERROR_GROUP_NOT_FOUND) {
+			g_error(("internal error, reason: %s\n"),
+				err->message);
+			return crError;
+		}
+		if(read_only_) {
+			g_error("ini file %s is missing parameter 'version' in "
+				"section 'stardict-private'", fname_.c_str());
+			return crError;
+		}
+		if(!fix_and_save())
+			return crError;
+		return crRetry;
+	}
+	if (strcmp(get_impl(version), myversion)) {
+		g_error(("unsupported ini file format, supported version is %s\n"), myversion);
+		return crError;
+	}
+	return crOK;
+}
+
+inifile::CheckResult inifile::load_ini_file()
+{
+	glib::Error err;
+	if (!g_key_file_load_from_file(gkeyfile_, fname_.c_str(),
+		GKeyFileFlags(G_KEY_FILE_KEEP_COMMENTS |
+			G_KEY_FILE_KEEP_TRANSLATIONS),
+		get_addr(err)))
+	{
+		if(!read_only_) {
+			if (err->code == G_KEY_FILE_ERROR_UNKNOWN_ENCODING) {
+				g_key_file_free(gkeyfile_);
+				gkeyfile_ = NULL;
+				if(!convert_from_locale_enc())
+					return crError;
+				return crRetry;
+			}
+		}
+		g_error(("Can not open config file: %s, reason: %s\n"),
+			fname_.c_str(), err->message);
+		return crError;
+	}
+	return crOK;
+}
+
+inifile::inifile(void)
+:
+	gkeyfile_(NULL),
+	read_only_(false)
+{
+	
 }
 
 inifile::~inifile()
 {
-	save();
-	g_key_file_free(gkeyfile_);
+	if(gkeyfile_) {
+		if(!read_only_)
+			save();
+		g_key_file_free(gkeyfile_);
+	}
+}
+
+bool inifile::load(const std::string& path, bool read_only, bool strict)
+{
+	fname_ = path;
+	read_only_ = read_only;
+	while (true) {
+		g_assert(!gkeyfile_);
+		gkeyfile_ = g_key_file_new();
+		g_key_file_set_list_separator(gkeyfile_, NEW_STRING_SEP);
+		/* create file if it does not exist, because g_key_file can not do that */
+		if (!g_file_test(fname_.c_str(),
+				 GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)))
+		{
+			if(read_only_)
+				return false;
+			if(!fix_and_save())
+				return false;
+			continue;
+		}
+
+		CheckResult res = load_ini_file();
+		if(res == crError)
+			return false;
+		else if(res == crRetry)
+			continue;
+		g_assert(res == crOK);
+
+		if(strict) {
+			res = check_config_version();
+			if(res == crError)
+				return false;
+			else if(res == crRetry)
+				continue;
+			g_assert(res == crOK);
+		}
+		
+		break;
+	}
+	return true;
 }
 
 static bool report_error(GError *err, const gchar *sect, const gchar *key)
@@ -266,8 +327,7 @@ void inifile::notify_add(const gchar *sect, const gchar *key,
 	std::string name = std::string(sect) + "/" + key;
 	
 	ChangeEventsMap::iterator it =
-                change_events_map_.insert(
-                        std::make_pair(name,
-                                       sigc::signal<void, const baseconfval*>())).first;
-        it->second.connect(slot);
+		change_events_map_.insert(
+			std::make_pair(name, sigc::signal<void, const baseconfval*>())).first;
+	it->second.connect(slot);
 }
