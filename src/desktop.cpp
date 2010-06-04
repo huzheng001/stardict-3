@@ -79,7 +79,7 @@ static std::string guess_html_help_dir(void)
 		size_t pos = locale.find('.');
 		if(pos != std::string::npos)
 			locale.resize(pos);
-		dir = GetStarDictHelpDir();
+		dir = conf_dirs->get_help_dir();
 		dir += G_DIR_SEPARATOR;
 		dir += locale;
 		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
@@ -87,13 +87,13 @@ static std::string guess_html_help_dir(void)
 		pos = locale.find('_');
 		if(pos != std::string::npos)
 			locale.resize(pos);
-		dir = GetStarDictHelpDir();
+		dir = conf_dirs->get_help_dir();
 		dir += G_DIR_SEPARATOR;
 		dir += locale;
 		if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
 			return dir;
 	}
-	dir = GetStarDictHelpDir();
+	dir = conf_dirs->get_help_dir();
 	dir += G_DIR_SEPARATOR_S "C";
 	if(g_file_test(dir.c_str(), G_FILE_TEST_IS_DIR))
 		return dir;
@@ -194,7 +194,7 @@ void show_help(const gchar *section)
 #else
 	std::string dir = guess_html_help_dir();
 	if(dir.empty()) {
-		std::string index_file = GetStarDictHelpDir()
+		std::string index_file = conf_dirs->get_help_dir()
 			+ G_DIR_SEPARATOR_S "C" G_DIR_SEPARATOR_S "index.html";
 		glib::CharStr message(g_strdup_printf(_("Unable to find help file %s."),
 			index_file.c_str()));
@@ -239,5 +239,5 @@ void show_url(const char *url)
 void play_sound_on_event(const gchar *eventname)
 {
 	if (conf->get_bool_at("dictionary/enable_sound_event"))
-	  play_sound_file(gStarDictDataDir+ G_DIR_SEPARATOR_S "sounds" G_DIR_SEPARATOR_S +eventname+".wav");
+	  play_sound_file(conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "sounds" G_DIR_SEPARATOR_S +eventname+".wav");
 }

@@ -19,9 +19,9 @@ DEFAULT_INCLUDES = -I$(top_builddir)
 AM_CPPFLAGS =							                            \
 	$(STARDICT_CFLAGS)						                    \
 	$(LOCAL_SIGCPP_INCLUDE)	\
-	-DDATADIR=\""$(datadir)"\"	\
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps"\"	\
-	-DSTARDICT_LOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DSYSTEM_DATA_DIR=\""$(datadir)"\"	\
+	-DSYSTEM_ICON_DIR=\""$(datadir)/pixmaps"\"	\
+	-DSTARDICT_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DSTARDICT_DATA_DIR=\""$(datadir)/stardict"\"	\
 	-DSTARDICT_LIB_DIR=\""$(libdir)/stardict"\"
 
@@ -34,7 +34,7 @@ if !GNOME_SUPPORT
 if MAEMO_SUPPORT
 CONFIG_FILE_MODULE = gconf_file.cpp gconf_file.hpp
 else
-CONFIG_FILE_MODULE = inifile.cpp inifile.hpp
+CONFIG_FILE_MODULE =
 endif
 else
 CONFIG_FILE_MODULE = gconf_file.cpp gconf_file.hpp
@@ -75,6 +75,7 @@ stardict_SOURCES = 			                \
 	articleview.cpp articleview.h           \
 	class_factory.cpp class_factory.hpp     \
 	config_file.hpp              \
+	inifile.cpp inifile.hpp                 \
 	$(CONFIG_FILE_MODULE)                   \
 	$(KEYPRESS_FILE_MODULE) \
 	$(DOCKLET_FILE_MODULE) \

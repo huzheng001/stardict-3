@@ -32,7 +32,9 @@ int main()
 	
 	{
 		TmpFile tf(tmpfname);
-		inifile ini(tmpfname);
+		inifile ini;
+		bool res = ini.load(tmpfname);
+		g_assert(res);
 		std::string s;
 		g_assert(ini.read_string("stardict-private", "version", s));
 		g_assert(s == "1.0");
@@ -47,7 +49,9 @@ int main()
 	fclose(f);
 	{
 		//TmpFile tf(tmpfname);
-		inifile ini(tmpfname);
+		inifile ini;
+		bool res = ini.load(tmpfname);
+		g_assert(res);
 		std::string s;
 		g_assert(ini.read_string("stardict-private", "version", s));
 		g_assert(s == "1.0");

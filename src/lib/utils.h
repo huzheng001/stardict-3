@@ -72,9 +72,6 @@ namespace glib {
 
 extern void ProcessGtkEvent();
 
-//sinse glib 2.6 we have g_get_user_config_dir
-//but because of compability with other 2.x...
-extern std::string get_user_config_dir();
 extern std::string combnum2str(gint comb_code);
 extern std::vector<std::string> split(const std::string& str, char sep);
 extern GdkPixbuf *load_image_from_file(const std::string& filename);

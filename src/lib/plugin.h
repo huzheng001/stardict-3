@@ -43,7 +43,7 @@ struct StarDictPluginSystemService {
 };
 
 struct StarDictPluginSystemInfo {
-	const char *datadir;
+	std::string datadir;
 	GtkWidget *mainwin;
 	GtkWidget *pluginwin;
 };

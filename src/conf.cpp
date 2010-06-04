@@ -25,6 +25,7 @@
 
 #include "class_factory.hpp"
 #include "lib/utils.h"
+#include "inifile.hpp"
 
 #include "conf.h"
 
@@ -39,7 +40,7 @@ const int DEFAULT_HPANED_POS=127;
 #endif
 
 std::auto_ptr<AppConf> conf;
-std::string gStarDictDataDir;
+std::auto_ptr<AppDirs> conf_dirs;
 
 //---------------------------------------------------------------------------------
 AppConf::AppConf() :
@@ -153,9 +154,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>());
 
 	std::list<std::string> dirs;
-	dirs.push_back(gStarDictDataDir + G_DIR_SEPARATOR_S "dic");
+	dirs.push_back(conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "dic");
 #ifndef _WIN32
-	if (gStarDictDataDir != "/usr/share/stardict") {
+	if (conf_dirs->get_data_dir() != "/usr/share/stardict") {
 		dirs.push_back("/usr/share/stardict/dic");
 	}
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
@@ -163,7 +164,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);
 
 	dirs.clear();
-	dirs.push_back(gStarDictDataDir+ G_DIR_SEPARATOR_S "treedict");
+	dirs.push_back(conf_dirs->get_data_dir()+ G_DIR_SEPARATOR_S "treedict");
 #ifndef _WIN32
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/treedict");
 #endif
@@ -219,22 +220,21 @@ void AppConf::Load()
 //---------------------------------------------------------------------------------
 std::string AppConf::get_default_history_filename()
 {
-std::string histname;
+	std::string histname;
 #ifdef _WIN32
-	histname = get_user_config_dir() + G_DIR_SEPARATOR_S "history.txt";
+	histname = conf_dirs->get_user_config_dir() + G_DIR_SEPARATOR_S "history.txt";
 #else
-	histname = get_user_config_dir() + G_DIR_SEPARATOR_S "history";
+	histname = conf_dirs->get_user_config_dir() + G_DIR_SEPARATOR_S "history";
 #endif
 
-  return histname;
-
+	return histname;
 }
 
 std::string AppConf::get_default_export_filename()
 {
 	std::string exportname;
 #ifdef _WIN32
-	exportname = gStarDictDataDir + G_DIR_SEPARATOR_S "dic.txt";
+	exportname = conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "dic.txt";
 #else
 	exportname = g_get_home_dir();
 	exportname+= G_DIR_SEPARATOR_S "dic.txt";
@@ -319,22 +319,144 @@ std::string AppConf::get_darwin_custom_font()
 #endif
 //---------------------------------------------------------------------------------
 
-std::string GetStardictPluginDir(void)
+/* Wrapper of stardict-dirs.cfg configuration file.
+ * Provides access to configuration parameters.
+ * If a parameter is not defined, an empty string is returned.
+ *  
+ * Do not use conf_dirs in this class! conf_dirs creation is in progress
+ * when an instance of this class is created. */
+class AppDirsConf
+{
+public:
+	AppDirsConf(void)
+	: loaded(false)
+	{
+	}
+	
+	void load(const std::string& user_config_dir)
+	{
+		std::string conf_file
+			= user_config_dir + G_DIR_SEPARATOR_S + "stardict-dirs.cfg";
+		const gchar * conf_file_env = g_getenv("STARDICT_DIRS_CONFIG_FILE");
+		if(conf_file_env)
+			conf_file = conf_file_env;
+		if(g_file_test(conf_file.c_str(),
+			GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR))) {
+			g_debug("Loading StarDict dirs config: %s", conf_file.c_str());
+			if(!ini.load(conf_file, true, false))
+				exit(EXIT_FAILURE);
+			loaded = true;
+		}
+	}
+
+	std::string get_string_at(const char* key)
+	{
+		if(!loaded)
+			return "";
+		std::string val;
+		if(ini.read_string("general", key, val))
+			return val;
+		else
+			return "";
+	}
+	
+private:
+	inifile ini;
+	bool loaded;
+};
+
+AppDirs::AppDirs(void)
+{
+	user_config_dir = get_default_user_config_dir();
+	g_debug("user_config_dir: %s", user_config_dir.c_str());
+	AppDirsConf app_conf;
+	app_conf.load(user_config_dir);
+	std::string path;
+	path = app_conf.get_string_at("data_dir");
+	data_dir = path.empty() ? get_default_data_dir() : path;
+	g_debug("data_dir: %s", data_dir.c_str());
+#ifdef _WIN32
+	path = app_conf.get_string_at("dll_dir");
+	dll_dir = path.empty() ? data_dir : path;
+	g_debug("dll_dir: %s", dll_dir.c_str());
+#endif
+	path = app_conf.get_string_at("plugin_dir");
+	plugin_dir = path.empty() ? get_default_plugin_dir() : path;
+	g_debug("plugin_dir: %s", plugin_dir.c_str());
+#ifndef CONFIG_GNOME
+	path = app_conf.get_string_at("help_dir");
+	help_dir = path.empty() ? get_default_help_dir() : path;
+	g_debug("help_dir: %s", help_dir.c_str());
+#endif
+	locale_dir = get_default_locale_dir();
+}
+
+std::string AppDirs::get_default_user_config_dir(void) const
+{
+	/* Note
+	 * StarDict plugins use user config dir.
+	 * Search for get_cfg_filename and g_get_user_config_dir functions.
+	 * If you make change to this function, do not forget to change other
+	 * functions as well. */
+	const gchar *config_path_from_env = g_getenv("STARDICT_CONFIG_PATH");
+	if (config_path_from_env)
+		return config_path_from_env;
+#ifdef _WIN32
+	std::string res = g_get_user_config_dir();
+	res += G_DIR_SEPARATOR_S "StarDict";
+	return res;
+#else
+	std::string res = g_get_home_dir();
+	res += G_DIR_SEPARATOR_S ".stardict";
+	return res;
+#endif
+}
+
+std::string AppDirs::get_default_data_dir(void) const
 {
 #ifdef _WIN32
-	return gStarDictDataDir + G_DIR_SEPARATOR_S "plugins";
+	HMODULE hmod;
+
+	if ((hmod = GetModuleHandle(NULL))==0)
+		exit(EXIT_FAILURE);
+	TCHAR path_win[MAX_PATH];
+	DWORD dwRes = GetModuleFileName(hmod, path_win, MAX_PATH);
+	if(dwRes == 0 || dwRes == MAX_PATH)
+		exit(EXIT_FAILURE);
+	std::string path_utf8;
+	std::string path;
+	if(windows_to_utf8(path_win, path_utf8) && utf8_to_file_name(path_utf8, path)) {
+		glib::CharStr buf(g_path_get_dirname(path.c_str()));
+		return get_impl(buf);
+	} else
+		exit(EXIT_FAILURE);
+	return "";
 #else
-	return STARDICT_LIB_DIR"/plugins";
+	return STARDICT_DATA_DIR;
+#endif
+}
+
+std::string AppDirs::get_default_plugin_dir(void) const
+{
+#ifdef _WIN32
+	return data_dir + G_DIR_SEPARATOR_S "plugins";
+#else
+	return STARDICT_LIB_DIR G_DIR_SEPARATOR_S "plugins";
 #endif
 }
 
 #ifndef CONFIG_GNOME
-std::string GetStarDictHelpDir(void)
+std::string AppDirs::get_default_help_dir(void) const
 {
-#ifdef _WIN32
-	return gStarDictDataDir + G_DIR_SEPARATOR_S "help";
-#else
-	return STARDICT_DATA_DIR G_DIR_SEPARATOR_S "help";
-#endif
+	return data_dir + G_DIR_SEPARATOR_S "help";
 }
 #endif
+
+std::string AppDirs::get_default_locale_dir(void) const
+{
+#ifdef _WIN32
+	return data_dir + G_DIR_SEPARATOR_S "locale";
+#else
+	return STARDICT_LOCALE_DIR;
+#endif
+}

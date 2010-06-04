@@ -386,7 +386,7 @@ void AppCore::Create(gchar *queryword)
 #endif
 
 // Init oStarDictPlugins after we get window.
-	oStarDictPluginSystemInfo.datadir = gStarDictDataDir.c_str();
+	oStarDictPluginSystemInfo.datadir = conf_dirs->get_data_dir();
 	oStarDictPluginSystemInfo.mainwin = window;
 	oStarDictPluginSystemService.send_http_request = do_send_http_request;
 	oStarDictPluginSystemService.show_url = show_url;
@@ -399,7 +399,7 @@ void AppCore::Create(gchar *queryword)
 	oStarDictPluginSystemService.ShowPangoTips = ShowPangoTips;
 	std::list<std::string> plugin_new_install_list;
 	UpdatePluginList(plugin_new_install_list);
-	oStarDictPlugins = new StarDictPlugins(GetStardictPluginDir().c_str(),
+	oStarDictPlugins = new StarDictPlugins(conf_dirs->get_plugin_dir(),
 		conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"),
 		conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
 	oLibs.set_show_progress(&load_show_progress);
@@ -2554,60 +2554,12 @@ static void stardict_log_handler(const gchar * log_domain,
 }
 #endif // #ifdef _WIN32
 
-static void set_data_dir()
-{
-	//set gStarDictDataDir;
-#ifdef _WIN32
-	HMODULE hmod;
-
-	if ((hmod = GetModuleHandle(NULL))==0)
-		exit(EXIT_FAILURE);
-	TCHAR path_win[MAX_PATH];
-	DWORD dwRes = GetModuleFileName(hmod, path_win, MAX_PATH);
-	if(dwRes == 0 || dwRes == MAX_PATH)
-		exit(EXIT_FAILURE);
-	std::string path_utf8;
-	std::string path;
-	if(windows_to_utf8(path_win, path_utf8) && utf8_to_file_name(path_utf8, path)) {
-		gchar* buf = g_path_get_dirname(path.c_str());
-		gStarDictDataDir=buf;
-		g_free(buf);
-	} else
-		exit(EXIT_FAILURE);
-#else
-	gStarDictDataDir = STARDICT_DATA_DIR;
-#endif
-}
-
 #ifdef _WIN32
 int stardict_main(int argc,char **argv)
 #else
 int main(int argc,char **argv)
 #endif
 {
-	set_data_dir();
-#ifdef _WIN32
-	bindtextdomain (GETTEXT_PACKAGE, (gStarDictDataDir + G_DIR_SEPARATOR_S "locale").c_str());
-#else
-	bindtextdomain (GETTEXT_PACKAGE, STARDICT_LOCALEDIR);
-#endif
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
-
-	std::string userdir(get_user_config_dir());
-	if (!g_file_test(userdir.c_str(), GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
-		if (g_mkdir(userdir.c_str(), S_IRWXU)==-1)
-			g_warning("Cannot create directory %s.", userdir.c_str());
-	}
-	g_thread_init (NULL);
-#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
-	gtk_set_locale();
-	gtk_init(&argc, &argv);
-#endif
-#ifdef CONFIG_GPE
-	if (gpe_application_init (&argc, &argv) == FALSE)
-		exit (1);
-#endif
 #if defined(_WIN32)
 	g_log_set_handler(NULL, (GLogLevelFlags)(G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION),
 			  stardict_log_handler, NULL);
@@ -2628,7 +2580,25 @@ int main(int argc,char **argv)
 	attach_windows_console();
 #endif
 #endif // #if defined(_WIN32)
-	g_debug("DataDir = %s", gStarDictDataDir.c_str());
+	conf_dirs.reset(new AppDirs);
+	bindtextdomain (GETTEXT_PACKAGE, conf_dirs->get_locale_dir().c_str());
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
+	std::string userdir(conf_dirs->get_user_config_dir());
+	if (!g_file_test(userdir.c_str(), GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
+		if (g_mkdir(userdir.c_str(), S_IRWXU)==-1)
+			g_warning("Cannot create directory %s.", userdir.c_str());
+	}
+	g_thread_init (NULL);
+#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
+	gtk_set_locale();
+	gtk_init(&argc, &argv);
+#endif
+#ifdef CONFIG_GPE
+	if (gpe_application_init (&argc, &argv) == FALSE)
+		exit (1);
+#endif
 	GOptionContext *context;
 	context = g_option_context_new(_("- Lookup words"));
 	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
@@ -2667,7 +2637,7 @@ int main(int argc,char **argv)
 			    GNOME_PARAM_GOPTION_CONTEXT, context,
 			    GNOME_PARAM_HUMAN_READABLE_NAME,
 		            _("Dictionary"),
-			    GNOME_PARAM_APP_DATADIR, DATADIR,
+			    GNOME_PARAM_APP_DATADIR, conf_dirs->get_system_data_dir().c_str(),
 			    NULL);
 
 	char *query_word;

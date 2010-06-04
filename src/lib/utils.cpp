@@ -44,24 +44,6 @@ void ProcessGtkEvent()
     gtk_main_iteration();
 }
 
-std::string get_user_config_dir()
-{
-        const gchar *config_path_from_env = g_getenv("STARDICT_CONFIG_PATH");
-        if (config_path_from_env)
-            return config_path_from_env;
-#ifdef _WIN32
-	std::string res = g_get_user_config_dir();
-	res += G_DIR_SEPARATOR_S "StarDict";
-	return res;
-#else
-	std::string res;
-	gchar *tmp = g_build_filename(g_get_home_dir(), ".stardict", NULL);
-	res=tmp;
-	g_free(tmp);
-	return res;
-#endif
-}
-
 std::string combnum2str(gint comb_code)
 {
   switch (comb_code) {
