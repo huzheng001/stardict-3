@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="dictdotcn"
-	ProjectGUID="{13CBE77F-99CA-4456-852D-E625D40915EE}"
-	RootNamespace="dictdotcn"
+	Version="8,00"
+	Name="stardict-update-info-plugin"
+	ProjectGUID="{8DF3871C-B32C-4CD9-ABBE-31773D23ABC8}"
+	RootNamespace="updateinfo"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;DICTDOTCN_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;UPDATEINFO_EXPORTS;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;DICTDOTCN_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;UPDATEINFO_EXPORTS;BUILDING_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -173,7 +173,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-dictdotcn-plugin\stardict_dictdotcn.cpp"
+				RelativePath="..\stardict-plugins\stardict-update-info-plugin\stardict_update_info.cpp"
 				>
 			</File>
 		</Filter>
@@ -183,7 +183,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-dictdotcn-plugin\stardict_dictdotcn.h"
+				RelativePath="..\stardict-plugins\stardict-update-info-plugin\stardict_update_info.h"
 				>
 			</File>
 		</Filter>

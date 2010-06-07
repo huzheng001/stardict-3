@@ -78,3 +78,8 @@ If you build Debug version of the project, you need a debug version of CRT which
 4. Build the project.
 5. You've created Setup-CRTDebug.msi setup file. Run it on the target machine. It installs debug version of CRT. In the course of executing you'll be asked to specify an installation directory somewhere under "C:\Program Files". Never mind. The installer does not copy anything there. It does not even create that folder.
 6. Now you should be able to start StarDict.
+
+StarDict version
+----------------
+
+StarDict version for MSVC build can be specified in the mvsc\stardictrc.rc.

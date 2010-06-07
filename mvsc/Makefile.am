@@ -1,7 +1,19 @@
-EXTRA_DIST = config.h glib_wrapper.c stardict-mvsc.sln stardictrc.rc	\
-		stardict-mvsc.vcproj textouthook.vcproj textoutspy.vcproj	\
-		advertisement.vcproj dictdotcn.vcproj html-parsedata.vcproj powerword-parsedata.vcproj update-info.vcproj wiki-parsedata.vcproj xdxf-parsedata.vcproj	\
-		wordnet.vcproj wordnet_parsedata.vcproj	\
-		sapi-tts.vcproj qqwry.vcproj stardict-lib.vcproj stardict-test-str.vcproj	\
+EXTRA_DIST = config.h glib_wrapper.c stardict.sln stardictrc.rc	\
+		stardict-advertisement-plugin.vcproj \
+		stardict-dictdotcn-plugin.vcproj \
+		stardict-html-parsedata-plugin.vcproj \
+		stardict-lib.vcproj \
+		stardict-powerword-parsedata-plugin.vcproj \
+		stardict-qqwry-plugin.vcproj \
+		stardict-sapi-tts-plugin.vcproj \
+		stardict-test-str.vcproj \
+		stardict-update-info-plugin.vcproj \
+		stardict-wiki-parsedata-plugin.vcproj \
+		stardict-wordnet-plugin.vcproj \
+		stardict-wordnet_parsedata-plugin.vcproj \
+		stardict-xdxf-parsedata-plugin.vcproj \
+		stardict.vcproj \
+		textouthook.vcproj \
+		textoutspy.vcproj \
 		readme.txt \
 		gtk.vsprops main.vsprops
