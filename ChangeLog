@@ -1,8 +1,15 @@
 2010.
+update WordPick Acrobat plug-in
+fix full-text translation service
+Update end-user documentation, make it accessible in all versions of StarDict.
+Migrating to GNOME Documentation Build Utilities (used to configure and build StarDict on Linux-like OSs)
 Removed 'l', 'W', 'P' dictionary content type identifiers. Use 'm' instead of 'l', 'r' instead of 'W' and 'P'.
+StarDict on Windows: change project from ANSI to Unicode. That allows to use all range of unicode characters when working with Windows API.
 Thanks Mindaugas Baranauskas <embar@users.berlios.de> for Lithuanian translation.
+Implemented resource storage. It allows to associate various files with a dictionary like images, sounds, videos. A dictionary article may show images, play sounds and video files, provide means to save attached files.
 
 2009.
+Skin support.
 StarDict-3.0.2 (Bodhisattva) released.
 Mac OS X port.
 Fixed network dictionary authentification issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
