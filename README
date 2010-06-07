@@ -1,4 +1,44 @@
+package: StarDict
+
+StarDict version
+----------------
+
+See AC_INIT macro in the configure.in file. It looks like this:
+
+AC_INIT(stardict, 3.0.2, http://stardict.sourceforge.net)
+
+3.0.2 - is the version.
+
+general description
+-------------------
+
 StarDict is a Cross-Platform and international dictionary written in Gtk2.
 It has powerful features such as "Glob-style pattern matching," "Scan selection word," "Fuzzy query," etc.
 
 http://stardict.sourceforge.net
+
+first-level subdirectories
+--------------------------
+
+data - general data files
+debian-upstream - Debian OS-specific data
+doc - documentation files mainly not for end-users
+help - documentation for end-user, a manual
+m4 - m4 macros, used by autoconf
+mvsc - Microsoft Visual Studio project files, used to build StarDict on Windows
+pixmaps - general images
+po - messages for gettext package (for translating messages and GUI)
+src - source files (on C++ language)
+stardict-plugins - StarDict plugins
+tests - tests for source code
+
+installation
+------------
+
+See INSTALL file
+
+copyright
+---------
+
+See COPYING file
+
