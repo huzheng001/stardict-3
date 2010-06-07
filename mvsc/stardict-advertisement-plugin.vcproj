@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="sapi-tts"
-	ProjectGUID="{D64728EB-02DD-4B53-8587-5C8BD81024A3}"
-	RootNamespace="sapitts"
+	Version="8,00"
+	Name="stardict-advertisement-plugin"
+	ProjectGUID="{315C8DBB-63B5-472A-8943-B21ED509CE01}"
+	RootNamespace="advertisement"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,8 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SAPITTS_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ADVERTISEMENT_EXPORTS;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,9 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sapi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Lib\i386&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -117,8 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SAPITTS_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ADVERTISEMENT_EXPORTS;BUILDING_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -135,9 +131,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Lib\i386&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -179,7 +173,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-sapi-tts-plugin\stardict_sapi_tts.cpp"
+				RelativePath="..\stardict-plugins\stardict-advertisement-plugin\advertisement.cpp"
 				>
 			</File>
 		</Filter>
@@ -189,7 +183,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-sapi-tts-plugin\stardict_sapi_tts.h"
+				RelativePath="..\stardict-plugins\stardict-advertisement-plugin\advertisement.h"
 				>
 			</File>
 		</Filter>

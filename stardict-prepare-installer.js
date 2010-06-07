@@ -2,13 +2,15 @@
 To run the script, execute the command in Windows Console:
 cscript //nologo stardict-prepare-installer.js
 this script must run in the root StarDict directory
+You may need to tweak the options below.
 */
 
 // options
 /* use Dev-C++ output files - true, or use MS Visual Studio output files - false */
-var UseDevC = true; 
+var UseDevC = true;
 var InstallDirMustNotExist = false;
-var MSVSConfig = "Debug"; // Release or Debug
+var MSVSConfig = "Release"; // Release or Debug
+var LinuxDistDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\trunk";
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
@@ -69,6 +71,12 @@ function CreateFolder(path) {
 	} while(i >= 0);
 }
 
+function DeleteFolder(path) {
+	if(fso.FolderExists(path)) {
+		fso.DeleteFolder(path);
+	}
+}
+
 /* path - directory name where to search for files,
 name_regex - a regular expression that file name must match */
 function FindFiles(path, name_regex) {
@@ -90,6 +98,13 @@ if (!fso.FileExists(BaseDir + "stardict-installer.nsi")) {
 	WScript.Quit(1);
 }
 
+if(!fso.FolderExists(LinuxDistDir)) {
+	WScript.Echo("Linux distribution folder does not exist.\n"
+		+ "We need linux distribution to get files that cannot be build on Windows.\n"
+		+ "Folder: " + LinuxDistDir);
+	WScript.Quit(1);
+}
+
 if(InstallDirMustNotExist) {
 	if (fso.FolderExists(BaseDir + "win32-install-dir")) {
 		WScript.Echo("Directory win32-install-dir already exists, "
@@ -97,7 +112,7 @@ if(InstallDirMustNotExist) {
 		WScript.Quit(1);
 	} 
 } else {
-	fso.DeleteFolder(BaseDir + "win32-install-dir");
+	DeleteFolder(BaseDir + "win32-install-dir");
 }
 CreateFolder(InstallDir);
 if(UseDevC)
@@ -112,7 +127,7 @@ if(UseDevC) {
 	CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 }
 {
-	var oFolder = fso.GetFolder(BaseDir + "\\po");
+	var oFolder = fso.GetFolder(LinuxDistDir + "\\po");
 	var oFiles = new Enumerator(oFolder.Files);
 	var cnt = 0;
 	for (; !oFiles.atEnd(); oFiles.moveNext())
@@ -151,7 +166,7 @@ CreateFolder(InstallDir + "skins\\");
 {
 	var InstallHelpDir = InstallDir + "help\\";
 	CreateFolder(InstallHelpDir);
-	var oFolder = fso.GetFolder(BaseDir + "\\help\\");
+	var oFolder = fso.GetFolder(LinuxDistDir + "\\help\\");
 	var oFolders = new Enumerator(oFolder.SubFolders);
 	var cnt = 0;
 	for(; !oFolders.atEnd(); oFolders.moveNext())
@@ -197,7 +212,11 @@ CreateFolder(InstallDir + "skins\\");
 		var files = FindFiles(MSVSOutputDir, /.*\.dll$/i);
 		for(var i=0; i<files.length; i++) {
 			if(files[i].toLowerCase() == "textoutspy.dll" 
-			|| files[i].toLowerCase() == "textouthook.dll")
+			|| files[i].toLowerCase() == "textouthook.dll"
+			/* advertisement plugin fails to load with the message:
+			"File C:\Program Files\StarDict\data\advertisement\advertisement.txt doesn't exist!"
+			Skip it. */
+			|| files[i].toLowerCase() == "stardict-advertisement-plugin.dll")
 				continue;
 			//WScript.Echo("path: " + MSVSOutputDir + files[i]);
 			CopyFile(MSVSOutputDir + files[i], PluginsDir);
@@ -209,12 +228,18 @@ CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
 if(!UseDevC) {
 	var LibSigcDir = MSVSDir + "libsigc++\\";
 	var files = FindFiles(LibSigcDir, /sigc-.*\.dll/i);
-	if(files.length == 0) {
+	var cnt = 0;
+	for(var i=0; i<files.length; ++i) {
+		var is_debug_dll = (files[i].match(/.*-d-.*/i) != null);
+		var is_debug_build = (MSVSConfig.toLowerCase() == "debug");
+		if(is_debug_dll != is_debug_build)
+			continue;
+		CopyFile(LibSigcDir + files[i], InstallDir);
+		++cnt;
+	}
+	if(cnt == 0) {
 		WScript.Echo("libsigc++ dll is not found in " + LibSigcDir);
 		WScript.Quit(1);
-	}
-	for(var i=0; i<files.length; ++i) {
-		CopyFile(LibSigcDir + files[i], InstallDir);
 	}
 }
 WScript.Echo("Done.");

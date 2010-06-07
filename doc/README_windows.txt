@@ -40,17 +40,11 @@ Build the installer
 Grab and install NSIS: http://www.nullsoft.com/free/nsis
 I was using the 2.44 version.
 
-I use linux commmand to illustrate the steps, but you cann't do it in this way :)
+I use linux commands to illustrate the steps, but you cann't do it in this way :)
 You may use stardict-prepare-installer.js to build win32-install-dir directory structure provided you already have all the required files in place. See comment at the head of the file for details of running the script.
 
-You need to prepare some files manually before proceeding the steps below.
-
-po/*.gmo file must be prepared in linux and copied into po
-
-Html documentation you may find in linux version of StarDict distribution.
-Copy <linux-StarDict-distr>/help over the help directory, overwrite all files.
-As result you'll get help/*/html directories containing html help.
-You may copy only help/*/html directories if you like.
+Some of the required files cannot be created on Windows, you need Linux to prepare them.
+In the steps below <linux-StarDict-distr> referes to a directory containing required files.
 
 ===============
 cd stardict-3.0.0
@@ -61,12 +55,12 @@ cp src/win32/TextOutSpy.dll win32-install-dir
 cp src/win32/TextOutHook.dll win32-install-dir
 
 mkdir -p win32-install-dir/locale/zh_CN/LC_MESSAGES/
-cp po/zh_CN.gmo win32-install-dir/locale/zh_CN/LC_MESSAGES/stardict.mo
+cp <linux-StarDict-distr>/po/zh_CN.gmo win32-install-dir/locale/zh_CN/LC_MESSAGES/stardict.mo
 mkdir -p win32-install-dir/locale/ru/LC_MESSAGES/
-cp po/ru.gmo win32-install-dir/locale/ru/LC_MESSAGES/stardict.mo
+cp <linux-StarDict-distr>/po/ru.gmo win32-install-dir/locale/ru/LC_MESSAGES/stardict.mo
 mkdir -p win32-install-dir/locale/cs/LC_MESSAGES/
-cp po/cs.gmo win32-install-dir/locale/cs/LC_MESSAGES/stardict.mo
-# repeat for all po/*.gmo files
+cp <linux-StarDict-distr>/po/cs.gmo win32-install-dir/locale/cs/LC_MESSAGES/stardict.mo
+# repeat for all <linux-StarDict-distr>/po/*.gmo files
 
 mkdir -p win32-install-dir/pixmaps
 cp pixmaps/stardict.png win32-install-dir/pixmaps
@@ -78,10 +72,10 @@ mkdir -p win32-install-dir/treedict
 mkdir -p win32-install-dir/skins
 
 mkdir -p win32-install-dir/help/C
-cp help/C/html/* win32-install-dir/help/C
+cp <linux-StarDict-distr>/help/C/html/* win32-install-dir/help/C
 mkdir -p win32-install-dir/help/ru
-cp help/ru/html/* win32-install-dir/help/ru
-# repeat for all help/*/html directories
+cp <linux-StarDict-distr>/help/ru/html/* win32-install-dir/help/ru
+# repeat for all <linux-StarDict-distr>/help/*/html directories
 
 mkdir -p win32-install-dir/plugins
 cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="powerword-parsedata"
-	ProjectGUID="{56BCFBD8-EB13-47B4-98DE-387A7F31F11B}"
-	RootNamespace="powerwordparsedata"
+	Version="8,00"
+	Name="stardict-xdxf-parsedata-plugin"
+	ProjectGUID="{6172EB6A-432C-4858-A848-308C9B15F8BF}"
+	RootNamespace="xdxfparsedata"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;POWERWORDPARSEDATA_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XDXFPARSEDATA_EXPORTS;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -92,7 +92,6 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
 			CharacterSet="1"
@@ -115,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;POWERWORDPARSEDATA_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XDXFPARSEDATA_EXPORTS;BUILDING_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -174,7 +173,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-powerword-parsedata-plugin\stardict_powerword_parsedata.cpp"
+				RelativePath="..\stardict-plugins\stardict-xdxf-parsedata-plugin\stardict_xdxf_parsedata.cpp"
 				>
 			</File>
 		</Filter>
@@ -184,7 +183,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-powerword-parsedata-plugin\stardict_powerword_parsedata.h"
+				RelativePath="..\stardict-plugins\stardict-xdxf-parsedata-plugin\stardict_xdxf_parsedata.h"
 				>
 			</File>
 		</Filter>
