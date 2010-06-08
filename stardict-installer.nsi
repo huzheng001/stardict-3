@@ -11,6 +11,8 @@ Var ISSILENT
 ;General
 
 !define STARDICT_VERSION		"3.0.2"
+; define if StarDict was built with MS Visual Studio, comment otherwise
+!define MSVC
 
 Name "StarDict ${STARDICT_VERSION}"
 
@@ -55,7 +57,8 @@ SetDateSave on
 !define GTK_REG_KEY			"SOFTWARE\GTK\2.0"
 !define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
 !define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
-!define GTK_RUNTIME_INSTALLER			"gtk_installer\gtk2-runtime*.exe"
+!define GTK_RUNTIME_INSTALLER			"redist\gtk2-runtime*.exe"
+!define VC_REDIST_INSTALLER				"redist\vcredist_x86.exe"
 !define LIB_SIGC_DLL	"sigc-*.dll"
 
 
@@ -114,6 +117,10 @@ SetDateSave on
 		"A same version of the GTK+ runtime was found. Do you wish to skip its installation?"
   LangString GTK_INSTALL_ERROR			${LANG_ENGLISH} \
 		"Error installing GTK+ runtime."
+  LangString VC_REDIST_INSTALL_ERROR	${LANG_ENGLISH} \
+		"Error installing Microsoft Visual C++ redistributable package."
+ LangString VC_REDIST_NO_RIGHTS_ERROR	${LANG_ENGLISH} \
+		"Not enough rights to install Microsoft Visual C++ redistributable package."
 
   ; StarDict Section Prompts and Texts
   LangString STARDICT_UNINSTALL_DESC		${LANG_ENGLISH} \
@@ -276,6 +283,42 @@ Section $(GTK_SECTION_TITLE) SecGtk
   done:
     Delete "$TEMP\gtk-runtime.exe"
 SectionEnd ; end of GTK+ section
+
+!ifdef MSVC
+;--------------------------------
+;Microsoft Visual C++ Redistributable Package
+
+Section SecMSVCRedist
+
+  Call CheckUserInstallRights
+  Pop $R1
+  
+  SetOutPath $TEMP
+  SetOverwrite on
+  File /oname=vcredist.exe ${VC_REDIST_INSTALLER}
+  SetOverwrite off
+
+  StrCmp $R1 "HKLM" install_vcredist vcredist_no_install_rights
+  
+  install_vcredist:
+    ClearErrors
+    ExecWait '"$TEMP\vcredist.exe" /Q'
+    IfErrors vcredist_install_error done
+
+  vcredist_install_error:
+    Delete "$TEMP\vcredist.exe"
+    MessageBox MB_OK $(VC_REDIST_INSTALL_ERROR) /SD IDOK
+    Quit
+	
+  vcredist_no_install_rights:
+    Delete "$TEMP\vcredist.exe"
+	MessageBox MB_OK $(VC_REDIST_NO_RIGHTS_ERROR) /SD IDOK
+    Quit
+	
+  done:
+    Delete "$TEMP\vcredist.exe"
+SectionEnd ; end of Microsoft Visual C++ Redistributable Package
+!endif
 
 ;--------------------------------
 ;StarDict Install Section

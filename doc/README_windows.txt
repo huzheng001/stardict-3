@@ -82,7 +82,15 @@ cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins
 
 cp src/win32/acrobat/win32/Release/StarDict.api win32-install-dir
 
-Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into gtk_installer/.
+Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
+
+If you build the project with MS Visual Studio.
+1. Download Microsoft Visual C++ 2005 Redistributable Package and put into redist.
+	For VS 2005 non SP1 version take this
+	http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en
+	and for VS 2005 SP1 take this:
+	http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647&displaylang=en
+2. Uncomment '!define MSVC' in stardict-installer.nsi
 
 Double click the stardict-installer.nsi :) NSIS will build the installer.
 

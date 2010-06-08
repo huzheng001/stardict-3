@@ -7,7 +7,7 @@ You may need to tweak the options below.
 
 // options
 /* use Dev-C++ output files - true, or use MS Visual Studio output files - false */
-var UseDevC = true;
+var UseDevC = false;
 var InstallDirMustNotExist = false;
 var MSVSConfig = "Release"; // Release or Debug
 var LinuxDistDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\trunk";
