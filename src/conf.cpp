@@ -22,6 +22,7 @@
 
 #include <glib/gi18n.h>
 #include <cstring>
+#include <cstdlib>
 
 #include "class_factory.hpp"
 #include "lib/utils.h"

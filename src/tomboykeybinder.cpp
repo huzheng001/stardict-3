@@ -99,7 +99,8 @@ do_grab_key (Binding *binding)
 					    &virtual_mods))
 		return FALSE;
 
-	TRACE (g_print ("Got accel %d, %d\n", keysym, virtual_mods));
+	TRACE (g_print ("Got key string %s\n", binding->keystring));
+	TRACE (g_print ("Got accel %d ('%c'), %d\n", keysym, (char)keysym, virtual_mods));
 
 	binding->keycode = XKeysymToKeycode (GDK_WINDOW_XDISPLAY (rootwin),
 					     keysym);
@@ -119,12 +120,15 @@ do_grab_key (Binding *binding)
 	grab_ungrab_with_ignorable_modifiers (rootwin,
 					      binding,
 					      TRUE /* grab */);
-
 	gdk_flush ();
 
-	if (gdk_error_trap_pop ()) {
-	   g_warning ("Binding '%s' failed!\n", binding->keystring);
-	   return FALSE;
+	gint error = gdk_error_trap_pop();
+	if (error) {
+		if(error == BadAccess)
+			g_warning("Binding '%s' failed! Already assigned.\n", binding->keystring);
+		else
+			g_warning("Binding '%s' failed!\n", binding->keystring);
+		return FALSE;
 	}
 
 	return TRUE;
