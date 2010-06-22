@@ -7,7 +7,7 @@ test -z "$srcdir" && srcdir=.
 PKG_NAME="stardict"
 REQUIRED_AUTOMAKE_VERSION=1.9
 
-(test -f $srcdir/configure.in \
+(test -f $srcdir/configure.ac \
   && test -f $srcdir/ChangeLog \
   && test -d $srcdir/src) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"

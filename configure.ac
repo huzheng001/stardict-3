@@ -399,6 +399,16 @@ fi
 
 fi
 
+dnl ================================================================
+dnl scrollkeeper checks.
+dnl It is used in help subdir
+dnl ================================================================
+if test "x$enable_scrollkeeper" = "xyes" ; then
+	AC_CHECK_PROG([SCROLLKEEPER], [scrollkeeper-config], [yes])
+	if test x"$SCROLLKEEPER" != xyes; then
+		AC_MSG_ERROR([scrollkeeper-config executable is not found in your path - should be installed with scrollkeeper])
+	fi
+fi
 
 dnl ==========================================================================
 
