@@ -89,7 +89,8 @@ void stardict_plugin_exit(void)
 
 bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 {
-	espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL, 0);
+	if(EE_INTERNAL_ERROR == espeak_Initialize(AUDIO_OUTPUT_PLAYBACK, 0, NULL, 0))
+		return true;
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
 		g_file_set_contents(res.c_str(), "[espeak]\nvoice=\n", -1, NULL);
