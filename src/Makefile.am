@@ -6,7 +6,7 @@ LOCAL_SIGCPP_INCLUDE =
 else
 LOCAL_SIGCPP_DIR = sigc++ sigc++config
 LOCAL_SIGCPP_LIBFILE = sigc++/libsigc.a
-LOCAL_SIGCPP_INCLUDE = -Isigc++config
+LOCAL_SIGCPP_INCLUDE = -I. -Isigc++config
 endif
 
 DIST_SUBDIRS = sigc++ sigc++config lib pixmaps sounds win32 dic treedict skins
@@ -14,9 +14,8 @@ SUBDIRS = $(LOCAL_SIGCPP_DIR) lib pixmaps sounds win32 dic treedict skins
 
 bin_PROGRAMS = stardict
 
-DEFAULT_INCLUDES = -I$(top_builddir)
-
 AM_CPPFLAGS =							                            \
+	-I$(top_builddir)					                            \
 	$(STARDICT_CFLAGS)						                    \
 	$(LOCAL_SIGCPP_INCLUDE)	\
 	-DSYSTEM_DATA_DIR=\""$(datadir)"\"	\

@@ -38,7 +38,7 @@ libstardict_a_SOURCES = \
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_INCLUDE =
 else
-LOCAL_SIGCPP_INCLUDE = -I$(top_builddir)/src -I$(top_builddir)/src/sigc++config
+LOCAL_SIGCPP_INCLUDE = -I$(top_srcdir)/src -I$(top_srcdir)/src/sigc++config
 endif
 
-INCLUDES = @STARDICT_CFLAGS@ $(LOCAL_SIGCPP_INCLUDE)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir) $(LOCAL_SIGCPP_INCLUDE)
