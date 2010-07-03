@@ -68,9 +68,10 @@ BUILT_SOURCES = $(sigc_built_h) $(sigc_built_cc)
 CLEANFILES = build-subdirs-stamp
 
 # Remove the generated sources during maintainer-clean:
-MAINTAINERCLEANFILES = $(built_sources)
+# StarDict project is not configured for recreating these files
+# MAINTAINERCLEANFILES = $(built_sources)
 
-M4_DIR = $(top_srcdir)/sigc++/macros
+M4_DIR = $(top_srcdir)/src/sigc++/macros
 
 # Rules to generate .h and .cc from .h.m4 and .cc.m4:
 %.h: macros/%.h.m4 $(M4_DIR)/template.macros.m4
@@ -90,5 +91,6 @@ build-subdirs-stamp:
 # Remove current directory from DEFAULT_INCLUDES because signal.h has
 # the same name as a standard header:
 DEFAULT_INCLUDES =
-AM_CPPFLAGS = -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/sigc++config
+AM_CPPFLAGS = -I$(top_builddir) -I$(top_builddir)/src -I$(top_builddir)/src/sigc++config \
+	-I$(top_srcdir)/src -I$(top_srcdir)/src/sigc++config 
 

@@ -4,7 +4,7 @@ AC_PREREQ(2.52)
 
 AC_INIT(stardict, 3.0.2, http://stardict.sourceforge.net)
 AC_CONFIG_SRCDIR(src/stardict.cpp)
-AM_INIT_AUTOMAKE([dist-bzip2])
+AM_INIT_AUTOMAKE([1.9 tar-pax dist-bzip2])
 
 AM_MAINTAINER_MODE
 AC_CONFIG_HEADERS([config.h])
