@@ -6,7 +6,7 @@ LOCAL_SIGCPP_INCLUDE =
 else
 LOCAL_SIGCPP_DIR = sigc++ sigc++config
 LOCAL_SIGCPP_LIBFILE = sigc++/libsigc.a
-LOCAL_SIGCPP_INCLUDE = -I. -Isigc++config
+LOCAL_SIGCPP_INCLUDE = -I$(srcdir) -I$(srcdir)/sigc++config
 endif
 
 DIST_SUBDIRS = sigc++ sigc++config lib pixmaps sounds win32 dic treedict skins
@@ -90,7 +90,7 @@ stardict_SOURCES = 			                \
 
 if GNOME_SUPPORT
 $(IDL_SOURCES): $(IDL_FILE)
-	$(ORBIT_IDL) -I $(LIBBONOBO_IDL) -I $(BONOBO_ACTIVATION_IDL) $(IDL_FILE)
+	$(ORBIT_IDL) -I $(LIBBONOBO_IDL) -I $(BONOBO_ACTIVATION_IDL) $^
 
 idl_DATA = $(IDL_FILE)
 idldir = $(datadir)/idl
