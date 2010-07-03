@@ -63,7 +63,8 @@ noinst_LIBRARIES = libsigc.a
 libsigc_a_SOURCES = signal.cc signal_base.cc trackable.cc connection.cc \
                          functors/slot.cc functors/slot_base.cc \
 			 adaptors/lambda/lambda.cc
-BUILT_SOURCES = $(sigc_built_h) $(sigc_built_cc)
+# comment BUILT_SOURCES to disable maintainer-clean target
+# BUILT_SOURCES = $(sigc_built_h) $(sigc_built_cc)
 
 CLEANFILES = build-subdirs-stamp
 
