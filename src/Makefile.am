@@ -86,7 +86,8 @@ stardict_SOURCES = 			                \
 	globalhotkeys.cpp globalhotkeys.h	\
 	hotkeyeditor.c hotkeyeditor.h	\
 	tomboykeybinder.cpp tomboykeybinder.h	\
-	desktop.cpp desktop.hpp
+	desktop.cpp desktop.hpp	\
+	log.cpp log.h
 
 if GNOME_SUPPORT
 $(IDL_SOURCES): $(IDL_FILE)

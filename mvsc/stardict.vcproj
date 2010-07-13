@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\log.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\mainwin.cpp"
 				>
 			</File>
@@ -498,6 +502,10 @@
 			</File>
 			<File
 				RelativePath="..\src\iskeyspressed.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\log.h"
 				>
 			</File>
 			<File
