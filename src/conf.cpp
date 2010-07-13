@@ -20,6 +20,8 @@
 #  include "config.h"
 #endif
 
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <glib/gi18n.h>
 #include <cstring>
 #include <cstdlib>
@@ -369,25 +371,32 @@ private:
 AppDirs::AppDirs(void)
 {
 	user_config_dir = get_default_user_config_dir();
-	g_debug("user_config_dir: %s", user_config_dir.c_str());
+	if (!g_file_test(user_config_dir.c_str(), G_FILE_TEST_IS_DIR)) {
+		if (-1 == g_mkdir(user_config_dir.c_str(), S_IRWXU))
+			g_warning("Cannot create user config directory %s.", user_config_dir.c_str());
+	}
 	AppDirsConf app_conf;
 	app_conf.load(user_config_dir);
+
 	std::string path;
 	path = app_conf.get_string_at("data_dir");
 	data_dir = path.empty() ? get_default_data_dir() : path;
-	g_debug("data_dir: %s", data_dir.c_str());
+
+	path = app_conf.get_string_at("log_dir");
+	log_dir = path.empty() ? get_default_log_dir() : path;
+	if(!g_file_test(log_dir.c_str(), G_FILE_TEST_IS_DIR))
+		if(-1 == g_mkdir_with_parents(log_dir.c_str(), S_IRWXU))
+			g_warning("Cannot create log directory %s.", log_dir.c_str());
+
 #ifdef _WIN32
 	path = app_conf.get_string_at("dll_dir");
 	dll_dir = path.empty() ? data_dir : path;
-	g_debug("dll_dir: %s", dll_dir.c_str());
 #endif
 	path = app_conf.get_string_at("plugin_dir");
 	plugin_dir = path.empty() ? get_default_plugin_dir() : path;
-	g_debug("plugin_dir: %s", plugin_dir.c_str());
 #ifndef CONFIG_GNOME
 	path = app_conf.get_string_at("help_dir");
 	help_dir = path.empty() ? get_default_help_dir() : path;
-	g_debug("help_dir: %s", help_dir.c_str());
 #endif
 	locale_dir = get_default_locale_dir();
 }
@@ -435,6 +444,17 @@ std::string AppDirs::get_default_data_dir(void) const
 #else
 	return STARDICT_DATA_DIR;
 #endif
+}
+
+std::string AppDirs::get_default_log_dir(void) const
+{
+	std::string res = g_get_tmp_dir();
+#ifdef _WIN32
+	res += G_DIR_SEPARATOR_S "StarDict";
+#else
+	res += G_DIR_SEPARATOR_S "stardict";
+#endif
+	return res;
 }
 
 std::string AppDirs::get_default_plugin_dir(void) const
