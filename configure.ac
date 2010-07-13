@@ -108,6 +108,8 @@ AC_ARG_ENABLE([festival],
 	[enable_festival=yes])
 
 if test "x$enable_festival" = "xyes" ; then
+	dnl festival.h includes EST.h, it must be in include path
+	CPPFLAGS="${CPPFLAGS} -I/usr/include/speech_tools"
 	AC_CHECK_HEADERS([festival/festival.h],
 		[
 			FESTIVAL_LIBS="-lFestival -lestools -lestbase -leststring"
