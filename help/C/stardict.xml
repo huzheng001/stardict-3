@@ -187,7 +187,8 @@
       If &app_t; is already running, it will perform the query in the existing StarDict window. 
       </para>
     </note>
-
+	<para>See <xref linkend="stardict-details-command-line" /> for complete description of command line options.
+	</para>
     </sect2>
     
     <sect2 id="stardict-main-window">
@@ -1775,6 +1776,67 @@
 
 	<sect1 id="stardict-details">
 	<title>Details</title>
+	<sect2 id="stardict-details-command-line">
+	<title>Command line options</title>
+	<para>&app_t; usage:
+	</para>
+	<para><command>stardict <replaceable>options</replaceable> <replaceable>query_word</replaceable></command>
+	</para>
+	<variablelist>
+	<varlistentry>
+		<term>query_word</term>
+		<listitem>
+		<para>With <replaceable>query_word</replaceable> you request &app_t; to look up the specified word just after startup. It has the same effect as if you had typed that word in the Search field. You may use pattens, fuzzy query and other supported modes.
+		</para>
+		</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+		<term>-m, --message-level=<replaceable>integer</replaceable></term>
+		<listitem>
+		<para>This option specifies the minimum severity level of message that should be printed on console. The value may range from 0 to 6, where 0 means to suppress all output, 6 &mdash; print all produced messages, including debug ones. Default value is 4 which passes informational messages, like what dictionaries are loaded during startup.
+		</para>
+		</listitem>
+	</varlistentry>
+
+	<varlistentry>
+		<term>-l, --log-level=<replaceable>integer</replaceable></term>
+		<listitem>
+		<para>This option specifies the minimum severity level of message that should be logged. The value may range from 0 to 6, where 0 means to suppress all output, 6 &mdash; print all produced messages, including debug ones. Default value is 0, that is log file is not used. See <xref linkend="stardict-details-logging"/> for details about &app_t; log.
+		</para>
+		</listitem>
+	</varlistentry>
+
+	<varlistentry>
+		<term>-h, --hide</term>
+		<listitem>
+		<para>Do not show splash screen during startup and hide the Main window. Only notification area icon will be visible.
+		</para>
+		</listitem>
+	</varlistentry>
+
+	<varlistentry>
+		<term>-n, --new</term>
+		<listitem>
+		<para>Start a new instance of &app_t;. By default &app_t; uses existing instance of the application if &app_t; is already running.
+		</para>
+		<para>This option is only available in &winedition; and &gnomeedition; of &app_t;.
+		</para>
+		</listitem>
+	</varlistentry>
+
+	<varlistentry>
+		<term>-q, --quit</term>
+		<listitem>
+		<para>Quit an existing instance of &app_t;.
+		</para>
+		<para>This option is only available in &gnomeedition; of &app_t;.
+		</para>
+		</listitem>
+	</varlistentry>
+	</variablelist>
+	</sect2>
+	
 	<sect2 id="stardict-details-dictmanage">
 	<title>Dictionary Management</title>
 	<para>To manage the dictionaries, click the <guibutton>Manage dictionaries</guibutton> button at the bottom-right corner of the Main window, or click 
@@ -1917,6 +1979,21 @@ plugin_dir=C:\\StarDict\\mvsc\\Debug
 		</listitem>
 		</varlistentry>
 		
+		<varlistentry>
+		<term>log_dir
+		</term>
+		<listitem>
+		<para>A directory for log files.
+		</para>
+		<para>Windows default: <filename>C:\Documents and Settings\%USERNAME%\Local Settings\Temp\StarDict</filename>.
+		</para>
+		<para>Other default: <filename>/var/tmp/stardict</filename>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: log_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
 	</variablelist>
 	
 	<note>
@@ -1924,6 +2001,18 @@ plugin_dir=C:\\StarDict\\mvsc\\Debug
 	</para>
 	</note>
 	
+	</sect2>
+
+	<sect2 id="stardict-details-logging">
+	<title>Logging</title>
+	<para>&app_t; may log messages into a file. By default logging is turned off, you may enable it specifing non-zero log level with <parameter class='command'>--log-level</parameter> command line option, see <xref linkend="stardict-details-command-line"/>. 
+	</para>
+	<para>
+	By default messages are printed on to console, log file may be useful if console is not available like in Windows. Log may be useful in troubleshooting startup problems. 
+	</para>
+	<para>
+	For default location of the log directory see <xref linkend="stardict-details-dirs"/>, log_dir parameter. &app_t; log files are named like <filename>stardict-<replaceable>process_number</replaceable>.log</filename>. We need to use process numbers to create unique log files, since multiple &app_t; instances may run at the same time. To find the log file belonging to the most recently started instance of &app_t;, consider file creation time.
+	</para>
 	</sect2>
 	
 	</sect1>
