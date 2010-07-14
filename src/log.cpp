@@ -97,9 +97,13 @@ void Logger::log_handler(const gchar * log_domain,
 		fputs(buf.str().c_str(), logger->h_log_file);
 		logger->start_flush_log_timer();
 	}
-	// the application will be aborted short after this message, so flush the log
-	if((log_level & G_LOG_FLAG_FATAL) && logger->h_log_file)
-		fflush(logger->h_log_file);
+	// the application will be aborted short after this message
+	if(log_level & G_LOG_FLAG_FATAL) {
+		if(logger->h_log_file)
+			fflush(logger->h_log_file);
+		// make the fault loud and clear for the user
+		show_error_dialog(buf.str().c_str());
+	}
 }
 
 void Logger::print_handler(const gchar* message)
@@ -186,6 +190,23 @@ gint Logger::vFlushLogTimeOutCallback(gpointer data)
 		fflush(pLogger->h_log_file);
 	pLogger->flush_log_timer = 0;
 	return FALSE; // destroy the timer
+}
+
+void Logger::show_error_dialog(const char* msg)
+{
+	GtkWidget *message_dlg = gtk_message_dialog_new(
+		NULL,
+		(GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+		GTK_MESSAGE_ERROR,
+		GTK_BUTTONS_OK,
+		"%s", msg
+	);
+
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	gtk_window_set_title(GTK_WINDOW(message_dlg), _("Error"));
+	gtk_dialog_run(GTK_DIALOG(message_dlg));
+	gtk_widget_destroy(message_dlg);
 }
 
 #ifdef ENABLE_LOG_WINDOW
