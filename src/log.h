@@ -52,6 +52,7 @@ private:
 	void start_flush_log_timer(void);
 	void destroy_flush_log_timer(void);
 	static gint vFlushLogTimeOutCallback(gpointer data);
+	static void show_error_dialog(const char* msg);
 
 	MessageLevel console_message_level;
 	MessageLevel log_message_level;

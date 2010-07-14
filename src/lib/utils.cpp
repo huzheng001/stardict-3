@@ -102,23 +102,9 @@ GdkPixbuf *load_image_from_file(const std::string& filename)
 {
 	GError *err=NULL;
 	GdkPixbuf *res=gdk_pixbuf_new_from_file(filename.c_str(), &err);
-	if (!res) {		
-		 GtkWidget *message_dlg = 
-			 gtk_message_dialog_new(
-															NULL,
-															(GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-															GTK_MESSAGE_ERROR,
-															GTK_BUTTONS_OK,
-															_("Can not load image. %s"), err->message);
-    
-    gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
-    
-    gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
-    
-    gtk_dialog_run(GTK_DIALOG(message_dlg));
-    gtk_widget_destroy(message_dlg);
+	if (!res) {
+		g_error(_("Can not load image. %s"), err->message);
 		g_error_free(err);
-		exit(EXIT_FAILURE);
 	}
 
 	return res;

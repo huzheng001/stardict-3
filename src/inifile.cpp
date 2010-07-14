@@ -186,8 +186,7 @@ bool inifile::load(const std::string& path, bool read_only, bool strict)
 		gkeyfile_ = g_key_file_new();
 		g_key_file_set_list_separator(gkeyfile_, NEW_STRING_SEP);
 		/* create file if it does not exist, because g_key_file can not do that */
-		if (!g_file_test(fname_.c_str(),
-				 GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR)))
+		if (!g_file_test(fname_.c_str(), G_FILE_TEST_EXISTS))
 		{
 			if(read_only_)
 				return false;
