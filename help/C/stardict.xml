@@ -2017,6 +2017,18 @@ plugin_dir=C:\\StarDict\\mvsc\\Debug
 	
 	</sect1>
 
+	<sect1 id="troubleshooting">
+	<title>Troubleshooting</title>
+	<para>If you experience problems with &app_t;, examine &app_t; output.
+	By default the application prints the most important messages to standard output and standard error. To see messages, start &app_t; from the console.
+	You may increase verbosity of the output with <parameter class='command'>--message-level</parameter> command line option, see <xref linkend="stardict-details-command-line"/>.
+	</para>
+	
+	<para>In some cases, for example in Windows, &app_t; prints nothing to console or console is not available.
+	Then turn on logging function, see <xref linkend="stardict-details-logging"/> for details.
+	</para>
+	</sect1>
+
  <sect1 id="stardict-projects">
    <title>Related Projects</title>
    <para>
