@@ -51,7 +51,7 @@ static void configure()
 	content += "\n";
 	content += latest_news;
 	
-	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, content.c_str());
+	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "%s", content.c_str());
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Update information"));
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy (dialog);
@@ -175,7 +175,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		std::string content = version_msg_content;
 		content += "\n\n";
 		content += _("Visit StarDict website now?");
-		GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->mainwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, content.c_str());
+		GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->mainwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, "%s", content.c_str());
 		GtkWidget *prompt = gtk_check_button_new_with_mnemonic(_("_Don't show this until the next update."));
 		gtk_widget_show(prompt);
 		gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), prompt);

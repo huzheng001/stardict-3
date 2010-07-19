@@ -910,7 +910,7 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
                         GTK_WINDOW(account_dialog),
                         (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                         GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-                        error_msg);
+                        "%s", error_msg);
             gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
             gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
             gtk_dialog_run(GTK_DIALOG(message_dlg));
@@ -944,7 +944,7 @@ void PrefsDlg::on_register_end(const char *msg)
 
 	GtkWidget *message_dlg = gtk_message_dialog_new(GTK_WINDOW(window),
 			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-			GTK_MESSAGE_INFO, GTK_BUTTONS_OK, msg);
+			GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", msg);
 	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
 	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
 	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
@@ -1013,7 +1013,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
                         GTK_WINDOW(register_dialog),
                         (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                         GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-                        error_msg);
+                        "%s", error_msg);
             gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
             gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
             gtk_dialog_run(GTK_DIALOG(message_dlg));
@@ -1549,10 +1549,10 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 		if (error_msg) {
 			GtkWidget *message_dlg =
 				gtk_message_dialog_new(
-															 GTK_WINDOW(searchwebsite_add_dialog),
-																 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
-															 GTK_MESSAGE_INFO,	GTK_BUTTONS_OK,
-															 error_msg);
+					GTK_WINDOW(searchwebsite_add_dialog),
+					 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+					GTK_MESSAGE_INFO,	GTK_BUTTONS_OK,
+					"%s", error_msg);
 
 			gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
 			gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);

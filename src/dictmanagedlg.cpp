@@ -79,7 +79,7 @@ void NetworkAddDlg::on_network_adddlg_add_button_clicked(GtkWidget *widget, Netw
                                 GTK_WINDOW(oNetworkAddDlg->window),
                                 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                                 GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-                                msg);
+                                "%s", msg);
                     g_free(msg);
                     gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
                     gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
