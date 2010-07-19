@@ -288,7 +288,8 @@ msgstr "Αν το παράθυρο είναι μεγιστοποιημένο ή 
 msgid ""
 "Whether to enable StartDict to use an external TTS program for "
 "pronounciation, or not."
-msgstr ""
+msgstr "Αν θα ενεργοποιηθεί η χρήση εξωτερικού TTS προγράμματος για"
+"προφορά, ή όχι"
 
 #: ../data/stardict.schemas.in.h:51
 msgid ""
@@ -375,40 +376,40 @@ msgstr "αν θα κλειδώνεται το παράθυρο ή όχι"
 
 #: ../src/articleview.cpp:183
 msgid "XDXF data parsing plug-in is not found!"
-msgstr ""
+msgstr "Το XDXF plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
 #: ../src/articleview.cpp:188
 msgid "PowerWord data parsing plug-in is not found!"
-msgstr ""
+msgstr "Το PowerWord plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
 #: ../src/articleview.cpp:193
 msgid "Wiki data parsing plug-in is not found!"
-msgstr ""
+msgstr "Το Wiki plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
 #: ../src/articleview.cpp:198
 msgid "HTML data parsing plug-in is not found!"
-msgstr ""
+msgstr "Το HTML plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
 #: ../src/articleview.cpp:203
 msgid "WordNet data parsing plug-in is not found!"
-msgstr ""
+msgstr "Το WordNet plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
 #: ../src/articleview.cpp:254
 msgid "<span foreground=\"red\">[Load image error!]</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">[Λάθος φόρρωσης εικόνας!]</span>"
 
 #: ../src/articleview.cpp:259
 msgid "<span foreground=\"red\">[Missing Image]</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">[Η Εικόνα λείπει]</span>"
 
 #: ../src/articleview.cpp:273
 msgid "Unknown data type, please upgrade StarDict!"
-msgstr ""
+msgstr "Άγνωστος τύπος δεδομένων, παρακαλούμε αναβαθμίστε το StarDict"
 
 #. Default stardictd server.
 #: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
 msgid "dict.stardict.org"
-msgstr ""
+msgstr "dict.stardict.org"
 
 #: ../src/conf.cpp:238
 #, no-c-format
@@ -432,6 +433,24 @@ msgid ""
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
 "cmudict?in=%s\n"
 msgstr ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
 #: ../src/conf.cpp:265
@@ -465,18 +484,18 @@ msgstr ""
 
 #: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
 msgid "Default Group"
-msgstr ""
+msgstr "Προεπιλεγμένη Ομάδα"
 
 #: ../src/dictmanagedlg.cpp:62
 #, c-format
 msgid "Only level %d user can choose this dictionary!"
-msgstr ""
+msgstr "Μόνο επιπέδου %d χρήστης μπορεί να επιλέξει αυτό το λεξικό!"
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
 #: ../src/dictmanagedlg.cpp:2283
 #, c-format
 msgid "You can only choose %d dictionaries."
-msgstr ""
+msgstr "Μπορείς να επιλέξεις μόνο %d λεξικά."
 
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
 #: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
@@ -502,11 +521,11 @@ msgstr "Οι ρυθμίσεις θα εφαρμοστούν στην επόμε�
 
 #: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
 msgid "Loading..."
-msgstr ""
+msgstr "Φόρτωση..."
 
 #: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
 msgid "<span foreground=\"red\">Query Dict</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">Ερώτημα Λεξικού</span>"
 
 #: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
 #, fuzzy
@@ -516,7 +535,7 @@ msgstr "<span weight=\"bold\" size=\"x-large\">Εύρεση Επιλογής</sp
 #: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
 #, fuzzy
 msgid "Virtual Dictionary"
-msgstr "Λεξικό"
+msgstr "Εικονικό Λεξικό"
 
 #: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
 #, fuzzy
@@ -528,6 +547,8 @@ msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
+"Μπορείς να έχεις πολλαπλές ομάδες λεξικών, όπως \"Μελέτη Αγγλικών\", "
+"\"Μελέτη Γερμανικών\", και να εναλλάσεσαι σε αυτές στιγμιαία."
 
 #: ../src/dictmanagedlg.cpp:788
 msgid ""
@@ -566,25 +587,25 @@ msgstr "Ενεργοποίηση"
 
 #: ../src/dictmanagedlg.cpp:1295
 msgid "Are you sure you want to delete this group of dictionaries?"
-msgstr ""
+msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την ομάδα λεξικών"
 
 #: ../src/dictmanagedlg.cpp:1306
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
-msgstr ""
+msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την υπό-ομάδα λεξικών"
 
 #: ../src/dictmanagedlg.cpp:1325
 msgid "New dict group"
-msgstr ""
+msgstr "Νέα ομάδα λεξικών"
 
 #: ../src/dictmanagedlg.cpp:1328
 #, fuzzy
 msgid "Group name:"
-msgstr "Όνομα προγράμματος"
+msgstr "Όνομα ομάδας:"
 
 #: ../src/dictmanagedlg.cpp:1365
 #, fuzzy
 msgid "Add dictionary"
-msgstr "Λεξικό"
+msgstr "Προσθήκη λεξικού"
 
 #: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
 msgid "Add"
@@ -593,27 +614,27 @@ msgstr "Προσθήκη"
 #: ../src/dictmanagedlg.cpp:1798
 #, fuzzy
 msgid "Delete"
-msgstr "Ημερομηνία"
+msgstr "Διαγραφή"
 
 #: ../src/dictmanagedlg.cpp:1805
 msgid "Information"
-msgstr ""
+msgstr "Πληροφορία"
 
 #: ../src/dictmanagedlg.cpp:1814
 msgid "Move to top"
-msgstr ""
+msgstr "Μετακίνηση στην κορυφή"
 
 #: ../src/dictmanagedlg.cpp:1821
 msgid "Move up"
-msgstr ""
+msgstr "Μετακίνηση επάνω"
 
 #: ../src/dictmanagedlg.cpp:1828
 msgid "Move down"
-msgstr ""
+msgstr "Μετακίνηση κάτω"
 
 #: ../src/dictmanagedlg.cpp:1835
 msgid "Move to bottom"
-msgstr ""
+msgstr "Μετακίνηση στο τέλος"
 
 #: ../src/dictmanagedlg.cpp:1917
 #, fuzzy
@@ -650,7 +671,7 @@ msgstr ""
 #: ../src/dictmanagedlg.cpp:2015
 #, fuzzy
 msgid "Visit "
-msgstr "_Λίστα"
+msgstr "_Επίσκεψη"
 
 #: ../src/dictmanagedlg.cpp:2023
 #, fuzzy
@@ -659,7 +680,7 @@ msgstr "Κ_ύρια λεξικά"
 
 #: ../src/dictmanagedlg.cpp:2032
 msgid "Upgrade Now!"
-msgstr ""
+msgstr "Αναβάθμιση Τώρα!"
 
 #: ../src/dictmanagedlg.cpp:2053
 msgid "Manage Dictionaries"
@@ -677,7 +698,7 @@ msgstr "Μέτρηση λέξεων"
 
 #: ../src/dictmanagedlg.cpp:2221
 msgid "Download Now!"
-msgstr ""
+msgstr "Κατέβασμα Τώρα!"
 
 #: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
 msgid "StarDict - Scanning"
@@ -833,7 +854,7 @@ msgstr ""
 
 #: ../src/mainwin.cpp:1302
 msgid "Full-Text Translation"
-msgstr ""
+msgstr "Μετάφραση Πλήρους Κειμένου"
 
 #: ../src/mainwin.cpp:1313
 #, fuzzy
@@ -1057,7 +1078,7 @@ msgstr "Προφορά της λέξης"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
 msgid "Arabic"
-msgstr ""
+msgstr "Αραβικά"
 
 #: ../src/mainwin.cpp:2207
 #, fuzzy
@@ -1069,14 +1090,14 @@ msgstr "Επιλογή"
 #: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 #: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Κινέζικα (Απλοποιημένα)"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
 #: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 #: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Κινέζικα (Παραδοσιακά)"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
 #: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
@@ -1096,7 +1117,7 @@ msgstr ""
 #: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
 #: ../src/mainwin.cpp:2327
 msgid "English"
-msgstr ""
+msgstr "Αγγλικά"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
 #: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
@@ -1108,21 +1129,21 @@ msgstr ""
 #: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
 #: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
 msgid "French"
-msgstr ""
+msgstr "Γαλλικά"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
 #: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
 #: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
 #: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "German"
-msgstr ""
+msgstr "Γερμανικά"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
 #: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
 #: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
 #: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Italian"
-msgstr ""
+msgstr "Ιταλικά"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
 #: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
@@ -1130,64 +1151,61 @@ msgstr ""
 #: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
 #: ../src/mainwin.cpp:2329
 msgid "Japanese"
-msgstr ""
+msgstr "Ιαπωνικά"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
 #: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
 #: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
 #: ../src/mainwin.cpp:2327
 msgid "Korean"
-msgstr ""
+msgstr "Κορεάτικα"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
 #: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
 #: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
 #: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Portuguese"
-msgstr ""
+msgstr "Πορτογαλέζικα"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
 #: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
 #: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Russian"
-msgstr ""
+msgstr "Ρώσικα"
 
 #: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
 #: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
 #: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Spanish"
-msgstr ""
+msgstr "Ισπανικά"
 
 #: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
 #: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
 #: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
 msgid "Dutch"
-msgstr ""
+msgstr "Ολλανδικά"
 
 #: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
 #: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
 #: ../src/mainwin.cpp:2301
-#, fuzzy
 msgid "Greek"
-msgstr "_Δέντρο"
+msgstr "Ελληνικά"
 
 #: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
 msgid "Swedish"
-msgstr ""
+msgstr "Σουηδικά"
 
 #: ../src/mainwin.cpp:2351
-#, fuzzy
 msgid "Google Translate"
-msgstr "Μετάφραση από"
+msgstr "Μετάφραση από Google"
 
 #: ../src/mainwin.cpp:2352
-#, fuzzy
 msgid "Yahoo Translate"
-msgstr "Μετάφραση από"
+msgstr "Μετάφραση από Yahoo"
 
 #: ../src/mainwin.cpp:2353
 msgid "Altavista Translate"
-msgstr ""
+msgstr "Μετάφραση από Altavista"
 
 #: ../src/mainwin.cpp:2354
 msgid "SystranBox Translate"
@@ -1215,13 +1233,12 @@ msgid "Powered by -"
 msgstr ""
 
 #: ../src/mainwin.cpp:2661
-#, fuzzy
 msgid "Please input some words to translate."
-msgstr "Παρακαλώ εισάγετε το όνομα του ιστοχώρου."
+msgstr "Παρακαλώ εισάγετε κάποιες λέξεις προς μετάφραση."
 
 #: ../src/mainwin.cpp:2676
 msgid "Connecting..."
-msgstr ""
+msgstr "Δημιουργία σύνδεσης..."
 
 #: ../src/mainwin.cpp:2753
 msgid "Scan the selection"
@@ -2483,3 +2500,5 @@ msgstr ""
 
 #~ msgid "Find"
 #~ msgstr "Εύρεση"
+
+ 	  	 
