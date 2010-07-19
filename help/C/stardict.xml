@@ -9,6 +9,7 @@
   <!ENTITY app_t "<application>StarDict</application>">
   <!ENTITY winedition "Windows edition">
   <!ENTITY gnomeedition "Gnome edition">
+  <!ENTITY mdash "&#x2012;">
 ]>
 <!-- 
       (Do not remove this comment block.)
