@@ -1758,7 +1758,7 @@ void AppCore::on_stardict_client_error(const char *error_msg)
                 parent,
                 (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
                 GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-                error_msg);
+                "%s", error_msg);
     gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
     gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
     g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
@@ -1862,7 +1862,7 @@ void AppCore::on_http_client_error(HttpClient *http_client, const char *error_ms
 				parent,
 				(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 				GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
-				error_msg);
+				"%s", error_msg);
 		gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
 		gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
 		g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
