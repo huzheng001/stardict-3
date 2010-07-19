@@ -162,19 +162,19 @@
     		<listitem>
     		<para>Type <command>stardict</command>, then press <keycap>Return</keycap>.</para>
             <para>
-            You can specify a word to query too : 
+            You can specify a word to query too: 
 	        </para>
 	        <para>
             <command>stardict <replaceable>word</replaceable></command>
             </para>
             <para>  
-            or a Glob-style pattern matching string : 
+            or a Glob-style pattern matching string: 
             </para>  
             <para>
             <command>stardict <replaceable>wo?d*</replaceable></command>
             </para>
             <para>  
-            or do a fuzzy query : 
+            or do a fuzzy query: 
             </para>  
             <para>
             <command>stardict <replaceable>/word</replaceable></command>
@@ -184,7 +184,8 @@
     </variablelist>
     <note>
       <para>
-      If &app_t; is already running, it will perform the query in the existing StarDict window. 
+      If &app_t; is already running.
+      In &winedition; &app_t; activates the first instance of &app_t;, then terminates. In &gnomeedition; &app_t; actives the first instance of &app_t;, queries the word in that instance if one was supplied on the command line, then terminates.
       </para>
     </note>
 	<para>See <xref linkend="stardict-details-command-line" /> for complete description of command line options.
@@ -1818,7 +1819,8 @@
 	<varlistentry>
 		<term>-n, --new</term>
 		<listitem>
-		<para>Start a new instance of &app_t;. By default &app_t; uses existing instance of the application if &app_t; is already running.
+		<para>Start a new instance of &app_t;.
+		By default &app_t; checks if the application is already running and prevents starting the second instance.
 		</para>
 		<para>This option is only available in &winedition; and &gnomeedition; of &app_t;.
 		</para>
