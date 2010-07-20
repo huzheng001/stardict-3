@@ -11,6 +11,7 @@ src/dictmanagedlg.cpp
 src/docklet.cpp
 src/eggtrayicon.c
 src/floatwin.cpp
+src/log.cpp
 src/mainwin.cpp
 src/pluginmanagedlg.cpp
 src/prefsdlg.cpp
