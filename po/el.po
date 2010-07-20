@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-05 06:08+0800\n"
+"POT-Creation-Date: 2010-07-21 01:28+1000\n"
 "PO-Revision-Date: 2006-05-04 12:44+0200\n"
 "Last-Translator: Χ. Βασδέκης <christosvas@in.gr>\n"
 "Language-Team: \n"
@@ -28,11 +28,10 @@ msgstr "πρόγραμμα αυτοματοποίησης του stardict"
 msgid "Lookup words"
 msgstr " λέξεις:\n"
 
-#. gtk_widget_set_app_paintable(window, TRUE);
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
-#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/splash.cpp:84
-#: ../src/stardict.cpp:270 ../src/stardict.cpp:340 ../src/stardict.cpp:2504
-#: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:268
+#: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/stardict.cpp:301
+#: ../src/stardict.cpp:372 ../src/stardict.cpp:2429
+#: ../src/win32/systray.cpp:220 ../src/win32/systray.cpp:272
 msgid "StarDict"
 msgstr ""
 
@@ -288,8 +287,8 @@ msgstr "Αν το παράθυρο είναι μεγιστοποιημένο ή 
 msgid ""
 "Whether to enable StartDict to use an external TTS program for "
 "pronounciation, or not."
-msgstr "Αν θα ενεργοποιηθεί η χρήση εξωτερικού TTS προγράμματος για"
-"προφορά, ή όχι"
+msgstr ""
+"Αν θα ενεργοποιηθεί η χρήση εξωτερικού TTS προγράμματος γιαπροφορά, ή όχι"
 
 #: ../data/stardict.schemas.in.h:51
 msgid ""
@@ -374,44 +373,46 @@ msgstr "η θέση κλειδώματος y του παραθύρου."
 msgid "whether to lock the window or not"
 msgstr "αν θα κλειδώνεται το παράθυρο ή όχι"
 
-#: ../src/articleview.cpp:183
+#: ../src/articleview.cpp:305
 msgid "XDXF data parsing plug-in is not found!"
 msgstr "Το XDXF plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
-#: ../src/articleview.cpp:188
+#: ../src/articleview.cpp:310
 msgid "PowerWord data parsing plug-in is not found!"
 msgstr "Το PowerWord plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
-#: ../src/articleview.cpp:193
+#: ../src/articleview.cpp:315
 msgid "Wiki data parsing plug-in is not found!"
 msgstr "Το Wiki plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
-#: ../src/articleview.cpp:198
+#: ../src/articleview.cpp:320
 msgid "HTML data parsing plug-in is not found!"
 msgstr "Το HTML plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
-#: ../src/articleview.cpp:203
+#: ../src/articleview.cpp:325
 msgid "WordNet data parsing plug-in is not found!"
 msgstr "Το WordNet plugin ανάλυσης δεδομένων δεν βρέθηκε!"
 
-#: ../src/articleview.cpp:254
-msgid "<span foreground=\"red\">[Load image error!]</span>"
-msgstr "<span foreground=\"red\">[Λάθος φόρρωσης εικόνας!]</span>"
-
-#: ../src/articleview.cpp:259
-msgid "<span foreground=\"red\">[Missing Image]</span>"
-msgstr "<span foreground=\"red\">[Η Εικόνα λείπει]</span>"
-
-#: ../src/articleview.cpp:273
+#: ../src/articleview.cpp:370
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Άγνωστος τύπος δεδομένων, παρακαλούμε αναβαθμίστε το StarDict"
 
+#: ../src/articleview.cpp:462 ../src/articleview.cpp:487
+#, fuzzy
+msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
+msgstr "<span foreground=\"red\">[Λάθος φόρρωσης εικόνας!]</span>"
+
+#: ../src/articleview.cpp:944
+#, fuzzy
+msgid "Save File"
+msgstr "Αποθήκευση σε αρχείο"
+
 #. Default stardictd server.
-#: ../src/conf.cpp:61 ../src/prefsdlg.cpp:1920
+#: ../src/conf.cpp:64 ../src/prefsdlg.cpp:2050
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:238
+#: ../src/conf.cpp:251
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
@@ -453,36 +454,35 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:265
+#: ../src/conf.cpp:278
 #, fuzzy
 msgid "win32_use_custom_font=0"
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:277
+#: ../src/conf.cpp:290
 #, fuzzy
 msgid "win32_custom_font="
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:290
+#: ../src/conf.cpp:303
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:302
+#: ../src/conf.cpp:315
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
-#. You may translate it as "%s\\help\\stardict-zh_CN.chm" when this file available.
-#: ../src/desktop.cpp:71
+#: ../src/desktop.cpp:199 ../src/desktop.cpp:207
 #, c-format
-msgid "%s\\help\\stardict.chm"
+msgid "Unable to find help file %s."
 msgstr ""
 
-#: ../src/dictmanage.cpp:46 ../src/dictmanage.cpp:240
+#: ../src/dictmanage.cpp:89 ../src/dictmanage.cpp:118
 msgid "Default Group"
 msgstr "Προεπιλεγμένη Ομάδα"
 
@@ -492,21 +492,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr "Μόνο επιπέδου %d χρήστης μπορεί να επιλέξει αυτό το λεξικό!"
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
-#: ../src/dictmanagedlg.cpp:2283
+#: ../src/dictmanagedlg.cpp:2303
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Μπορείς να επιλέξεις μόνο %d λεξικά."
 
-#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:802
-#: ../src/dictmanagedlg.cpp:902 ../src/dictmanagedlg.cpp:973
-#: ../src/dictmanagedlg.cpp:1425 ../src/dictmanagedlg.cpp:2205
-#: ../src/stardict.cpp:1144
+#: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:813
+#: ../src/dictmanagedlg.cpp:922 ../src/dictmanagedlg.cpp:993
+#: ../src/dictmanagedlg.cpp:1445 ../src/dictmanagedlg.cpp:2225
+#: ../src/stardict.cpp:1120
 msgid "Dictionary Name"
 msgstr "Όνομα Λεξικού"
 
-#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:803
-#: ../src/dictmanagedlg.cpp:908 ../src/dictmanagedlg.cpp:980
-#: ../src/dictmanagedlg.cpp:1430 ../src/dictmanagedlg.cpp:2206
+#: ../src/dictmanagedlg.cpp:191 ../src/dictmanagedlg.cpp:814
+#: ../src/dictmanagedlg.cpp:928 ../src/dictmanagedlg.cpp:1000
+#: ../src/dictmanagedlg.cpp:1450 ../src/dictmanagedlg.cpp:2226
 msgid "Word count"
 msgstr "Μέτρηση λέξεων"
 
@@ -519,30 +519,30 @@ msgstr "Κ_ύρια λεξικά"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Οι ρυθμίσεις θα εφαρμοστούν στην επόμενη εκκίνηση."
 
-#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1209
+#: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1269
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
-#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1345
+#: ../src/dictmanagedlg.cpp:445 ../src/dictmanagedlg.cpp:1365
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Ερώτημα Λεξικού</span>"
 
-#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1347
+#: ../src/dictmanagedlg.cpp:447 ../src/dictmanagedlg.cpp:1367
 #, fuzzy
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span weight=\"bold\" size=\"x-large\">Εύρεση Επιλογής</span>"
 
-#: ../src/dictmanagedlg.cpp:464 ../src/dictmanagedlg.cpp:546
+#: ../src/dictmanagedlg.cpp:465 ../src/dictmanagedlg.cpp:549
 #, fuzzy
 msgid "Virtual Dictionary"
 msgstr "Εικονικό Λεξικό"
 
-#: ../src/dictmanagedlg.cpp:471 ../src/dictmanagedlg.cpp:553
+#: ../src/dictmanagedlg.cpp:472 ../src/dictmanagedlg.cpp:556
 #, fuzzy
 msgid "Network Dictionary"
 msgstr "Κ_ύρια λεξικά"
 
-#: ../src/dictmanagedlg.cpp:783
+#: ../src/dictmanagedlg.cpp:786
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
@@ -550,161 +550,161 @@ msgstr ""
 "Μπορείς να έχεις πολλαπλές ομάδες λεξικών, όπως \"Μελέτη Αγγλικών\", "
 "\"Μελέτη Γερμανικών\", και να εναλλάσεσαι σε αυτές στιγμιαία."
 
-#: ../src/dictmanagedlg.cpp:788
+#: ../src/dictmanagedlg.cpp:791
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:804 ../src/dictmanagedlg.cpp:2208
-msgid "Author"
-msgstr "Συγγραφέας"
-
-#: ../src/dictmanagedlg.cpp:805 ../src/dictmanagedlg.cpp:2209
-msgid "Email"
-msgstr "E-mail"
-
-#: ../src/dictmanagedlg.cpp:806 ../src/dictmanagedlg.cpp:2210
-msgid "Website"
-msgstr "Ιστοχώρος"
-
-#: ../src/dictmanagedlg.cpp:807 ../src/dictmanagedlg.cpp:2211
-msgid "Description"
-msgstr "Περιγραφή"
-
-#: ../src/dictmanagedlg.cpp:808 ../src/dictmanagedlg.cpp:2212
-msgid "Date"
-msgstr "Ημερομηνία"
-
-#: ../src/dictmanagedlg.cpp:809
-msgid "File name"
-msgstr "Όνομα αρχείου"
-
-#: ../src/dictmanagedlg.cpp:895 ../src/dictmanagedlg.cpp:967
-#: ../src/pluginmanagedlg.cpp:373
-msgid "Enable"
-msgstr "Ενεργοποίηση"
-
-#: ../src/dictmanagedlg.cpp:1295
-msgid "Are you sure you want to delete this group of dictionaries?"
-msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την ομάδα λεξικών"
-
-#: ../src/dictmanagedlg.cpp:1306
-msgid "Are you sure you want to delete this sub-group of dictionaries?"
-msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την υπό-ομάδα λεξικών"
-
-#: ../src/dictmanagedlg.cpp:1325
-msgid "New dict group"
-msgstr "Νέα ομάδα λεξικών"
-
-#: ../src/dictmanagedlg.cpp:1328
-#, fuzzy
-msgid "Group name:"
-msgstr "Όνομα ομάδας:"
-
-#: ../src/dictmanagedlg.cpp:1365
-#, fuzzy
-msgid "Add dictionary"
-msgstr "Προσθήκη λεξικού"
-
-#: ../src/dictmanagedlg.cpp:1791 ../src/prefsdlg.cpp:1343
-msgid "Add"
-msgstr "Προσθήκη"
-
-#: ../src/dictmanagedlg.cpp:1798
-#, fuzzy
-msgid "Delete"
-msgstr "Διαγραφή"
-
-#: ../src/dictmanagedlg.cpp:1805
-msgid "Information"
-msgstr "Πληροφορία"
-
-#: ../src/dictmanagedlg.cpp:1814
-msgid "Move to top"
-msgstr "Μετακίνηση στην κορυφή"
-
-#: ../src/dictmanagedlg.cpp:1821
-msgid "Move up"
-msgstr "Μετακίνηση επάνω"
-
-#: ../src/dictmanagedlg.cpp:1828
-msgid "Move down"
-msgstr "Μετακίνηση κάτω"
-
-#: ../src/dictmanagedlg.cpp:1835
-msgid "Move to bottom"
-msgstr "Μετακίνηση στο τέλος"
-
-#: ../src/dictmanagedlg.cpp:1917
-#, fuzzy
-msgid "D_ict List"
-msgstr "_Λίστα"
-
-#: ../src/dictmanagedlg.cpp:1932 ../src/mainwin.cpp:540
-#, fuzzy
-msgid "Manage _Dict"
-msgstr "Διαχείριση Λεξικών"
-
-#: ../src/dictmanagedlg.cpp:1946
-msgid "T_ree dictionaries"
-msgstr "Κ_ύρια λεξικά"
-
-#: ../src/dictmanagedlg.cpp:1960
-#, fuzzy
-msgid "_Network dictionaries"
-msgstr "Κ_ύρια λεξικά"
-
-#: ../src/dictmanagedlg.cpp:1984
-#, fuzzy
-msgid "_Show information"
-msgstr "Εμφάνιση πληροφοριών"
-
-#: ../src/dictmanagedlg.cpp:1991
-msgid "Select _All"
-msgstr ""
-
-#: ../src/dictmanagedlg.cpp:1996
-msgid "_Unselect all"
-msgstr ""
-
-#: ../src/dictmanagedlg.cpp:2015
-#, fuzzy
-msgid "Visit "
-msgstr "_Επίσκεψη"
-
-#: ../src/dictmanagedlg.cpp:2023
-#, fuzzy
-msgid " to download dictionaries!"
-msgstr "Κ_ύρια λεξικά"
-
-#: ../src/dictmanagedlg.cpp:2032
-msgid "Upgrade Now!"
-msgstr "Αναβάθμιση Τώρα!"
-
-#: ../src/dictmanagedlg.cpp:2053
-msgid "Manage Dictionaries"
-msgstr "Διαχείριση Λεξικών"
-
-#: ../src/dictmanagedlg.cpp:2200
+#: ../src/dictmanagedlg.cpp:800 ../src/dictmanagedlg.cpp:2220
 #, fuzzy
 msgid "Dictionary Information"
 msgstr "Γραμματοσειρά λεξικού"
 
-#: ../src/dictmanagedlg.cpp:2207
+#: ../src/dictmanagedlg.cpp:815 ../src/dictmanagedlg.cpp:2228
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: ../src/dictmanagedlg.cpp:816 ../src/dictmanagedlg.cpp:2229
+msgid "Email"
+msgstr "E-mail"
+
+#: ../src/dictmanagedlg.cpp:817 ../src/dictmanagedlg.cpp:2230
+msgid "Website"
+msgstr "Ιστοχώρος"
+
+#: ../src/dictmanagedlg.cpp:818 ../src/dictmanagedlg.cpp:2231
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: ../src/dictmanagedlg.cpp:819 ../src/dictmanagedlg.cpp:2232
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: ../src/dictmanagedlg.cpp:820
+msgid "File name"
+msgstr "Όνομα αρχείου"
+
+#: ../src/dictmanagedlg.cpp:915 ../src/dictmanagedlg.cpp:987
+#: ../src/pluginmanagedlg.cpp:387
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#: ../src/dictmanagedlg.cpp:1315
+msgid "Are you sure you want to delete this group of dictionaries?"
+msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την ομάδα λεξικών"
+
+#: ../src/dictmanagedlg.cpp:1326
+msgid "Are you sure you want to delete this sub-group of dictionaries?"
+msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις αυτή την υπό-ομάδα λεξικών"
+
+#: ../src/dictmanagedlg.cpp:1345
+msgid "New dict group"
+msgstr "Νέα ομάδα λεξικών"
+
+#: ../src/dictmanagedlg.cpp:1348
+#, fuzzy
+msgid "Group name:"
+msgstr "Όνομα ομάδας:"
+
+#: ../src/dictmanagedlg.cpp:1385
+#, fuzzy
+msgid "Add dictionary"
+msgstr "Προσθήκη λεξικού"
+
+#: ../src/dictmanagedlg.cpp:1811 ../src/prefsdlg.cpp:1483
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: ../src/dictmanagedlg.cpp:1818
+#, fuzzy
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: ../src/dictmanagedlg.cpp:1825
+msgid "Information"
+msgstr "Πληροφορία"
+
+#: ../src/dictmanagedlg.cpp:1834
+msgid "Move to top"
+msgstr "Μετακίνηση στην κορυφή"
+
+#: ../src/dictmanagedlg.cpp:1841
+msgid "Move up"
+msgstr "Μετακίνηση επάνω"
+
+#: ../src/dictmanagedlg.cpp:1848
+msgid "Move down"
+msgstr "Μετακίνηση κάτω"
+
+#: ../src/dictmanagedlg.cpp:1855
+msgid "Move to bottom"
+msgstr "Μετακίνηση στο τέλος"
+
+#: ../src/dictmanagedlg.cpp:1937
+#, fuzzy
+msgid "D_ict List"
+msgstr "_Λίστα"
+
+#: ../src/dictmanagedlg.cpp:1952 ../src/mainwin.cpp:540
+#, fuzzy
+msgid "Manage _Dict"
+msgstr "Διαχείριση Λεξικών"
+
+#: ../src/dictmanagedlg.cpp:1966
+msgid "T_ree dictionaries"
+msgstr "Κ_ύρια λεξικά"
+
+#: ../src/dictmanagedlg.cpp:1980
+#, fuzzy
+msgid "_Network dictionaries"
+msgstr "Κ_ύρια λεξικά"
+
+#: ../src/dictmanagedlg.cpp:2004
+#, fuzzy
+msgid "_Show information"
+msgstr "Εμφάνιση πληροφοριών"
+
+#: ../src/dictmanagedlg.cpp:2011
+msgid "Select _All"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:2016
+msgid "_Unselect all"
+msgstr ""
+
+#: ../src/dictmanagedlg.cpp:2035
+#, fuzzy
+msgid "Visit "
+msgstr "_Επίσκεψη"
+
+#: ../src/dictmanagedlg.cpp:2043
+#, fuzzy
+msgid " to download dictionaries!"
+msgstr "Κ_ύρια λεξικά"
+
+#: ../src/dictmanagedlg.cpp:2052
+msgid "Upgrade Now!"
+msgstr "Αναβάθμιση Τώρα!"
+
+#: ../src/dictmanagedlg.cpp:2073
+msgid "Manage Dictionaries"
+msgstr "Διαχείριση Λεξικών"
+
+#: ../src/dictmanagedlg.cpp:2227
 #, fuzzy
 msgid "Synonym word count"
 msgstr "Μέτρηση λέξεων"
 
-#: ../src/dictmanagedlg.cpp:2221
+#: ../src/dictmanagedlg.cpp:2241
 msgid "Download Now!"
 msgstr "Κατέβασμα Τώρα!"
 
-#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:258
+#: ../src/docklet.cpp:33 ../src/docklet.cpp:181 ../src/win32/systray.cpp:256
 msgid "StarDict - Scanning"
 msgstr "StarDict - Ανιχνεύω"
 
-#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:263
+#: ../src/docklet.cpp:36 ../src/docklet.cpp:187 ../src/win32/systray.cpp:264
 msgid "StarDict - Stopped"
 msgstr "StarDict - Διακοπή"
 
@@ -716,82 +716,103 @@ msgstr "_Ανίχνευση"
 msgid "_Quit"
 msgstr "_Έξοδος"
 
-#: ../src/floatwin.cpp:126
-msgid "Query in the main window"
-msgstr "Ερώτηση στο κύριο παράθυρο"
+#: ../src/eggtrayicon.c:132
+msgid "Orientation"
+msgstr ""
 
-#: ../src/floatwin.cpp:135
-msgid "Save to file"
-msgstr "Αποθήκευση σε αρχείο"
-
-#: ../src/floatwin.cpp:143
-msgid "Pronounce the word"
-msgstr "Προφορά της λέξης"
-
-#: ../src/floatwin.cpp:153
+#: ../src/eggtrayicon.c:133
 #, fuzzy
-msgid "Stop selection-scanning"
-msgstr "Διασκοπή έρευνας επιλογής"
+msgid "The orientation of the tray."
+msgstr "Η έκδοση του προγράμματος"
 
-#: ../src/floatwin.cpp:165
-msgid "Help"
-msgstr "Βοήθεια"
-
-#: ../src/floatwin.cpp:173 ../src/mainwin.cpp:2777
-#: ../src/win32/systray.cpp:111
-msgid "Quit"
-msgstr "Έξοδος"
-
-#: ../src/floatwin.cpp:187
-msgid "Lock floating window"
-msgstr "Κλείδωμα επιπλέοντος παραθύρου"
-
-#: ../src/floatwin.cpp:323 ../src/floatwin.cpp:366 ../src/mainwin.cpp:1974
-#: ../src/mainwin.cpp:2004 ../src/selection.cpp:194 ../src/stardict.cpp:705
-#: ../src/stardict.cpp:850 ../src/stardict.cpp:1023 ../src/stardict.cpp:1037
-#: ../src/stardict.cpp:1042 ../src/stardict.cpp:1047 ../src/stardict.cpp:1537
-#: ../src/stardict.cpp:1664 ../src/win32/clipboard.cpp:117
+#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:1977 ../src/mainwin.cpp:2007
+#: ../src/stardict.cpp:999 ../src/stardict.cpp:1013 ../src/stardict.cpp:1018
+#: ../src/stardict.cpp:1023 ../src/stardict.cpp:1512 ../src/stardict.cpp:1639
 msgid "<Not Found!>"
 msgstr "<Δε Βρέθηκε!>"
 
-#: ../src/floatwin.cpp:445
+#: ../src/floatwin.cpp:346
 msgid "Fuzzy query"
 msgstr "Ασαφής ερώτηση"
 
-#: ../src/floatwin.cpp:451
+#: ../src/floatwin.cpp:350
 msgid "has succeeded.\n"
 msgstr "έχει επιτευχθεί.\n"
 
-#: ../src/floatwin.cpp:453
+#: ../src/floatwin.cpp:352
 #, fuzzy
 msgid "Found 1 word:\n"
 msgstr "1 λέξη:\n"
 
-#: ../src/floatwin.cpp:455
+#: ../src/floatwin.cpp:354
 #, fuzzy, c-format
 msgid "Found %d words:\n"
 msgstr " λέξεις:\n"
 
-#: ../src/floatwin.cpp:943
+#: ../src/floatwin.cpp:889
+msgid "Query in the main window"
+msgstr "Ερώτηση στο κύριο παράθυρο"
+
+#: ../src/floatwin.cpp:898
+msgid "Save to file"
+msgstr "Αποθήκευση σε αρχείο"
+
+#: ../src/floatwin.cpp:906
+msgid "Pronounce the word"
+msgstr "Προφορά της λέξης"
+
+#: ../src/floatwin.cpp:916
+#, fuzzy
+msgid "Stop selection-scanning"
+msgstr "Διασκοπή έρευνας επιλογής"
+
+#: ../src/floatwin.cpp:928
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: ../src/floatwin.cpp:936 ../src/mainwin.cpp:2777
+#: ../src/win32/systray.cpp:110
+msgid "Quit"
+msgstr "Έξοδος"
+
+#: ../src/floatwin.cpp:947
+msgid "Lock floating window"
+msgstr "Κλείδωμα επιπλέοντος παραθύρου"
+
+#: ../src/floatwin.cpp:1027
 msgid "_Copy"
 msgstr "_Αντιγραφή"
 
-#: ../src/floatwin.cpp:949
+#: ../src/floatwin.cpp:1033
 #, fuzzy
 msgid "_Save"
 msgstr "_Ανίχνευση"
 
-#: ../src/floatwin.cpp:954 ../src/mainwin.cpp:2169
+#: ../src/floatwin.cpp:1038 ../src/mainwin.cpp:2173
 msgid "_Query"
 msgstr "_Ερώτηση"
 
-#: ../src/floatwin.cpp:961
+#: ../src/floatwin.cpp:1045
 msgid "_Play"
 msgstr "_Αναπαραγωγή"
 
-#: ../src/floatwin.cpp:969
+#: ../src/floatwin.cpp:1052
 msgid "_Fuzzy Query"
 msgstr "_Ασαφής Ερώτηση"
+
+#: ../src/floatwin.cpp:1140
+#, fuzzy
+msgid "Looking up..."
+msgstr "Φόρτωση..."
+
+#: ../src/log.cpp:207
+msgid "Error"
+msgstr ""
+
+#: ../src/log.cpp:227
+#, fuzzy
+msgid "Log window"
+msgstr "Επιπλέον παράθυρο"
 
 #: ../src/mainwin.cpp:91
 msgid "Clear the search box"
@@ -910,7 +931,7 @@ msgstr "Εκτύπωση"
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "Εύρεση στον ορισμό (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1808
+#: ../src/mainwin.cpp:1804
 #, fuzzy, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -922,7 +943,7 @@ msgstr ""
 "λεξικά:\n"
 "http://stardict.sourceforge.net"
 
-#: ../src/mainwin.cpp:1831
+#: ../src/mainwin.cpp:1834
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -958,7 +979,7 @@ msgstr ""
 "   Όταν το επιπλέον παράθυρο αναφέρει ότι μια λέξη δε βρέθηκε, με διπλό κλικ "
 "θα γίνει ασαφή ερώτηση.\n"
 
-#: ../src/mainwin.cpp:1848
+#: ../src/mainwin.cpp:1851
 #, fuzzy
 msgid ""
 "       Welcome to StarDict\n"
@@ -1048,187 +1069,368 @@ msgstr ""
 "χρήσιμο, αλλά χωρίς ΚΑΜΙΑ ΕΓΓΥΗΣΗ. Χωρίς εγγύηση ότι η ορθογραφία, οι "
 "ορισμοί και οι φωνητικές πληροφορίες είναι ορθές.\n"
 
-#: ../src/mainwin.cpp:1996 ../src/stardict.cpp:1371
+#: ../src/mainwin.cpp:1999 ../src/stardict.cpp:1349
 msgid "Found no words matching this pattern!"
 msgstr "Δε βρέθηκαν λέξεις που να ταιριάζουν!"
 
-#: ../src/mainwin.cpp:1998 ../src/stardict.cpp:1396
+#: ../src/mainwin.cpp:2001 ../src/stardict.cpp:1374
 #, fuzzy
 msgid "Found no words matching this regular expression!"
 msgstr "Δε βρέθηκαν λέξεις που να ταιριάζουν!"
 
-#: ../src/mainwin.cpp:2000 ../src/stardict.cpp:1285
+#: ../src/mainwin.cpp:2003 ../src/stardict.cpp:1261
 msgid "There are too many spelling errors :-("
 msgstr "Υπάρχουν πολλά ορθογραφικά λάθη :-("
 
-#: ../src/mainwin.cpp:2002 ../src/stardict.cpp:1204 ../src/stardict.cpp:1249
+#: ../src/mainwin.cpp:2005 ../src/stardict.cpp:1180 ../src/stardict.cpp:1225
 #, fuzzy
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Δεν υπάρχουν άρθρα λεξικών με τέτοια λέξη :-("
 
-#: ../src/mainwin.cpp:2090
+#: ../src/mainwin.cpp:2093
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Το κέιμενο \"%s\" δε βρέθηκε."
 
-#: ../src/mainwin.cpp:2161 ../src/mainwin.cpp:2428
+#: ../src/mainwin.cpp:2165 ../src/mainwin.cpp:2422
 #, fuzzy
 msgid "_Pronounce"
 msgstr "Προφορά της λέξης"
 
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Afrikaans"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Albanian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Arabic"
 msgstr "Αραβικά"
 
-#: ../src/mainwin.cpp:2207
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Belarusian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Bulgarian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Catalan"
+msgstr "Ιταλικά"
+
+#: ../src/mainwin.cpp:2211
 #, fuzzy
 msgid "Chinese"
 msgstr "Επιλογή"
 
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2214 ../src/mainwin.cpp:2216
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
-#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
-msgid "Chinese (Simplified)"
-msgstr "Κινέζικα (Απλοποιημένα)"
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Croatian"
+msgstr ""
 
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
-#: ../src/mainwin.cpp:2320 ../src/mainwin.cpp:2327
-msgid "Chinese (Traditional)"
-msgstr "Κινέζικα (Παραδοσιακά)"
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Czech"
+msgstr ""
 
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2208 ../src/mainwin.cpp:2210
-#: ../src/mainwin.cpp:2218 ../src/mainwin.cpp:2220 ../src/mainwin.cpp:2222
-#: ../src/mainwin.cpp:2224 ../src/mainwin.cpp:2226 ../src/mainwin.cpp:2228
-#: ../src/mainwin.cpp:2230 ../src/mainwin.cpp:2232 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2238 ../src/mainwin.cpp:2240 ../src/mainwin.cpp:2242
-#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250
-#: ../src/mainwin.cpp:2252 ../src/mainwin.cpp:2254 ../src/mainwin.cpp:2256
-#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2266 ../src/mainwin.cpp:2268 ../src/mainwin.cpp:2270
-#: ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2276 ../src/mainwin.cpp:2278
-#: ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2282 ../src/mainwin.cpp:2284
-#: ../src/mainwin.cpp:2286 ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292
-#: ../src/mainwin.cpp:2293 ../src/mainwin.cpp:2295 ../src/mainwin.cpp:2297
-#: ../src/mainwin.cpp:2301 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2305
-#: ../src/mainwin.cpp:2307 ../src/mainwin.cpp:2309 ../src/mainwin.cpp:2311
-#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315 ../src/mainwin.cpp:2320
-#: ../src/mainwin.cpp:2327
-msgid "English"
-msgstr "Αγγλικά"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2220
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2242 ../src/mainwin.cpp:2244
-#: ../src/mainwin.cpp:2248 ../src/mainwin.cpp:2250 ../src/mainwin.cpp:2252
-#: ../src/mainwin.cpp:2258 ../src/mainwin.cpp:2260 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2270 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2276
-#: ../src/mainwin.cpp:2278 ../src/mainwin.cpp:2280 ../src/mainwin.cpp:2286
-#: ../src/mainwin.cpp:2288 ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2297
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2303 ../src/mainwin.cpp:2307
-#: ../src/mainwin.cpp:2313 ../src/mainwin.cpp:2315
-msgid "French"
-msgstr "Γαλλικά"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2218
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
-#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
-msgid "German"
-msgstr "Γερμανικά"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
-msgid "Italian"
-msgstr "Ιταλικά"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
-#: ../src/mainwin.cpp:2321 ../src/mainwin.cpp:2323 ../src/mainwin.cpp:2325
-#: ../src/mainwin.cpp:2329
-msgid "Japanese"
-msgstr "Ιαπωνικά"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2320
-#: ../src/mainwin.cpp:2327
-msgid "Korean"
-msgstr "Κορεάτικα"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2265
-#: ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274 ../src/mainwin.cpp:2292
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
-msgid "Portuguese"
-msgstr "Πορτογαλέζικα"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2237
-#: ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
-msgid "Russian"
-msgstr "Ρώσικα"
-
-#: ../src/mainwin.cpp:2207 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2244
-#: ../src/mainwin.cpp:2246 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
-#: ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
-msgid "Spanish"
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Danish"
 msgstr "Ισπανικά"
 
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
-#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299 ../src/mainwin.cpp:2301
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
 msgid "Dutch"
 msgstr "Ολλανδικά"
 
-#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2244 ../src/mainwin.cpp:2246
-#: ../src/mainwin.cpp:2265 ../src/mainwin.cpp:2272 ../src/mainwin.cpp:2274
-#: ../src/mainwin.cpp:2301
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2217 ../src/mainwin.cpp:2219 ../src/mainwin.cpp:2223
+#: ../src/mainwin.cpp:2225 ../src/mainwin.cpp:2227 ../src/mainwin.cpp:2229
+#: ../src/mainwin.cpp:2231 ../src/mainwin.cpp:2233 ../src/mainwin.cpp:2235
+#: ../src/mainwin.cpp:2237 ../src/mainwin.cpp:2239 ../src/mainwin.cpp:2241
+#: ../src/mainwin.cpp:2305 ../src/mainwin.cpp:2312
+msgid "English"
+msgstr "Αγγλικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Estonian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Filipino"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Finnish"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2223 ../src/mainwin.cpp:2227
+#: ../src/mainwin.cpp:2229 ../src/mainwin.cpp:2231 ../src/mainwin.cpp:2237
+#: ../src/mainwin.cpp:2241
+msgid "French"
+msgstr "Γαλλικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Galician"
+msgstr "Ιταλικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
+msgid "German"
+msgstr "Γερμανικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
 msgid "Greek"
 msgstr "Ελληνικά"
 
-#: ../src/mainwin.cpp:2292 ../src/mainwin.cpp:2299
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Haitian Creole ALPHA"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Hebrew"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Hindi"
+msgstr "Εύρεση"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Hungarian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Icelandic"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Indonesian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Irish"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
+msgid "Italian"
+msgstr "Ιταλικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2305 ../src/mainwin.cpp:2306
+#: ../src/mainwin.cpp:2308 ../src/mainwin.cpp:2310 ../src/mainwin.cpp:2314
+msgid "Japanese"
+msgstr "Ιαπωνικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2305 ../src/mainwin.cpp:2312
+msgid "Korean"
+msgstr "Κορεάτικα"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Latvian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Lithuanian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Macedonian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Malay"
+msgstr "_Αναπαραγωγή"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Maltese"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Norwegian"
+msgstr "Κορεάτικα"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Persian"
+msgstr "Εκτύπωση"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Polish"
+msgstr "Αγγλικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
+msgid "Portuguese"
+msgstr "Πορτογαλέζικα"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Romanian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221
+msgid "Russian"
+msgstr "Ρώσικα"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Serbian"
+msgstr "Γερμανικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Slovak"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Slovenian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
+msgid "Spanish"
+msgstr "Ισπανικά"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Swahili"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Swedish"
 msgstr "Σουηδικά"
 
-#: ../src/mainwin.cpp:2351
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Thai"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Turkish"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Ukrainian"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+#, fuzzy
+msgid "Vietnamese"
+msgstr "Όνομα αρχείου"
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Welsh"
+msgstr ""
+
+#: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
+msgid "Yiddish"
+msgstr ""
+
+#.
+#. static const char *altavista_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
+#. static const char *altavista_chinese_simplified_tolangs[] = {N_("English"), NULL};
+#. static const char *altavista_chinese_simplified_code[] = { "zh_en" };
+#. static const char *altavista_chinese_traditional_tolangs[] = {N_("English"), NULL};
+#. static const char *altavista_chinese_traditional_code[] = { "zt_en" };
+#. static const char *altavista_dutch_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_dutch_code[] = { "nl_en" , "nl_fr"};
+#. static const char *altavista_english_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
+#. static const char *altavista_english_code[] = { "en_zh", "en_zt", "en_nl", "en_fr", "en_de", "en_el", "en_it", "en_ja", "en_ko", "en_pt", "en_ru", "en_es" };
+#. static const char *altavista_french_tolangs[] = {N_("Dutch"), N_("English"), N_("German"), N_("Greek"), N_("Italian"), N_("Portuguese"), N_("Spanish"), NULL };
+#. static const char *altavista_french_code[] = { "fr_nl", "fr_en", "fr_de", "fr_el", "fr_it", "fr_pt", "fr_es"};
+#. static const char *altavista_german_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_german_code[] = { "de_en", "de_fr" };
+#. static const char *altavista_greek_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_greek_code[] = { "el_en", "el_fr" };
+#. static const char *altavista_italian_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_italian_code[] = { "it_en", "it_fr" };
+#. static const char *altavista_japanese_tolangs[] = {N_("English"), NULL};
+#. static const char *altavista_japanese_code[] = { "ja_en" };
+#. static const char *altavista_korean_tolangs[] = {N_("English"), NULL};
+#. static const char *altavista_korean_code[] = { "ko_en" };
+#. static const char *altavista_portuguese_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_portuguese_code[] = { "pt_en", "pt_fr" };
+#. static const char *altavista_spanish_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *altavista_spanish_code[] = { "es_en", "es_fr" };
+#. static const char **altavista_tolangs[] = {altavista_chinese_simplified_tolangs, altavista_chinese_traditional_tolangs, altavista_dutch_tolangs, altavista_english_tolangs, altavista_french_tolangs, altavista_german_tolangs, altavista_greek_tolangs, altavista_italian_tolangs, altavista_japanese_tolangs, altavista_korean_tolangs, altavista_portuguese_tolangs, altavista_spanish_tolangs};
+#. static const char **altavista_code[] = {altavista_chinese_simplified_code,altavista_chinese_traditional_code,altavista_dutch_code,altavista_english_code, altavista_french_code, altavista_german_code, altavista_greek_code, altavista_italian_code, altavista_japanese_code, altavista_korean_code, altavista_portuguese_code, altavista_spanish_code};
+#.
+#.
+#. static const char *systranbox_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Swedish"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
+#. static const char *systranbox_chinese_simplified_tolangs[] = {N_("English"), NULL};
+#. static const char *systranbox_chinese_simplified_code[] = { "zh_en" };
+#. static const char *systranbox_chinese_traditional_tolangs[] = {N_("English"), NULL};
+#. static const char *systranbox_chinese_traditional_code[] = { "zt_en" };
+#. static const char *systranbox_dutch_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *systranbox_dutch_code[] = { "nl_en" , "nl_fr"};
+#. static const char *systranbox_english_tolangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("French"), N_("German"), N_("Swedish"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), N_("Spanish"), NULL};
+#. static const char *systranbox_english_code[] = { "en_zh", "en_zt", "en_nl", "en_fr", "en_de", "en_sv", "en_it", "en_ja", "en_ko", "en_pt", "en_ru", "en_es" };
+#. static const char *systranbox_french_tolangs[] = {N_("Dutch"), N_("English"), N_("German"), N_("Greek"), N_("Italian"), N_("Portuguese"), N_("Spanish"), NULL };
+#. static const char *systranbox_french_code[] = { "fr_nl", "fr_en", "fr_de", "fr_el", "fr_it", "fr_pt", "fr_es"};
+#. static const char *systranbox_german_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *systranbox_german_code[] = { "de_en", "de_fr" };
+#. static const char *systranbox_swedish_tolangs[] = {N_("English"), NULL};
+#. static const char *systranbox_swedish_code[] = { "sv_en" };
+#. static const char *systranbox_italian_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *systranbox_italian_code[] = { "it_en", "it_fr" };
+#. static const char *systranbox_japanese_tolangs[] = {N_("English"), NULL};
+#. static const char *systranbox_japanese_code[] = { "ja_en" };
+#. static const char *systranbox_korean_tolangs[] = {N_("English"), NULL};
+#. static const char *systranbox_korean_code[] = { "ko_en" };
+#. static const char *systranbox_portuguese_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *systranbox_portuguese_code[] = { "pt_en", "pt_fr" };
+#. static const char *systranbox_spanish_tolangs[] = {N_("English"), N_("French"), NULL};
+#. static const char *systranbox_spanish_code[] = { "es_en", "es_fr" };
+#. static const char **systranbox_tolangs[] = {systranbox_chinese_simplified_tolangs, systranbox_chinese_traditional_tolangs, systranbox_dutch_tolangs, systranbox_english_tolangs, systranbox_french_tolangs, systranbox_german_tolangs, systranbox_swedish_tolangs, systranbox_italian_tolangs, systranbox_japanese_tolangs, systranbox_korean_tolangs, systranbox_portuguese_tolangs, systranbox_spanish_tolangs};
+#. static const char **systranbox_code[] = {systranbox_chinese_simplified_code,systranbox_chinese_traditional_code,systranbox_dutch_code,systranbox_english_code, systranbox_french_code, systranbox_german_code, systranbox_swedish_code, systranbox_italian_code, systranbox_japanese_code, systranbox_korean_code, systranbox_portuguese_code, systranbox_spanish_code};
+#.
+#: ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2219
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2305 ../src/mainwin.cpp:2312
+msgid "Chinese (Simplified)"
+msgstr "Κινέζικα (Απλοποιημένα)"
+
+#: ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216 ../src/mainwin.cpp:2217
+#: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2305 ../src/mainwin.cpp:2312
+msgid "Chinese (Traditional)"
+msgstr "Κινέζικα (Παραδοσιακά)"
+
+#. name,                        fromlangs,            tolangs,            tolangs2,         code,            fromcode,              tocode,                website_name,   website
+#: ../src/mainwin.cpp:2343
 msgid "Google Translate"
 msgstr "Μετάφραση από Google"
 
-#: ../src/mainwin.cpp:2352
+#: ../src/mainwin.cpp:2344
 msgid "Yahoo Translate"
 msgstr "Μετάφραση από Yahoo"
 
-#: ../src/mainwin.cpp:2353
-msgid "Altavista Translate"
-msgstr "Μετάφραση από Altavista"
-
-#: ../src/mainwin.cpp:2354
-msgid "SystranBox Translate"
-msgstr ""
-
-#: ../src/mainwin.cpp:2355
+#. { N_("Altavista Translate"),    altavista_fromlangs,  altavista_tolangs,  NULL,             altavista_code,  NULL,                  NULL,                  "Altavista",    "http://babelfish.altavista.com"},
+#. { N_("SystranBox Translate"),   systranbox_fromlangs, systranbox_tolangs, NULL,             systranbox_code, NULL,                  NULL,                  "SystranBox",   "http://www.systranbox.com"},
+#: ../src/mainwin.cpp:2347
 msgid "Excite Japan Translate"
 msgstr ""
 
-#: ../src/mainwin.cpp:2450
+#: ../src/mainwin.cpp:2444
 msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2481
+#: ../src/mainwin.cpp:2475
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2514
+#: ../src/mainwin.cpp:2510
 #, fuzzy
 msgid "_Translate"
 msgstr "Μετάφραση από"
 
-#: ../src/mainwin.cpp:2536
+#: ../src/mainwin.cpp:2532
 msgid "Powered by -"
 msgstr ""
 
@@ -1248,7 +1450,7 @@ msgstr "Αναζήτηση της επιλογής"
 msgid "Show info"
 msgstr "Εμφάνιση πληροφοριών"
 
-#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:1895
+#: ../src/mainwin.cpp:2819 ../src/prefsdlg.cpp:2025
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
@@ -1264,7 +1466,7 @@ msgstr "Προς ιστοχώρο του StarDict"
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Εύρεση Διαδικτυακού λεξικού - Δεξί κλικ: λίστα ιστοχώρων"
 
-#: ../src/pluginmanagedlg.cpp:119
+#: ../src/pluginmanagedlg.cpp:133
 #, c-format
 msgid ""
 "%s\n"
@@ -1274,352 +1476,395 @@ msgid ""
 "<b>Filename:</b>\t%s"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:179
+#: ../src/pluginmanagedlg.cpp:193
 msgid "<b>Virtual Dictionary</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:184
+#: ../src/pluginmanagedlg.cpp:198
 #, fuzzy
 msgid "<b>Network Dictionary</b>"
 msgstr "Κ_ύρια λεξικά"
 
-#: ../src/pluginmanagedlg.cpp:189
+#: ../src/pluginmanagedlg.cpp:203
 #, fuzzy
 msgid "<b>Special Dictionary</b>"
 msgstr "Λεξικό"
 
-#: ../src/pluginmanagedlg.cpp:194
+#: ../src/pluginmanagedlg.cpp:208
 msgid "<b>TTS Engine</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:199
+#: ../src/pluginmanagedlg.cpp:213
 msgid "<b>Data Parsing Engine</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:204
+#: ../src/pluginmanagedlg.cpp:218
 msgid "<b>Misc</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:379
+#: ../src/pluginmanagedlg.cpp:393
 msgid "Plug-in Name"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:402
+#: ../src/pluginmanagedlg.cpp:416
 msgid "Configure Pl_ug-in"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:412
+#: ../src/pluginmanagedlg.cpp:426
 msgid "<b>Plug-in Details</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:421
+#: ../src/pluginmanagedlg.cpp:435
 #, fuzzy
 msgid "Manage Plugins"
 msgstr "Διαχείριση Λεξικών"
 
-#: ../src/prefsdlg.cpp:79 ../src/prefsdlg.cpp:398
+#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:402
 msgid "Scan Selection"
 msgstr "Εύρεση Επιλογής"
 
-#: ../src/prefsdlg.cpp:80 ../src/prefsdlg.cpp:529
+#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:533
 msgid "Font"
 msgstr "Γραμματοσειρά"
 
-#: ../src/prefsdlg.cpp:81 ../src/prefsdlg.cpp:610
+#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:591
 msgid "Cache"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:82 ../src/prefsdlg.cpp:701
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:682
 msgid "Export"
 msgstr "Εξαγωγή"
 
-#: ../src/prefsdlg.cpp:83 ../src/prefsdlg.cpp:770
+#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:759
 msgid "Sound"
 msgstr "Ήχος"
 
-#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:737
+#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:834
+msgid "Video"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:718
 msgid "Article rendering"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:1033
+#: ../src/prefsdlg.cpp:93 ../src/prefsdlg.cpp:1047
 #, fuzzy
 msgid "Net Dict"
 msgstr "Διαχείριση Λεξικών"
 
-#: ../src/prefsdlg.cpp:95 ../src/prefsdlg.cpp:1108
+#: ../src/prefsdlg.cpp:94 ../src/prefsdlg.cpp:1111
+msgid "Web browser"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:1160
 msgid "Input"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:111
-#: ../src/prefsdlg.cpp:1195 ../src/prefsdlg.cpp:1634 ../src/prefsdlg.cpp:1665
+#: ../src/prefsdlg.cpp:101 ../src/prefsdlg.cpp:109 ../src/prefsdlg.cpp:116
+#: ../src/prefsdlg.cpp:1313 ../src/prefsdlg.cpp:1773 ../src/prefsdlg.cpp:1805
 msgid "Options"
 msgstr "Επιλογές"
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1508
+#: ../src/prefsdlg.cpp:102 ../src/prefsdlg.cpp:1648
 msgid "Search website"
 msgstr "Έρευνα ιστοχώρου"
 
-#: ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:1732
+#: ../src/prefsdlg.cpp:117 ../src/prefsdlg.cpp:1859
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:119 ../src/stardict.cpp:2522
+#: ../src/prefsdlg.cpp:124 ../src/stardict.cpp:2410
 msgid "Dictionary"
 msgstr "Λεξικό"
 
-#: ../src/prefsdlg.cpp:121
+#: ../src/prefsdlg.cpp:125
 msgid "Network"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:123
+#: ../src/prefsdlg.cpp:126
 msgid "Main window"
 msgstr "Κυρίως παράθυρο"
 
-#: ../src/prefsdlg.cpp:125
+#: ../src/prefsdlg.cpp:127
 msgid "Notification area icon"
 msgstr "Εικονίδιο περιοχής επισήμανσης"
 
-#: ../src/prefsdlg.cpp:127
+#: ../src/prefsdlg.cpp:128
 msgid "Floating window"
 msgstr "Επιπλέον παράθυρο"
 
-#: ../src/prefsdlg.cpp:264
+#: ../src/prefsdlg.cpp:268
 msgid "Categories"
 msgstr "Κατηγορίες"
 
-#: ../src/prefsdlg.cpp:401
+#: ../src/prefsdlg.cpp:405
 #, fuzzy
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "_Εύρεση μόνο αν το κουμπί modifier είναι πατημένο."
 
-#: ../src/prefsdlg.cpp:417
+#: ../src/prefsdlg.cpp:421
 msgid "H_ide floating window when modifier key released."
 msgstr "Α_πόκρυψη του επιπλέοντος παραθύρου όταν το κουμπί modifier αφήνεται."
 
-#: ../src/prefsdlg.cpp:427
+#: ../src/prefsdlg.cpp:431
 msgid "Scan modifier _key:"
 msgstr "Ανίχνευση _κουμπιού modifier:"
 
-#: ../src/prefsdlg.cpp:448
+#: ../src/prefsdlg.cpp:452
 msgid "_Scan clipboard."
 msgstr "_Ανίχνευση προχείρου."
 
-#: ../src/prefsdlg.cpp:458
+#: ../src/prefsdlg.cpp:462
 #, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "_Χρήση πλήκτρου ανίχνευσης: Ctrl+Alt+F1."
 
-#: ../src/prefsdlg.cpp:506
+#: ../src/prefsdlg.cpp:510
 msgid "Choose dictionary font"
 msgstr "Επιλογή γραμματοσειράς λεξικού"
 
-#: ../src/prefsdlg.cpp:509 ../src/prefsdlg.cpp:554
+#: ../src/prefsdlg.cpp:513 ../src/prefsdlg.cpp:558
 msgid "Choose"
 msgstr "Επιλογή"
 
-#: ../src/prefsdlg.cpp:511
+#: ../src/prefsdlg.cpp:515
 msgid "Dictionary font"
 msgstr "Γραμματοσειρά λεξικού"
 
-#: ../src/prefsdlg.cpp:532
+#: ../src/prefsdlg.cpp:536
 msgid "_Use custom font."
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
-#: ../src/prefsdlg.cpp:544
+#: ../src/prefsdlg.cpp:548
 msgid "Dictionary _font:"
 msgstr "Γραμματοσειρά _λεξικού:"
 
-#: ../src/prefsdlg.cpp:614
+#: ../src/prefsdlg.cpp:595
 msgid "Create c_ache files to speed up loading."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:619
+#: ../src/prefsdlg.cpp:600
 msgid "_Sort word list by collation function."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:628
+#: ../src/prefsdlg.cpp:609
 msgid "\tCollation _function:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:660
+#: ../src/prefsdlg.cpp:641
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:666
+#: ../src/prefsdlg.cpp:647
 msgid "C_lean all cache files"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:683
+#: ../src/prefsdlg.cpp:664
 msgid "Open file..."
 msgstr "Άνοιγμα αρχείου..."
 
-#: ../src/prefsdlg.cpp:706
+#: ../src/prefsdlg.cpp:687
 #, fuzzy
 msgid "_Only export words."
 msgstr "_Εξαγωγή μόνο λέξης."
 
-#: ../src/prefsdlg.cpp:713
+#: ../src/prefsdlg.cpp:694
 #, fuzzy
 msgid "File name:"
 msgstr "Όνομα αρχείου"
 
-#: ../src/prefsdlg.cpp:722
+#: ../src/prefsdlg.cpp:703
 msgid "_Browse..."
 msgstr "_Αναζήτηση..."
 
-#: ../src/prefsdlg.cpp:743
+#: ../src/prefsdlg.cpp:724
 msgid "_Highlight search term"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:775
+#: ../src/prefsdlg.cpp:764
 msgid "_Enable sound event."
 msgstr "_Ενεργοποίηση ηχητικού γεγονότος."
 
-#: ../src/prefsdlg.cpp:784
-msgid "Command for playing wav files:"
+#: ../src/prefsdlg.cpp:773
+#, fuzzy
+msgid "Command for playing sound files:"
 msgstr "Εντολή αναπαραγωγής αρχείων wav:"
 
-#: ../src/prefsdlg.cpp:797
+#: ../src/prefsdlg.cpp:785
+msgid "Always use sound play command."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:792
 msgid "RealPeopleTTS search path:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:815
+#: ../src/prefsdlg.cpp:810
 #, fuzzy
 msgid "Enable _TTS program."
 msgstr "Το όνομα του προγράμματος"
 
-#: ../src/prefsdlg.cpp:823
-msgid "Commandline:"
-msgstr ""
+#: ../src/prefsdlg.cpp:818
+#, fuzzy
+msgid "Command line:"
+msgstr "Εντολή αναπαραγωγής αρχείων wav:"
 
-#: ../src/prefsdlg.cpp:852
+#: ../src/prefsdlg.cpp:839
+#, fuzzy
+msgid "Command for playing video files:"
+msgstr "Εντολή αναπαραγωγής αρχείων wav:"
+
+#: ../src/prefsdlg.cpp:866
 #, fuzzy
 msgid "Account"
 msgstr "_Περί"
 
-#: ../src/prefsdlg.cpp:863 ../src/prefsdlg.cpp:960
+#: ../src/prefsdlg.cpp:877 ../src/prefsdlg.cpp:974
 #, fuzzy
 msgid "_User Name:"
 msgstr "Όνομα Ιστοχώρου"
 
-#: ../src/prefsdlg.cpp:869 ../src/prefsdlg.cpp:966
+#: ../src/prefsdlg.cpp:883 ../src/prefsdlg.cpp:980
 msgid "_Password:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:892 ../src/prefsdlg.cpp:991
+#: ../src/prefsdlg.cpp:906 ../src/prefsdlg.cpp:1005
 #, fuzzy
 msgid "Please input the password."
 msgstr "Παρακαλώ εισάγετε το όνομα του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:949
+#: ../src/prefsdlg.cpp:963
 msgid "Register"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:973
+#: ../src/prefsdlg.cpp:987
 #, fuzzy
 msgid "_Email:"
 msgstr "E-mail"
 
-#: ../src/prefsdlg.cpp:989
+#: ../src/prefsdlg.cpp:1003
 #, fuzzy
 msgid "Please input the user name."
 msgstr "Παρακαλώ εισάγετε το όνομα του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:993
+#: ../src/prefsdlg.cpp:1007
 #, fuzzy
 msgid "Please input the email."
 msgstr "Παρακαλώ εισάγετε το δεσμό του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:995
+#: ../src/prefsdlg.cpp:1009
 #, fuzzy
 msgid "Please input a valid email."
 msgstr "Παρακαλώ εισάγετε το όνομα του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:1039
+#: ../src/prefsdlg.cpp:1053
 #, fuzzy
 msgid "Enable _network dictionaries."
 msgstr "Διαχείριση λεξικών"
 
-#: ../src/prefsdlg.cpp:1051
+#: ../src/prefsdlg.cpp:1065
 msgid "StarDict server:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1060
+#: ../src/prefsdlg.cpp:1074
 #, fuzzy
 msgid "Port:"
 msgstr "Εκτύπωση"
 
-#: ../src/prefsdlg.cpp:1069
+#: ../src/prefsdlg.cpp:1083
 msgid "Account:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1080
+#: ../src/prefsdlg.cpp:1094
 msgid "_Register an account"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1115
+#: ../src/prefsdlg.cpp:1116
+#, fuzzy
+msgid "Command for opening URLs:"
+msgstr "Εντολή αναπαραγωγής αρχείων wav:"
+
+#: ../src/prefsdlg.cpp:1129
+msgid "Always use this command for opening URLs."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1167
 #, fuzzy
 msgid "_Search while typing."
 msgstr "Έρευνα ιστοχώρου"
 
-#: ../src/prefsdlg.cpp:1124
+#: ../src/prefsdlg.cpp:1176
 msgid "Word change _timeout:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1133
+#: ../src/prefsdlg.cpp:1185
 #, fuzzy
 msgid "(default:300 ms)"
 msgstr "(προκαθορισμένο:320)"
 
-#: ../src/prefsdlg.cpp:1135
+#: ../src/prefsdlg.cpp:1187
 #, fuzzy
 msgid "Show the _first word when not found."
 msgstr "_Εμφάνιση επιπλέοντος παραθύρου αν δε βρεθεί λέξη."
 
-#: ../src/prefsdlg.cpp:1202
+#: ../src/prefsdlg.cpp:1264
+msgid "Skin change will take effect after application restart"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1303
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
+#, fuzzy
+msgid "Default"
+msgstr "(προκαθορισμένο:320)"
+
+#: ../src/prefsdlg.cpp:1320
 msgid "_Auto run StarDict after boot."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1232
+#: ../src/prefsdlg.cpp:1359
+msgid "Skin:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1372
 msgid "Hide main window when _starting StarDict."
 msgstr "Απόκρυψη κυρίως παραθύρου στην _εκκίνηση του StarDict."
 
-#: ../src/prefsdlg.cpp:1245
+#: ../src/prefsdlg.cpp:1385
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "_Χρήση του πλήκτρου ανοίγματος κυρίως παραθύρου: Ctrl+Alt+Z."
 
-#: ../src/prefsdlg.cpp:1263 ../src/prefsdlg.cpp:1793
+#: ../src/prefsdlg.cpp:1403 ../src/prefsdlg.cpp:1920
 #, fuzzy
 msgid "_Transparency:"
 msgstr "Μετάφραση από"
 
-#: ../src/prefsdlg.cpp:1356 ../src/prefsdlg.cpp:1559
+#: ../src/prefsdlg.cpp:1496 ../src/prefsdlg.cpp:1699
 msgid "Website Name"
 msgstr "Όνομα Ιστοχώρου"
 
-#: ../src/prefsdlg.cpp:1368 ../src/prefsdlg.cpp:1567
+#: ../src/prefsdlg.cpp:1508 ../src/prefsdlg.cpp:1707
 msgid "Website link"
 msgstr "Δεσμός Ιστοχώρου"
 
-#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1575
+#: ../src/prefsdlg.cpp:1519 ../src/prefsdlg.cpp:1715
 msgid "Website search link"
 msgstr "Δεσμός Ιστοχώρου εύρεσης"
 
-#: ../src/prefsdlg.cpp:1400
+#: ../src/prefsdlg.cpp:1540
 msgid "Please input the website name."
 msgstr "Παρακαλώ εισάγετε το όνομα του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:1402
+#: ../src/prefsdlg.cpp:1542
 msgid "Please input the website link."
 msgstr "Παρακαλώ εισάγετε το δεσμό του ιστοχώρου."
 
-#: ../src/prefsdlg.cpp:1404
+#: ../src/prefsdlg.cpp:1544
 msgid "Please input the website search link."
 msgstr "Παρακαλώ εισάγετε το δεσμό του ιστοχώρου εύρεσης."
 
-#: ../src/prefsdlg.cpp:1406 ../src/prefsdlg.cpp:1485
+#: ../src/prefsdlg.cpp:1546 ../src/prefsdlg.cpp:1625
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
@@ -1627,169 +1872,188 @@ msgstr ""
 "Ο δεσμός ιστοχώρου εύρεσης θα πρέπει να περιέχει μια συμβολοσειρά \"%%s\" "
 "γαι την λέξη της ερώτησης."
 
-#: ../src/prefsdlg.cpp:1640
+#: ../src/prefsdlg.cpp:1777
 #, fuzzy
-msgid ""
-"_Query in the floating window when middle mouse\n"
-"button is clicked."
+msgid "When middle mouse button is clicked:"
 msgstr ""
 "_Ερώτηση στο επιπλέον παράθυρο κατά το κλικ\n"
 "του μεσαίου κουμπιού."
 
-#: ../src/prefsdlg.cpp:1668
+#. order of items must match the TNotifAreaMiddleClickAction enum
+#: ../src/prefsdlg.cpp:1781
+#, fuzzy
+msgid "Query selection in floating window"
+msgstr "Ερώτηση στο κύριο παράθυρο"
+
+#: ../src/prefsdlg.cpp:1782
+#, fuzzy
+msgid "Query selection in main window"
+msgstr "Ερώτηση στο κύριο παράθυρο"
+
+#: ../src/prefsdlg.cpp:1783
+msgid "Do nothing"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1808
 #, fuzzy
 msgid "_Pronounce the word when it pops up."
 msgstr "_Εκφώνηση της λέξης κατά την εμφάνιση."
 
-#: ../src/prefsdlg.cpp:1677
+#: ../src/prefsdlg.cpp:1817
 msgid "_Show floating window if word not found."
 msgstr "_Εμφάνιση επιπλέοντος παραθύρου αν δε βρεθεί λέξη."
 
-#: ../src/prefsdlg.cpp:1751
+#: ../src/prefsdlg.cpp:1878
 msgid "Max window _width:"
 msgstr "Μέγιστο _πλάτος παραθύρου:"
 
-#: ../src/prefsdlg.cpp:1761
+#: ../src/prefsdlg.cpp:1888
 msgid "(default:320)"
 msgstr "(προκαθορισμένο:320)"
 
-#: ../src/prefsdlg.cpp:1765
+#: ../src/prefsdlg.cpp:1892
 msgid "Max window hei_ght:"
 msgstr "Μέγιστο _ύψος παραθύρου:"
 
-#: ../src/prefsdlg.cpp:1773
+#: ../src/prefsdlg.cpp:1900
 msgid "(default:240)"
 msgstr "(προκαθορισμένο:240)"
 
-#: ../src/prefsdlg.cpp:1778
+#: ../src/prefsdlg.cpp:1905
 #, fuzzy
 msgid "_Use custom background color:"
 msgstr "_Χρήση ατομικής γραμματοσειράς."
 
-#: ../src/prefsdlg.cpp:1873
+#: ../src/prefsdlg.cpp:2003
 msgid "Cat_egories:"
 msgstr "Κατ_ηγορίες:"
 
-#: ../src/progresswin.cpp:35 ../src/progresswin.cpp:39 ../src/splash.cpp:70
+#: ../src/progresswin.cpp:42 ../src/progresswin.cpp:46 ../src/splash.cpp:72
 msgid "Loading"
 msgstr ""
 
-#: ../src/readword.cpp:150
+#: ../src/readword.cpp:151
 msgid "Real People TTS"
 msgstr ""
 
-#: ../src/readword.cpp:157
+#: ../src/readword.cpp:158
 msgid "Command TTS"
 msgstr ""
 
-#: ../src/stardict.cpp:95
-msgid "Turn on all debugging messages"
-msgstr "Ενεργοποίηση όλων των μηνυμάτων εκσφαλμάτωσης"
+#. gtk_widget_set_app_paintable(window, TRUE);
+#: ../src/splash.cpp:86
+#, fuzzy
+msgid "StarDict starting..."
+msgstr "StarDict - Ανιχνεύω"
 
-#: ../src/stardict.cpp:97
+#: ../src/stardict.cpp:101
+msgid "How many messages print to console (0-6)"
+msgstr ""
+
+#: ../src/stardict.cpp:103
+msgid "How many messages print to log (0-6)"
+msgstr ""
+
+#: ../src/stardict.cpp:105
 #, fuzzy
 msgid "Hide the main window, do not show splash screen"
 msgstr "Απόκρυψη κυρίως παραθύρου"
 
-#: ../src/stardict.cpp:100
+#: ../src/stardict.cpp:108
 #, fuzzy
 msgid "Start a new instance of stardict"
 msgstr "Έξοδος μιας υπάρχουσας συνεδρίας του stardict"
 
-#: ../src/stardict.cpp:104
+#: ../src/stardict.cpp:112
 msgid "Quit an existing instance of stardict"
 msgstr "Έξοδος μιας υπάρχουσας συνεδρίας του stardict"
 
-#: ../src/stardict.cpp:1112
+#: ../src/stardict.cpp:1088
 #, fuzzy
 msgid "Full-text Search"
 msgstr "Πλήρης αναζήτηση κειμένου..."
 
-#: ../src/stardict.cpp:1139
+#: ../src/stardict.cpp:1115
 #, fuzzy
 msgid "Search"
 msgstr "_Έρευνα για:"
 
-#: ../src/stardict.cpp:1224 ../src/stardict.cpp:1641
+#: ../src/stardict.cpp:1200 ../src/stardict.cpp:1616
 msgid "Full-text search..."
 msgstr "Πλήρης αναζήτηση κειμένου..."
 
-#: ../src/stardict.cpp:1344
-msgid "Fuzzy query failed, too :-("
-msgstr "Και η ασαφής ερώτηση απέτυχε :-("
-
-#: ../src/stardict.cpp:1630
+#: ../src/stardict.cpp:1605
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Πιέστε Enter για λίστα λέξεων που ταιριάζουν στη φόρμα."
 
-#: ../src/stardict.cpp:1633
+#: ../src/stardict.cpp:1608
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr "Πιέστε Enter για λίστα λέξεων που ταιριάζουν στη φόρμα."
 
-#: ../src/stardict.cpp:1637
+#: ../src/stardict.cpp:1612
 msgid "Fuzzy query..."
 msgstr "Ασαφής ερώτηση..."
 
-#: ../src/stardict.cpp:1905 ../src/stardict.cpp:2010
+#: ../src/stardict.cpp:1882 ../src/stardict.cpp:2019
 #, fuzzy
 msgid "Not found!\n"
 msgstr "<Δε Βρέθηκε!>"
 
-#: ../src/stardict.cpp:2006
+#: ../src/stardict.cpp:2015
 msgid "Conversion error!\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2354
+#: ../src/stardict.cpp:2315
 msgid "StarDict is already running. Using the running process."
 msgstr "Το StarDict τρέχει ήδη. Χρήση της υπάρχουσας συνεδρίας."
 
-#: ../src/stardict.cpp:2487
+#: ../src/stardict.cpp:2394
 #, fuzzy
 msgid "- Lookup words"
 msgstr " λέξεις:\n"
 
-#: ../src/stardict.cpp:2492
+#: ../src/stardict.cpp:2399
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
 
-#: ../src/utils.cpp:130
-#, fuzzy, c-format
-msgid "Can not load image. %s"
-msgstr "Δεν είναι δυνατή η δημιουργία του %s."
-
-#: ../src/lib/stardict_client.cpp:903
+#: ../src/lib/stardict_client.cpp:905
 #, c-format
 msgid "Authentication denied: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:916
+#: ../src/lib/stardict_client.cpp:918
 #, c-format
 msgid "Register failed: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:921
+#: ../src/lib/stardict_client.cpp:923
 msgid "Register success!"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:956
+#: ../src/lib/stardict_client.cpp:958
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1076
+#: ../src/lib/stardict_client.cpp:1078
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
 msgstr ""
 
-#: ../src/lib/stddict.cpp:650
+#: ../src/lib/stddict.cpp:705
 msgid "Sorting, please wait..."
 msgstr ""
 
-#: ../src/win32/systray.cpp:107
+#: ../src/lib/utils.cpp:106
+#, fuzzy, c-format
+msgid "Can not load image. %s"
+msgstr "Δεν είναι δυνατή η δημιουργία του %s."
+
+#: ../src/win32/systray.cpp:105
 msgid "Scan"
 msgstr "Ανίχνευση"
 
@@ -1856,12 +2120,6 @@ msgstr ""
 msgid "Voice type:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:35
-#, fuzzy
-msgid "Default"
-msgstr "(προκαθορισμένο:320)"
-
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:79
 msgid "Espeak"
 msgstr ""
@@ -1874,11 +2132,11 @@ msgstr ""
 msgid "Pronounce words by Espeak TTS engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:109
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
 msgid "Espeak TTS"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:110
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:111
 #, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr ""
@@ -1908,135 +2166,135 @@ msgstr ""
 msgid "Festival plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:217
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:218
 msgid "[not a printable character]"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:234
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
 msgid "General Character Properties"
 msgstr ""
 
 #. character category
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:238
 msgid "Unicode category:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:243
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:244
 msgid "Canonical decomposition:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:256
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:257
 msgid "Various Useful Representations"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:269
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:270
 msgid "UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:277
 msgid "UTF-16:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:284
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:285
 msgid "C octal escaped UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:292
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
 msgid "XML decimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:296
 msgid "XML hexadecimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:306
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:307
 #, fuzzy
 msgid "Alias names:"
 msgstr "Όνομα αρχείου"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:313
 msgid "Notes:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:319
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:320
 msgid "See also:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:326
 msgid "Approximate equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:332
 msgid "Equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:336
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:337
 msgid "Annotations and Cross References"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:343
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
 msgid "Definition in English:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:346
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
 msgid "Mandarin Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:349
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
 msgid "Cantonese Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:352
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
 msgid "Japanese On Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
 msgid "Japanese Kun Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:358
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
 msgid "Tang Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:361
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
 msgid "Korean Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:364
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:365
 msgid "CJK Ideograph Information"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:409
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:397
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
 msgid "Gucharmap"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:397
 msgid "Gucharmap virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:396
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:397
 msgid "Show information about Unicode characters."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:411
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:465
 msgid "HTML data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:465
 msgid "HTML data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:464
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:465
 msgid "Parse the HTML data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:476
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:477
 #, c-format
 msgid "HTML data parsing plug-in loaded.\n"
 msgstr ""
@@ -2086,22 +2344,22 @@ msgstr ""
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:167
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:168
 #, c-format
 msgid "Error: Open file %s failed!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:211
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:212
 msgid "QQWry configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:217
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:218
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:219
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:220
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
@@ -2109,22 +2367,22 @@ msgid ""
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:241
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
 msgid "QQWry"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:241
 #, fuzzy
 msgid "Show QQWry IP information."
 msgstr "Εμφάνιση πληροφοριών"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:240
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:241
 #, fuzzy
 msgid "Show address information by IP."
 msgstr "Εμφάνιση πληροφοριών"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:256
 #, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr ""
@@ -2342,22 +2600,42 @@ msgstr ""
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:384
 msgid "XDXF data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:384
 msgid "XDXF data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:325
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:384
 msgid "Parse the XDXF data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:337
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:396
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr ""
+
+#~ msgid "<span foreground=\"red\">[Missing Image]</span>"
+#~ msgstr "<span foreground=\"red\">[Η Εικόνα λείπει]</span>"
+
+#~ msgid "Altavista Translate"
+#~ msgstr "Μετάφραση από Altavista"
+
+#, fuzzy
+#~ msgid ""
+#~ "_Query in the floating window when middle mouse\n"
+#~ "button is clicked."
+#~ msgstr ""
+#~ "_Ερώτηση στο επιπλέον παράθυρο κατά το κλικ\n"
+#~ "του μεσαίου κουμπιού."
+
+#~ msgid "Turn on all debugging messages"
+#~ msgstr "Ενεργοποίηση όλων των μηνυμάτων εκσφαλμάτωσης"
+
+#~ msgid "Fuzzy query failed, too :-("
+#~ msgstr "Και η ασαφής ερώτηση απέτυχε :-("
 
 #, fuzzy
 #~ msgid "Found no words matching this regular expressions!"
@@ -2439,9 +2717,6 @@ msgstr ""
 #~ msgid "Program version"
 #~ msgstr "Έκδοση προγράμματος"
 
-#~ msgid "The version of the program"
-#~ msgstr "Η έκδοση του προγράμματος"
-
 #~ msgid "Copyright string"
 #~ msgstr "Συμβολοσειρά πνευματικών δικαιωμάτων"
 
@@ -2497,8 +2772,3 @@ msgstr ""
 
 #~ msgid "_Dict Manage"
 #~ msgstr "_Διαχ. Λεξικού"
-
-#~ msgid "Find"
-#~ msgstr "Εύρεση"
-
- 	  	 
