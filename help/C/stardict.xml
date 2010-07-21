@@ -2020,7 +2020,7 @@ plugin_dir=C:\\StarDict\\mvsc\\Debug
 	
 	</sect1>
 
-	<sect1 id="troubleshooting">
+	<sect1 id="stardict-troubleshooting">
 	<title>Troubleshooting</title>
 	<para>If you experience problems with &app_t;, examine &app_t; output.
 	By default the application prints the most important messages to standard output and standard error. To see messages, start &app_t; from the console.
@@ -2216,7 +2216,7 @@ plugin_dir=C:\\StarDict\\mvsc\\Debug
  </sect1>
 
 <!-- ============= Authors ================================ -->
- <sect1 id="authors">
+ <sect1 id="stardict-authors">
    <sect1info>
      <authorgroup>
        <author>
