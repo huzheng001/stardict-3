@@ -24,7 +24,16 @@ DOC_LINGUAS = mk nl ru uk zh_CN zh_TW
 
 STARDICT_ALL_LINGUAS = C $(DOC_LINGUAS)
 STARDICT_DB2HTML ?= `$(PKG_CONFIG) --variable db2html gnome-doc-utils`
+STARDICT_SYSICONDIR ?= `$(PKG_CONFIG) --variable icondir gnome-doc-utils`/hicolor/48x48/status
+STARDICT_ICONDIR = icons
 STARDICT_HTML_DIRS = $(foreach lc,$(STARDICT_ALL_LINGUAS),$(lc)/html)
+STARDICT_ADMON_ICONS = \
+	admon-caution.png	\
+	admon-important.png	\
+	admon-note.png		\
+	admon-bug.png		\
+	admon-tip.png		\
+	admon-warning.png
 
 ## How does StarDict knows where to search for html doc?
 ## src/Makefile.am defines STARDICT_DATA_DIR macro that is passed to the compiler.
@@ -39,15 +48,22 @@ stardict-html: $(STARDICT_HTML_DIRS)
 $(STARDICT_HTML_DIRS): %/html : %/$(DOC_MODULE).xml $(foreach fig,$(DOC_FIGURES),%/$(fig))
 	lc=$(patsubst %/html,%,$@); \
 	htmldir=$(srcdir)/$${lc}/html; \
+	chunk_basename=index; \
 	test -d $${htmldir} && rm -rf $${htmldir}; \
 	$(mkinstalldirs) $${htmldir}; \
-	xsltproc -o $${htmldir}/index.html --xinclude --param db.chunk.chunk_top "false()" --stringparam db.chunk.basename "${DOC_MODULE}" --stringparam db.chunk.extension ".html" ${STARDICT_DB2HTML} $(srcdir)/$${lc}/${DOC_MODULE}.xml; \
+	xsltproc -o $${htmldir}/$${chunk_basename}.html --xinclude --param db.chunk.chunk_top "false()" --stringparam db.chunk.basename "$${chunk_basename}" --stringparam db.chunk.extension ".html" --stringparam theme.icon.admon.path "${STARDICT_ICONDIR}/" ${STARDICT_DB2HTML} $<; \
 	for fig in $(DOC_FIGURES); do \
 		figdir=`echo $$fig | sed -e 's/^\(.*\/\).*/\1/' -e '/\//!s/.*//' -e 's/\/$$//'`; \
 		if test ! -d "$${htmldir}/$${figdir}"; then \
 			$(mkinstalldirs) "$${htmldir}/$${figdir}"; \
 		fi; \
 		$(INSTALL_DATA) $(srcdir)/$${lc}/$${fig} $${htmldir}/$${fig}; \
+	done; \
+	for icon in $(STARDICT_ADMON_ICONS); do \
+		if test ! -d "$${htmldir}/$(STARDICT_ICONDIR)"; then \
+			$(mkinstalldirs) "$${htmldir}/$(STARDICT_ICONDIR)"; \
+		fi; \
+		$(INSTALL_DATA) $(STARDICT_SYSICONDIR)/$${icon} $${htmldir}/$(STARDICT_ICONDIR)/$${icon}; \
 	done;
 
 maintainer-clean-local: stardict-maintainer-clean
