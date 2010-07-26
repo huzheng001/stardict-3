@@ -10,11 +10,12 @@ You may need to tweak the options below.
 var UseDevC = false;
 var InstallDirMustNotExist = false;
 var MSVSConfig = "Release"; // Release or Debug
-var LinuxDistDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\trunk";
+var LinuxDistDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build\\stardict-3.0.2";
+var LinuxBuildDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build";
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
-var MSVSDir = BaseDir + "mvsc\\";
+var MSVSDir = BaseDir + "msvc_2005\\";
 var MSVSOutputDir = MSVSDir + MSVSConfig + "\\";
 var fso = WScript.CreateObject("Scripting.FileSystemObject");
 
@@ -105,6 +106,13 @@ if(!fso.FolderExists(LinuxDistDir)) {
 	WScript.Quit(1);
 }
 
+if(!fso.FolderExists(LinuxBuildDir)) {
+	WScript.Echo("Linux build folder does not exist.\n"
+		+ "We need linux build directory to get files that cannot be build on Windows.\n"
+		+ "Folder: " + LinuxBuildDir);
+	WScript.Quit(1);
+}
+
 if(InstallDirMustNotExist) {
 	if (fso.FolderExists(BaseDir + "win32-install-dir")) {
 		WScript.Echo("Directory win32-install-dir already exists, "
@@ -127,7 +135,7 @@ if(UseDevC) {
 	CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 }
 {
-	var oFolder = fso.GetFolder(LinuxDistDir + "\\po");
+	var oFolder = fso.GetFolder(LinuxBuildDir + "\\po");
 	var oFiles = new Enumerator(oFolder.Files);
 	var cnt = 0;
 	for (; !oFiles.atEnd(); oFiles.moveNext())

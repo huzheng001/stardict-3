@@ -3,20 +3,20 @@ You need to install developer packages into "gtk" directory, they can be found a
 These packages are needed:
 glib-dev-2.12.13.zip gtk+-dev-2.10.14.zip pango-dev-1.16.4.zip atk-dev-1.12.3.zip cairo-dev-1.4.8.zip gettext-dev-0.14.5.zip zlib123-dll.zip
 
-Just extract them into "mvsc\gtk\" is OK.
+Just extract them into "msvc_2005\gtk\" is OK.
 
 Building libsigc++
 ------------------
 
-1. Download libsigc++ (http://libsigc.sourceforge.net/), unpack it into mvsc directory. You'll get a directory like "mvsc\libsigc++-2.2.4.2". 
-2. Rename it to "mvsc\libsigc++-src". 
+1. Download libsigc++ (http://libsigc.sourceforge.net/), unpack it into msvc_2005 directory. You'll get a directory like "msvc_2005\libsigc++-2.2.4.2". 
+2. Rename it to "msvc_2005\libsigc++-src". 
 3. Build the libsigc++ project with MS Visual Studio 2005 (do Release and Debug builds). 
 4. Copy 
 	Release\sigc-vc80-2_0.lib, 
 	Release\sigc-vc80-2_0.dll, 
 	Debug\sigc-vc80-d-2_0.lib,
 	Debug\sigc-vc80-d-2_0.dll 
-	into "mvsc\libsigc++\".
+	into "msvc_2005\libsigc++\".
 
 libsigc++ have static link problem on vs2005 presently.
 
@@ -82,4 +82,4 @@ If you build Debug version of the project, you need a debug version of CRT which
 StarDict version
 ----------------
 
-StarDict version for MSVC build can be specified in the mvsc\stardictrc.rc.
+StarDict version for MSVC build can be specified in the msvc_2005\stardictrc.rc.

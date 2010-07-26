@@ -252,8 +252,8 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 {
 	std::string mark;
 
-	guint32 data_size,sec_size=0;
-	data_size=get_uint32(data);
+	guint32 sec_size=0;
+	const guint32 data_size=get_uint32(data);
 	data+=sizeof(guint32);
 	const gchar *p=data;
 	bool first_time = true;

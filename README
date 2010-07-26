@@ -25,7 +25,7 @@ debian-upstream - Debian OS-specific data
 doc - documentation files mainly not for end-users
 help - documentation for end-user, a manual
 m4 - m4 macros, used by autoconf
-mvsc - Microsoft Visual Studio project files, used to build StarDict on Windows
+msvc_2005 - Microsoft Visual Studio 2005 project files, used to build StarDict on Windows
 pixmaps - general images
 po - messages for gettext package (for translating messages and GUI)
 src - source files (on C++ language)
