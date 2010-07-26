@@ -3,7 +3,7 @@ StarDict can be compiled and run in windows.
 Building StarDict
 =================
 
-You may use either Dev-C++ or MS Visual Studio 2005 to build StarDict. The guide below deals with Dev-C++. For details specific to MSVS see mvsc\readme.txt, MS Visual Studio solution file is in the mvsc directory.
+You may use either Dev-C++ or MS Visual Studio 2005 to build StarDict. The guide below deals with Dev-C++. For details specific to MSVS see msvc_2005\readme.txt, MS Visual Studio solution file is in the msvc_2005 directory.
 
 Please install Dev-C++, they can be found in http://www.bloodshed.net/dev/
 devcpp-4.9.9.2_setup.exe
@@ -28,7 +28,7 @@ You can find plug-in projects at stardict-plugins/.
 You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/TextOutHook.dev.
 They implement mouseover scanning feature.
 
-For the sapi-tts plugin, you need to compile it by vs2005, see mvsc/readme.txt.
+For the sapi-tts plugin, you need to compile it by vs2005, see msvc_2005/readme.txt.
 
 Unicode
 =======
