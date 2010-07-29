@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="stardict-lib"
 	ProjectGUID="{9A00DC58-3417-43D9-BE37-8B613CD6F588}"
 	RootNamespace="stardictlib"
@@ -154,7 +154,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\common.cpp"
+					RelativePath="..\src\lib\compositelookup.cpp"
 					>
 				</File>
 				<File
@@ -187,6 +187,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\httpmanager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\ifo_file.cpp"
 					>
 				</File>
 				<File
@@ -280,7 +284,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\common.hpp"
+					RelativePath="..\src\lib\compositelookup.h"
 					>
 				</File>
 				<File
@@ -313,6 +317,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\httpmanager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\ifo_file.hpp"
 					>
 				</File>
 				<File
@@ -365,6 +373,10 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\specialdictplugin.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\lib\stardict-sigc++.h"
 					>
 				</File>
 				<File

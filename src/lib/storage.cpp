@@ -9,7 +9,7 @@
 #endif
 #include "storage.h"
 #include "storage_impl.h"
-#include "common.hpp"
+#include "ifo_file.hpp"
 #include "stddict.hpp"
 #include "utils.h"
 #include "dictziplib.hpp"

@@ -33,7 +33,7 @@
 #include <algorithm>
 #include <memory>
 
-#include "common.hpp"
+#include "ifo_file.hpp"
 #include "distance.h"
 #include "kmp.h"
 #include "mapfile.hpp"

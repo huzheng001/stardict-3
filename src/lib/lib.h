@@ -3,7 +3,7 @@
 
 #include "stardict_libconfig.h"
 
-#include "common.hpp"
+#include "ifo_file.hpp"
 #include "data.hpp"
 #include "stddict.hpp"
 
