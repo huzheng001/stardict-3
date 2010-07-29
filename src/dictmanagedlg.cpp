@@ -14,7 +14,7 @@
 #include "stardict.h"
 #include "conf.h"
 #include "desktop.hpp"
-#include "lib/common.hpp"
+#include "lib/ifo_file.hpp"
 #include "lib/utils.h"
 #include "lib/file.hpp"
 #include "dictmanage.h"

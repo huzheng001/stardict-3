@@ -61,27 +61,12 @@ There may be only one resource storage per directory and it will be shared by al
 dictionaries of the directory if you have more than one.
 
 
-{2}. The ".ifo" file's format.
-The .ifo file has the following format:
+{2}. The normal dictionary ".ifo" file's format.
+The .ifo file format is described in ".ifo file format" section.
 
-StarDict's dict ifo file
-version=2.4.2
-[options]
-
-Note that the current "version" string must be "2.4.2" or "3.0.0".  If it's not,
-then StarDict will refuse to read the file.
-If version is "3.0.0", StarDict will parse the "idxoffsetbits" option.
-
-[options]
----------
-In the example above, [options] expands to any of the following lines
-specifying information about the dictionary.  Each option is a keyword
-followed by an equal sign, then the value of that option, then a
-newline.  The options may be appear in any order.
-
-Note that the dictionary must have at least a bookname, a wordcount and a 
-idxfilesize, or the load will fail.  All other information is optional.  All 
-strings should be encoded in UTF-8.
+magic data: "StarDict's dict ifo file"
+version: must be "2.4.2" or "3.0.0". 
+	Since "3.0.0", StarDict accepts the "idxoffsetbits" option.
 
 Available options:
 
@@ -464,9 +449,13 @@ the dir2resdatabase and resdatabase2dir tools.
 StarDict will try to load the storage database first, then try the direct 
 files form.
 
-The format of the res.rifo file:
-StarDict's storage ifo file
-version=3.0.0
+The format of the res.rifo file is described in ".ifo file format" section.
+
+magic data: "StarDict's storage ifo file"
+version: "3.0.0"
+
+Available options:
+
 filecount=	// required.
 ridxfilesize=	// required.
 idxoffsetbits=	// optional.
@@ -500,11 +489,10 @@ and sometreedict.dict.dz.
 
 It is better to compress the .tdx file, as it is always load into memory.
 
-The .ifo file has the following format:
+The .ifo file format is described in ".ifo file format" section.
 
-StarDict's treedict ifo file
-version=2.4.2
-[options]
+magic data: "StarDict's treedict ifo file"
+version: "2.4.2"
 
 Available options:
 
@@ -514,7 +502,7 @@ wordcount=     // required
 author=
 email=
 website=
-description=
+description=	// You can use <br> for new line.
 date=
 sametypesequence=
 
@@ -541,8 +529,36 @@ unsigned numbers in network byte order.
 The .dict file's format is the same as the normal dictionary.
 
 
+{10}. .ifo file format
+.ifo file format is used to describe normal and tree dictionaries, resource database.
+All files have common structure, but differes in set of available options.
 
-{10}. More information.
+.ifo file structure
+<magic data>
+version=<value>
+<key1>=<value1>
+<key2>=<value2>
+...
+
+The file starts with magic data, this is a string unique to file type. For example,
+"StarDict's dict ifo file" is the magic data for normal dictionary. Magic data occupies
+the first line of the file. There must be no spaces or other characters before and after
+the magic data. 
+
+The following lines contain key-value pairs separated by equal sign. 
+There must be no space around the equal sing. 
+A space after the sign will interpreted as part of the value.
+The value spreads to the end of the line.
+Each key-value pair must end with a new line (do not forget to add new line after
+the last key-value pair).
+The key may not contain spaces or tabs. It should not contain anything but alphanumerics, '-', and '_'.
+The first key in the file must be "version". This is mandatory option for all formats.
+
+Empty lines and lines consisting of only space and tab characters are ignored.
+Encoding. File contents must be in UTF-8 encoding.
+End of line. Any end of line convertion is OK: LF, CR+LF, CR.
+
+{11}. More information.
 You can read "src/lib.cpp", "src/dictmanagedlg.cpp" and
 "src/tools/*.cpp" for more information.
 

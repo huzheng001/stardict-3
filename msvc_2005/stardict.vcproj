@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-vc80-d-2_0.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="$(OutDir)\stardict-lib.lib zdll.lib sigc-vc80-d-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib sigc-vc80-2_0.lib shlwapi.lib Winmm.lib"
+				AdditionalDependencies="$(OutDir)\stardict-lib.lib zdll.lib sigc-vc80-2_0.lib shlwapi.lib Winmm.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;libsigc++&quot;"
 				GenerateDebugInformation="true"
@@ -334,110 +334,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="lib"
-				>
-				<File
-					RelativePath="..\src\lib\collation.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\common.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\compositelookup.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\data.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\dictziplib.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\distance.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\http_client.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\httpmanager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\lib.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\md5.c"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\netdictcache.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\netdictplugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\parsedata_plugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\plugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\pluginmanager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\sockets.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\specialdictplugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stardict_client.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stddict.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\storage.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\treedict.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\ttsplugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\utils.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\virtualdictplugin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\xml_str.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -573,154 +469,6 @@
 				</File>
 				<File
 					RelativePath="..\src\win32\win32_iskeyspressed.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="lib"
-				>
-				<File
-					RelativePath="..\src\lib\collation.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\common.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\compositelookup.h"
-					>
-				</File>
-				<File
-					RelativePath=".\config.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\data.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\dict_client.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\dictmask.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\dictziplib.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\distance.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\file.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\http_client.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\httpmanager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\kmp.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\lib.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\m_ctype.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\m_string.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\mapfile.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\md5.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\my_global.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\netdictcache.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\netdictplugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\parsedata_plugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\plugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\pluginmanager.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\sockets.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\specialdictplugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stardict-sigc++.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stardict_client.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stardict_libconfig.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\stddict.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\storage.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\treedict.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\ttsplugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\utils.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\virtualdictplugin.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\xml_str.h"
 					>
 				</File>
 			</Filter>

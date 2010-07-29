@@ -15,7 +15,7 @@ libstardict_a_SOURCES = \
 	stddict.cpp stddict.hpp \
 	storage.cpp storage.h storage_impl.h	\
 	treedict.cpp treedict.hpp	\
-	common.cpp common.hpp \
+	ifo_file.cpp ifo_file.hpp \
 	md5.c md5.h	\
 	stardict_client.cpp stardict_client.hpp \
 	sockets.cpp sockets.hpp \

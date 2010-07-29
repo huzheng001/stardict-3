@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 
-#include "common.hpp"
+#include "ifo_file.hpp"
 #include "data.hpp"
 
 typedef std::list<std::string> strlist_t;
