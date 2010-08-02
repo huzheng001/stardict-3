@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include <cstring>
 #include "libbgl2txt.h"
 #include "bgl_babylonreader.h"

@@ -1,9 +1,16 @@
-#include <string.h>
-#include <stdlib.h>
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#include <cstring>
+#include <cstdlib>
+#include <string>
 #include <glib/gstdio.h>
 #include <glib.h>
 
 #include "libtabfile.h"
+#include "libcommon.h"
+#include "resourcewrap.hpp"
 
 struct _worditem
 {
@@ -16,9 +23,9 @@ static gint comparefunc(gconstpointer a,gconstpointer b)
 	gint x;
 	x = stardict_strcmp(((struct _worditem *)a)->word,((struct _worditem *)b)->word);
 	if (x == 0)
-                return ((struct _worditem *)a)->definition - ((struct _worditem *)b)->definition;
-        else
-                return x;
+		return ((struct _worditem *)a)->definition - ((struct _worditem *)b)->definition;
+	else
+		return x;
 }
 
 static void my_strstrip(char *str, glong linenum, print_info_t print_info)
@@ -35,38 +42,30 @@ static void my_strstrip(char *str, glong linenum, print_info_t print_info)
 				p1++;
 				continue;
 			}
-			else if (*p1 == 'r') {
-				gchar *str = g_strdup_printf("Warining: line %ld \\r\n", linenum);
-				print_info(str);
-				g_free(str);
+			else if (*p1 == '\\') {
+				*p2='\\';
+				p2++;
 				p1++;
 				continue;
 			}
-			else if (*p1 == '\\') {
-				gchar *str = g_strdup_printf("Warining: line %ld \\\\\n", linenum);
-				print_info(str);
-				g_free(str);
-                                *p2='\\';
-                                p2++;
-                                p1++;
-                                continue;
-                        }
+			else if (*p1 == 't') {
+				*p2='\t';
+				p2++;
+				p1++;
+				continue;
+			}
 			else if (*p1 == '\0') {
-				gchar *str = g_strdup_printf("Big warining: line %ld end by \\\n", linenum);
-				print_info(str);
-				g_free(str);
-                                *p2='\\';
-                                p2++;
-                                continue;
+				print_info("Warning: line %ld: end by \\\n", linenum);
+				*p2='\\';
+				p2++;
+				continue;
 			}
 			else {
-				gchar *str = g_strdup_printf("Warining: line %ld \\%c\n", linenum, *p1);
-				print_info(str);
-				g_free(str);
-                                *p2='\\';
-                                p2++;
-                                *p2=*p1;
-                                p2++;
+				print_info("Warning: line %ld: \\%c is unsupported escape sequence.\n", linenum, *p1);
+				*p2='\\';
+				p2++;
+				*p2=*p1;
+				p2++;
 				p1++;
 				continue;
 			}
@@ -81,53 +80,55 @@ static void my_strstrip(char *str, glong linenum, print_info_t print_info)
 	*p2 = '\0';
 }
 
-void convert_tabfile(const char *filename, print_info_t print_info)
-{			
-	struct stat stats;
-	if (g_stat (filename, &stats) == -1)
-	{
-		print_info("File not exist!\n");
-		return;
-	}
-	gchar *basefilename = g_path_get_basename(filename);
-	gchar *ch = strrchr(basefilename, '.');
-	if (ch)
-		*ch = '\0';
-	gchar *dirname = g_path_get_dirname(filename);
-	FILE *tabfile;
-	tabfile = g_fopen(filename,"r");
+/* return: true - OK, false - error 
+Dictionary index is not allowed to contain duplicates. */
+static bool check_duplicate_words(GArray *array, print_info_t print_info)
+{
+	if(array->len < 2)
+		return true;
 
-	gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-	size_t readsize = fread (buffer, 1, stats.st_size, tabfile);
-	fclose (tabfile);
-	buffer[readsize] = '\0';	
-	
-	GArray *array = g_array_sized_new(FALSE,FALSE, sizeof(struct _worditem),20000);
-		
+	gulong i;
+	struct _worditem *pworditem1, *pworditem2;
+	pworditem1 = &g_array_index(array, struct _worditem, 0);
+	for (i=1; i < array->len; i++) {
+		pworditem2 = &g_array_index(array, struct _worditem, i);
+		if(stardict_strcmp(pworditem1->word, pworditem2->word) == 0) {
+			print_info("Error, duplicate word %s.\n", pworditem1->word);
+			return false;
+		}
+		pworditem1 = pworditem2;
+	}
+	return true;
+}
+
+static bool read_tab_file(gchar *buffer, GArray *array, print_info_t print_info)
+{
 	gchar *p, *p1, *p2;
 	p = buffer;
-	if ((guchar)*p==0xEF && (guchar)*(p+1)==0xBB && (guchar)*(p+2)==0xBF) // UTF-8 order characters.
+	if(g_str_has_prefix(p, "\xEF\xBB\xBF")) // UTF-8 BOM
 		p+=3;
+	if(!g_utf8_validate(p, -1, NULL)) {
+		print_info("Error, invalid UTF-8 encoded text.\n");
+		return false;
+	}
 	struct _worditem worditem;
 	glong linenum=1;
-	while (1) {
+	while (true) {
 		if (*p == '\0') {
-                        print_info("Convert over.\n");
-                        break;
-                }
+			print_info("Convertion is over.\n");
+			break;
+		}
 		p1 = strchr(p,'\n');
 		if (!p1) {
-			print_info("Error, no new line at the end\n");
-			return;
+			print_info("Error, no new line at the end.\n");
+			return false;
 		}
 		*p1 = '\0';
 		p1++;
 		p2 = strchr(p,'\t');
 		if (!p2) {
-			gchar *str = g_strdup_printf("Warning, no tab, %ld\n", linenum);
-			print_info(str);
-			g_free(str);
-			p= p1;
+			print_info("Warning: line %ld, no tab! Skipping line.\n", linenum);
+			p = p1;
 			linenum++;
 			continue;
 		}
@@ -135,51 +136,55 @@ void convert_tabfile(const char *filename, print_info_t print_info)
 		p2++;
 		worditem.word = p;
 		worditem.definition = p2;
+		my_strstrip(worditem.word, linenum, print_info);
 		my_strstrip(worditem.definition, linenum, print_info);
 		g_strstrip(worditem.word);
 		g_strstrip(worditem.definition);
 		if (!worditem.word[0]) {
-			gchar *str = g_strdup_printf("Warning: line %ld, bad word!\n", linenum);
-			print_info(str);
-			g_free(str);
-			p= p1;
-                	linenum++;
+			print_info("Warning: line %ld, bad word! Skipping line.\n", linenum);
+			p = p1;
+			linenum++;
 			continue;
 		}
 		if (!worditem.definition[0]) {
-			gchar *str = g_strdup_printf("Warning: line %ld, bad definition!\n", linenum);
-			print_info(str);
-			g_free(str);
-			p= p1;
-                        linenum++;
-                        continue;
+			print_info("Warning: line %ld, bad definition! Skipping line.\n", linenum);
+			p = p1;
+			linenum++;
+			continue;
 		}
-		g_array_append_val(array, worditem);			
-		p= p1;				
+		g_array_append_val(array, worditem);
+		p = p1;
 		linenum++;
-	}		
-	g_array_sort(array,comparefunc);
-		
-	gchar ifofilename[256];
-	gchar idxfilename[256];
-	gchar dicfilename[256];
-	sprintf(ifofilename, "%s" G_DIR_SEPARATOR_S "%s.ifo", dirname, basefilename);
-	sprintf(idxfilename, "%s" G_DIR_SEPARATOR_S "%s.idx", dirname, basefilename);
-	sprintf(dicfilename, "%s" G_DIR_SEPARATOR_S "%s.dict", dirname, basefilename);
-	FILE *ifofile = g_fopen(ifofilename,"wb");
+	}
+	return true;
+}
+
+static bool write_dictionary(const char *filename, GArray *array, print_info_t print_info)
+{
+	glib::CharStr basefilename(g_path_get_basename(filename));
+	gchar *ch = strrchr(get_impl(basefilename), '.');
+	if (ch)
+		*ch = '\0';
+	glib::CharStr dirname(g_path_get_dirname(filename));
+
+	const std::string fullbasefilename = std::string(get_impl(dirname)) + G_DIR_SEPARATOR_S + get_impl(basefilename);
+	const std::string ifofilename = fullbasefilename + ".ifo";
+	const std::string idxfilename = fullbasefilename + ".idx";
+	const std::string dicfilename = fullbasefilename + ".dict";
+	clib::File ifofile(g_fopen(ifofilename.c_str(),"wb"));
 	if (!ifofile) {
-		print_info("Write to ifo file failed!\n");
-		return;
+		print_info("Write to ifo file %s failed!\n", ifofilename.c_str());
+		return false;
 	}
-	FILE *idxfile = g_fopen(idxfilename,"wb");
+	clib::File idxfile(g_fopen(idxfilename.c_str(),"wb"));
 	if (!idxfile) {
-		print_info("Write to idx file failed!\n");
-		return;
+		print_info("Write to idx file %s failed!\n", idxfilename.c_str());
+		return false;
 	}
-	FILE *dicfile = g_fopen(dicfilename,"wb");
+	clib::File dicfile(g_fopen(dicfilename.c_str(),"wb"));
 	if (!dicfile) {
-		print_info("Write to dict file failed!\n");
-		return;
+		print_info("Write to dict file %s failed!\n", dicfilename.c_str());
+		return false;
 	}
 
 	guint32 offset_old;
@@ -187,40 +192,73 @@ void convert_tabfile(const char *filename, print_info_t print_info)
 	struct _worditem *pworditem;
 	gint definition_len;
 	gulong i;
-	for (i=0; i< array->len; i++) {
-		offset_old = ftell(dicfile);
+	for (i=0; i < array->len; i++) {
+		offset_old = ftell(get_impl(dicfile));
 		pworditem = &g_array_index(array, struct _worditem, i);
 		definition_len = strlen(pworditem->definition);
-		fwrite(pworditem->definition, 1 ,definition_len,dicfile);
-		fwrite(pworditem->word,sizeof(gchar),strlen(pworditem->word)+1,idxfile);
+		fwrite(pworditem->definition, 1 ,definition_len,get_impl(dicfile));
+		fwrite(pworditem->word,sizeof(gchar),strlen(pworditem->word)+1,get_impl(idxfile));
 		tmpglong = g_htonl(offset_old);
-		fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
+		fwrite(&(tmpglong),sizeof(guint32),1,get_impl(idxfile));
 		tmpglong = g_htonl(definition_len);
-		fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
+		fwrite(&(tmpglong),sizeof(guint32),1,get_impl(idxfile));
 	}
-	fclose(idxfile);
-	fclose(dicfile);
+	idxfile.reset(NULL);
+	dicfile.reset(NULL);
 
-	gchar *str = g_strdup_printf("%s wordcount: %d\n", basefilename, array->len);
-	print_info(str);
-	g_free(str);
+	print_info("%s wordcount: %d\n", get_impl(basefilename), array->len);
 
 #ifndef _WIN32
-	gchar command[256];
-        sprintf(command, "dictzip %s", dicfilename);
-        system(command);
+	std::string command(std::string("dictzip ") + dicfilename);
+	system(command.c_str());
 #endif
 
-	g_stat(idxfilename, &stats);
-	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
+	struct stat stats;
+	g_stat(idxfilename.c_str(), &stats);
+	fprintf(get_impl(ifofile), "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
 		"idxfilesize=%ld\nbookname=%s\nsametypesequence=m\n",
-		array->len, (long) stats.st_size, basefilename);
-	fclose(ifofile);
-
-	g_free(buffer);
-	g_array_free(array,TRUE);
-
-	g_free(basefilename);
-	g_free(dirname);
+		array->len, (long) stats.st_size, get_impl(basefilename));
+	return true;
 }
 
+class ArrayWrapper {
+public:
+	ArrayWrapper(GArray *array)
+		: array(array)
+	{
+	}
+	~ArrayWrapper(void)
+	{
+		g_array_free(array,TRUE);
+	}
+private:
+	GArray *array;
+};
+
+bool convert_tabfile(const char *filename, print_info_t print_info)
+{
+	glib::CharStr buffer;
+	glib::Error err;
+	if(!g_file_get_contents(filename, get_addr(buffer), NULL, get_addr(err))) {
+		print_info("Unable to open file %s, error: %s\n", filename, err->message);
+		return false;
+	}
+
+	GArray *array = g_array_sized_new(FALSE,FALSE, sizeof(struct _worditem),20000);
+	ArrayWrapper array_wrapper(array);
+	
+	if(!read_tab_file(get_impl(buffer), array, print_info))
+		return false;
+
+	if(array->len < 1) {
+		print_info("Error: empty dictionary.\n");
+		return false;
+	}
+	g_array_sort(array, comparefunc);
+	if(!check_duplicate_words(array, print_info))
+		return false;
+	
+	if(!write_dictionary(filename, array, print_info))
+		return false;
+	return true;
+}
