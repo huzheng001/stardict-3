@@ -22,7 +22,8 @@ static inline guint32 get_uint32(const gchar *addr)
 #define get_uint32(x) *reinterpret_cast<const guint32 *>(x)
 #endif
 
-template <typename T, typename unref_res_t, void (*unref_res)(unref_res_t *)>
+template <typename T, typename unref_res_par_t, typename unref_res_ret_t, 
+	unref_res_ret_t (*unref_res)(unref_res_par_t *)>
 class ResourceWrapper {
 public:
 	ResourceWrapper(T *p = NULL) : p_(p) {}
@@ -38,11 +39,11 @@ public:
 	}
 
 	friend inline T *get_impl(const ResourceWrapper& rw) {
-		return rw.p_; 
+		return rw.p_;
 	}
 
 	friend inline T **get_addr(ResourceWrapper& rw) {
-		return &rw.p_; 
+		return &rw.p_;
 	}
 private:
 	T *p_;
@@ -55,9 +56,10 @@ private:
 	private:
 		void operator delete(void*);
 	};
+
 public:
 	// enable 'if (sp)'
-	operator Tester*() const
+	operator const Tester*() const
 	{
 		if (!*this) return 0;
 		static Tester t;
@@ -66,8 +68,16 @@ public:
 };
 
 namespace glib {
-	typedef ResourceWrapper<gchar, void, g_free> CharStr;
-	typedef ResourceWrapper<GError, GError, g_error_free> Error;
+	typedef ResourceWrapper<gchar, void, void, g_free> CharStr;
+	typedef ResourceWrapper<GError, GError, void, g_error_free> Error;
+	typedef ResourceWrapper<gchar *, gchar *, void, g_strfreev> CharStrArr;
+	typedef ResourceWrapper<GOptionContext, GOptionContext, void,
+		g_option_context_free> OptionContext;
+	typedef ResourceWrapper<GDir, GDir, void, g_dir_close> Dir;
+}
+
+namespace clib {
+	typedef ResourceWrapper<FILE, FILE, int, fclose> File;
 }
 
 extern void ProcessGtkEvent();

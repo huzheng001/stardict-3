@@ -41,7 +41,7 @@
 #include "stddict.hpp"
 #include "utils.h"
 
-inline gint stardict_strcmp(const gchar *s1, const gchar *s2)
+gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
 	gint a=g_ascii_strcasecmp(s1, s2);
 	if (a == 0)

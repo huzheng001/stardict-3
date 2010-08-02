@@ -7,7 +7,7 @@
 #include <cstring>
 #include <cstdlib>
 #include "storage_impl.h"
-#include "common.hpp"
+#include "ifo_file.hpp"
 #include "utils.h"
 
 struct index_entry_t {

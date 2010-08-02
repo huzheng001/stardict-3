@@ -6,8 +6,8 @@
 
 #include "lib/utils.h"
 
-typedef ResourceWrapper<GdkCursor, GdkCursor, gdk_cursor_unref> SkinCursor;
-typedef ResourceWrapper<GdkPixbuf, void, g_object_unref> Skin_pixbuf_1;
+typedef ResourceWrapper<GdkCursor, GdkCursor, void, gdk_cursor_unref> SkinCursor;
+typedef ResourceWrapper<GdkPixbuf, void, void, g_object_unref> Skin_pixbuf_1;
 
 class SkinStorage {
 private:

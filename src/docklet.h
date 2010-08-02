@@ -17,7 +17,7 @@ public:
 private:
 	EggTrayIcon *docklet_;
 	GtkWidget *image_; //icon image.
-	typedef  ResourceWrapper<GtkWidget, GtkWidget, gtk_widget_destroy> GMenu;
+	typedef  ResourceWrapper<GtkWidget, GtkWidget, void, gtk_widget_destroy> GMenu;
         GMenu menu_;
 	GtkWidget *scan_menuitem_;
 	bool embedded_;
