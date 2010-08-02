@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include <string.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
@@ -19,11 +23,11 @@ void on_browse_button_clicked(GtkButton *button, gpointer data)
 	GtkEntry *entry = GTK_ENTRY(data);
 	GtkWidget *dialog;
 	dialog = gtk_file_chooser_dialog_new ("Open file...",
-			GTK_WINDOW(main_window),
-			GTK_FILE_CHOOSER_ACTION_OPEN,
-			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-			NULL);
+		GTK_WINDOW(main_window),
+		GTK_FILE_CHOOSER_ACTION_OPEN,
+		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+		NULL);
 	gtk_file_chooser_set_filename(GTK_FILE_CHOOSER (dialog), gtk_entry_get_text(entry));
 	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
 		gchar *filename;
@@ -34,23 +38,31 @@ void on_browse_button_clicked(GtkButton *button, gpointer data)
 	gtk_widget_destroy (dialog);
 }
 
-void compile_page_print_info(const char *info)
+void compile_page_print_info(const char *info, ...)
 {
-	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, info, -1);
+	va_list va;
+	va_start(va, info);
+	char *str = g_strdup_vprintf(info, va);
+	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, str, -1);
+	g_free(str);
+	va_end(va);
 }
 
 void on_compile_page_build_button_clicked(GtkButton *button, gpointer data)
 {
-	GtkEntry *entry = GTK_ENTRY(data);	
+	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(compile_page_text_view_buffer, "Building...\n", -1);
 	gint key = gtk_option_menu_get_history(GTK_OPTION_MENU(compile_page_option_menu));
+	bool res = true;
 	if (key == 0)
-		convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
+		res = convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
 	else if (key == 1)
 		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info, true);
 	else
 		convert_bglfile(gtk_entry_get_text(entry), "", "");
-	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, "Done!\n", -1);
+	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, 
+		res ? "Done!\n" : "Failed!\n",
+		-1);
 }
 
 void create_compile_page(GtkWidget *notebook)
@@ -80,7 +92,8 @@ void create_compile_page(GtkWidget *notebook)
 		"b\t4\\\\5\\n6\n"
 		"c\t789\n"
 		"============\n"
-		"It means: write the search word first, then a Tab character, and the definition. If the definition contains new line, just write \\n, if contains \\ character, just write \\\\.\n"
+		"Each line contains a word - definition pair. The word is splitted from definition with a tab character. "
+		"You may use the following escapes: \\n - new line, \\\\ - \\, \\t - tab character.\n"
 		"\n\n"
 		"Another format that StarDict recommends is babylon source file format, it is just like this:\n"
 		"======\n"
@@ -88,7 +101,7 @@ void create_compile_page(GtkWidget *notebook)
 		"the meaning of apple\n"
 		"\n"
 		"2dimensional|2dimensionale|2dimensionaler|2dimensionales|2dimensionalem|2dimensionalen\n"
-		"two dimensional's meaning<br>the sencond line.\n"
+		"two dimensional's meaning<br>the second line.\n"
 		"\n"
 		"======\n"
 		, -1);
@@ -115,14 +128,19 @@ void create_compile_page(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_build_button_clicked), entry);
 }
 
-void decompile_page_print_info(const char *info)
+void decompile_page_print_info(const char *info, ...)
 {
-	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, info, -1);
+	va_list va;
+	va_start(va, info);
+	char *str = g_strdup_vprintf(info, va);
+	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, str, -1);
+	g_free(str);
+	va_end(va);
 }
 
 void on_decompile_page_build_button_clicked(GtkButton *button, gpointer data)
 {
-	GtkEntry *entry = GTK_ENTRY(data);	
+	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(decompile_page_text_view_buffer, "Building...\n", -1);
 	convert_stardict2txt(gtk_entry_get_text(entry), decompile_page_print_info);
 	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, "Done!\n", -1);
@@ -130,7 +148,7 @@ void on_decompile_page_build_button_clicked(GtkButton *button, gpointer data)
 
 void on_decompile_page_verify_button_clicked(GtkButton *button, gpointer data)
 {
-	GtkEntry *entry = GTK_ENTRY(data);	
+	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(decompile_page_text_view_buffer, "Verifing dictionary files...\n", -1);
 	stardict_verify(gtk_entry_get_text(entry), decompile_page_print_info);
 	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, "Done!\n", -1);
@@ -173,40 +191,40 @@ void create_decompile_page(GtkWidget *notebook)
 
 void on_edit_page_open_button_clicked(GtkButton *button, gpointer data)
 {
-        GtkWidget *dialog;
-        dialog = gtk_file_chooser_dialog_new ("Open file...",
-                        GTK_WINDOW(main_window),
-                        GTK_FILE_CHOOSER_ACTION_OPEN,
-                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                        GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                        NULL);
-        if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
-                gchar *filename;
-                filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+	GtkWidget *dialog;
+	dialog = gtk_file_chooser_dialog_new ("Open file...",
+		GTK_WINDOW(main_window),
+		GTK_FILE_CHOOSER_ACTION_OPEN,
+		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+		NULL);
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
+		gchar *filename;
+		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 		gchar *buffer;
 		if (g_file_get_contents(filename, &buffer, NULL, NULL)) {
 			gtk_text_buffer_set_text(edit_page_text_view_buffer, buffer, -1);
 			g_free(buffer);
 		}
-                g_free (filename);
-        }
-        gtk_widget_destroy (dialog);
+		g_free (filename);
+	}
+	gtk_widget_destroy (dialog);
 
 }
 
 void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkWidget *dialog;
-        dialog = gtk_file_chooser_dialog_new ("Save file...",
-                        GTK_WINDOW(main_window),
-                        GTK_FILE_CHOOSER_ACTION_SAVE,
-                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                        GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                        NULL);
+	dialog = gtk_file_chooser_dialog_new ("Save file...",
+		GTK_WINDOW(main_window),
+		GTK_FILE_CHOOSER_ACTION_SAVE,
+		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+		NULL);
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
-        if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
-                gchar *filename;
-                filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT) {
+		gchar *filename;
+		filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 		GtkTextIter start, end;
 		gtk_text_buffer_get_bounds(edit_page_text_view_buffer, &start, &end);
 		gchar *buffer = gtk_text_buffer_get_text(edit_page_text_view_buffer, &start, &end, FALSE);
@@ -214,9 +232,9 @@ void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 		fwrite(buffer, 1, strlen(buffer), file);
 		fclose(file);
 		g_free(buffer);
-                g_free (filename);
-        }
-        gtk_widget_destroy (dialog);
+		g_free (filename);
+	}
+	gtk_widget_destroy (dialog);
 }
 
 void create_edit_page(GtkWidget *notebook)
@@ -233,17 +251,17 @@ void create_edit_page(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_edit_page_saveas_button_clicked), NULL);
 	GtkWidget *text_view = gtk_text_view_new();
-        gtk_widget_set_size_request(text_view, -1, 150);
-        gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
-        edit_page_text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+	gtk_widget_set_size_request(text_view, -1, 150);
+	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
+	edit_page_text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 	gtk_text_buffer_set_text(edit_page_text_view_buffer,
-                "This is a simple UTF-8 text file editor.\n"
-                , -1);
-        GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+		"This is a simple UTF-8 text file editor.\n"
+		, -1);
+	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-        gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
-        gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
+	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
+	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 }
 
 gboolean on_delete_event(GtkWidget * window, GdkEvent *event , gpointer data)
@@ -267,7 +285,11 @@ void create_window()
 	gtk_widget_show_all(main_window);
 }
 
+#ifdef _WIN32
+int stardict_editor_main(int argc,char **argv)
+#else
 int main(int argc,char **argv)
+#endif
 {
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
@@ -275,3 +297,21 @@ int main(int argc,char **argv)
 	gtk_main();
 	return 0;
 }
+
+#ifdef _WIN32
+
+#ifdef __GNUC__
+#  ifndef _stdcall
+#    define _stdcall  __attribute__((stdcall))
+#  endif
+#endif
+
+int _stdcall
+WinMain (struct HINSTANCE__ *hInstance,
+struct HINSTANCE__ *hPrevInstance,
+	char               *lpszCmdLine,
+	int                 nCmdShow)
+{
+	return stardict_editor_main (__argc, __argv);
+}
+#endif

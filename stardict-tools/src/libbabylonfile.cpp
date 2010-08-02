@@ -1,5 +1,9 @@
-#include <string.h>
-#include <stdlib.h>
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#include <cstring>
+#include <cstdlib>
 #include <glib/gstdio.h>
 #include <glib.h>
 
@@ -7,6 +11,7 @@
 #include <list>
 
 #include "libbabylonfile.h"
+#include "resourcewrap.hpp"
 
 struct _worditem
 {
@@ -377,15 +382,13 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	g_array_sort(array,comparefunc);
 	g_array_sort(array2,comparefunc2);
 
-	gchar ifofilename[256];
-	gchar idxfilename[256];
-	gchar dicfilename[256];
-	sprintf(ifofilename, "%s" G_DIR_SEPARATOR_S "%s.ifo", dirname, basefilename);
-	sprintf(idxfilename, "%s" G_DIR_SEPARATOR_S "%s.idx", dirname, basefilename);
-	sprintf(dicfilename, "%s" G_DIR_SEPARATOR_S "%s.dict", dirname, basefilename);
-	FILE *ifofile = g_fopen(ifofilename,"wb");
-	FILE *idxfile = g_fopen(idxfilename,"wb");
-	FILE *dicfile = g_fopen(dicfilename,"wb");
+	const std::string fullbasefilename = std::string(dirname) + G_DIR_SEPARATOR_S + basefilename;
+	const std::string ifofilename = fullbasefilename + ".ifo";
+	const std::string idxfilename = fullbasefilename + ".idx";
+	const std::string dicfilename = fullbasefilename + ".dict";
+	FILE *ifofile = g_fopen(ifofilename.c_str(),"wb");
+	FILE *idxfile = g_fopen(idxfilename.c_str(),"wb");
+	FILE *dicfile = g_fopen(dicfilename.c_str(),"wb");
 	
 	guint32 offset_old;
 	guint32 tmpglong;
@@ -412,9 +415,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	g_free(str);
 
 	if (array2->len) {
-		gchar synfilename[256];
-	        sprintf(synfilename, "%s" G_DIR_SEPARATOR_S "%s.syn", dirname, basefilename);
-		FILE *synfile = g_fopen(synfilename,"wb");
+		const std::string synfilename = fullbasefilename + ".syn";
+		FILE *synfile = g_fopen(synfilename.c_str(),"wb");
 		struct _synworditem *psynworditem;
 		gint iFrom, iTo, iThisIndex, cmpint;
 		bool bFound;
@@ -486,7 +488,7 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	} else {
 		synwordcount = g_strdup("");
 	}
-	g_stat(idxfilename, &stats);
+	g_stat(idxfilename.c_str(), &stats);
 	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
 		"%sidxfilesize=%ld\n", array->len, synwordcount, (long) stats.st_size);
 	if (bookname.empty())
@@ -513,9 +515,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	g_array_free(array2,TRUE);
 
 #ifndef _WIN32
-	gchar command[256];
-        sprintf(command, "dictzip %s", dicfilename);
-        system(command);
+	std::string command(std::string("dictzip ") + dicfilename);
+	system(command.c_str());
 #endif
 
 	g_free(basefilename);

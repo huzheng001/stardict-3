@@ -3,6 +3,6 @@
 
 #include "libcommon.h"
 
-extern void convert_tabfile(const char *filename, print_info_t print_info);
+extern bool convert_tabfile(const char *filename, print_info_t print_info);
 
 #endif

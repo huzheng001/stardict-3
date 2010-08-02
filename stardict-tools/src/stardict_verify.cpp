@@ -3,18 +3,23 @@
 
 #include "libstardictverify.h"
 
-void print_info(const char *info)
+void print_info(const char *info, ...)
 {
-        g_print("%s", info);
+	va_list va;
+	va_start(va, info);
+	char *str = g_strdup_vprintf(info, va);
+	g_print("%s", str);
+	g_free(str);
+	va_end(va);
 }
 
 static void verify_dir(gchar *dirname)
 {
-	GDir *dir = g_dir_open(dirname, 0, NULL);	
+	GDir *dir = g_dir_open(dirname, 0, NULL);
 	if (dir) {
 		const gchar *filename;	
 		gchar fullfilename[256];
-		while ((filename = g_dir_read_name(dir))!=NULL) {	
+		while ((filename = g_dir_read_name(dir))!=NULL) {
 			sprintf(fullfilename, "%s/%s", dirname, filename);
 			if (g_file_test(fullfilename, G_FILE_TEST_IS_DIR)) {
 				verify_dir(fullfilename);

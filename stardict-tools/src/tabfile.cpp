@@ -2,9 +2,14 @@
 
 #include "libtabfile.h"
 
-void print_info(const char *info)
+void print_info(const char *info, ...)
 {
-	g_print("%s", info);
+	va_list va;
+	va_start(va, info);
+	char *str = g_strdup_vprintf(info, va);
+	g_print("%s", str);
+	g_free(str);
+	va_end(va);
 }
 
 int main(int argc,char * argv [])
@@ -18,6 +23,5 @@ int main(int argc,char * argv [])
 	g_type_init ();
 	for (int i=1; i< argc; i++)
 		convert_tabfile (argv[i], print_info);
-	return FALSE;	
+	return FALSE;
 }
-
