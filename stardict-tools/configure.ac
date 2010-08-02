@@ -119,6 +119,10 @@ dnl LDFLAGS environment variable to specify library path. For example,
 dnl export LDFLAGS="-L/usr/local/lib".
 AM_ICONV
 
+if test x$am_cv_lib_iconv != xyes; then
+	AC_ERROR([iconv not found])
+fi
+
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
