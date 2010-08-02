@@ -41,6 +41,7 @@ enum CollationLevelType {
 	CollationLevel_MULTI = 2,
 };
 
+extern gint stardict_strcmp(const gchar *s1, const gchar *s2);
 extern gint stardict_server_collate(const gchar *str1, const gchar *str2, CollationLevelType CollationLevel, CollateFunctions func, int servercollatefunc);
 
 
