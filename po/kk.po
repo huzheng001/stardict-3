@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-31 08:47+1000\n"
-"PO-Revision-Date: 2010-07-29 16:36+0600\n"
+"POT-Creation-Date: 2010-08-04 19:56+1000\n"
+"PO-Revision-Date: 2010-08-03 15:57+0600\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
-msgstr ""
+msgstr "stardict қолданбасы"
 
 #: ../data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: ../data/stardict.desktop.in.h:1
 msgid "Lookup words"
-msgstr ""
+msgstr "Сөздерді іздеу"
 
 #: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:30
 #: ../src/docklet.cpp:195 ../src/mainwin.cpp:499 ../src/stardict.cpp:301
@@ -43,6 +43,8 @@ msgid ""
 "A custom font that will be used in StarDict. This will only take effect if "
 "the \"Use Custom Font\" option is turned on."
 msgstr ""
+"StarDict ішінде қолдану үшін таңдауыңызша қаріп. \"Басқа қаріпті қолдану\" "
+"қосулы тұрса ғана іске асырылады."
 
 #: ../data/stardict.schemas.in.h:2
 msgid "Custom Font"
@@ -50,7 +52,7 @@ msgstr "Таңдауыңызша қаріп"
 
 #: ../data/stardict.schemas.in.h:3
 msgid "Dictionary configuration XML"
-msgstr ""
+msgstr "Сөздіктің баптау XML файлы"
 
 #: ../data/stardict.schemas.in.h:4
 msgid "Dictionary order"
@@ -58,19 +60,19 @@ msgstr "Сөздіктер реті"
 
 #: ../data/stardict.schemas.in.h:5
 msgid "Disabled plugins list"
-msgstr ""
+msgstr "Сөндірілген плагиндер тізімі"
 
 #: ../data/stardict.schemas.in.h:6
 msgid "Disabled tree dictionaries list"
-msgstr ""
+msgstr "Сөндірілген ағаш тектес сөздіктер тізімі"
 
 #: ../data/stardict.schemas.in.h:7
 msgid "Enable sound event"
-msgstr ""
+msgstr "Дыбыспен ескертуді іске қосу"
 
 #: ../data/stardict.schemas.in.h:8
 msgid "Enable the use of TTS program"
-msgstr ""
+msgstr "TTS бағдарламасын қолдануды іске қосу"
 
 #: ../data/stardict.schemas.in.h:9
 msgid "Engine index"
@@ -78,21 +80,23 @@ msgstr ""
 
 #: ../data/stardict.schemas.in.h:10
 msgid "Hide floating window when modifier key is released"
-msgstr ""
+msgstr "Түрлендіргіш перне жіберілген кезде қалқымалы терезені жасыру"
 
 #: ../data/stardict.schemas.in.h:11
 msgid ""
 "Hide floating window when modifier key is released. It only take effect when "
 "only_scan_while_modifier_key is turned on."
 msgstr ""
+"Түрлендіргіш перне жіберілген кезде қалқымалы терезені жасыру. Тек  "
+"only_scan_while_modifier_key қосулы тұрса іске асырылады."
 
 #: ../data/stardict.schemas.in.h:12
 msgid "Hide the list"
-msgstr ""
+msgstr "Тізімді жасыру"
 
 #: ../data/stardict.schemas.in.h:13
 msgid "Hide the window on startup"
-msgstr ""
+msgstr "Қосылғанда, терезені жасыру"
 
 #: ../data/stardict.schemas.in.h:14
 msgid "Hpaned 's position"
@@ -100,15 +104,15 @@ msgstr ""
 
 #: ../data/stardict.schemas.in.h:15
 msgid "List the dictionaries in order."
-msgstr ""
+msgstr "Сөздіктерді ретпен тізіп шығару."
 
 #: ../data/stardict.schemas.in.h:16
 msgid "List the plugins in order."
-msgstr ""
+msgstr "Плагиндерді ретпен тізіп шығару."
 
 #: ../data/stardict.schemas.in.h:17
 msgid "List the plugins which are disabled."
-msgstr ""
+msgstr "Сөндірілген плагиндерді ретпен тізіп шығару."
 
 #: ../data/stardict.schemas.in.h:18
 msgid "List the search websites."
@@ -132,7 +136,7 @@ msgstr ""
 
 #: ../data/stardict.schemas.in.h:23
 msgid "Only scan while modifier key is being pressed"
-msgstr ""
+msgstr "Тек түрлендіргіш перне басылған кезде бақылау"
 
 #: ../data/stardict.schemas.in.h:24
 msgid ""
@@ -148,7 +152,7 @@ msgstr ""
 
 #: ../data/stardict.schemas.in.h:26
 msgid "Plug-in order"
-msgstr ""
+msgstr "Плагин реті"
 
 #: ../data/stardict.schemas.in.h:27
 msgid "Pronounce the word when it pops up."
@@ -172,7 +176,7 @@ msgstr "Таңдалғанды бақылау"
 
 #: ../data/stardict.schemas.in.h:32
 msgid "Scan-modifier key"
-msgstr ""
+msgstr "Бақылаудың түрлендіргіш пернесі"
 
 #: ../data/stardict.schemas.in.h:33
 msgid "Search website list"
@@ -340,11 +344,12 @@ msgstr ""
 
 #: ../src/articleview.cpp:370
 msgid "Unknown data type, please upgrade StarDict!"
-msgstr ""
+msgstr "Мәлімет түрі белгісіз, StarDict бағдарламасын жаңартыңыз!"
 
 #: ../src/articleview.cpp:462 ../src/articleview.cpp:487
+#, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">[Суретті жүктеу қатесі!]</span>"
 
 #: ../src/articleview.cpp:944
 #, fuzzy
@@ -378,6 +383,24 @@ msgid ""
 "CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
 "cmudict?in=%s\n"
 msgstr ""
+"StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q=%"
+"s\n"
+"Dictionary.com\thttp://dictionary.reference.com\thttp://dictionary.reference."
+"com/search?q=%s\n"
+"dict.leo.org\thttp://dict.leo.org\thttp://dict.leo.org/?search=%s&lang=en\n"
+"H2G2\thttp://www.h2g2.com\thttp://www.h2g2.com/Search?searchstring=%"
+"s&searchtype=ARTICLE&skip=0&show=20&showapproved=1&shownormal=1&showsubmitted=1\n"
+"WhatIs\thttp://whatis.techtarget.com\thttp://whatis.techtarget.com/"
+"wsearchResults/1,290214,sid9,00.html?query=%s\n"
+"Altavista\thttp://www.altavista.com\thttp://www.altavista.com/cgi-bin/query?"
+"q=%s\n"
+"WEB.DE\thttp://suche.web.de\thttp://suche.web.de/search/?su=%s\n"
+"WebCrawler\thttp://www.webcrawler.com\thttp://www.webcrawler.com/cgi-bin/"
+"WebQuery?searchText=%s\n"
+"Google\thttp://www.google.com\thttp://www.google.com/search?q=%s\n"
+"Yahoo\thttp://search.yahoo.com\thttp://search.yahoo.com/bin/search?p=%s\n"
+"CMU\thttp://www.speech.cs.cmu.edu\thttp://www.speech.cs.cmu.edu/cgi-bin/"
+"cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
 #: ../src/conf.cpp:278
@@ -406,18 +429,18 @@ msgstr ""
 
 #: ../src/dictmanage.cpp:89 ../src/dictmanage.cpp:118
 msgid "Default Group"
-msgstr ""
+msgstr "Бастапқы топ"
 
 #: ../src/dictmanagedlg.cpp:62
 #, c-format
 msgid "Only level %d user can choose this dictionary!"
-msgstr ""
+msgstr "Тек %d деңгейлі пайдаланушы бұл сөздікті таңдай алады!"
 
 #: ../src/dictmanagedlg.cpp:74 ../src/dictmanagedlg.cpp:430
 #: ../src/dictmanagedlg.cpp:2303
 #, c-format
 msgid "You can only choose %d dictionaries."
-msgstr ""
+msgstr "Сіз тек %d сөздікті таңдағансыз."
 
 #: ../src/dictmanagedlg.cpp:186 ../src/dictmanagedlg.cpp:813
 #: ../src/dictmanagedlg.cpp:922 ../src/dictmanagedlg.cpp:993
@@ -434,11 +457,11 @@ msgstr "Сөздер саны"
 
 #: ../src/dictmanagedlg.cpp:216
 msgid "Browse Dictionaries"
-msgstr ""
+msgstr "Сөздіктерді қарап шығу"
 
 #: ../src/dictmanagedlg.cpp:412
 msgid "These settings will take effect the next time you run StarDict."
-msgstr ""
+msgstr "Бұл баптаулар тек StarDict келесі рет қосылғанда іске асады."
 
 #: ../src/dictmanagedlg.cpp:425 ../src/lib/stddict.cpp:1269
 msgid "Loading..."
@@ -645,12 +668,12 @@ msgstr ""
 
 #: ../src/floatwin.cpp:352
 msgid "Found 1 word:\n"
-msgstr ""
+msgstr "1 сөз табылды:\n"
 
 #: ../src/floatwin.cpp:354
 #, c-format
 msgid "Found %d words:\n"
-msgstr ""
+msgstr "%d сөз табылды:\n"
 
 #: ../src/floatwin.cpp:889
 msgid "Query in the main window"
@@ -822,7 +845,7 @@ msgstr "Баспаға шығару"
 
 #: ../src/mainwin.cpp:1622
 msgid "Search in the definition text (Ctrl+F)"
-msgstr ""
+msgstr "Анықтама мәтінінде іздеу (Ctrl+F)"
 
 #: ../src/mainwin.cpp:1804
 #, c-format
@@ -910,19 +933,19 @@ msgstr ""
 
 #: ../src/mainwin.cpp:1999 ../src/stardict.cpp:1349
 msgid "Found no words matching this pattern!"
-msgstr ""
+msgstr "Бұл үлгіге сай бірде-бір сөз табылмады!"
 
 #: ../src/mainwin.cpp:2001 ../src/stardict.cpp:1374
 msgid "Found no words matching this regular expression!"
-msgstr ""
+msgstr "Бұл тұрақты өрнекке сай бірде-бір сөз табылмады!"
 
 #: ../src/mainwin.cpp:2003 ../src/stardict.cpp:1261
 msgid "There are too many spelling errors :-("
-msgstr ""
+msgstr "Тым көп емле қателері кездесті :-("
 
 #: ../src/mainwin.cpp:2005 ../src/stardict.cpp:1180 ../src/stardict.cpp:1225
 msgid "There are no dictionary articles containing this word. :-("
-msgstr ""
+msgstr "Бұл сөз бар сөздіктер ішінен табылмады. :-("
 
 #: ../src/mainwin.cpp:2093
 #, c-format
@@ -961,7 +984,7 @@ msgstr "Италияндық"
 #: ../src/mainwin.cpp:2211
 #, fuzzy
 msgid "Chinese"
-msgstr "Қытай"
+msgstr "Қытай (Ch)"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Croatian"
@@ -981,7 +1004,7 @@ msgstr "Испаниялық"
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
 #, fuzzy
 msgid "Dutch"
-msgstr "Голландия"
+msgstr "Дат"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2217 ../src/mainwin.cpp:2219 ../src/mainwin.cpp:2223
@@ -1250,17 +1273,17 @@ msgstr ""
 #. name,                        fromlangs,            tolangs,            tolangs2,         code,            fromcode,              tocode,                website_name,   website
 #: ../src/mainwin.cpp:2343
 msgid "Google Translate"
-msgstr ""
+msgstr "Google Translate"
 
 #: ../src/mainwin.cpp:2344
 msgid "Yahoo Translate"
-msgstr ""
+msgstr "Yahoo Translate"
 
 #. { N_("Altavista Translate"),    altavista_fromlangs,  altavista_tolangs,  NULL,             altavista_code,  NULL,                  NULL,                  "Altavista",    "http://babelfish.altavista.com"},
 #. { N_("SystranBox Translate"),   systranbox_fromlangs, systranbox_tolangs, NULL,             systranbox_code, NULL,                  NULL,                  "SystranBox",   "http://www.systranbox.com"},
 #: ../src/mainwin.cpp:2347
 msgid "Excite Japan Translate"
-msgstr ""
+msgstr "Excite Japan Translate"
 
 #: ../src/mainwin.cpp:2444
 msgid "<b>Full-Text Translation</b>"
@@ -1269,7 +1292,7 @@ msgstr "<b>Мәтінді аудару</b>"
 #: ../src/mainwin.cpp:2475
 #, fuzzy
 msgid "To"
-msgstr "Оған"
+msgstr "Шегі"
 
 #: ../src/mainwin.cpp:2510
 msgid "_Translate"
@@ -1462,7 +1485,7 @@ msgstr "Ал_масу буферін бақылау."
 #: ../src/prefsdlg.cpp:462
 #, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
-msgstr "_Басты терезені ашу ыстық пернелері: Ctrl+Alt+Z."
+msgstr "Б_ақылау ыстық пернесін қолдану: Ctrl+Alt+F1."
 
 #: ../src/prefsdlg.cpp:510
 msgid "Choose dictionary font"
@@ -1486,15 +1509,17 @@ msgstr "Сө_здік қарібі:"
 
 #: ../src/prefsdlg.cpp:595
 msgid "Create c_ache files to speed up loading."
-msgstr ""
+msgstr "Жүкте_луді тездету үшін кэш файлдарын жасау."
 
 #: ../src/prefsdlg.cpp:600
+#, fuzzy
 msgid "_Sort word list by collation function."
-msgstr ""
+msgstr "_Сөздер тізімін collation функциясы көмегімен сұрыптау."
 
 #: ../src/prefsdlg.cpp:609
+#, fuzzy
 msgid "\tCollation _function:"
-msgstr ""
+msgstr "\tCollation _function:"
 
 #: ../src/prefsdlg.cpp:641
 msgid ""
@@ -1528,7 +1553,7 @@ msgstr ""
 
 #: ../src/prefsdlg.cpp:764
 msgid "_Enable sound event."
-msgstr ""
+msgstr "Дыбыс_пен ескертуді іске қосу"
 
 #: ../src/prefsdlg.cpp:773
 msgid "Command for playing sound files:"
@@ -1544,7 +1569,7 @@ msgstr ""
 
 #: ../src/prefsdlg.cpp:810
 msgid "Enable _TTS program."
-msgstr ""
+msgstr "TTS бағд_арламасын қолдануды іске қосу"
 
 #: ../src/prefsdlg.cpp:818
 msgid "Command line:"
@@ -1716,11 +1741,11 @@ msgstr ""
 
 #: ../src/prefsdlg.cpp:1808
 msgid "_Pronounce the word when it pops up."
-msgstr ""
+msgstr "Сөз қалқ_ымалы түрде шыққан кезде оны айту."
 
 #: ../src/prefsdlg.cpp:1817
 msgid "_Show floating window if word not found."
-msgstr ""
+msgstr "Сөз т_абылмаса да қылқымалы терезені көрсету."
 
 #: ../src/prefsdlg.cpp:1878
 msgid "Max window _width:"
@@ -1786,7 +1811,7 @@ msgstr ""
 
 #: ../src/stardict.cpp:1088
 msgid "Full-text Search"
-msgstr ""
+msgstr "Толық мәтінді іздеу"
 
 #: ../src/stardict.cpp:1115
 msgid "Search"
@@ -1794,7 +1819,7 @@ msgstr "Іздеу"
 
 #: ../src/stardict.cpp:1200 ../src/stardict.cpp:1616
 msgid "Full-text search..."
-msgstr ""
+msgstr "Толық мәтінді іздеу..."
 
 #: ../src/stardict.cpp:1605
 msgid "Press Enter to list the words that match the pattern."
@@ -1822,7 +1847,7 @@ msgstr ""
 
 #: ../src/stardict.cpp:2394
 msgid "- Lookup words"
-msgstr ""
+msgstr "- Сөздерді іздеу"
 
 #: ../src/stardict.cpp:2399
 #, c-format
@@ -1857,7 +1882,7 @@ msgstr ""
 
 #: ../src/lib/stddict.cpp:705
 msgid "Sorting, please wait..."
-msgstr ""
+msgstr "Сұрыптау, күте тұрыңыз..."
 
 #: ../src/lib/utils.cpp:106
 #, c-format
@@ -1898,15 +1923,15 @@ msgstr "Dict.cn баптаулары"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:301
 msgid "Query by XML API."
-msgstr ""
+msgstr "XML API көмегімен сұрау."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:303
 msgid "Query by HTML API."
-msgstr ""
+msgstr "HTML API көмегімен сұрау."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Dict.cn network dictionary."
-msgstr ""
+msgstr "Dict.cn желілік сөздігі."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:337
 msgid "Query result from Dict.cn website."
@@ -1915,11 +1940,11 @@ msgstr ""
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:371
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
-msgstr ""
+msgstr "Dict.cn плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:31
 msgid "Espeak TTS configuration"
-msgstr ""
+msgstr "Espeak TTS баптаулары"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:33
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:32
@@ -1983,7 +2008,7 @@ msgstr ""
 #. character category
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:238
 msgid "Unicode category:"
-msgstr ""
+msgstr "Юникод санаты:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:244
 msgid "Canonical decomposition:"
@@ -2024,7 +2049,7 @@ msgstr "Белгілер"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:320
 msgid "See also:"
-msgstr ""
+msgstr "Тағы қараңыз:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:326
 msgid "Approximate equivalents:"
@@ -2205,7 +2230,7 @@ msgstr "_Даусы бар"
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:132
 #, fuzzy
 msgid "Volume :"
-msgstr "Бөлім:"
+msgstr "Даусы"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:141
 #, fuzzy
@@ -2418,3 +2443,15 @@ msgstr ""
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr ""
+
+#~ msgid "<span foreground=\"red\">[Missing Image]</span>"
+#~ msgstr "<span foreground=\"red\">[Сурет жоқ]</span>"
+
+#~ msgid "%s\\help\\stardict.chm"
+#~ msgstr "%s\\help\\stardict-kk_KZ.chm"
+
+#~ msgid "Altavista Translate"
+#~ msgstr "Altavista Translate"
+
+#~ msgid "SystranBox Translate"
+#~ msgstr "SystranBox Translate"
