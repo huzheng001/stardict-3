@@ -5,15 +5,15 @@ msgstr ""
 "Project-Id-Version: StarDict 3.0 beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-31 08:47+1000\n"
-"PO-Revision-Date: 2010-01-25 18:43+0200\n"
+"PO-Revision-Date: 2010-08-06 23:42+0300\n"
 "Last-Translator: Mindaugas Baranauskas <embar@users.berlios.de>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<"
+"10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict application"
@@ -164,8 +164,7 @@ msgstr "Ištarti žodį iškilus slankiajam langui."
 
 #: ../data/stardict.schemas.in.h:29
 msgid "Query in the floating window when middle mouse button is clicked"
-msgstr ""
-"Programos ženkliuką spragtelėjus pele, užklausą pateikti slankiajame lange"
+msgstr "Programos ženkliuką spragtelėjus pele, užklausą pateikti slankiajame lange"
 
 #: ../data/stardict.schemas.in.h:30
 msgid "Save the dictionary management configuration."
@@ -199,8 +198,7 @@ msgstr "Paskirties kalbos numeris"
 msgid ""
 "The command-line to use in order to enable pronunciation of words via an "
 "external TTS program."
-msgstr ""
-"Komandinės eilutės įrašas, vykdomas žodžių tarimui išorine TTS programa."
+msgstr "Komandinės eilutės įrašas, vykdomas žodžių tarimui išorine TTS programa."
 
 #: ../data/stardict.schemas.in.h:38
 msgid "The height of the main stardict window."
@@ -360,17 +358,16 @@ msgstr "Nerastas WordNet duomenų analizatoriaus papildinys!"
 
 #: ../src/articleview.cpp:370
 msgid "Unknown data type, please upgrade StarDict!"
-msgstr "Nežinomo tipo duomenys. Prašome atnaujinti StarDict!"
+msgstr "Nežinomo tipo duomenys. Atnaujinkite StarDict!"
 
 #: ../src/articleview.cpp:462 ../src/articleview.cpp:487
-#, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
-msgstr "<span·foreground=\"red\">[Paveikslėlio įkėlimo klaida!]</span>"
+msgstr ""
+"<span·foreground=\"red\">[Išteklių rinkmenų sąrašas: netinkamas formatas!]</span>"
 
 #: ../src/articleview.cpp:944
-#, fuzzy
 msgid "Save File"
-msgstr "Įrašyti į rinkmeną"
+msgstr "Įrašyti rinkmeną"
 
 #. Default stardictd server.
 #: ../src/conf.cpp:64 ../src/prefsdlg.cpp:2050
@@ -431,17 +428,17 @@ msgstr "win32_custom_font=Palemonas 12"
 #. You may translate it to "darwin_use_custom_font=1" for your language.
 #: ../src/conf.cpp:303
 msgid "darwin_use_custom_font=0"
-msgstr "naudoti_savitą_šriftą=0"
+msgstr "darwin_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
 #: ../src/conf.cpp:315
 msgid "darwin_custom_font="
-msgstr "savitas_šriftas=Palemonas 12"
+msgstr "darwin_custom_font=Palemonas 12"
 
 #: ../src/desktop.cpp:199 ../src/desktop.cpp:207
 #, c-format
 msgid "Unable to find help file %s."
-msgstr ""
+msgstr "Nepavyksta rasti pagalbos rinkmenos %s."
 
 #: ../src/dictmanage.cpp:89 ../src/dictmanage.cpp:118
 msgid "Default Group"
@@ -666,11 +663,11 @@ msgstr "_Išeiti"
 
 #: ../src/eggtrayicon.c:132
 msgid "Orientation"
-msgstr ""
+msgstr "Orientacija"
 
 #: ../src/eggtrayicon.c:133
 msgid "The orientation of the tray."
-msgstr ""
+msgstr "Dėklo orientacija"
 
 #: ../src/floatwin.cpp:144 ../src/mainwin.cpp:1977 ../src/mainwin.cpp:2007
 #: ../src/stardict.cpp:999 ../src/stardict.cpp:1013 ../src/stardict.cpp:1018
@@ -745,18 +742,16 @@ msgid "_Fuzzy Query"
 msgstr "_Apytikslė paieška"
 
 #: ../src/floatwin.cpp:1140
-#, fuzzy
 msgid "Looking up..."
-msgstr "Įkeliama..."
+msgstr "Ieškoma..."
 
 #: ../src/log.cpp:207
 msgid "Error"
-msgstr ""
+msgstr "Klaida"
 
 #: ../src/log.cpp:227
-#, fuzzy
 msgid "Log window"
-msgstr "Slankusis langas"
+msgstr "Žurnalo langas"
 
 #: ../src/mainwin.cpp:91
 msgid "Clear the search box"
@@ -967,8 +962,8 @@ msgid ""
 msgstr ""
 "       Jus sveikina StarDict\n"
 "StarDict yra tarptautinis ir daugiaplatformis žodynas, parašytas su Gtk2. "
-"Jis turi galingus įrankius, leidžiančius, pvz., „pažymėto teksto "
-"peržvelgimą“, „apytikslę paiešką“, „paiešką visuose apibūdinimuose“, "
+"Jis turi galingus įrankius, pvz., „pažymėto teksto peržvelgimas“, "
+"„apytikslė paieška“, „paiešką visuose apibūdinimuose“, "
 "reguliarių išraiškų naudojimą.\n"
 "\n"
 "       Trumpas StarDict naudojimo aprašymas:\n"
@@ -1001,8 +996,8 @@ msgstr ""
 "„\\“; pavyzdžiui, užklausa „a\\*b\\?“ ieškos „a*b?“, „\\/abc“ ras „/abc“.\n"
 "       6. Automatinis pažymėto teksto peržvelgimas\n"
 "       Norėdami įgalinti šią funkciją, spragtelėkite ties „Peržvelgimas“ "
-"StarDict žodyno pagrindinio lango apatiniame kairiame kampe.Tuomet StarDict "
-"automatiškai ieškos žodžių, posakių ar kiniškų hieroglifų kitose jūsų "
+"StarDict žodyno pagrindinio lango apatiniame kairiame kampe. Tuomet "
+"StarDict automatiškai ieškos žodžių, posakių ar kiniškų hieroglifų kitose "
 "kompiuterio programose. Tiesiog pele pažymėkite žodį, o jo apibūdinimas ar "
 "vertimas pasirodys iškylančiame slankiame lange.\n"
 "       7. Žodynų tvarkymas\n"
@@ -1042,11 +1037,11 @@ msgstr "Išta_rti"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Afrikaans"
-msgstr ""
+msgstr "afrikanso"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Albanian"
-msgstr ""
+msgstr "albanų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Arabic"
@@ -1054,16 +1049,15 @@ msgstr "arabų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Belarusian"
-msgstr ""
+msgstr "gudų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Bulgarian"
-msgstr ""
+msgstr "bulgarų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Catalan"
-msgstr "italų"
+msgstr "katalonų"
 
 #: ../src/mainwin.cpp:2211
 msgid "Chinese"
@@ -1071,17 +1065,15 @@ msgstr "kinų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Croatian"
-msgstr ""
+msgstr "kroatų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Czech"
-msgstr "Podėlis"
+msgstr "čekų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Danish"
-msgstr "ispanų"
+msgstr "danų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1099,15 +1091,15 @@ msgstr "anglų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Estonian"
-msgstr ""
+msgstr "estų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Filipino"
-msgstr ""
+msgstr "filipinų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Finnish"
-msgstr ""
+msgstr "suomių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2223 ../src/mainwin.cpp:2227
@@ -1117,9 +1109,8 @@ msgid "French"
 msgstr "prancūzų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Galician"
-msgstr "italų"
+msgstr "galų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1133,31 +1124,31 @@ msgstr "graikų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Haitian Creole ALPHA"
-msgstr ""
+msgstr "Haičio mišrioji ALFA"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Hebrew"
-msgstr ""
+msgstr "hebrajų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Hindi"
-msgstr ""
+msgstr "hindi"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Hungarian"
-msgstr ""
+msgstr "vendrų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Icelandic"
-msgstr ""
+msgstr "islandų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Indonesian"
-msgstr ""
+msgstr "indoneziečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Irish"
-msgstr ""
+msgstr "airių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1177,39 +1168,35 @@ msgstr "korėjiečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Latvian"
-msgstr ""
+msgstr "latvių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Lithuanian"
-msgstr ""
+msgstr "lietuvių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Macedonian"
-msgstr ""
+msgstr "makedonų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Malay"
-msgstr "S_kaityti"
+msgstr "malajų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Maltese"
-msgstr ""
+msgstr "maltiečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Norwegian"
-msgstr "korėjiečių"
+msgstr "norvegų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Persian"
-msgstr "Spausdinti"
+msgstr "persų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Polish"
-msgstr "anglų"
+msgstr "lenkų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1217,9 +1204,8 @@ msgid "Portuguese"
 msgstr "portugalų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Romanian"
-msgstr "Komandinė eilutė:"
+msgstr "rumunų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221
@@ -1227,17 +1213,16 @@ msgid "Russian"
 msgstr "rusų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Serbian"
-msgstr "vokiečių"
+msgstr "serbų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Slovak"
-msgstr ""
+msgstr "slovakų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Slovenian"
-msgstr ""
+msgstr "slovėnų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1246,7 +1231,7 @@ msgstr "ispanų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Swahili"
-msgstr ""
+msgstr "svahili"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Swedish"
@@ -1254,28 +1239,27 @@ msgstr "švedų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Thai"
-msgstr ""
+msgstr "tajų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Turkish"
-msgstr ""
+msgstr "turkų"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Ukrainian"
-msgstr ""
+msgstr "ukrainiečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Vietnamese"
-msgstr "Rinkmenos pavadinimas"
+msgstr "vietnamiečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Welsh"
-msgstr ""
+msgstr "velsiečių"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Yiddish"
-msgstr ""
+msgstr "jidiš"
 
 #.
 #. static const char *altavista_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
@@ -1485,7 +1469,7 @@ msgstr "Garsas"
 
 #: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:834
 msgid "Video"
-msgstr ""
+msgstr "Vaizdas"
 
 #: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:718
 msgid "Article rendering"
@@ -1497,7 +1481,7 @@ msgstr "Tinklo žodynai"
 
 #: ../src/prefsdlg.cpp:94 ../src/prefsdlg.cpp:1111
 msgid "Web browser"
-msgstr ""
+msgstr "Žiniatinklio naršyklė"
 
 #: ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:1160
 msgid "Input"
@@ -1629,13 +1613,12 @@ msgid "_Enable sound event."
 msgstr "Įgalinti _garsinius signalus."
 
 #: ../src/prefsdlg.cpp:773
-#, fuzzy
 msgid "Command for playing sound files:"
-msgstr "Komanda wav rinkmenų grojimui:"
+msgstr "Komanda garso rinkmenų grojimui:"
 
 #: ../src/prefsdlg.cpp:785
 msgid "Always use sound play command."
-msgstr ""
+msgstr "Visada naudoti garso grojimo komandą."
 
 #: ../src/prefsdlg.cpp:792
 msgid "RealPeopleTTS search path:"
@@ -1646,14 +1629,12 @@ msgid "Enable _TTS program."
 msgstr "Įgalinti _TTS programą."
 
 #: ../src/prefsdlg.cpp:818
-#, fuzzy
 msgid "Command line:"
 msgstr "Komandinė eilutė:"
 
 #: ../src/prefsdlg.cpp:839
-#, fuzzy
 msgid "Command for playing video files:"
-msgstr "Komanda wav rinkmenų grojimui:"
+msgstr "Komanda vaizdo rinkmenų grojimui:"
 
 #: ../src/prefsdlg.cpp:866
 msgid "Account"
@@ -1712,13 +1693,12 @@ msgid "_Register an account"
 msgstr "_Kurti paskyrą"
 
 #: ../src/prefsdlg.cpp:1116
-#, fuzzy
 msgid "Command for opening URLs:"
-msgstr "Komanda wav rinkmenų grojimui:"
+msgstr "Komanda URL atvėrimui:"
 
 #: ../src/prefsdlg.cpp:1129
 msgid "Always use this command for opening URLs."
-msgstr ""
+msgstr "URL atvėrimui visada naudoti šią komandą."
 
 #: ../src/prefsdlg.cpp:1167
 msgid "_Search while typing."
@@ -1738,7 +1718,7 @@ msgstr "Rodyti _pirmąjį žodį, net jei užklausa neturi atitikmens."
 
 #: ../src/prefsdlg.cpp:1264
 msgid "Skin change will take effect after application restart"
-msgstr ""
+msgstr "Apipavidalinimas bus pakeistas tik sekančio paleidimo metu"
 
 #: ../src/prefsdlg.cpp:1303
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
@@ -1753,7 +1733,7 @@ msgstr ""
 
 #: ../src/prefsdlg.cpp:1359
 msgid "Skin:"
-msgstr ""
+msgstr "Apipavidalinimas:"
 
 #: ../src/prefsdlg.cpp:1372
 msgid "Hide main window when _starting StarDict."
@@ -1800,25 +1780,21 @@ msgid ""
 msgstr "Svetainės paieškos adresas privalo turėti „%%s“ užklausos žodžiams."
 
 #: ../src/prefsdlg.cpp:1777
-#, fuzzy
 msgid "When middle mouse button is clicked:"
-msgstr ""
-"Programos ženkliuką spragtelėjus pele, užklausą pateikti slankiajame lange"
+msgstr "Spragtelėjus vidurinį pelės klavišą:"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
 #: ../src/prefsdlg.cpp:1781
-#, fuzzy
 msgid "Query selection in floating window"
-msgstr "Paieška pagrindiniame lange"
+msgstr "užklausti slankiajame lange"
 
 #: ../src/prefsdlg.cpp:1782
-#, fuzzy
 msgid "Query selection in main window"
-msgstr "Paieška pagrindiniame lange"
+msgstr "užklausti pagrindiniame lange"
 
 #: ../src/prefsdlg.cpp:1783
 msgid "Do nothing"
-msgstr ""
+msgstr "nieko nedaryti"
 
 #: ../src/prefsdlg.cpp:1808
 msgid "_Pronounce the word when it pops up."
@@ -1866,17 +1842,16 @@ msgstr "Komandinės eilutės TTS"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../src/splash.cpp:86
-#, fuzzy
 msgid "StarDict starting..."
-msgstr "StarDict - peržvelgiama"
+msgstr "Paleidžiamas StarDict..."
 
 #: ../src/stardict.cpp:101
 msgid "How many messages print to console (0-6)"
-msgstr ""
+msgstr "Žinučių, spausdinamų konsolėje, skaičius (0-6)"
 
 #: ../src/stardict.cpp:103
 msgid "How many messages print to log (0-6)"
-msgstr ""
+msgstr "Žinučių, spausdinamų žurnale, skaičius (0-6)"
 
 #: ../src/stardict.cpp:105
 msgid "Hide the main window, do not show splash screen"
@@ -2358,8 +2333,7 @@ msgstr "SAPI TTS papildinys įkeltas.\n"
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
-msgstr ""
-"Dėmesio: užklausiant rašybos tikrinimo žodyną %s kalbai, įvyko klaida.\n"
+msgstr "Dėmesio: užklausiant rašybos tikrinimo žodyną %s kalbai, įvyko klaida.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:305
