@@ -113,7 +113,7 @@ void convert_file(gchar *idxfilename)
 		convert_idxfile(idxfilename);
 }
 
-void convert_dir(gchar *dirname)
+void convert_dir(const gchar *dirname)
 {
 	GDir *dir = g_dir_open(dirname, 0, NULL);	
 	if (dir) {

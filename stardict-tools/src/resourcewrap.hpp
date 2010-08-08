@@ -2,6 +2,7 @@
 #define _RESOURCE_HPP_
 
 #include <glib.h>
+#include <cstdio>
 
 // borrowed from makedict program, part of xdxf project
 // http://sourceforge.net/projects/xdxf/

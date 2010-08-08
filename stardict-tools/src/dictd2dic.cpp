@@ -222,11 +222,11 @@ void convert(char *basefilename)
 #endif	
 	glong wordcount = array->len;
 	long offset_old;
-	gchar *previous_word = "";
+	const gchar *previous_word = "";
 	struct _worditem *pworditem;
 	gulong i=0;
 	glong thedatasize;
-	gchar *insert_word = "\n\n";
+	const gchar *insert_word = "\n\n";
 	gboolean flag;
 	pworditem = &g_array_index(array, struct _worditem, i);
 	while (i<array->len)

@@ -13,11 +13,11 @@ void print_info(const char *info, ...)
 	va_end(va);
 }
 
-static void verify_dir(gchar *dirname)
+static void verify_dir(const gchar *dirname)
 {
 	GDir *dir = g_dir_open(dirname, 0, NULL);
 	if (dir) {
-		const gchar *filename;	
+		const gchar *filename;
 		gchar fullfilename[256];
 		while ((filename = g_dir_read_name(dir))!=NULL) {
 			sprintf(fullfilename, "%s/%s", dirname, filename);

@@ -108,11 +108,11 @@ void convert(char *filename)
 
 	long offset_old;
 	glong tmpglong;
-	gchar *previous_word = "";
+	const gchar *previous_word = "";
 	struct _worditem *pworditem;
 	gulong i=0;
 	glong thedatasize;
-	gchar *insert_word = "\n\n";
+	const gchar *insert_word = "\n\n";
 	gboolean flag;
 	pworditem = &g_array_index(array, struct _worditem, i);
 	gint definition_len;

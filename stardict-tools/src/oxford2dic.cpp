@@ -147,8 +147,8 @@ void convert(char *filename)
 	long offset_old;	
 	glong wordcount;
 	glong thedatasize, flag, wordlength;
-	gchar *previous_word = "";
-	gchar *insert_word = "\n\n";
+	const gchar *previous_word = "";
+	const gchar *insert_word = "\n\n";
 	struct _worditem *pworditem;
 	
 	if (stat (filename, &stats) == -1)
