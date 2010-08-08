@@ -1,5 +1,6 @@
 //file format crack by Luo XiaoHui <tipyluo@hotmail.com>, this program is written by Hu Zheng <huzheng_001@163.com>
 //you can mail us for the demo program which have more comment.
+//encoding of this file is Chinese simplified -> GB18030
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -1004,7 +1005,7 @@ void closeFile()
 	fclose(f);
 }
 
-void save_array_to_file(GArray *array, gchar *basefilename)
+void save_array_to_file(GArray *array, const gchar *basefilename)
 {
 	g_array_sort(array,comparefunc);
 		
@@ -1021,7 +1022,7 @@ void save_array_to_file(GArray *array, gchar *basefilename)
 	guint wordcount = array->len;
 
 	long offset_old;
-	gchar *previous_word = "";
+	const gchar *previous_word = "";
 	struct _worditem *pworditem;	
 	gint definition_len;
 	gulong i;

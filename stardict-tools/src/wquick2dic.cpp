@@ -145,12 +145,12 @@ void convert(char *filename)
 	glong wordcount = array->len;
 
 	long offset_old;
-	gchar *previous_word = "";
+	const gchar *previous_word = "";
 	struct _worditem *pworditem;
 	gulong i=0;
 	glong thedatasize;
 	//gchar *insert_word = "\n\n";
-	gchar *insert_word = "\n";
+	const gchar *insert_word = "\n";
 	gboolean flag;
 	pworditem = &g_array_index(array, struct _worditem, i);
 	gint definition_len;

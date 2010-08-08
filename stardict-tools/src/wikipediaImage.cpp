@@ -18,7 +18,7 @@ void dump_file()
 		return;
 	if (mysql_select_db(&mysql, CONN_DB))
 		return;
-	char *sqlstr = "SELECT img_name img_metadata FROM image";
+	const char *sqlstr = "SELECT img_name img_metadata FROM image";
 	if (mysql_query(&mysql, sqlstr))
 		return;
 	MYSQL_RES *res;

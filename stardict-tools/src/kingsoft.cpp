@@ -413,7 +413,7 @@ void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synw
         fclose (xmlfile);
         buffer[stats.st_size] = '\0';
 
-	gchar *bookname="";
+	const gchar *bookname="";
 	gchar *p = buffer;
 	gchar *p1, *p2, *p3;
 	p1 = strstr(p, "<cp_936>");
