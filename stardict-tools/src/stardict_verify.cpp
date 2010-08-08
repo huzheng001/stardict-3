@@ -37,7 +37,7 @@ int main(int argc,char * argv [])
 	gtk_set_locale ();
 	g_type_init ();
 	struct Info {
-		Info() { g_print("Verifing dictionary files...\n"); }
+		Info() { g_print("Verifying dictionary files...\n"); }
 		~Info() { g_print("Done!\n"); }
 	} info;
 
