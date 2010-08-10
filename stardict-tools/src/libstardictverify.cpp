@@ -1161,16 +1161,19 @@ void norm_dict::verify_data_blocks_overlapping(void)
 	region_t region;
 	guint32 low_boundary=0;
 	for(size_t i=0; i<sort_index.size(); ++i) {
-		if(sort_index[i]->offset < low_boundary)
-			continue;
-		if(sort_index[i]->offset == low_boundary) {
-			low_boundary = sort_index[i]->offset + sort_index[i]->size;
-			continue;
+		const guint32 l_left = sort_index[i]->offset;
+		const guint32 l_right = sort_index[i]->offset + sort_index[i]->size;
+		if(l_left < low_boundary) {
+			if(l_right > low_boundary)
+				low_boundary = l_right;
+		} if(l_left == low_boundary) {
+			low_boundary = l_right;
+		} else { // gap found
+			region.offset = low_boundary;
+			region.size = l_left - low_boundary;
+			unused_regions.push_back(region);
+			low_boundary = l_right;
 		}
-		region.offset = low_boundary;
-		region.size = sort_index[i]->offset - low_boundary;
-		unused_regions.push_back(region);
-		low_boundary = sort_index[i]->offset + sort_index[i]->size;
 	}
 	if(low_boundary < dictfilesize) {
 		region.offset = low_boundary;
