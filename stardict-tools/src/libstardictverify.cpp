@@ -107,6 +107,11 @@ static bool compare_worditem_by_offset(const worditem_t* left, const worditem_t*
 	return left->offset < right->offset;
 }
 
+static bool compare_fileitem_by_offset(const fileitem_t* left, const fileitem_t* right)
+{
+	return left->offset < right->offset;
+}
+
 /* Create a new temporary file. Return file name in file name encoding.
 Return an empty string if file cannot be created. */
 static std::string create_temp_file(void)
@@ -155,6 +160,49 @@ static std::string create_temp_file(void)
 		return tmp_url;
 	}
 #endif
+}
+
+template <class item_t>
+void verify_data_blocks_overlapping(std::vector<item_t*>& sort_index,
+	std::vector<std::pair<size_t, size_t> >& overlapping_blocks)
+{
+	for(size_t i=0; i<sort_index.size(); ++i) {
+		for(size_t j=i+1; j<sort_index.size()
+			&& sort_index[i]->offset + sort_index[i]->size > sort_index[j]->offset; ++j) {
+			if(sort_index[i]->offset == sort_index[j]->offset
+				&& sort_index[i]->size == sort_index[j]->size)
+				continue;
+			overlapping_blocks.push_back(std::pair<size_t, size_t>(i, j));
+		}
+	}
+}
+
+template <class item_t>
+void verify_unused_regions(std::vector<item_t*>& sort_index,
+		std::vector<region_t>& unused_regions, guint32 filesize)
+{
+	region_t region;
+	guint32 low_boundary=0;
+	for(size_t i=0; i<sort_index.size(); ++i) {
+		const guint32 l_left = sort_index[i]->offset;
+		const guint32 l_right = sort_index[i]->offset + sort_index[i]->size;
+		if(l_left < low_boundary) {
+			if(l_right > low_boundary)
+				low_boundary = l_right;
+		} if(l_left == low_boundary) {
+			low_boundary = l_right;
+		} else { // gap found
+			region.offset = low_boundary;
+			region.size = l_left - low_boundary;
+			unused_regions.push_back(region);
+			low_boundary = l_right;
+		}
+	}
+	if(low_boundary < filesize) {
+		region.offset = low_boundary;
+		region.size = filesize - low_boundary;
+		unused_regions.push_back(region);
+	}
 }
 
 class TempFile
@@ -443,6 +491,7 @@ private:
 	int load_ridx_file(void);
 	int load_rdic_file(void);
 	void print_index(void);
+	void verify_data_blocks_overlapping(void);
 
 	std::string rifofilename;
 	std::string ridxfilename;
@@ -455,6 +504,7 @@ private:
 	DictInfo dict_info;
 	std::vector<fileitem_t> index;
 	print_info_t print_info;
+	guint32 rdicfilesize;
 };
 
 TResult resource_database::load(const std::string& dirname,
@@ -646,7 +696,7 @@ int resource_database::load_rdic_file(void)
 		print_info("Unable to find resource dictionary file %s\n", rdicfilename.c_str());
 		return EXIT_FAILURE;
 	}
-	const guint32 filesize = stats.st_size;
+	rdicfilesize = stats.st_size;
 	
 	print_info("Verifying resource dictionary file: %s\n", rdicfilename_orig.c_str());
 	clib::File rdicfile(g_fopen(rdicfilename.c_str(), "rb"));
@@ -657,13 +707,14 @@ int resource_database::load_rdic_file(void)
 
 	bool have_errors = false;
 	for(size_t i=0; i<index.size(); ++i) {
-		if(index[i].offset + index[i].size > filesize) {
+		if(index[i].offset + index[i].size > rdicfilesize) {
 			print_info("Index item %s. Incorrect size, offset parameters. "
 				"Referenced data block is outside dictionary file.\n", index[i].filename.c_str());
 			have_errors = true;
 			continue;
 		}
 	}
+	verify_data_blocks_overlapping();
 	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
@@ -680,6 +731,35 @@ void resource_database::print_index(void)
 		print_info("Info: index item '%s'\n", index[i].filename.c_str());
 	}
 }
+
+void resource_database::verify_data_blocks_overlapping(void)
+{
+	std::vector<const fileitem_t*> sort_index(index.size(), NULL);
+	for(size_t i=0; i<index.size(); ++i)
+		sort_index[i] = &index[i];
+	std::sort(sort_index.begin(), sort_index.end(), compare_fileitem_by_offset);
+	// find overlapping but not equal regions (offset, size)
+	std::vector<std::pair<size_t, size_t> > overlapping_blocks;
+	::verify_data_blocks_overlapping(sort_index, overlapping_blocks);
+	for(size_t i=0; i<overlapping_blocks.size(); ++i) {
+		const fileitem_t& first = *sort_index[overlapping_blocks[i].first];
+		const fileitem_t& second = *sort_index[overlapping_blocks[i].second];
+		print_info("Warning: Index item %s and index item %s refer to overlapping "
+			"but not equal regions (offset, size): "
+			"(%u, %u) and (%u, %u)\n",
+			first.filename.c_str(), second.filename.c_str(),
+			first.offset, first.size, second.offset, second.size);
+	}
+	// find not used regions
+	std::vector<region_t> unused_regions;
+	verify_unused_regions(sort_index, unused_regions, rdicfilesize);
+	if(!unused_regions.empty()) {
+		print_info("Warning: Resource database contains unreferenced blocks (offset, size):\n");
+		for(size_t i = 0; i<unused_regions.size(); ++i)
+			print_info("\t(%u, %u)\n", unused_regions[i].offset, unused_regions[i].size);
+	}
+}
+
 
 class resource_files
 {
@@ -1143,43 +1223,20 @@ void norm_dict::verify_data_blocks_overlapping(void)
 		sort_index[i] = &index[i];
 	std::sort(sort_index.begin(), sort_index.end(), compare_worditem_by_offset);
 	// find overlapping but not equal regions (offset, size)
-	for(size_t i=0; i<sort_index.size(); ++i) {
-		for(size_t j=i+1; j<sort_index.size()
-			&& sort_index[i]->offset + sort_index[i]->size > sort_index[j]->offset; ++j) {
-				if(sort_index[i]->offset == sort_index[j]->offset
-					&& sort_index[i]->size == sort_index[j]->size)
-					continue;
-				print_info("Warning: Index item %s and index item %s refer to overlapping "
-					"but not equal regions (offset, size): "
-					"(%u, %u) and (%u, %u)\n",
-					sort_index[i]->word.c_str(), sort_index[j]->word.c_str(),
-					sort_index[i]->offset);
-		}
+	std::vector<std::pair<size_t, size_t> > overlapping_blocks;
+	::verify_data_blocks_overlapping(sort_index, overlapping_blocks);
+	for(size_t i=0; i<overlapping_blocks.size(); ++i) {
+		const worditem_t& first = *sort_index[overlapping_blocks[i].first];
+		const worditem_t& second = *sort_index[overlapping_blocks[i].second];
+		print_info("Warning: Index item %s and index item %s refer to overlapping "
+			"but not equal regions (offset, size): "
+			"(%u, %u) and (%u, %u)\n",
+			first.word.c_str(), second.word.c_str(),
+			first.offset, first.size, second.offset, second.size);
 	}
 	// find not used regions
 	std::vector<region_t> unused_regions;
-	region_t region;
-	guint32 low_boundary=0;
-	for(size_t i=0; i<sort_index.size(); ++i) {
-		const guint32 l_left = sort_index[i]->offset;
-		const guint32 l_right = sort_index[i]->offset + sort_index[i]->size;
-		if(l_left < low_boundary) {
-			if(l_right > low_boundary)
-				low_boundary = l_right;
-		} if(l_left == low_boundary) {
-			low_boundary = l_right;
-		} else { // gap found
-			region.offset = low_boundary;
-			region.size = l_left - low_boundary;
-			unused_regions.push_back(region);
-			low_boundary = l_right;
-		}
-	}
-	if(low_boundary < dictfilesize) {
-		region.offset = low_boundary;
-		region.size = dictfilesize - low_boundary;
-		unused_regions.push_back(region);
-	}
+	verify_unused_regions(sort_index, unused_regions, dictfilesize);
 	if(!unused_regions.empty()) {
 		print_info("Warning: Dictionary contains unreferenced blocks (offset, size):\n");
 		for(size_t i = 0; i<unused_regions.size(); ++i)
