@@ -6,6 +6,8 @@
 #include <string>
 #include "libcommon.h"
 
+// keep this file in sync with src/lib/ifo_file.hpp
+
 enum DictInfoType {
 	DictInfoType_NormDict,
 	DictInfoType_TreeDict,
