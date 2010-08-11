@@ -5,6 +5,8 @@
 #include <list>
 #include <string>
 
+// keep this file in sync with stardict-tools/src/ifo_file.hpp
+
 enum DictInfoType {
 	DictInfoType_NormDict,
 	DictInfoType_TreeDict,

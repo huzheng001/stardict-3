@@ -65,6 +65,7 @@ static void parse_description(const char *p, long len, std::string &description)
 /* extract key - value pair having the following format:
  * key=value<new line>
  * Empty lines and lines containing only spaces and tabs are skipped.
+ * Leading and trailing blanks, as well as blanks around the equal sign are discarded.
  * 
  * Parameters:
  * p1 - beginning of the string.
@@ -72,44 +73,52 @@ static void parse_description(const char *p, long len, std::string &description)
  * Return value:
  * NULL if key - value pair was not found
  * != NULL otherwise. It is a pointer to the beginning of the next string. */
-const char* DictInfo::get_key_value(const char *p1, std::string& key, 
+const char* DictInfo::get_key_value(const char *line_beg, std::string& key,
 	std::string& value)
 {
 	key.clear();
 	value.clear();
 	while(true) {
-		const size_t s1 = strcspn(p1, "\r\n");
-		const size_t s2 = strspn(p1, " \t");
-		const char* p2 = p1 + s1;
-		if(*p2 == '\0') { // EOF reached
-			if(s1 != s2)
+		const size_t n1 = strcspn(line_beg, "\r\n");
+		const size_t n2 = strspn(line_beg, " \t");
+		const char* const line_end = line_beg + n1;
+		if(*line_end == '\0') { // EOF reached
+			if(n1 != n2)
 				g_print("%s: line %d: Last line is not terminated with new line char.\n",
 					ifo_file_name.c_str(), lineno);
 			return NULL;
-		} else { // new line char found
-			if(s1 == s2) { // empty line
-				p1 = skip_new_line(p2);
-				++lineno;
-				continue;
-			}
 		}
-		g_assert(*p2 == '\r' || *p2 == '\n');
-		// p1 != p2 here
-		const char *p3 = p1;
-		while(*p3 != '=' && p3 < p2)
-			++p3;
-		if(*p3 != '=') {
-			g_print("%s: line %d: '=' not found.\n", ifo_file_name.c_str(), lineno);
-			p1 = skip_new_line(p2);
+		// new line char found
+		g_assert(*line_end == '\r' || *line_end == '\n');
+		if(n1 == n2) { // empty line
+			line_beg = skip_new_line(line_end);
 			++lineno;
 			continue;
 		}
-		key.assign(p1, p3-p1);
-		++p3;
-		value.assign(p3, p2-p3);
-		p1 = skip_new_line(p2);
+		const char* const key_beg = line_beg + n2; // first non-blank char
+		const char *equal_sign = key_beg;
+		while(*equal_sign != '=' && equal_sign < line_end)
+			++equal_sign;
+		if(*equal_sign != '=') {
+			g_print("%s: line %d: '=' not found.\n", ifo_file_name.c_str(), lineno);
+			line_beg = skip_new_line(line_end);
+			++lineno;
+			continue;
+		}
+		const char *key_end=equal_sign;
+		while(key_beg < key_end && (*(key_end-1) == ' ' || *(key_end-1) == '\t'))
+			--key_end;
+		key.assign(key_beg, key_end-key_beg);
+		const char *val_beg = equal_sign+1;
+		const char *val_end = line_end;
+		while(val_beg < line_end && (*val_beg == ' ' || *val_beg == '\t'))
+			++val_beg;
+		while(val_beg < val_end && (*(val_end-1) == ' ' || *(val_end-1) == '\t'))
+			--val_end;
+		value.assign(val_beg, val_end-val_beg);
+		line_beg = skip_new_line(line_end);
 		// no ++lineno; here
-		return p1;
+		return line_beg;
 	}
 }
 

@@ -531,7 +531,7 @@ The .dict file's format is the same as the normal dictionary.
 
 {10}. .ifo file format
 .ifo file format is used to describe normal and tree dictionaries, resource database.
-All files have common structure, but differes in set of available options.
+All files have common structure, but different set of supported options.
 
 .ifo file structure
 <magic data>
@@ -543,18 +543,18 @@ version=<value>
 The file starts with magic data, this is a string unique to file type. For example,
 "StarDict's dict ifo file" is the magic data for normal dictionary. Magic data occupies
 the first line of the file. There must be no spaces or other characters before and after
-the magic data. 
+the magic data on the first line. 
 
-The following lines contain key-value pairs separated by equal sign. 
-There must be no space around the equal sing. 
-A space after the sign will interpreted as part of the value.
-The value spreads to the end of the line.
+The following lines contain key-value pairs separated by equal sign, one pair per line.
+We search for the first equal sign in the line. Everything to the left of the equal sign is key,
+everything to the right is value.
+Leading and trailing blanks, as well as blanks around the equal sign are discarded.
 Each key-value pair must end with a new line (do not forget to add new line after
 the last key-value pair).
 The key may not contain spaces or tabs. It should not contain anything but alphanumerics, '-', and '_'.
 The first key in the file must be "version". This is mandatory option for all formats.
 
-Empty lines and lines consisting of only space and tab characters are ignored.
+Blank lines are ignored.
 Encoding. File contents must be in UTF-8 encoding.
 End of line. Any end of line convertion is OK: LF, CR+LF, CR.
 
