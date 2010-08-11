@@ -10,7 +10,7 @@ noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 	rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict_verify \
 	fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e \
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict \
-	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase
+	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict_index
 
 noinst_LIBRARIES = libbgl2txt.a
 
@@ -244,6 +244,10 @@ bgl2txt_DEPENDENCIES = libbgl2txt.a
 bgl2txt_LDFLAGS =
 bgl2txt_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
 bgl2txt_SOURCES = bgl2txt.cpp
+
+stardict_index_LDFLAGS =
+stardict_index_LDADD = $(STARDICT_LIBS)
+stardict_index_SOURCES = stardict_index.cpp resourcewrap.hpp
 
 stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)

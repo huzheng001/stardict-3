@@ -7,7 +7,7 @@ Make sure you restart StarDict after using a converter!
 dictd2dic.sh	converter from dictd format (you may need dictzip package for .dz)
 (dictd2dic)
 
-dsl2dict	converter for Lingvo proprietary dictionaries
+dsl2dict	converter for Lingvo proprietary dictionaries (outdated by makedict)
 
 exc.sh		converter of English irregular forms from WordNet-base package
 (exc2i2e)
@@ -43,3 +43,17 @@ resdatabase2dir		converter from Stardict resource database file into resource
 
 dir2resdatabase		converter from resource directory into Stardict resource 
 		database file. See resdatabase2dir for reverse conversion.
+
+stardict_verify	check StarDict dictionary for errors
+
+stardict-editor	a GUI front-end combining a number of tools. They allows to convert 
+		StarDict dictionary <-> tab file, (Babylong file, BGL file) -> StarDict dictionary,
+		verify dictionary.
+
+stardict_index	print content of StarDict index file in human readable form
+
+------------------------------------------------------------------------------------
+External tools
+
+makedict	http://sourceforge.net/projects/xdxf/files/, under "converter many to many" section
+		Allows to create a StarDict dictionary from a number of file formats.
