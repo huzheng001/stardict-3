@@ -9,7 +9,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #include "resourcewrap.hpp"
-#include "stardict-utils.h"
+#include "libcommon.h"
 
 class EMain {};
 
