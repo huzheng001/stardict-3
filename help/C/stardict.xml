@@ -1080,10 +1080,18 @@
 			</varlistentry>
 			
 			<varlistentry>
-			<term><keycombo><keycap>BackSpace</keycap></keycombo>
+			<term><keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>
 			</term>
 			<listitem>
 			<para>Clear the Search field and focus it.</para>
+			</listitem>
+			</varlistentry>
+			
+			<varlistentry>
+			<term><keycombo><keycap>BackSpace</keycap></keycombo>
+			</term>
+			<listitem>
+			<para>The same as <keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>.</para>
 			</listitem>
 			</varlistentry>
 			
@@ -1118,7 +1126,7 @@
 			<term><keycombo><keycap>Escape</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>Clear the Search field and focus it.</para>
+			<para>The same as <keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>.</para>
 			</listitem>
 			</varlistentry>
 			
