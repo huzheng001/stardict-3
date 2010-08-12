@@ -566,6 +566,10 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		if (event->type==GDK_KEY_PRESS)
 			oAppCore->oTopWin.do_menu();
 	}
+	else if ((event->keyval==GDK_u || event->keyval==GDK_U) && only_ctrl_pressed) {
+		if (event->type==GDK_KEY_PRESS)
+			oAppCore->new_query_action();
+	}
 	else if ((event->keyval==GDK_v || event->keyval==GDK_V) && only_ctrl_pressed &&
 			!oAppCore->oTopWin.has_focus() &&
 			!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
@@ -588,15 +592,10 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		oAppCore->oTopWin.SetText(str, conf->get_bool_at("main_window/search_while_typing"));
 		oAppCore->oTopWin.set_position_in_text(1);
 	} else if (event->type==GDK_KEY_PRESS && event->keyval == GDK_BackSpace &&
-			!oAppCore->oTopWin.has_focus() &&
-			!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
-			!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		if (oAppCore->oTopWin.get_text()[0]) {
-			oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
-                        oAppCore->oTopWin.InsertBackList();
-                        oAppCore->oTopWin.SetText("");
-		}
-		oAppCore->oTopWin.grab_focus();
+		!oAppCore->oTopWin.has_focus() &&
+		!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
+		!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
+		oAppCore->new_query_action();
 	} else if (event->type == GDK_KEY_PRESS &&
 		   event->keyval == GDK_Return &&
 		   !oAppCore->oTopWin.has_focus() &&
@@ -645,15 +644,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		switch (event->keyval) {
 		case GDK_Escape:
 			if (event->type==GDK_KEY_PRESS) {
-				if (oAppCore->oTopWin.get_text()[0]) {
-					oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
-					oAppCore->oTopWin.InsertBackList();
-					oAppCore->oTopWin.SetText("");
-					oAppCore->oTopWin.grab_focus();
-				} else {
-					if (!oAppCore->oTopWin.has_focus())
-						oAppCore->oTopWin.grab_focus();
-				}
+				oAppCore->new_query_action();
 			}
 			break;
 		default:
@@ -662,6 +653,16 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		}
 	}
 	return return_val;
+}
+
+/* Clear the Search field and focus it. Be ready for new query. */
+void AppCore::new_query_action(void) {
+	if (oTopWin.get_text()[0]) {
+		oTopWin.InsertHisList(oTopWin.get_text());
+		oTopWin.InsertBackList();
+		oTopWin.SetText("");
+	}
+	oTopWin.grab_focus();
 }
 
 void AppCore::SimpleLookupToFloat(const char* sWord, bool IgnoreScanModifierKey)
