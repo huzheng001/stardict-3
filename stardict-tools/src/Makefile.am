@@ -27,12 +27,12 @@ lingvosound2resdb_SOURCES = lingvosound2resdb.cpp
 dir2resdatabase_LDFLAGS = 
 dir2resdatabase_LDADD = $(STARDICT_LIBS)
 dir2resdatabase_SOURCES = dir2resdatabase.cpp resourcewrap.hpp \
-	stardict-utils.cpp stardict-utils.h
+	libcommon.cpp libcommon.h
 
 resdatabase2dir_LDFLAGS = 
 resdatabase2dir_LDADD = $(STARDICT_LIBS)
 resdatabase2dir_SOURCES = resdatabase2dir.cpp resourcewrap.hpp \
-	stardict-utils.cpp stardict-utils.h
+	libcommon.cpp libcommon.h
 
 pydict2dic_LDFLAGS = 
 pydict2dic_LDADD = $(STARDICT_LIBS)
