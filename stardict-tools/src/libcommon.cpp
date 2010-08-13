@@ -3,7 +3,10 @@
 #endif
 
 #include <cstring>
+#include <cstdlib>
 #include <vector>
+#include <glib.h>
+#include <glib/gstdio.h>
 #include "libcommon.h"
 #include "resourcewrap.hpp"
 
@@ -161,3 +164,102 @@ std::string dir_separator_db_to_fs(const std::string& path)
 	return temp;
 }
 #endif
+
+int unpack_zlib(const char* arch_file_name, const char* out_file_name, print_info_t print_info)
+{
+	zip::gzFile in(gzopen(arch_file_name, "rb"));
+	if(!in) {
+		print_info("Unable to open archive file %s\n", arch_file_name);
+		return EXIT_FAILURE;
+	}
+	const size_t buffer_size = 1024*1024;
+	std::vector<char> buffer(buffer_size);
+	char* buf = &buffer[0];
+	gulong len;
+	clib::File out_file(g_fopen(out_file_name, "wb"));
+	if(!out_file) {
+		print_info("Unable to open file %s for writing\n", out_file_name);
+		return EXIT_FAILURE;
+	}
+	while(true) {
+		len = gzread(get_impl(in), buf, buffer_size);
+		if(len < 0) {
+			print_info(read_file_err, arch_file_name);
+			return EXIT_FAILURE;
+		}
+		if(len == 0)
+			break;
+		if(1 != fwrite(buf, len, 1, get_impl(out_file))) {
+			print_info(write_file_err, out_file_name);
+			return EXIT_FAILURE;
+		}
+	}
+	return EXIT_SUCCESS;
+}
+
+const std::string& TempFile::create_temp_file(void)
+{
+	clear();
+	file_name = ::create_temp_file();
+	if(file_name.empty())
+		print_info("Unable to create a temporary file.\n");
+	return file_name;
+}
+
+void TempFile::clear(void)
+{
+	if(!file_name.empty()) {
+		if(g_remove(file_name.c_str()))
+			print_info("Unable to remove temp file %s\n", file_name.c_str());
+		file_name.clear();
+	}
+}
+
+std::string create_temp_file(void)
+{
+#ifdef _WIN32
+	/* g_file_open_tmp does not work reliably on Windows
+	Use platform specific API here. */
+	{
+		UINT uRetVal   = 0;
+		DWORD dwRetVal = 0;
+		TCHAR szTempFileName[MAX_PATH];
+		TCHAR lpTempPathBuffer[MAX_PATH];
+		dwRetVal = GetTempPath(MAX_PATH, lpTempPathBuffer);
+		if (dwRetVal > MAX_PATH || (dwRetVal == 0))
+			return "";
+
+		uRetVal = GetTempFileName(lpTempPathBuffer, // directory for tmp files
+			TEXT("temp"),     // temp file name prefix
+			0,                // create unique name
+			szTempFileName);  // buffer for name
+		if (uRetVal == 0)
+			return "";
+		std::string tmp_url_utf8;
+		std::string tmp_url;
+		if(!windows_to_utf8(szTempFileName, tmp_url_utf8)
+			|| !utf8_to_file_name(tmp_url_utf8, tmp_url))
+			return "";
+		FILE * f = g_fopen(tmp_url.c_str(), "wb");
+		if(!f)
+			return "";
+		fwrite(" ", 1, 1, f);
+		fclose(f);
+		return tmp_url;
+	}
+#else
+	{
+		std::string tmp_url;
+		gchar * buf = NULL;
+		gint fd = g_file_open_tmp(NULL, &buf, NULL);
+		if(fd == -1)
+			return "";
+		tmp_url = buf;
+		g_free(buf);
+		write(fd, " ", 1);
+		close(fd);
+		return tmp_url;
+	}
+#endif
+}
+

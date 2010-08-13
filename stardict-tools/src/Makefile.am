@@ -253,7 +253,8 @@ stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)
 stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp \
 	libstardictverify.h libcommon.cpp libcommon.h resourcewrap.hpp \
-	ifo_file.hpp ifo_file.cpp
+	ifo_file.hpp ifo_file.cpp lib_res_store.cpp lib_res_store.h \
+	lib_norm_dict.cpp lib_norm_dict.h
 
 stardict_editor_DEPENDENCIES = libbgl2txt.a
 stardict_editor_LDFLAGS =
@@ -261,7 +262,8 @@ stardict_editor_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
-	libstardictverify.h resourcewrap.hpp ifo_file.hpp ifo_file.cpp
+	libstardictverify.h resourcewrap.hpp ifo_file.hpp ifo_file.cpp \
+	lib_res_store.cpp lib_res_store.h lib_norm_dict.cpp lib_norm_dict.h
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \
