@@ -3,6 +3,7 @@
 
 #include <glib.h>
 #include <cstdio>
+#include <zlib.h>
 
 // borrowed from makedict program, part of xdxf project
 // http://sourceforge.net/projects/xdxf/
@@ -63,6 +64,10 @@ namespace glib {
 
 namespace clib {
 	typedef ResourceWrapper<FILE, FILE, int, fclose> File;
+}
+
+namespace zip {
+typedef ResourceWrapper<void, void, int, gzclose> gzFile;
 }
 
 #endif//!_RESOURCE_HPP_

@@ -3,6 +3,7 @@
 
 #include <glib.h>
 #include <string>
+#include <vector>
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -36,6 +37,44 @@ extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
 
+enum TLoadResult { lrOK, lrError, lrNotFound };
+
+int unpack_zlib(const char* arch_file_name, const char* out_file_name, print_info_t print_info);
+
+/* allows to create a temp file, remove the temp file when the object is destroyed. */
+class TempFile
+{
+public:
+	explicit TempFile(print_info_t print_info = g_print)
+		: print_info(print_info)
+	{
+	}
+	~TempFile(void)
+	{
+		clear();
+	}
+	const std::string& create_temp_file(void);
+	const std::string& get_file_name(void) const
+	{
+		return file_name;
+	}
+	void set_print_info(print_info_t print_info)
+	{
+		this->print_info = print_info;
+	}
+private:
+	void clear(void);
+	std::string file_name;
+	print_info_t print_info;
+};
+
+/* Create a new temporary file. Return file name in file name encoding.
+Return an empty string if file cannot be created. */
+std::string create_temp_file(void);
+
+#define read_file_err "Error reading file %s.\n"
+#define write_file_err "Error writing file %s.\n"
+#define index_file_truncated_err "Index file is truncated, last record is truncated.\n"
 
 #endif
 
