@@ -1786,7 +1786,7 @@ void TextWin::Create(GtkWidget *vbox)
 									 G_CALLBACK(OnSearchKeyPress), this);
 
   gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(eSearch), TRUE, TRUE, 0);
-	btFind = GTK_BUTTON(gtk_button_new_from_stock("gtk-find"));
+	btFind = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_FIND));
   gtk_button_set_relief(btFind, GTK_RELIEF_NONE);
   GTK_WIDGET_UNSET_FLAGS(btFind, GTK_CAN_FOCUS);
   g_signal_connect(G_OBJECT(btFind), "clicked",
