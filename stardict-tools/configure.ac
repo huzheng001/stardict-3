@@ -6,6 +6,7 @@ AC_INIT(stardict-tools, 3.0.2, http://stardict.sourceforge.net)
 AC_CONFIG_SRCDIR([src/stardict-editor.cpp])
 AM_INIT_AUTOMAKE([dist-bzip2])
 AC_CONFIG_HEADERS([config.h])
+AH_BOTTOM([#include <config-custom.h>])
 
 AC_CONFIG_MACRO_DIR([m4])
 LT_INIT

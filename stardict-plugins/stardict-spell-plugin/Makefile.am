@@ -21,4 +21,4 @@ stardict_spell_la_LDFLAGS = 	-avoid-version \
 
 stardict_spell_la_LIBADD  = $(ENCHANT_LIBS)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(ENCHANT_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) -I$(top_builddir)/src $(ENCHANT_CFLAGS)

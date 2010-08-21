@@ -21,4 +21,4 @@ stardict_espeak_la_LDFLAGS = 	-avoid-version \
 
 stardict_espeak_la_LIBADD  = $(ESPEAK_LIBS)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(ESPEAK_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) -I$(top_builddir)/src $(ESPEAK_CFLAGS)

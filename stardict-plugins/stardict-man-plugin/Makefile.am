@@ -19,4 +19,4 @@ stardict_man_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(LD_VERSION_SCRIPT_OPTION)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) 

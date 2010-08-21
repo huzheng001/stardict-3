@@ -36,4 +36,4 @@ stardict_wordnet_parsedata_la_LDFLAGS = 	-avoid-version \
 					-module \
 					$(WORDNET_PARSEDATA_LD_VERSION_SCRIPT_OPTION)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) 

@@ -601,11 +601,10 @@ static int make_idxifo(char *dictfilename, char *outputdir, char *bname) {
     for (j=0, node=firstnode; node; firstnode=node, node=node->next_node, free(firstnode)) {
         for (i = 0; (i < IDX_NODE_SIZE) && (node->idx_items[i].word); i++, j++) {
             arr_idxitemsptr[j] = idxitemsptr;
-            idxitemsptr =
-                (struct worditem *)mempcpy(
-                    (void *)idxitemsptr,
+            memcpy( (void *)idxitemsptr,
                     (void *)&(node->idx_items[i]),
                     sizeof(struct worditem));
+            ++idxitemsptr;
         }
         free(node->idx_items);
     }

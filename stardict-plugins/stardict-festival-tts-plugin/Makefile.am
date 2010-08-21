@@ -21,4 +21,4 @@ stardict_festival_la_LDFLAGS = 	-avoid-version \
 
 stardict_festival_la_LIBADD  = $(FESTIVAL_LIBS)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src $(FESTIVAL_CFLAGS)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) -I$(top_builddir)/src $(FESTIVAL_CFLAGS)
