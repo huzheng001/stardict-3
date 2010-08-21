@@ -12,9 +12,9 @@ public:
 	int main(int argc, char * argv [])
 	{
 		if(ParseCommandLine(argc, argv))
-			return 1;
+			return EXIT_FAILURE;
 		print_index(idx_file_name);
-		return 0;
+		return EXIT_SUCCESS;
 	}
 private:
 	int ParseCommandLine(int argc, char * argv [])
