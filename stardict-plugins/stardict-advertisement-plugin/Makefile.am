@@ -20,4 +20,4 @@ advertisement_la_LDFLAGS = 	-avoid-version \
 				-module \
 				$(LD_VERSION_SCRIPT_OPTION)
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir)/src
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_srcdir) -I$(top_builddir)/src

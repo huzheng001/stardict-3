@@ -41,4 +41,4 @@ else
 LOCAL_SIGCPP_INCLUDE = -I$(top_srcdir)/src -I$(top_srcdir)/src/sigc++config
 endif
 
-AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir) $(LOCAL_SIGCPP_INCLUDE)
+AM_CPPFLAGS = @STARDICT_CFLAGS@ -I$(top_builddir) -I$(top_srcdir) $(LOCAL_SIGCPP_INCLUDE)

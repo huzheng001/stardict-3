@@ -16,6 +16,7 @@ bin_PROGRAMS = stardict
 
 AM_CPPFLAGS =							                            \
 	-I$(top_builddir)					                            \
+	-I$(top_srcdir)						                            \
 	$(STARDICT_CFLAGS)						                    \
 	$(LOCAL_SIGCPP_INCLUDE)	\
 	-DSYSTEM_DATA_DIR=\""$(datadir)"\"	\

@@ -14,7 +14,8 @@ noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 
 noinst_LIBRARIES = libbgl2txt.a
 
-AM_CPPFLAGS = $(STARDICT_CFLAGS)
+# -I../$(top_srcdir) here is to include config-custom.h in config.h
+AM_CPPFLAGS = $(STARDICT_CFLAGS) -I../$(top_srcdir)
 
 libbgl2txt_a_SOURCES = libbgl2txt.h libbgl2txt.cpp bgl_babylon.h \
 	bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h \

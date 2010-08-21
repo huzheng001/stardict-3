@@ -8,6 +8,7 @@ AM_INIT_AUTOMAKE([1.9 tar-pax dist-bzip2])
 
 AM_MAINTAINER_MODE
 AC_CONFIG_HEADERS([config.h])
+AH_BOTTOM([#include <config-custom.h>])
 AM_DISABLE_STATIC
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
