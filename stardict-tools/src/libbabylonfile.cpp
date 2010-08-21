@@ -135,8 +135,8 @@ static void newline_strstrip(gchar *str, gint linenum, print_info_t print_info)
 }
 
 void convert_babylonfile(const char *filename, print_info_t print_info, bool strip_html)
-{			
-	struct stat stats;
+{
+	stardict_stat_t stats;
 	if (g_stat (filename, &stats) == -1)
 	{
 		print_info("File not exist!\n");

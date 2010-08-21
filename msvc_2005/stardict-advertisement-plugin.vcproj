@@ -176,6 +176,14 @@
 				RelativePath="..\stardict-plugins\stardict-advertisement-plugin\advertisement.cpp"
 				>
 			</File>
+			<Filter
+				Name="win32"
+				>
+				<File
+					RelativePath=".\glib_wrapper.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

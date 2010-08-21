@@ -693,17 +693,9 @@ void TopWin::SaveHistory()
 void TopWin::LoadHistory(GtkListStore* list_store)
 {
 	const gchar *filename = conf->get_string_at("dictionary/history").c_str();
-	struct stat stats;
-	if (g_stat (filename, &stats) == -1)
-        	return;
-	FILE *historyfile;
-	historyfile = g_fopen(filename,"r");
-	if (!historyfile)
+	gchar *buffer;
+	if(!g_file_get_contents(filename, &buffer, NULL, NULL))
 		return;
-	gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-	size_t readsize = fread (buffer, 1, stats.st_size, historyfile);
-	fclose (historyfile);
-	buffer[readsize] = '\0';
 	gchar *p,*p1;
 	p=buffer;
 	GtkTreeIter iter;

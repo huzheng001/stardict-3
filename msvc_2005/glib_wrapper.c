@@ -7,15 +7,17 @@
 #include <glib/gstdio.h>
 
 FILE *
-my_g_fopen (const gchar *filename,
+stardict_g_fopen (const gchar *filename,
 						const gchar *mode)
 {
 #ifdef _WIN32
-	if (G_WIN32_HAVE_WIDECHAR_API ())
+#if !G_WIN32_HAVE_WIDECHAR_API()
+#error Widechar API is not available
+#endif
 	{
 		wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
 		wchar_t *wmode;
-		FILE *retval;
+		FILE *fp;
 		int save_errno;
 
 		if (wfilename == NULL)
@@ -33,34 +35,15 @@ my_g_fopen (const gchar *filename,
 			return NULL;
 		}
 
-		retval = _wfopen (wfilename, wmode);
+		if(_wfopen_s(&fp, wfilename, wmode))
+			fp = NULL;
 		save_errno = errno;
 
 		g_free (wfilename);
 		g_free (wmode);
 
 		errno = save_errno;
-		return retval;
-	}
-	else
-	{
-		gchar *cp_filename = g_locale_from_utf8 (filename, -1, NULL, NULL, NULL);
-		FILE *retval;
-		int save_errno;
-
-		if (cp_filename == NULL)
-		{
-			errno = EINVAL;
-			return NULL;
-		}
-
-		retval = fopen (cp_filename, mode);
-		save_errno = errno;
-
-		g_free (cp_filename);
-
-		errno = save_errno;
-		return retval;
+		return fp;
 	}
 #else
 	return fopen (filename, mode);

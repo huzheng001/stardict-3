@@ -15,7 +15,7 @@ static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
 {
 	std::string idxfilename=ifofilename;
 	idxfilename.replace(idxfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "idx");
-	struct stat idx_stats;
+	stardict_stat_t idx_stats;
 	if (g_stat (idxfilename.c_str(), &idx_stats) == -1) {
 		gchar *str = g_strdup_printf("File not exist: %s\n", idxfilename.c_str());
 		print_info(str);
@@ -23,9 +23,9 @@ static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
 		return;
 	}
 	std::string dictfilename=ifofilename;
-        dictfilename.replace(dictfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "dict");
-        struct stat dict_stats;
-        if (g_stat (dictfilename.c_str(), &dict_stats) == -1) {
+	dictfilename.replace(dictfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "dict");
+	stardict_stat_t dict_stats;
+	if (g_stat (dictfilename.c_str(), &dict_stats) == -1) {
 #ifdef _WIN32
 		gchar *str = g_strdup_printf("File not exist: %s\nPlease rename somedict.dict.dz to somedict.dict.gz and use SevenZip to uncompress the somedict.dict.gz file, then you can get the somedict.dict file.\n", dictfilename.c_str());
 #else

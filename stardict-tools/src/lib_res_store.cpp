@@ -142,7 +142,7 @@ int resource_database::load_ridx_file(void)
 	if(EXIT_FAILURE == prepare_ridx_file())
 		return EXIT_FAILURE;
 
-	struct stat stats;
+	stardict_stat_t stats;
 	if (g_stat (ridxfilename.c_str(), &stats) == -1) {
 		print_info("Unable to find index file %s\n", ridxfilename.c_str());
 		return EXIT_FAILURE;
@@ -251,7 +251,7 @@ int resource_database::load_rdic_file(void)
 	if(EXIT_FAILURE == prepare_rdic_file())
 		return EXIT_FAILURE;
 
-	struct stat stats;
+	stardict_stat_t stats;
 	if (g_stat (rdicfilename.c_str(), &stats) == -1) {
 		print_info("Unable to find resource dictionary file %s\n", rdicfilename.c_str());
 		return EXIT_FAILURE;
