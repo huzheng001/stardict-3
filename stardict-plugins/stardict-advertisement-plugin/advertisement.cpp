@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include "advertisement.h"
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -75,14 +79,10 @@ static char *build_dictdata(char type, const char *definition)
 			} else {
 				filename = datapath + G_DIR_SEPARATOR_S + definition;
 			}
-			struct stat stats;
+			stardict_stat_t stats;
 			FILE *file;
 			if (g_stat (filename.c_str(), &stats) == 0
-#ifdef _MSC_VER
-				&& fopen_s(&file, filename.c_str(), "rb") == 0)
-#else
 				&& (file = g_fopen(filename.c_str(), "rb"))!=NULL)
-#endif
 			{
 				size = sizeof(char) + sizeof(guint32) + stats.st_size;
 				data = (char *)g_malloc(sizeof(guint32) + size);

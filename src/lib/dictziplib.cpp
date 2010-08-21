@@ -125,7 +125,7 @@ int dictData::read_header(const std::string &fname, int computeCRC)
 	int           i;
 	char          *pt;
 	int           c;
-	struct stat   sb;
+	stardict_stat_t   stats;
 	unsigned long crc   = crc32( 0L, Z_NULL, 0 );
 	int           count;
 	unsigned long offset;
@@ -143,14 +143,10 @@ int dictData::read_header(const std::string &fname, int computeCRC)
 	
 	if (id1 != GZ_MAGIC1 || id2 != GZ_MAGIC2) {
 		this->type = DICT_TEXT;
-#if defined(_MSC_VER)
-		fstat( _fileno( str ), &sb );
-#else
-		fstat( fileno( str ), &sb );
-#endif
-		this->compressedLength = this->length = sb.st_size;
+		g_stat(fname.c_str(), &stats);
+		this->compressedLength = this->length = stats.st_size;
 		this->origFilename     = fname;
-		this->mtime            = sb.st_mtime;
+		this->mtime            = stats.st_mtime;
 		if (computeCRC) {
 			rewind( str );
 			while (!feof( str )) {
@@ -276,9 +272,8 @@ int dictData::read_header(const std::string &fname, int computeCRC)
 
 bool dictData::open(const std::string& fname, int computeCRC)
 {
-	struct stat sb;
+	stardict_stat_t stats;
 	int         j;
-	int fd;
 
 	this->initialized = 0;
 	if (!g_file_test(fname.c_str(),
@@ -294,29 +289,12 @@ bool dictData::open(const std::string& fname, int computeCRC)
 		return false;
 	}
 
-#if defined(_MSC_VER)
-	if ((fd = ::_open(fname.c_str(), O_RDONLY )) < 0) {
-#else
-	if ((fd = ::open(fname.c_str(), O_RDONLY )) < 0) {
-#endif
-		//err_fatal_errno( __FUNCTION__,
-		//       "Cannot open data file \"%s\"\n", fname );
+	if(g_stat(fname.c_str(), &stats))
 		return false;
-   }
-   if (fstat(fd, &sb)) {
-		 //err_fatal_errno( __FUNCTION__,
-		 //       "Cannot stat data file \"%s\"\n", fname );
-		 return false;
-   }
 
-   this->size = sb.st_size;
-#if defined(_MSC_VER)
-	::_close(fd);
-#else
-	::close(fd);
-#endif
-	 if (!mapfile.open(fname.c_str(), size))
-		 return false;		
+	this->size = stats.st_size;
+	if (!mapfile.open(fname.c_str(), size))
+		return false;
 
 	 this->start=mapfile.begin();
    this->end = this->start + this->size;

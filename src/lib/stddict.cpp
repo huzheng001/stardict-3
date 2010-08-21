@@ -28,6 +28,7 @@
 #endif
 
 #include <cstring>
+#include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <algorithm>
@@ -306,7 +307,7 @@ MapFile* cache_file::get_cache_for_load(const gchar *filename,
 	const std::string &url, const std::string &saveurl,
 	CollateFunctions cltfunc, glong filedatasize, int next)
 {
-	struct stat cachestat;
+	stardict_stat_t cachestat;
 	if (g_stat(filename, &cachestat)!=0)
 		return NULL;
 	std::auto_ptr<MapFile> mf(new MapFile);
@@ -356,7 +357,7 @@ MapFile* cache_file::get_cache_for_load(const gchar *filename,
 		if (static_cast<gulong>(cachestat.st_size)
 			!= static_cast<gulong>(filedatasize + sizeof(guint32) + strlen(mf->begin() + word_off_size) +1))
 			return NULL;
-		struct stat idxstat;
+		stardict_stat_t idxstat;
 		if (g_stat(url.c_str(), &idxstat)!=0)
 			return NULL;
 		if (cachestat.st_mtime<idxstat.st_mtime)
@@ -427,7 +428,7 @@ bool cache_file::get_cache_filename(const std::string& url, std::string &cachefi
 FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc)
 {
 	cfilename = filename;
-	struct stat oftstat;
+	stardict_stat_t oftstat;
 	if (g_stat(filename, &oftstat)!=0) {
 		return fopen(filename, "wb");
 	}
@@ -1094,8 +1095,8 @@ bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
 	wordcount=wc;
 	npages=(wc-1)/ENTR_PER_PAGE+2;
 	if (!oft_file.load_cache(url, url, _CollateFunction, npages*sizeof(guint32))) {
-		struct stat stats;
-		if (stat (url.c_str(), &stats) == -1)
+		stardict_stat_t stats;
+		if (g_stat(url.c_str(), &stats) == -1)
 			return false;
 		MapFile map_file;
 		if (!map_file.open(url.c_str(), stats.st_size))
@@ -1665,7 +1666,7 @@ void Libs::LoadXMLDir(const char *dir, DictInfoItem *info_item)
 	std::string filename;
 	filename = dir;
 	filename += G_DIR_SEPARATOR_S "stardictd.xml";
-	struct stat filestat;
+	stardict_stat_t filestat;
 	if (g_stat(filename.c_str(), &filestat)!=0)
 		return;
 	MapFile mf;

@@ -213,7 +213,7 @@ static bool write_dictionary(const char *filename, GArray *array, print_info_t p
 	system(command.c_str());
 #endif
 
-	struct stat stats;
+	stardict_stat_t stats;
 	g_stat(idxfilename.c_str(), &stats);
 	fprintf(get_impl(ifofile), "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%d\n"
 		"idxfilesize=%ld\nbookname=%s\nsametypesequence=m\n",

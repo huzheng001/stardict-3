@@ -12,6 +12,12 @@
 
 #ifdef _WIN32
 #  include <windows.h>
+#  ifdef min
+#    undef min
+#  endif
+#  ifdef max
+#    undef max
+#  endif
 #else
 #  include <unistd.h>
 #endif
@@ -175,7 +181,7 @@ int norm_dict::load_idx_file(void)
 
 	guint32 idxfilesize;
 	{
-		struct stat stats;
+		stardict_stat_t stats;
 		if (g_stat (idxfilename.c_str(), &stats) == -1) {
 			print_info("Unable to find index file %s\n", idxfilename.c_str());
 			return EXIT_FAILURE;
@@ -333,7 +339,7 @@ int norm_dict::load_syn_file(void)
 	synfilename = basefilename + ".syn";
 
 	if (dict_info.synwordcount == 0) {
-		struct stat stats;
+		stardict_stat_t stats;
 		if (g_stat (synfilename.c_str(), &stats) != -1) {
 			print_info(".syn file exists but no \"synwordcount=\" entry in .ifo file\n");
 			if(fix_errors) {
@@ -346,7 +352,7 @@ int norm_dict::load_syn_file(void)
 
 	guint32 synfilesize;
 	{
-		struct stat stats;
+		stardict_stat_t stats;
 		if (g_stat (synfilename.c_str(), &stats) == -1) {
 			print_info("Unable to find synonyms file %s\n", synfilename.c_str());
 			if(fix_errors) {
@@ -514,7 +520,7 @@ int norm_dict::load_dict_file(void)
 		return EXIT_FAILURE;
 
 	{
-		struct stat stats;
+		stardict_stat_t stats;
 		if (g_stat (dictfilename.c_str(), &stats) == -1) {
 			print_info("Dictionary file does not exist: %s\n", dictfilename.c_str());
 			return EXIT_FAILURE;

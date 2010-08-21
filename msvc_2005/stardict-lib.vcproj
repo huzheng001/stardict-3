@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;&quot;libsigc++-src&quot;;../src;&quot;../src/sigc++config&quot;"
-				PreprocessorDefinitions="_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
+				PreprocessorDefinitions="_LIB;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -103,7 +103,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".;&quot;libsigc++-src&quot;;../src;&quot;../src/sigc++config&quot;"
-				PreprocessorDefinitions="_LIB;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;HAVE_CONFIG_H"
+				PreprocessorDefinitions="_LIB;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"

@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include <gtk/gtk.h>
 
 #include <string.h>
@@ -45,8 +49,8 @@ static void my_strstrip(char *str, glong linenum, print_info_t print_info)
 }
 
 void convert(const char *filename, print_info_t print_info)
-{			
-	struct stat stats;
+{
+	stardict_stat_t stats;
 	if (g_stat (filename, &stats) == -1)
 	{
 		print_info("File not exist!\n");
@@ -117,10 +121,10 @@ void convert(const char *filename, print_info_t print_info)
                         linenum++;
                         continue;
 		}
-		g_array_append_val(array, worditem);			
-		p= p1;				
+		g_array_append_val(array, worditem);
+		p= p1;
 		linenum++;
-	}		
+	}
 	g_array_sort(array,comparefunc);
 		
 	gchar ifofilename[256];

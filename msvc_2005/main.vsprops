@@ -6,6 +6,11 @@
 	IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 	>
 	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="."
+		PreprocessorDefinitions="HAVE_CONFIG_H"
+	/>
+	<Tool
 		Name="VCLinkerTool"
 		AdditionalLibraryDirectories=""
 	/>
