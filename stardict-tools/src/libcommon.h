@@ -72,9 +72,68 @@ private:
 Return an empty string if file cannot be created. */
 std::string create_temp_file(void);
 
-#define read_file_err "Error reading file %s.\n"
-#define write_file_err "Error writing file %s.\n"
-#define index_file_truncated_err "Index file is truncated, last record is truncated.\n"
+#define key_forbidden_chars \
+	"\t\n\r"
+#define known_type_ids \
+	"mtygxkwhnr"
+
+#define read_file_err \
+	"Error reading file %s.\n"
+#define write_file_err \
+	"Error writing file %s.\n"
+#define open_read_file_err \
+	"Unable open file %s for reading\n"
+#define open_write_file_err \
+	"Unable open file %s for writing\n"
+#define index_file_truncated_err \
+	"Index file is truncated, last record is truncated.\n"
+#define incorrect_data_block_size_err \
+	"Index item %s. Fields do not fit into the data block, incorrect data block size.\n"
+#define empty_field_err \
+	"Index item %s. Empty field in definition data block. Type ID '%c'.\n"
+#define invalid_utf8_field_err \
+	"Index item %s. Invalid field. Type id = '%c'. Invalid utf8 string %s.\n"
+#define malformed_field_err \
+	"Index item %s. Type id '%c'. Malformed field.\n"
+#define syn_file_truncated_err \
+	"Synonyms file is truncated, last record is truncated.\n"
+#define unknown_type_id_err \
+	"Index item %s. Unknown type identifier '%c'.\n"
+#define empty_word_err \
+	"Empty word in index.\n"
+#define long_word_err \
+	"Index item %s. wordlen>=%d, wordlen = %d.\n"
+#define word_begin_space_err \
+	"Warning: Index item %s. word begins with space.\n"
+#define word_end_space_err \
+	"Warning: Index item %s. word ends with space.\n"
+#define word_forbidden_chars_err \
+	"Warning: Index item %s. word contains forbidden characters.\n"
+#define word_invalid_utf8_err \
+	"Index item %s. Invalid utf8 string.\n"
+#define wrong_word_order_err \
+	"Wrong order, first word = %s, second word = %s\n"
+#define fixed_ignore_field_msg \
+	"fixed. ignore the field.\n"
+#define fixed_accept_unknown_field_msg \
+	"fixed. accept unknown field type.\n"
+#define fixed_ignore_line_msg \
+	"fixed. ignore the line.\n"
+#define fixed_ignore_file_tail_msg \
+	"fixed. ignore the tail of the file.\n"
+#define fixed_ignore_syn_file_msg \
+	"fixed. ignore the .syn file.\n"
+#define fixed_ignore_word_msg \
+	"fixed. ignore the word.\n"
+#define fixed_ignore_msg \
+	"fixed. ignore.\n"
+#define fixed_msg \
+	"fixed\n"
+
+
+/* Maximum size of word in index. strlen(word) < MAX_INDEX_KEY_SIZE.
+ * See doc/StarDictFileFormat. */
+const int MAX_INDEX_KEY_SIZE=256;
 
 #endif
 

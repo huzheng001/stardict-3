@@ -41,7 +41,7 @@ int stardict_verify(const char *ifofilename, print_info_t print_info)
 		have_errors = true;
 
 	norm_dict dict;
-	if(EXIT_FAILURE == dict.load(ifofilename, print_info, static_cast<i_resource_storage*>(&res_storage)))
+	if(dict.load(ifofilename, print_info, static_cast<i_resource_storage*>(&res_storage)))
 		have_errors = true;
 
 	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;

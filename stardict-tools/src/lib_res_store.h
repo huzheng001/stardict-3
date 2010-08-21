@@ -12,6 +12,14 @@ public:
 class resource_database;
 class resource_files;
 
+struct resitem_t {
+	std::string type;
+	std::string key;
+};
+
+typedef std::vector<resitem_t> resitem_vect_t;
+
+
 class resource_storage: public i_resource_storage
 {
 public:

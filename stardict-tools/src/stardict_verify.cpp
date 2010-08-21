@@ -1,31 +1,22 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <string>
 
 #include "libstardictverify.h"
 
-void print_info(const char *info, ...)
+static void verify_dir(const std::string& dirname)
 {
-	va_list va;
-	va_start(va, info);
-	char *str = g_strdup_vprintf(info, va);
-	g_print("%s", str);
-	g_free(str);
-	va_end(va);
-}
-
-static void verify_dir(const gchar *dirname)
-{
-	GDir *dir = g_dir_open(dirname, 0, NULL);
+	GDir *dir = g_dir_open(dirname.c_str(), 0, NULL);
 	if (dir) {
 		const gchar *filename;
-		gchar fullfilename[256];
+		std::string fullfilename;
 		while ((filename = g_dir_read_name(dir))!=NULL) {
-			sprintf(fullfilename, "%s/%s", dirname, filename);
-			if (g_file_test(fullfilename, G_FILE_TEST_IS_DIR)) {
+			fullfilename = dirname + "/" + filename;
+			if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
 				verify_dir(fullfilename);
 			}
 			else if (g_str_has_suffix(filename,".ifo")) {
-				stardict_verify(fullfilename, print_info);
+				stardict_verify(fullfilename.c_str(), g_print);
 			}
 		}
 		g_dir_close(dir);
@@ -42,11 +33,10 @@ int main(int argc,char * argv [])
 	} info;
 
 	if (argc==2)
-		return stardict_verify(argv[1], print_info);
+		return stardict_verify(argv[1], g_print);
 	else {
-		verify_dir ("/usr/share/stardict/dic");
-		gchar home_dir[256];
-		sprintf(home_dir, "%s/.stardict/dic", g_get_home_dir());
+		verify_dir("/usr/share/stardict/dic");
+		const std::string home_dir = std::string(g_get_home_dir()) + "/.stardict/dic";
 		verify_dir(home_dir);
 	}
 

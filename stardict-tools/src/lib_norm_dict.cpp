@@ -23,240 +23,56 @@
 #include "lib_norm_dict.h"
 #include "libstardictverify.h"
 
-static const char* const key_forbidden_chars = "\t\n\r";
-static const char* const syn_file_truncated_err =
-	"Synonyms file is truncated, last record is truncated.\n";
-static const char* const incorrect_data_block_size_err =
-	"Index item %s. Fields do not fit into the data block, incorrect data block size.\n";
-static const char* const unknown_type_id_err =
-	"Index item %s. Unknown type identifier '%c'.\n";
-static const char* const empty_field_err =
-	"Index item %s. Empty field in definition data block. Type ID '%c'.\n";
-static const char* const invalid_utf8_field_err =
-	"Index item %s. Invalid field. Type id = '%c'. Invalid utf8 string %s.\n";
-static const char* const empty_word_err =
-	"Empty word in index.\n";
-static const char* const long_word_err =
-	"Index item %s. wordlen>=256, wordlen = %d.\n";
-static const char* const word_begin_space_err =
-	"Warning: Index item %s. word begins with space.\n";
-static const char* const word_end_space_err =
-	"Warning: Index item %s. word ends with space.\n";
-static const char* const word_forbidden_chars_err =
-	"Warning: Index item %s. word contains forbidden characters.\n";
-static const char* const word_invalid_utf8_err =
-	"Index item %s. Invalid utf8 string.\n";
-static const char* const wrong_word_order_err =
-	"Wrong order, first word = %s, second word = %s\n";
-static const char* const known_type_ids = "mtygxkwhnr";
+/* Limit the initially reserved index size.
+ * .ifo file may contain incorrect, unreasonably large value of index size,
+ * so we'd be out of memory if we try to allocate such amount. */
+const size_t MAX_RESERVED_INDEX_SIZE = 200*1024;
 
 static bool compare_worditem_by_offset(const worditem_t* left, const worditem_t* right)
 {
 	return left->offset < right->offset;
 }
 
-class dictionary_data_block {
-public:
-	/* p_res_storage may be NULL */
-	int verify(const char* const data, size_t data_size,
-		const std::string& sametypesequence, print_info_t print_info,
-		const char* word,
-		i_resource_storage* p_res_storage = NULL)
-	{
-		if(data_size == 0) {
-			print_info("Index item %s. data size = 0.\n", word);
-			return EXIT_FAILURE;
-		}
-		this->word = word;
-		this->print_info = print_info;
-		this->p_res_storage = p_res_storage;
-		if (!sametypesequence.empty()) {
-			return verify_sametypesequence(data, data_size,
-				sametypesequence);
-		} else {
-			return verify_no_sametypesequence(data, data_size);
-		}
-	}
-private:
-	const char* word;
-	print_info_t print_info;
-	i_resource_storage* p_res_storage;
-
-	int verify_no_sametypesequence(const char* const data, size_t data_size);
-	int verify_sametypesequence(const char* const data, size_t data_size,
-		const std::string& sametypesequence);
-	int verify_field(const char type_id,
-		const char*& p, size_t size_remain);
-	int verify_field_content(const char type_id, const char* data, guint32 size);
-	int verify_field_content_x(const char type_id, const char* data, guint32 size);
-};
-
-
-int dictionary_data_block::verify_sametypesequence(const char* const data, size_t data_size,
-	const std::string& sametypesequence)
+/* truncate utf8 string on char boundary (string content is not changed,
+ * instead desired new length is returned)
+ * new string length must be <= max_len
+ * beg - first char of the string,
+ * str_len - string length in bytes
+ * return value: length of the truncated string */
+static size_t truncate_utf8_string(const char* const beg, const size_t str_len, const size_t max_len)
 {
-	const char* p = data;
-	size_t size_remain; // to the end of the data block
-	for (size_t i=0; i<sametypesequence.length()-1; i++) {
-		size_remain = data_size - (p - data);
-		const char type_id = sametypesequence[i];
-		if(EXIT_FAILURE == verify_field(type_id, p, size_remain))
-			return EXIT_FAILURE;
-	}
-	// last item
-	size_remain = data_size - (p - data);
-	const char type_id = sametypesequence[sametypesequence.length()-1];
-	if(g_ascii_isupper(type_id)) {
-		guint32 size = size_remain;
-		if(size == 0) {
-			print_info(empty_field_err, word, type_id);
-		} else
-			verify_field_content(type_id, p, size);
-	} else if(g_ascii_islower(type_id)) {
-		if(size_remain == 0) {
-			print_info(empty_field_err, word, type_id);
-		} else {
-			const char* p2 = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
-			if(p2) {
-				// '\0' found in the last record
-				print_info(incorrect_data_block_size_err, word);
-				return EXIT_FAILURE;
-			}
-			if (!g_utf8_validate(p, size_remain, NULL)) {
-				std::string tmp(p, size_remain);
-				print_info(invalid_utf8_field_err, word, type_id, tmp.c_str());
-				return EXIT_FAILURE;
-			}
-			verify_field_content(type_id, p, size_remain);
-		}
-	} else {
-		print_info(unknown_type_id_err, word, type_id);
-		return EXIT_FAILURE;
-	}
-	if(!strchr(known_type_ids, type_id)) {
-		print_info(unknown_type_id_err, word, type_id);
-		return EXIT_FAILURE;
-	}
-	return EXIT_SUCCESS;
-}
-
-int dictionary_data_block::verify_no_sametypesequence(const char* const data, size_t data_size)
-{
-	const char* p = data;
-	size_t size_remain; // to the end of the data block
+	if(str_len <= max_len)
+		return str_len;
+	if(max_len == 0)
+		return 0;
+	const char* char_end = beg+str_len;
+	const char* p = beg+str_len-1;
 	while(true) {
-		size_remain = data_size - (p - data);
-		if(size_remain == 0)
-			return EXIT_SUCCESS;
-		const char type_id = *p;
-		++p;
-		--size_remain;
-		if(EXIT_FAILURE == verify_field(type_id, p, size_remain))
-			return EXIT_FAILURE;
+		// find the first byte of a utf8 char
+		for(; beg <= p && (*p & 0xC0) == 0x80; --p)
+			;
+		if(p<beg)
+			return 0;
+		const gunichar guch = g_utf8_get_char_validated(p, char_end-p);
+		if(guch != (gunichar)-1 && guch != (gunichar)-2)
+			return char_end - beg;
+		char_end = p;
+		--p;
+		if(p<beg)
+			return 0;
 	}
-	g_assert_not_reached();
-	return EXIT_SUCCESS;
 }
 
-int dictionary_data_block::verify_field(const char type_id,
-	const char*& p, const size_t size_remain)
+
+norm_dict::norm_dict(void)
+:
+	dictfilesize(0),
+	print_info(NULL),
+	p_res_storage(NULL),
+	fix_errors(false)
 {
-	if(g_ascii_isupper(type_id)) {
-		if(size_remain < sizeof(guint32)) {
-			print_info(incorrect_data_block_size_err, word);
-			return EXIT_FAILURE;
-		}
-		guint32 size = g_ntohl(*reinterpret_cast<const guint32 *>(p));
-		if(size_remain < sizeof(guint32) + size) {
-			print_info(incorrect_data_block_size_err, word);
-			return EXIT_FAILURE;
-		}
-		if(size == 0) {
-			print_info(empty_field_err, word, type_id);
-		}
-		p += sizeof(guint32);
-		if(size > 0)
-			verify_field_content(type_id, p, size);
-		p += size;
-	} else if(g_ascii_islower(type_id)) {
-		if(size_remain < 1) { // data must contain at least '\0'
-			print_info(incorrect_data_block_size_err, word);
-			return EXIT_FAILURE;
-		}
-		const char* p2 = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
-		if(!p2) {
-			print_info(incorrect_data_block_size_err, word);
-			return EXIT_FAILURE;
-		}
-		int datalen = p2 - p;
-		if(datalen == 0) {
-			print_info(empty_field_err, word, type_id);
-		} else {
-			if (!g_utf8_validate(p, datalen, NULL)) {
-				print_info(invalid_utf8_field_err, word, type_id, p);
-				return EXIT_FAILURE;
-			}
-			verify_field_content(type_id, p, datalen);
-		}
-		p = p2 + 1;
-	} else {
-		print_info(unknown_type_id_err, word, type_id);
-		return EXIT_FAILURE;
-	}
-	if(!strchr(known_type_ids, type_id)) {
-		print_info(unknown_type_id_err, word, type_id);
-		return EXIT_FAILURE;
-	}
-	return EXIT_SUCCESS;
-}
 
-int dictionary_data_block::verify_field_content(const char type_id, const char* data, guint32 size)
-{
-	if(type_id == 'x')
-		return verify_field_content_x(type_id, data, size);
-	return EXIT_SUCCESS;
 }
-
-int dictionary_data_block::verify_field_content_x(const char type_id, const char* data, guint32 size)
-{
-	// create a '\0'-terminated string
-	std::string temp(data, size);
-	std::string key;
-	const char* p;
-	const char* tag;
-	bool have_errors = false;
-	for(p = temp.c_str(); p && *p && (tag = strstr(p, "<rref")); ) {
-		p = tag + sizeof("<rref")-1;
-		if(*p == '>')
-			++p;
-		else if (*p == ' ') {
-			p = strchr(p, '>');
-			if(!p)
-				break;
-			++p;
-		} else { // error
-			p = strchr(p, '>');
-			if(!p)
-				break;
-			++p;
-			continue;
-		}
-		// p points after the "<rref ...>"
-		tag = strstr(p, "</rref>");
-		if(!tag)
-			break;
-		key.assign(p, tag - p);
-		if(p_res_storage && !p_res_storage->have_file(key)) {
-			print_info("Warning: Index item %s. Type id '%c'. The field refers to resource \"%s\", "
-				"that is not found in resource storage.\n",
-				word, type_id, key.c_str());
-			have_errors = true;
-		}
-		p = tag + sizeof("</rref>") - 1;
-	}
-	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
-}
-
 
 /* p_res_storage may be NULL */
 int norm_dict::load(const std::string& ifofilename, print_info_t print_info,
@@ -281,6 +97,35 @@ int norm_dict::load(const std::string& ifofilename, print_info_t print_info,
 	if(EXIT_FAILURE == load_dict_file())
 		return EXIT_FAILURE;
 	return EXIT_SUCCESS;
+}
+
+int norm_dict::get_data_fields(guint32 offset, guint32 size, data_field_vect_t& fields) const
+{
+	if(size == 0)
+		return EXIT_FAILURE;
+	fields.clear();
+
+	const char* word = "???";
+	std::vector<char> buffer(size);
+
+	if(!dictfile) {
+		print_info("Dictionary is not loaded.\n");
+		return EXIT_FAILURE;
+	}
+	if(fseek(get_impl(dictfile), offset, SEEK_SET)) {
+		print_info(read_file_err, dictfilename.c_str());
+		return EXIT_FAILURE;
+	}
+	if(1 != fread(&buffer[0], size, 1, get_impl(dictfile))) {
+		print_info(read_file_err, dictfilename.c_str());
+		return EXIT_FAILURE;
+	}
+
+	dictionary_data_block data_block;
+	data_block.set_resource_storage(p_res_storage);
+	data_block.set_print_info(print_info);
+	data_block.set_fix_errors(fix_errors);
+	return data_block.load(&buffer[0], size, dict_info.sametypesequence, word, &fields);
 }
 
 int norm_dict::prepare_idx_file(void)
@@ -328,110 +173,152 @@ int norm_dict::load_idx_file(void)
 	if(EXIT_FAILURE == prepare_idx_file())
 		return EXIT_FAILURE;
 
-	struct stat stats;
-	if (g_stat (idxfilename.c_str(), &stats) == -1) {
-		print_info("Unable to find index file %s\n", idxfilename.c_str());
-		return EXIT_FAILURE;
+	guint32 idxfilesize;
+	{
+		struct stat stats;
+		if (g_stat (idxfilename.c_str(), &stats) == -1) {
+			print_info("Unable to find index file %s\n", idxfilename.c_str());
+			return EXIT_FAILURE;
+		}
+		idxfilesize = (guint32)stats.st_size;
 	}
-	print_info("Verifying index file: %s\n", idxfilename_orig.c_str());
-	if (dict_info.index_file_size!=(guint)stats.st_size) {
-		print_info("Incorrect size of the index file: in .ifo file, idxfilesize=%d, "
-			"real file size is %ld\n",
-			dict_info.index_file_size, (long) stats.st_size);
-		return EXIT_FAILURE;
+	print_info("Loading index file: %s\n", idxfilename_orig.c_str());
+
+	if (dict_info.index_file_size != idxfilesize) {
+		print_info("Incorrect size of the index file: in .ifo file, idxfilesize=%u, "
+			"real file size is %u\n",
+			dict_info.index_file_size, idxfilesize);
+		if(fix_errors) {
+			dict_info.index_file_size = idxfilesize;
+			print_info(fixed_msg);
+		} else
+			return EXIT_FAILURE;
 	}
 
 	index.clear();
-	index.reserve(dict_info.wordcount);
+	index.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.wordcount));
 
-	std::vector<gchar> buf(stats.st_size+1);
+	std::vector<gchar> buf(idxfilesize+1);
 	gchar * const buffer_beg = &buf[0];
-	gchar * const buffer_end = buffer_beg+stats.st_size;
+	gchar * const buffer_end = buffer_beg+idxfilesize;
 	{
 		FILE *idxfile = g_fopen(idxfilename.c_str(),"rb");
-		fread(buffer_beg, 1, stats.st_size, idxfile);
+		if(!idxfile) {
+			print_info(open_read_file_err, idxfilename.c_str());
+			return EXIT_FAILURE;
+		}
+		fread(buffer_beg, 1, idxfilesize, idxfile);
 		fclose(idxfile);
 	}
 
-	gchar *p=buffer_beg;
-	gchar *preword=NULL;
+	const char *p=buffer_beg;
 	int wordlen;
 	gint cmpvalue;
 	guint wordcount=0;
 	bool have_errors=false;
-	worditem_t worditem;
+	worditem_t worditem, preworditem;
 	size_t size_remain; // to the end of the index file
 
 	while (p < buffer_end) {
 		size_remain = buffer_end - p;
-		const char* p2 = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
-		if(!p2) {
+		const char* const word_end = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
+		if(!word_end) {
 			print_info(index_file_truncated_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_file_tail_msg);
+			else
+				have_errors=true;
 			break;
 		}
-		wordlen = p2 - p;
+		worditem.word = p;
+		wordlen = worditem.word.length();
+		if (!g_utf8_validate(worditem.word.c_str(), wordlen, NULL)) {
+			print_info(word_invalid_utf8_err, worditem.word.c_str());
+			if(fix_errors) {
+				worditem.word.clear();
+				wordlen = 0;
+				print_info(fixed_ignore_word_msg);
+			} else
+				have_errors=true;
+		}
 		if (wordlen==0) {
 			print_info(empty_word_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_word_msg);
+			else
+				have_errors=true;
 		} else {
-			if (wordlen>=256) {
-				print_info(long_word_err, p, wordlen);
-				have_errors=true;
+			if (wordlen>=MAX_INDEX_KEY_SIZE) {
+				print_info(long_word_err, worditem.word.c_str(), MAX_INDEX_KEY_SIZE, wordlen);
+				if(fix_errors) {
+					wordlen = truncate_utf8_string(worditem.word.c_str(), wordlen, MAX_INDEX_KEY_SIZE-1);
+					worditem.word.resize(wordlen);
+					print_info("fixed. the word is truncated.\n");
+				} else
+					have_errors=true;
 			}
-			if (g_ascii_isspace(*p)) {
-				print_info(word_begin_space_err, p);
+			if (g_ascii_isspace(worditem.word[0])) {
+				print_info(word_begin_space_err, worditem.word.c_str());
 			}
-			if (g_ascii_isspace(*(p+wordlen-1))) {
-				print_info(word_end_space_err, p);
+			if (g_ascii_isspace(worditem.word[wordlen-1])) {
+				print_info(word_end_space_err, worditem.word.c_str());
 			}
 		}
-		if (strpbrk(p, key_forbidden_chars)) {
-			print_info(word_forbidden_chars_err, p);
+		if (strpbrk(worditem.word.c_str(), key_forbidden_chars)) {
+			print_info(word_forbidden_chars_err, worditem.word.c_str());
 		}
-		if (!g_utf8_validate(p, wordlen, NULL)) {
-			print_info(word_invalid_utf8_err, p);
-			have_errors=true;
-		}
-		if (preword) {
-			cmpvalue=stardict_strcmp(preword, p);
+		if (!preworditem.word.empty() && !worditem.word.empty()) {
+			cmpvalue=stardict_strcmp(preworditem.word.c_str(), worditem.word.c_str());
 			if (cmpvalue>0) {
-				print_info(wrong_word_order_err, preword, p);
-				have_errors=true;
+				print_info(wrong_word_order_err, preworditem.word.c_str(), worditem.word.c_str());
+				if(fix_errors)
+					print_info("fixed. Will be reordered.\n");
+				else
+					have_errors=true;
 			}
 		}
-		preword=p;
-		worditem.word = p;
-		p += wordlen + 1;
+		p = word_end + 1;
 		size_remain = buffer_end - p;
 		if(size_remain < 2 * sizeof(guint32)) {
 			print_info(index_file_truncated_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_file_tail_msg);
+			else
+				have_errors=true;
 			break;
 		}
-		worditem.offset = g_ntohl(*reinterpret_cast<guint32 *>(p));
+		worditem.offset = g_ntohl(*reinterpret_cast<const guint32 *>(p));
 		p += sizeof(guint32);
-		worditem.size = g_ntohl(*reinterpret_cast<guint32 *>(p));
+		worditem.size = g_ntohl(*reinterpret_cast<const guint32 *>(p));
 		p += sizeof(guint32);
 		if (worditem.size==0) {
-			print_info("Index item %s. Data block size = 0.\n", preword);
+			print_info("Index item %s. Data block size = 0.\n", worditem.word.c_str());
+			if(fix_errors) {
+				worditem.word.clear();
+				print_info(fixed_ignore_word_msg);
+			}
 		}
+		preworditem = worditem;
 		wordcount++;
 		index.push_back(worditem);
 	} // while
 
 	g_assert(p <= buffer_end);
 
-	if (wordcount!=dict_info.wordcount) {
+	if (dict_info.wordcount != wordcount) {
 		print_info("Incorrect number of words: in .ifo file, wordcount=%d, "
 			"while the real word count is %d\n", dict_info.wordcount, wordcount);
-		have_errors=true;
+		if(fix_errors) {
+			dict_info.wordcount = wordcount;
+			print_info(fixed_msg);
+		} else
+			have_errors=true;
 	}
 
 	for(size_t i=0; i < index.size(); ++i) {
 		for(size_t j=i+1; j < index.size() && index[i].word == index[j].word; ++j) {
 			if(index[i].offset == index[j].offset && index[i].size == index[j].size) {
-				print_info("Multiple index items have the same word = %s, offset = %d, size = %d\n",
+				print_info("Warning. Multiple index items have the same word = %s, offset = %d, size = %d\n",
 					index[i].word.c_str(), index[i].offset, index[i].size);
 				break;
 			}
@@ -444,138 +331,199 @@ int norm_dict::load_idx_file(void)
 int norm_dict::load_syn_file(void)
 {
 	synfilename = basefilename + ".syn";
-	have_synfile = dict_info.synwordcount != 0;
 
 	if (dict_info.synwordcount == 0) {
 		struct stat stats;
 		if (g_stat (synfilename.c_str(), &stats) != -1) {
 			print_info(".syn file exists but no \"synwordcount=\" entry in .ifo file\n");
-			return EXIT_FAILURE;
-		}
-		return EXIT_SUCCESS;
+			if(fix_errors) {
+				print_info("fixed. process the .syn file.\n");
+			} else
+				return EXIT_FAILURE;
+		} else
+			return EXIT_SUCCESS;
 	}
 
-	struct stat stats;
-	if (g_stat (synfilename.c_str(), &stats) == -1) {
-		print_info("Unable to find synonyms file %s\n", synfilename.c_str());
-		return EXIT_FAILURE;
+	guint32 synfilesize;
+	{
+		struct stat stats;
+		if (g_stat (synfilename.c_str(), &stats) == -1) {
+			print_info("Unable to find synonyms file %s\n", synfilename.c_str());
+			if(fix_errors) {
+				dict_info.synwordcount = 0;
+				print_info(fixed_ignore_syn_file_msg);
+				return EXIT_SUCCESS;
+			} else
+				return EXIT_FAILURE;
+		}
+		synfilesize = stats.st_size;
 	}
-	print_info("Verifying synonyms file: %s\n", synfilename.c_str());
+	print_info("Loading synonyms file: %s\n", synfilename.c_str());
 
 	synindex.clear();
-	synindex.reserve(dict_info.synwordcount);
+	synindex.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.synwordcount));
 
-	std::vector<gchar> buf(stats.st_size+1);
+	std::vector<gchar> buf(synfilesize+1);
 	gchar *buffer_begin = &buf[0];
-	gchar *buffer_end = buffer_begin+stats.st_size;
+	gchar *buffer_end = buffer_begin+synfilesize;
 	{
 		FILE *synfile = g_fopen(synfilename.c_str(),"rb");
-		fread (buffer_begin, 1, stats.st_size, synfile);
+		if(!synfile) {
+			print_info(open_read_file_err, synfilename.c_str());
+			if(fix_errors) {
+				dict_info.synwordcount = 0;
+				print_info(fixed_ignore_syn_file_msg);
+				return EXIT_SUCCESS;
+			} else
+				return EXIT_FAILURE;
+		}
+		fread (buffer_begin, 1, synfilesize, synfile);
 		fclose (synfile);
 	}
 
-	gchar *p=buffer_begin;
-	gchar *preword=NULL;
+	const char *p=buffer_begin;
 	int wordlen;
 	gint cmpvalue;
 	guint wordcount=0;
 	bool have_errors=false;
-	synitem_t synitem;
+	synitem_t synitem, presynitem;
 	size_t size_remain; // to the end of the synonyms file
 
 	while (p < buffer_end) {
 		size_remain = buffer_end - p;
-		const char* p2 = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
-		if(!p2) {
+		const char* const word_end = reinterpret_cast<const char*>(memchr(p, '\0', size_remain));
+		if(!word_end) {
 			print_info(syn_file_truncated_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_file_tail_msg);
+			else
+				have_errors=true;
 			break;
 		}
-		wordlen = p2 - p;
+		synitem.word = p;
+		wordlen = synitem.word.length();
+		if (!g_utf8_validate(synitem.word.c_str(), wordlen, NULL)) {
+			print_info(word_invalid_utf8_err, synitem.word.c_str());
+			if(fix_errors) {
+				synitem.word.clear();
+				wordlen = 0;
+				print_info(fixed_ignore_word_msg);
+			} else
+				have_errors=true;
+		}
 		if (wordlen==0) {
 			print_info(empty_word_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_word_msg);
+			else
+				have_errors=true;
 		} else {
-			if (wordlen>=256) {
-				print_info(long_word_err, p, wordlen);
-				have_errors=true;
+			if (wordlen>=MAX_INDEX_KEY_SIZE) {
+				print_info(long_word_err, synitem.word.c_str(), MAX_INDEX_KEY_SIZE, wordlen);
+				if(fix_errors) {
+					wordlen = truncate_utf8_string(synitem.word.c_str(), wordlen, MAX_INDEX_KEY_SIZE-1);
+					synitem.word.resize(wordlen);
+					print_info("fixed. the word is truncated.\n");
+				} else
+					have_errors=true;
 			}
-			if (g_ascii_isspace(*p)) {
-				print_info(word_begin_space_err, p);
+			if (g_ascii_isspace(synitem.word[0])) {
+				print_info(word_begin_space_err, synitem.word.c_str());
 			}
-			if (g_ascii_isspace(*(p+wordlen-1))) {
-				print_info(word_end_space_err, p);
+			if (g_ascii_isspace(synitem.word[wordlen-1])) {
+				print_info(word_end_space_err, synitem.word.c_str());
 			}
 		}
-		if (strpbrk(p, key_forbidden_chars)) {
-			print_info(word_forbidden_chars_err, p);
+		if (strpbrk(synitem.word.c_str(), key_forbidden_chars)) {
+			print_info(word_forbidden_chars_err, synitem.word.c_str());
 		}
-		if (!g_utf8_validate(p, wordlen, NULL)) {
-			print_info(word_invalid_utf8_err, p);
-			have_errors=true;
-		}
-		if (preword) {
-			cmpvalue=stardict_strcmp(preword, p);
+		if (!presynitem.word.empty() && !synitem.word.empty()) {
+			cmpvalue=stardict_strcmp(presynitem.word.c_str(), synitem.word.c_str());
 			if (cmpvalue>0) {
-				print_info(wrong_word_order_err, preword, p);
-				have_errors=true;
+				print_info(wrong_word_order_err, presynitem.word.c_str(), synitem.word.c_str());
+				if(fix_errors)
+					print_info("fixed. Will be reordered.\n");
+				else
+					have_errors=true;
 			}
 		}
-		preword=p;
-		synitem.word = p;
-		p += wordlen +1;
+		p = word_end +1;
 		size_remain = buffer_end - p;
 		if(size_remain < sizeof(guint32)) {
 			print_info(syn_file_truncated_err);
-			have_errors=true;
+			if(fix_errors)
+				print_info(fixed_ignore_file_tail_msg);
+			else
+				have_errors=true;
 			break;
 		}
-		synitem.index = g_ntohl(*reinterpret_cast<guint32 *>(p));
+		synitem.index = g_ntohl(*reinterpret_cast<const guint32 *>(p));
 		if (synitem.index>=dict_info.wordcount) {
-			print_info("Index item %s. wrong index %d.\n", preword, synitem.index);
-			have_errors=true;
+			print_info("Index item %s. wrong index %d.\n", synitem.word.c_str(), synitem.index);
+			if(fix_errors) {
+				synitem.word.clear();
+				print_info(fixed_ignore_word_msg);
+			} else
+				have_errors=true;
 		}
 		p+=sizeof(guint32);
+		presynitem = synitem;
 		wordcount++;
 		synindex.push_back(synitem);
 	} // while
 
 	g_assert(p <= buffer_end);
 
-	if (wordcount!=dict_info.synwordcount) {
+	if (wordcount != dict_info.synwordcount) {
 		print_info("Incorrect number of words: in .ifo file, synwordcount=%d, "
 			"while the real synwordcount is %d\n",
 			dict_info.synwordcount, wordcount);
-		have_errors=true;
+		if(fix_errors) {
+			dict_info.synwordcount = wordcount;
+			print_info(fixed_msg);
+		} else
+			have_errors=true;
 	}
 
 	for(size_t i=0; i < synindex.size(); ++i) {
 		for(size_t j=i+1; j < synindex.size() && synindex[i].word == synindex[j].word; ++j) {
 			if(synindex[i].index == synindex[j].index) {
-				print_info("Multiple synonym items with the same word = %s, index =%d\n",
+				print_info("Warning. Multiple synonym items with the same word = %s, index =%d\n",
 					synindex[i].word.c_str(), synindex[i].index);
 				break;
 			}
 		}
 	}
 
-	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
+	if(have_errors) {
+		print_info("Loading synonyms file failed.\n");
+		if(fix_errors) {
+			dict_info.synwordcount = 0;
+			synindex.clear();
+			print_info(fixed_ignore_syn_file_msg);
+			return EXIT_SUCCESS;
+		} else
+			return EXIT_FAILURE;
+	} else
+		return EXIT_SUCCESS;
 }
 
 int norm_dict::load_dict_file(void)
 {
-	if(EXIT_FAILURE == prepare_dict_file())
+	if(prepare_dict_file())
 		return EXIT_FAILURE;
 
-	struct stat stats;
-	if (g_stat (dictfilename.c_str(), &stats) == -1) {
-		print_info("Dictionary file does not exist: %s\n", dictfilename.c_str());
-		return EXIT_FAILURE;
+	{
+		struct stat stats;
+		if (g_stat (dictfilename.c_str(), &stats) == -1) {
+			print_info("Dictionary file does not exist: %s\n", dictfilename.c_str());
+			return EXIT_FAILURE;
+		}
+		dictfilesize = stats.st_size;
 	}
-	dictfilesize = stats.st_size;
 
-	print_info("Verifying dictionary file: %s\n", dictfilename_orig.c_str());
-	clib::File dictfile(g_fopen(dictfilename.c_str(), "rb"));
+	print_info("Loading dictionary file: %s\n", dictfilename_orig.c_str());
+	dictfile.reset(g_fopen(dictfilename.c_str(), "rb"));
 	if(!dictfile) {
 		print_info("Unable open dictionary file %s.\n", dictfilename.c_str());
 		return EXIT_FAILURE;
@@ -584,12 +532,28 @@ int norm_dict::load_dict_file(void)
 	bool have_errors = false;
 	std::vector<char> buffer;
 	dictionary_data_block block_verifier;
+	block_verifier.set_resource_storage(p_res_storage);
+	block_verifier.set_print_info(print_info);
+	block_verifier.set_fix_errors(fix_errors);
 	for(size_t i=0; i<index.size(); ++i) {
+		if(index[i].word.empty())
+			continue;
 		if(index[i].offset + index[i].size > dictfilesize) {
 			print_info("Index item %s. Incorrect size, offset parameters. "
 				"Referenced data block is outside dictionary file.\n", index[i].word.c_str());
-			have_errors = true;
-			continue;
+			if(fix_errors) {
+				if(index[i].offset >= dictfilesize) {
+					index[i].word.clear();
+					print_info(fixed_ignore_word_msg);
+					continue;
+				} else {
+					index[i].size = dictfilesize - index[i].offset;
+					print_info("fixed. changed size of the data block.\n");
+				}
+			} else {
+				have_errors = true;
+				continue;
+			}
 		}
 		buffer.resize(index[i].size);
 		if(fseek(get_impl(dictfile), index[i].offset, SEEK_SET)) {
@@ -600,8 +564,15 @@ int norm_dict::load_dict_file(void)
 			print_info(read_file_err, dictfilename.c_str());
 			return EXIT_FAILURE;
 		}
-		block_verifier.verify(&buffer[0], index[i].size, dict_info.sametypesequence,
-			print_info, index[i].word.c_str(), p_res_storage);
+		if(block_verifier.load(&buffer[0], index[i].size,
+			dict_info.sametypesequence, index[i].word.c_str())) {
+			if(fix_errors) {
+				index[i].word.clear();
+				print_info(fixed_ignore_word_msg);
+				continue;
+			} else
+				have_errors = true;
+		}
 	}
 	verify_data_blocks_overlapping();
 	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
