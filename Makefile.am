@@ -21,7 +21,8 @@ EXTRA_DIST = \
 	intltool-merge.in 	\
 	intltool-update.in	\
 	stardictrc.rc	\
-	gnome-doc-utils.make
+	gnome-doc-utils.make \
+	config-custom.h
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --disable-schemas-install
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update
