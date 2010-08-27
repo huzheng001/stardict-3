@@ -28,6 +28,7 @@
 #include "ifo_file.hpp"
 #include "lib_norm_dict.h"
 #include "libstardictverify.h"
+#include "lib_xml_utils.h"
 
 /* Limit the initially reserved index size.
  * .ifo file may contain incorrect, unreasonably large value of index size,
@@ -176,7 +177,7 @@ int norm_dict::load_ifo_file(void)
 
 int norm_dict::load_idx_file(void)
 {
-	if(EXIT_FAILURE == prepare_idx_file())
+	if(prepare_idx_file())
 		return EXIT_FAILURE;
 
 	guint32 idxfilesize;
@@ -246,6 +247,22 @@ int norm_dict::load_idx_file(void)
 				print_info(fixed_ignore_word_msg);
 			} else
 				have_errors=true;
+		}
+		{	// check for invalid chars
+			typedef std::list<const char*> str_list_t;
+			str_list_t invalid_chars;
+			const char* const word = worditem.word.c_str();
+			if(check_xml_string_chars(word, invalid_chars)) {
+				for(str_list_t::const_iterator it = invalid_chars.begin(); it != invalid_chars.end(); ++it) {
+					print_info(word_invalid_char_value_err,
+							word, g_utf8_get_char(*it));
+				}
+				if(fix_errors) {
+					print_info(fixed_drop_invalid_char_msg);
+					fix_xml_string_chars(word, worditem.word);
+					wordlen = worditem.word.length();
+				}
+			}
 		}
 		if (wordlen==0) {
 			print_info(empty_word_err);
@@ -416,6 +433,22 @@ int norm_dict::load_syn_file(void)
 				print_info(fixed_ignore_word_msg);
 			} else
 				have_errors=true;
+		}
+		{	// check for invalid chars
+			typedef std::list<const char*> str_list_t;
+			str_list_t invalid_chars;
+			const char* const word = synitem.word.c_str();
+			if(check_xml_string_chars(word, invalid_chars)) {
+				for(str_list_t::const_iterator it = invalid_chars.begin(); it != invalid_chars.end(); ++it) {
+					print_info(word_invalid_char_value_err,
+							word, g_utf8_get_char(*it));
+				}
+				if(fix_errors) {
+					print_info(fixed_drop_invalid_char_msg);
+					fix_xml_string_chars(word, synitem.word);
+					wordlen = synitem.word.length();
+				}
+			}
 		}
 		if (wordlen==0) {
 			print_info(empty_word_err);

@@ -92,9 +92,11 @@ std::string create_temp_file(void);
 #define empty_field_err \
 	"Index item %s. Empty field in definition data block. Type ID '%c'.\n"
 #define invalid_utf8_field_err \
-	"Index item %s. Invalid field. Type id = '%c'. Invalid utf8 string %s.\n"
-#define malformed_field_err \
-	"Index item %s. Type id '%c'. Malformed field.\n"
+	"Index item %s. Invalid field. Type id = '%c'. Invalid utf8 string: %s\n"
+#define invalid_char_value_err \
+	"Invalid Char value %lu.\n"
+#define invalid_field_content_err \
+	"Index item %s. Type id '%c'. Invalid field content: %s\n"
 #define syn_file_truncated_err \
 	"Synonyms file is truncated, last record is truncated.\n"
 #define unknown_type_id_err \
@@ -111,6 +113,8 @@ std::string create_temp_file(void);
 	"Warning: Index item %s. word contains forbidden characters.\n"
 #define word_invalid_utf8_err \
 	"Index item %s. Invalid utf8 string.\n"
+#define word_invalid_char_value_err \
+	"Index item %s. Invalid Char value %lu.\n"
 #define wrong_word_order_err \
 	"Wrong order, first word = %s, second word = %s\n"
 #define fixed_ignore_field_msg \
@@ -125,6 +129,8 @@ std::string create_temp_file(void);
 	"fixed. ignore the .syn file.\n"
 #define fixed_ignore_word_msg \
 	"fixed. ignore the word.\n"
+#define fixed_drop_invalid_char_msg \
+	"fixed. Dropping invalid chars.\n"
 #define fixed_ignore_msg \
 	"fixed. ignore.\n"
 #define fixed_msg \
