@@ -22,6 +22,7 @@
 #include "ifo_file.hpp"
 #include "lib_dict_data_block.h"
 #include "libstardictverify.h"
+#include "lib_xml_utils.h"
 
 
 size_t data_field_t::get_size(void) const
@@ -213,7 +214,8 @@ ext_result_t dictionary_data_block::load_field_upper(const char type_id,
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
 	if(verify_field_content(type_id, p, size)) {
-		print_info(malformed_field_err, word, type_id);
+		std::string temp(p, size);
+		print_info(invalid_field_content_err, word, type_id, temp.c_str());
 		p += size;
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
@@ -255,28 +257,47 @@ ext_result_t dictionary_data_block::load_field_lower(const char type_id,
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 		}
 	}
+	/* In case we need to apply changes to data, we'll store modified copy here. */
+	std::string data_str;
+	const char* data = p;
 	int datalen = field_end - p;
+	p += std::min<size_t>(datalen + 1, size_remain); // shift the pointer to the next field
 	if(datalen == 0) {
 		print_info(empty_field_err, word, type_id);
-		p += std::min<size_t>(datalen + 1, size_remain);
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
 			return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 		} else
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
-	if (!g_utf8_validate(p, datalen, NULL)) {
-		print_info(invalid_utf8_field_err, word, type_id, p);
-		p += std::min<size_t>(datalen + 1, size_remain);
+	if (!g_utf8_validate(data, datalen, NULL)) {
+		print_info(invalid_utf8_field_err, word, type_id, data);
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
 			return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 		} else
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
-	if(verify_field_content(type_id, p, datalen)) {
-		print_info(malformed_field_err, word, type_id);
-		p += std::min<size_t>(datalen + 1, size_remain);
+	{	// check for invalid chars
+		typedef std::list<const char*> str_list_t;
+		str_list_t invalid_chars;
+		if(check_xml_string_chars(data, datalen, invalid_chars)) {
+			std::string temp(data, datalen);
+			print_info(invalid_field_content_err, word, type_id, temp.c_str());
+			for(str_list_t::const_iterator it = invalid_chars.begin(); it != invalid_chars.end(); ++it) {
+				print_info(invalid_char_value_err, g_utf8_get_char(*it));
+			}
+			if(fix_errors) {
+				fix_xml_string_chars(data, datalen, data_str);
+				data = data_str.c_str();
+				datalen = data_str.length();
+				print_info(fixed_drop_invalid_char_msg);
+			}
+		}
+	}
+	if(verify_field_content(type_id, data, datalen)) {
+		std::string temp(data, datalen);
+		print_info(invalid_field_content_err, word, type_id, temp.c_str());
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
 			return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
@@ -287,10 +308,9 @@ ext_result_t dictionary_data_block::load_field_lower(const char type_id,
 	if(fields) {
 		data_field_t field;
 		field.type_id = type_id;
-		field.set_data(p, datalen, true);
+		field.set_data(data, datalen, true);
 		fields->push_back(field);
 	}
-	p += std::min<size_t>(datalen + 1, size_remain);
 	return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 }
 
@@ -306,7 +326,8 @@ ext_result_t dictionary_data_block::load_field_sametypesequence_last_upper(const
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
 	if(verify_field_content(type_id, p, size)) {
-		print_info(malformed_field_err, word, type_id);
+		std::string temp(p, size);
+		print_info(invalid_field_content_err, word, type_id, temp.c_str());
 		p += size;
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
@@ -337,37 +358,53 @@ ext_result_t dictionary_data_block::load_field_sametypesequence_last_lower(const
 		} else
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
-	const char* p2 = reinterpret_cast<const char*>(memchr(p, '\0', datalen));
+	/* In case we need to apply changes to data, we'll store modified copy here. */
+	std::string data_str;
+	const char* data = p;
+	p += size_remain; // shift the pointer to the next field
+	const char* p2 = reinterpret_cast<const char*>(memchr(data, '\0', datalen));
 	if(p2) {
 		// '\0' found in the last record
 		print_info(incorrect_data_block_size_err, word);
 		if(fix_errors) {
-			datalen = p2 - p;
+			datalen = p2 - data;
 			if(datalen == 0) {
-				p += size_remain;
 				print_info(fixed_ignore_field_msg);
 				return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 			}
 			print_info("fixed. take a zero-terminated string.\n");
-		} else {
-			p += size_remain;
+		} else
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
-		}
 	}
-	if (!g_utf8_validate(p, datalen, NULL)) {
-		std::string tmp(p, datalen);
+	if (!g_utf8_validate(data, datalen, NULL)) {
+		std::string tmp(data, datalen);
 		print_info(invalid_utf8_field_err, word, type_id, tmp.c_str());
-		p += size_remain;
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
 			return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 		} else
 			return ext_result_t(EXIT_SUCCESS, EXIT_FAILURE);
 	}
-
-	if(verify_field_content(type_id, p, datalen)) {
-		print_info(malformed_field_err, word, type_id);
-		p += size_remain;
+	{	// check for invalid chars
+		typedef std::list<const char*> str_list_t;
+		str_list_t invalid_chars;
+		if(check_xml_string_chars(data, datalen, invalid_chars)) {
+			std::string temp(data, datalen);
+			print_info(invalid_field_content_err, word, type_id, temp.c_str());
+			for(str_list_t::const_iterator it = invalid_chars.begin(); it != invalid_chars.end(); ++it) {
+				print_info(invalid_char_value_err, g_utf8_get_char(*it));
+			}
+			if(fix_errors) {
+				fix_xml_string_chars(data, datalen, data_str);
+				data = data_str.c_str();
+				datalen = data_str.length();
+				print_info(fixed_drop_invalid_char_msg);
+			}
+		}
+	}
+	if(verify_field_content(type_id, data, datalen)) {
+		std::string temp(data, datalen);
+		print_info(invalid_field_content_err, word, type_id, temp.c_str());
 		if(fix_errors) {
 			print_info(fixed_ignore_field_msg);
 			return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
@@ -378,10 +415,9 @@ ext_result_t dictionary_data_block::load_field_sametypesequence_last_lower(const
 	if(fields) {
 		data_field_t field;
 		field.type_id = type_id;
-		field.set_data(p, datalen, true);
+		field.set_data(data, datalen, true);
 		fields->push_back(field);
 	}
-	p += size_remain;
 	return ext_result_t(EXIT_SUCCESS, EXIT_SUCCESS);
 }
 

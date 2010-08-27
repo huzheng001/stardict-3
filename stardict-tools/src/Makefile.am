@@ -250,13 +250,16 @@ stardict_index_LDFLAGS =
 stardict_index_LDADD = $(STARDICT_LIBS)
 stardict_index_SOURCES = stardict_index.cpp resourcewrap.hpp
 
+stardict_verify_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_verify_LDFLAGS =
 stardict_verify_LDADD = $(STARDICT_LIBS)
 stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp \
 	libstardictverify.h libcommon.cpp libcommon.h resourcewrap.hpp \
 	ifo_file.hpp ifo_file.cpp lib_res_store.cpp lib_res_store.h \
-	lib_norm_dict.cpp lib_norm_dict.h lib_dict_data_block.cpp lib_dict_data_block.h 
+	lib_norm_dict.cpp lib_norm_dict.h lib_dict_data_block.cpp lib_dict_data_block.h \
+	lib_xml_utils.cpp lib_xml_utils.h
 
+stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_editor_DEPENDENCIES = libbgl2txt.a
 stardict_editor_LDFLAGS =
 stardict_editor_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
@@ -265,7 +268,7 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
 	libstardictverify.h resourcewrap.hpp ifo_file.hpp ifo_file.cpp \
 	lib_norm_dict.cpp lib_norm_dict.h lib_dict_data_block.cpp lib_dict_data_block.h \
-	lib_res_store.cpp lib_res_store.h 
+	lib_res_store.cpp lib_res_store.h lib_xml_utils.cpp lib_xml_utils.h
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \

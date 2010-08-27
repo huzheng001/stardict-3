@@ -124,6 +124,9 @@ if test "x$am_cv_func_iconv" != xyes; then
 AC_ERROR([iconv not found])
 fi
 
+dnl for src/stardict_text2bin
+PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= 2.5])
+
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
