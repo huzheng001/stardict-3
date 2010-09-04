@@ -42,7 +42,7 @@ static const char* skip_new_line(const char *p)
 	return NULL;
 }
 
-static void parse_description(const char *p, long len, std::string &description)
+static void decode_description(const char *p, long len, std::string &description)
 {
 	description.clear();
 	const char *p1 = p;
@@ -58,6 +58,22 @@ static void parse_description(const char *p, long len, std::string &description)
 		} else {
 			description += *p1;
 			p1++;
+		}
+	}
+}
+
+/* replace new lines with "<br>" sequence */
+void encode_description(const char *p, long len, std::string &description)
+{
+	description.clear();
+	const char *p1 = p;
+	while(p1 - p < len) {
+		if(*p1 == '\r' || *p1 == '\n') {
+			description += "<br>";
+			p1 = skip_new_line(p1);
+		} else {
+			description += *p1;
+			++p1;
 		}
 	}
 }
@@ -267,7 +283,7 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_description, "description"))
 				continue;
-			parse_description(value.c_str(), value.length(), description);
+			decode_description(value.c_str(), value.length(), description);
 		} else if(key == "sametypesequence" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_sametypesequence, "sametypesequence"))

@@ -126,11 +126,11 @@ int resource_database::load_rifo_file(void)
 	if(!dict_info.load_from_ifo_file(rifofilename, DictInfoType_ResDb))
 		return EXIT_FAILURE;
 	bool have_errors = false;
-	if(dict_info.filecount == 0) {
+	if(dict_info.get_filecount() == 0) {
 		print_info("Resource database %s. filecount = 0.\n", rifofilename.c_str());
 		have_errors = true;
 	}
-	if(dict_info.index_file_size == 0) {
+	if(dict_info.get_index_file_size() == 0) {
 		print_info("Resource database %s. ridxfilesize = 0.\n", rifofilename.c_str());
 		have_errors = true;
 	}
@@ -148,15 +148,15 @@ int resource_database::load_ridx_file(void)
 		return EXIT_FAILURE;
 	}
 	print_info("Verifying resource index file: %s\n", ridxfilename_orig.c_str());
-	if (dict_info.index_file_size!=(guint)stats.st_size) {
+	if (dict_info.get_index_file_size()!=(guint)stats.st_size) {
 		print_info("Incorrect size of the index file: in .rifo file, ridxfilesize=%d, "
 			"real file size is %ld\n",
-			dict_info.index_file_size, (long) stats.st_size);
+			dict_info.get_index_file_size(), (long) stats.st_size);
 		return EXIT_FAILURE;
 	}
 
 	index.clear();
-	index.reserve(dict_info.filecount);
+	index.reserve(dict_info.get_filecount());
 
 	std::vector<gchar> buf(stats.st_size+1);
 	gchar * const buffer_beg = &buf[0];
@@ -237,9 +237,9 @@ int resource_database::load_ridx_file(void)
 
 	g_assert(p <= buffer_end);
 
-	if (filecount!=dict_info.filecount) {
+	if (filecount!=dict_info.get_filecount()) {
 		print_info("Incorrect number of files: in .rifo file, filecount=%d, "
-			"while the real file count is %d\n", dict_info.filecount, filecount);
+			"while the real file count is %d\n", dict_info.get_filecount(), filecount);
 		have_errors=true;
 	}
 

@@ -257,7 +257,7 @@ stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp \
 	libstardictverify.h libcommon.cpp libcommon.h resourcewrap.hpp \
 	ifo_file.hpp ifo_file.cpp lib_res_store.cpp lib_res_store.h \
 	lib_norm_dict.cpp lib_norm_dict.h lib_dict_data_block.cpp lib_dict_data_block.h \
-	lib_xml_utils.cpp lib_xml_utils.h
+	lib_chars.cpp lib_chars.h
 
 stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_editor_DEPENDENCIES = libbgl2txt.a
@@ -268,7 +268,7 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
 	libstardictverify.h resourcewrap.hpp ifo_file.hpp ifo_file.cpp \
 	lib_norm_dict.cpp lib_norm_dict.h lib_dict_data_block.cpp lib_dict_data_block.h \
-	lib_res_store.cpp lib_res_store.h lib_xml_utils.cpp lib_xml_utils.h
+	lib_res_store.cpp lib_res_store.h lib_chars.cpp lib_chars.h
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \
