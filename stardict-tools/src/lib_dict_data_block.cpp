@@ -22,7 +22,7 @@
 #include "ifo_file.hpp"
 #include "lib_dict_data_block.h"
 #include "libstardictverify.h"
-#include "lib_xml_utils.h"
+#include "lib_chars.h"
 
 
 size_t data_field_t::get_size(void) const
@@ -544,7 +544,7 @@ int dictionary_data_block::verify_field_content_r(const char* const data, guint3
 				continue;
 			}
 		}
-		if(resitem.key != "img" && resitem.key != "snd" && resitem.key != "vdo" && resitem.key != "att") {
+		if(!is_known_resource_type(resitem.key.c_str())) {
 			print_info("Index item %s. Type id '%c'. Line: %s. Unknown type.\n",
 				word, type_id, line.c_str());
 			if(fix_errors) {

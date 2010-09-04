@@ -10,6 +10,14 @@
 #include "libcommon.h"
 #include "resourcewrap.hpp"
 
+const char* known_resource_types[] = {
+	"img",
+	"snd",
+	"vdo",
+	"att",
+	NULL
+};
+
 gint stardict_strcmp(const gchar *s1, const gchar *s2)
 {
 	gint a;
@@ -261,5 +269,13 @@ std::string create_temp_file(void)
 		return tmp_url;
 	}
 #endif
+}
+
+bool is_known_resource_type(const char* str)
+{
+	for(size_t i=0; known_resource_types[i]; ++i)
+		if(strcmp(str, known_resource_types[i]) == 0)
+			return true;
+	return false;
 }
 

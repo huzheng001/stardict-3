@@ -68,12 +68,37 @@ private:
 	print_info_t print_info;
 };
 
+template <class T>
+class auto_executor_t
+{
+public:
+	typedef void (T::*method_t)(void);
+	auto_executor_t(T& obj, method_t method)
+	:
+		obj(obj),
+		method(method)
+	{
+
+	}
+	~auto_executor_t(void)
+	{
+		(obj.*method)();
+	}
+private:
+	T& obj;
+	method_t method;
+};
+
 /* Create a new temporary file. Return file name in file name encoding.
 Return an empty string if file cannot be created. */
 std::string create_temp_file(void);
 
+extern const char* known_resource_types[];
+
+bool is_known_resource_type(const char* str);
+
 #define key_forbidden_chars \
-	"\t\n\r"
+	"\n\r"
 #define known_type_ids \
 	"mtygxkwhnr"
 

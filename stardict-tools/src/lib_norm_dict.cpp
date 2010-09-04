@@ -28,7 +28,7 @@
 #include "ifo_file.hpp"
 #include "lib_norm_dict.h"
 #include "libstardictverify.h"
-#include "lib_xml_utils.h"
+#include "lib_chars.h"
 
 /* Limit the initially reserved index size.
  * .ifo file may contain incorrect, unreasonably large value of index size,
@@ -132,7 +132,7 @@ int norm_dict::get_data_fields(guint32 offset, guint32 size, data_field_vect_t& 
 	data_block.set_resource_storage(p_res_storage);
 	data_block.set_print_info(print_info);
 	data_block.set_fix_errors(fix_errors);
-	return data_block.load(&buffer[0], size, dict_info.sametypesequence, word, &fields);
+	return data_block.load(&buffer[0], size, dict_info.get_sametypesequence(), word, &fields);
 }
 
 int norm_dict::prepare_idx_file(void)
@@ -191,19 +191,19 @@ int norm_dict::load_idx_file(void)
 	}
 	print_info("Loading index file: %s\n", idxfilename_orig.c_str());
 
-	if (dict_info.index_file_size != idxfilesize) {
+	if (dict_info.get_index_file_size() != idxfilesize) {
 		print_info("Incorrect size of the index file: in .ifo file, idxfilesize=%u, "
 			"real file size is %u\n",
-			dict_info.index_file_size, idxfilesize);
+			dict_info.get_index_file_size(), idxfilesize);
 		if(fix_errors) {
-			dict_info.index_file_size = idxfilesize;
+			dict_info.set_index_file_size(idxfilesize);
 			print_info(fixed_msg);
 		} else
 			return EXIT_FAILURE;
 	}
 
 	index.clear();
-	index.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.wordcount));
+	index.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.get_wordcount()));
 
 	std::vector<gchar> buf(idxfilesize+1);
 	gchar * const buffer_beg = &buf[0];
@@ -328,11 +328,11 @@ int norm_dict::load_idx_file(void)
 
 	g_assert(p <= buffer_end);
 
-	if (dict_info.wordcount != wordcount) {
+	if (dict_info.get_wordcount() != wordcount) {
 		print_info("Incorrect number of words: in .ifo file, wordcount=%d, "
-			"while the real word count is %d\n", dict_info.wordcount, wordcount);
+			"while the real word count is %d\n", dict_info.get_wordcount(), wordcount);
 		if(fix_errors) {
-			dict_info.wordcount = wordcount;
+			dict_info.set_wordcount(wordcount);
 			print_info(fixed_msg);
 		} else
 			have_errors=true;
@@ -355,7 +355,7 @@ int norm_dict::load_syn_file(void)
 {
 	synfilename = basefilename + ".syn";
 
-	if (dict_info.synwordcount == 0) {
+	if (dict_info.get_synwordcount() == 0) {
 		stardict_stat_t stats;
 		if (g_stat (synfilename.c_str(), &stats) != -1) {
 			print_info(".syn file exists but no \"synwordcount=\" entry in .ifo file\n");
@@ -373,7 +373,7 @@ int norm_dict::load_syn_file(void)
 		if (g_stat (synfilename.c_str(), &stats) == -1) {
 			print_info("Unable to find synonyms file %s\n", synfilename.c_str());
 			if(fix_errors) {
-				dict_info.synwordcount = 0;
+				dict_info.set_synwordcount(0);
 				print_info(fixed_ignore_syn_file_msg);
 				return EXIT_SUCCESS;
 			} else
@@ -384,7 +384,7 @@ int norm_dict::load_syn_file(void)
 	print_info("Loading synonyms file: %s\n", synfilename.c_str());
 
 	synindex.clear();
-	synindex.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.synwordcount));
+	synindex.reserve(std::min(MAX_RESERVED_INDEX_SIZE, dict_info.get_synwordcount()));
 
 	std::vector<gchar> buf(synfilesize+1);
 	gchar *buffer_begin = &buf[0];
@@ -394,7 +394,7 @@ int norm_dict::load_syn_file(void)
 		if(!synfile) {
 			print_info(open_read_file_err, synfilename.c_str());
 			if(fix_errors) {
-				dict_info.synwordcount = 0;
+				dict_info.set_synwordcount(0);
 				print_info(fixed_ignore_syn_file_msg);
 				return EXIT_SUCCESS;
 			} else
@@ -497,7 +497,7 @@ int norm_dict::load_syn_file(void)
 			break;
 		}
 		synitem.index = g_ntohl(*reinterpret_cast<const guint32 *>(p));
-		if (synitem.index>=dict_info.wordcount) {
+		if (synitem.index>=dict_info.get_wordcount()) {
 			print_info("Index item %s. wrong index %d.\n", synitem.word.c_str(), synitem.index);
 			if(fix_errors) {
 				synitem.word.clear();
@@ -513,12 +513,12 @@ int norm_dict::load_syn_file(void)
 
 	g_assert(p <= buffer_end);
 
-	if (wordcount != dict_info.synwordcount) {
+	if (wordcount != dict_info.get_synwordcount()) {
 		print_info("Incorrect number of words: in .ifo file, synwordcount=%d, "
 			"while the real synwordcount is %d\n",
-			dict_info.synwordcount, wordcount);
+			dict_info.get_synwordcount(), wordcount);
 		if(fix_errors) {
-			dict_info.synwordcount = wordcount;
+			dict_info.set_synwordcount(wordcount);
 			print_info(fixed_msg);
 		} else
 			have_errors=true;
@@ -537,7 +537,7 @@ int norm_dict::load_syn_file(void)
 	if(have_errors) {
 		print_info("Loading synonyms file failed.\n");
 		if(fix_errors) {
-			dict_info.synwordcount = 0;
+			dict_info.set_synwordcount(0);
 			synindex.clear();
 			print_info(fixed_ignore_syn_file_msg);
 			return EXIT_SUCCESS;
@@ -604,7 +604,7 @@ int norm_dict::load_dict_file(void)
 			return EXIT_FAILURE;
 		}
 		if(block_verifier.load(&buffer[0], index[i].size,
-			dict_info.sametypesequence, index[i].word.c_str())) {
+			dict_info.get_sametypesequence(), index[i].word.c_str())) {
 			if(fix_errors) {
 				index[i].word.clear();
 				print_info(fixed_ignore_word_msg);
