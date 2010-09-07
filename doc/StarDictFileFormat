@@ -144,6 +144,14 @@ dictionary.
 
 Every dictionary should try to use the sametypesequence feature to
 save disk space.
+
+This feature does not actually saves much space. Let's consider a real example:
+Wirtschaft Deutsch-Englisch dictionary.
+Number of word: 46385
+Size of the .dict file without sametypesequence: 3244782 bytes
+Size of the .dict file with sametypesequnce:     3152012 bytes
+2.86% of space has been saved. 
+Does it really worth it?
 ***
 
 
@@ -389,7 +397,7 @@ Here are some utf-8 phonetic characters:
 'x'
 A utf-8 string which is marked up with the xdxf language.
 See http://xdxf.sourceforge.net
-StarDict have these extention:
+StarDict have these extension:
 <rref> can have "type" attribute, it can be "image", "sound", "video" 
 and "attach".
 <kref> can have "k" attribute.
@@ -497,8 +505,8 @@ version: "2.4.2"
 Available options:
 
 bookname=      // required
-tdxfilesize=   // required
 wordcount=     // required
+tdxfilesize=   // required
 author=
 email=
 website=
@@ -556,7 +564,7 @@ The first key in the file must be "version". This is mandatory option for all fo
 
 Blank lines are ignored.
 Encoding. File contents must be in UTF-8 encoding.
-End of line. Any end of line convertion is OK: LF, CR+LF, CR.
+End of line. Any end of line conversion is OK: LF, CR+LF, CR.
 
 {11}. More information.
 You can read "src/lib.cpp", "src/dictmanagedlg.cpp" and
