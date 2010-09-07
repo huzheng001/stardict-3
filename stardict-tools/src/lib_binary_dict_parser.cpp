@@ -26,7 +26,7 @@
 #include "resourcewrap.hpp"
 #include "libcommon.h"
 #include "ifo_file.hpp"
-#include "lib_norm_dict.h"
+#include "lib_binary_dict_parser.h"
 #include "libstardictverify.h"
 #include "lib_chars.h"
 
@@ -71,7 +71,7 @@ static size_t truncate_utf8_string(const char* const beg, const size_t str_len, 
 }
 
 
-norm_dict::norm_dict(void)
+binary_dict_parser_t::binary_dict_parser_t(void)
 :
 	dictfilesize(0),
 	print_info(NULL),
@@ -82,7 +82,7 @@ norm_dict::norm_dict(void)
 }
 
 /* p_res_storage may be NULL */
-int norm_dict::load(const std::string& ifofilename, print_info_t print_info,
+int binary_dict_parser_t::load(const std::string& ifofilename, print_info_t print_info,
 	i_resource_storage* p_res_storage)
 {
 	this->ifofilename = ifofilename;
@@ -106,7 +106,7 @@ int norm_dict::load(const std::string& ifofilename, print_info_t print_info,
 	return EXIT_SUCCESS;
 }
 
-int norm_dict::get_data_fields(guint32 offset, guint32 size, data_field_vect_t& fields) const
+int binary_dict_parser_t::get_data_fields(guint32 offset, guint32 size, data_field_vect_t& fields) const
 {
 	if(size == 0)
 		return EXIT_FAILURE;
@@ -135,7 +135,7 @@ int norm_dict::get_data_fields(guint32 offset, guint32 size, data_field_vect_t& 
 	return data_block.load(&buffer[0], size, dict_info.get_sametypesequence(), word, &fields);
 }
 
-int norm_dict::prepare_idx_file(void)
+int binary_dict_parser_t::prepare_idx_file(void)
 {
 	idxfilename_orig=basefilename + ".idx.gz";
 	if(g_file_test(idxfilename_orig.c_str(), G_FILE_TEST_EXISTS)) {
@@ -151,7 +151,7 @@ int norm_dict::prepare_idx_file(void)
 	return EXIT_SUCCESS;
 }
 
-int norm_dict::prepare_dict_file(void)
+int binary_dict_parser_t::prepare_dict_file(void)
 {
 	dictfilename_orig=basefilename + ".dict.dz";
 	if(g_file_test(dictfilename_orig.c_str(), G_FILE_TEST_EXISTS)) {
@@ -167,7 +167,7 @@ int norm_dict::prepare_dict_file(void)
 	return EXIT_SUCCESS;
 }
 
-int norm_dict::load_ifo_file(void)
+int binary_dict_parser_t::load_ifo_file(void)
 {
 	dict_info.set_print_info(print_info);
 	if(!dict_info.load_from_ifo_file(ifofilename, DictInfoType_NormDict))
@@ -175,7 +175,7 @@ int norm_dict::load_ifo_file(void)
 	return EXIT_SUCCESS;
 }
 
-int norm_dict::load_idx_file(void)
+int binary_dict_parser_t::load_idx_file(void)
 {
 	if(prepare_idx_file())
 		return EXIT_FAILURE;
@@ -351,7 +351,7 @@ int norm_dict::load_idx_file(void)
 	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
-int norm_dict::load_syn_file(void)
+int binary_dict_parser_t::load_syn_file(void)
 {
 	synfilename = basefilename + ".syn";
 
@@ -547,7 +547,7 @@ int norm_dict::load_syn_file(void)
 		return EXIT_SUCCESS;
 }
 
-int norm_dict::load_dict_file(void)
+int binary_dict_parser_t::load_dict_file(void)
 {
 	if(prepare_dict_file())
 		return EXIT_FAILURE;
@@ -617,7 +617,7 @@ int norm_dict::load_dict_file(void)
 	return have_errors ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
-void norm_dict::verify_data_blocks_overlapping(void)
+void binary_dict_parser_t::verify_data_blocks_overlapping(void)
 {
 	std::vector<const worditem_t*> sort_index(index.size(), NULL);
 	for(size_t i=0; i<index.size(); ++i)

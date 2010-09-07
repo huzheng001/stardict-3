@@ -1,5 +1,5 @@
-#ifndef STARDICT_RES_STORE_H_
-#define STARDICT_RES_STORE_H_
+#ifndef LIB_RES_STORE_H_
+#define LIB_RES_STORE_H_
 
 #include <string>
 #include "libcommon.h"
@@ -34,4 +34,4 @@ private:
 	resource_files *files;
 };
 
-#endif /* STARDICT_RES_STORE_H_ */
+#endif /* LIB_RES_STORE_H_ */

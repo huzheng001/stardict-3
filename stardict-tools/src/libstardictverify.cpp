@@ -19,7 +19,7 @@
 #include "libcommon.h"
 #include "resourcewrap.hpp"
 #include "lib_res_store.h"
-#include "lib_norm_dict.h"
+#include "lib_binary_dict_parser.h"
 
 /* Terminology
 
@@ -40,7 +40,7 @@ int stardict_verify(const char *ifofilename, print_info_t print_info)
 	if(lrError == res_storage.load(get_impl(cdirname), print_info))
 		have_errors = true;
 
-	norm_dict dict;
+	binary_dict_parser_t dict;
 	if(dict.load(ifofilename, print_info, static_cast<i_resource_storage*>(&res_storage)))
 		have_errors = true;
 
