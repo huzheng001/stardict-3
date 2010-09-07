@@ -52,6 +52,13 @@ stardict-editor	a GUI front-end combining a number of tools. They allows to conv
 
 stardict_index	print content of StarDict index file in human readable form
 
+stardict_bin2text	convert normal binary StarDict dictionary into textual
+		xml-based dictionary. See doc/TextualDictionaryFileFormat
+
+stardict_text2bin	convert textual xml-based dictionary into binary StarDict
+		dictionary. See doc/TextualDictionaryFileFormat
+
+
 ------------------------------------------------------------------------------------
 External tools
 

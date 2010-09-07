@@ -10,7 +10,8 @@ noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 	rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict-verify \
 	fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e \
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi bgl2txt ydp2dict \
-	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index
+	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
+	stardict-text2bin stardict-bin2text
 
 noinst_LIBRARIES = libbgl2txt.a
 
@@ -258,6 +259,25 @@ stardict_verify_SOURCES = stardict_verify.cpp libstardictverify.cpp \
 	ifo_file.hpp ifo_file.cpp lib_res_store.cpp lib_res_store.h \
 	lib_binary_dict_parser.cpp lib_binary_dict_parser.h lib_dict_data_block.cpp lib_dict_data_block.h \
 	lib_chars.cpp lib_chars.h
+
+stardict_bin2text_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
+stardict_bin2text_LDFLAGS =
+stardict_bin2text_LDADD = $(STARDICT_LIBS)
+stardict_bin2text_SOURCES = stardict_bin2text.cpp \
+	lib_stardict_bin2text.cpp lib_stardict_bin2text.h \
+	lib_binary_dict_parser.cpp lib_binary_dict_parser.h lib_dict_data_block.cpp lib_dict_data_block.h  \
+	libcommon.cpp libcommon.h ifo_file.hpp ifo_file.cpp resourcewrap.hpp \
+	lib_chars.cpp lib_chars.h lib_common_dict.cpp lib_common_dict.h \
+	lib_binary_parser_unify.h lib_binary_parser_unify.cpp
+
+stardict_text2bin_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
+stardict_text2bin_LDFLAGS =
+stardict_text2bin_LDADD = $(STARDICT_LIBS) $(LIBXML_LIBS)
+stardict_text2bin_SOURCES = stardict_text2bin.cpp \
+	lib_stardict_text2bin.cpp lib_stardict_text2bin.h resourcewrap.hpp \
+	ifo_file.hpp ifo_file.cpp resourcewrap.hpp libcommon.cpp libcommon.h \
+	lib_chars.cpp lib_chars.h lib_common_dict.cpp lib_common_dict.h \
+	lib_textual_dict_parser.cpp lib_textual_dict_parser.h
 
 stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_editor_DEPENDENCIES = libbgl2txt.a
