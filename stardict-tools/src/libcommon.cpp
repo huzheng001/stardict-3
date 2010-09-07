@@ -279,3 +279,25 @@ bool is_known_resource_type(const char* str)
 	return false;
 }
 
+/* trim string src
+ * new_beg is set to new beginning of the string
+ * new_len length of the new string in bytes
+ * The source string is not modified. */
+void trim_spaces(const char* const src, const char*& new_beg, size_t& new_len)
+{
+	new_beg = src;
+	while(*new_beg && g_unichar_isspace(g_utf8_get_char(new_beg))) {
+		new_beg = g_utf8_next_char(new_beg);
+	}
+	const char* p = new_beg;
+	const char* end = p;
+	while(*p) {
+		if(!g_unichar_isspace(g_utf8_get_char(p)))
+			end = p;
+		p = g_utf8_next_char(p);
+	}
+	if(*end)
+		end = g_utf8_next_char(end);
+	new_len = end - new_beg;
+}
+

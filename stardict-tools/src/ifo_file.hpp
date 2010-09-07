@@ -8,8 +8,6 @@
 
 // keep this file in sync with src/lib/ifo_file.hpp
 
-void encode_description(const char *p, long len, std::string &description);
-
 #define GET_METHOD_TEMPL(type, field) \
 	type get_##field(void) const \
 	{ \
@@ -56,8 +54,10 @@ struct DictInfo {
 	DictInfo(void);
 	/* ifofilename in file name encoding */
 	bool load_from_ifo_file(const std::string& ifofilename, DictInfoType infotype);
+	bool save_ifo_file(void) const;
 	void clear(void);
 	void set_print_info(print_info_t func);
+	DictInfo& operator=(const DictInfo& dict_info);
 
 	ALL_METHOD_TEMPL(guint32, wordcount)
 	ALL_METHOD_TEMPL(guint32, filecount)
@@ -72,6 +72,7 @@ struct DictInfo {
 	ALL_METHOD_TEMPL(const std::string&, sametypesequence)
 	ALL_METHOD_TEMPL(const std::string&, dicttype)
 	ALL_METHOD_TEMPL(const std::string&, version)
+	ALL_METHOD_TEMPL(DictInfoType, infotype)
 private:
 	const char* get_key_value(const char *p1, std::string& key, 
 		std::string& value);
@@ -92,6 +93,7 @@ private:
 	bool f_dicttype;
 	bool f_version;
 	bool f_idxoffsetbits;
+	bool f_infotype;
 
 	/* other strings in utf-8 */
 	guint32 wordcount;
@@ -107,6 +109,7 @@ private:
 	std::string sametypesequence;
 	std::string dicttype;
 	std::string version;
+	DictInfoType infotype;
 
 	print_info_t print_info;
 };

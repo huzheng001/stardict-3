@@ -97,6 +97,10 @@ extern const char* known_resource_types[];
 
 bool is_known_resource_type(const char* str);
 
+void trim_spaces(const char* const src, const char*& new_beg, size_t& new_len);
+
+#define UTF8_BOM "\xEF\xBB\xBF"
+
 #define key_forbidden_chars \
 	"\n\r"
 #define known_type_ids \
@@ -110,6 +114,10 @@ bool is_known_resource_type(const char* str);
 	"Unable open file %s for reading\n"
 #define open_write_file_err \
 	"Unable open file %s for writing\n"
+#define create_temp_file_err \
+		"Unable to create a temporary file: %s.\n"
+#define incorrect_arg_err \
+		"Incorrect argument.\n"
 #define index_file_truncated_err \
 	"Index file is truncated, last record is truncated.\n"
 #define incorrect_data_block_size_err \

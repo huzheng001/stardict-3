@@ -1,5 +1,5 @@
-#ifndef STARDICT_NORM_DICT_H_
-#define STARDICT_NORM_DICT_H_
+#ifndef LIB_BINARY_DICT_PARSER_H_
+#define LIB_BINARY_DICT_PARSER_H_
 
 #include <string>
 #include <vector>
@@ -22,13 +22,13 @@ struct synitem_t {
 
 class i_resource_storage;
 
-class norm_dict
+class binary_dict_parser_t
 {
 public:
 	typedef std::vector<worditem_t> worditem_vect_t;
 	typedef std::vector<synitem_t> synitem_vect_t;
 
-	norm_dict(void);
+	binary_dict_parser_t(void);
 	int load(const std::string& ifofilename, print_info_t print_info,
 			i_resource_storage* p_res_storage = NULL);
 	void set_fix_errors(bool b)
@@ -86,4 +86,4 @@ private:
 };
 
 
-#endif /* STARDICT_NORM_DICT_H_ */
+#endif /* LIB_BINARY_DICT_PARSER_H_ */
