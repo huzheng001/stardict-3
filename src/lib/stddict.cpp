@@ -1308,14 +1308,14 @@ bool Dict::load_ifofile(const std::string& ifofilename, gulong &idxfilesize, glo
 		return false;
 
 	ifo_file_name=dict_info.ifo_file_name;
-	bookname=dict_info.bookname;
+	bookname=dict_info.get_bookname();
 
-	idxfilesize=dict_info.index_file_size;
-	wordcount=dict_info.wordcount;
-	synwordcount=dict_info.synwordcount;
+	idxfilesize=dict_info.get_index_file_size();
+	wordcount=dict_info.get_wordcount();
+	synwordcount=dict_info.get_synwordcount();
 
-	sametypesequence=dict_info.sametypesequence;
-	dicttype=dict_info.dicttype;
+	sametypesequence=dict_info.get_sametypesequence();
+	dicttype=dict_info.get_dicttype();
 
 	return true;
 }

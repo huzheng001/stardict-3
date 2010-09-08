@@ -452,9 +452,19 @@ static void create_dict_item_model(GtkTreeStore *model, GtkTreeIter *group_iter,
 			DictInfo dictinfo;
 			if (dictinfo.load_from_ifo_file(i->file_or_id.c_str(),
 				DictInfoType_NormDict)) {
-				gchar *markup = g_markup_escape_text(dictinfo.bookname.c_str(), dictinfo.bookname.length());
+				gchar *markup = g_markup_escape_text(dictinfo.get_bookname().c_str(), dictinfo.get_bookname().length());
 				gtk_tree_store_append(model, &dict_iter, &type_iter);
-				gtk_tree_store_set(model, &dict_iter, 0, i->enable, 1, markup, 2, dictinfo.wordcount, 3, dictinfo.author.c_str(), 4, dictinfo.email.c_str(), 5, dictinfo.website.c_str(), 6, dictinfo.description.c_str(), 7, dictinfo.date.c_str(), 8, i->file_or_id.c_str(), 9, true, 10, 2, 11, FALSE, 12, LOCAL_DICT, -1);
+				gtk_tree_store_set(model, &dict_iter, 0, i->enable,
+						1, markup,
+						2, dictinfo.get_wordcount(),
+						3, dictinfo.get_author().c_str(),
+						4, dictinfo.get_email().c_str(),
+						5, dictinfo.get_website().c_str(),
+						6, dictinfo.get_description().c_str(),
+						7, dictinfo.get_date().c_str(),
+						8, i->file_or_id.c_str(),
+						9, true,
+						10, 2, 11, FALSE, 12, LOCAL_DICT, -1);
 				g_free(markup);
 			}
 		} else if (i->type == VIRTUAL_DICT){
@@ -503,13 +513,13 @@ public:
 			gtk_list_store_append(model, &iter);
 			gtk_list_store_set(model, &iter, 
 						 0, istreedict ? (!disable) : LOCAL_DICT, 
-						 1, dictinfo.bookname.c_str(), 
-						 2, dictinfo.wordcount, 
-						 3, dictinfo.author.c_str(), 
-						 4, dictinfo.email.c_str(), 
-						 5, dictinfo.website.c_str(),
-						 6, dictinfo.description.c_str(), 
-						 7, dictinfo.date.c_str(), 
+						 1, dictinfo.get_bookname().c_str(),
+						 2, dictinfo.get_wordcount(),
+						 3, dictinfo.get_author().c_str(),
+						 4, dictinfo.get_email().c_str(),
+						 5, dictinfo.get_website().c_str(),
+						 6, dictinfo.get_description().c_str(),
+						 7, dictinfo.get_date().c_str(),
 						 8, url.c_str(), 
 						 -1);
 		}

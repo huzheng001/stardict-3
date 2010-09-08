@@ -20,10 +20,15 @@
 #  include "config.h"
 #endif
 
+#include <sstream>
 #include <cstring>
 #include <cstdlib>
 #include "ifo_file.hpp"
 #include "utils.h"
+
+#define NORM_DICT_MAGIC_DATA "StarDict's dict ifo file"
+#define TREE_DICT_MAGIC_DATA "StarDict's treedict ifo file"
+#define RES_DB_MAGIC_DATA "StarDict's storage ifo file"
 
 /* Skip new line (LF, CR+LF, CR), return pointer to the post- new line char.
 Return NULL if no new line. */
@@ -42,7 +47,7 @@ static const char* skip_new_line(const char *p)
 	return NULL;
 }
 
-static void parse_description(const char *p, long len, std::string &description)
+static void decode_description(const char *p, long len, std::string &description)
 {
 	description.clear();
 	const char *p1 = p;
@@ -58,6 +63,22 @@ static void parse_description(const char *p, long len, std::string &description)
 		} else {
 			description += *p1;
 			p1++;
+		}
+	}
+}
+
+/* replace new lines with "<br>" sequence */
+static void encode_description(const char *p, long len, std::string &description)
+{
+	description.clear();
+	const char *p1 = p;
+	while(p1 - p < len) {
+		if(*p1 == '\r' || *p1 == '\n') {
+			description += "<br>";
+			p1 = skip_new_line(p1);
+		} else {
+			description += *p1;
+			++p1;
 		}
 	}
 }
@@ -84,7 +105,7 @@ const char* DictInfo::get_key_value(const char *line_beg, std::string& key,
 		const char* const line_end = line_beg + n1;
 		if(*line_end == '\0') { // EOF reached
 			if(n1 != n2)
-				g_print("%s: line %d: Last line is not terminated with new line char.\n",
+				print_info("%s: line %d: Last line is not terminated with new line char.\n",
 					ifo_file_name.c_str(), lineno);
 			return NULL;
 		}
@@ -100,7 +121,7 @@ const char* DictInfo::get_key_value(const char *line_beg, std::string& key,
 		while(*equal_sign != '=' && equal_sign < line_end)
 			++equal_sign;
 		if(*equal_sign != '=') {
-			g_print("%s: line %d: '=' not found.\n", ifo_file_name.c_str(), lineno);
+			print_info("%s: line %d: '=' not found.\n", ifo_file_name.c_str(), lineno);
 			line_beg = skip_new_line(line_end);
 			++lineno;
 			continue;
@@ -124,6 +145,7 @@ const char* DictInfo::get_key_value(const char *line_beg, std::string& key,
 
 DictInfo::DictInfo(void)
 {
+	set_print_info(NULL);
 	clear();
 }
 
@@ -132,36 +154,37 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 {
 	clear();
 	ifo_file_name=ifofilename;
+	set_infotype(infotype);
 	glib::CharStr buffer;
-	if (!g_file_get_contents(ifofilename.c_str(), get_addr(buffer), NULL, NULL))
+	if (!g_file_get_contents(ifo_file_name.c_str(), get_addr(buffer), NULL, NULL))
 		return false;
 	const gchar *p1 = get_impl(buffer);
 	
-	if(g_str_has_prefix(p1, "\xEF\xBB\xBF")) // UTF-8 BOM
+	if(g_str_has_prefix(p1, UTF8_BOM))
 		p1 += 3;
 	if(!g_utf8_validate(p1, -1, NULL)) {
-		g_print("Load %s failed: Invalid UTF-8 encoded text.\n", ifofilename.c_str());
+		print_info("Load %s failed: Invalid UTF-8 encoded text.\n", ifo_file_name.c_str());
 		return false;
 	}
 	lineno = 1;
 
 	const gchar *magic_data = NULL;
 	if(infotype == DictInfoType_NormDict)
-		magic_data = "StarDict's dict ifo file";
+		magic_data = NORM_DICT_MAGIC_DATA;
 	else if(infotype == DictInfoType_TreeDict)
-		magic_data = "StarDict's treedict ifo file";
+		magic_data = TREE_DICT_MAGIC_DATA;
 	else if(infotype == DictInfoType_ResDb)
-		magic_data = "StarDict's storage ifo file";
+		magic_data = RES_DB_MAGIC_DATA;
 	else
 		return false;
 	if (!g_str_has_prefix(p1, magic_data)) {
-		g_print("Load %s failed: Incorrect magic data\n", ifofilename.c_str());
+		print_info("Load %s failed: Incorrect magic data\n", ifo_file_name.c_str());
 		return false;
 	}
 	p1 += strlen(magic_data);
 	p1 = skip_new_line(p1);
 	if(!p1) {
-		g_print("Load %s failed: Incorrect magic data\n", ifofilename.c_str());
+		print_info("Load %s failed: Incorrect magic data\n", ifo_file_name.c_str());
 		return false;
 	}
 
@@ -173,29 +196,29 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 			break;
 
 		// version must the first option
-		if(version.empty()) {
+		if(!is_version()) {
 			if(key != "version") {
-				g_print("Load %s failed: \"version\" must be the first option.\n", ifofilename.c_str());
+				print_info("Load %s failed: \"version\" must be the first option.\n", ifo_file_name.c_str());
 				return false;
 			}
 		}
 		if(key == "version") {
 			if(!check_option_duplicate(f_version, "version"))
 				continue;
-			version = value;
+			set_version(value);
 			if(infotype == DictInfoType_NormDict) {
 				if(version != "2.4.2" && version != "3.0.0") {
-					g_print("Load %s failed: Unknown version.\n", ifofilename.c_str());
+					print_info("Load %s failed: Unknown version.\n", ifo_file_name.c_str());
 					return false;
 				}
 			} else if(infotype == DictInfoType_TreeDict) {
 				if(version != "2.4.2") {
-					g_print("Load %s failed: Unknown version.\n", ifofilename.c_str());
+					print_info("Load %s failed: Unknown version.\n", ifo_file_name.c_str());
 					return false;
 				}
 			} else if(infotype == DictInfoType_ResDb) {
 				if(version != "3.0.0") {
-					g_print("Load %s failed: Unknown version.\n", ifofilename.c_str());
+					print_info("Load %s failed: Unknown version.\n", ifo_file_name.c_str());
 					return false;
 				}
 			}
@@ -204,99 +227,101 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 				continue;
 			if(value != "32") {
 				// TODO
-				g_print("Load %s failed: idxoffsetbits != 32 not supported presently.\n",
-					ifofilename.c_str());
+				print_info("Load %s failed: idxoffsetbits != 32 not supported presently.\n",
+					ifo_file_name.c_str());
 				return false;
 			}
 		} else if(key == "wordcount" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_wordcount, "wordcount"))
 				continue;
-			wordcount = atol(value.c_str());
+			set_wordcount(atol(value.c_str()));
 		} else if(key == "filecount" && infotype == DictInfoType_ResDb) {
 			if(!check_option_duplicate(f_filecount, "filecount"))
 				continue;
-			filecount = atol(value.c_str());
+			set_filecount(atol(value.c_str()));
 		} else if(key == "synwordcount" && infotype == DictInfoType_NormDict) {
 			if(!check_option_duplicate(f_synwordcount, "synwordcount"))
 				continue;
-			synwordcount = atol(value.c_str());
+			set_synwordcount(atol(value.c_str()));
 		} else if(key == "tdxfilesize" && infotype == DictInfoType_TreeDict) {
 			if(!check_option_duplicate(f_index_file_size, "tdxfilesize"))
 				continue;
-			index_file_size = atol(value.c_str());
+			set_index_file_size(atol(value.c_str()));
 		} else if(key == "idxfilesize" && infotype == DictInfoType_NormDict) {
 			if(!check_option_duplicate(f_index_file_size, "idxfilesize"))
 				continue;
-			index_file_size = atol(value.c_str());
+			set_index_file_size(atol(value.c_str()));
 		} else if(key == "ridxfilesize" && infotype == DictInfoType_ResDb) {
 			if(!check_option_duplicate(f_index_file_size, "ridxfilesize"))
 				continue;
-			index_file_size = atol(value.c_str());
+			set_index_file_size(atol(value.c_str()));
 		} else if(key == "dicttype" && infotype == DictInfoType_NormDict) {
 			if(!check_option_duplicate(f_dicttype, "dicttype"))
 				continue;
-			dicttype = value;
+			set_dicttype(value);
 		} else if(key == "bookname" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_bookname, "bookname"))
 				continue;
-			bookname = value;
+			set_bookname(value);
 		} else if(key == "author" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_author, "author"))
 				continue;
-			author = value;
+			set_author(value);
 		} else if(key == "email" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_email, "email"))
 				continue;
-			email = value;
+			set_email(value);
 		} else if(key == "website" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_website, "website"))
 				continue;
-			website = value;
+			set_website(value);
 		} else if(key == "date" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_date, "date"))
 				continue;
-			date = value;
+			set_date(value);
 		} else if(key == "description" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_description, "description"))
 				continue;
-			parse_description(value.c_str(), value.length(), description);
+			std::string temp;
+			decode_description(value.c_str(), value.length(), temp);
+			set_description(temp);
 		} else if(key == "sametypesequence" && (infotype == DictInfoType_NormDict
 			|| infotype == DictInfoType_TreeDict)) {
 			if(!check_option_duplicate(f_sametypesequence, "sametypesequence"))
 				continue;
-			sametypesequence = value;
+			set_sametypesequence(value);
 		} else {
-			g_print("Load %s warning: unknown option %s.\n", ifofilename.c_str(), 
+			print_info("Load %s warning: unknown option %s.\n", ifo_file_name.c_str(),
 				key.c_str());
 		}
 	}
 
 	// check required options
-	if(wordcount == 0 && ((infotype == DictInfoType_NormDict 
+	if((!is_wordcount() || wordcount == 0) && ((infotype == DictInfoType_NormDict
 		|| infotype == DictInfoType_TreeDict))) {
-		g_print("Load %s failed: wordcount not specified or 0.\n", 
-			ifofilename.c_str());
+		print_info("Load %s failed: wordcount not specified or 0.\n", 
+			ifo_file_name.c_str());
 		return false;
 	}
-	if(filecount == 0 && infotype == DictInfoType_ResDb) {
-		g_print("Load %s failed: filecount not specified or 0.\n", 
-			ifofilename.c_str());
+	if((!is_filecount() || filecount == 0) && infotype == DictInfoType_ResDb) {
+		print_info("Load %s failed: filecount not specified or 0.\n", 
+			ifo_file_name.c_str());
 		return false;
 	}
-	if(bookname.empty() && (infotype == DictInfoType_NormDict 
+	if((!is_bookname() || bookname.empty()) && (infotype == DictInfoType_NormDict
 		|| infotype == DictInfoType_TreeDict)) {
-		g_print("Load %s failed: bookname not specified.\n", 
-			ifofilename.c_str());
+		print_info("Load %s failed: bookname not specified.\n", 
+			ifo_file_name.c_str());
 		return false;
 	}
-	if(index_file_size == 0) {
+	if(!is_index_file_size() || index_file_size == 0) {
 		const char* kkey = NULL;
 		if(infotype == DictInfoType_NormDict)
 			kkey = "idxfilesize";
@@ -304,11 +329,99 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 			kkey = "tdxfilesize";
 		else if(infotype == DictInfoType_ResDb)
 			kkey = "ridxfilesize";
-		g_print("Load %s failed: %s not specified or 0.\n", 
-			ifofilename.c_str(), kkey);
+		print_info("Load %s failed: %s not specified or 0.\n", 
+			ifo_file_name.c_str(), kkey);
 		return false;
 	}
 
+	return true;
+}
+
+bool DictInfo::save_ifo_file(void) const
+{
+	if(ifo_file_name.empty()) {
+		print_info("ifo file name is not specified.\n");
+		return false;
+	}
+	std::stringstream str;
+	str << UTF8_BOM;
+	if(!is_infotype()) {
+		print_info("Dict info type is not specified.\n");
+		return false;
+	}
+	const gchar *magic_data = NULL;
+	if(infotype == DictInfoType_NormDict)
+		magic_data = NORM_DICT_MAGIC_DATA;
+	else if(infotype == DictInfoType_TreeDict)
+		magic_data = TREE_DICT_MAGIC_DATA;
+	else if(infotype == DictInfoType_ResDb)
+		magic_data = RES_DB_MAGIC_DATA;
+	else
+		return false;
+	str << magic_data << '\n';
+	if(!is_version()) {
+		print_info("version is not specified.\n");
+		return false;
+	}
+	str << "version=" << version << '\n';
+	if(infotype == DictInfoType_NormDict || infotype == DictInfoType_TreeDict) {
+		if(!is_bookname()) {
+			print_info("bookname is not specified.\n");
+			return false;
+		}
+		str << "bookname=" << bookname << '\n';
+		if(!is_wordcount()) {
+			print_info("wordcount is not specified.\n");
+			return false;
+		}
+		str << "wordcount=" << wordcount << '\n';
+	}
+	if(infotype == DictInfoType_NormDict) {
+		if(is_synwordcount())
+			str << "synwordcount=" << synwordcount << '\n';
+	}
+	if(infotype == DictInfoType_ResDb) {
+		if(is_filecount())
+			str << "filecount=" << filecount << '\n';
+	}
+	if(infotype == DictInfoType_NormDict || infotype == DictInfoType_TreeDict
+			|| infotype == DictInfoType_ResDb) {
+		if(!is_index_file_size()) {
+			print_info("index_file_size is not specified.\n");
+			return false;
+		}
+		if(infotype == DictInfoType_NormDict)
+			str << "idxfilesize=" << index_file_size << '\n';
+		if(infotype == DictInfoType_TreeDict)
+			str << "tdxfilesize=" << index_file_size << '\n';
+		if(infotype == DictInfoType_ResDb)
+			str << "ridxfilesize=" << index_file_size << '\n';
+	}
+	if(infotype == DictInfoType_NormDict || infotype == DictInfoType_TreeDict) {
+		if(is_author())
+			str << "author=" << author << '\n';
+		if(is_email())
+			str << "email=" << email << '\n';
+		if(is_website())
+			str << "website=" << website << '\n';
+		if(is_description()) {
+			std::string temp;
+			encode_description(description.c_str(), description.length(), temp);
+			str << "description=" << temp << '\n';
+		}
+		if(is_date())
+			str << "date=" << date << '\n';
+		if(is_sametypesequence())
+			str << "sametypesequence=" << sametypesequence << '\n';
+	}
+	if(infotype == DictInfoType_NormDict) {
+		if(is_dicttype())
+			str << "dicttype=" << dicttype << '\n';
+	}
+	if(!g_file_set_contents(ifo_file_name.c_str(), str.str().c_str(), -1, NULL)) {
+		print_info(open_write_file_err, ifo_file_name.c_str());
+		return false;
+	}
 	return true;
 }
 
@@ -344,12 +457,57 @@ void DictInfo::clear(void)
 	f_dicttype = false;
 	f_version = false;
 	f_idxoffsetbits = false;
+	f_infotype = false;
+}
+
+void DictInfo::set_print_info(print_info_t func)
+{
+	print_info = func ? func : g_print;
+}
+
+DictInfo& DictInfo::operator=(const DictInfo& dict_info)
+{
+	clear();
+	ifo_file_name = dict_info.ifo_file_name;
+
+	if(dict_info.is_wordcount())
+		set_wordcount(dict_info.get_wordcount());
+	if(dict_info.is_filecount())
+		set_filecount(dict_info.get_filecount());
+	if(dict_info.is_synwordcount())
+		set_synwordcount(dict_info.get_synwordcount());
+	if(dict_info.is_bookname())
+		set_bookname(dict_info.get_bookname());
+	if(dict_info.is_author())
+		set_author(dict_info.get_author());
+	if(dict_info.is_email())
+		set_email(dict_info.get_email());
+	if(dict_info.is_website())
+		set_website(dict_info.get_website());
+	if(dict_info.is_date())
+		set_date(dict_info.get_date());
+	if(dict_info.is_description())
+		set_description(dict_info.get_description());
+	if(dict_info.is_index_file_size())
+		set_index_file_size(dict_info.get_index_file_size());
+	if(dict_info.is_sametypesequence())
+		set_sametypesequence(dict_info.get_sametypesequence());
+	if(dict_info.is_dicttype())
+		set_dicttype(dict_info.get_dicttype());
+	if(dict_info.is_version())
+		set_version(dict_info.get_version());
+	if(dict_info.is_infotype())
+		set_infotype(dict_info.get_infotype());
+
+	f_idxoffsetbits = dict_info.f_idxoffsetbits;
+	print_info = dict_info.print_info;
+	return *this;
 }
 
 bool DictInfo::check_option_duplicate(bool& flag, const char* option)
 {
 	if(flag) {
-		g_print("%s: line %d: duplicate option %s.\n", ifo_file_name.c_str(), lineno, option);
+		print_info("%s: line %d: duplicate option %s.\n", ifo_file_name.c_str(), lineno, option);
 		return false;
 	}
 	flag = true;

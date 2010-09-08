@@ -6,7 +6,10 @@
 #include <string>
 #include "libcommon.h"
 
-// keep this file in sync with src/lib/ifo_file.hpp
+/* keep the following files in sync:
+ * src/lib/ifo_file.hpp
+ * stardict-tools/src/ifo_file.hpp
+ */
 
 #define GET_METHOD_TEMPL(type, field) \
 	type get_##field(void) const \
@@ -21,10 +24,11 @@
 		this->f_##field = true; \
 	}
 
-#define UNSET_METHOD_TEMPL(type, field) \
+#define UNSET_METHOD_TEMPL(type, field, default_val) \
 	void unset_##field(void) \
 	{ \
 		this->f_##field = false; \
+		this->field = default_val; \
 	}
 
 #define IS_METHOD_TEMPL(type, field) \
@@ -33,10 +37,10 @@
 		return f_##field; \
 	}
 
-#define ALL_METHOD_TEMPL(type, field) \
+#define ALL_METHOD_TEMPL(type, field, default_val) \
 	GET_METHOD_TEMPL(type, field) \
 	SET_METHOD_TEMPL(type, field) \
-	UNSET_METHOD_TEMPL(type, field) \
+	UNSET_METHOD_TEMPL(type, field, default_val) \
 	IS_METHOD_TEMPL(type, field)
 
 enum DictInfoType {
@@ -59,20 +63,20 @@ struct DictInfo {
 	void set_print_info(print_info_t func);
 	DictInfo& operator=(const DictInfo& dict_info);
 
-	ALL_METHOD_TEMPL(guint32, wordcount)
-	ALL_METHOD_TEMPL(guint32, filecount)
-	ALL_METHOD_TEMPL(guint32, synwordcount)
-	ALL_METHOD_TEMPL(const std::string&, bookname)
-	ALL_METHOD_TEMPL(const std::string&, author)
-	ALL_METHOD_TEMPL(const std::string&, email)
-	ALL_METHOD_TEMPL(const std::string&, website)
-	ALL_METHOD_TEMPL(const std::string&, date)
-	ALL_METHOD_TEMPL(const std::string&, description)
-	ALL_METHOD_TEMPL(guint32, index_file_size)
-	ALL_METHOD_TEMPL(const std::string&, sametypesequence)
-	ALL_METHOD_TEMPL(const std::string&, dicttype)
-	ALL_METHOD_TEMPL(const std::string&, version)
-	ALL_METHOD_TEMPL(DictInfoType, infotype)
+	ALL_METHOD_TEMPL(guint32, wordcount, 0)
+	ALL_METHOD_TEMPL(guint32, filecount, 0)
+	ALL_METHOD_TEMPL(guint32, synwordcount, 0)
+	ALL_METHOD_TEMPL(const std::string&, bookname, "")
+	ALL_METHOD_TEMPL(const std::string&, author, "")
+	ALL_METHOD_TEMPL(const std::string&, email, "")
+	ALL_METHOD_TEMPL(const std::string&, website, "")
+	ALL_METHOD_TEMPL(const std::string&, date, "")
+	ALL_METHOD_TEMPL(const std::string&, description, "")
+	ALL_METHOD_TEMPL(guint32, index_file_size, 0)
+	ALL_METHOD_TEMPL(const std::string&, sametypesequence, "")
+	ALL_METHOD_TEMPL(const std::string&, dicttype, "")
+	ALL_METHOD_TEMPL(const std::string&, version, "")
+	ALL_METHOD_TEMPL(DictInfoType, infotype, DictInfoType_NormDict)
 private:
 	const char* get_key_value(const char *p1, std::string& key, 
 		std::string& value);
