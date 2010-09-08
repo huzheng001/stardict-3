@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_powerword_parsedata.v stardict_powerword_parsedata.dev
+EXTRA_DIST = stardict_powerword_parsedata.v
 
 
 if DARWIN_SUPPORT

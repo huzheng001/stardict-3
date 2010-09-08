@@ -4,5 +4,4 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 	README	\
 	autogen.sh	\
-	stardict-editor.spec	\
-	stardict-editor.dev
+	stardict-editor.spec

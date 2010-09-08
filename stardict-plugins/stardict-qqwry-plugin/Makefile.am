@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_qqwry.v stardict_qqwry.dev
+EXTRA_DIST = stardict_qqwry.v
 
 
 if DARWIN_SUPPORT

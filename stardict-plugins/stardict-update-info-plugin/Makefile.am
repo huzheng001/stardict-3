@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_update_info.v stardict_update_info.dev
+EXTRA_DIST = stardict_update_info.v
 
 
 if DARWIN_SUPPORT
