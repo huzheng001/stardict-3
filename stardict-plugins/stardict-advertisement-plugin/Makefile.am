@@ -1,6 +1,6 @@
 SUBDIRS = data
 
-EXTRA_DIST = advertisement.v advertisement.dev
+EXTRA_DIST = advertisement.v
 
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=

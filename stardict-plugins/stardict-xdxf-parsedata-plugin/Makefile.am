@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_xdxf_parsedata.v stardict_xdxf_parsedata.dev
+EXTRA_DIST = stardict_xdxf_parsedata.v
 
 
 if DARWIN_SUPPORT

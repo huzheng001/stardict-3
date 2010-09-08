@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_dictdotcn.v dictdotcn.dev
+EXTRA_DIST = stardict_dictdotcn.v
 
 if DARWIN_SUPPORT
 LD_VERSION_SCRIPT_OPTION=

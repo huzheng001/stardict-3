@@ -1,5 +1,5 @@
-EXTRA_DIST = stardict_wordnet.v stardict_wordnet.dev	\
-		stardict_wordnet_parsedata.v stardict_wordnet_parsedata.dev
+EXTRA_DIST = stardict_wordnet.v	\
+		stardict_wordnet_parsedata.v
 
 
 if DARWIN_SUPPORT

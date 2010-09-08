@@ -6,12 +6,10 @@ You may need to tweak the options below.
 */
 
 // options
-/* use Dev-C++ output files - true, or use MS Visual Studio output files - false */
-var UseDevC = false;
 var InstallDirMustNotExist = false;
 var MSVSConfig = "Release"; // Release or Debug
-var LinuxDistDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build\\stardict-3.0.2";
-var LinuxBuildDir = "\\\\Mainwstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build";
+var LinuxDistDir = "\\\\Mainworkstation\\mnt\\freebsd.data\\work\\stardict\\work\\stardict-current\\tests\\stardict-3.0.2";
+var LinuxBuildDir = LinuxDistDir;
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
@@ -123,17 +121,9 @@ if(InstallDirMustNotExist) {
 	DeleteFolder(BaseDir + "win32-install-dir");
 }
 CreateFolder(InstallDir);
-if(UseDevC)
-	CopyFile(BaseDir + "src\\stardict.exe", InstallDir);
-else
-	CopyFile(MSVSOutputDir + "stardict.exe", InstallDir);
-if(UseDevC) {
-	CopyFile(BaseDir + "src\\win32\\TextOutSpy.dll", InstallDir);
-	CopyFile(BaseDir + "src\\win32\\TextOutHook.dll", InstallDir);
-} else {
-	CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
-	CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
-}
+CopyFile(MSVSOutputDir + "stardict.exe", InstallDir);
+CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
+CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 {
 	var oFolder = fso.GetFolder(LinuxBuildDir + "\\po");
 	var oFiles = new Enumerator(oFolder.Files);
@@ -202,21 +192,7 @@ CreateFolder(InstallDir + "skins\\");
 {
 	var PluginsDir = InstallDir + "plugins\\";
 	CreateFolder(PluginsDir);
-	if(UseDevC) {
-		var oFolder = fso.GetFolder(BaseDir + "\\stardict-plugins\\");
-		var oFolders = new Enumerator(oFolder.SubFolders);
-		for (; !oFolders.atEnd(); oFolders.moveNext())
-		{
-			var oSubFolder = oFolders.item();
-			if(oSubFolder.Name.match(/^stardict-.*-plugin$/i)) {
-				var files = FindFiles(oSubFolder.Path + "\\", /.*\.dll$/i);
-				for(var i=0; i<files.length; i++) {
-					//WScript.Echo("path: " + oSubFolder.Path + "\\" + files[i]);
-					CopyFile(oSubFolder.Path + "\\" + files[i], PluginsDir);
-				}
-			}
-		}
-	} else {
+	{
 		var files = FindFiles(MSVSOutputDir, /.*\.dll$/i);
 		for(var i=0; i<files.length; i++) {
 			if(files[i].toLowerCase() == "textoutspy.dll" 
@@ -233,7 +209,7 @@ CreateFolder(InstallDir + "skins\\");
 }
 
 CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
-if(!UseDevC) {
+{
 	var LibSigcDir = MSVSDir + "libsigc++\\";
 	var files = FindFiles(LibSigcDir, /sigc-.*\.dll/i);
 	var cnt = 0;

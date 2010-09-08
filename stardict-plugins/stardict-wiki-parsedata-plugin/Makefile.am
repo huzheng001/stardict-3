@@ -1,4 +1,4 @@
-EXTRA_DIST = stardict_wiki_parsedata.v stardict_wiki_parsedata.dev
+EXTRA_DIST = stardict_wiki_parsedata.v
 
 
 if DARWIN_SUPPORT

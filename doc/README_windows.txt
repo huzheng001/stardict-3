@@ -3,32 +3,94 @@ StarDict can be compiled and run in windows.
 Building StarDict
 =================
 
-You may use either Dev-C++ or MS Visual Studio 2005 to build StarDict. The guide below deals with Dev-C++. For details specific to MSVS see msvc_2005\readme.txt, MS Visual Studio solution file is in the msvc_2005 directory. Dev-C++ support will be discontinued soon, use MS Visual Studio if possible.
+Use MS Visual Studio 2005 to build StarDict.
 
-Please install Dev-C++, they can be found in http://www.bloodshed.net/dev/
-devcpp-4.9.9.2_setup.exe
-Use default installation directory X:\Dev-Cpp
+gtk
+----
 
-Then install developer packages, they can be found at http://www.gtk.org/download-windows.html
+You need to install developer packages into "gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
+
 These packages are needed:
-atk-dev_1.28.0-1_win32.zip cairo-dev_1.8.8-2_win32.zip gettext-runtime-dev-0.17-1.zip glib-dev_2.22.3-1_win32.zip gtk+-dev_2.16.6-1_win32.zip libiconv-1.9.1.bin.woe32.zip pango-dev_1.26.1-1_win32.zip zlib123-dll.zip
-Just extract them into X:\Dev-Cpp\ is OK.
-Notice, for Zlib, you need to put the zlib1.dll in X:\Dev-Cpp\bin folder.
+atk-dev_1.30.0-1_win32.zip
+cairo-dev_1.8.10-3_win32.zip
+gettext-runtime-dev-0.17-1.zip
+glib-dev_2.24.0-2_win32.zip
+gtk+-dev_2.16.6-2_win32.zip
+libiconv-1.9.1.bin.woe32.zip
+pango-dev_1.28.0-1_win32.zip
+zlib-dev_1.2.4-2_win32.zip
 
-Here is a stardict.dev
-use Dev-C++ to open it, then compile it. Becase the compile command is too long, it can't be compile in win98, please use win2000 or XP.
+Just extract them into "msvc_2005\gtk\" is OK.
 
-my environment: Windows XP, Dev-Cpp 4.9.9.2
+libxml library
+--------------
 
-After compiled, you will find stardict.exe at src/.
+stardict-editor project depends on on libxml library (http://xmlsoft.org/).
+If you plan to build only StarDict, you do not need this library.
+
+Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
+Unpack into a temporary directory.
+Copy ibxml2-*.win32/include/libxml directory into msvc_2005/libxml
+Now stardict-editor need not be linked with libxml library, it only uses header files.
+
+Building libsigc++
+------------------
+
+1. Download libsigc++ (http://libsigc.sourceforge.net/), unpack it into msvc_2005 directory. You'll get a directory like "msvc_2005\libsigc++-2.2.4.2". 
+2. Rename it to "msvc_2005\libsigc++-src". 
+3. Build the libsigc++ project with MS Visual Studio 2005 (do Release and Debug builds). 
+4. Copy 
+	Release\sigc-vc80-2_0.lib, 
+	Release\sigc-vc80-2_0.dll, 
+	Debug\sigc-vc80-d-2_0.lib,
+	Debug\sigc-vc80-d-2_0.dll 
+	into "msvc_2005\libsigc++\".
+
+libsigc++ have static link problem on vs2005 presently.
+
+Notes
+-----
+
+For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
+For wordnet plugin files, they are the same.
+(8 May 2010. Compilation succeeds without the fix. It is not needed anymore?)
+
+For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSDK51.exe file. Install it into "C:\Program Files\Microsoft Speech SDK 5.1". Fix these compile errors in sphelper.h:
+=====
+1) add to the top of the file to prevent many errors
+#pragma warning( disable : 4430 )
+#pragma warning( disable : 4996 )
+2) line 2372
+	replace
+        for (const WCHAR * psz = (const WCHAR *)lParam; *psz; psz++) {}
+	with
+        const WCHAR * psz;
+        for (psz = (const WCHAR *)lParam; *psz; psz++) {}
+3) line 2560
+	replace
+    SPPHONEID* pphoneId = dsPhoneId;
+	with
+    SPPHONEID* pphoneId = (SPPHONEID*)((WCHAR *)dsPhoneId);
+4) line 2634
+	replace 
+	pphoneId += wcslen(pphoneId) + 1;
+	with
+    pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
+=====
+
+There are two crash bug with vs2005, which you need to notice.
+1. Use stardict_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
+2. Use fprintf_s instead of fprintf, or it will crash. This is a little strange.
+
+libintl.h redefines *printf functions to libintl_*printf functions.
+That may be the cause of the crash.
+printf outputs nothing with console attached. Use printf_s instead, or better g_print.
+
+There are two builds in vs2005: Debug and Release, you should choose Release version if you plan to distribute the result, you should choose Debug version for debugging the project.
+
+You should can compile and run stardict successfully now. You cannot start stardict.exe in place, since a special directory structure is needed.
+
 You cannot start stardict.exe in place, in the src directory, since a special directory structure is needed.
-
-You can find plug-in projects at stardict-plugins/.
-
-You can find the hook dll projects as src/win32/TextOutSpy.dev and src/win32/TextOutHook.dev.
-They implement mouseover scanning feature.
-
-For the sapi-tts plugin, you need to compile it by vs2005, see msvc_2005/readme.txt.
 
 Unicode
 =======
@@ -40,51 +102,12 @@ Build the installer
 Grab and install NSIS: http://www.nullsoft.com/free/nsis
 I was using the 2.44 version.
 
-I use linux commands to illustrate the steps, but you cann't do it in this way :)
-You may use stardict-prepare-installer.js to build win32-install-dir directory structure provided you already have all the required files in place. See comment at the head of the file for details of running the script.
+Use stardict-prepare-installer.js to build win32-install-dir directory structure. You must have all the required files in place before running the script. See comment at the head of the file for details of running the script.
 
 Some of the required files cannot be created on Windows, you need Linux to prepare them.
-In the steps below <linux-StarDict-distr> referes to a directory containing required files.
-
-===============
-cd stardict-3.0.0
-mkdir win32-install-dir
-
-cp src/stardict.exe win32-install-dir
-cp src/win32/TextOutSpy.dll win32-install-dir
-cp src/win32/TextOutHook.dll win32-install-dir
-
-mkdir -p win32-install-dir/locale/zh_CN/LC_MESSAGES/
-cp <linux-StarDict-distr>/po/zh_CN.gmo win32-install-dir/locale/zh_CN/LC_MESSAGES/stardict.mo
-mkdir -p win32-install-dir/locale/ru/LC_MESSAGES/
-cp <linux-StarDict-distr>/po/ru.gmo win32-install-dir/locale/ru/LC_MESSAGES/stardict.mo
-mkdir -p win32-install-dir/locale/cs/LC_MESSAGES/
-cp <linux-StarDict-distr>/po/cs.gmo win32-install-dir/locale/cs/LC_MESSAGES/stardict.mo
-# repeat for all <linux-StarDict-distr>/po/*.gmo files
-
-mkdir -p win32-install-dir/pixmaps
-cp pixmaps/stardict.png win32-install-dir/pixmaps
-cp src/pixmaps/* win32-install-dir/pixmaps # except docklet_*.png
-mkdir -p win32-install-dir/sounds
-cp src/sounds/*.wav win32-install-dir/sounds
-mkdir -p win32-install-dir/dic
-mkdir -p win32-install-dir/treedict
-mkdir -p win32-install-dir/skins
-
-mkdir -p win32-install-dir/help/C
-cp <linux-StarDict-distr>/help/C/html/* win32-install-dir/help/C
-mkdir -p win32-install-dir/help/ru
-cp <linux-StarDict-distr>/help/ru/html/* win32-install-dir/help/ru
-# repeat for all <linux-StarDict-distr>/help/*/html directories
-
-mkdir -p win32-install-dir/plugins
-cp stardict-plugins/stardict-*-plugin/*.dll win32-install-dir/plugins
-
-cp src/win32/acrobat/win32/Release/StarDict.api win32-install-dir
 
 Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
 
-If you build the project with MS Visual Studio.
 1. Download Microsoft Visual C++ 2005 Redistributable Package and put into redist.
 	For VS 2005 non SP1 version take this
 	http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en
@@ -132,25 +155,29 @@ Add "-DATTACH_WINDOWS_CONSOLE -D_WIN32_WINNT=0x0501 -DENABLE_LOG_WINDOW" to the 
 
 All that windows console stuff is not much reliable, if it does not work, retreat to printing into a file or to the log window.
 
-Starting stardict
-=================
+Running StarDict on another computer
+====================================
 
-To start Stardict just for debugging, just to make sure it works, you need:
-1) GTK+ binaries,
-2) minumum directory structure.
+You may encounter a problem running StarDict project compiled with VS 2005 on other computer not having VS 2005. You may see the following rather unclear error message "This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem." The error happens because StarDict application, plugin DLLs, hook DLLs are linked with CRT (C runtime library) dynamically and you may not have the appropriate version on that dll on the target computer. 
 
-You need at least the following binary packages to start Stardict:
-atk_1.28.0-1_win32.zip cairo_1.8.8-2_win32.zip expat_2.0.1-1_win32.zip fontconfig_2.8.0-1_win32.zip freetype_2.3.11-1_win32.zip gettext-runtime-0.17-1.zip glib_2.22.3-1_win32.zip gtk+_2.16.6-1_win32.zip libpng_1.2.40-1_win32.zip pango_1.26.1-1_win32.zip zlib123-dll.zip
+If you build Release version of the project, you need to download and install Microsoft Visual C++ 2005 Redistributable Package (x86). 
+For VS 2005 non SP1 version take this
+http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en
+and for VS 2005 SP1 take this:
+http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647&displaylang=en
 
-Extract binaries packages into some directory, for instance, X:\Stardict-libs.
-Move zlib1.dll into bin directory.
-Add X:\Stardict-libs\bin in the path variable.
+If you build Debug version of the project, you need a debug version of CRT which not redistributable. I see at least one reason why you may need to use the debug version of StarDict - to debug the project remotely. Microsoft prohibit do distribute the debug version of CRT, but I assume a developer may do that for debuging purpose. Anyway this how to install the debuging version of CRT onto the target machine.
+1. In Visual Studio create new Setup Project, name it Setup-CRTDebug.
+2. Right-click the project in the Solution Explorer, select Add -> Merge module.
+3. In the file selection dialog select "C:\Program Files\Common Files\Merge Modules\Microsoft_VC80_DebugCRT_x86.msm".
+4. Build the project.
+5. You've created Setup-CRTDebug.msi setup file. Run it on the target machine. It installs debug version of CRT. In the course of executing you'll be asked to specify an installation directory somewhere under "C:\Program Files". Never mind. The installer does not copy anything there. It does not even create that folder.
+6. Now you should be able to start StarDict.
 
-Create a empty directory to start Stardict in, for instance, X:\Stardict-start
-Copy stardict.exe there.
-Create X:\Stardict-start\pixmaps directory and copy there *.png files from
-stardict-source\pixmaps and stardict-source\src\pixmaps
-Now stardict.exe is ready to start.
+StarDict version
+----------------
+
+StarDict version for MSVC build can be specified in the msvc_2005\stardictrc.rc.
 
 ============
 StarDict's win32 port got many experience from ReciteWord (my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
