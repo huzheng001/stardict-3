@@ -137,4 +137,16 @@ gboolean is_not_alpha(gunichar c);
 gboolean is_not_upper(gunichar c);
 gboolean is_not_lower(gunichar c);
 
+#define UTF8_BOM "\xEF\xBB\xBF"
+#define read_file_err \
+	"Error reading file %s.\n"
+#define write_file_err \
+	"Error writing file %s.\n"
+#define open_read_file_err \
+	"Unable open file %s for reading\n"
+#define open_write_file_err \
+	"Unable open file %s for writing\n"
+#define create_temp_file_err \
+		"Unable to create a temporary file: %s.\n"
+
 #endif/*UTILS_H*/

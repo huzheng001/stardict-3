@@ -823,7 +823,7 @@ bool Database_ResourceStorage::load_rifofile(const std::string& rifofilename,
 	if (!dict_info.load_from_ifo_file(rifofilename, DictInfoType_ResDb))
 		return false;
 
-	filecount = dict_info.filecount;
-	indexfilesize = dict_info.index_file_size;
+	filecount = dict_info.get_filecount();
+	indexfilesize = dict_info.get_index_file_size();
 	return true;
 }

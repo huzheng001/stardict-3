@@ -100,8 +100,8 @@ int main(int argc, char *argv[])
 	if (!dict_info.load_from_ifo_file(rifo_url, DictInfoType_ResDb))
 		return 1;
 
-	gulong filecount = dict_info.filecount;
-	gulong indexfilesize = dict_info.index_file_size;
+	gulong filecount = dict_info.get_filecount();
+	gulong indexfilesize = dict_info.get_index_file_size();
 
 	std::auto_ptr<rindex_file> pindex;
 	std::string base_url = rifo_url.substr(0, rifo_url.length() + 1 - sizeof(".rifo"));

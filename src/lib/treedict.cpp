@@ -106,8 +106,8 @@ bool TreeDict::load_ifofile(const std::string& ifofilename, gulong *tdxfilesize)
 	if (!dict_info.load_from_ifo_file(ifofilename, DictInfoType_TreeDict))
 		return false;
 
-	*tdxfilesize = dict_info.index_file_size;
-	sametypesequence=dict_info.sametypesequence;
+	*tdxfilesize = dict_info.get_index_file_size();
+	sametypesequence=dict_info.get_sametypesequence();
 
 	return true;
 }
