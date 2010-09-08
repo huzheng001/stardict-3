@@ -3,7 +3,7 @@ StarDict can be compiled and run in windows.
 Building StarDict
 =================
 
-You may use either Dev-C++ or MS Visual Studio 2005 to build StarDict. The guide below deals with Dev-C++. For details specific to MSVS see msvc_2005\readme.txt, MS Visual Studio solution file is in the msvc_2005 directory.
+You may use either Dev-C++ or MS Visual Studio 2005 to build StarDict. The guide below deals with Dev-C++. For details specific to MSVS see msvc_2005\readme.txt, MS Visual Studio solution file is in the msvc_2005 directory. Dev-C++ support will be discontinued soon, use MS Visual Studio if possible.
 
 Please install Dev-C++, they can be found in http://www.bloodshed.net/dev/
 devcpp-4.9.9.2_setup.exe
