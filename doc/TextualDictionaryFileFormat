@@ -78,34 +78,46 @@ Inclusions (XInclude) are used to combine xml chunks.
 textual file format
 -------------------
 
+Unless stated otherwise, the order of elements does not matter. There may be
+a preferred order for the purpose of readability.
+
 root element: stardict
 
-stardict contains: (info, (contents | article)+
+stardict contains: (info, (contents | article)+)
 info element is mandatory, contents and article are optional
+'stardict' must contain one 'info' element
+'stardict' may contain any number of 'contents' and 'article' elements
 A dictionary must contain at least one article.
+Normally the info section should come first.
 
 info contains: version, bookname, email, website, description, date, dicttype
-all elements may contain only text, may appear 0 or 1 times.
-mandatory elements: version, bookname.
-order of items does not matter
+An info section contains general information about a dictionary, it corresponds
+to .ifo file of a binary dictionary. See doc/StarDictFileFormat for the meaning
+of info section subelements.
+All elements may contain only text, may appear 0 or 1 times.
+Mandatory elements: version, bookname.
 
 contents contains: (article | contents)+
 'contents' may be empty,
 'contents' may contain other 'contents' elements
 'contents' should be used as a root element of an included xml file. Included
-files include other files them selves. Thus we may get a hierarchy of 'contents'
-elements. We may put any number of 'contents' elements in one document at the
-same level. We have to allows this because of includes, an xml document must
-contain only one root element. 'contents' elements may be useful for specifying
-default attributes, for example, content type of an definition. So 'contents'
-element is an implementation artifact. 
+files may include other files them selves. Thus we may get a hierarchy of
+'contents' elements. We may put any number of 'contents' elements in one
+document at the same level. We have to allows this because of includes, an xml
+document must contain only one root element. 'contents' elements may be useful
+for specifying default attributes, for example, content type of an definition.
+So 'contents' element is an implementation artifact.
+'contents' element may have optional 'type' attribute. See 'type' attribute of
+the 'definition' element for details.
 
 article contains: key, synonym*, (definition | definition-r)+
-must 1 'key'
+must be 1 'key'
 must be 0 or more 'synonym'
 must be 1 or more 'definition' or 'definition-r'
+'article' element may have optional 'type' attribute. See 'type' attribute of
+the 'definition' element for details.
 
-definition may contain only plain text, no markup.
+'definition' element may contain only plain text, no markup.
 
 Rationale
 
@@ -113,8 +125,27 @@ Textual file format was designed to reflect structure of a dictionary. Structure
 of an article is another question. To keep file format simple, let's do not mix
 two different things.
 
+'definition' element may have optional 'type' attribute. The 'type' attribute
+specifies content type of the definition. See "Type identifies" in
+doc/StarDictFileFormat for possible files. Content type 'r' is disallowed, use
+'definition-r' element for this content type.
+
+Content type of definition may be specified on different levels (in the order
+of increasing precedence): contents, article, definition. If we specify content
+type on 'contents' element, then all definition inside the 'contents' element
+by default have that content type. You may overwrite content type of a specific
+definition. 
+
+Often all definitions in a dictionary have the same content type, you may save
+a lot of typing if you put all articles in a 'contents' group and specify
+content type on the group only.
+
+Each 'definition' must have content type specified. It may be specified on that
+'definition' explicitly or inherited from one of its parent elements.
+
 definition-r: resource+
 definition-r is a special type of definition for content type 'r'.
+contains one or more resource elements
 
 resource - empty element
 contains attributes: type, key
@@ -137,6 +168,6 @@ stardict_bin2text should do possible corrections to data, for example, remove
 invalid chars, like control chars. 
 
 stardict_bin2text on the other hand is allowed to stop on the first error. The
-source data are in xml format is cannot be fixed by user. We may apply simple
-fixed to data, but we should not encourage the user to ignore textual dictionary
-standards. 
+source data are in xml format is cannot be fixed by the user. We may apply
+simple fixes to data, but we should not encourage the user to ignore textual
+dictionary standards. 
