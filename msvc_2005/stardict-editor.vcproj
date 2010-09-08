@@ -199,11 +199,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_dict_data_block.cpp"
+				RelativePath="..\stardict-tools\src\lib_binary_dict_parser.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_norm_dict.cpp"
+				RelativePath="..\stardict-tools\src\lib_chars.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_dict_data_block.cpp"
 				>
 			</File>
 			<File
@@ -269,11 +273,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_dict_data_block.h"
+				RelativePath="..\stardict-tools\src\lib_binary_dict_parser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_norm_dict.h"
+				RelativePath="..\stardict-tools\src\lib_chars.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_dict_data_block.h"
 				>
 			</File>
 			<File

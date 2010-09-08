@@ -12,6 +12,17 @@ zlib-dev_1.2.4-2_win32.zip
 
 Just extract them into "msvc_2005\gtk\" is OK.
 
+libxml library
+--------------
+
+stardict-editor project depends on on libxml library (http://xmlsoft.org/).
+If you plan to build only StarDict, you do not need this library.
+
+Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
+Unpack into a temporary directory.
+Copy ibxml2-*.win32/include/libxml directory into msvc_2005/libxml
+Now stardict-editor need not be linked with libxml library, it only uses header files.
+
 Building libsigc++
 ------------------
 
