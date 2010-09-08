@@ -378,18 +378,14 @@ int textual_dict_parser_t::read_all(void)
  * EXIT_FAILURE or EXIT_SUCCESS */
 int textual_dict_parser_t::read_stardict(void)
 {
-	static const char* exp_elems1[] = {
+	static const char* exp_elems[] = {
 		"info",
-		NULL
-	};
-	static const char* exp_elems2[] = {
 		"contents",
 		"article",
 		NULL
 	};
 	bool have_info = false;
 	while(true) {
-		const char** const exp_elems = have_info ? exp_elems2 : exp_elems1;
 		int ret = read_xml_element(exp_elems, elem_stack.back().name);
 		if(ret == rrEOF) {
 			unexpected_eof(exp_elems);
@@ -406,29 +402,26 @@ int textual_dict_parser_t::read_stardict(void)
 			return EXIT_FAILURE;
 		}
 		elem_stack.push_back(elem_data_t(exp_elems[ret]));
-		if(!have_info) {
-			switch(ret) {
-			case 0:
-				if(read_info())
-					return EXIT_FAILURE;
-				have_info = true;
-				break;
-			default:
-				g_assert_not_reached();
+		switch(ret) {
+		case 0:
+			if(have_info) {
+				print_info(duplicate_elem_err, get_line_number(), exp_elems[ret]);
+				return EXIT_FAILURE;
 			}
-		} else {
-			switch(ret) {
-			case 0:
-				if(read_contents())
-					return EXIT_FAILURE;
-				break;
-			case 1:
-				if(read_article())
-					return EXIT_FAILURE;
-				break;
-			default:
-				g_assert_not_reached();
-			}
+			if(read_info())
+				return EXIT_FAILURE;
+			have_info = true;
+			break;
+		case 1:
+			if(read_contents())
+				return EXIT_FAILURE;
+			break;
+		case 2:
+			if(read_article())
+				return EXIT_FAILURE;
+			break;
+		default:
+			g_assert_not_reached();
 		}
 	}
 	if(!have_info) {
