@@ -8,7 +8,7 @@ Use MS Visual Studio 2005 to build StarDict.
 gtk
 ----
 
-You need to install developer packages into "gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
+You need to install developer packages into "msvc_2005\gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
 
 These packages are needed:
 atk-dev_1.30.0-1_win32.zip
@@ -25,7 +25,7 @@ Just extract them into "msvc_2005\gtk\" is OK.
 libxml library
 --------------
 
-stardict-editor project depends on on libxml library (http://xmlsoft.org/).
+stardict-editor project depends on libxml library (http://xmlsoft.org/).
 If you plan to build only StarDict, you do not need this library.
 
 Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
