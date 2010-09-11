@@ -50,7 +50,10 @@ care that articles are stored in a binary dictionary in the right order.
 
 
 Problems
---------
+========
+
+viewing and editing xml files
+-----------------------------
 
 A dictionary in textual format is a large file. It may take 10-50 Mb or more on
 the disk. A textual dictionary has size of uncompressed binary dictionary plus
@@ -75,42 +78,52 @@ files. The whole is rewritten each time you save changed.
 The solution here is to split a large xml file into smaller parts. XML
 Inclusions (XInclude) are used to combine xml chunks.
 
+whitespace normalization
+------------------------
+
+Attribute whitespace normalization is normal behavior in XML 1.0. All XML parsers 
+must normalize an attribute's value before reporting it to other applications.
+This may cause problems with some values. The key attribute of the resource element
+contains a file name, whitespace normalization here is unwanted. Maybe we should
+turn the key attribute into a child element.
+
 textual file format
--------------------
+===================
 
 Unless stated otherwise, the order of elements does not matter. There may be
-a preferred order for the purpose of readability.
+a preferred order for readability purpose.
 
 root element: stardict
 
-stardict contains: (info, (contents | article)+)
+stardict contains: info & contents* & article*
 info element is mandatory, contents and article are optional
 'stardict' must contain one 'info' element
 'stardict' may contain any number of 'contents' and 'article' elements
 A dictionary must contain at least one article.
 Normally the info section should come first.
 
-info contains: version, bookname, email, website, description, date, dicttype
+info contains: version & bookname & author? & email? & website? & description? & date? & dicttype?
 An info section contains general information about a dictionary, it corresponds
 to .ifo file of a binary dictionary. See doc/StarDictFileFormat for the meaning
 of info section subelements.
 All elements may contain only text, may appear 0 or 1 times.
 Mandatory elements: version, bookname.
 
-contents contains: (article | contents)+
+contents contains: article* & contents*
 'contents' may be empty,
-'contents' may contain other 'contents' elements
+'contents' may contain other 'contents' elements and 'article' elements
 'contents' should be used as a root element of an included xml file. Included
 files may include other files them selves. Thus we may get a hierarchy of
 'contents' elements. We may put any number of 'contents' elements in one
 document at the same level. We have to allows this because of includes, an xml
 document must contain only one root element. 'contents' elements may be useful
-for specifying default attributes, for example, content type of an definition.
+for specifying default attributes, for example, content type of a definition.
 So 'contents' element is an implementation artifact.
+
 'contents' element may have optional 'type' attribute. See 'type' attribute of
 the 'definition' element for details.
 
-article contains: key, synonym*, (definition | definition-r)+
+article contains: key & synonym* & (definition | definition-r)+
 must be 1 'key'
 must be 0 or more 'synonym'
 must be 1 or more 'definition' or 'definition-r'
@@ -125,14 +138,14 @@ Textual file format was designed to reflect structure of a dictionary. Structure
 of an article is another question. To keep file format simple, let's do not mix
 two different things.
 
-'definition' element may have optional 'type' attribute. The 'type' attribute
+'definition' element may have an optional 'type' attribute. The 'type' attribute
 specifies content type of the definition. See "Type identifies" in
-doc/StarDictFileFormat for possible files. Content type 'r' is disallowed, use
+doc/StarDictFileFormat for possible values. Content type 'r' is disallowed, use
 'definition-r' element for this content type.
 
 Content type of definition may be specified on different levels (in the order
 of increasing precedence): contents, article, definition. If we specify content
-type on 'contents' element, then all definition inside the 'contents' element
+type on a 'contents' element, then all definition inside the 'contents' element
 by default have that content type. You may overwrite content type of a specific
 definition. 
 
@@ -145,16 +158,16 @@ Each 'definition' must have content type specified. It may be specified on that
 
 definition-r: resource+
 definition-r is a special type of definition for content type 'r'.
-contains one or more resource elements
+It contains one or more resource elements.
 
 resource - empty element
 contains attributes: type, key
-both attributes are required
+both attributes are mandatory
 the type attribute may be ( img | snd | vdo | att )
 
-Leading and trailing blanks in element value are considered insignificant. They
+Leading and trailing blanks in element values are considered insignificant. They
 are removed by textual-to-binary converter. This applies to all items of the
-info block, value of the 'definition' element. 
+info block, values of 'definition' elements. 
 
 tools
 =====
@@ -171,3 +184,37 @@ stardict_bin2text on the other hand is allowed to stop on the first error. The
 source data are in xml format is cannot be fixed by the user. We may apply
 simple fixes to data, but we should not encourage the user to ignore textual
 dictionary standards. 
+
+Validating textual dictionary
+=============================
+
+stardict-textual-dict.rnc and stardict-textual-dict.rng files contain RELAX NG
+schema for textual format of StarDict dictionary. .rnc - compact syntax, .rng -
+XML syntax. Both definitions are equivalent. You can translate the XML syntax to
+and from the compact syntax using existing translators.
+
+For example with trang (http://code.google.com/p/jing-trang/)  you can do that
+this way:
+# .rnc to .rng
+java -jar trang.jar stardict-textual-dict.rnc stardict-textual-dict.rng
+or
+trang stardict-textual-dict.rnc stardict-textual-dict.rng
+
+# .rng to .rnc
+java -jar trang.jar stardict-textual-dict.rng stardict-textual-dict.rnc
+or
+trang stardict-textual-dict.rng stardict-textual-dict.rnc
+
+To validate a textual dictionary with xmllint (http://xmlsoft.org/xmllint.html)
+use this command:
+xmllint --noout --xinclude --relaxng stardict-textual-dict.rng dict.xml
+
+xmllint understands only xml syntax.
+
+RELAX NG schema open questions
+------------------------------
+
+We use the default token datatype for content type and resource type attributes.
+This implies that attribute value undergoes whitespace normalization before
+validation.
+Maybe we should change datatype to string to match values as is.
