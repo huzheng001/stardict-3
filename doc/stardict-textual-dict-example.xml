@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<stardict>
+<info>
+	<version>2.4.2</version>
+	<bookname>Babylon Arabic-English</bookname>
+	<author>Babylon Ltd.</author>
+	<email>linguistic-support@babylon.com</email>
+	<website>www.babylon.com</website>
+	<description>This comprehensive Arabic-English dictionary contains words,
+phrases, abbreviations &amp; acronyms. It includes terms from a vast variety of
+subjects, such as Medicine, Electronics, Zoology, Business, Computers, Religion,
+etc.</description>
+	<date>12.08.2007</date>
+	<dicttype><!-- this element is normally empty --></dicttype>
+</info>
+
+
+<contents>
+
+<article>
+<key>record</key>
+<definition type="m">information about something that is written down or
+stored on computer, film etc so that it can be looked at in the future
+</definition>
+</article>
+
+
+<article>
+<key>car</key>
+<synonym>syn1</synonym>
+<synonym>syn2</synonym>
+<synonym>syn3</synonym>
+<synonym>syn4</synonym>
+<synonym>syn5</synonym>
+<definition type="m">
+a vehicle with four wheels and an engine, that can carry a small number of
+passengers
+</definition>
+
+<definition type="g">
+<![CDATA[You can have text in <b>bold</b> or in a <span
+color='Orange'>different color</span>]]>
+</definition>
+
+<definition type="x">
+<![CDATA[
+[<tr>ho:um</tr>]
+<pos><abr>n.</abr></pos>
+<rref start="16384" size="512"> sounds_of_words.ogg </rref>
+1) One's own dwelling place; the house in which one lives.
+2) One's native land; the place or country in which one dwells.
+3) The abiding place of the affections. <ex>For without hearts there is no
+home.</ex>
+]]>
+</definition>
+
+<definition-r>
+	<resource type="img" key="pic/example.jpg"/>
+	<resource type="snd" key="apple.wav"/>
+	<resource type="vdo" key="film.avi"/>
+	<resource type="att" key="file.bin"/>
+</definition-r>
+</article>
+
+
+<article>
+<key>ride</key>
+<synonym>rode</synonym>
+<synonym>ridden</synonym>
+<synonym>riding</synonym>
+<definition type="g">
+text...
+</definition>
+</article>
+
+</contents>
+</stardict>
