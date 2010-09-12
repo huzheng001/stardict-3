@@ -42,14 +42,6 @@ Use stardict_stat_t in the source code to define a structure for g_stat. */
       typedef struct stat stardict_stat_t;
     #endif
   #endif /* G_OS_UNIX */
-
-  #ifdef G_OS_WIN32
-    // int g_stat (const gchar *filename, struct _g_stat_struct *buf);
-    typedef struct _g_stat_struct stardict_stat_t;
-  #else
-    // int g_stat (const gchar *filename, struct stat *buf);
-    typedef struct stat stardict_stat_t;
-  #endif
 #elif GLIB_CHECK_VERSION(2, 20, 0)
   #if defined(G_OS_UNIX) && !defined(G_STDIO_NO_WRAP_ON_UNIX)
     // #define g_stat    stat
