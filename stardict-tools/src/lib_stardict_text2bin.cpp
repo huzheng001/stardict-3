@@ -31,6 +31,11 @@ static bool compare_synitems_by_synonym(const synitem_t& left, const synitem_t& 
 	return 0 > stardict_strcmp(left.synonym.c_str(), right.synonym.c_str());
 }
 
+static bool compare_article_data_by_key(const article_data_t& left, const article_data_t& right)
+{
+	return 0 > stardict_strcmp(left.key.c_str(), right.key.c_str());
+}
+
 /* generate binary normal dictionary */
 class binary_dict_gen_t
 {
@@ -409,6 +414,7 @@ int stardict_text2bin(const std::string& xmlfilename, const std::string& ifofile
 	if(parse_textual_dict(xmlfilename, &norm_dict,
 			print_info, show_xincludes))
 		return EXIT_FAILURE;
+	std::sort(norm_dict.articles.begin(), norm_dict.articles.end(), compare_article_data_by_key);
 	binary_dict_gen_t generator;
 	generator.set_print_info(print_info);
 	generator.set_use_same_type_sequence(use_same_type_sequence);
