@@ -544,7 +544,7 @@ int dictionary_data_block::verify_field_content_r(const char* const data, guint3
 				continue;
 			}
 		}
-		if(!is_known_resource_type(resitem.key.c_str())) {
+		if(!is_known_resource_type(resitem.type.c_str())) {
 			print_info("Index item %s. Type id '%c'. Line: %s. Unknown type.\n",
 				word, type_id, line.c_str());
 			if(fix_errors) {
