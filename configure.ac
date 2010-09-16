@@ -178,17 +178,6 @@ else
 fi
 AC_SUBST(DICTDOTCN_PLUGIN_DIR)
 
-AC_ARG_ENABLE([advertisement],
-	AS_HELP_STRING([--disable-advertisement],[Disable advertisement virtual dict plugin (default: enabled)]),
-	[enable_advertisement=$enableval],
-	[enable_advertisement=yes])
-if test "x$enable_advertisement" = "xyes" ; then
-	ADVERTISEMENT_PLUGIN_DIR="stardict-advertisement-plugin"
-else
-	ADVERTISEMENT_PLUGIN_DIR=
-fi
-AC_SUBST(ADVERTISEMENT_PLUGIN_DIR)
-
 AC_ARG_ENABLE([man],
 	AS_HELP_STRING([--disable-man],[Disable man virtual dict plugin (default: enabled)]),
 	[enable_man=$enableval],
@@ -458,6 +447,8 @@ src/lib/Makefile
 src/pixmaps/Makefile
 src/sounds/Makefile
 src/dic/Makefile
+src/dic/stardict-dict/Makefile
+src/dic/stardict-dict/res/Makefile
 src/skins/Makefile
 src/treedict/Makefile
 src/win32/Makefile
@@ -466,8 +457,6 @@ src/win32/acrobat/sources/Makefile
 src/win32/acrobat/win32/Makefile
 src/win32/nsis/Makefile
 stardict-plugins/Makefile
-stardict-plugins/stardict-advertisement-plugin/Makefile
-stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
 stardict-plugins/stardict-qqwry-plugin/Makefile
 stardict-plugins/stardict-dictdotcn-plugin/Makefile
