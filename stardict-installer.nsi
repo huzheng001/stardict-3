@@ -423,6 +423,7 @@ Section Uninstall
       SetShellVarContext "all"
 
   cont_uninstall:
+    RMDir /r "$INSTDIR\dic\stardict-dict"
     RMDir "$INSTDIR\dic"
     RMDir "$INSTDIR\treedict"
     RMDir /r "$INSTDIR\locale"
