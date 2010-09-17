@@ -8,8 +8,8 @@ You may need to tweak the options below.
 // options
 var InstallDirMustNotExist = false;
 var MSVSConfig = "Release"; // Release or Debug
-var LinuxDistDir = "\\\\Mainworkstation\\mnt\\freebsd.data\\work\\stardict\\work\\stardict-current\\tests\\stardict-3.0.2";
-var LinuxBuildDir = LinuxDistDir;
+var LinuxDistDir = "\\\\Mainworkstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\tests\\stardict-3.0.2";
+var LinuxBuildDir = "\\\\Mainworkstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build";
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
@@ -42,12 +42,21 @@ function CopyFolderContent(SrcDir, TargetDir) {
 	var oFolders = new Enumerator(oFolder.SubFolders);
 	for(; !oFolders.atEnd(); oFolders.moveNext())
 	{
+		if(oFolders.item().name.toLowerCase() == ".svn") {
+			continue;
+		}
 		//WScript.Echo("folder: " + oFolders.item().path);
-		fso.CopyFolder(oFolders.item().path, TargetDir);
+		var NewDir = TargetDir + oFolders.item().name + "\\";
+		CreateFolder(NewDir);
+		CopyFolderContent(oFolders.item().path, NewDir);
 	}
 	var oFiles = new Enumerator(oFolder.Files);
 	for(; !oFiles.atEnd(); oFiles.moveNext()) 
 	{
+		if(oFiles.item().name.toLowerCase() == "makefile.am"
+		|| oFiles.item().name.toLowerCase() == "makefile.in") {
+			continue;
+		}
 		//WScript.Echo("file: " + oFiles.item().path);
 		fso.CopyFile(oFiles.item().path, TargetDir);
 	}
@@ -157,7 +166,13 @@ CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 	CreateFolder(SoundsDir);
 	fso.CopyFile(BaseDir + "src\\sounds\\*.wav",  SoundsDir);
 }
-CreateFolder(InstallDir + "dic\\");
+
+{
+	var DicDir = InstallDir + "dic\\";
+	CreateFolder(DicDir);
+	CopyFolderContent("src\\dic\\", DicDir);
+}
+
 CreateFolder(InstallDir + "treedict\\");
 CreateFolder(InstallDir + "skins\\");
 
@@ -196,11 +211,7 @@ CreateFolder(InstallDir + "skins\\");
 		var files = FindFiles(MSVSOutputDir, /.*\.dll$/i);
 		for(var i=0; i<files.length; i++) {
 			if(files[i].toLowerCase() == "textoutspy.dll" 
-			|| files[i].toLowerCase() == "textouthook.dll"
-			/* advertisement plugin fails to load with the message:
-			"File C:\Program Files\StarDict\data\advertisement\advertisement.txt doesn't exist!"
-			Skip it. */
-			|| files[i].toLowerCase() == "stardict-advertisement-plugin.dll")
+			|| files[i].toLowerCase() == "textouthook.dll")
 				continue;
 			//WScript.Echo("path: " + MSVSOutputDir + files[i]);
 			CopyFile(MSVSOutputDir + files[i], PluginsDir);
