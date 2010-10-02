@@ -288,7 +288,10 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
 	libstardictverify.h resourcewrap.hpp ifo_file.hpp ifo_file.cpp \
 	lib_binary_dict_parser.cpp lib_binary_dict_parser.h lib_dict_data_block.cpp lib_dict_data_block.h \
-	lib_res_store.cpp lib_res_store.h lib_chars.cpp lib_chars.h
+	lib_res_store.cpp lib_res_store.h lib_chars.cpp lib_chars.h \
+	lib_stardict_bin2text.cpp lib_stardict_bin2text.h \
+	lib_common_dict.cpp lib_common_dict.h \
+	lib_binary_parser_unify.h lib_binary_parser_unify.cpp
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \

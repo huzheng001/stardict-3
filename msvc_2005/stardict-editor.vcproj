@@ -203,7 +203,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\stardict-tools\src\lib_binary_parser_unify.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\stardict-tools\src\lib_chars.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_common_dict.cpp"
 				>
 			</File>
 			<File
@@ -212,6 +220,10 @@
 			</File>
 			<File
 				RelativePath="..\stardict-tools\src\lib_res_store.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_stardict_bin2text.cpp"
 				>
 			</File>
 			<File
@@ -277,7 +289,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\stardict-tools\src\lib_binary_parser_unify.h"
+				>
+			</File>
+			<File
 				RelativePath="..\stardict-tools\src\lib_chars.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_common_dict.h"
 				>
 			</File>
 			<File
@@ -286,6 +306,10 @@
 			</File>
 			<File
 				RelativePath="..\stardict-tools\src\lib_res_store.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_stardict_bin2text.h"
 				>
 			</File>
 			<File

@@ -2,23 +2,30 @@
 #  include "config.h"
 #endif
 
-#include <string.h>
+#include <cstring>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
+#include <cstdlib>
+#include <cstdio>
 
 #include "libtabfile.h"
 #include "libbabylonfile.h"
 #include "libstardict2txt.h"
 #include "libstardictverify.h"
 #include "libbgl2txt.h"
+#include "lib_stardict_bin2text.h"
+#include "resourcewrap.hpp"
 
 static GtkWidget *main_window;
 static GtkTextBuffer *compile_page_text_view_buffer;
-static GtkWidget *compile_page_option_menu;
+static GtkWidget *compile_page_combo_box;
+static GtkWidget *decompile_page_combo_box;
 static GtkTextBuffer *decompile_page_text_view_buffer;
 static GtkTextBuffer *edit_page_text_view_buffer;
+static GtkWidget *decompile_page_entry_chunk_size;
+static GtkWidget *decompile_page_textual_stardict_hbox;
 
-void on_browse_button_clicked(GtkButton *button, gpointer data)
+static void on_browse_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
 	GtkWidget *dialog;
@@ -38,7 +45,7 @@ void on_browse_button_clicked(GtkButton *button, gpointer data)
 	gtk_widget_destroy (dialog);
 }
 
-void compile_page_print_info(const char *info, ...)
+static void compile_page_print_info(const char *info, ...)
 {
 	va_list va;
 	va_start(va, info);
@@ -48,15 +55,15 @@ void compile_page_print_info(const char *info, ...)
 	va_end(va);
 }
 
-void on_compile_page_build_button_clicked(GtkButton *button, gpointer data)
+static void on_compile_page_compile_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(compile_page_text_view_buffer, "Building...\n", -1);
-	gint key = gtk_option_menu_get_history(GTK_OPTION_MENU(compile_page_option_menu));
+	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(compile_page_combo_box));
 	bool res = true;
-	if (key == 0)
+	if (output_format_ind == 0)
 		res = convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
-	else if (key == 1)
+	else if (output_format_ind == 1)
 		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info, true);
 	else
 		convert_bglfile(gtk_entry_get_text(entry), "", "");
@@ -65,7 +72,7 @@ void on_compile_page_build_button_clicked(GtkButton *button, gpointer data)
 		-1);
 }
 
-void create_compile_page(GtkWidget *notebook)
+static void create_compile_page(GtkWidget *notebook)
 {
 	GtkWidget *vbox = gtk_vbox_new(false, 6);
 	GtkWidget *label = gtk_label_new("Compile");
@@ -112,23 +119,20 @@ void create_compile_page(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 	hbox = gtk_hbox_new(false, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
-	compile_page_option_menu = gtk_option_menu_new();
-	GtkWidget *menu = gtk_menu_new();
-	GtkWidget *menuitem;
-	menuitem=gtk_menu_item_new_with_mnemonic("Tab file");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("Babylon file");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	menuitem=gtk_menu_item_new_with_mnemonic("BGL file");
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-	gtk_option_menu_set_menu(GTK_OPTION_MENU(compile_page_option_menu), menu);
-	gtk_box_pack_start(GTK_BOX(hbox), compile_page_option_menu, true, false, 0);
-	button = gtk_button_new_with_mnemonic("_Build");
+	
+	compile_page_combo_box = gtk_combo_box_new_text();
+	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Tab file");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Babylon file");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "BGL file");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(compile_page_combo_box), 0);
+	gtk_box_pack_start(GTK_BOX(hbox), compile_page_combo_box, true, false, 0);
+
+	button = gtk_button_new_with_mnemonic("_Compile");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
-	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_build_button_clicked), entry);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_compile_button_clicked), entry);
 }
 
-void decompile_page_print_info(const char *info, ...)
+static void decompile_page_print_info(const char *info, ...)
 {
 	va_list va;
 	va_start(va, info);
@@ -138,26 +142,61 @@ void decompile_page_print_info(const char *info, ...)
 	va_end(va);
 }
 
-void on_decompile_page_build_button_clicked(GtkButton *button, gpointer data)
+static void on_decompile_page_build_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(decompile_page_text_view_buffer, "Building...\n", -1);
-	convert_stardict2txt(gtk_entry_get_text(entry), decompile_page_print_info);
-	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, "Done!\n", -1);
+	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(decompile_page_combo_box));
+	int res = EXIT_SUCCESS;
+	if(output_format_ind == 0)
+		convert_stardict2txt(gtk_entry_get_text(entry), decompile_page_print_info);
+	else {
+		std::string ifofilename(gtk_entry_get_text(entry));
+		std::string::size_type pos = ifofilename.find_last_of('.');
+		std::string xmlfilename = (pos == std::string::npos ? ifofilename : ifofilename.substr(0, pos)) + ".xml";
+		const gchar* chunk_size_str = gtk_entry_get_text(GTK_ENTRY(decompile_page_entry_chunk_size));
+		int chunk_size = atoi(chunk_size_str);
+		if(chunk_size < 0)
+			chunk_size = 0;
+		glib::CharStr temp(g_strdup_printf("%d", chunk_size));
+		// set the chunk size back to the entry for the user to see what value was actually used.
+		gtk_entry_set_text(GTK_ENTRY(decompile_page_entry_chunk_size), get_impl(temp));
+		res = stardict_bin2text(ifofilename, xmlfilename, chunk_size, decompile_page_print_info);
+	}
+	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, 
+		(res == EXIT_SUCCESS) ? "Done!\n" : "Failed!\n",
+		-1);
 }
 
-void on_decompile_page_verify_button_clicked(GtkButton *button, gpointer data)
+static void on_decompile_page_verify_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
 	gtk_text_buffer_set_text(decompile_page_text_view_buffer, "Verifing dictionary files...\n", -1);
-	stardict_verify(gtk_entry_get_text(entry), decompile_page_print_info);
-	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, "Done!\n", -1);
+	int res = stardict_verify(gtk_entry_get_text(entry), decompile_page_print_info);
+	gtk_text_buffer_insert_at_cursor(decompile_page_text_view_buffer, 
+		(res == EXIT_SUCCESS) ? "Done!\n" : "Failed!\n",
+		-1);
 }
 
-void create_decompile_page(GtkWidget *notebook)
+static void set_parameter_panel(void)
+{
+	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(decompile_page_combo_box));
+	if(output_format_ind == 1)
+		gtk_widget_show(GTK_WIDGET(decompile_page_textual_stardict_hbox));
+	else
+		gtk_widget_hide(GTK_WIDGET(decompile_page_textual_stardict_hbox));
+}
+
+static void on_decompile_page_combo_box_changed(GtkComboBox *widget, gpointer user_data)
+{
+	set_parameter_panel();
+}
+
+
+static void create_decompile_page(GtkWidget *notebook)
 {
 	GtkWidget *vbox = gtk_vbox_new(false, 6);
-	GtkWidget *label = gtk_label_new("DeCompile");
+	GtkWidget *label = gtk_label_new("DeCompile/Verify");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 	GtkWidget *hbox = gtk_hbox_new(false, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
@@ -181,15 +220,34 @@ void create_decompile_page(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 	hbox = gtk_hbox_new(false, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+
+	decompile_page_combo_box = gtk_combo_box_new_text();
+	gtk_combo_box_append_text(GTK_COMBO_BOX(decompile_page_combo_box), "Tab file");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(decompile_page_combo_box), "Textual StarDict dictionary");
+	gtk_combo_box_set_active(GTK_COMBO_BOX(decompile_page_combo_box), 0);
+	gtk_box_pack_start(GTK_BOX(hbox), decompile_page_combo_box, true, false, 0);
+
 	button = gtk_button_new_with_mnemonic("_Decompile");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_decompile_page_build_button_clicked), entry);
 	button = gtk_button_new_with_mnemonic("_Verify");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_decompile_page_verify_button_clicked), entry);
+
+	// parameter panel
+	decompile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), decompile_page_textual_stardict_hbox, false, false, 3);
+	label = gtk_label_new("Chunk size (in bytes, 0 - do not split):");
+	gtk_box_pack_start(GTK_BOX(decompile_page_textual_stardict_hbox), label, false, false, 0);
+	decompile_page_entry_chunk_size = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(decompile_page_entry_chunk_size), "0");
+	gtk_box_pack_start(GTK_BOX(decompile_page_textual_stardict_hbox), decompile_page_entry_chunk_size, false, false, 0);
+
+	// must be after the parameter panel is created
+	g_signal_connect(G_OBJECT(decompile_page_combo_box), "changed", G_CALLBACK(on_decompile_page_combo_box_changed), NULL);
 }
 
-void on_edit_page_open_button_clicked(GtkButton *button, gpointer data)
+static void on_edit_page_open_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkWidget *dialog;
 	dialog = gtk_file_chooser_dialog_new ("Open file...",
@@ -212,7 +270,7 @@ void on_edit_page_open_button_clicked(GtkButton *button, gpointer data)
 
 }
 
-void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
+static void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkWidget *dialog;
 	dialog = gtk_file_chooser_dialog_new ("Save file...",
@@ -237,7 +295,7 @@ void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 	gtk_widget_destroy (dialog);
 }
 
-void create_edit_page(GtkWidget *notebook)
+static void create_edit_page(GtkWidget *notebook)
 {
 	GtkWidget *vbox = gtk_vbox_new(false, 6);
 	GtkWidget *label = gtk_label_new("Edit");
@@ -264,13 +322,13 @@ void create_edit_page(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 }
 
-gboolean on_delete_event(GtkWidget * window, GdkEvent *event , gpointer data)
+static gboolean on_delete_event(GtkWidget * window, GdkEvent *event , gpointer data)
 {
 	gtk_main_quit();
 	return FALSE;
 }
 
-void create_window()
+static void create_window()
 {
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_position (GTK_WINDOW (main_window), GTK_WIN_POS_CENTER);
@@ -283,6 +341,7 @@ void create_window()
 	create_decompile_page(notebook);
 	create_edit_page(notebook);
 	gtk_widget_show_all(main_window);
+	set_parameter_panel();
 }
 
 #ifdef _WIN32
