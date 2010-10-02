@@ -39,8 +39,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="."
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				AdditionalIncludeDirectories=".;libxml2\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,8 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib iconv.lib"
+				AdditionalDependencies="zdll.lib iconv.lib libxml2_a.lib Ws2_32.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="libxml2\lib.debug"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -117,8 +118,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="."
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				AdditionalIncludeDirectories=".;libxml2\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -136,8 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="zdll.lib iconv.lib"
+				AdditionalDependencies="zdll.lib iconv.lib libxml2_a.lib Ws2_32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="libxml2\lib.release"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -227,6 +229,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\stardict-tools\src\lib_stardict_text2bin.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_textual_dict_parser.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\stardict-tools\src\libbabylonfile.cpp"
 				>
 			</File>
@@ -310,6 +320,14 @@
 			</File>
 			<File
 				RelativePath="..\stardict-tools\src\lib_stardict_bin2text.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_stardict_text2bin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-tools\src\lib_textual_dict_parser.h"
 				>
 			</File>
 			<File
