@@ -275,14 +275,14 @@ stardict_text2bin_LDFLAGS =
 stardict_text2bin_LDADD = $(STARDICT_LIBS) $(LIBXML_LIBS)
 stardict_text2bin_SOURCES = stardict_text2bin.cpp \
 	lib_stardict_text2bin.cpp lib_stardict_text2bin.h resourcewrap.hpp \
-	ifo_file.hpp ifo_file.cpp resourcewrap.hpp libcommon.cpp libcommon.h \
+	ifo_file.hpp ifo_file.cpp libcommon.cpp libcommon.h \
 	lib_chars.cpp lib_chars.h lib_common_dict.cpp lib_common_dict.h \
 	lib_textual_dict_parser.cpp lib_textual_dict_parser.h
 
 stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_editor_DEPENDENCIES = libbgl2txt.a
 stardict_editor_LDFLAGS =
-stardict_editor_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
+stardict_editor_LDADD = $(STARDICT_LIBS) $(LIBXML_LIBS) -lz libbgl2txt.a
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \
@@ -291,7 +291,9 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	lib_res_store.cpp lib_res_store.h lib_chars.cpp lib_chars.h \
 	lib_stardict_bin2text.cpp lib_stardict_bin2text.h \
 	lib_common_dict.cpp lib_common_dict.h \
-	lib_binary_parser_unify.h lib_binary_parser_unify.cpp
+	lib_binary_parser_unify.h lib_binary_parser_unify.cpp \
+	lib_stardict_text2bin.cpp lib_stardict_text2bin.h \
+	lib_textual_dict_parser.cpp lib_textual_dict_parser.h
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \

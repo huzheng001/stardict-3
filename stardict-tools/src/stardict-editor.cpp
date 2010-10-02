@@ -14,6 +14,7 @@
 #include "libstardictverify.h"
 #include "libbgl2txt.h"
 #include "lib_stardict_bin2text.h"
+#include "lib_stardict_text2bin.h"
 #include "resourcewrap.hpp"
 
 static GtkWidget *main_window;
@@ -24,6 +25,9 @@ static GtkTextBuffer *decompile_page_text_view_buffer;
 static GtkTextBuffer *edit_page_text_view_buffer;
 static GtkWidget *decompile_page_entry_chunk_size;
 static GtkWidget *decompile_page_textual_stardict_hbox;
+static GtkWidget *compile_page_show_xinclude_check_box;
+static GtkWidget *compile_page_use_sametypesequence_check_box;
+static GtkWidget *compile_page_textual_stardict_hbox;
 
 static std::string get_file_path_without_extension(const std::string& full_file_name)
 {
@@ -64,18 +68,42 @@ static void compile_page_print_info(const char *info, ...)
 static void on_compile_page_compile_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
+	std::string srcfilename(gtk_entry_get_text(entry));
 	gtk_text_buffer_set_text(compile_page_text_view_buffer, "Building...\n", -1);
 	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(compile_page_combo_box));
 	bool res = true;
 	if (output_format_ind == 0)
-		res = convert_tabfile(gtk_entry_get_text(entry), compile_page_print_info);
+		res = convert_tabfile(srcfilename.c_str(), compile_page_print_info);
 	else if (output_format_ind == 1)
-		convert_babylonfile(gtk_entry_get_text(entry), compile_page_print_info, true);
-	else
-		convert_bglfile(gtk_entry_get_text(entry), "", "");
+		convert_babylonfile(srcfilename.c_str(), compile_page_print_info, true);
+	else if (output_format_ind == 2)
+		convert_bglfile(srcfilename.c_str(), "", "");
+	else {
+		std::string ifofilename = get_file_path_without_extension(srcfilename) + ".ifo";
+		bool show_xincludes = gtk_toggle_button_get_active(
+			GTK_TOGGLE_BUTTON(compile_page_show_xinclude_check_box));
+		bool use_same_type_sequence = gtk_toggle_button_get_active(
+			GTK_TOGGLE_BUTTON(compile_page_use_sametypesequence_check_box));
+		res = (EXIT_SUCCESS == stardict_text2bin(srcfilename, ifofilename,
+			compile_page_print_info, show_xincludes, use_same_type_sequence));
+	}
 	gtk_text_buffer_insert_at_cursor(compile_page_text_view_buffer, 
 		res ? "Done!\n" : "Failed!\n",
 		-1);
+}
+
+static void set_compile_parameter_panel(void)
+{
+	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(compile_page_combo_box));
+	if(output_format_ind == 3)
+		gtk_widget_show(GTK_WIDGET(compile_page_textual_stardict_hbox));
+	else
+		gtk_widget_hide(GTK_WIDGET(compile_page_textual_stardict_hbox));
+}
+
+static void on_compile_page_combo_box_changed(GtkComboBox *widget, gpointer user_data)
+{
+	set_compile_parameter_panel();
 }
 
 static void create_compile_page(GtkWidget *notebook)
@@ -117,6 +145,8 @@ static void create_compile_page(GtkWidget *notebook)
 		"two dimensional's meaning<br>the second line.\n"
 		"\n"
 		"======\n"
+		"See doc\\TextualDictionaryFileFormat in source tarball for information about Textual StarDict dictionary.\n"
+		"======\n"
 		, -1);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
@@ -130,12 +160,30 @@ static void create_compile_page(GtkWidget *notebook)
 	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Tab file");
 	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Babylon file");
 	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "BGL file");
+	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Textual StarDict dictionary");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(compile_page_combo_box), 0);
 	gtk_box_pack_start(GTK_BOX(hbox), compile_page_combo_box, true, false, 0);
 
 	button = gtk_button_new_with_mnemonic("_Compile");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_compile_button_clicked), entry);
+
+	// parameter panel
+	compile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+	gtk_box_pack_start(GTK_BOX(vbox), compile_page_textual_stardict_hbox, false, false, 3);
+	
+	compile_page_show_xinclude_check_box = gtk_check_button_new_with_label("show xincludes");
+	gtk_box_pack_start(GTK_BOX(compile_page_textual_stardict_hbox), 
+		compile_page_show_xinclude_check_box, false, false, 0);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(compile_page_show_xinclude_check_box), TRUE);
+	
+	compile_page_use_sametypesequence_check_box = gtk_check_button_new_with_label("use same type sequence");
+	gtk_box_pack_start(GTK_BOX(compile_page_textual_stardict_hbox), 
+		compile_page_use_sametypesequence_check_box, false, false, 0);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(compile_page_use_sametypesequence_check_box), TRUE);
+
+	// must be after the parameter panel is created
+	g_signal_connect(G_OBJECT(compile_page_combo_box), "changed", G_CALLBACK(on_compile_page_combo_box_changed), NULL);
 }
 
 static void decompile_page_print_info(const char *info, ...)
@@ -184,7 +232,7 @@ static void on_decompile_page_verify_button_clicked(GtkButton *button, gpointer 
 		-1);
 }
 
-static void set_parameter_panel(void)
+static void set_decompile_parameter_panel(void)
 {
 	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(decompile_page_combo_box));
 	if(output_format_ind == 1)
@@ -195,9 +243,8 @@ static void set_parameter_panel(void)
 
 static void on_decompile_page_combo_box_changed(GtkComboBox *widget, gpointer user_data)
 {
-	set_parameter_panel();
+	set_decompile_parameter_panel();
 }
-
 
 static void create_decompile_page(GtkWidget *notebook)
 {
@@ -347,7 +394,8 @@ static void create_window()
 	create_decompile_page(notebook);
 	create_edit_page(notebook);
 	gtk_widget_show_all(main_window);
-	set_parameter_panel();
+	set_decompile_parameter_panel();
+	set_compile_parameter_panel();
 }
 
 #ifdef _WIN32

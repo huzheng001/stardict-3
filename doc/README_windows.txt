@@ -28,10 +28,52 @@ libxml library
 stardict-editor project depends on libxml library (http://xmlsoft.org/).
 If you plan to build only StarDict, you do not need this library.
 
-Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
-Unpack into a temporary directory.
-Copy ibxml2-*.win32/include/libxml directory into msvc_2005/libxml
-Now stardict-editor need not be linked with libxml library, it only uses header files.
+To build stardict-editor with libxml2 library you have two options: you may use either prebuild libxml2 binaries by  Igor Zlatković. or build libxml2 from source. With prebuild binaries you'll be only able to build release version of stardict-editor. If you build libxml library from source, you'll be able to build both Release and Debug versions of stardict-editor.
+
+See http://www.zlatkovic.com/libxml.en.html for details about libxml2 library on Windows.
+
+I. building with prebuild binaries
+----------------------------------
+1. Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
+2. Unpack into msvc_2005, you'll get a msvc_2005/libxml2-*.win32 folder.
+3. Rename libxml2-*.win32 to libxml2.
+4. Rename msvc_2005/libxml2/lib to msvc_2005/libxml2/lib.release
+
+II. building libxml library from source
+---------------------------------------
+1. download libxml archive (for example libxml2-2.7.7.tar.gz) from ftp://xmlsoft.org/libxml2/
+2. extract the archave into msvc_2005, rename msvc_2005\libxml2-* to msvc_2005\libxml2-src
+3. Windows menu->All Programs->Microsoft Visual Studio 2005->Visual Studio Tools->Visual Studio 2005 Command Prompt
+4. cd to msvc_2005\libxml2-src\win32 in the opened console window.
+5. Run "cscript configure.js help" to get a listing of all the build options (for your information only).
+6. Building release version with default options.
+> cscript configure.js include=../../gtk/include lib=../../gtk/lib
+> nmake /f Makefile.msvc
+you see multiple warning like:
+<<<<
+c14n.c
+c:\stardict\msvc_2005\libxml2-src\libxml.h(94) : warning C4005: 'LIBXML_STATIC' : macro redefinition
+        command-line arguments : see previous definition of 'LIBXML_STATIC'
+>>>>
+I think they can be ignored.
+7. build results are in msvc_2005\libxml2-src\win32\bin.msvc
+8. copy msvc_2005\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2005\libxml2\lib.release\libxml2_a.lib
+9. remove msvc_2005\libxml2-src folder, than repeat step 2 to recreate this folder
+10. buiding a debug version
+> cscript configure.js cruntime=/MDd include=../../gtk/include lib=../../gtk/lib
+> nmake /f Makefile.msvc
+11. copy msvc_2005\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2005\libxml2\lib.debug\libxml2_a.lib
+12. copy msvc_2005\libxml2-src\include to msvc\libxml2\include
+
+stardict-editor project configuration for libxml
+------------------------------------------------
+
+stardict-editor MS Visual C++ project is already configured to build with libxml2. You do not need to change settings unless you want a custom build.
+
+stardict-editor links libxml statically. You need to adjust project settings as follows to build the project.
+1. link with libxml2_a.lib library
+2. define the following macros LIBXML_STATIC, LIBXSLT_STATIC, LIBEXSLT_STATIC and XMLSEC_STATIC in project settings. These macros must be globally defined!
+3. libxml2 library and the project must use the same version of the c-runtime library. It may be multi-threaded vs. single-threaded, release vs. debug, linked statically or dynamically.
 
 Building libsigc++
 ------------------
