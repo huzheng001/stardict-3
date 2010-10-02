@@ -17,10 +17,10 @@ int main(int argc,char * argv [])
 	gtk_set_locale ();
 	g_type_init ();
 
-	if (argc!=2) {
-		g_print("please type this:\n./stardict2txt somedict.ifo\n");
+	if (argc!=3) {
+		g_print("Usage:\n./stardict2txt somedict.ifo output.txt\n");
 	} else {
-		convert_stardict2txt(argv[1], print_info);
+		convert_stardict2txt(argv[1], argv[2], print_info);
 	}
 	return FALSE;
 }

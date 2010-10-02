@@ -3,7 +3,7 @@
 
 #include "libcommon.h"
 
-extern void convert_stardict2txt(const char *ifofilename, print_info_t print_info);
+extern void convert_stardict2txt(const char *ifofilename, const char* txtfilename, print_info_t print_info);
 
 #endif
 
