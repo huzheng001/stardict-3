@@ -11,15 +11,13 @@
 
 #include "libstardict2txt.h"
 
-static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
+static void convert2tabfile(const gchar *ifofilename, const gchar* txtfilename, print_info_t print_info)
 {
 	std::string idxfilename=ifofilename;
 	idxfilename.replace(idxfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "idx");
 	stardict_stat_t idx_stats;
 	if (g_stat (idxfilename.c_str(), &idx_stats) == -1) {
-		gchar *str = g_strdup_printf("File not exist: %s\n", idxfilename.c_str());
-		print_info(str);
-		g_free(str);
+		print_info("File not exist: %s\n", idxfilename.c_str());
 		return;
 	}
 	std::string dictfilename=ifofilename;
@@ -27,14 +25,12 @@ static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
 	stardict_stat_t dict_stats;
 	if (g_stat (dictfilename.c_str(), &dict_stats) == -1) {
 #ifdef _WIN32
-		gchar *str = g_strdup_printf("File not exist: %s\nPlease rename somedict.dict.dz to somedict.dict.gz and use SevenZip to uncompress the somedict.dict.gz file, then you can get the somedict.dict file.\n", dictfilename.c_str());
+		print_info("File not exist: %s\nPlease rename somedict.dict.dz to somedict.dict.gz and use SevenZip to uncompress the somedict.dict.gz file, then you can get the somedict.dict file.\n", dictfilename.c_str());
 #else
-		gchar *str = g_strdup_printf("File not exist: %s\nPlease do \"mv somedict.dict.dz somedict.dict.gz;gunzip somedict.dict.gz\"\n", dictfilename.c_str());
+		print_info("File not exist: %s\nPlease do \"mv somedict.dict.dz somedict.dict.gz;gunzip somedict.dict.gz\"\n", dictfilename.c_str());
 #endif
-		print_info(str);
-		g_free(str);
-                return;
-        }
+		return;
+	}
 	gchar *idxbuffer = (gchar *)g_malloc (idx_stats.st_size);
 	gchar *idxbuffer_end = idxbuffer+idx_stats.st_size;
 	FILE *idxfile;
@@ -43,20 +39,14 @@ static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
 	fclose (idxfile);
 
 	gchar *dictbuffer = (gchar *)g_malloc (dict_stats.st_size);
-        FILE *dictfile;
-        dictfile = g_fopen(dictfilename.c_str(),"rb");
-        fread (dictbuffer, 1, dict_stats.st_size, dictfile);
-        fclose (dictfile);
+	FILE *dictfile;
+	dictfile = g_fopen(dictfilename.c_str(),"rb");
+	fread (dictbuffer, 1, dict_stats.st_size, dictfile);
+	fclose (dictfile);
 
-	gchar *basefilename = g_path_get_basename(ifofilename);
-	std::string txtfilename=basefilename;
-	g_free(basefilename);
-	txtfilename.replace(txtfilename.length()-sizeof("ifo")+1, sizeof("ifo")-1, "txt");
-	gchar *str = g_strdup_printf("Write to file: %s\n", txtfilename.c_str());
-	print_info(str);
-	g_free(str);
+	print_info("Write to file: %s\n", txtfilename);
 	FILE *txtfile;
-	txtfile = g_fopen(txtfilename.c_str(),"w");
+	txtfile = g_fopen(txtfilename,"w");
 
 	gchar *p=idxbuffer;
 	int wordlen;
@@ -98,7 +88,7 @@ static void convert2tabfile(const gchar *ifofilename, print_info_t print_info)
 	g_free(dictbuffer);
 }
 
-void convert_stardict2txt(const char *ifofilename, print_info_t print_info)
+void convert_stardict2txt(const char *ifofilename, const char* txtfilename, print_info_t print_info)
 {
 	gchar *buffer;
 	g_file_get_contents(ifofilename, &buffer, NULL, NULL);
@@ -109,8 +99,8 @@ void convert_stardict2txt(const char *ifofilename, print_info_t print_info)
 	}
 	gchar *p1,*p2;
 
-        p1 = buffer;
-        p2 = strstr(p1,"\nsametypesequence=");
+	p1 = buffer;
+	p2 = strstr(p1,"\nsametypesequence=");
 	if (!p2) {
 		print_info("Error, no sametypesequence=\n");
 		g_free(buffer);
@@ -118,9 +108,9 @@ void convert_stardict2txt(const char *ifofilename, print_info_t print_info)
 	}
 	p2 += sizeof("\nsametypesequence=") -1;
 	if (g_ascii_islower(*p2) && *(p2+1)=='\n') {
-		convert2tabfile(ifofilename, print_info);
+		convert2tabfile(ifofilename, txtfilename, print_info);
 	} else {
-		print_info("Error, sametypesequence is not m\n");
+		print_info("Error, sametypesequence must be a single lower case letter, preferably 'm'.\n");
 		g_free(buffer);
 		return;
 	}

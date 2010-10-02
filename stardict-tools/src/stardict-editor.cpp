@@ -25,6 +25,12 @@ static GtkTextBuffer *edit_page_text_view_buffer;
 static GtkWidget *decompile_page_entry_chunk_size;
 static GtkWidget *decompile_page_textual_stardict_hbox;
 
+static std::string get_file_path_without_extension(const std::string& full_file_name)
+{
+	std::string::size_type pos = full_file_name.find_last_of('.');
+	return (pos == std::string::npos ? full_file_name : full_file_name.substr(0, pos));
+}
+
 static void on_browse_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
@@ -145,15 +151,15 @@ static void decompile_page_print_info(const char *info, ...)
 static void on_decompile_page_build_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
+	std::string ifofilename(gtk_entry_get_text(entry));
 	gtk_text_buffer_set_text(decompile_page_text_view_buffer, "Building...\n", -1);
 	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(decompile_page_combo_box));
 	int res = EXIT_SUCCESS;
-	if(output_format_ind == 0)
-		convert_stardict2txt(gtk_entry_get_text(entry), decompile_page_print_info);
-	else {
-		std::string ifofilename(gtk_entry_get_text(entry));
-		std::string::size_type pos = ifofilename.find_last_of('.');
-		std::string xmlfilename = (pos == std::string::npos ? ifofilename : ifofilename.substr(0, pos)) + ".xml";
+	if(output_format_ind == 0) {
+		std::string txtfilename = get_file_path_without_extension(ifofilename) + ".txt";
+		convert_stardict2txt(ifofilename.c_str(), txtfilename.c_str(), decompile_page_print_info);
+	} else {
+		std::string xmlfilename = get_file_path_without_extension(ifofilename) + ".xml";
 		const gchar* chunk_size_str = gtk_entry_get_text(GTK_ENTRY(decompile_page_entry_chunk_size));
 		int chunk_size = atoi(chunk_size_str);
 		if(chunk_size < 0)
