@@ -133,6 +133,7 @@ CreateFolder(InstallDir);
 CopyFile(MSVSOutputDir + "stardict.exe", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
+CopyFile(MSVSOutputDir + "stardict-editor.exe", InstallDir);
 {
 	var oFolder = fso.GetFolder(LinuxBuildDir + "\\po");
 	var oFiles = new Enumerator(oFolder.Files);

@@ -377,6 +377,7 @@ Section SecStarDict
     startin_stardict:
     CreateDirectory "$SMPROGRAMS\StarDict"
     CreateShortCut "$SMPROGRAMS\StarDict\StarDict.lnk" "$INSTDIR\stardict.exe"
+    CreateShortCut "$SMPROGRAMS\StarDict\StarDict-editor.lnk" "$INSTDIR\stardict-editor.exe"
     CreateShortCut "$DESKTOP\StarDict.lnk" "$INSTDIR\stardict.exe"
     SetOutPath "$INSTDIR"
 
@@ -434,6 +435,7 @@ Section Uninstall
     RMDir /r "$INSTDIR\data"
     RMDir /r "$INSTDIR\skins"
     Delete "$INSTDIR\stardict.exe"
+    Delete "$INSTDIR\stardict-editor.exe"
     Delete "$INSTDIR\TextOutSpy.dll"
     Delete "$INSTDIR\TextOutHook.dll"
     Delete "$INSTDIR\${LIB_SIGC_DLL}"
@@ -443,7 +445,7 @@ Section Uninstall
 
     Call un.DeleteWordPickAcrobatPlugin
 
-    ; Shortcuts..
+    ; Shortcuts...
     RMDir /r "$SMPROGRAMS\StarDict"
     Delete "$DESKTOP\StarDict.lnk"
 
