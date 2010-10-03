@@ -1,4 +1,16 @@
 2010.
+Add stardict-bin2text and stardict_text2bin tools to stardict-editor.
+Update Russian translation.
+replace advertisement plugin with a dictionary
+discontinue support for Dev-C++ IDE. Now use MS Visual Studio 2005 to build StarDict under Windows.
+Introduce new textual dictionary format (see doc/TextualDictionaryFileFormat). Add new stardict_bin2text and stardict_text2bin tools for converting between old binary and new textual file formats.
+Update stardict-verifier tool: added new tests.
+Update Lithuanian translation.
+Add Kazakh translation.
+Update Greek translation.
+Update Chinese translation.
+Added logging facility. Added command line options that specify verbosity level for log and console output.
+StarDict-3.0.2-RC1 released.
 update WordPick Acrobat plug-in
 fix full-text translation service
 Update end-user documentation, make it accessible in all versions of StarDict.
@@ -12,7 +24,7 @@ Implemented resource storage. It allows to associate various files with a dictio
 Skin support.
 StarDict-3.0.2 (Bodhisattva) released.
 Mac OS X port.
-Fixed network dictionary authentification issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
+Fixed network dictionary authentication issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
 Thanks Vlad Muraviev <rex.lux@gmail.com> for adding many lingvo dictionaries.
 Thanks Evgeniy <dushistov@mail.ru> for tray icon transparent patch.
 Thanks Arseniy Lartsev <ars3niy@users.sourceforge.net> for the cool global hotkeys patch.
