@@ -24,6 +24,11 @@
 echo "Generating configuration files for Stardict, please wait...."
 echo;
 
+srcdir=`dirname $0`
+test -z "$srcdir" && srcdir=.
+topdir=`pwd`
+
+cd "$srcdir"
 echo "Running libtoolize, please ignore non-fatal messages...."
 echo n | libtoolize --copy --force || exit;
 
@@ -37,4 +42,5 @@ echo "Running autoconf ...."
 autoconf || exit;
 echo "Running automake ...."
 automake || exit;
-./configure --prefix=/usr --sysconfdir=/etc  --mandir=/usr/share/man "$@"
+cd "$topdir"
+"${srcdir}/configure" --prefix=/usr --sysconfdir=/etc  --mandir=/usr/share/man "$@"
