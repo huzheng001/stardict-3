@@ -181,15 +181,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_babylon.cpp"
+				RelativePath="..\..\stardict-tools\src\bgl_babylon.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_babylonreader.cpp"
+				RelativePath="..\..\stardict-tools\src\bgl_babylonreader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_stardictbuilder.cpp"
+				RelativePath="..\..\stardict-tools\src\bgl_stardictbuilder.cpp"
 				>
 			</File>
 			<File
@@ -197,71 +197,71 @@
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\ifo_file.cpp"
+				RelativePath="..\..\stardict-tools\src\ifo_file.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_binary_dict_parser.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_binary_dict_parser.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_binary_parser_unify.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_binary_parser_unify.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_chars.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_chars.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_common_dict.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_common_dict.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_dict_data_block.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_dict_data_block.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_res_store.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_res_store.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_stardict_bin2text.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_stardict_bin2text.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_stardict_text2bin.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_stardict_text2bin.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_textual_dict_parser.cpp"
+				RelativePath="..\..\stardict-tools\src\lib_textual_dict_parser.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libbabylonfile.cpp"
+				RelativePath="..\..\stardict-tools\src\libbabylonfile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libbgl2txt.cpp"
+				RelativePath="..\..\stardict-tools\src\libbgl2txt.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libcommon.cpp"
+				RelativePath="..\..\stardict-tools\src\libcommon.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libstardict2txt.cpp"
+				RelativePath="..\..\stardict-tools\src\libstardict2txt.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libstardictverify.cpp"
+				RelativePath="..\..\stardict-tools\src\libstardictverify.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libtabfile.cpp"
+				RelativePath="..\..\stardict-tools\src\libtabfile.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\stardict-editor.cpp"
+				RelativePath="..\..\stardict-tools\src\stardict-editor.cpp"
 				>
 			</File>
 		</Filter>
@@ -271,91 +271,91 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_babylon.h"
+				RelativePath="..\..\stardict-tools\src\bgl_babylon.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_babylonreader.h"
+				RelativePath="..\..\stardict-tools\src\bgl_babylonreader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_dictbuilder.h"
+				RelativePath="..\..\stardict-tools\src\bgl_dictbuilder.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_dictreader.h"
+				RelativePath="..\..\stardict-tools\src\bgl_dictreader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\bgl_stardictbuilder.h"
+				RelativePath="..\..\stardict-tools\src\bgl_stardictbuilder.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\ifo_file.hpp"
+				RelativePath="..\..\stardict-tools\src\ifo_file.hpp"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_binary_dict_parser.h"
+				RelativePath="..\..\stardict-tools\src\lib_binary_dict_parser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_binary_parser_unify.h"
+				RelativePath="..\..\stardict-tools\src\lib_binary_parser_unify.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_chars.h"
+				RelativePath="..\..\stardict-tools\src\lib_chars.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_common_dict.h"
+				RelativePath="..\..\stardict-tools\src\lib_common_dict.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_dict_data_block.h"
+				RelativePath="..\..\stardict-tools\src\lib_dict_data_block.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_res_store.h"
+				RelativePath="..\..\stardict-tools\src\lib_res_store.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_stardict_bin2text.h"
+				RelativePath="..\..\stardict-tools\src\lib_stardict_bin2text.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_stardict_text2bin.h"
+				RelativePath="..\..\stardict-tools\src\lib_stardict_text2bin.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\lib_textual_dict_parser.h"
+				RelativePath="..\..\stardict-tools\src\lib_textual_dict_parser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libbabylonfile.h"
+				RelativePath="..\..\stardict-tools\src\libbabylonfile.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libbgl2txt.h"
+				RelativePath="..\..\stardict-tools\src\libbgl2txt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libcommon.h"
+				RelativePath="..\..\stardict-tools\src\libcommon.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libstardict2txt.h"
+				RelativePath="..\..\stardict-tools\src\libstardict2txt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libstardictverify.h"
+				RelativePath="..\..\stardict-tools\src\libstardictverify.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\libtabfile.h"
+				RelativePath="..\..\stardict-tools\src\libtabfile.h"
 				>
 			</File>
 			<File
-				RelativePath="..\stardict-tools\src\resourcewrap.hpp"
+				RelativePath="..\..\stardict-tools\src\resourcewrap.hpp"
 				>
 			</File>
 		</Filter>
