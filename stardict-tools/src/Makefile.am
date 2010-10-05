@@ -15,8 +15,7 @@ noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 
 noinst_LIBRARIES = libbgl2txt.a
 
-# -I../$(top_srcdir) here is to include config-custom.h in config.h
-AM_CPPFLAGS = $(STARDICT_CFLAGS) -I../$(top_srcdir)
+AM_CPPFLAGS = $(STARDICT_CFLAGS) -I$(top_builddir) -I$(top_srcdir)
 
 libbgl2txt_a_SOURCES = libbgl2txt.h libbgl2txt.cpp bgl_babylon.h \
 	bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h \
@@ -298,6 +297,6 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \
 	dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh \
-	exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-\
-	djvu2tiff.py extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
+	exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py \
+	extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
 	lingea-trd-decoder.py
