@@ -58,6 +58,8 @@ stardict_bin2text	convert normal binary StarDict dictionary into textual
 stardict_text2bin	convert textual xml-based dictionary into binary StarDict
 		dictionary. See doc/TextualDictionaryFileFormat
 
+babylon	convert from babylon source file format to StarDict dictionary
+	see doc/HowToCreateDictionary for information about babylon source file format
 
 ------------------------------------------------------------------------------------
 External tools

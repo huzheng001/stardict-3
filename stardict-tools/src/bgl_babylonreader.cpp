@@ -40,7 +40,7 @@ bool BabylonReader::convert(std::string &source_charset, std::string &target_cha
 {
 	if( !m_babylon->open() )
 	{
-		printf( "Error openning %s\n", m_babylon->filename().c_str() );
+		printf( "Error opening %s\n", m_babylon->filename().c_str() );
 		return false;
 	}
 
