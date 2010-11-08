@@ -5,7 +5,7 @@
 int main(int argc, char * argv[])
 {
 	if (argc<2) {
-		printf("please type this:\n./bgl2txt a.bgl\n");
+		printf("please type this:\n./bgl2txt [-s <source charset>] [-t <target charset>] a.bgl\n");
 		return false;
 	}
 	std::string infile, source_charset, target_charset;

@@ -21,9 +21,9 @@ struct _worditem
 
 struct _synworditem
 {
-        gchar *synword;
+	gchar *synword;
 	gchar *origword;
-        gchar *definition;
+	gchar *definition;
 };
 
 static gint comparefunc(gconstpointer a,gconstpointer b)
@@ -279,23 +279,23 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 			print_info(str);
 			g_free(str);
 			p= p3;
-                        continue;
-		}	
+			continue;
+		}
 		
 		p4 = strchr(p, '|');
 		if (p4) {
 			*p4 = '\0';
 			worditem.word = p;
-                        g_strstrip(worditem.word);
-                        if (!worditem.word[0]) {
+			g_strstrip(worditem.word);
+			if (!worditem.word[0]) {
 				gchar *str = g_strdup_printf("%s-%d, bad word!!!\n", basefilename, linenum-2);
 				print_info(str);
 				g_free(str);
-                                p=p3;
-                                continue;
-                        }
+				p=p3;
+				continue;
+			}
 			worditem.definition = p1;
-                        g_array_append_val(array, worditem);
+			g_array_append_val(array, worditem);
 			std::list <std::string> WordList;
 			WordList.push_back(worditem.word);
 			p4++;
@@ -305,13 +305,13 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 					*p5 = '\0';
 					synworditem.synword = p4;
 					g_strstrip(synworditem.synword);
-                        		if (!synworditem.synword[0]) {
+					if (!synworditem.synword[0]) {
 						gchar *str = g_strdup_printf("%s-%d, bad word!!!\n", basefilename, linenum-2);
 						print_info(str);
 						g_free(str);
-                				p4 = p5+1;
-		                                continue;
-                		        }
+						p4 = p5+1;
+						continue;
+					}
 					bool find = false;
 					for (std::list<std::string>::const_iterator it=WordList.begin(); it!=WordList.end(); ++it) {
 						if (*it == synworditem.synword) {
@@ -337,12 +337,12 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 				} else {
 					synworditem.synword = p4;
 					g_strstrip(synworditem.synword);
-                                        if (!synworditem.synword[0]) {
+					if (!synworditem.synword[0]) {
 						gchar *str = g_strdup_printf("%s-%d, bad word!!!\n", basefilename, linenum-2);
 						print_info(str);
 						g_free(str);
-                                                break;
-                                        }
+						break;
+					}
 					bool find = false;
 					for (std::list<std::string>::const_iterator it=WordList.begin(); it!=WordList.end(); ++it) {
 						if (*it == synworditem.synword) {
@@ -359,8 +359,8 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 						break;
 					}
 					synworditem.origword = worditem.word;
-                                        synworditem.definition = worditem.definition;
-                                        g_array_append_val(array2, synworditem);
+					synworditem.definition = worditem.definition;
+					g_array_append_val(array2, synworditem);
 					break;
 				}
 			}
@@ -401,10 +401,10 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 		definition_len = strlen(pworditem->definition);
 		fwrite(pworditem->definition, 1 ,definition_len,dicfile);
 		fwrite(pworditem->word,sizeof(gchar),strlen(pworditem->word)+1,idxfile);
-                tmpglong = g_htonl(offset_old);
-                fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
-                tmpglong = g_htonl(definition_len);
-                fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
+		tmpglong = g_htonl(offset_old);
+		fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
+		tmpglong = g_htonl(definition_len);
+		fwrite(&(tmpglong),sizeof(guint32),1,idxfile);
 
 	}
 	fclose(idxfile);
@@ -471,10 +471,10 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 				gchar *str = g_strdup_printf("Error, %s definition not find.\n", psynworditem->origword);
 				print_info(str);
 				g_free(str);
-                                return;
-                        }
+				return;
+			}
 			tmpglong = g_htonl(iThisIndex);
-	                fwrite(&(tmpglong),sizeof(guint32),1, synfile);
+			fwrite(&(tmpglong),sizeof(guint32),1, synfile);
 		}
 		fclose(synfile);
 		gchar *str = g_strdup_printf("%s synwordcount: %d\n", basefilename, array2->len);
@@ -506,7 +506,7 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	if (!description.empty())
 		fprintf(ifofile, "description=%s\n", description.c_str());
 	fprintf(ifofile, "sametypesequence=%s\n", sametypesequence.c_str());
-        fclose(ifofile);
+	fclose(ifofile);
 	g_free(synwordcount);
 
 	
