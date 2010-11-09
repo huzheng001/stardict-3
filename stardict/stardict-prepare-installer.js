@@ -13,7 +13,7 @@ var LinuxBuildDir = "\\\\Mainworkstation\\mnt\\data\\work\\stardict\\work\\stard
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
-var MSVSDir = BaseDir + "msvc_2005\\";
+var MSVSDir = BaseDir + "msvc_2008\\";
 var MSVSOutputDir = MSVSDir + MSVSConfig + "\\";
 var fso = WScript.CreateObject("Scripting.FileSystemObject");
 

@@ -4,7 +4,7 @@
 /* include this file at the bottom of config.h 
 the following config.h files should be affected:
 config.h
-msvc_2005/config.h
+msvc_2008/config.h
 stardict-tools/config.h
 
 keep the following files in sync:
