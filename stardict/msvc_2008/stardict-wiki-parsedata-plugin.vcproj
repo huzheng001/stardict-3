@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
-	Name="stardict-sapi-tts-plugin"
-	ProjectGUID="{D64728EB-02DD-4B53-8587-5C8BD81024A3}"
-	RootNamespace="sapitts"
+	Version="9,00"
+	Name="stardict-wiki-parsedata-plugin"
+	ProjectGUID="{7A1D210B-93E3-41E7-89AC-26B76B15DD61}"
+	RootNamespace="wikiparsedata"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -40,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;SAPITTS_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WIKIPARSEDATA_EXPORTS;BUILDING_DLL;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,11 +60,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sapi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Lib\i386&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -84,9 +84,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -117,8 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;SAPITTS_EXPORTS;BUILDING_DLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;WIKIPARSEDATA_EXPORTS;BUILDING_DLL;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -135,13 +131,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sapi.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Speech SDK 5.1\Lib\i386&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -163,9 +159,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -179,7 +172,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-sapi-tts-plugin\stardict_sapi_tts.cpp"
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\global.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\stardict_wiki2xml.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\stardict_wiki_parsedata.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\TXML.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\WIKI2XML.cpp"
 				>
 			</File>
 		</Filter>
@@ -189,7 +198,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\stardict-plugins\stardict-sapi-tts-plugin\stardict_sapi_tts.h"
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\global.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\stardict_wiki2xml.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\stardict_wiki_parsedata.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\TXML.h"
+				>
+			</File>
+			<File
+				RelativePath="..\stardict-plugins\stardict-wiki-parsedata-plugin\WIKI2XML.h"
 				>
 			</File>
 		</Filter>

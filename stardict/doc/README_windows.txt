@@ -3,12 +3,12 @@ StarDict can be compiled and run in windows.
 Building StarDict
 =================
 
-Use MS Visual Studio 2005 to build StarDict.
+Use MS Visual Studio 2008 to build StarDict.
 
 gtk
 ----
 
-You need to install developer packages into "msvc_2005\gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
+You need to install developer packages into "msvc_2008\gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
 
 These packages are needed:
 atk-dev_1.30.0-1_win32.zip
@@ -20,7 +20,7 @@ libiconv-1.9.1.bin.woe32.zip
 pango-dev_1.28.0-1_win32.zip
 zlib-dev_1.2.4-2_win32.zip
 
-Just extract them into "msvc_2005\gtk\" is OK.
+Just extract them into "msvc_2008\gtk\" is OK.
 
 libxml library
 --------------
@@ -35,35 +35,35 @@ See http://www.zlatkovic.com/libxml.en.html for details about libxml2 library on
 I. building with prebuild binaries
 ----------------------------------
 1. Download libxml2-*.win32.zip from ftp://ftp.zlatkovic.com/libxml/
-2. Unpack into msvc_2005, you'll get a msvc_2005/libxml2-*.win32 folder.
+2. Unpack into msvc_2008, you'll get a msvc_2008/libxml2-*.win32 folder.
 3. Rename libxml2-*.win32 to libxml2.
-4. Rename msvc_2005/libxml2/lib to msvc_2005/libxml2/lib.release
+4. Rename msvc_2008/libxml2/lib to msvc_2008/libxml2/lib.release
 
 II. building libxml library from source
 ---------------------------------------
 1. download libxml archive (for example libxml2-2.7.7.tar.gz) from ftp://xmlsoft.org/libxml2/
-2. extract the archave into msvc_2005, rename msvc_2005\libxml2-* to msvc_2005\libxml2-src
-3. Windows menu->All Programs->Microsoft Visual Studio 2005->Visual Studio Tools->Visual Studio 2005 Command Prompt
-4. cd to msvc_2005\libxml2-src\win32 in the opened console window.
+2. extract the archive into msvc_2008, rename msvc_2008\libxml2-* to msvc_2008\libxml2-src
+3. Windows menu->All Programs->Microsoft Visual Studio 2008->Visual Studio Tools->Visual Studio 2008 Command Prompt
+4. cd to msvc_2008\libxml2-src\win32 in the opened console window.
 5. Run "cscript configure.js help" to get a listing of all the build options (for your information only).
 6. Building release version with default options.
 > cscript configure.js include=../../gtk/include lib=../../gtk/lib
 > nmake /f Makefile.msvc
-you see multiple warning like:
+you may see multiple warning like:
 <<<<
 c14n.c
-c:\stardict\msvc_2005\libxml2-src\libxml.h(94) : warning C4005: 'LIBXML_STATIC' : macro redefinition
+c:\stardict\msvc_2008\libxml2-src\libxml.h(94) : warning C4005: 'LIBXML_STATIC' : macro redefinition
         command-line arguments : see previous definition of 'LIBXML_STATIC'
 >>>>
 I think they can be ignored.
-7. build results are in msvc_2005\libxml2-src\win32\bin.msvc
-8. copy msvc_2005\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2005\libxml2\lib.release\libxml2_a.lib
-9. remove msvc_2005\libxml2-src folder, than repeat step 2 to recreate this folder
+7. build results are in msvc_2008\libxml2-src\win32\bin.msvc
+8. copy msvc_2008\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2008\libxml2\lib.release\libxml2_a.lib
+9. remove msvc_2008\libxml2-src folder, than repeat step 2 to recreate this folder
 10. buiding a debug version
 > cscript configure.js cruntime=/MDd include=../../gtk/include lib=../../gtk/lib
 > nmake /f Makefile.msvc
-11. copy msvc_2005\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2005\libxml2\lib.debug\libxml2_a.lib
-12. copy msvc_2005\libxml2-src\include to msvc\libxml2\include
+11. copy msvc_2008\libxml2-src\win32\bin.msvc\libxml2_a.lib to msvc_2008\libxml2\lib.debug\libxml2_a.lib
+12. copy msvc_2008\libxml2-src\include to msvc\libxml2\include
 
 stardict-editor project configuration for libxml
 ------------------------------------------------
@@ -78,17 +78,17 @@ stardict-editor links libxml statically. You need to adjust project settings as 
 Building libsigc++
 ------------------
 
-1. Download libsigc++ (http://libsigc.sourceforge.net/), unpack it into msvc_2005 directory. You'll get a directory like "msvc_2005\libsigc++-2.2.4.2". 
-2. Rename it to "msvc_2005\libsigc++-src". 
-3. Build the libsigc++ project with MS Visual Studio 2005 (do Release and Debug builds). 
+1. Download libsigc++ (http://libsigc.sourceforge.net/), unpack it into msvc_2008 directory. You'll get a directory like "msvc_2008\libsigc++-2.2.4.2". 
+2. Rename it to "msvc_2008\libsigc++-src". 
+3. Build the libsigc++ project with MS Visual Studio 2008 (do Release and Debug builds). 
 4. Copy 
-	Release\sigc-vc80-2_0.lib, 
-	Release\sigc-vc80-2_0.dll, 
-	Debug\sigc-vc80-d-2_0.lib,
-	Debug\sigc-vc80-d-2_0.dll 
-	into "msvc_2005\libsigc++\".
+	Release\sigc-vc90-2_0.lib, 
+	Release\sigc-vc90-2_0.dll, 
+	Debug\sigc-vc90-d-2_0.lib,
+	Debug\sigc-vc90-d-2_0.dll 
+	into "msvc_2008\libsigc++\".
 
-libsigc++ have static link problem on vs2005 presently.
+libsigc++ have static link problem on vs2008 (?).
 
 Notes
 -----
@@ -120,7 +120,7 @@ For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSD
     pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
 =====
 
-There are two crash bug with vs2005, which you need to notice.
+There are two crash bug with vs2005 (and likely with vs2008), which you need to notice.
 1. Use stardict_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
 2. Use fprintf_s instead of fprintf, or it will crash. This is a little strange.
 
@@ -128,11 +128,9 @@ libintl.h redefines *printf functions to libintl_*printf functions.
 That may be the cause of the crash.
 printf outputs nothing with console attached. Use printf_s instead, or better g_print.
 
-There are two builds in vs2005: Debug and Release, you should choose Release version if you plan to distribute the result, you should choose Debug version for debugging the project.
+There are two builds in vs2008: Debug and Release, you should choose Release version if you plan to distribute the result, you should choose Debug version for debugging the project.
 
 You should can compile and run stardict successfully now. You cannot start stardict.exe in place, since a special directory structure is needed.
-
-You cannot start stardict.exe in place, in the src directory, since a special directory structure is needed.
 
 Unicode
 =======
@@ -150,11 +148,11 @@ Some of the required files cannot be created on Windows, you need Linux to prepa
 
 Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
 
-1. Download Microsoft Visual C++ 2005 Redistributable Package and put into redist.
-	For VS 2005 non SP1 version take this
-	http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en
-	and for VS 2005 SP1 take this:
-	http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647&displaylang=en
+1. Download Microsoft Visual C++ 2008 Redistributable Package and put into redist.
+	For VS 2008 non SP1 version take this
+	http://www.microsoft.com/downloads/en/details.aspx?FamilyID=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en
+	and for VS 2008 SP1 take this:
+	http://www.microsoft.com/downloads/en/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&displaylang=en
 2. Uncomment '!define MSVC' in stardict-installer.nsi
 
 Double click the stardict-installer.nsi :) NSIS will build the installer.
@@ -200,13 +198,9 @@ All that windows console stuff is not much reliable, if it does not work, retrea
 Running StarDict on another computer
 ====================================
 
-You may encounter a problem running StarDict project compiled with VS 2005 on other computer not having VS 2005. You may see the following rather unclear error message "This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem." The error happens because StarDict application, plugin DLLs, hook DLLs are linked with CRT (C runtime library) dynamically and you may not have the appropriate version on that dll on the target computer. 
+You may encounter a problem running StarDict project compiled with VS 2008 on other computer not having VS 2008. You may see the following rather unclear error message "This application has failed to start because the application configuration is incorrect. Reinstalling the application may fix this problem." The error happens because StarDict application, plugin DLLs, hook DLLs are linked with CRT (C runtime library) dynamically and you may not have the appropriate version on that dll on the target computer. 
 
-If you build Release version of the project, you need to download and install Microsoft Visual C++ 2005 Redistributable Package (x86). 
-For VS 2005 non SP1 version take this
-http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE&displaylang=en
-and for VS 2005 SP1 take this:
-http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647&displaylang=en
+If you build Release version of the project, you need to download and install Microsoft Visual C++ 2008 Redistributable Package (x86). 
 
 If you build Debug version of the project, you need a debug version of CRT which not redistributable. I see at least one reason why you may need to use the debug version of StarDict - to debug the project remotely. Microsoft prohibit do distribute the debug version of CRT, but I assume a developer may do that for debuging purpose. Anyway this how to install the debuging version of CRT onto the target machine.
 1. In Visual Studio create new Setup Project, name it Setup-CRTDebug.
@@ -219,7 +213,7 @@ If you build Debug version of the project, you need a debug version of CRT which
 StarDict version
 ----------------
 
-StarDict version for MSVC build can be specified in the msvc_2005\stardictrc.rc.
+StarDict version for MSVC build can be specified in the msvc_2008\stardictrc.rc.
 
 ============
 StarDict's win32 port got many experience from ReciteWord (my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im

@@ -293,7 +293,7 @@ bool attach_windows_console(void)
 	/* restore stdout and stderr
 	By default GUI application on Windows do not have a console associated 
 	with them, so output from printf, std::cout << "string" goes nowhere.
-	(printf may not work for other reasons too, see msvc_2005/readme.txt.)
+	(printf may not work for other reasons too, see msvc_2008/readme.txt.)
 	Create a console and redirect stdout and stderr to it.
 	See Microsoft article for details: http://support.microsoft.com/kb/105305.
 	

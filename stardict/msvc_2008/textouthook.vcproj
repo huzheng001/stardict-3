@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="windows-1251"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
-	Name="stardict-test-str"
-	ProjectGUID="{4D1CF3E1-5E34-44C6-8EC4-5E1AF2A121B7}"
-	RootNamespace="stardictteststr"
+	Version="9,00"
+	Name="textouthook"
+	ProjectGUID="{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
+	RootNamespace="texthook"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -18,8 +19,8 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="1"
-			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -40,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../src"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS;_CRT_SECURE_NO_DEPRECATE;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -60,11 +60,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\stardict-lib.lib"
+				AdditionalDependencies="shlwapi.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -86,17 +87,14 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="1"
-			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
+			ConfigurationType="2"
+			InheritedPropertySheets=".\main.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -117,8 +115,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../src"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TEXTHOOK_EXPORTS;_CRT_SECURE_NO_DEPRECATE;BUILDING_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -135,12 +132,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(OutDir)\stardict-lib.lib"
+				AdditionalDependencies="shlwapi.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -162,9 +161,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -178,7 +174,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\tests\t_str.cpp"
+				RelativePath="..\src\win32\GetWord.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\win32\HookImportFunction.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\win32\TextOutHook.c"
 				>
 			</File>
 		</Filter>
@@ -187,6 +191,22 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\src\win32\GetWord.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\win32\HookImportFunction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\win32\InterProcessCommunication.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\win32\TextOutHook.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

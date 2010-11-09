@@ -1912,8 +1912,8 @@
 <![CDATA[
 [general]
 data_dir=C:\\Program Files\\StarDict
-dll_dir=C:\\StarDict\\msvc_2005\\Debug
-plugin_dir=C:\\StarDict\\msvc_2005\\Debug
+dll_dir=C:\\StarDict\\msvc_2008\\Debug
+plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 ]]>
 	</programlisting>
 	</para>
