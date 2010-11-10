@@ -1,4 +1,6 @@
 2010.
+Switch to MS Visual Studio 2008 to build StarDict under Windows.
+StarDict-3.0.2-RC2 and StarDict-tools-3.0.2-RC2 released.
 Add stardict-bin2text and stardict_text2bin tools to stardict-editor.
 Update Russian translation.
 replace advertisement plugin with a dictionary
@@ -22,7 +24,7 @@ Implemented resource storage. It allows to associate various files with a dictio
 
 2009.
 Skin support.
-StarDict-3.0.2 (Bodhisattva) released.
+StarDict-3.0.2-RC0 (Bodhisattva) released.
 Mac OS X port.
 Fixed network dictionary authentication issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
 Thanks Vlad Muraviev <rex.lux@gmail.com> for adding many lingvo dictionaries.
