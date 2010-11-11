@@ -235,7 +235,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
   no_gtk:
     StrCmp $R1 "NONE" gtk_no_install_rights
     ClearErrors
-    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /D=$GTK_FOLDER'
+    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /translations=yes /compatdlls=yes /D=$GTK_FOLDER'
     IfErrors gtk_install_error done
 
   upgrade_gtk:
@@ -243,7 +243,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
     StrCmp $R0 "2" +2 ; Upgrade isn't optional
     MessageBox MB_YESNO $(GTK_UPGRADE_PROMPT) /SD IDYES IDNO done
     ClearErrors
-    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE /S /D=$GTK_FOLDER'
+    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /translations=yes /compatdlls=yes /D=$GTK_FOLDER'
     IfErrors gtk_install_error done
 
     gtk_install_error:
@@ -257,7 +257,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
     ; Even if we have a sufficient version of GTK+, we give user choice to re-install.
     MessageBox MB_YESNO $(GTK_SKIP_PROMPT) /SD IDYES IDYES done
     ClearErrors
-    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT'
+    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /translations=yes /compatdlls=yes /D=$GTK_FOLDER'
     IfErrors gtk_install_error
     Goto done
 
@@ -268,7 +268,7 @@ Section $(GTK_SECTION_TITLE) SecGtk
     ; Install GTK+ to Pidgin install dir
     StrCpy $GTK_FOLDER $INSTDIR
     ClearErrors
-    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /D=$GTK_FOLDER'
+    ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE $ISSILENT /translations=yes /compatdlls=yes /D=$GTK_FOLDER'
     IfErrors gtk_install_error
       SetOverwrite on
       ClearErrors
