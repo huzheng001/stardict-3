@@ -12,6 +12,7 @@
 
 #include "libbabylonfile.h"
 #include "resourcewrap.hpp"
+#include "libcommon.h"
 
 struct _worditem
 {
@@ -132,6 +133,14 @@ static void newline_strstrip(gchar *str, gint linenum, print_info_t print_info)
 		}
 	}
 	*p2 = '\0';
+}
+
+/* truncate article keys and synonyms
+ * must be: strlen(key) < MAX_INDEX_KEY_SIZE */
+static void truncate_key(gchar *str)
+{
+	size_t new_size = truncate_utf8_string(str, strlen(str), MAX_INDEX_KEY_SIZE-1);
+	str[new_size] = '\0';
 }
 
 struct DictFields
@@ -269,6 +278,7 @@ int read_articles(gchar *p, print_info_t print_info, gint& linenum,
 			*p4 = '\0';
 			worditem.word = p;
 			g_strstrip(worditem.word);
+			truncate_key(worditem.word);
 			if (!worditem.word[0]) {
 				print_info("Line %d, bad word!!!\n", linenum-2);
 				p=p3;
@@ -285,6 +295,7 @@ int read_articles(gchar *p, print_info_t print_info, gint& linenum,
 					*p5 = '\0';
 					synworditem.synword = p4;
 					g_strstrip(synworditem.synword);
+					truncate_key(synworditem.synword);
 					if (!synworditem.synword[0]) {
 						print_info("Line %d, bad word!!!\n", linenum-2);
 						p4 = p5+1;
@@ -313,6 +324,7 @@ int read_articles(gchar *p, print_info_t print_info, gint& linenum,
 				} else {
 					synworditem.synword = p4;
 					g_strstrip(synworditem.synword);
+					truncate_key(synworditem.synword);
 					if (!synworditem.synword[0]) {
 						print_info("Line %d, bad word!!!\n", linenum-2);
 						break;
@@ -339,6 +351,7 @@ int read_articles(gchar *p, print_info_t print_info, gint& linenum,
 		} else {
 			worditem.word = p;
 			g_strstrip(worditem.word);
+			truncate_key(worditem.word);
 			if (!worditem.word[0]) {
 				print_info("Line %d, bad word!!!\n", linenum-2);
 				p=p3;

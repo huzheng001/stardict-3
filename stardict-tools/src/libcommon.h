@@ -98,6 +98,7 @@ extern const char* known_resource_types[];
 bool is_known_resource_type(const char* str);
 
 void trim_spaces(const char* const src, const char*& new_beg, size_t& new_len);
+size_t truncate_utf8_string(const char* const beg, const size_t str_len, const size_t max_len);
 
 #define UTF8_BOM "\xEF\xBB\xBF"
 
