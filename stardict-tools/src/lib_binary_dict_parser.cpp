@@ -40,37 +40,6 @@ static bool compare_worditem_by_offset(const worditem_t* left, const worditem_t*
 	return left->offset < right->offset;
 }
 
-/* truncate utf8 string on char boundary (string content is not changed,
- * instead desired new length is returned)
- * new string length must be <= max_len
- * beg - first char of the string,
- * str_len - string length in bytes
- * return value: length of the truncated string */
-static size_t truncate_utf8_string(const char* const beg, const size_t str_len, const size_t max_len)
-{
-	if(str_len <= max_len)
-		return str_len;
-	if(max_len == 0)
-		return 0;
-	const char* char_end = beg+str_len;
-	const char* p = beg+str_len-1;
-	while(true) {
-		// find the first byte of a utf8 char
-		for(; beg <= p && (*p & 0xC0) == 0x80; --p)
-			;
-		if(p<beg)
-			return 0;
-		const gunichar guch = g_utf8_get_char_validated(p, char_end-p);
-		if(guch != (gunichar)-1 && guch != (gunichar)-2)
-			return char_end - beg;
-		char_end = p;
-		--p;
-		if(p<beg)
-			return 0;
-	}
-}
-
-
 binary_dict_parser_t::binary_dict_parser_t(void)
 :
 	dictfilesize(0),
