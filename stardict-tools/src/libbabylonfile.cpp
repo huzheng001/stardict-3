@@ -161,6 +161,11 @@ int read_header_fields(gchar*& p, gint& linenum, DictFields& fields, bool& print
 			linenum++;
 			break;
 		}
+		if(*p != '#') {
+			print_info("Reading header. The first char must be '#'. Line: %d\n", linenum);
+			return EXIT_FAILURE;
+		}
+		++p; // the first char must be '#', skip it
 		p1 = strchr(p, '\n');
 		if (!p1) {
 			print_info("Error, no new line char. line: %d\n", linenum);
