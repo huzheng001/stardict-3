@@ -2,7 +2,9 @@
 #define _LIBBGL2TXT_H_
 
 #include <string>
+#include "libcommon.h"
 
-extern void convert_bglfile(std::string infile, std::string source_charset, std::string target_charset);
+extern void convert_bglfile(const std::string& infile, const std::string& source_charset, 
+							const std::string& target_charset, print_info_t print_info);
 
 #endif

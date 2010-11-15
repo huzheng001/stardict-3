@@ -28,7 +28,7 @@
 #include <glib.h>
 #include <cstring>
 
-StarDictBuilder::StarDictBuilder( std::string filename )
+StarDictBuilder::StarDictBuilder( std::string filename, print_info_t print_info)
 {
   const char *p = strrchr(filename.c_str(), G_DIR_SEPARATOR);
   if (p)
@@ -38,6 +38,7 @@ StarDictBuilder::StarDictBuilder( std::string filename )
   m_babylonfilename += ".babylon";
   file.open( m_babylonfilename.c_str() );
   m_entriescount = 0;
+  this->print_info = print_info;
 }
 
 
@@ -115,7 +116,9 @@ bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vecto
 bool StarDictBuilder::finish()
 {
   file.close();
-  printf("Write file: %s\n\nBookname: %s\nWord count: %d\nAuthor: %s\nEmail: %s\nWebsite: %s\nDescription: %s\n", m_babylonfilename.c_str(), m_title.c_str(), m_entriescount, m_author.c_str(), m_email.c_str(), m_website.c_str(), m_description.c_str());
+  print_info("Write file: %s\n\nBookname: %s\nWord count: %d\nAuthor: %s\nEmail: %s\nWebsite: %s\nDescription: %s\n", 
+	  m_babylonfilename.c_str(), m_title.c_str(), m_entriescount, m_author.c_str(), 
+	  m_email.c_str(), m_website.c_str(), m_description.c_str());
 
   return true;
 }

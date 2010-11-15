@@ -77,7 +77,7 @@ static void on_compile_page_compile_button_clicked(GtkButton *button, gpointer d
 	else if (output_format_ind == 1)
 		convert_babylonfile(srcfilename.c_str(), compile_page_print_info, true);
 	else if (output_format_ind == 2)
-		convert_bglfile(srcfilename.c_str(), "", "");
+		convert_bglfile(srcfilename.c_str(), "", "", compile_page_print_info);
 	else {
 		std::string ifofilename = get_file_path_without_extension(srcfilename) + ".ifo";
 		bool show_xincludes = gtk_toggle_button_get_active(

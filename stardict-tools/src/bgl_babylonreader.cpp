@@ -29,24 +29,24 @@
 #include <stdio.h>
 #include <glib/gstdio.h>
 
-BabylonReader::BabylonReader( std::string filename, DictBuilder *builder )
+BabylonReader::BabylonReader( std::string filename, DictBuilder *builder, print_info_t print_info )
 {
-	m_babylon = new Babylon( filename );
+	m_babylon = new Babylon( filename, print_info );
 	m_builder = builder;
+	this->print_info = print_info;
 }
 
-
-bool BabylonReader::convert(std::string &source_charset, std::string &target_charset)
+bool BabylonReader::convert(const std::string &source_charset, const std::string &target_charset)
 {
 	if( !m_babylon->open() )
 	{
-		printf( "Error opening %s\n", m_babylon->filename().c_str() );
+		print_info( "Error opening %s\n", m_babylon->filename().c_str() );
 		return false;
 	}
 
 	if( !m_babylon->read(source_charset, target_charset) )
 	{
-		printf( "Error reading %s\n", m_babylon->filename().c_str() );
+		print_info( "Error reading %s\n", m_babylon->filename().c_str() );
 		return false;
 	}
 
@@ -73,11 +73,11 @@ bool BabylonReader::convert(std::string &source_charset, std::string &target_cha
 		entry = m_babylon->readEntry();
 		n++;
 		if (n%100 == 1) {
-			printf( "." );
+			print_info( "." );
 			fflush(stdout);
 		}
 	}
-	printf( "\n" );
+	print_info( "\n" );
 
 	m_babylon->close();
 

@@ -26,6 +26,7 @@
 
 #include <string>
 #include <vector>
+#include "libcommon.h"
 
 const std::string bgl_language[] = {
 	"English", 
@@ -154,13 +155,13 @@ typedef struct {
 class Babylon
 {
 public:
-	Babylon( std::string );
+	Babylon( std::string, print_info_t print_info );
 	~Babylon();
 
 	bool open();
 	void close();
 	bool readBlock( bgl_block& );
-	bool read(std::string &source_charset, std::string &target_charset);
+	bool read(const std::string &source_charset, const std::string &target_charset);
 	bgl_entry readEntry();
 
 	inline std::string title() const { return m_title; };
@@ -193,8 +194,11 @@ private:
 	std::string m_defaultCharset;
 	std::string m_sourceCharset;
 	std::string m_targetCharset;
-
-	enum CHARSET { DEFAULT_CHARSET, SOURCE_CHARSET, TARGET_CHARSET };
+	
+	/* Do not use DEFAULT_CHARSET identifier, there is a macro named DEFAULT_CHARSET
+	in WinGDI.h on Windows. */
+	enum CHARSET { BABYLON_DEFAULT_CHARSET, BABYLON_SOURCE_CHARSET, BABYLON_TARGET_CHARSET };
+	print_info_t print_info;
 };
 
 #endif // BABYLON_H

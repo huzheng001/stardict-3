@@ -7,20 +7,19 @@
 #include "bgl_babylonreader.h"
 #include "bgl_stardictbuilder.h"
 
-void convert_bglfile(std::string infile, std::string source_charset, std::string target_charset)
+void convert_bglfile(const std::string& infile, const std::string& source_charset,
+					 const std::string& target_charset, print_info_t print_info)
 {
 	std::string outfile;
-	const char *p = infile.c_str();
-	const char *p1 = strrchr(p, '.');
-	if (p1) {
-		outfile.assign(p, p1-p);
-	} else {
+	std::string::size_type pos = infile.find_last_of('.');
+	if(pos == std::string::npos)
 		outfile = infile;
-	}
-	DictBuilder *builder = new StarDictBuilder( outfile );
-	DictReader *reader = new BabylonReader( infile, builder );
+	else
+		outfile.substr(0, pos);
+	DictBuilder *builder = new StarDictBuilder( outfile, print_info );
+	DictReader *reader = new BabylonReader( infile, builder, print_info );
 	if( !reader->convert(source_charset, target_charset) ) {
-		printf( "Error converting %s\n", infile.c_str() );
+		print_info( "Error converting %s\n", infile.c_str() );
 		return;
 	}
 	builder->finish();

@@ -39,12 +39,12 @@
 
 #include "bgl_babylon.h"
 
-Babylon::Babylon( std::string filename )
+Babylon::Babylon( std::string filename, print_info_t print_info)
 {
 	m_filename = filename;
 	file = NULL;
+	this->print_info = print_info;
 }
-
 
 Babylon::~Babylon()
 {
@@ -134,7 +134,7 @@ unsigned int Babylon::bgl_readnum( int bytes )
 }
 
 
-bool Babylon::read(std::string &source_charset, std::string &target_charset)
+bool Babylon::read(const std::string &source_charset, const std::string &target_charset)
 {
 	if( file == NULL ) return false;
 
@@ -238,12 +238,12 @@ bool Babylon::read(std::string &source_charset, std::string &target_charset)
 	}
 	gzseek( file, 0, SEEK_SET );
 
-	convertToUtf8( m_title, TARGET_CHARSET );
-	convertToUtf8( m_author, TARGET_CHARSET );
-	convertToUtf8( m_email, TARGET_CHARSET );
-	convertToUtf8( m_copyright, TARGET_CHARSET );
-	convertToUtf8( m_description, TARGET_CHARSET );
-	printf("Default charset: %s\nSource Charset: %s\nTargetCharset: %s\n",
+	convertToUtf8( m_title, BABYLON_TARGET_CHARSET );
+	convertToUtf8( m_author, BABYLON_TARGET_CHARSET );
+	convertToUtf8( m_email, BABYLON_TARGET_CHARSET );
+	convertToUtf8( m_copyright, BABYLON_TARGET_CHARSET );
+	convertToUtf8( m_description, BABYLON_TARGET_CHARSET );
+	print_info("Default charset: %s\nSource Charset: %s\nTargetCharset: %s\n",
 		m_defaultCharset.c_str(), m_sourceCharset.c_str(), m_targetCharset.c_str());
 	return true;
 }
@@ -299,7 +299,7 @@ bgl_entry Babylon::readEntry()
 
 			headword.reserve( len );
 			for(unsigned int a=0;a<len;a++) headword += block.data[pos++];
-			convertToUtf8( headword, SOURCE_CHARSET );
+			convertToUtf8( headword, BABYLON_SOURCE_CHARSET );
 
 			// Definition
 			len = 0;
@@ -328,7 +328,7 @@ bgl_entry Babylon::readEntry()
 					}
 				}else definition += block.data[pos++];
 			}
-			convertToUtf8( definition, TARGET_CHARSET );
+			convertToUtf8( definition, BABYLON_TARGET_CHARSET );
 
 			// Alternate forms
 			while( pos != block.length )
@@ -336,7 +336,7 @@ bgl_entry Babylon::readEntry()
 				len = (unsigned char)block.data[pos++];
 				alternate.reserve( len );
 				for(unsigned int a=0;a<len;a++) alternate += block.data[pos++];
-				convertToUtf8( alternate, SOURCE_CHARSET );
+				convertToUtf8( alternate, BABYLON_SOURCE_CHARSET );
 				alternates.push_back( alternate );
 				alternate.clear();
 			}
@@ -366,15 +366,15 @@ void Babylon::convertToUtf8( std::string &s, unsigned int type )
 	std::string charset;
 	switch( type )
 	{
-	case DEFAULT_CHARSET:
+	case BABYLON_DEFAULT_CHARSET:
 		if(!m_defaultCharset.empty()) charset = m_defaultCharset;
 		else charset = m_sourceCharset;
 		break;
-	case SOURCE_CHARSET:
+	case BABYLON_SOURCE_CHARSET:
 		if(!m_sourceCharset.empty()) charset = m_sourceCharset;
 		else charset = m_defaultCharset;
 		break;
-	case TARGET_CHARSET:
+	case BABYLON_TARGET_CHARSET:
 		if(!m_targetCharset.empty()) charset = m_targetCharset;
 		else charset = m_defaultCharset;
 		break;
@@ -385,7 +385,7 @@ void Babylon::convertToUtf8( std::string &s, unsigned int type )
 	iconv_t cd = iconv_open( "UTF-8", charset.c_str() );
 	if( cd == (iconv_t)(-1) )
 	{
-		printf( "Error opening iconv library\n" );
+		print_info( "Error opening iconv library\n" );
 		exit(1);
 	}
 
@@ -406,8 +406,8 @@ void Babylon::convertToUtf8( std::string &s, unsigned int type )
 	defbuf = outbuf;
 	while (inbufbytes) {
 		if (iconv(cd, &inbuf, &inbufbytes, &outbuf, &outbufbytes) == (size_t)-1) {
-			printf( "\n%s\n", inbuf );
-			printf( "Error in iconv conversion\n" );
+			print_info( "\n%s\n", inbuf );
+			print_info( "Error in iconv conversion\n" );
 			inbuf++;
 			inbufbytes--;
 		}
