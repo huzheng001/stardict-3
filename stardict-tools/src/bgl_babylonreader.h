@@ -25,6 +25,7 @@
 #include "bgl_babylon.h"
 
 #include <string>
+#include "libcommon.h"
 
 class DictBuilder;
 
@@ -34,15 +35,16 @@ class DictBuilder;
 class BabylonReader : public DictReader
 {
   public:
-    BabylonReader( std::string filename, DictBuilder *builder );
+    BabylonReader( std::string filename, DictBuilder *builder, print_info_t print_info );
     //~BabylonReader();
-    bool convert(std::string &source_charset, std::string &target_charset);
+    bool convert(const std::string &source_charset, const std::string &target_charset);
     inline DictBuilder* product() const { return m_builder; };
     inline std::string filename() const { return m_babylon->filename(); };
 
   protected:
     DictBuilder *m_builder;
     Babylon *m_babylon;
+	print_info_t print_info;
 };
 
 #endif // BABYLONREADER_H

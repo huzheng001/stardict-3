@@ -20,16 +20,17 @@
 #ifndef STARDICTBUILDER_H
 #define STARDICTBUILDER_H
 
-#include "bgl_dictbuilder.h"
-
 #include <map>
 #include <fstream>
+
+#include "libcommon.h"
+#include "bgl_dictbuilder.h"
 
 class StarDictBuilder : public DictBuilder
 {
 
 public:
-  StarDictBuilder( std::string filename );
+  StarDictBuilder( std::string filename, print_info_t print_info);
   ~StarDictBuilder();
 
   bool addHeadword( std::string word, std::string def, std::vector<std::string> alternates = std::vector<std::string>() );
@@ -105,6 +106,7 @@ protected:
   std::string m_definition;
 
   dictionary dic;
+  print_info_t print_info;
 };
 
 #endif // STARDICTBUILDER_H
