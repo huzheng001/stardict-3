@@ -19,7 +19,8 @@ AM_CPPFLAGS = $(STARDICT_CFLAGS) -I$(top_builddir) -I$(top_srcdir)
 
 libbgl2txt_a_SOURCES = libbgl2txt.h libbgl2txt.cpp bgl_babylon.h \
 	bgl_babylon.cpp bgl_dictreader.h bgl_dictbuilder.h bgl_babylonreader.h \
-	bgl_babylonreader.cpp bgl_stardictbuilder.h bgl_stardictbuilder.cpp
+	bgl_babylonreader.cpp bgl_stardictbuilder.h bgl_stardictbuilder.cpp \
+	resourcewrap.hpp libcommon.cpp libcommon.h
 
 lingvosound2resdb_LDFLAGS = 
 lingvosound2resdb_LDADD = $(STARDICT_LIBS)
@@ -244,7 +245,7 @@ wordnet_SOURCES = wordnet.cpp
 bgl2txt_DEPENDENCIES = libbgl2txt.a
 bgl2txt_LDFLAGS =
 bgl2txt_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
-bgl2txt_SOURCES = bgl2txt.cpp
+bgl2txt_SOURCES = bgl2txt.cpp libcommon.h libcommon.cpp
 
 stardict_index_LDFLAGS =
 stardict_index_LDADD = $(STARDICT_LIBS)

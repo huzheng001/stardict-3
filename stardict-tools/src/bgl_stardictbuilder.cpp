@@ -22,31 +22,25 @@
 #  include "config.h"
 #endif
 
-#include "bgl_stardictbuilder.h"
-
 #include <iostream>
 #include <glib.h>
 #include <cstring>
+#include "bgl_stardictbuilder.h"
 
-StarDictBuilder::StarDictBuilder( std::string filename, print_info_t print_info)
+StarDictBuilder::StarDictBuilder( const std::string& outfilename, print_info_t print_info)
 {
-  const char *p = strrchr(filename.c_str(), G_DIR_SEPARATOR);
-  if (p)
-    m_babylonfilename = p+1;
-  else
-    m_babylonfilename = filename;
-  m_babylonfilename += ".babylon";
+  m_babylonfilename = outfilename;
   file.open( m_babylonfilename.c_str() );
   m_entriescount = 0;
   this->print_info = print_info;
 }
 
-
 StarDictBuilder::~StarDictBuilder()
 {
 }
 
-bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vector<std::string> alternates )
+bool StarDictBuilder::addHeadword( const std::string& word, const std::string& def,
+		const std::vector<std::string>& alternates )
 {
   if (m_entriescount == 0) {
     file.write("\n", 1);
@@ -101,7 +95,7 @@ bool StarDictBuilder::addHeadword( std::string word, std::string def, std::vecto
   }
   std::string lines;
   lines = headword;
-  for (std::vector<std::string>::iterator i = alternates.begin(); i != alternates.end(); ++i) {
+  for (std::vector<std::string>::const_iterator i = alternates.begin(); i != alternates.end(); ++i) {
     lines += '|';
     lines += *i;
   }
@@ -117,8 +111,8 @@ bool StarDictBuilder::finish()
 {
   file.close();
   print_info("Write file: %s\n\nBookname: %s\nWord count: %d\nAuthor: %s\nEmail: %s\nWebsite: %s\nDescription: %s\n", 
-	  m_babylonfilename.c_str(), m_title.c_str(), m_entriescount, m_author.c_str(), 
-	  m_email.c_str(), m_website.c_str(), m_description.c_str());
+    m_babylonfilename.c_str(), m_title.c_str(), m_entriescount, m_author.c_str(),
+    m_email.c_str(), m_website.c_str(), m_description.c_str());
 
   return true;
 }

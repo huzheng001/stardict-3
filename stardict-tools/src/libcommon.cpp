@@ -330,3 +330,61 @@ size_t truncate_utf8_string(const char* const beg, const size_t str_len, const s
 			return 0;
 	}
 }
+
+std::string get_basename_without_extension(const std::string& filepath)
+{
+	std::string::size_type pos = filepath.find_last_of(G_DIR_SEPARATOR);
+	if(pos == std::string::npos)
+		pos = 0;
+	else
+		pos += 1;
+	if(pos >= filepath.length())
+		return "";
+	std::string::size_type pos2 = filepath.find_last_of('.');
+	if(pos2 == std::string::npos || pos2 < pos)
+		return filepath.substr(pos);
+	return filepath.substr(pos, pos2-pos);
+}
+
+/* remove the item at path
+ * if this is a regular file, removed the file;
+ * if this is a symbolic line, remove the link;
+ * if this is a directory, remove the directory recursively.
+ * Return value: EXIT_SUCCESS or EXIT_FAILURE
+ * */
+int remove_recursive(const std::string& path)
+{
+	int res = EXIT_SUCCESS;
+	if(g_file_test(path.c_str(),G_FILE_TEST_IS_DIR)) {
+		// change file mode so we can read directory and remove items from it
+		// If we cannot read mode or change it, go on, maybe we can remove the dir anyway.
+		stardict_stat_t stats;
+		if(!g_stat(path.c_str(), &stats)) {
+			// full access for everyone
+			g_chmod(path.c_str(), stats.st_mode | (S_IRWXU|S_IRWXG|S_IRWXO));
+		}
+		glib::Dir dir(g_dir_open(path.c_str(), 0, NULL));
+		if(!dir)
+			res = EXIT_FAILURE;
+		else {
+			std::string dirpath(path); // directory path ending with a dir separator
+			if(dirpath[dirpath.length()-1] != G_DIR_SEPARATOR)
+				dirpath += G_DIR_SEPARATOR;
+			const gchar * filename;
+			while((filename = g_dir_read_name(get_impl(dir)))) {
+				if (strcmp(filename, ".") == 0 || strcmp(filename, "..") == 0)
+					continue;
+				const std::string itempath(dirpath + filename);
+				if(remove_recursive(itempath.c_str()))
+					res = EXIT_FAILURE;
+			}
+		}
+		if(g_rmdir(path.c_str()))
+			res = EXIT_FAILURE;
+		return res;
+	} else {
+		if(g_remove(path.c_str()))
+			res = EXIT_FAILURE;
+		return res;
+	}
+}
