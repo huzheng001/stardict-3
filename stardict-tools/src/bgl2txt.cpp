@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstring>
+#include <glib.h>
 #include "libbgl2txt.h"
+#include "libcommon.h"
 
 int main(int argc, char * argv[])
 {
@@ -20,6 +22,7 @@ int main(int argc, char * argv[])
 			infile = argv[i];
 		}
 	}
-	convert_bglfile(infile, source_charset, target_charset);
+	std::string outfile = get_basename_without_extension(infile) + ".babylon";
+	convert_bglfile(infile, outfile, source_charset, target_charset, g_print);
 	return false;
 }

@@ -38,30 +38,42 @@
 #endif
 
 #include "bgl_babylon.h"
+#include "resourcewrap.hpp"
+#include "libcommon.h"
 
-Babylon::Babylon( std::string filename, print_info_t print_info)
+
+Babylon::Babylon( const std::string& infilename, const std::string& outfilename,
+		print_info_t print_info)
 {
-	m_filename = filename;
+	m_filename = infilename;
 	file = NULL;
 	this->print_info = print_info;
+	std::string::size_type pos = outfilename.find_last_of(G_DIR_SEPARATOR);
+	if(pos == std::string::npos)
+		m_resdirname = "res"; // in current directory
+	else
+		m_resdirname = outfilename.substr(0, pos+1) + "res";
+	if(g_file_test(m_resdirname.c_str(), G_FILE_TEST_EXISTS))
+		if(remove_recursive(m_resdirname))
+			print_info("unable to remove the resource directory: %s", m_resdirname.c_str());
+	g_mkdir_with_parents(m_resdirname.c_str(), S_IRWXU);
 }
 
 Babylon::~Babylon()
 {
 }
 
-
 bool Babylon::open()
 {
-	FILE *f;
+	clib::File f;
 	unsigned char buf[6];
 	int i;
 
-	f = g_fopen( m_filename.c_str(), "rb" );
-	if( f == NULL )
+	f.reset(g_fopen( m_filename.c_str(), "rb" ));
+	if(!f)
 		return false;
 
-	i = fread( buf, 1, 6, f );
+	i = fread( buf, 1, 6, get_impl(f) );
 
 	/* First four bytes: BGL signature 0x12340001 or 0x12340002 (big-endian) */
 	if( i < 6 || memcmp( buf, "\x12\x34\x00", 3 ) || buf[3] == 0 || buf[3] > 2 )
@@ -74,36 +86,32 @@ bool Babylon::open()
 	if( i < 6 )
 		return false;
 
-	if( fseek( f, i, SEEK_SET ) ) /* can't seek - emulate */
-		for(int j=0;j < i - 6;j++) fgetc( f );
+	if( fseek( get_impl(f), i, SEEK_SET ) ) /* can't seek - emulate */
+		for(int j=0;j < i - 6;j++) fgetc( get_impl(f) );
 
-	if( ferror( f ) || feof( f ) )
+	if( ferror( get_impl(f) ) || feof( get_impl(f) ) )
 		return false;
 
 	/* we need to flush the file because otherwise some nfs mounts don't seem
 	* to properly update the file position for the following reopen */
 
-	fflush( f );
+	fflush( get_impl(f) );
 
-	file = gzdopen( DUP( FILENO( f ) ), "r" );
+	file = gzdopen( DUP( FILENO( get_impl(f) ) ), "rb" );
 	if( file == NULL )
 		return false;
 
-	fclose( f );
-
 	return true;
 }
-
 
 void Babylon::close()
 {
 	gzclose( file );
 }
 
-
 bool Babylon::readBlock( bgl_block &block )
 {
-	if( gzeof( file ) || file == NULL )
+	if( file == NULL || gzeof( file ))
 		return false;
 
 	block.length = bgl_readnum( 1 );
@@ -120,7 +128,6 @@ bool Babylon::readBlock( bgl_block &block )
 	return true;
 }
 
-
 unsigned int Babylon::bgl_readnum( int bytes )
 {
 	unsigned char buf[4];
@@ -132,7 +139,6 @@ unsigned int Babylon::bgl_readnum( int bytes )
 	for(int i=0;i<bytes;i++) val= (val << 8) | buf[i];
 	return val;
 }
-
 
 bool Babylon::read(const std::string &source_charset, const std::string &target_charset)
 {
@@ -248,7 +254,6 @@ bool Babylon::read(const std::string &source_charset, const std::string &target_
 	return true;
 }
 
-
 bgl_entry Babylon::readEntry()
 {
 	bgl_entry entry;
@@ -277,7 +282,7 @@ bgl_entry Babylon::readEntry()
 				len = (unsigned char)block.data[pos++];
 				std::string filename(block.data+pos, len);
 				if (filename != "8EAF66FD.bmp" && filename != "C2EEF3F6.html") {
-					filename = "res/" + filename;
+					filename = m_resdirname + G_DIR_SEPARATOR_S + filename;
 					pos += len;
 					FILE *ifile = g_fopen(filename.c_str(), "w");
 					fwrite(block.data + pos, 1, block.length -pos, ifile);
@@ -355,8 +360,6 @@ bgl_entry Babylon::readEntry()
 	entry.headword = "";
 	return entry;
 }
-
-
 
 void Babylon::convertToUtf8( std::string &s, unsigned int type )
 {

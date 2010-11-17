@@ -155,7 +155,8 @@ typedef struct {
 class Babylon
 {
 public:
-	Babylon( std::string, print_info_t print_info );
+	Babylon( const std::string& infilename, const std::string& outfilename,
+			print_info_t print_info );
 	~Babylon();
 
 	bool open();
@@ -181,6 +182,7 @@ private:
 	void convertToUtf8( std::string &, unsigned int = 0 );
 
 	std::string m_filename;
+	std::string m_resdirname;
 	gzFile file;
 
 	std::string m_title;

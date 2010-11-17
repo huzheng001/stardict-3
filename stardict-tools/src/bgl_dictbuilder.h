@@ -29,36 +29,37 @@ class DictBuilder
 
 public:
 
-  virtual bool addHeadword( std::string word, std::string def, std::vector<std::string> alternates = std::vector<std::string>() ){ return true; };
+  virtual bool addHeadword( const std::string& word, const std::string& def,
+    const std::vector<std::string>& alternates = std::vector<std::string>() ){ return true; };
 
   virtual bool finish(){ return true; };
 
   virtual std::string filename(){ return std::string(); };
-  virtual void setTitle( const std::string /*title*/ ){};
+  virtual void setTitle( const std::string& /*title*/ ){};
   virtual std::string title(){ return std::string(); };
-  virtual void setAuthor( const std::string /*author*/ ){};
+  virtual void setAuthor( const std::string& /*author*/ ){};
   virtual std::string author(){ return std::string(); };
-  virtual void setLicense( const std::string /*license*/ ){};
+  virtual void setLicense( const std::string& /*license*/ ){};
   virtual std::string license(){ return std::string(); };
-  virtual void setOrigLang( const std::string /*origLang*/ ){};
+  virtual void setOrigLang( const std::string& /*origLang*/ ){};
   virtual std::string origLang(){ return std::string(); };
-  virtual void setDestLang( const std::string /*destLang*/ ){};
+  virtual void setDestLang( const std::string& /*destLang*/ ){};
   virtual std::string destLang(){ return std::string(); };
-  virtual void setDescription( const std::string /*description*/ ){};
+  virtual void setDescription( const std::string& /*description*/ ){};
   virtual std::string description(){ return std::string(); };
-  virtual void setComments( const std::string /*comments*/ ){};
+  virtual void setComments( const std::string& /*comments*/ ){};
   virtual std::string comments(){ return std::string(); };
-  virtual void setEmail( const std::string /*email*/ ){};
+  virtual void setEmail( const std::string& /*email*/ ){};
   virtual std::string email(){ return std::string(); };
-  virtual void setWebsite( const std::string /*website*/ ){};
+  virtual void setWebsite( const std::string& /*website*/ ){};
   virtual std::string website(){ return std::string(); };
-  virtual void setVersion( const std::string /*version*/ ){};
+  virtual void setVersion( const std::string& /*version*/ ){};
   virtual std::string version(){ return std::string(); };
-  virtual void setCreationDate( const std::string /*creationDate*/ ){};
+  virtual void setCreationDate( const std::string& /*creationDate*/ ){};
   virtual std::string creationDate(){ return std::string(); };
-  virtual void setLastUpdate( const std::string /*lastUpdate*/ ){};
+  virtual void setLastUpdate( const std::string& /*lastUpdate*/ ){};
   virtual std::string lastUpdate(){ return std::string(); };
-  virtual void setMisc( const std::string /*misc*/ ){};
+  virtual void setMisc( const std::string& /*misc*/ ){};
   virtual std::string misc(){ return std::string(); };
   virtual unsigned int headwords(){ return 0; };
   virtual unsigned int words(){ return 0; };

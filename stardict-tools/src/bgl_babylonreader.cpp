@@ -29,11 +29,17 @@
 #include <stdio.h>
 #include <glib/gstdio.h>
 
-BabylonReader::BabylonReader( std::string filename, DictBuilder *builder, print_info_t print_info )
+BabylonReader::BabylonReader( const std::string& infilename, const std::string& outfilename,
+  DictBuilder *builder, print_info_t print_info )
 {
-	m_babylon = new Babylon( filename, print_info );
+	m_babylon = new Babylon( infilename, outfilename, print_info );
 	m_builder = builder;
 	this->print_info = print_info;
+}
+
+BabylonReader::~BabylonReader()
+{
+	delete m_babylon;
 }
 
 bool BabylonReader::convert(const std::string &source_charset, const std::string &target_charset)
@@ -58,11 +64,6 @@ bool BabylonReader::convert(const std::string &source_charset, const std::string
 	m_builder->setDestLang( m_babylon->targetLang() );
 	m_builder->setDescription( m_babylon->description() );
 
-#ifdef _WIN32
-	g_mkdir("res", S_IRWXU);
-#else
-	system("rm -rf res;mkdir res");
-#endif
 	bgl_entry entry;
 	entry = m_babylon->readEntry();
 

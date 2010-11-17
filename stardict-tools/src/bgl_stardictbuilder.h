@@ -30,38 +30,39 @@ class StarDictBuilder : public DictBuilder
 {
 
 public:
-  StarDictBuilder( std::string filename, print_info_t print_info);
+  StarDictBuilder( const std::string& outfilename, print_info_t print_info);
   ~StarDictBuilder();
 
-  bool addHeadword( std::string word, std::string def, std::vector<std::string> alternates = std::vector<std::string>() );
+  bool addHeadword( const std::string& word, const std::string& def,
+    const std::vector<std::string>& alternates = std::vector<std::string>() );
   bool finish();
 
   std::string filename() { return m_babylonfilename; };
-  void setTitle( const std::string title ) { m_title = title; };
+  void setTitle( const std::string& title ) { m_title = title; };
   std::string title() { return m_title; };
-  void setAuthor( const std::string author ) { m_author = author; };
+  void setAuthor( const std::string& author ) { m_author = author; };
   std::string author() { return m_author; };
-  void setLicense( const std::string license ) { m_license = license; };
+  void setLicense( const std::string& license ) { m_license = license; };
   std::string license() { return m_license; };
-  void setOrigLang( const std::string origLang ) { m_origLang = origLang; };
+  void setOrigLang( const std::string& origLang ) { m_origLang = origLang; };
   std::string origLang() { return m_origLang; };
-  void setDestLang( const std::string destLang ) { m_destLang = destLang; };
+  void setDestLang( const std::string& destLang ) { m_destLang = destLang; };
   std::string destLang() { return m_destLang; };
-  void setDescription( const std::string description ) { m_description = description; };
+  void setDescription( const std::string& description ) { m_description = description; };
   std::string description() { return m_description; };
-  void setComments( const std::string comments ) { m_comments = comments; };
+  void setComments( const std::string& comments ) { m_comments = comments; };
   std::string comments() { return m_comments; };
-  void setEmail( const std::string email ) { m_email = email; };
+  void setEmail( const std::string& email ) { m_email = email; };
   std::string email() { return m_email; };
-  void setWebsite( const std::string website ) { m_website = website; };
+  void setWebsite( const std::string& website ) { m_website = website; };
   std::string website() { return m_website; };
-  void setVersion( const std::string version ) { m_version = version; };
+  void setVersion( const std::string& version ) { m_version = version; };
   std::string version() { return m_version; };
-  void setCreationDate( const std::string creationDate ) { m_creationDate = creationDate; };
+  void setCreationDate( const std::string& creationDate ) { m_creationDate = creationDate; };
   std::string creationDate() { return m_creationDate; };
-  void setLastUpdate( const std::string lastUpdate ) { m_lastUpdate = lastUpdate; };
+  void setLastUpdate( const std::string& lastUpdate ) { m_lastUpdate = lastUpdate; };
   std::string lastUpdate() { return m_lastUpdate; };
-  void setMisc( const std::string misc ) { m_misc = misc; };
+  void setMisc( const std::string& misc ) { m_misc = misc; };
   std::string misc() { return m_misc; };
   unsigned int headwords() { return m_entriescount; };
   unsigned int words() { return m_wordcount; };
