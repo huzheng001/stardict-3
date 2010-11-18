@@ -50,7 +50,7 @@ Babylon::Babylon( const std::string& infilename, const std::string& outfilename,
 	this->print_info = print_info;
 	std::string::size_type pos = outfilename.find_last_of(G_DIR_SEPARATOR);
 	if(pos == std::string::npos)
-		m_resdirname = "res"; // in current directory
+		m_resdirname = "res"; // in the current directory
 	else
 		m_resdirname = outfilename.substr(0, pos+1) + "res";
 	if(g_file_test(m_resdirname.c_str(), G_FILE_TEST_EXISTS))
@@ -109,40 +109,66 @@ void Babylon::close()
 	gzclose( file );
 }
 
+// return value: true - OK, false - error
 bool Babylon::readBlock( bgl_block &block )
 {
 	if( file == NULL || gzeof( file ))
 		return false;
 
-	block.length = bgl_readnum( 1 );
+	if(!bgl_readnum( 1, block.length ))
+		return false;
 	block.type = block.length & 0xf;
-	if( block.type == 4 ) return false; // end of file marker
 	block.length >>= 4;
-	block.length = block.length < 4 ? bgl_readnum( block.length + 1 ) : block.length - 4 ;
+	if(block.length < 4) {
+		if(!bgl_readnum( block.length + 1, block.length ))
+			return false;
+	} else
+		block.length -= 4;
 	if( block.length )
 	{
 		block.data = (char *)malloc( block.length );
-		gzread( file, block.data, block.length );
-	}
+		int res = gzread( file, block.data, block.length );
+		if(res == -1) {
+			print_info("gzread error\n");
+			return false;
+		}
+		if(res != block.length) {
+			print_info("gzread: unexpected end of file\n");
+			return false;
+		}
+	} else
+		block.data = NULL;
 
 	return true;
 }
 
-unsigned int Babylon::bgl_readnum( int bytes )
+// return value: true - OK, false - error
+bool Babylon::bgl_readnum( int bytes, unsigned int& val )
 {
 	unsigned char buf[4];
-	unsigned val = 0;
+	val = 0;
 
-	if ( bytes < 1 || bytes > 4 ) return (0);
+	if ( bytes < 1 || bytes > 4 )
+		return false;
 
-	gzread( file, buf, bytes );
-	for(int i=0;i<bytes;i++) val= (val << 8) | buf[i];
-	return val;
+	int res = gzread( file, buf, bytes );
+	if(res == -1) {
+		print_info("gzread error\n");
+		return false;
+	}
+	if(res != bytes) {
+		print_info("gzread: unexpected end of file\n");
+		return false;
+	}
+	for(int i=0;i<bytes;i++)
+		val = (val << 8) | buf[i];
+	return true;
 }
 
 bool Babylon::read(const std::string &source_charset, const std::string &target_charset)
 {
-	if( file == NULL ) return false;
+	if( file == NULL )
+		return false;
 
 	bgl_block block;
 	unsigned int pos;
@@ -153,8 +179,12 @@ bool Babylon::read(const std::string &source_charset, const std::string &target_
 	m_sourceCharset = source_charset;
 	m_targetCharset = target_charset;
 	m_numEntries = 0;
-	while( readBlock( block ) )
+	while(true)
 	{
+		if(!readBlock( block ))
+			return false;
+		if( block.type == 4 )
+			break; // end of file marker
 		headword.clear();
 		definition.clear();
 		switch( block.type )
@@ -272,8 +302,12 @@ bgl_entry Babylon::readEntry()
 	std::vector<std::string> alternates;
 	std::string alternate;
 
-	while( readBlock( block ) )
+	while( true )
 	{
+		if(!readBlock( block ))
+			break;
+		if( block.type == 4 )
+			break; // end of file marker
 		switch( block.type )
 		{
 		case 2:

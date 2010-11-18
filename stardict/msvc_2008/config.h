@@ -6,6 +6,8 @@
 #  include <glib/gstdio.h>
 
 #  define S_IRWXU 0
+#  define S_IRWXG 0
+#  define S_IRWXO 0
 #  define __attribute__(x) /**/
 #  define g_fopen stardict_g_fopen
 

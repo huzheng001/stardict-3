@@ -178,7 +178,7 @@ public:
 	inline std::string filename() const { return m_filename; };
 
 private:
-	unsigned int bgl_readnum( int );
+	bool bgl_readnum( int bytes, unsigned int& val );
 	void convertToUtf8( std::string &, unsigned int = 0 );
 
 	std::string m_filename;
