@@ -40,7 +40,7 @@ static gint comparefunc(gconstpointer a,gconstpointer b)
 static gint comparefunc2(gconstpointer a,gconstpointer b)
 {
 	gint x;
-        x = stardict_strcmp(((struct _synworditem *)a)->synword,((struct _synworditem *)b)->synword);
+	x = stardict_strcmp(((struct _synworditem *)a)->synword,((struct _synworditem *)b)->synword);
 	if (x == 0)
 		return ((struct _worditem *)a)->definition - ((struct _worditem *)b)->definition;
 	else
