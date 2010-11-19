@@ -110,20 +110,20 @@ const std::string bgl_charsetname[] = {
 };
 
 const std::string bgl_charset[] = {
-	"ISO-8859-1", /*Default*/
-	"ISO-8859-1", /*Latin*/
-	"ISO-8859-2", /*Eastern European*/
-	"WINDOWS-1251", /*Cyriilic*/
-	"SHIFT_JIS", /*Japanese*/
-	"BIG5", /*Traditional Chinese*/
-	"GB18030", /*Simplified Chinese*/
-	"CP1257", /*Baltic*/
-	"CP1253", /*Greek*/
-	"EUC-KR",  /*Korean*/
-	"ISO-8859-9", /*Turkish*/
-	"WINDOWS-1255", /*Hebrew*/
-	"CP1256", /*Arabic*/
-	"CP874"  /*Thai*/
+	"cp1252",       // Default                0x41
+	"cp1252",       // Latin                    42
+	"cp1250",       // Eastern European         43
+	"cp1251",       // Cyrillic                 44
+	"cp932",        // Japanese                 45
+	"cp950",        // Traditional Chinese      46
+	"cp936",        // Simplified Chinese       47
+	"cp1257",       // Baltic                   48
+	"cp1253",       // Greek                    49
+	"cp949",        // Korean                   4A
+	"cp1254",       // Turkish                  4B
+	"cp1255",       // Hebrew                   4C
+	"cp1256",       // Arabic                   4D
+	"cp874"         // Thai                     4E
 };
 
 const std::string partOfSpeech[] = {
@@ -140,17 +140,16 @@ const std::string partOfSpeech[] = {
 	"art."
 };
 
-typedef struct {
+struct bgl_block {
 	unsigned type;
-	unsigned length;
-	char * data;
-} bgl_block;
+	std::vector<char> data;
+};
 
-typedef struct {
+struct bgl_entry {
 	std::string headword;
 	std::string definition;
 	std::vector<std::string> alternates;
-} bgl_entry;
+};
 
 class Babylon
 {
@@ -163,7 +162,7 @@ public:
 	void close();
 	bool readBlock( bgl_block& );
 	bool read(const std::string &source_charset, const std::string &target_charset);
-	bgl_entry readEntry();
+	bgl_entry readEntry(void);
 
 	inline std::string title() const { return m_title; };
 	inline std::string author() const { return m_author; };
@@ -178,8 +177,12 @@ public:
 	inline std::string filename() const { return m_filename; };
 
 private:
+	/* Do not use DEFAULT_CHARSET identifier, there is a macro named DEFAULT_CHARSET
+	in WinGDI.h on Windows. */
+	enum BABYLON_CHARSET { BABYLON_DEFAULT_CHARSET, BABYLON_SOURCE_CHARSET, BABYLON_TARGET_CHARSET };
+
 	bool bgl_readnum( int bytes, unsigned int& val );
-	void convertToUtf8( std::string &, unsigned int = 0 );
+	void convertToUtf8( std::string& s, BABYLON_CHARSET type);
 
 	std::string m_filename;
 	std::string m_resdirname;
@@ -197,10 +200,10 @@ private:
 	std::string m_sourceCharset;
 	std::string m_targetCharset;
 	
-	/* Do not use DEFAULT_CHARSET identifier, there is a macro named DEFAULT_CHARSET
-	in WinGDI.h on Windows. */
-	enum CHARSET { BABYLON_DEFAULT_CHARSET, BABYLON_SOURCE_CHARSET, BABYLON_TARGET_CHARSET };
 	print_info_t print_info;
+#ifdef _WIN32
+	TempFile m_gz_temp_file;
+#endif
 };
 
 #endif // BABYLON_H

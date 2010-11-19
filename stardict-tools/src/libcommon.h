@@ -62,8 +62,8 @@ public:
 	{
 		this->print_info = print_info;
 	}
-private:
 	void clear(void);
+private:
 	std::string file_name;
 	print_info_t print_info;
 };
