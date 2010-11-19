@@ -8,19 +8,10 @@ Use MS Visual Studio 2008 to build StarDict.
 gtk
 ----
 
-You need to install developer packages into "msvc_2008\gtk" directory, they can be found at http://www.gimp.org/~tml/gimp/win32/downloads.html
-
-These packages are needed:
-atk-dev_1.30.0-1_win32.zip
-cairo-dev_1.8.10-3_win32.zip
-gettext-runtime-dev-0.17-1.zip
-glib-dev_2.24.0-2_win32.zip
-gtk+-dev_2.16.6-2_win32.zip
-libiconv-1.9.1.bin.woe32.zip
-pango-dev_1.28.0-1_win32.zip
-zlib-dev_1.2.4-2_win32.zip
-
-Just extract them into "msvc_2008\gtk\" is OK.
+You need to install developer packages into "msvc_2008\gtk" directory.
+Download All-in-one bundle gtk+-bundle_2.22.*_win32.zip at http://www.gtk.org/download-windows.html.
+Download libiconv-1.9-w32.2.bin.woe32.zip at http://sourceforge.net/projects/gettext/files/.
+Extract them into "msvc_2008\gtk\".
 
 libxml library
 --------------

@@ -6,7 +6,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories="gtk\include;&quot;gtk\include\pango-1.0&quot;;&quot;gtk\include\atk-1.0&quot;;&quot;gtk\include\atk-1.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;;gtk\include\cairo;&quot;gtk\include\gtk-2.0&quot;"
+		AdditionalIncludeDirectories="gtk\include;&quot;gtk\include\pango-1.0&quot;;&quot;gtk\include\atk-1.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;;gtk\include\cairo;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\include\gdk-pixbuf-2.0&quot;"
 	/>
 	<Tool
 		Name="VCLinkerTool"

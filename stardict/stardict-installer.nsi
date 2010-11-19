@@ -52,8 +52,8 @@ SetDateSave on
 !define HKLM_APP_PATHS_KEY		"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\stardict.exe"
 !define STARDICT_UNINST_EXE			"stardict-uninst.exe"
 
-!define GTK_MIN_VERSION			"2.12.0"
-!define GTK_INSTALL_VERSION		"2.12.1"
+!define GTK_MIN_VERSION			"2.22.0"
+!define GTK_INSTALL_VERSION		"2.22.0"
 !define GTK_REG_KEY			"SOFTWARE\GTK\2.0"
 !define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
 !define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
