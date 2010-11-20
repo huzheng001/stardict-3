@@ -137,6 +137,7 @@ struct dict_ParseUserData {
 	std::list<std::pair<std::string, std::string> > sentences;
 	std::string orig;
 	std::string trans;
+	std::list<std::string> suggestions;
 };
 
 static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
@@ -155,6 +156,8 @@ static void dict_parse_text(GMarkupParseContext *context, const gchar *text, gsi
 		Data->orig.assign(text, text_len);
 	} else if (strcmp(element, "trans")==0) {
 		Data->trans.assign(text, text_len);
+	} else if (strcmp(element, "sugg")==0) {
+		Data->suggestions.push_back(std::string(text, text_len));
 	}
 }
 
@@ -241,22 +244,29 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		g_markup_parse_context_parse(context, xml, xml_end - xml, NULL);
 		g_markup_parse_context_end_parse(context, NULL);
 		g_markup_parse_context_free(context);
-		if (Data.def == "Not Found") {
+		if ((Data.def.empty() || Data.def == "Not Found") && Data.suggestions.empty()) {
 			resp->data = NULL;
 		} else {
 			std::string definition;
 			if (!Data.pron.empty()) {
 				definition += "[";
 				definition += Data.pron;
-				definition += "]\n";
+				definition += "]";
 			}
-			definition += Data.def;
+			if(!Data.def.empty()) {
+				if(!definition.empty())
+					definition += "\n";
+				definition += Data.def;
+			}
 			if (!Data.rel.empty()) {
-				definition += "\n";
+				if(!definition.empty())
+					definition += "\n";
 				definition += Data.rel;
 			}
 			if (!Data.sentences.empty()) {
-				definition += "\n\n例句与用法:";
+				if(!definition.empty())
+					definition += "\n\n";
+				definition += "例句与用法:";
 				int index = 1;
 				char *tmp_str;
 				for (std::list<std::pair<std::string, std::string> >::iterator i = Data.sentences.begin(); i != Data.sentences.end(); ++i) {
@@ -264,6 +274,15 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 					definition += tmp_str;
 					g_free(tmp_str);
 					index++;
+				}
+			}
+			if (!Data.suggestions.empty()) {
+				if(!definition.empty())
+					definition += "\n\n";
+				definition += "Suggested words:";
+				for(std::list<std::string>::const_iterator it=Data.suggestions.begin(); it != Data.suggestions.end(); ++it) {
+					definition += "\n";
+					definition += *it;
 				}
 			}
 			resp->data = build_dictdata('m', definition.c_str());

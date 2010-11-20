@@ -2115,7 +2115,6 @@ void AppCore::stop_word_change_timer()
 		g_source_remove(word_change_timeout_id);
 		word_change_timeout_id = 0;
 	}
-
 }
 
 void AppCore::End()
