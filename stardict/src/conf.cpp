@@ -343,8 +343,7 @@ public:
 		const gchar * conf_file_env = g_getenv("STARDICT_DIRS_CONFIG_FILE");
 		if(conf_file_env)
 			conf_file = conf_file_env;
-		if(g_file_test(conf_file.c_str(),
-			GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_REGULAR))) {
+		if(g_file_test(conf_file.c_str(), GFileTest(G_FILE_TEST_IS_REGULAR))) {
 			g_debug("Loading StarDict dirs config: %s", conf_file.c_str());
 			if(!ini.load(conf_file, true, false))
 				exit(EXIT_FAILURE);
