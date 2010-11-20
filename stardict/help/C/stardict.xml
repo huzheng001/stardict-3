@@ -4,7 +4,7 @@
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appversion "3.0.2">
   <!ENTITY manrevision "3.0.2">
-  <!ENTITY date "Mar 2010">
+  <!ENTITY date "Nov 2010">
   <!ENTITY app "StarDict">
   <!ENTITY app_t "<application>StarDict</application>">
   <!ENTITY winedition "Windows edition">
@@ -27,6 +27,13 @@
 	<title>&app; Manual V&manrevision;</title>
 	<copyright> 
 		<year>2003</year>
+		<year>2004</year>
+		<year>2005</year>
+		<year>2006</year>
+		<year>2007</year>
+		<year>2008</year>
+		<year>2009</year>
+		<year>2010</year>
 		<holder>Hu Zheng</holder>
 	</copyright>
 
@@ -112,6 +119,10 @@
 				<para role="author">Hu Zheng</para>
 				<para role="publisher">GNOME Documentation Project</para>
 			</revdescription>
+		</revision>
+		<revision>
+			<revnumber>&app; Manual V3.0.2</revnumber>
+			<date>Nov 2010</date>
 		</revision>
 	</revhistory>
 	<releaseinfo> This manual describes version &appversion; of &app;.
