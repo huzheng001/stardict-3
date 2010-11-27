@@ -7,15 +7,66 @@ You may need to tweak the options below.
 
 // options
 var InstallDirMustNotExist = false;
-var MSVSConfig = "Release"; // Release or Debug
-var LinuxDistDir = "\\\\Mainworkstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\tests\\stardict-3.0.2";
-var LinuxBuildDir = "\\\\Mainworkstation\\mnt\\data\\work\\stardict\\work\\stardict-current\\build";
+var VSConfig = "release"; // release or debug
+var UnixDistDir = "stardict-unix-dist";
+var UnixBuildDir = "stardict-build";
 
 var BaseDir = GetBaseDir();
 var InstallDir = BaseDir + "win32-install-dir\\";
 var MSVSDir = BaseDir + "msvc_2008\\";
-var MSVSOutputDir = MSVSDir + MSVSConfig + "\\";
 var fso = WScript.CreateObject("Scripting.FileSystemObject");
+var shell = WScript.CreateObject("WScript.Shell");
+
+function usage()
+{
+	var txt;
+	txt =  "Usage:\n";
+	txt += "  cscript " + WScript.ScriptName + " <options>\n";
+	txt += "  cscript " + WScript.ScriptName + " help\n\n";
+	txt += "Options can be specified in the form <option>=<value>.\n\n";
+	txt += "\nDefault value given in parentheses:\n\n";
+	txt += "  vsconfig:     Visual Studio configuration [release|debug] (" + VSConfig + ") \n";
+	txt += "  distdir:      StarDict source directory after executing `make dist` or\n";
+	txt += "                a directory with unpacked distribution tarball for Unix.\n";
+	txt += "                Used to get html help files.\n";
+	txt += "                (" + UnixDistDir + ") \n";
+	txt += "  builddir:     StarDict build directory or.\n";
+	txt += "                Used to get compiled translation files.\n";
+	txt += "                (" + UnixBuildDir + ") \n";
+	WScript.Echo(txt);
+}
+
+/* This function was inspired by configure.js script of libxml2 package. */
+function ParseCommandLine() {
+	var error = 0;
+	for (i = 0; (i < WScript.Arguments.length) && (error == 0); i++) {
+		var arg, opt;
+		arg = WScript.Arguments(i);
+		opt = arg.substring(0, arg.indexOf("="));
+		if (opt.length == 0)
+			opt = arg.substring(0, arg.indexOf(":"));
+		if (opt.length > 0) {
+			if (opt == "vsconfig")
+				VSConfig = arg.substring(opt.length + 1, arg.length);
+			else if (opt == "distdir")
+				UnixDistDir = arg.substring(opt.length + 1, arg.length);
+			else if (opt == "builddir")
+				UnixBuildDir = arg.substring(opt.length + 1, arg.length);
+		} else if (i == 0) {
+			if (arg == "help") {
+				usage();
+				WScript.Quit(0);
+			}
+		} else {
+			error = 1;
+		}
+	}
+	// If we fail here, it is because the user supplied an unrecognised argument.
+	if (error != 0) {
+		usage();
+		WScript.Quit(error);
+	}
+}
 
 function GetBaseDir() {
 	var t = WScript.ScriptFullName.lastIndexOf("\\");
@@ -103,20 +154,27 @@ function FindFiles(path, name_regex) {
 
 if (!fso.FileExists(BaseDir + "stardict-installer.nsi")) {
 	WScript.Echo("This script must be started in the Stardict source directory.");
+	usage();
 	WScript.Quit(1);
 }
 
-if(!fso.FolderExists(LinuxDistDir)) {
-	WScript.Echo("Linux distribution folder does not exist.\n"
-		+ "We need linux distribution to get files that cannot be build on Windows.\n"
-		+ "Folder: " + LinuxDistDir);
+ParseCommandLine();
+
+var MSVSOutputDir = MSVSDir + VSConfig + "\\";
+
+if(!fso.FolderExists(UnixDistDir)) {
+	WScript.Echo("StarDict distribution directory does not exist.\n"
+		+ "This directory must contain unpacked distribution tarball for Unix or\n"
+		+ "it must be StarDict source directory after executing `make dist`.\n"
+		+ "Folder: " + UnixDistDir);
+	usage();
 	WScript.Quit(1);
 }
 
-if(!fso.FolderExists(LinuxBuildDir)) {
-	WScript.Echo("Linux build folder does not exist.\n"
-		+ "We need linux build directory to get files that cannot be build on Windows.\n"
-		+ "Folder: " + LinuxBuildDir);
+if(!fso.FolderExists(UnixBuildDir)) {
+	WScript.Echo("StarDict build directory does not exist.\n"
+		+ "Folder: " + UnixBuildDir);
+	usage();
 	WScript.Quit(1);
 }
 
@@ -135,7 +193,7 @@ CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 CopyFile(MSVSOutputDir + "stardict-editor.exe", InstallDir);
 {
-	var oFolder = fso.GetFolder(LinuxBuildDir + "\\po");
+	var oFolder = fso.GetFolder(fso.BuildPath(UnixBuildDir, "po"));
 	var oFiles = new Enumerator(oFolder.Files);
 	var cnt = 0;
 	for (; !oFiles.atEnd(); oFiles.moveNext())
@@ -150,7 +208,8 @@ CopyFile(MSVSOutputDir + "stardict-editor.exe", InstallDir);
 		}
 	}
 	if(cnt == 0) {
-		WScript.Echo("Translation files are not found: " + oFolder.Path + "\\*.gmo");
+		WScript.Echo("No translation files found: " + oFolder.Path + "\\*.gmo");
+		usage();
 		WScript.Quit(1);
 	}
 }
@@ -180,7 +239,7 @@ CreateFolder(InstallDir + "skins\\");
 {
 	var InstallHelpDir = InstallDir + "help\\";
 	CreateFolder(InstallHelpDir);
-	var oFolder = fso.GetFolder(LinuxDistDir + "\\help\\");
+	var oFolder = fso.GetFolder(fso.BuildPath(UnixDistDir, "help\\"));
 	var oFolders = new Enumerator(oFolder.SubFolders);
 	var cnt = 0;
 	for(; !oFolders.atEnd(); oFolders.moveNext())
@@ -201,6 +260,7 @@ CreateFolder(InstallDir + "skins\\");
 	}
 	if(cnt == 0) {
 		WScript.Echo("Html help is not found: " + oFolder.Path + "\\C\\html");
+		usage();
 		WScript.Quit(1);
 	}
 }
@@ -227,7 +287,7 @@ CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
 	var cnt = 0;
 	for(var i=0; i<files.length; ++i) {
 		var is_debug_dll = (files[i].match(/.*-d-.*/i) != null);
-		var is_debug_build = (MSVSConfig.toLowerCase() == "debug");
+		var is_debug_build = (VSConfig.toLowerCase() == "debug");
 		if(is_debug_dll != is_debug_build)
 			continue;
 		CopyFile(LibSigcDir + files[i], InstallDir);
