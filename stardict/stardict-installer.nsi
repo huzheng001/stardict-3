@@ -11,8 +11,6 @@ Var ISSILENT
 ;General
 
 !define STARDICT_VERSION		"3.0.2"
-; define if StarDict was built with MS Visual Studio, comment otherwise
-!define MSVC
 
 Name "StarDict ${STARDICT_VERSION}"
 
@@ -21,15 +19,15 @@ OutFile "stardict-${STARDICT_VERSION}.exe"
 XPStyle on
 
 SetCompressor /SOLID lzma
-
 ShowInstDetails show
 ShowUninstDetails show
 SetDateSave on
+RequestExecutionLevel highest
 
 ; $INSTDIR is set in .onInit function..
 
 !include "MUI.nsh"
-!include Sections.nsh
+!include "Sections.nsh"
 
 !include "FileFunc.nsh"
 !insertmacro GetParent
@@ -40,26 +38,29 @@ SetDateSave on
 ;--------------------------------
 ;Defines
 
-!define MUI_ICON			.\stardict.ico
-!define MUI_UNICON			.\stardict-uninst.ico
-!define MUI_SPECIALBITMAP		.\src\win32\nsis\stardict-intro.bmp
-!define MUI_HEADERBITMAP		.\src\win32\nsis\stardict-header.bmp
+!define MUI_ICON                     .\stardict.ico
+!define MUI_UNICON                   .\stardict-uninst.ico
+!define MUI_SPECIALBITMAP            .\src\win32\nsis\stardict-intro.bmp
+!define MUI_HEADERBITMAP             .\src\win32\nsis\stardict-header.bmp
+!define MUI_FINISHPAGE_NOAUTOCLOSE
 
-!define STARDICT_NSIS_INCLUDE_PATH		".\src\win32\nsis"
+!define STARDICT_NSIS_INCLUDE_PATH   ".\src\win32\nsis"
 
-!define STARDICT_REG_KEY			"SOFTWARE\stardict"
-!define STARDICT_UNINSTALL_KEY		"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StarDict"
-!define HKLM_APP_PATHS_KEY		"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\stardict.exe"
-!define STARDICT_UNINST_EXE			"stardict-uninst.exe"
+!define STARDICT_REG_KEY             "SOFTWARE\stardict"
+!define STARDICT_UNINSTALL_KEY       "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\StarDict"
+!define HKLM_APP_PATHS_KEY           "SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\stardict.exe"
+!define STARDICT_UNINST_EXE          "stardict-uninst.exe"
 
-!define GTK_MIN_VERSION			"2.22.0"
-!define GTK_INSTALL_VERSION		"2.22.0"
-!define GTK_REG_KEY			"SOFTWARE\GTK\2.0"
-!define GTK_INSTALL_VERIFIER		"bin\libgtk-win32-2.0-0.dll"
-!define GTK_DEFAULT_INSTALL_PATH		"$COMMONFILES\GTK\2.0"
-!define GTK_RUNTIME_INSTALLER			"redist\gtk2-runtime*.exe"
-!define VC_REDIST_INSTALLER				"redist\vcredist_x86.exe"
-!define LIB_SIGC_DLL	"sigc-*.dll"
+!define GTK_MIN_VERSION              "2.22.0"
+!define GTK_INSTALL_VERSION          "2.22.0"
+!define GTK_REG_KEY                  "SOFTWARE\GTK\2.0"
+!define GTK_INSTALL_VERIFIER         "bin\libgtk-win32-2.0-0.dll"
+!define GTK_DEFAULT_INSTALL_PATH     "$COMMONFILES\GTK\2.0"
+!define GTK_RUNTIME_INSTALLER        "redist\gtk2-runtime*.exe"
+!define VC_REDIST_INSTALLER          "redist\vcredist_x86.exe"
+!define VC_REDIST_DIR                "Microsoft.VC90.CRT"
+!define VC_REDIST_ASSEMBLY           "redist\${VC_REDIST_DIR}"
+!define LIB_SIGC_DLL                 "sigc-*.dll"
 
 
 ;--------------------------------
@@ -284,41 +285,46 @@ Section $(GTK_SECTION_TITLE) SecGtk
     Delete "$TEMP\gtk-runtime.exe"
 SectionEnd ; end of GTK+ section
 
-!ifdef MSVC
 ;--------------------------------
 ;Microsoft Visual C++ Redistributable Package
 
 Section SecMSVCRedist
-
   Call CheckUserInstallRights
   Pop $R1
-  
-  SetOutPath $TEMP
-  SetOverwrite on
-  File /oname=vcredist.exe ${VC_REDIST_INSTALLER}
-  SetOverwrite off
-
-  StrCmp $R1 "HKLM" install_vcredist vcredist_no_install_rights
+  StrCmp $R1 "HKLM" install_vcredist
+  StrCmp $R1 "HKCU" install_private_assembly no_install_rights
   
   install_vcredist:
+    SetOutPath $TEMP
+    SetOverwrite on
+    File /oname=vcredist.exe ${VC_REDIST_INSTALLER}
+    SetOverwrite off
     ClearErrors
     ExecWait '"$TEMP\vcredist.exe" /Q'
-    IfErrors vcredist_install_error done
-
+    IfErrors vcredist_install_error vcredist_install_success
+  
   vcredist_install_error:
     Delete "$TEMP\vcredist.exe"
     MessageBox MB_OK $(VC_REDIST_INSTALL_ERROR) /SD IDOK
     Quit
-	
-  vcredist_no_install_rights:
+  
+  vcredist_install_success:
     Delete "$TEMP\vcredist.exe"
-	MessageBox MB_OK $(VC_REDIST_NO_RIGHTS_ERROR) /SD IDOK
+    Goto done
+  
+  install_private_assembly:
+    SetOutPath "$INSTDIR"
+    SetOverwrite on
+    File /r "${VC_REDIST_ASSEMBLY}"
+    SetOverwrite off
+    Goto done
+
+  no_install_rights:
+    MessageBox MB_OK $(VC_REDIST_NO_RIGHTS_ERROR) /SD IDOK
     Quit
-	
+  
   done:
-    Delete "$TEMP\vcredist.exe"
 SectionEnd ; end of Microsoft Visual C++ Redistributable Package
-!endif
 
 ;--------------------------------
 ;StarDict Install Section
@@ -434,6 +440,7 @@ Section Uninstall
     RMDir /r "$INSTDIR\plugins"
     RMDir /r "$INSTDIR\data"
     RMDir /r "$INSTDIR\skins"
+    RMDir /r "$INSTDIR\${VC_REDIST_DIR}"
     Delete "$INSTDIR\stardict.exe"
     Delete "$INSTDIR\stardict-editor.exe"
     Delete "$INSTDIR\TextOutSpy.dll"
@@ -466,35 +473,42 @@ SectionEnd ; end of uninstall section
 ;--------------------------------
 ;Functions
 
+;
+; Usage:
+; Call CheckUserInstallRights
+; First Pop:
+;   "HKLM"
+;   "HKCU"
+;   "NONE"
 Function CheckUserInstallRights
-	ClearErrors
-	UserInfo::GetName
-	IfErrors Win9x
-	Pop $0
-	UserInfo::GetAccountType
-	Pop $1
+  ClearErrors
+  UserInfo::GetName
+  IfErrors Win9x
+  Pop $0
+  UserInfo::GetAccountType
+  Pop $1
 
-	StrCmp $1 "Admin" 0 +3
-                StrCpy $1 "HKLM"
-		Goto done
-	StrCmp $1 "Power" 0 +3
-                StrCpy $1 "HKLM"
-		Goto done
-	StrCmp $1 "User" 0 +3
-		StrCpy $1 "HKCU"
-		Goto done
-	StrCmp $1 "Guest" 0 +3
-		StrCpy $1 "NONE"
-		Goto done
-	; Unknown error
-	StrCpy $1 "NONE"
-        Goto done
+  StrCmp $1 "Admin" 0 +3
+    StrCpy $1 "HKLM"
+    Goto done
+  StrCmp $1 "Power" 0 +3
+    StrCpy $1 "HKLM"
+    Goto done
+  StrCmp $1 "User" 0 +3
+    StrCpy $1 "HKCU"
+    Goto done
+  StrCmp $1 "Guest" 0 +3
+    StrCpy $1 "NONE"
+    Goto done
+  ; Unknown error
+  StrCpy $1 "NONE"
+    Goto done
 
-	Win9x:
-		StrCpy $1 "HKLM"
+  Win9x:
+    StrCpy $1 "HKLM"
 
-	done:
-        Push $1
+  done:
+    Push $1
 FunctionEnd
 
 Function un.CheckUserInstallRights
@@ -583,7 +597,7 @@ Function DoWeNeedGtk
 
   have_gtk:
     ; GTK+ is already installed; check version.
-	; Change this to not even run the GTK installer if this version is already installed.
+    ; Change this to not even run the GTK installer if this version is already installed.
     ${VersionCompare} ${GTK_INSTALL_VERSION} $0 $3
     IntCmp $3 1 +1 good_version good_version
     ${VersionCompare} ${GTK_MIN_VERSION} $0 $3
@@ -700,9 +714,8 @@ Function preGtkDirPage
   Call DoWeNeedGtk
   Pop $R0
   Pop $R1
-
-  IntCmp $R0 2 +2 +2 no_gtk
-  StrCmp $R0 "3" no_gtk no_gtk
+  
+  IntCmp $R0 2 0 0 no_gtk
 
   ; Don't show dir selector.. Upgrades are done to existing path..
   Pop $R1

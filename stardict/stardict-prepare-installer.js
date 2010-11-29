@@ -271,8 +271,7 @@ CreateFolder(InstallDir + "skins\\");
 	{
 		var files = FindFiles(MSVSOutputDir, /.*\.dll$/i);
 		for(var i=0; i<files.length; i++) {
-			if(files[i].toLowerCase() == "textoutspy.dll" 
-			|| files[i].toLowerCase() == "textouthook.dll")
+			if(!files[i].match(/stardict-.*-plugin\.dll/i))
 				continue;
 			//WScript.Echo("path: " + MSVSOutputDir + files[i]);
 			CopyFile(MSVSOutputDir + files[i], PluginsDir);
