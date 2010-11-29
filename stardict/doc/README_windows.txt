@@ -137,17 +137,72 @@ Use stardict-prepare-installer.js to build win32-install-dir directory structure
 
 Some of the required files cannot be created on Windows, you need Linux to prepare them.
 
-Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
+1. Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
 
-1. Download Microsoft Visual C++ 2008 Redistributable Package and put into redist.
-	For VS 2008 non SP1 version take this
+2. Download Microsoft Visual C++ 2008 Redistributable Package and put into redist. The file is named vcredist_x86.exe.
+	VS 2008 pre-SP1 version:
 	http://www.microsoft.com/downloads/en/details.aspx?FamilyID=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en
-	and for VS 2008 SP1 take this:
+	VS 2008 SP1 version:
 	http://www.microsoft.com/downloads/en/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2&displaylang=en
-2. Uncomment '!define MSVC' in stardict-installer.nsi
+
+3. From %PROGDIR%\Microsoft Visual Studio 8\VC\Redist\x86, copy Microsoft.VC80.CRT to redist.
 
 Double click the stardict-installer.nsi :) NSIS will build the installer.
 
+Warning
+-------
+
+The libraries for Visual Studio often are updated after a release. For example, this can occur when you install a service pack. Visual Studio SP1 installs new version of C Runtime library as well as other libraries. Redistributable files in %PROGDIR%\Microsoft Visual Studio 8\VC\Redist\x86 are updated too. However, by default Visual Studio still bind applications to the original release version of libraries available. That is, after installing SP1, application built with Visual Studio require the libraries that were originally installed with Visual Studio 2008! For details see "Redistributing an Application and Binding It to Specific Libraries" at http://msdn.microsoft.com/en-us/library/cc664727.aspx.
+
+In practice that means that after installing SP1.
+1. You should continue to use vcredist_x86.exe for Visual Studio 2008.
+2. %PROGDIR%\Microsoft Visual Studio 8\VC\Redist\x86 folder now contains files that do not satisfy dependency requirements of produced applications. You need the pre-SP1 files.
+
+Deploying Visual C++ library with StarDict
+------------------------------------------
+
+StarDict application as well as related tools and DLLs depend upon Visual C++ libraries that must be installed on the target computer in order for application to start. The following libraries are needed: C Runtime Library, Standard C++ Library. They both are part of the Microsoft.VC80.CRT assembly.
+
+There are two way to distribute Visual C++ DLLs.
+
+1. Using Visual C++ Redistributable Package (VCRedist_x86.exe) to install libraries into global assembly cache. This methods requires administrative rights.
+
+2. Installing Microsoft.VC80.CRT as a private assembly in application's folder.
+
+Whenever possible we should install Visual C++ libraries into the native assembly cache (WinSxS folder). That makes the libraries available to all applications no matter where they are installed. In some cases we do not have administrative rights or we should not alter the target system as with the portable version of StarDict. We have to use the second method. Privite assembly are subject of restrictions. We are not free to choose the folder where the private assembly is placed into. That must either the application folder or a subfolder of it named after the assembly name. Of two variants a subfolder in StarDict folder seams the best one - no extra DLLs near stardict.exe. We may have a directory structure like this:
+
+$INSTALLDIR\stardict.exe
+$INSTALLDIR\stardict-editor.exe
+$INSTALLDIR\sigc-vc90-2_0.dll
+$INSTALLDIR\textouthook.dll
+$INSTALLDIR\textoutspy.dll
+...
+$INSTALLDIR\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest
+$INSTALLDIR\Microsoft.VC90.CRT\msvcm90.dll
+$INSTALLDIR\Microsoft.VC90.CRT\msvcp90.dll
+$INSTALLDIR\Microsoft.VC90.CRT\msvcr90.dll
+...
+
+Having Microsoft.VC90.CRT installed this way, Visual C++ libraries will be successfully loaded by stardict.exe, stardict-editor.exe and other DLLs in the "$INSTALLDIR" folder, but not by stardict plugins residing in $INSTALLDIR\plugins folder. The reason for this is "Assembly Searching Sequence", see 
+http://msdn.microsoft.com/en-us/library/aa374224(VS.85).aspx for more details. 
+
+There are a number of possibilites to make plugins load successfully.
+
+1. Copy the Microsoft.VC90.CRT folder into plugins. That is we'll have two copies of the Microsoft.VC90.CRT assembly: the first in the $INSTALLDIR folder and the second in the $INSTALLDIR\plugins folder. This make StarDict to load two different copies of the C Runtime and Standard C++ Libraries. The first copy will be loaded by StarDict itself, and the second will be loaded by plugins, hopefully all plugins will share one copy of each library.
+
+This solution is not acceptable for two reasons. 1) Multiple copies of the sample library in process address space, 2) extra disk space required to store two copies of the same file.
+
+2. Link all plugins with C Runtime and Standard C++ libraries statically. In this case each plugin will have its own copy of the library. That is not acceptable again.
+
+3. Move all plugins from the plugins folder directly to $INSTALLDIR. This clutters StarDict folder, but should work OK with a single copy of assembly.
+
+4. Remove reference to Microsoft.VC90.CRT assembly out of plugin manifests. Since Microsoft.VC90.CRT is the only assembly in plugin minifests we can drop the manifest entirely. This make plugin use the copy of C Runtime and Standard C++ Libraries loaded by StarDict.exe. Plugins are only loaded by stardict.exe so we can be sure both libraries present in the process address space.
+
+To disable embedding a manifest into a DLL follow these steps:
+- In Visual Studio open project properties.
+- In configuration select "All Configurations"
+- Navigate to Configuration Properties -> Linker -> Manifest File in the tree on the left.
+- Set "Generate Manifest" property to "No".
 
 Debugging
 =========
