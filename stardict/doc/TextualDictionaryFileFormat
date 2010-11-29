@@ -27,8 +27,8 @@ We may use any text editor to perform these tasks, no special tools are needed.
 A textual dictionary is not supposed to be used by StarDict directly. 
 StarDict will continue to use binary dictionaries.
 To convert between binary and textual file formats use special converters:
-stardict_bin2text (StarDict normal dictionary binary to text), 
-stardict_text2bin (StarDict normal dictionary text to binary).
+stardict-bin2text (StarDict normal dictionary binary to text), 
+stardict-text2bin (StarDict normal dictionary text to binary).
 
 The textual format must reflect the binary format as close as possible, 
 not sacrificing benefits of textual format, of course.
@@ -45,7 +45,7 @@ images, sounds, attachments should be stored in independent files (maybe
 resource storage). A textual file may contain references to binary data, for
 example, refer to an image file by name. 
 
-The order of item in textual dictionary does not matter. Conversion tool takes
+The order of items in textual dictionary does not matter. Conversion tool takes
 care that articles are stored in a binary dictionary in the right order. 
 
 
@@ -172,15 +172,15 @@ info block, values of 'definition' elements.
 tools
 =====
 
-stardict_text2bin and stardict_bin2text
+stardict-text2bin and stardict-bin2text
 
-stardict_bin2text must do its best to recover from errors. We should skip items
+stardict-bin2text must do its best to recover from errors. We should skip items
 we cannot read correctly. The reason for that is that binary dictionary cannot
 not be fixed. We must extract as much information as possible from it.
-stardict_bin2text should do possible corrections to data, for example, remove
+stardict-bin2text should do possible corrections to data, for example, remove
 invalid chars, like control chars. 
 
-stardict_bin2text on the other hand is allowed to stop on the first error. The
+stardict-bin2text on the other hand is allowed to stop on the first error. The
 source data are in xml format is cannot be fixed by the user. We may apply
 simple fixes to data, but we should not encourage the user to ignore textual
 dictionary standards. 
