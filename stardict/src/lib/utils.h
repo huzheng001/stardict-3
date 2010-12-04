@@ -136,6 +136,7 @@ gboolean is_space_or_punct(gunichar c);
 gboolean is_not_alpha(gunichar c);
 gboolean is_not_upper(gunichar c);
 gboolean is_not_lower(gunichar c);
+std::string fix_utf8_str(const std::string& str);
 
 #define UTF8_BOM "\xEF\xBB\xBF"
 #define read_file_err \

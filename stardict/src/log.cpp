@@ -21,6 +21,7 @@
 
 #include "conf.h"
 #include "log.h"
+#include "lib/utils.h"
 
 std::auto_ptr<Logger> logger;
 
@@ -255,8 +256,16 @@ void LogWindow::End(void)
 	textview = NULL;
 	scrolled_window = NULL;
 }
+
 void LogWindow::append(const gchar* str)
 {
+	/* append_in_window accepts only valid utf8 strings, 
+	we must take care over the proper encoding. */
+	std::string fixed_str;
+	if(!g_utf8_validate(str, -1, NULL)) {
+		fixed_str = fix_utf8_str(str);
+		str = fixed_str.c_str();
+	}
 	if(window)
 		append_in_window(str);
 	else

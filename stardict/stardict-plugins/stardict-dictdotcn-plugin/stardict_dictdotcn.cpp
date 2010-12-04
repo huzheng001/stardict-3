@@ -178,6 +178,122 @@ static void dict_parse_end_element(GMarkupParseContext *context, const gchar *el
 	}
 }
 
+static void process_xml_response(const char *data, size_t data_len, NetDictResponse *resp)
+{
+	resp->data = NULL;
+	gchar *content = NULL;
+	// search for xml processing instruction, it may specify custom encoding
+	do {
+		const char *pi = g_strstr_len(data, data_len, "<?xml");
+		if(!pi)
+			break;
+		const char *pi_end = g_strstr_len(pi, data_len - (pi - data), "?>");
+		if(!pi_end)
+			break;
+		const char *enc = g_strstr_len(pi, pi_end - pi, "encoding=");
+		if(!enc)
+			break;
+		enc += sizeof("encoding=") - 1;
+		char quote = *enc;
+		if(quote != '\'' && quote != '"')
+			break;
+		enc += 1;
+		const char* enc_end = strchr(enc, quote);
+		if(!enc_end)
+			break;
+		std::string encoding(enc, enc_end - enc);
+		if (encoding.empty())
+			break;
+		gsize bytes_written;
+		content = g_convert(data, data_len, "UTF-8", encoding.c_str(), NULL, &bytes_written, NULL);
+		data = content;
+		data_len = bytes_written;
+	} while(false);
+	if(!data)
+		return;
+	const char *xml = g_strstr_len(data, data_len, "<dict>");
+	if (!xml) {
+		g_free(content);
+		return;
+	}
+	const char *xml_end = g_strstr_len(xml+6, data_len - (xml+6 - data), "</dict>");
+	if (!xml_end) {
+		g_free(content);
+		return;
+	}
+	xml_end += 7;
+	dict_ParseUserData Data;
+	GMarkupParser parser;
+	parser.start_element = dict_parse_start_element;
+	parser.end_element = dict_parse_end_element;
+	parser.text = dict_parse_text;
+	parser.passthrough = NULL;
+	parser.error = NULL;
+	GError *err = NULL;
+	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+	if(!g_markup_parse_context_parse(context, xml, xml_end - xml, &err)) {
+		g_warning(_("Dict.cn plugin: context parse failed: %s"), err ? err->message : "");
+		g_error_free(err);
+		g_markup_parse_context_free(context);
+		g_free(content);
+		return;
+	}
+	if(!g_markup_parse_context_end_parse(context, &err)) {
+		g_warning(_("Dict.cn plugin: context parse failed: %s"), err ? err->message : "");
+		g_error_free(err);
+		g_markup_parse_context_free(context);
+		g_free(content);
+		return;
+	}
+	g_markup_parse_context_free(context);
+	context = NULL;
+	if ((Data.def.empty() || Data.def == "Not Found") && Data.suggestions.empty()) {
+		g_free(content);
+		return;
+	}
+
+	std::string definition;
+	if (!Data.pron.empty()) {
+		definition += "[";
+		definition += Data.pron;
+		definition += "]";
+	}
+	if(!Data.def.empty()) {
+		if(!definition.empty())
+			definition += "\n";
+		definition += Data.def;
+	}
+	if (!Data.rel.empty()) {
+		if(!definition.empty())
+			definition += "\n";
+		definition += Data.rel;
+	}
+	if (!Data.sentences.empty()) {
+		if(!definition.empty())
+			definition += "\n\n";
+		definition += "例句与用法:";
+		int index = 1;
+		char *tmp_str;
+		for (std::list<std::pair<std::string, std::string> >::iterator i = Data.sentences.begin(); i != Data.sentences.end(); ++i) {
+			tmp_str = g_strdup_printf("\n%d. %s\n   %s", index, i->first.c_str(), i->second.c_str());
+			definition += tmp_str;
+			g_free(tmp_str);
+			index++;
+		}
+	}
+	if (!Data.suggestions.empty()) {
+		if(!definition.empty())
+			definition += "\n\n";
+		definition += "Suggested words:";
+		for(std::list<std::string>::const_iterator it=Data.suggestions.begin(); it != Data.suggestions.end(); ++it) {
+			definition += "\n";
+			definition += *it;
+		}
+	}
+	resp->data = build_dictdata('m', definition.c_str());
+	g_free(content);
+}
+
 static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
 {
 	if (!buffer) {
@@ -224,69 +340,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		}
 		g_free(content);
 	} else {
-		const char *xml = g_strstr_len(p, buffer_len - (p - buffer), "<dict>");
-		if (!xml) {
-			return;
-		}
-		const char *xml_end = g_strstr_len(xml+6, buffer_len - (xml+6 - buffer), "</dict>");
-		if (!xml_end) {
-			return;
-		}
-		xml_end += 7;
-		dict_ParseUserData Data;
-		GMarkupParser parser;
-		parser.start_element = dict_parse_start_element;
-		parser.end_element = dict_parse_end_element;
-		parser.text = dict_parse_text;
-		parser.passthrough = NULL;
-		parser.error = NULL;
-		GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
-		g_markup_parse_context_parse(context, xml, xml_end - xml, NULL);
-		g_markup_parse_context_end_parse(context, NULL);
-		g_markup_parse_context_free(context);
-		if ((Data.def.empty() || Data.def == "Not Found") && Data.suggestions.empty()) {
-			resp->data = NULL;
-		} else {
-			std::string definition;
-			if (!Data.pron.empty()) {
-				definition += "[";
-				definition += Data.pron;
-				definition += "]";
-			}
-			if(!Data.def.empty()) {
-				if(!definition.empty())
-					definition += "\n";
-				definition += Data.def;
-			}
-			if (!Data.rel.empty()) {
-				if(!definition.empty())
-					definition += "\n";
-				definition += Data.rel;
-			}
-			if (!Data.sentences.empty()) {
-				if(!definition.empty())
-					definition += "\n\n";
-				definition += "例句与用法:";
-				int index = 1;
-				char *tmp_str;
-				for (std::list<std::pair<std::string, std::string> >::iterator i = Data.sentences.begin(); i != Data.sentences.end(); ++i) {
-					tmp_str = g_strdup_printf("\n%d. %s\n   %s", index, i->first.c_str(), i->second.c_str());
-					definition += tmp_str;
-					g_free(tmp_str);
-					index++;
-				}
-			}
-			if (!Data.suggestions.empty()) {
-				if(!definition.empty())
-					definition += "\n\n";
-				definition += "Suggested words:";
-				for(std::list<std::string>::const_iterator it=Data.suggestions.begin(); it != Data.suggestions.end(); ++it) {
-					definition += "\n";
-					definition += *it;
-				}
-			}
-			resp->data = build_dictdata('m', definition.c_str());
-		}
+		process_xml_response(p, buffer_len - (p - buffer), resp);
 	}
 	plugin_service->netdict_save_cache_resp(DICTDOTCN, qi->word, resp);
 	plugin_service->show_netdict_resp(DICTDOTCN, resp, qi->ismainwin);
