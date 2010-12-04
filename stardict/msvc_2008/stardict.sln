@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stardict", "stardict.vcproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stardict-editor", "stardict-editor.vcproj", "{2B9D77C6-44C1-4843-BFA8-A9D63F5AB09B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stardict-loader", "stardict-loader.vcproj", "{FE51B1FA-5C6C-4B2A-A99B-00D94A541BF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -121,6 +123,10 @@ Global
 		{2B9D77C6-44C1-4843-BFA8-A9D63F5AB09B}.Debug|Win32.Build.0 = Debug|Win32
 		{2B9D77C6-44C1-4843-BFA8-A9D63F5AB09B}.Release|Win32.ActiveCfg = Release|Win32
 		{2B9D77C6-44C1-4843-BFA8-A9D63F5AB09B}.Release|Win32.Build.0 = Release|Win32
+		{FE51B1FA-5C6C-4B2A-A99B-00D94A541BF3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FE51B1FA-5C6C-4B2A-A99B-00D94A541BF3}.Debug|Win32.Build.0 = Debug|Win32
+		{FE51B1FA-5C6C-4B2A-A99B-00D94A541BF3}.Release|Win32.ActiveCfg = Release|Win32
+		{FE51B1FA-5C6C-4B2A-A99B-00D94A541BF3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

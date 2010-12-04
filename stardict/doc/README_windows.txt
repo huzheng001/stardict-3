@@ -123,6 +123,21 @@ There are two builds in vs2008: Debug and Release, you should choose Release ver
 
 You should can compile and run stardict successfully now. You cannot start stardict.exe in place, since a special directory structure is needed.
 
+Solution structure
+==================
+
+The StarDict solution consists of the following projects:
+- stardict (stardict.dll) - a GUI part of StarDict packed into a dynamic library
+- stardict-loader (stardict.exe) - an executable file that starts StarDict
+- stardict-lib (stardict.lib) - a static library containing a non-GUI part of StarDict
+- textouthook and textoutspy (textouthook.dll and textoutspy.dll) - implement scan words feature
+- plugins - plugins loaded by StarDict and extending it functionality
+- tests - test for StarDict
+- tools/stardict-editor (stardict-editor.exe) - a GUI application providing auxiliary tools 
+- acrobat-wordpick-plugin - Adobe Acrobat plugin for scan words feature
+
+Code of StarDict application is divided into a number of projects: stardict-lib, stardict, stardict-loader. stardict-lib mainly contains non-GUI code. It was put into a library in order to facilitate testing. The tests solution folder holds test projects, they normaly link the stardict-lib library. The GUI part of the code was put in the stardict project. The division into GUI and non-GUI parts is not strict. Feel free to move code from stardict to stardict-lib and back if needed. stardict and stardict-lib project contains almost all code of the application excluding plugins and auxiliary libraries. stardict-loader is a small project which primary job is to load the StarDict application. stardict-loader inspects OS environment, set up directories, set environment variables and finally loads stardict.dll. stardict-loader should have as few dependencies as possible, it must not depend on GTK for example. Now stardict-loader only uses C Runtime Library and Windows API functions. One of the tasks of stardict-loader is to find GTK directory and add to the dll load path, so stardict.dll can be successfully started. This project produces stardict-loader.exe executable file, it will be renamed to stardict.exe in release version. Configuring the project to output stardict.exe leads to debugging problems is Visual Studio.
+
 Unicode
 =======
 It's recommended to build Unicode (versus ANSI) version of StarDict. That's done by default. You need to define UNICODE macro in compiler command line to build Unicode version.
@@ -215,29 +230,20 @@ fprintf(file, "a\n");
 fclose(file);
 =====
 
-You may simplify debugging process if you configure windows console in Stardict.
-Stardict sends debug messages, warnings, errors to console.
-Unfortunately, windows GUI applications do not attach to a console by default,
-hence all the aforementioned messages go nowhere.
+StarDict sends debug messages, warnings, errors to console. Windows GUI applications do not attach to a console by default, hence all the aforementioned messages go nowhere.
 
-Stardict can attach itself to a windows console either opening a new instance or reusing
-an existing one. To enable that feature define ATTACH_WINDOWS_CONSOLE preprocessor symbol
-when compiling the project. If you use Windows XP or later, it is recommended to define
-_WIN32_WINNT=0x0501 as well. That allows to connect to an existing console, otherwise
-Stardict always opens a new console window. The later case has the disadvantage that
+There are to ways to make the output visible. You may attach StarDict to a windows console or open a log window. Both release and debug versions of StarDict allow to use console, while the log window is only available in the debug version.
+
+To open window console pass --message-level option with non-zero parameter. The parameter specifies the amount of output to produce. The larger the value, the more verbose output will be. See StarDict help for more details.
+The --help option opens console as well. It prints a usage message and exits the application.
+
+If you start StarDict with a shortcut, a new console windows is opened. It is closed with the application. If you start StarDict in an existing console window, the program do not open a new window, but prints all output to the existing one. Opening a new console has the disadvantage that
 if the application crushs, the console window closes so quickly you cannot read the error message.
-To reuse the existing console window, start Stardict in that console.
-All messages will go into that window.
-If you start Stardict not from console, a new console windows is opened.
 
 Windows console has a limitation, it cannot show all unicode characters.
 To overcome this limitation StarDict can show output in a log window.
 The log window has no problems with showing unicode characters, but it can not fully
-duplicate console output. StarDict can show output of g_debug, g_error, g_warning and the like, g_print, g_printf(?) functions. I'll not see output from printf in the log window, for example. To enable the log window define ENABLE_LOG_WINDOW preprocessor symbol.
-
-To set up preprocessor symbols in Dev-C++ do the following:
-main menu->Project->Project options->Parameters tab.
-Add "-DATTACH_WINDOWS_CONSOLE -D_WIN32_WINNT=0x0501 -DENABLE_LOG_WINDOW" to the C and C++ compiler command line.
+duplicate console output. StarDict can show output of g_debug, g_error, g_warning and the like, g_print, g_printf(?) functions. You'll not see output from printf in the log window, for example. To enable the log window, build StarDict with ENABLE_LOG_WINDOW macro symbol.
 
 All that windows console stuff is not much reliable, if it does not work, retreat to printing into a file or to the log window.
 

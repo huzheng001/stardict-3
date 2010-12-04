@@ -188,7 +188,8 @@ if(InstallDirMustNotExist) {
 	DeleteFolder(BaseDir + "win32-install-dir");
 }
 CreateFolder(InstallDir);
-CopyFile(MSVSOutputDir + "stardict.exe", InstallDir);
+CopyFile(MSVSOutputDir + "stardict-loader.exe", InstallDir + "stardict.exe");
+CopyFile(MSVSOutputDir + "stardict.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
 CopyFile(MSVSOutputDir + "stardict-editor.exe", InstallDir);

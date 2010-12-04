@@ -88,6 +88,8 @@ private:
 extern LogWindow gLogWindow;
 #endif // ENABLE_LOG_WINDOW
 
-bool attach_windows_console(void);
+#if defined(_WIN32) && defined(_DEBUG)
+void test_windows_console(void);
+#endif
 
 #endif

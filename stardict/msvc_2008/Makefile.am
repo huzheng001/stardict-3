@@ -3,6 +3,7 @@ EXTRA_DIST = config.h glib_wrapper.c stardict.sln stardictrc.rc	\
 		stardict-editor.vcproj \
 		stardict-html-parsedata-plugin.vcproj \
 		stardict-lib.vcproj \
+		stardict-loader.vcproj \
 		stardict-powerword-parsedata-plugin.vcproj \
 		stardict-qqwry-plugin.vcproj \
 		stardict-sapi-tts-plugin.vcproj \

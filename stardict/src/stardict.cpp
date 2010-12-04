@@ -2366,15 +2366,13 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 #endif
 
 #ifdef _WIN32
-int stardict_main(int argc,char **argv)
+DLLIMPORT int stardict_main(HINSTANCE hInstance, int argc, char **argv)
 #else
 int main(int argc,char **argv)
 #endif
 {
 #if defined(_WIN32)
-#ifdef ATTACH_WINDOWS_CONSOLE
-	attach_windows_console();
-#endif
+	stardictexe_hInstance = hInstance;
 #endif // #if defined(_WIN32)
 	conf_dirs.reset(new AppDirs);
 	bindtextdomain (GETTEXT_PACKAGE, conf_dirs->get_locale_dir().c_str());
@@ -2385,6 +2383,17 @@ int main(int argc,char **argv)
 #if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
+#endif
+	/* Register an interim logger.
+	On Windows, without the logger all output produced by g_option_context_parse will be lost.
+	For example, g_option_context_parse prints usage message when stardict is invoked with --help option.
+	The problem is g_option_context_parse uses g_print function to print messages, 
+	but this function produce no output on windows console. See test_windows_console
+	function to check what works with windows console.
+	*/
+	logger.reset(new Logger(MessageLevel_MESSAGE, MessageLevel_NONE));
+#if defined(_WIN32) && defined(_DEBUG)
+	//test_windows_console();
 #endif
 #ifdef CONFIG_GPE
 	if (gpe_application_init (&argc, &argv) == FALSE)
@@ -2418,10 +2427,8 @@ int main(int argc,char **argv)
 	else
 		query_word = NULL;
 
-	logger.reset(new Logger(
-		Logger::convert_message_level(console_message_level),
-		Logger::convert_message_level(log_message_level))
-	);
+	logger->set_console_message_level(Logger::convert_message_level(console_message_level));
+	logger->set_log_message_level(Logger::convert_message_level(log_message_level));
 
 #ifndef CONFIG_GNOME
 #ifdef _WIN32
@@ -2472,22 +2479,3 @@ int main(int argc,char **argv)
 
 	return EXIT_SUCCESS;
 }
-
-#ifdef _WIN32
-
-#ifdef __GNUC__
-#  ifndef _stdcall
-#    define _stdcall  __attribute__((stdcall))
-#  endif
-#endif
-
-int _stdcall
-WinMain (struct HINSTANCE__ *hInstance,
-	 struct HINSTANCE__ *hPrevInstance,
-	 char               *lpszCmdLine,
-	 int                 nCmdShow)
-{
-	stardictexe_hInstance = hInstance;
-	return stardict_main (__argc, __argv);
-}
-#endif
