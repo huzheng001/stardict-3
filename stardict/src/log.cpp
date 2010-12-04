@@ -218,7 +218,7 @@ LogWindow::LogWindow(void):
 {
 }
 
-	void LogWindow::Init(void)
+void LogWindow::Init(void)
 {
 	if(window)
 		return;
@@ -286,11 +286,10 @@ void LogWindow::on_destroy(GtkObject *object, gpointer userdata)
 LogWindow gLogWindow;
 #endif // ENABLE_LOG_WINDOW
 
-#ifdef _WIN32
-#ifdef ATTACH_WINDOWS_CONSOLE
-bool attach_windows_console(void)
+#if defined(_WIN32) && defined(_DEBUG)
+void test_windows_console(void)
 {
-	/* restore stdout and stderr
+	/* test stdout and stderr
 	By default GUI application on Windows do not have a console associated 
 	with them, so output from printf, std::cout << "string" goes nowhere.
 	(printf may not work for other reasons too, see msvc_2008/readme.txt.)
@@ -306,55 +305,27 @@ bool attach_windows_console(void)
 	
 	That all is not reliable, unfortunately... It has been tested on Windows XP.
 	*/
-	bool bHaveConsole = false;
-#if (_WIN32_WINNT >= 0x0501)
-	// attach to the parent process assuming it is console
-	if(!AttachConsole((DWORD)-1)) {
-		DWORD dwError = GetLastError();
-		if(dwError == ERROR_ACCESS_DENIED) // already attached to console
-			bHaveConsole = true;
-	} else
-		bHaveConsole = true;
-#endif
-	if(!bHaveConsole) // create new console window
-		bHaveConsole = static_cast<bool>(AllocConsole());
-	if(bHaveConsole) {
-		int hCrt;
-		FILE *hf;
-		hCrt = _open_osfhandle((long) GetStdHandle(STD_OUTPUT_HANDLE), _O_TEXT);
-		hf = _fdopen(hCrt, "w");
-		*stdout = *hf;
-		setvbuf(stdout, NULL, _IONBF, 0);
-		hCrt = _open_osfhandle((long) GetStdHandle(STD_ERROR_HANDLE), _O_TEXT);
-		hf = _fdopen(hCrt, "w");
-		*stderr = *hf;
-		setvbuf(stderr, NULL, _IONBF, 0);
-#if 0
-		// check what works
-		puts("Hello from puts");
+	// check what works
+	puts("Hello from puts");
 #ifdef _MSC_VER
-		printf_s("Hello from printf_s\n");
+	printf_s("Hello from printf_s\n");
 #endif
-		printf("Hello from printf\n");
+	printf("Hello from printf\n");
 #ifdef _MSC_VER
-		fprintf_s(stderr, "Hello from fprintf_s on stderr\n");
+	fprintf_s(stderr, "Hello from fprintf_s on stderr\n");
 #endif
 #ifndef _WIN32
-		// crashs on Windows
-		fprintf(stderr, "Hello from fprintf on stderr\n");
+	// crashs on Windows
+	fprintf(stderr, "Hello from fprintf on stderr\n");
 #endif
-		std::cout << "Hello from cout!" << std::endl;
-		std::cerr << "Hello from cerr!" << std::endl;
-		g_printf("Hello from g_printf\n");
-		g_print("Hello from g_print\n");
-		g_debug("Hello from g_debug");
-		g_message("Hello from g_message. 1 = %d", 1);
-		g_warning("Hello from g_warning");
-		g_critical("Hello from g_critical");
-#endif
-	}
-	return bHaveConsole;
+	std::cout << "Hello from cout!" << std::endl;
+	std::cerr << "Hello from cerr!" << std::endl;
+	g_printf("Hello from g_printf\n");
+	g_print("Hello from g_print\n");
+	g_debug("Hello from g_debug");
+	g_message("Hello from g_message. 1 = %d", 1);
+	g_warning("Hello from g_warning");
+	g_critical("Hello from g_critical");
 }
-#endif // #ifdef ATTACH_WINDOWS_CONSOLE
 
-#endif // #ifdef _WIN32
+#endif // #ifdef defined(_WIN32) && defined(_DEBUG)

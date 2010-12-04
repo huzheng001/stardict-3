@@ -442,6 +442,7 @@ Section Uninstall
     RMDir /r "$INSTDIR\skins"
     RMDir /r "$INSTDIR\${VC_REDIST_DIR}"
     Delete "$INSTDIR\stardict.exe"
+    Delete "$INSTDIR\stardict.dll"
     Delete "$INSTDIR\stardict-editor.exe"
     Delete "$INSTDIR\TextOutSpy.dll"
     Delete "$INSTDIR\TextOutHook.dll"

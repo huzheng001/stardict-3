@@ -181,4 +181,16 @@ extern gchar* GetPureEnglishAlpha(gchar *str);
 extern gchar* GetHeadWord(gchar *str);
 extern gboolean stardict_on_enter_notify (GtkWidget * widget, GdkEventCrossing * event, gpointer data);
 
+#ifdef _WIN32
+#if BUILDING_DLL
+# define DLLIMPORT __declspec (dllexport)
+#else /* Not BUILDING_DLL */
+# define DLLIMPORT __declspec (dllimport)
+#endif /* Not BUILDING_DLL */
+
+extern "C" {
+	DLLIMPORT extern int stardict_main(HINSTANCE hInstance, int argc, char **argv);
+}
+#endif
+
 #endif
