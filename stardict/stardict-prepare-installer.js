@@ -192,7 +192,8 @@ CopyFile(MSVSOutputDir + "stardict-loader.exe", InstallDir + "stardict.exe");
 CopyFile(MSVSOutputDir + "stardict.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutSpy.dll", InstallDir);
 CopyFile(MSVSOutputDir + "TextOutHook.dll", InstallDir);
-CopyFile(MSVSOutputDir + "stardict-editor.exe", InstallDir);
+CopyFile(MSVSOutputDir + "stardict-editor.dll", InstallDir);
+CopyFile(MSVSOutputDir + "stardict-editor-loader.exe", InstallDir + "stardict-editor.exe");
 {
 	var oFolder = fso.GetFolder(fso.BuildPath(UnixBuildDir, "po"));
 	var oFiles = new Enumerator(oFolder.Files);
@@ -298,4 +299,27 @@ CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
 		WScript.Quit(1);
 	}
 }
+
+{ // Gtk runtime
+	var files = FindFiles("redist", /^gtk2-runtime-.*\.exe$/i);
+	if(files.length == 0) {
+		WScript.Echo("Unable to find gtk2-runtime.");
+		WScript.Quit(1);
+	}
+	if(files.length > 1) {
+		WScript.Echo("Multiple gtk2-runtime's found.");
+		WScript.Quit(1);
+	}
+	var gtk2_runtime = "redist\\" + files[0];
+	var GtkInstallDir = InstallDir + "Gtk";
+	CreateFolder(GtkInstallDir);
+	var cmd = "\"" + gtk2_runtime + "\" /S /sideeffects=no /dllpath=bin /translations=yes /compatdlls=yes "
+		+ "/D=" + GtkInstallDir + "";
+	var status = shell.Run(cmd, 1, true);
+	if(status != 0) {
+		WScript.Echo("gtk2-runtime failed.");
+		WScript.Quit(status);
+	}
+}
+
 WScript.Echo("Done.");

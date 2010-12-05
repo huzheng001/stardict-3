@@ -424,7 +424,17 @@ static void create_window()
 }
 
 #ifdef _WIN32
-int stardict_editor_main(int argc,char **argv)
+#if BUILDING_DLL
+# define DLLIMPORT __declspec (dllexport)
+#else /* Not BUILDING_DLL */
+# define DLLIMPORT __declspec (dllimport)
+#endif /* Not BUILDING_DLL */
+
+extern "C" {
+	DLLIMPORT extern int stardict_editor_main(HINSTANCE hInstance, int argc, char **argv);
+}
+
+DLLIMPORT int stardict_editor_main(HINSTANCE /*hInstance*/, int argc, char **argv)
 #else
 int main(int argc,char **argv)
 #endif
@@ -435,21 +445,3 @@ int main(int argc,char **argv)
 	gtk_main();
 	return 0;
 }
-
-#ifdef _WIN32
-
-#ifdef __GNUC__
-#  ifndef _stdcall
-#    define _stdcall  __attribute__((stdcall))
-#  endif
-#endif
-
-int _stdcall
-WinMain (struct HINSTANCE__ *hInstance,
-struct HINSTANCE__ *hPrevInstance,
-	char               *lpszCmdLine,
-	int                 nCmdShow)
-{
-	return stardict_editor_main (__argc, __argv);
-}
-#endif

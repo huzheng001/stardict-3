@@ -187,22 +187,6 @@ Section -SecUninstallOldStarDict
 SectionEnd
 
 ;--------------------------------
-;GTK+ Runtime Install Section
-;install GTK in the application directory
-
-Section SecGtk
-
-  SetOutPath $TEMP
-  SetOverwrite on
-  File /oname=gtk-runtime.exe ${GTK_RUNTIME_INSTALLER}
-  SetOverwrite off
-
-  ExecWait '"$TEMP\gtk-runtime.exe" /L=$LANGUAGE /S /sideeffects=no /dllpath=bin /translations=yes /compatdlls=yes /D=$INSTDIR\Gtk'
-
-  Delete "$TEMP\gtk-runtime.exe"
-SectionEnd ; end of GTK+ section
-
-;--------------------------------
 ;Microsoft Visual C++ Redistributable Package
 
 Section SecMSVCRedist
@@ -344,6 +328,7 @@ Section Uninstall
     RMDir /r "$INSTDIR\Gtk"
     Delete "$INSTDIR\stardict.exe"
     Delete "$INSTDIR\stardict.dll"
+    Delete "$INSTDIR\stardict-editor.dll"
     Delete "$INSTDIR\stardict-editor.exe"
     Delete "$INSTDIR\TextOutSpy.dll"
     Delete "$INSTDIR\TextOutHook.dll"
