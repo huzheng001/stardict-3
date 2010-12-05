@@ -3,6 +3,11 @@
  * http://pidgin.im/. Preserve the code as close as possible to the ordinal version
  * in order to facilitate synchronising the code in the future.
  * Pidgin may come up with updates that will be useful for StarDict loader.
+ * This code is used in both StarDict and StarDict-editor loader projects.
+ * A large part of the code is identical in both projects.
+ * Chunks that are specific to particular application should be included conditionally.
+ * STARDICT macros is only defined in stardict project,
+ * while STARDICT_EDITOR is unique to stardict-editor.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,19 +40,28 @@
 #include "config.h"
 #endif
 
-typedef int (* LPFNSTARDICTMAIN)(HINSTANCE, int, char**);
+typedef int (* LPFNDLLMAIN)(HINSTANCE, int, char**);
 #if 0
 typedef int (CALLBACK* LPFNPIDGINMAIN)(HINSTANCE, int, char**);
 #endif
 typedef void (CALLBACK* LPFNSETDLLDIRECTORY)(LPCWSTR);
 typedef BOOL (CALLBACK* LPFNATTACHCONSOLE)(DWORD);
 
+#ifdef STARDICT
+#define DLL_NAME L"stardict.dll"
+#define MAIN_FUNC_NAME "stardict_main"
+#endif
+#ifdef STARDICT_EDITOR
+#define DLL_NAME L"stardict-editor.dll"
+#define MAIN_FUNC_NAME "stardict_editor_main"
+#endif
+
 static BOOL portable_mode = FALSE;
 
 /*
  *  PROTOTYPES
  */
-static LPFNSTARDICTMAIN stardict_main = NULL;
+static LPFNDLLMAIN dll_main = NULL;
 static LPFNSETDLLDIRECTORY MySetDllDirectory = NULL;
 
 static const wchar_t *get_win32_error_message(DWORD err) {
@@ -622,6 +636,7 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 	LPWSTR *szArglist;
 	LPWSTR cmdLine;
 
+#ifdef STARDICT
 	/* If debug or help or version flag used, create console for output */
 	for (i = 1; i < __argc; i++) {
 		if (strlen(__argv[i]) > 1 && __argv[i][0] == '-') {
@@ -651,6 +666,7 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 			}
 		}
 	}
+#endif
 
 	if (debug || help) {
 		/* If stdout hasn't been redirected to a file, alloc a console
@@ -785,20 +801,20 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 #endif
 
 	/* Now we are ready for Stardict .. */
-	wcscat(pidgin_dir, L"\\stardict.dll");
+	wcscat(pidgin_dir, L"\\" DLL_NAME);
 	if ((hmod = LoadLibraryW(pidgin_dir)))
-		stardict_main = (LPFNSTARDICTMAIN) GetProcAddress(hmod, "stardict_main");
+		dll_main = (LPFNDLLMAIN) GetProcAddress(hmod, MAIN_FUNC_NAME);
 
 	/* Restore pidgin_dir to point to where the executable is */
 	if (pidgin_dir_start)
 		pidgin_dir_start[0] = L'\0';
 
-	if (!stardict_main) {
+	if (!dll_main) {
 		DWORD dw = GetLastError();
 		BOOL mod_not_found = (dw == ERROR_MOD_NOT_FOUND || dw == ERROR_DLL_NOT_FOUND);
 		const wchar_t *err_msg = get_win32_error_message(dw);
 
-		_snwprintf(errbuf, 512, L"Error loading stardict.dll.\nError: (%u) %s%s%s",
+		_snwprintf(errbuf, 512, L"Error loading " DLL_NAME L".\nError: (%u) %s%s%s",
 			(UINT) dw, err_msg,
 			mod_not_found ? L"\n" : L"",
 			mod_not_found ? L"This probably means that GTK+ can't be found." : L"");
@@ -838,5 +854,5 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 	LocalFree(szArglist);
 
 
-	return stardict_main(hInstance, pidgin_argc, pidgin_argv);
+	return dll_main(hInstance, pidgin_argc, pidgin_argv);
 }

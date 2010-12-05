@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
 			CharacterSet="1"
 			>
@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories=".;libxml2\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC;BUILDING_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -96,7 +96,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			InheritedPropertySheets=".\main.vsprops;.\gtk.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -119,7 +119,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories=".;libxml2\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;LIBXML_STATIC;LIBXSLT_STATIC;LIBEXSLT_STATIC;XMLSEC_STATIC;BUILDING_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
