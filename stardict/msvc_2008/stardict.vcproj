@@ -190,6 +190,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\cmdlineopts.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\conf.cpp"
 				>
 			</File>
@@ -345,6 +349,10 @@
 			</File>
 			<File
 				RelativePath="..\src\class_factory.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\cmdlineopts.h"
 				>
 			</File>
 			<File

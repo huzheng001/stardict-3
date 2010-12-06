@@ -4,6 +4,7 @@ data/GNOME_Stardict.server.in
 data/stardict.desktop.in
 data/stardict.schemas.in
 src/articleview.cpp
+src/cmdlineopts.cpp
 src/conf.cpp
 src/desktop.cpp
 src/dictmanage.cpp

@@ -79,41 +79,11 @@ HINSTANCE stardictexe_hInstance;
 #include "prefsdlg.h"
 #include "lib/netdictcache.h"
 #include "log.h"
+#include "cmdlineopts.h"
 
 #include "stardict.h"
 
 AppCore *gpAppFrame;
-
-static gboolean hide_option = FALSE;
-static gint console_message_level = Logger::default_message_level;
-static gint log_message_level = MessageLevel_NONE;
-#if defined(_WIN32) || defined(CONFIG_GNOME)
-static gboolean newinstance_option = FALSE;
-#endif
-#ifdef CONFIG_GNOME
-static gboolean quit_option = FALSE;
-#endif
-static gchar **query_words = NULL;
-
-static const GOptionEntry options [] =
-{
-	{ "message-level", 'm', 0, G_OPTION_ARG_INT, &console_message_level,
-	  N_("How many messages print to console (0-6)"), NULL },
-	{ "log-level", 'l', 0, G_OPTION_ARG_INT, &log_message_level,
-	  N_("How many messages print to log (0-6)"), NULL },
-	{ "hide", 'h', 0, G_OPTION_ARG_NONE, &hide_option,
-	  N_("Hide the main window, do not show splash screen"), NULL },
-#if defined(_WIN32) || defined(CONFIG_GNOME)
-	{ "new", 'n', 0, G_OPTION_ARG_NONE, &newinstance_option,
-	  N_("Start a new instance of stardict"), NULL },
-#endif
-#ifdef CONFIG_GNOME
-	{ "quit", 'q', 0, G_OPTION_ARG_NONE, &quit_option,
-	  N_("Quit an existing instance of stardict"), NULL },
-#endif
-	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_STRING_ARRAY, &query_words, NULL, NULL },
-	{NULL}
-};
 
 /********************************************************************/
 class change_cursor {
@@ -278,7 +248,7 @@ void AppCore::ShowPangoTips(const char *word, const char *text)
 	gpAppFrame->oFloatWin.ShowPangoTips(word, text);
 }
 
-void AppCore::Create(gchar *queryword)
+void AppCore::Create(const gchar *queryword)
 {
 	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
 
@@ -433,7 +403,7 @@ void AppCore::Create(gchar *queryword)
 
 	//NOTICE: when docklet embedded failed,it should always show the window,but,how to detect the failure?
 	// As stardict is FOR GNOME,so i don't want to consider the case that haven't the Notification area applet.
-	if (!hide_option && (queryword || !hide)) {
+	if (!CmdLineOptions::get_hide() && (queryword || !hide)) {
 		oDockLet->hide_state();
 		gtk_widget_show(window);
 	} else {
@@ -2144,7 +2114,7 @@ void AppCore::End()
 	gtk_widget_destroy(window);
 }
 
-void AppCore::Init(gchar *queryword)
+void AppCore::Init(const gchar *queryword)
 {
 	conf->notify_add("/apps/stardict/preferences/main_window/hide_list",
 			 sigc::mem_fun(this, &AppCore::on_main_win_hide_list_changed));
@@ -2157,7 +2127,7 @@ void AppCore::Init(gchar *queryword)
 	oAppSkin.load(conf->get_string_at("main_window/skin"));
 	g_debug("skin loaded");
 
-	if (!hide_option)
+	if (!CmdLineOptions::get_hide())
 		stardict_splash.show();
 
 	Create(queryword);
@@ -2301,14 +2271,14 @@ stardict_handle_automation_cmdline (gchar *queryword)
 	}
 	//g_return_if_fail (server != NULL);
 
-	if (quit_option) {
+	if (CmdLineOptions::get_quit()) {
 		GNOME_Stardict_Application_quit (server, &env);
 	}
 	else {
 		if (queryword) {
 			GNOME_Stardict_Application_queryWord (server, queryword, &env);
 		}
-		if (hide_option) {
+		if (CmdLineOptions::get_hide()) {
 			GNOME_Stardict_Application_hide (server, &env);
 		} else {
 			GNOME_Stardict_Application_grabFocus (server, &env);
@@ -2401,7 +2371,7 @@ int main(int argc,char **argv)
 #endif
 	GOptionContext *context;
 	context = g_option_context_new(_("- Lookup words"));
-	g_option_context_add_main_entries(context, options, GETTEXT_PACKAGE);
+	g_option_context_add_main_entries(context, CmdLineOptions::get_options(), GETTEXT_PACKAGE);
 #ifndef CONFIG_GNOME
 	glib::Error err;
 	if (!g_option_context_parse(context, &argc, &argv, get_addr(err))) {
@@ -2421,18 +2391,16 @@ int main(int argc,char **argv)
 			    NULL);
 #endif // #ifndef CONFIG_GNOME
 
-	char *query_word;
-	if (query_words && query_words[0])
-		query_word = query_words[0];
-	else
-		query_word = NULL;
+	const char *query_word = NULL;
+	if(CmdLineOptions::get_query_words())
+		query_word = CmdLineOptions::get_query_words()[0];
 
-	logger->set_console_message_level(Logger::convert_message_level(console_message_level));
-	logger->set_log_message_level(Logger::convert_message_level(log_message_level));
+	logger->set_console_message_level(CmdLineOptions::get_console_message_level());
+	logger->set_log_message_level(CmdLineOptions::get_log_message_level());
 
 #ifndef CONFIG_GNOME
 #ifdef _WIN32
-	if (newinstance_option == FALSE) {
+	if (CmdLineOptions::get_newinstance() == FALSE) {
 		gchar *title=g_locale_from_utf8(_("StarDict"), -1, NULL, NULL, NULL);
 		HWND ll_winhandle = FindWindowA("gdkWindowToplevel", title);
 		g_free(title);
@@ -2447,7 +2415,7 @@ int main(int argc,char **argv)
 	}
 #endif // #ifdef _WIN32
 #else // #ifndef CONFIG_GNOME
-	if (newinstance_option == FALSE) {
+	if (CmdLineOptions::get_newinstance() == FALSE) {
 		CORBA_Object factory;
 		CORBA_char id[] = "OAFIID:GNOME_Stardict_Factory";
 		factory = bonobo_activation_activate_from_id(id,

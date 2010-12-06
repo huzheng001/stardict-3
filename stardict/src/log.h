@@ -6,6 +6,7 @@
 #endif
 
 #include <memory>
+#include <string>
 #include <glib.h>
 #include <gtk/gtk.h>
 

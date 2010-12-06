@@ -117,9 +117,9 @@ public:
 
 	AppCore();
 	~AppCore();
-	void Init(gchar *queryword);
+	void Init(const gchar *queryword);
 	void Quit();
-	void Create(gchar *queryword);
+	void Create(const gchar *queryword);
 	void End();
 	void Query(const gchar *word);
 	void BuildResultData(std::vector<InstantDictIndex> &dictmask, const char* sWord, CurrentIndex *iIndex, const gchar *piIndexValidStr, int iLib, gchar ***pppWord, gchar ****ppppWordData, bool &bFound, gint Method);
