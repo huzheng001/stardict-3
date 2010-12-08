@@ -18,6 +18,8 @@ static gboolean newinstance_option = FALSE;
 static gboolean quit_option = FALSE;
 #endif
 static gchar **query_words = NULL;
+static gchar *dirs_config_option = NULL;
+static gchar *dirs_config_option_pre = NULL;
 
 static const GOptionEntry options [] =
 {
@@ -35,9 +37,43 @@ static const GOptionEntry options [] =
 	{ "quit", 'q', 0, G_OPTION_ARG_NONE, &quit_option,
 	  N_("Quit an existing instance of stardict"), NULL },
 #endif
+	{ "dirs-config", 0, 0, G_OPTION_ARG_FILENAME, &dirs_config_option,
+	  N_("StarDict directories configuration file"), N_("config-file") },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_STRING_ARRAY, &query_words, NULL, NULL },
 	{NULL}
 };
+
+class CleanOptions {
+public:
+	/* Free data refered by options.
+	This method is called right before exiting the application.
+	Strictly speaking, all variables will be freed anyway when the application exits.
+	Calling this function is right programming practice. */
+	~CleanOptions(void)
+	{
+		g_free(dirs_config_option);
+		dirs_config_option = NULL;
+		g_strfreev(query_words);
+		query_words = NULL;
+		g_free(dirs_config_option_pre);
+		dirs_config_option_pre = NULL;
+	}
+} cleanOptions;
+
+/* Preliminary parsing command line arguments.
+We only extract a few options that we need early in project initialization before
+the main command line parser can be used. */
+void CmdLineOptions::pre_parse_arguments(int argc, char **argv)
+{
+	for(int i=1; i<argc; ++i) {
+		if(!dirs_config_option_pre) {
+			if(strstr(argv[i], "--dirs-config=") == argv[i])
+				dirs_config_option_pre = g_strdup(argv[i] + sizeof("--dirs-config=") - 1);
+			else if(strcmp(argv[i], "--dirs-config") == 0 && i + 1 < argc)
+				dirs_config_option_pre = g_strdup(argv[i+1]);
+		}
+	}
+}
 
 const GOptionEntry* CmdLineOptions::get_options(void)
 {
@@ -76,4 +112,14 @@ gboolean CmdLineOptions::get_quit(void)
 gchar const * const* CmdLineOptions::get_query_words(void)
 {
 	return query_words;
+}
+
+gchar const * CmdLineOptions::get_dirs_config(void)
+{
+	return dirs_config_option;
+}
+
+gchar const * CmdLineOptions::get_dirs_config_pre(void)
+{
+	return dirs_config_option_pre;
 }
