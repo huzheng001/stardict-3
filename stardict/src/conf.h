@@ -191,7 +191,7 @@ private:
 class AppDirs
 {
 public:
-	AppDirs(void);
+	explicit AppDirs(const std::string& dirs_config_file);
 	std::string get_user_config_dir(void) const { return user_config_dir; }
 	std::string get_data_dir(void) const { return data_dir; }
 	std::string get_log_dir(void) const { return log_dir; }
@@ -211,6 +211,7 @@ public:
 #endif
 	
 private:
+	std::string get_dirs_config_file(const std::string& dirs_config_file) const;
 	std::string get_default_user_config_dir(void) const;
 	std::string get_default_data_dir(void) const;
 	std::string get_default_log_dir(void) const;

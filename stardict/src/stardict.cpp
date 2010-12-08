@@ -2344,7 +2344,8 @@ int main(int argc,char **argv)
 #if defined(_WIN32)
 	stardictexe_hInstance = hInstance;
 #endif // #if defined(_WIN32)
-	conf_dirs.reset(new AppDirs);
+	CmdLineOptions::pre_parse_arguments(argc, argv);
+	conf_dirs.reset(new AppDirs(CmdLineOptions::get_dirs_config_pre()));
 	bindtextdomain (GETTEXT_PACKAGE, conf_dirs->get_locale_dir().c_str());
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);

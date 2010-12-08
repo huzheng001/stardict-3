@@ -336,13 +336,8 @@ public:
 	{
 	}
 	
-	void load(const std::string& user_config_dir)
+	void load(const std::string& conf_file)
 	{
-		std::string conf_file
-			= user_config_dir + G_DIR_SEPARATOR_S + "stardict-dirs.cfg";
-		const gchar * conf_file_env = g_getenv("STARDICT_DIRS_CONFIG_FILE");
-		if(conf_file_env)
-			conf_file = conf_file_env;
 		if(g_file_test(conf_file.c_str(), GFileTest(G_FILE_TEST_IS_REGULAR))) {
 			g_debug("Loading StarDict dirs config: %s", conf_file.c_str());
 			if(!ini.load(conf_file, true, false))
@@ -367,17 +362,21 @@ private:
 	bool loaded;
 };
 
-AppDirs::AppDirs(void)
+AppDirs::AppDirs(const std::string& dirs_config_file)
 {
-	user_config_dir = get_default_user_config_dir();
+	std::string l_dirs_config_file = get_dirs_config_file(dirs_config_file);
+	AppDirsConf app_conf;
+	app_conf.load(l_dirs_config_file);
+
+	std::string path;
+
+	path = app_conf.get_string_at("user_config_dir");
+	user_config_dir = path.empty() ? get_default_user_config_dir() : path;
 	if (!g_file_test(user_config_dir.c_str(), G_FILE_TEST_IS_DIR)) {
 		if (-1 == g_mkdir(user_config_dir.c_str(), S_IRWXU))
 			g_warning("Cannot create user config directory %s.", user_config_dir.c_str());
 	}
-	AppDirsConf app_conf;
-	app_conf.load(user_config_dir);
 
-	std::string path;
 	path = app_conf.get_string_at("data_dir");
 	data_dir = path.empty() ? get_default_data_dir() : path;
 
@@ -398,6 +397,16 @@ AppDirs::AppDirs(void)
 	help_dir = path.empty() ? get_default_help_dir() : path;
 #endif
 	locale_dir = get_default_locale_dir();
+}
+
+std::string AppDirs::get_dirs_config_file(const std::string& dirs_config_file) const
+{
+	if(!dirs_config_file.empty())
+		return dirs_config_file;
+	const gchar * conf_file_env = g_getenv("STARDICT_DIRS_CONFIG_FILE");
+	if(conf_file_env)
+		return conf_file_env;
+	return get_default_user_config_dir() + G_DIR_SEPARATOR_S + "stardict-dirs.cfg";
 }
 
 std::string AppDirs::get_default_user_config_dir(void) const
