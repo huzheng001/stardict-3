@@ -1856,6 +1856,14 @@
 		</para>
 		</listitem>
 	</varlistentry>
+	
+	<varlistentry>
+		<term>--dirs-config</term>
+		<listitem>
+		<para>Specifies path to the &app_t; directory configuration file. See <xref linkend="stardict-details-dirs"/> for details about &app_t; directories and configuration file.
+		</para>
+		</listitem>
+	</varlistentry>
 	</variablelist>
 	</sect2>
 	
@@ -1898,15 +1906,16 @@
 	
 	<sect2 id="stardict-details-dirs">
 	<title>&app; directories</title>
-	<para>&app_t; installs data files into a number of directories.
+	<para>&app_t; uses a number of directories to store application data, load and save configuration settings.
 	Default directories are assigned at build time, but some of them 
 	can be overriden with <filename>stardict-dirs.cfg</filename> file.
-	Overriding &app; directories is useful for debugging, 
+	Overriding &app; directories is useful for debugging,
+	preparing special configurations like &app;-portable for Windows,
 	an ordinary user does not need this.
 	</para>
 	
 	<para>
-	&app_t; searches for the <filename>stardict-dirs.cfg</filename> file in the <varname>user_config_dir</varname> directory. You may override location of the <filename>stardict-dirs.cfg</filename> file with <varname>STARDICT_DIRS_CONFIG_FILE</varname> environment variable.
+	&app_t; searches for the <filename>stardict-dirs.cfg</filename> file in the <varname>user_config_dir</varname> directory. You may override location of the <filename>stardict-dirs.cfg</filename> file with <varname>STARDICT_DIRS_CONFIG_FILE</varname> environment variable or with <parameter class='command'>--dirs-config</parameter> command line option. Command line option takes the highest precedence, then the environment variable is inspected, and finally the file in the <varname>user_config_dir</varname> directory. The first specified file wins, it will be probed as a configuration file. If load fails, no other files will be tried.
 	</para>
 	
 	<para>The <filename>stardict-dirs.cfg</filename> file is a .ini-like config file. The syntax of .ini files is described in detail in the <ulink url="http://freedesktop.org/wiki/Specifications/desktop-entry-spec">Desktop Entry Specification</ulink>.
@@ -1941,6 +1950,8 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 		<para>Other default: <filename>~/.stardict</filename>.
 		</para>
 		<para>Environment variable: <varname>STARDICT_CONFIG_PATH</varname>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: user_config_dir.
 		</para>
 		</listitem>
 		</varlistentry>
@@ -2043,10 +2054,26 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 	<title>Troubleshooting</title>
 	<para>If you experience problems with &app_t;, examine &app_t; output.
 	By default the application prints the most important messages to standard output and standard error. To see messages, start &app_t; from the console.
-	You may increase verbosity of the output with <parameter class='command'>--message-level</parameter> command line option, see <xref linkend="stardict-details-command-line"/>.
+	You may increase verbosity of the output using the <parameter class='command'>--message-level</parameter> command line option, see <xref linkend="stardict-details-command-line"/>.
 	</para>
 	
-	<para>In some cases, for example in Windows, &app_t; prints nothing to console or console is not available.
+	<para>To see standard output and standard error on Windows, start &app_t; from windows console and pass non-zero parameter to the <parameter class='command'>--message-level</parameter> command line option. Unfortunately, often windows console can not display all unicode characters that are sent to output. If this problem effects you, redirect output to a file or use &app_t; logging facility.
+	</para>
+
+	<figure id="stardict-windows-console-fig"> 
+	<title>Starting &app_t; from windows console</title> 
+	<screenshot> 
+		<mediaobject> 
+			<imageobject><imagedata fileref="figures/stardict_windows_console.png" format="PNG"/> 
+			</imageobject>
+			<textobject> 
+				<phrase>Starting &app_t; from windows console with --message-level option specified. Typical &app_t; output. </phrase>
+			</textobject> 
+		</mediaobject> 
+	</screenshot> 
+	</figure>
+    
+	<para>In some cases, &app_t; prints nothing to console or console is not available.
 	Then turn on logging function, see <xref linkend="stardict-details-logging"/> for details.
 	</para>
 	</sect1>
