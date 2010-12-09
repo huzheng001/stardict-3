@@ -84,7 +84,7 @@ SkinStorage::SkinStorage(const char *path)
 		return;
 	m_path = path;
 	gchar *buf = NULL;
-	if(g_file_get_contents((m_path + G_DIR_SEPARATOR_S + "name").c_str(),
+	if(g_file_get_contents(build_path(m_path, "name").c_str(),
 		&buf, NULL, NULL)) {
 		m_name = buf;
 		g_free(buf);
@@ -103,7 +103,7 @@ const char *SkinStorage::get_name() const
 
 void SkinStorage::load_icon(Skin_pixbuf_1 &icon, const char *name) const
 {
-	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file((m_path + G_DIR_SEPARATOR_S + name).c_str(), NULL);
+	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(build_path(m_path, name).c_str(), NULL);
 	if (pixbuf != NULL)
 		icon.reset(pixbuf);
 }
@@ -111,7 +111,7 @@ void SkinStorage::load_icon(Skin_pixbuf_1 &icon, const char *name) const
 void SkinStorage::load_stock_icons(GtkIconFactory *factory) const
 {
 	for (int i = 0; stock_icons[i].stock_id != NULL; i++) {
-		std::string filename = m_path + std::string(G_DIR_SEPARATOR_S "stock" G_DIR_SEPARATOR_S) + stock_icons[i].filename + ".png";
+		std::string filename = build_path(m_path, std::string("stock" G_DIR_SEPARATOR_S) + stock_icons[i].filename + ".png");
 		GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(filename.c_str(), NULL);
 		if (pixbuf != NULL) {
 			GtkIconSet *iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
@@ -136,7 +136,7 @@ void SkinStorage::load_gtk_engine() const
 	 * reloading the whole thing? Consider using gtk_rc_parse, 
 	 * gtk_rc_add_default_file routines. */
 	gchar *gtkrc_files[2] = {NULL, NULL};
-	std::string gtkrc_path = m_path + G_DIR_SEPARATOR_S "gtkrc";
+	std::string gtkrc_path = build_path(m_path, "gtkrc");
 	gtkrc_files[0] = (gchar *)gtkrc_path.c_str();
 	gtk_rc_set_default_files(gtkrc_files);
 	gtk_rc_reparse_all_for_settings(gtk_settings_get_default(), TRUE);
@@ -145,13 +145,13 @@ void SkinStorage::load_gtk_engine() const
 void AppSkin::load()
 {
 	watch_cursor.reset(gdk_cursor_new(GDK_WATCH));
-	std::string pixmaps_dir(conf_dirs->get_data_dir()+ G_DIR_SEPARATOR_S "pixmaps" G_DIR_SEPARATOR_S);
+	std::string pixmaps_dir(build_path(conf_dirs->get_data_dir(), "pixmaps" G_DIR_SEPARATOR_S));
 	std::string filename;
 #ifdef _WIN32
 	filename=pixmaps_dir+"stardict.png";
 	icon.reset(load_image_from_file(filename));
 #else // #ifdef _WIN32
-	icon.reset(load_image_from_file(conf_dirs->get_system_icon_dir() + "/stardict.png"));
+	icon.reset(load_image_from_file(build_path(conf_dirs->get_system_icon_dir(), "stardict.png")));
 #ifdef CONFIG_GPE
 	filename=pixmaps_dir+"docklet_gpe_normal.png";
 #else

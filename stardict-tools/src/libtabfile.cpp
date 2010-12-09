@@ -167,7 +167,7 @@ static bool write_dictionary(const char *filename, GArray *array, print_info_t p
 		*ch = '\0';
 	glib::CharStr dirname(g_path_get_dirname(filename));
 
-	const std::string fullbasefilename = std::string(get_impl(dirname)) + G_DIR_SEPARATOR_S + get_impl(basefilename);
+	const std::string fullbasefilename = build_path(get_impl(dirname), get_impl(basefilename));
 	const std::string ifofilename = fullbasefilename + ".ifo";
 	const std::string idxfilename = fullbasefilename + ".idx";
 	const std::string dicfilename = fullbasefilename + ".dict";

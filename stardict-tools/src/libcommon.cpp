@@ -173,6 +173,21 @@ std::string dir_separator_db_to_fs(const std::string& path)
 }
 #endif
 
+/* concatenate path1 and path2 inserting a path separator in between if needed. */
+std::string build_path(const std::string& path1, const std::string& path2)
+{
+	std::string res;
+	res.reserve(path1.length() + 1 + path2.length());
+	res = path1;
+	if(!res.empty() && res[res.length()-1] != G_DIR_SEPARATOR)
+		res += G_DIR_SEPARATOR_S;
+	if(!path2.empty() && path2[0] == G_DIR_SEPARATOR)
+		res.append(path2, 1, std::string::npos);
+	else
+		res.append(path2);
+	return res;
+}
+
 int unpack_zlib(const char* arch_file_name, const char* out_file_name, print_info_t print_info)
 {
 	zip::gzFile in(gzopen(arch_file_name, "rb"));

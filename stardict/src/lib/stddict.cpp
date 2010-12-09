@@ -1664,8 +1664,7 @@ void Libs::func_parse_text(GMarkupParseContext *context, const gchar *text, gsiz
 void Libs::LoadXMLDir(const char *dir, DictInfoItem *info_item)
 {
 	std::string filename;
-	filename = dir;
-	filename += G_DIR_SEPARATOR_S "stardictd.xml";
+	filename = build_path(dir, "stardictd.xml");
 	stardict_stat_t filestat;
 	if (g_stat(filename.c_str(), &filestat)!=0)
 		return;

@@ -157,7 +157,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>());
 
 	std::list<std::string> dirs;
-	dirs.push_back(conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "dic");
+	dirs.push_back(build_path(conf_dirs->get_data_dir(), "dic"));
 #ifndef _WIN32
 	if (conf_dirs->get_data_dir() != "/usr/share/stardict") {
 		dirs.push_back("/usr/share/stardict/dic");
@@ -167,7 +167,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);
 
 	dirs.clear();
-	dirs.push_back(conf_dirs->get_data_dir()+ G_DIR_SEPARATOR_S "treedict");
+	dirs.push_back(build_path(conf_dirs->get_data_dir(), "treedict"));
 #ifndef _WIN32
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/treedict");
 #endif
@@ -225,9 +225,9 @@ std::string AppConf::get_default_history_filename()
 {
 	std::string histname;
 #ifdef _WIN32
-	histname = conf_dirs->get_user_config_dir() + G_DIR_SEPARATOR_S "history.txt";
+	histname = build_path(conf_dirs->get_user_config_dir(), "history.txt");
 #else
-	histname = conf_dirs->get_user_config_dir() + G_DIR_SEPARATOR_S "history";
+	histname = build_path(conf_dirs->get_user_config_dir(), "history");
 #endif
 
 	return histname;
@@ -237,7 +237,7 @@ std::string AppConf::get_default_export_filename()
 {
 	std::string exportname;
 #ifdef _WIN32
-	exportname = conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "dic.txt";
+	exportname = build_path(conf_dirs->get_data_dir(), "dic.txt");
 #else
 	exportname = g_get_home_dir();
 	exportname+= G_DIR_SEPARATOR_S "dic.txt";
@@ -406,7 +406,7 @@ std::string AppDirs::get_dirs_config_file(const std::string& dirs_config_file) c
 	const gchar * conf_file_env = g_getenv("STARDICT_DIRS_CONFIG_FILE");
 	if(conf_file_env)
 		return conf_file_env;
-	return get_default_user_config_dir() + G_DIR_SEPARATOR_S + "stardict-dirs.cfg";
+	return build_path(get_default_user_config_dir(), "stardict-dirs.cfg");
 }
 
 std::string AppDirs::get_default_user_config_dir(void) const
@@ -468,23 +468,23 @@ std::string AppDirs::get_default_log_dir(void) const
 std::string AppDirs::get_default_plugin_dir(void) const
 {
 #ifdef _WIN32
-	return data_dir + G_DIR_SEPARATOR_S "plugins";
+	return build_path(data_dir, "plugins");
 #else
-	return STARDICT_LIB_DIR G_DIR_SEPARATOR_S "plugins";
+	return build_path(STARDICT_LIB_DIR, "plugins");
 #endif
 }
 
 #ifndef CONFIG_GNOME
 std::string AppDirs::get_default_help_dir(void) const
 {
-	return data_dir + G_DIR_SEPARATOR_S "help";
+	return build_path(data_dir, "help");
 }
 #endif
 
 std::string AppDirs::get_default_locale_dir(void) const
 {
 #ifdef _WIN32
-	return data_dir + G_DIR_SEPARATOR_S "locale";
+	return build_path(data_dir, "locale");
 #else
 	return STARDICT_LOCALE_DIR;
 #endif

@@ -12,6 +12,7 @@
 #include <cstring>
 
 #include "config_file.hpp"
+#include "lib/iappdirs.h"
 
 const int MIN_MAX_FLOATWIN_WIDTH=80; // if user 's MAX_FLOATWIN_WIDTH setting is less then this,it will be set to DEFAULT_MAX_FLOATWIN_WIDTH.
 const int MIN_MAX_FLOATWIN_HEIGHT=60;
@@ -188,7 +189,7 @@ private:
  * retreat to environment variables. For example, STARDICT_DATA_DIR for 
  * data_dir.
  * */
-class AppDirs
+class AppDirs: public IAppDirs
 {
 public:
 	explicit AppDirs(const std::string& dirs_config_file);

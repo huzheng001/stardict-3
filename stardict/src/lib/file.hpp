@@ -6,7 +6,7 @@
 #include <list>
 #include <string>
 #include <cstring>
-
+#include "utils.h"
 
 typedef std::list<std::string> List;
 
@@ -19,7 +19,7 @@ void __for_each_file(const std::string& dirname, const std::string& suff,
 	if (dir) {
 		const gchar *filename;
 		while ((filename = g_dir_read_name(dir))!=NULL) {
-			std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
+			std::string fullfilename(build_path(dirname, filename));
 			if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR))
 				__for_each_file(fullfilename, suff, order_list, disable_list, f);
 			else if (g_str_has_suffix(filename, suff.c_str()) &&
@@ -61,7 +61,7 @@ void __for_each_file_restricted(const std::string& dirname, const std::string& s
 	bool found = false;
 	// search for a file with a suff suffix
 	while ((filename = g_dir_read_name(dir))!=NULL) {
-		std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
+		std::string fullfilename(build_path(dirname, filename));
 		if (!g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)
 			&& g_str_has_suffix(filename, suff.c_str())) {
 			found = true;
@@ -79,7 +79,7 @@ void __for_each_file_restricted(const std::string& dirname, const std::string& s
 	while ((filename = g_dir_read_name(dir))!=NULL) {
 		if(found && strcmp(filename, "res") == 0)
 			continue;
-		std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
+		std::string fullfilename(build_path(dirname, filename));
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR))
 			__for_each_file_restricted(fullfilename, suff, order_list, disable_list, f);
 	}
@@ -109,7 +109,7 @@ void __for_each_dir(const std::string& dirname, Function f)
 	if (dir) {
 		const gchar *filename;
 		while ((filename = g_dir_read_name(dir))) {
-			std::string fullfilename(dirname+G_DIR_SEPARATOR_S+filename);
+			std::string fullfilename(build_path(dirname, filename));
 			if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR))
 				 f(fullfilename, false);
 		}

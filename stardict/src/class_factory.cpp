@@ -54,7 +54,7 @@ void *PlatformFactory::create_class_by_name(const std::string& name, void *param
 		return new gconf_file("/apps/stardict");
 #else
 		inifile *iniconf = new inifile();
-		if(!iniconf->load(conf_dirs->get_user_config_dir()+ G_DIR_SEPARATOR_S "stardict.cfg"))
+		if(!iniconf->load(build_path(conf_dirs->get_user_config_dir(), "stardict.cfg")))
 			exit(EXIT_FAILURE);
 		return iniconf;
 #endif

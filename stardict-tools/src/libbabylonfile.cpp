@@ -554,7 +554,7 @@ void convert_babylonfile(const char *filename, print_info_t print_info, bool str
 	g_array_sort(array,comparefunc);
 	g_array_sort(array2,comparefunc2);
 
-	const std::string fullbasefilename = std::string(dirname) + G_DIR_SEPARATOR_S + basefilename;
+	const std::string fullbasefilename = build_path(dirname, basefilename);
 	const std::string ifofilename = fullbasefilename + ".ifo";
 	const std::string idxfilename = fullbasefilename + ".idx";
 	const std::string dicfilename = fullbasefilename + ".dict";

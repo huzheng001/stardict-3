@@ -37,7 +37,7 @@ void Mouseover::NeedSpyDll()
 {
 	if (fSpyDLL == 0) {
 		// Notice, the path must be absolute!
-		std::string path = conf_dirs->get_dll_dir() + G_DIR_SEPARATOR_S "TextOutSpy.dll";
+		std::string path = build_path(conf_dirs->get_dll_dir(), "TextOutSpy.dll");
 		std::string path_utf8;
 		std_win_string path_win;
 		if(file_name_to_utf8(path, path_utf8) && utf8_to_windows(path_utf8, path_win)) {
@@ -164,7 +164,7 @@ void Mouseover::Init()
 {
 	ThTypes_Init();
 	ZeroMemory(GlobalData, sizeof(TGlobalDLLData));
-	std::string path = conf_dirs->get_dll_dir() + G_DIR_SEPARATOR_S "TextOutHook.dll";
+	std::string path = build_path(conf_dirs->get_dll_dir(), "TextOutHook.dll");
 	std::string path_utf8;
 	std_win_string path_win;
 	file_name_to_utf8(path, path_utf8);

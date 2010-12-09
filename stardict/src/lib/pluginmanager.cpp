@@ -11,6 +11,8 @@
 
 #include "pluginmanager.h"
 #include "file.hpp"
+#include "iappdirs.h"
+#include "conf.h"
 
 StarDictPluginBaseObject::StarDictPluginBaseObject(const char *filename, GModule *module_, plugin_configure_func_t configure_func_):
 	plugin_filename(filename), module(module_), configure_func(configure_func_)
@@ -184,7 +186,7 @@ void StarDictPlugins::get_plugin_list(const std::list<std::string>& order_list, 
 	}
 }
 
-typedef bool (*stardict_plugin_init_func_t)(StarDictPlugInObject *obj);
+typedef bool (*stardict_plugin_init_func_t)(StarDictPlugInObject *obj, IAppDirs* appDirs);
 
 void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml, bool &can_configure)
 {
@@ -205,7 +207,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 		return;
 	}
 	StarDictPlugInObject *plugin_obj = new StarDictPlugInObject();
-	bool failed = func.stardict_plugin_init(plugin_obj);
+	bool failed = func.stardict_plugin_init(plugin_obj, conf_dirs.get());
 	if (failed) {
 		g_print("Load %s failed!\n", filename);
 		g_module_close (module);
@@ -255,7 +257,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		return;
 	}
 	StarDictPlugInObject *plugin_obj = new StarDictPlugInObject();
-	bool failed = func.stardict_plugin_init(plugin_obj);
+	bool failed = func.stardict_plugin_init(plugin_obj, conf_dirs.get());
 	if (failed) {
 		g_print("Load %s failed!\n", filename);
 		g_module_close (module);

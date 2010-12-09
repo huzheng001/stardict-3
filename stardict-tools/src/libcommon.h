@@ -36,6 +36,7 @@ inline std::string dir_separator_db_to_fs(const std::string& path)
 extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
+std::string build_path(const std::string& path1, const std::string& path2);
 
 enum TLoadResult { lrOK, lrError, lrNotFound };
 

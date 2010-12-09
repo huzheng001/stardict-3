@@ -12,9 +12,10 @@
 #endif
 
 #include "../../src/lib/plugin.h"
+#include "../../src/lib/iappdirs.h"
 
 extern "C" {
-	DLLIMPORT extern bool stardict_plugin_init(StarDictPlugInObject *obj);
+	DLLIMPORT extern bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs);
 	DLLIMPORT extern void stardict_plugin_exit(void);
 	DLLIMPORT extern bool stardict_misc_plugin_init(void);
 }
