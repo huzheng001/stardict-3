@@ -151,7 +151,7 @@ std::string Logger::get_log_file_name(void)
 	Each instance gets an independent log file.
 	We use pid to construct unique log file name. */
 	std::stringstream buf;
-	buf << conf_dirs->get_log_dir() << G_DIR_SEPARATOR_S "stardict-"
+	buf << build_path(conf_dirs->get_log_dir(), "stardict-")
 #ifdef _WIN32
 		<< (gulong)_getpid()
 #else

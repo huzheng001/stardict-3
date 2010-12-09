@@ -33,7 +33,8 @@ libstardict_a_SOURCES = \
 	xml_str.cpp xml_str.h	\
 	utils.cpp utils.h	\
 	compositelookup.cpp compositelookup.h \
-	stardict_libconfig.h stardict-sigc++.h
+	stardict_libconfig.h stardict-sigc++.h \
+	iappdirs.h
 
 if USE_SYSTEM_SIGCPP
 LOCAL_SIGCPP_INCLUDE =

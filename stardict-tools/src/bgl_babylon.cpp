@@ -384,7 +384,7 @@ bgl_entry Babylon::readEntry()
 				std::string filename(&block.data[pos], len);
 				pos += len;
 				if (filename != "8EAF66FD.bmp" && filename != "C2EEF3F6.html") {
-					filename = m_resdirname + G_DIR_SEPARATOR_S + filename;
+					filename = build_path(m_resdirname, filename);
 					int size = block.data.size() - pos;
 					if(size <= 0)
 						break;

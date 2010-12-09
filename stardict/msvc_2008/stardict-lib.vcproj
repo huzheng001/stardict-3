@@ -321,6 +321,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\iappdirs.h"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\ifo_file.hpp"
 					>
 				</File>

@@ -30,7 +30,7 @@ static void configure()
 {
 }
 
-DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Wiki data parsing plugin version doesn't match!\n");

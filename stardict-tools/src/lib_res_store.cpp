@@ -75,7 +75,7 @@ TLoadResult resource_database::load(const std::string& dirname,
 	ridxtemp.set_print_info(print_info);
 	rdictemp.set_print_info(print_info);
 
-	rifofilename = dirname + G_DIR_SEPARATOR_S "res.rifo";
+	rifofilename = build_path(dirname, "res.rifo");
 	if(!g_file_test(rifofilename.c_str(), G_FILE_TEST_EXISTS))
 		return lrNotFound;
 
@@ -90,7 +90,7 @@ TLoadResult resource_database::load(const std::string& dirname,
 
 int resource_database::prepare_ridx_file(void)
 {
-	ridxfilename_orig = dirname + G_DIR_SEPARATOR_S "res.ridx.gz";
+	ridxfilename_orig = build_path(dirname, "res.ridx.gz");
 	if(g_file_test(ridxfilename_orig.c_str(), G_FILE_TEST_EXISTS)) {
 		ridxfilename = ridxtemp.create_temp_file();
 		if(ridxfilename.empty())
@@ -98,7 +98,7 @@ int resource_database::prepare_ridx_file(void)
 		if(EXIT_FAILURE == unpack_zlib(ridxfilename_orig.c_str(), ridxfilename.c_str(), print_info))
 			return EXIT_FAILURE;
 	} else {
-		ridxfilename_orig = dirname + G_DIR_SEPARATOR_S "res.ridx";
+		ridxfilename_orig = build_path(dirname, "res.ridx");
 		ridxfilename = ridxfilename_orig;
 	}
 	return EXIT_SUCCESS;
@@ -106,7 +106,7 @@ int resource_database::prepare_ridx_file(void)
 
 int resource_database::prepare_rdic_file(void)
 {
-	rdicfilename_orig = dirname + G_DIR_SEPARATOR_S "res.rdic.dz";
+	rdicfilename_orig = build_path(dirname, "res.rdic.dz");
 	if(g_file_test(rdicfilename_orig.c_str(), G_FILE_TEST_EXISTS)) {
 		rdicfilename = rdictemp.create_temp_file();
 		if(rdicfilename.empty())
@@ -114,7 +114,7 @@ int resource_database::prepare_rdic_file(void)
 		if(EXIT_FAILURE == unpack_zlib(rdicfilename_orig.c_str(), rdicfilename.c_str(), print_info))
 			return EXIT_FAILURE;
 	} else {
-		rdicfilename_orig = dirname + G_DIR_SEPARATOR_S "res.rdic";
+		rdicfilename_orig = build_path(dirname, "res.rdic");
 		rdicfilename = rdicfilename_orig;
 	}
 	return EXIT_SUCCESS;

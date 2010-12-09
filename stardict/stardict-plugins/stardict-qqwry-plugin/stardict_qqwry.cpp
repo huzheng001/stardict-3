@@ -17,6 +17,21 @@
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 
 
+/* concatenate path1 and path2 inserting a path separator in between if needed. */
+static std::string build_path(const std::string& path1, const std::string& path2)
+{
+	std::string res;
+	res.reserve(path1.length() + 1 + path2.length());
+	res = path1;
+	if(!res.empty() && res[res.length()-1] != G_DIR_SEPARATOR)
+		res += G_DIR_SEPARATOR_S;
+	if(!path2.empty() && path2[0] == G_DIR_SEPARATOR)
+		res.append(path2, 1, std::string::npos);
+	else
+		res.append(path2);
+	return res;
+}
+
 static char *build_dictdata(char type, const char *definition)
 {
 	size_t len = strlen(definition);
@@ -165,8 +180,7 @@ static void get_address_from_ip(const char *text, std::string &ipstr, std::strin
 	g_regex_unref (regex);
 	if (ipstr.empty())
 		return;
-	std::string datafilename = plugin_info->datadir;
-	datafilename += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "QQWry.Dat";
+	std::string datafilename = build_path(plugin_info->datadir, "data" G_DIR_SEPARATOR_S "QQWry.Dat");
 	FILE *fp = g_fopen(datafilename.c_str(), "rb");
 	if (!fp) {
 		gchar *msg = g_strdup_printf(_("Error: Open file %s failed!"), datafilename.c_str());
@@ -216,8 +230,8 @@ static void configure()
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("QQWry configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 	std::string msg;
-	std::string datafilename = plugin_info->datadir;
-	datafilename += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "QQWry.Dat";
+	std::string datafilename = build_path(plugin_info->datadir,
+		"data" G_DIR_SEPARATOR_S "QQWry.Dat");
 	if (g_file_test(datafilename.c_str(), G_FILE_TEST_EXISTS)) {
 		msg = _("You can update the QQWry.Dat file from this website:\nhttp://www.cz88.net");
 	} else {
@@ -235,7 +249,7 @@ static void configure()
 	gtk_widget_destroy (window);
 }
 
-DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj)
+DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: QQWry plugin version doesn't match!\n");

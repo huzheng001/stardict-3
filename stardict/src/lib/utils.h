@@ -112,6 +112,7 @@ inline std::string dir_separator_db_to_fs(const std::string& path)
 extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
+std::string build_path(const std::string& path1, const std::string& path2);
 
 void html_decode(const char *str, std::string& decoded);
 void GetPureEnglishAlpha(char *dst, const char *src); // not used

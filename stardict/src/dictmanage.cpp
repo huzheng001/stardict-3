@@ -517,7 +517,7 @@ void RemoveCacheFiles(void)
 		while ((filename = g_dir_read_name(dir))!=NULL) {
 			if(!g_str_has_suffix(filename, ".oft") && !g_str_has_suffix(filename, ".clt"))
 				continue;
-			std::string fullfilename(std::string(*it)+G_DIR_SEPARATOR_S+filename);
+			std::string fullfilename(build_path(*it, filename));
 			if (!g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
 				g_unlink(fullfilename.c_str());
 			}

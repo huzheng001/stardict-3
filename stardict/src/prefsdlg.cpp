@@ -1208,7 +1208,7 @@ void PrefsDlg::on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button
 			TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"), 0,
 			KEY_ALL_ACCESS, &hKEY);
 		if(lRet==ERROR_SUCCESS) {
-			std::string path = conf_dirs->get_data_dir()+ G_DIR_SEPARATOR_S "stardict.exe";
+			std::string path = build_path(conf_dirs->get_data_dir(), "stardict.exe");
 			std::string path_utf8;
 			std_win_string path_win;
 			if(file_name_to_utf8(path, path_utf8) 
@@ -1303,7 +1303,7 @@ void PrefsDlg::find_skins()
 	skins[0].name = _("Default"); // i.e. no skin applied
 	std::list<std::string> dirs;
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/skins");
-	dirs.push_back(conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S "skins");
+	dirs.push_back(build_path(conf_dirs->get_data_dir(), "skins"));
 	for_each_dir(dirs, SkinDetector(skins));
 }
 
@@ -1339,7 +1339,7 @@ void PrefsDlg::setup_mainwin_options_page()
 		if((lRet!=ERROR_SUCCESS)||(cbData_1 > buf_size_b)) {
 			autorun = false;
 		} else {
-			std::string path = conf_dirs->get_data_dir()+ G_DIR_SEPARATOR_S "stardict.exe";
+			std::string path = build_path(conf_dirs->get_data_dir(), "stardict.exe");
 			std::string run_path_utf8;
 			std::string run_path;
 			if(windows_to_utf8(run_path_win, run_path_utf8)

@@ -61,9 +61,8 @@ void splash_screen::show()
 
 //This function never failed
 	GtkWidget *image =
-		gtk_image_new_from_file((conf_dirs->get_data_dir() +
-					 G_DIR_SEPARATOR_S "pixmaps"
-					 G_DIR_SEPARATOR_S "splash.png").c_str());
+		gtk_image_new_from_file(build_path(conf_dirs->get_data_dir(),
+					"pixmaps" G_DIR_SEPARATOR_S "splash.png").c_str());
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 

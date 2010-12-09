@@ -74,7 +74,7 @@ void ReadWord::LoadRealTtsPath(const gchar *path)
 			if (g_file_test(it->c_str(), G_FILE_TEST_EXISTS))
 				ttspath.push_back(*it);
 		} else {
-			str = conf_dirs->get_data_dir() + G_DIR_SEPARATOR_S + *it;
+			str = build_path(conf_dirs->get_data_dir(), *it);
 			if (g_file_test(str.c_str(), G_FILE_TEST_EXISTS))
 				ttspath.push_back(str);
 		}
@@ -99,7 +99,7 @@ bool ReadWord::RealTts_canRead(const gchar *word)
 		std::string filename;
 		std::list<std::string>::const_iterator it;
 		for (it=ttspath.begin(); it!=ttspath.end(); ++it) {
-			filename = *it + G_DIR_SEPARATOR_S + lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav";
+			filename = build_path(*it, lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav");
 			return_val = g_file_test(filename.c_str(), G_FILE_TEST_EXISTS);
 			if (return_val)
 				break;
@@ -130,7 +130,7 @@ void ReadWord::RealTts_read(const gchar *word)
 		std::string filename;
 		std::list<std::string>::const_iterator it;
 		for (it=ttspath.begin(); it!=ttspath.end(); ++it) {
-			filename = *it + G_DIR_SEPARATOR_S + lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav";
+			filename = build_path(*it, lowerword[0] + G_DIR_SEPARATOR_S + lowerword + ".wav");
 			if (g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
 				play_sound_file(filename);
 				break;

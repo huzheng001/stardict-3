@@ -404,7 +404,7 @@ void stardict_plugin_exit(void)
 {
 }
 
-bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
+bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Gucharmap");

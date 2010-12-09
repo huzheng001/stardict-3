@@ -578,8 +578,7 @@ ResourceStorage* ResourceStorage::create(const std::string &dirname,
 {
 	ResourceStorage *storage = NULL;
 	std::string fullfilename;
-	fullfilename = dirname;
-	fullfilename += G_DIR_SEPARATOR_S "res.rifo";
+	fullfilename = build_path(dirname, "res.rifo");
 	if (g_file_test(fullfilename.c_str(), G_FILE_TEST_EXISTS)) {
 		storage = new ResourceStorage();
 		if(!storage->load_database(fullfilename, CreateCacheFile, sp)) {
@@ -587,8 +586,7 @@ ResourceStorage* ResourceStorage::create(const std::string &dirname,
 			storage = NULL;
 		}
 	} else {
-		fullfilename = dirname;
-		fullfilename += G_DIR_SEPARATOR_S "res";
+		fullfilename = build_path(dirname, "res");
 		if (g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
 			storage = new ResourceStorage();
 			if(!storage->load_filesdir(fullfilename, sp)) {

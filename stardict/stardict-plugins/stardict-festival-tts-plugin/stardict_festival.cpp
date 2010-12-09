@@ -4,20 +4,26 @@
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static std::string voice_engine;
+static IAppDirs* gpAppDirs = NULL;
+
+/* concatenate path1 and path2 inserting a path separator in between if needed. */
+static std::string build_path(const std::string& path1, const std::string& path2)
+{
+	std::string res;
+	res.reserve(path1.length() + 1 + path2.length());
+	res = path1;
+	if(!res.empty() && res[res.length()-1] != G_DIR_SEPARATOR)
+		res += G_DIR_SEPARATOR_S;
+	if(!path2.empty() && path2[0] == G_DIR_SEPARATOR)
+		res.append(path2, 1, std::string::npos);
+	else
+		res.append(path2);
+	return res;
+}
 
 static std::string get_cfg_filename()
 {
-#ifdef _WIN32
-	std::string res = g_get_user_config_dir();
-	res += G_DIR_SEPARATOR_S "StarDict" G_DIR_SEPARATOR_S "festival.cfg";
-#else
-	std::string res;
-	gchar *tmp = g_build_filename(g_get_home_dir(), ".stardict", NULL);
-	res=tmp;
-	g_free(tmp);
-	res += G_DIR_SEPARATOR_S "festival.cfg";
-#endif
-	return res;
+	return build_path(gpAppDirs->get_user_config_dir(), "festival.cfg");
 }
 
 static void saytext(const char *text)
@@ -89,7 +95,7 @@ static void configure()
 	gtk_widget_destroy (window);
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Festival plugin version doesn't match!\n");
@@ -99,11 +105,13 @@ bool stardict_plugin_init(StarDictPlugInObject *obj)
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Festival"), _("Festival TTS."), _("Pronounce words by Festival TTS engine."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
+	gpAppDirs = appDirs;
 	return false;
 }
 
 void stardict_plugin_exit(void)
 {
+	gpAppDirs = NULL;
 }
 
 bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)

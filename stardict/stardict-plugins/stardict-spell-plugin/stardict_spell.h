@@ -3,9 +3,10 @@
 
 #include "../../src/lib/plugin.h"
 #include "../../src/lib/virtualdictplugin.h"
+#include "../../src/lib/iappdirs.h"
 
 extern "C" {
-	extern bool stardict_plugin_init(StarDictPlugInObject *obj);
+	extern bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs);
 	extern void stardict_plugin_exit(void);
 	extern bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj);
 }
