@@ -159,9 +159,454 @@ void test_copy_normalize_trim_spaces(void)
 	}
 }
 
+
+void test_resolve_path_win(void)
+{
+	struct TData {
+		const char* source;
+		const char* resolved_path;
+		int result;
+	};
+	TData data[] = {
+		// all supported roots
+		{
+			"c:\\",
+			"c:\\",
+			EXIT_SUCCESS
+		},
+		{
+			"c:",
+			"c:",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\abcd",
+			"\\\\abcd",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\abcd\\",
+			"\\\\abcd\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\\\\\",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\abcd",
+			"\\abcd",
+			EXIT_SUCCESS
+		},
+		{
+			"\\abcd\\",
+			"\\abcd\\",
+			EXIT_SUCCESS
+		},
+		{
+			"abcd",
+			"abcd",
+			EXIT_SUCCESS
+		},
+		{
+			"a",
+			"a",
+			EXIT_SUCCESS
+		},
+		{
+			".",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			".\\",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			".\\ab",
+			"ab",
+			EXIT_SUCCESS
+		},
+		{
+			"",
+			"",
+			EXIT_SUCCESS
+		},
+		// refering parent directory of the root
+		{
+			"c:\\..",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\\\..",
+			"\\\\..",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\abcd\\..",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\..",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"..",
+			"..",
+			EXIT_SUCCESS
+		},
+		{
+			"..\\",
+			"..\\",
+			EXIT_SUCCESS
+		},
+		// empty path component
+		{
+			"c:\\ab\\\\cd",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\\\abcd\\\\",
+			"",
+			EXIT_FAILURE
+		},
+		{
+			"\\abcd\\\\de",
+			"",
+			EXIT_FAILURE
+		},
+		// resolving parent references
+		{
+			"..",
+			"..",
+			EXIT_SUCCESS
+		},
+		{
+			"..\\..",
+			"..\\..",
+			EXIT_SUCCESS
+		},
+		{
+			"abcd\\..",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"abcd\\..\\..",
+			"..",
+			EXIT_SUCCESS
+		},
+		{
+			"abcd\\..\\..\\",
+			"..\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\..",
+			"\\a\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c\\..\\..\\d",
+			"\\a\\d",
+			EXIT_SUCCESS
+		},
+		{
+			".\\..",
+			"..",
+			EXIT_SUCCESS
+		},
+		// strip "." component
+		{
+			"c:\\dir\\.",
+			"c:\\dir\\",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\dir\\.\\",
+			"c:\\dir\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\dir\\.",
+			"\\dir\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\dir\\.\\",
+			"\\dir\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\.",
+			"\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\.\\",
+			"\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\dir\\.\\..",
+			"\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\dir\\.\\.\\make",
+			"\\dir\\make",
+			EXIT_SUCCESS
+		},
+
+		/*
+		{
+			"",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"",
+			"",
+			EXIT_FAILURE
+		},
+		*/
+		
+		{
+			NULL,
+			NULL,
+			0
+		}
+	};
+	std::string resolved_path;
+	for(TData *d=data; d->source; ++d) {
+		int result = resolve_path_win(d->source, resolved_path);
+		if(strcmp(resolved_path.c_str(), d->resolved_path) != 0 || result != d->result) {
+			printf("Test test_resolve_path failed. source = %s\n", d->source);
+			exit(1);
+		}
+	}
+}
+
+void test_build_relative_path(void)
+{
+	struct TData {
+		const char* base_dir;
+		const char* path;
+		const char* rel_path;
+		int result;
+	};
+	TData data[] = {
+		{
+			"c:\\",
+			"c:\\dir1",
+			"dir1",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\",
+			"c:\\dir1\\",
+			"dir1\\",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\",
+			"c:\\a\\b\\",
+			"a\\b\\",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\",
+			"c:\\a\\b",
+			"a\\b",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\dir",
+			"c:\\dir",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\dir\\",
+			"c:\\dir",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"c:\\dir\\",
+			"c:\\dir\\",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"\\",
+			"\\a",
+			"a",
+			EXIT_SUCCESS
+		},
+		{
+			"\\",
+			"\\a\\",
+			"a\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a",
+			"\\a\\",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\a",
+			"\\\\a",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\a\\",
+			"\\\\a",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\a",
+			"\\\\a\\dir",
+			"dir",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\a\\",
+			"\\\\a\\dir",
+			"dir",
+			EXIT_SUCCESS
+		},
+		{
+			"\\\\a\\",
+			"\\\\a\\dir\\",
+			"dir\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c",
+			"\\a\\b",
+			"..",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c\\",
+			"\\a\\b",
+			"..",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c\\",
+			"\\a\\b\\",
+			"..\\",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c",
+			"\\a\\d",
+			"..\\..\\d",
+			EXIT_SUCCESS
+		},
+		{
+			"\\a\\b\\c",
+			"\\a\\d\\",
+			"..\\..\\d\\",
+			EXIT_SUCCESS
+		},
+
+		/*
+		{
+			"",
+			"",
+			"",
+			EXIT_SUCCESS
+		},
+		{
+			"",
+			"",
+			"",
+			EXIT_FAILURE
+		},
+		*/
+
+		{
+			NULL,
+			NULL,
+			NULL,
+			0
+		}
+	};
+	std::string rel_path;
+	for(TData *d=data; d->base_dir; ++d) {
+		int result = build_relative_path(d->base_dir, d->path, rel_path);
+		if(strcmp(rel_path.c_str(), d->rel_path) != 0 || result != d->result) {
+			printf("Test test_build_relative_path failed. base_dir = '%s', path = '%s', rel_path = '%s'\n", 
+				d->base_dir, d->path, rel_path.c_str());
+			exit(1);
+		}
+	}
+}
+
+void test_is_ascii_alpha(void)
+{
+	struct TData {
+		wchar_t ch;
+		bool result;
+	};
+	TData data[] = {
+		{
+			L'a',
+			true
+		},
+		{
+			L'Z',
+			true
+		},
+		/*
+		{
+			L'',
+			true
+		},
+		{
+			L'',
+			false
+		},
+		*/
+		{
+			L'\0',
+			false
+		}
+	};
+	for(TData *d=data; d->ch; ++d) {
+		bool result = is_ascii_alpha(d->ch);
+		if(result != d->result) {
+			printf("Test test_is_ascii_alpha failed.\n");
+			exit(1);
+		}
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	test_extract_word();
 	test_extract_capitalized_word();
 	test_copy_normalize_trim_spaces();
+	test_resolve_path_win();
+	test_build_relative_path();
+	test_is_ascii_alpha();
+	return 0;
 }

@@ -325,10 +325,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\win32\StdAfx.h"
-					>
-				</File>
-				<File
 					RelativePath="..\src\win32\systray.cpp"
 					>
 				</File>
@@ -468,6 +464,10 @@
 				</File>
 				<File
 					RelativePath="..\src\win32\mouseover.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\win32\StdAfx.h"
 					>
 				</File>
 				<File

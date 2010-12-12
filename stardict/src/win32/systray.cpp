@@ -10,12 +10,12 @@
 
 #include "systray.h"
 #include "lib/utils.h"
+#include "conf.h"
 
 #ifndef LR_VGACOLOR
 //if use gcc on windows this constant not defined
 #  define LR_VGACOLOR         0x0080
 #endif
-extern HINSTANCE stardictexe_hInstance;
 
 #define WM_TRAYMESSAGE WM_USER /* User defined WM Message */
 

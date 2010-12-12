@@ -62,8 +62,6 @@
 #  include <io.h>
 #  include <fcntl.h>
 #  include "win32/intl.h"
-
-HINSTANCE stardictexe_hInstance;
 #endif
 
 #include "desktop.hpp"

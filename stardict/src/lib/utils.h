@@ -93,6 +93,10 @@ extern bool utf8_to_file_name(const std::string& str, std::string& out);
 typedef std::basic_string<TCHAR> std_win_string;
 extern bool utf8_to_windows(const std::string& str_utf8, std_win_string& out);
 extern bool windows_to_utf8(const std_win_string& str, std::string& out_utf8);
+extern int resolve_path_win(const std::string& path, std::string& result);
+extern bool is_absolute_path_win(const std::string& path);
+extern bool is_valid_path_win(const std::string& path);
+extern int build_relative_path(const std::string& base_dir, const std::string& path, std::string& rel_path);
 #endif
 #define DB_DIR_SEPARATOR '/'
 #define DB_DIR_SEPARATOR_S "/"
@@ -112,7 +116,7 @@ inline std::string dir_separator_db_to_fs(const std::string& path)
 extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
-std::string build_path(const std::string& path1, const std::string& path2);
+extern std::string build_path(const std::string& path1, const std::string& path2);
 
 void html_decode(const char *str, std::string& decoded);
 void GetPureEnglishAlpha(char *dst, const char *src); // not used
@@ -138,6 +142,8 @@ gboolean is_not_alpha(gunichar c);
 gboolean is_not_upper(gunichar c);
 gboolean is_not_lower(gunichar c);
 std::string fix_utf8_str(const std::string& str);
+char* strrchr_len(char* str, size_t size, char c);
+bool is_ascii_alpha(wchar_t ch);
 
 #define UTF8_BOM "\xEF\xBB\xBF"
 #define read_file_err \
