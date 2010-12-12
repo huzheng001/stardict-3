@@ -11,6 +11,10 @@
 #include <string>
 #include <cstring>
 
+#ifdef _WIN32
+#  include <windows.h>
+#endif
+
 #include "config_file.hpp"
 #include "lib/iappdirs.h"
 
@@ -20,8 +24,15 @@ const int MIN_MAX_FLOATWIN_HEIGHT=60;
 const int DEFAULT_MAX_FLOATWIN_WIDTH=160;
 const int DEFAULT_MAX_FLOATWIN_HEIGHT=120;
 #else
-const int DEFAULT_MAX_FLOATWIN_WIDTH=320; // This is the lable's width in fact.
+const int DEFAULT_MAX_FLOATWIN_WIDTH=320; // This is the label's width in fact.
 const int DEFAULT_MAX_FLOATWIN_HEIGHT=240;
+#endif
+
+#ifdef _WIN32
+extern HINSTANCE stardictexe_hInstance;
+
+std::string get_application_dir(void);
+int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path);
 #endif
 
 template <typename T>

@@ -45,6 +45,50 @@ const int DEFAULT_HPANED_POS=127;
 std::auto_ptr<AppConf> conf;
 std::auto_ptr<AppDirs> conf_dirs;
 
+#ifdef _WIN32
+HINSTANCE stardictexe_hInstance;
+
+/* Get full path to the directory containing StarDict executable file 
+	- application directory. */
+std::string get_application_dir(void)
+{
+	TCHAR path_win[MAX_PATH];
+	DWORD dwRes = GetModuleFileName(NULL, path_win, MAX_PATH);
+	if(dwRes == 0 || dwRes == MAX_PATH)
+		exit(EXIT_FAILURE);
+	std::string path_utf8;
+	if(windows_to_utf8(path_win, path_utf8)) {
+		glib::CharStr buf(g_path_get_dirname(path_utf8.c_str()));
+		return get_impl(buf);
+	} else
+		exit(EXIT_FAILURE);
+}
+
+/* transform a path relative to the application dir to an absolute path.
+Do nothing if the path is already an absolute path.
+Return value: EXIT_FAILURE or EXIT_SUCCESS. */
+int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path)
+{
+	abs_path.clear();
+	std::string path_norm;
+	if(resolve_path_win(path, path_norm))
+		return EXIT_FAILURE;
+	if(!is_valid_path_win(path_norm))
+		return EXIT_FAILURE;
+	if(is_absolute_path_win(path_norm)) {
+		abs_path = path_norm;
+		return EXIT_SUCCESS;
+	}
+	std::string path_abs(build_path(get_application_dir(), path_norm));
+	std::string path_abs_norm;
+	if(resolve_path_win(path_abs, path_abs_norm))
+		return EXIT_FAILURE;
+	abs_path = path_abs_norm;
+	return EXIT_SUCCESS;
+}
+
+#endif // #ifdef _WIN32
+
 //---------------------------------------------------------------------------------
 AppConf::AppConf() :
 	cf(static_cast<config_file *>(PlatformFactory::create_class_by_name("config_file")))
@@ -364,7 +408,17 @@ private:
 
 AppDirs::AppDirs(const std::string& dirs_config_file)
 {
+#ifdef _WIN32
+	std::string t_path;
+#endif
 	std::string l_dirs_config_file = get_dirs_config_file(dirs_config_file);
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(l_dirs_config_file, t_path)) {
+		g_error(_("Unable to resolve StarDict directories config file: %s."), 
+			l_dirs_config_file.c_str());
+	}
+	l_dirs_config_file = t_path;
+#endif
 	AppDirsConf app_conf;
 	app_conf.load(l_dirs_config_file);
 
@@ -372,31 +426,72 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 
 	path = app_conf.get_string_at("user_config_dir");
 	user_config_dir = path.empty() ? get_default_user_config_dir() : path;
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(user_config_dir, t_path)) {
+		g_error(_("Unable to resolve user config directory: %s."), 
+			user_config_dir.c_str());
+	}
+	user_config_dir = t_path;
+#endif
 	if (!g_file_test(user_config_dir.c_str(), G_FILE_TEST_IS_DIR)) {
 		if (-1 == g_mkdir(user_config_dir.c_str(), S_IRWXU))
-			g_warning("Cannot create user config directory %s.", user_config_dir.c_str());
+			g_warning(_("Cannot create user config directory %s."), 
+				user_config_dir.c_str());
 	}
 
 	path = app_conf.get_string_at("data_dir");
 	data_dir = path.empty() ? get_default_data_dir() : path;
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(data_dir, t_path)) {
+		g_error(_("Unable to resolve data directory: %s."), 
+			data_dir.c_str());
+	}
+	data_dir = t_path;
+#endif
 
 	path = app_conf.get_string_at("log_dir");
 	log_dir = path.empty() ? get_default_log_dir() : path;
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(log_dir, t_path)) {
+		g_error(_("Unable to resolve log directory: %s."), 
+			log_dir.c_str());
+	}
+	log_dir = t_path;
+#endif
 	if(!g_file_test(log_dir.c_str(), G_FILE_TEST_IS_DIR))
 		if(-1 == g_mkdir_with_parents(log_dir.c_str(), S_IRWXU))
-			g_warning("Cannot create log directory %s.", log_dir.c_str());
+			g_warning(_("Cannot create log directory %s."), log_dir.c_str());
 
 #ifdef _WIN32
 	path = app_conf.get_string_at("dll_dir");
 	dll_dir = path.empty() ? data_dir : path;
+	if(resolve_rel_app_dir_path(dll_dir, t_path)) {
+		g_error(_("Unable to resolve DLL directory: %s."), 
+			dll_dir.c_str());
+	}
+	dll_dir = t_path;
 #endif
 	path = app_conf.get_string_at("plugin_dir");
 	plugin_dir = path.empty() ? get_default_plugin_dir() : path;
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(plugin_dir, t_path)) {
+		g_error(_("Unable to resolve plugin directory: %s."), 
+			plugin_dir.c_str());
+	}
+	plugin_dir = t_path;
+#endif
 #ifndef CONFIG_GNOME
 	path = app_conf.get_string_at("help_dir");
 	help_dir = path.empty() ? get_default_help_dir() : path;
 #endif
 	locale_dir = get_default_locale_dir();
+#ifdef _WIN32
+	if(resolve_rel_app_dir_path(locale_dir, t_path)) {
+		g_error(_("Unable to resolve locale directory: %s."), 
+			locale_dir.c_str());
+	}
+	locale_dir = t_path;
+#endif
 }
 
 std::string AppDirs::get_dirs_config_file(const std::string& dirs_config_file) const
@@ -433,22 +528,7 @@ std::string AppDirs::get_default_user_config_dir(void) const
 std::string AppDirs::get_default_data_dir(void) const
 {
 #ifdef _WIN32
-	HMODULE hmod;
-
-	if ((hmod = GetModuleHandle(NULL))==0)
-		exit(EXIT_FAILURE);
-	TCHAR path_win[MAX_PATH];
-	DWORD dwRes = GetModuleFileName(hmod, path_win, MAX_PATH);
-	if(dwRes == 0 || dwRes == MAX_PATH)
-		exit(EXIT_FAILURE);
-	std::string path_utf8;
-	std::string path;
-	if(windows_to_utf8(path_win, path_utf8) && utf8_to_file_name(path_utf8, path)) {
-		glib::CharStr buf(g_path_get_dirname(path.c_str()));
-		return get_impl(buf);
-	} else
-		exit(EXIT_FAILURE);
-	return "";
+	return get_application_dir();
 #else
 	return STARDICT_DATA_DIR;
 #endif

@@ -173,10 +173,6 @@ public:
 	static void ShowPangoTips(const char *word, const char *text);
 };
 
-#ifdef _WIN32
-extern HINSTANCE stardictexe_hInstance;
-#endif
-
 extern gchar* GetPureEnglishAlpha(gchar *str);
 extern gchar* GetHeadWord(gchar *str);
 extern gboolean stardict_on_enter_notify (GtkWidget * widget, GdkEventCrossing * event, gpointer data);
