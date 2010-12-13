@@ -109,7 +109,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/port", 2628);
 	add_entry("/apps/stardict/preferences/network/user", std::string());
 	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
-	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
+	add_entry("/apps/stardict/preferences/main_window/skin", std::string()); // absolute?
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/word_change_timeout", 300);
@@ -119,7 +119,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
-	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string());
+	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string()); // absolute?
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
 	add_entry("/apps/stardict/preferences/dictionary/markup_search_word", false);
@@ -155,7 +155,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/max_window_height", DEFAULT_MAX_FLOATWIN_HEIGHT);
 
 #ifdef _WIN32
-	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_win32_custom_font());
+	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_win32_custom_font()); //absolute?
 #else
 #ifdef CONFIG_DARWIN
 	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_darwin_custom_font());
@@ -168,37 +168,46 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/enable_collation", false);
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 
-	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play"));
+	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute?
 #if defined(_WIN32) || defined(CONFIG_GNOME)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif
-	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play"));
+	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play")); // absolute?
 #if defined(CONFIG_GPE)
 	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("gpe-mini-browser"));
 #else
-	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("firefox"));
+	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("firefox")); //absolute?
 #endif
 #if defined(_WIN32) || defined(CONFIG_GNOME)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_open_url_command", false);
 #endif
+	{
+		std::list<std::string> pathlist;
 #ifdef _WIN32
-	add_entry("/apps/stardict/preferences/dictionary/tts_path", std::string("C:\\Program Files\\WyabdcRealPeopleTTS\nC:\\Program Files\\OtdRealPeopleTTS\nWyabdcRealPeopleTTS\nOtdRealPeopleTTS"));
+		pathlist.push_back("C:\\Program Files\\WyabdcRealPeopleTTS");
+		pathlist.push_back("C:\\Program Files\\OtdRealPeopleTTS");
+		pathlist.push_back("WyabdcRealPeopleTTS");
+		pathlist.push_back("OtdRealPeopleTTS");
+		add_entry("/apps/stardict/preferences/dictionary/tts_path", pathlist); //absolute?
 #else
-	add_entry("/apps/stardict/preferences/dictionary/tts_path", std::string("/usr/share/WyabdcRealPeopleTTS\n/usr/share/OtdRealPeopleTTS"));
+		pathlist.push_back("/usr/share/WyabdcRealPeopleTTS");
+		pathlist.push_back("/usr/share/OtdRealPeopleTTS");
+		add_entry("/apps/stardict/preferences/dictionary/tts_path", pathlist);
 #endif
-	add_entry("/apps/stardict/preferences/dictionary/history", get_default_history_filename());
+	}
+	add_entry("/apps/stardict/preferences/dictionary/history", get_default_history_filename()); //absolute
 	add_entry("/apps/stardict/preferences/dictionary/only_export_word", true);
-	add_entry("/apps/stardict/preferences/dictionary/export_file", get_default_export_filename());
+	add_entry("/apps/stardict/preferences/dictionary/export_file", get_default_export_filename()); //absolute
 
 	add_entry("/apps/stardict/preferences/main_window/search_website_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/dict_order_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/dict_config_xml", std::string());
+	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>()); //absolute
+	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>()); //absolute
+	add_entry("/apps/stardict/manage_dictionaries/dict_order_list", std::list<std::string>()); //absolute
+	add_entry("/apps/stardict/manage_dictionaries/dict_config_xml", std::string()); //absolute
 	add_entry("/apps/stardict/manage_dictionaries/dict_default_group", std::string());
 
-	add_entry("/apps/stardict/manage_plugins/plugin_order_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>());
+	add_entry("/apps/stardict/manage_plugins/plugin_order_list", std::list<std::string>()); //absolute
+	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>()); //absolute
 
 	std::list<std::string> dirs;
 	dirs.push_back(build_path(conf_dirs->get_data_dir(), "dic"));
@@ -208,14 +217,14 @@ AppConf::AppConf() :
 	}
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
 #endif
-	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);
+	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs); //absolute
 
 	dirs.clear();
 	dirs.push_back(build_path(conf_dirs->get_data_dir(), "treedict"));
 #ifndef _WIN32
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/treedict");
 #endif
-	add_entry("/apps/stardict/manage_dictionaries/treedict_dirs_list", dirs);
+	add_entry("/apps/stardict/manage_dictionaries/treedict_dirs_list", dirs); //absolute
 
   Load();
 }
