@@ -15,7 +15,7 @@ enum ReadWordType {
 class ReadWord {
 public:
 	ReadWord();
-	void LoadRealTtsPath(const gchar *path);
+	void LoadRealTtsPath(const std::list<std::string>& pathlist);
 	ReadWordType canRead(const gchar *word);
 	void read(const gchar *word, ReadWordType type);
 	void ReadByEngine(const gchar *word, int engine_index);

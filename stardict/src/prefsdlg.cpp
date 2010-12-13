@@ -795,7 +795,16 @@ void PrefsDlg::setup_dictionary_sound_page()
 	tts_textview = gtk_text_view_new();
 	gtk_widget_set_size_request(tts_textview, -1, 70);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(tts_textview), GTK_WRAP_CHAR);
-	const std::string &ttspath = conf->get_string_at("dictionary/tts_path");
+	std::string ttspath;
+	{
+		const std::list<std::string> &ttspathlist = conf->get_strlist_at("dictionary/tts_path");
+		for(std::list<std::string>::const_iterator it = ttspathlist.begin();
+			it != ttspathlist.end(); ++it) {
+			if(!ttspath.empty())
+				ttspath += "\n";
+			ttspath += *it;
+		}
+	}
 	GtkTextBuffer *text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tts_textview));
 	gtk_text_buffer_set_text(text_view_buffer, ttspath.c_str(), -1);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
@@ -2072,8 +2081,24 @@ bool PrefsDlg::ShowModal()
 		gtk_text_buffer_get_start_iter(text_view_buffer, &start_iter);
 		gtk_text_buffer_get_end_iter(text_view_buffer, &end_iter);
 		gchar *text = gtk_text_buffer_get_text(text_view_buffer, &start_iter, &end_iter, FALSE);
-		conf->set_string_at("dictionary/tts_path", text);
-		gpAppFrame->oReadWord.LoadRealTtsPath(text);
+		std::list<std::string> ttspathlist;
+		{
+			const gchar* p = text;
+			const gchar* q;
+			while(true)
+			{
+				q = strchr(p, '\n');
+				if(!q)
+					q = strchr(p, '\0');
+				if(p<q)
+					ttspathlist.push_back(std::string(p, q-p));
+				if(!*q)
+					break;
+				p = q + 1;
+			}
+		}
+		conf->set_strlist_at("dictionary/tts_path", ttspathlist);
+		gpAppFrame->oReadWord.LoadRealTtsPath(ttspathlist);
 		g_free(text);
 		gtk_widget_destroy(GTK_WIDGET(window));
 		window = NULL;
