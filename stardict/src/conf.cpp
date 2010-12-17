@@ -67,11 +67,11 @@ std::string get_application_dir(void)
 /* transform a path relative to the application dir to an absolute path.
 Do nothing if the path is already an absolute path.
 Return value: EXIT_FAILURE or EXIT_SUCCESS. */
-int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path)
+int abs_path_to_app_dir(const std::string& path, std::string& abs_path)
 {
 	abs_path.clear();
 	std::string path_norm;
-	if(resolve_path_win(path, path_norm))
+	if(norm_path_win(path, path_norm))
 		return EXIT_FAILURE;
 	if(!is_valid_path_win(path_norm))
 		return EXIT_FAILURE;
@@ -81,7 +81,7 @@ int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path)
 	}
 	std::string path_abs(build_path(get_application_dir(), path_norm));
 	std::string path_abs_norm;
-	if(resolve_path_win(path_abs, path_abs_norm))
+	if(norm_path_win(path_abs, path_abs_norm))
 		return EXIT_FAILURE;
 	abs_path = path_abs_norm;
 	return EXIT_SUCCESS;
@@ -99,7 +99,7 @@ If the path is absolute or cannot be resolved, return the original path. */
 std::string rel_path_to_data_dir(const std::string& path)
 {
 	std::string path_norm;
-	if(resolve_path_win(path, path_norm))
+	if(norm_path_win(path, path_norm))
 		return path;
 	if(!is_absolute_path_win(path_norm))
 		return path_norm;
@@ -112,13 +112,13 @@ std::string rel_path_to_data_dir(const std::string& path)
 std::string abs_path_to_data_dir(const std::string& path)
 {
 	std::string path_norm;
-	if(resolve_path_win(path, path_norm))
+	if(norm_path_win(path, path_norm))
 		return path;
 	if(is_absolute_path_win(path_norm))
 		return path_norm;
 	std::string path_abs(build_path(conf_dirs->get_data_dir(), path_norm));
 	std::string path_abs_norm;
-	if(resolve_path_win(path_abs, path_abs_norm))
+	if(norm_path_win(path_abs, path_abs_norm))
 		return path_abs;
 	return path_abs_norm;
 }
@@ -501,7 +501,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 #endif
 	std::string l_dirs_config_file = get_dirs_config_file(dirs_config_file);
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(l_dirs_config_file, t_path)) {
+	if(abs_path_to_app_dir(l_dirs_config_file, t_path)) {
 		g_error(_("Unable to resolve StarDict directories config file: %s."), 
 			l_dirs_config_file.c_str());
 	}
@@ -515,7 +515,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 	path = app_conf.get_string_at("user_config_dir");
 	user_config_dir = path.empty() ? get_default_user_config_dir() : path;
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(user_config_dir, t_path)) {
+	if(abs_path_to_app_dir(user_config_dir, t_path)) {
 		g_error(_("Unable to resolve user config directory: %s."), 
 			user_config_dir.c_str());
 	}
@@ -530,7 +530,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 	path = app_conf.get_string_at("data_dir");
 	data_dir = path.empty() ? get_default_data_dir() : path;
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(data_dir, t_path)) {
+	if(abs_path_to_app_dir(data_dir, t_path)) {
 		g_error(_("Unable to resolve data directory: %s."), 
 			data_dir.c_str());
 	}
@@ -540,7 +540,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 	path = app_conf.get_string_at("log_dir");
 	log_dir = path.empty() ? get_default_log_dir() : path;
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(log_dir, t_path)) {
+	if(abs_path_to_app_dir(log_dir, t_path)) {
 		g_error(_("Unable to resolve log directory: %s."), 
 			log_dir.c_str());
 	}
@@ -553,7 +553,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 #ifdef _WIN32
 	path = app_conf.get_string_at("dll_dir");
 	dll_dir = path.empty() ? data_dir : path;
-	if(resolve_rel_app_dir_path(dll_dir, t_path)) {
+	if(abs_path_to_app_dir(dll_dir, t_path)) {
 		g_error(_("Unable to resolve DLL directory: %s."), 
 			dll_dir.c_str());
 	}
@@ -562,7 +562,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 	path = app_conf.get_string_at("plugin_dir");
 	plugin_dir = path.empty() ? get_default_plugin_dir() : path;
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(plugin_dir, t_path)) {
+	if(abs_path_to_app_dir(plugin_dir, t_path)) {
 		g_error(_("Unable to resolve plugin directory: %s."), 
 			plugin_dir.c_str());
 	}
@@ -574,7 +574,7 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 #endif
 	locale_dir = get_default_locale_dir();
 #ifdef _WIN32
-	if(resolve_rel_app_dir_path(locale_dir, t_path)) {
+	if(abs_path_to_app_dir(locale_dir, t_path)) {
 		g_error(_("Unable to resolve locale directory: %s."), 
 			locale_dir.c_str());
 	}

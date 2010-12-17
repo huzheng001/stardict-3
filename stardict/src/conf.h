@@ -32,7 +32,7 @@ const int DEFAULT_MAX_FLOATWIN_HEIGHT=240;
 extern HINSTANCE stardictexe_hInstance;
 
 std::string get_application_dir(void);
-int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path);
+int abs_path_to_app_dir(const std::string& path, std::string& abs_path);
 std::string rel_path_to_data_dir(const std::string& path);
 std::string abs_path_to_data_dir(const std::string& path);
 void rel_path_to_data_dir(const std::list<std::string>& paths_abs, 

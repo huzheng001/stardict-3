@@ -160,7 +160,7 @@ void test_copy_normalize_trim_spaces(void)
 }
 
 
-void test_resolve_path_win(void)
+void test_norm_path_win(void)
 {
 	struct TData {
 		const char* source;
@@ -221,12 +221,12 @@ void test_resolve_path_win(void)
 		},
 		{
 			".",
-			"",
+			".",
 			EXIT_SUCCESS
 		},
 		{
 			".\\",
-			"",
+			".\\",
 			EXIT_SUCCESS
 		},
 		{
@@ -236,7 +236,7 @@ void test_resolve_path_win(void)
 		},
 		{
 			"",
-			"",
+			".",
 			EXIT_SUCCESS
 		},
 		// refering parent directory of the root
@@ -299,7 +299,7 @@ void test_resolve_path_win(void)
 		},
 		{
 			"abcd\\..",
-			"",
+			".",
 			EXIT_SUCCESS
 		},
 		{
@@ -390,7 +390,7 @@ void test_resolve_path_win(void)
 	};
 	std::string resolved_path;
 	for(TData *d=data; d->source; ++d) {
-		int result = resolve_path_win(d->source, resolved_path);
+		int result = norm_path_win(d->source, resolved_path);
 		if(strcmp(resolved_path.c_str(), d->resolved_path) != 0 || result != d->result) {
 			printf("Test test_resolve_path failed. source = %s\n", d->source);
 			exit(1);
@@ -605,7 +605,7 @@ int main(int argc, char *argv[])
 	test_extract_word();
 	test_extract_capitalized_word();
 	test_copy_normalize_trim_spaces();
-	test_resolve_path_win();
+	test_norm_path_win();
 	test_build_relative_path();
 	test_is_ascii_alpha();
 	return 0;
