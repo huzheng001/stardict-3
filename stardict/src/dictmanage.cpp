@@ -33,8 +33,19 @@ static void get_all_dict_list(std::list<std::string> &dict_all_list)
 {
 	std::list<std::string> dict_order_list;
 	std::list<std::string> dict_disable_list;
+#ifdef _WIN32
+	std::list<std::string> dict_dirs_list;
+	{
+		const std::list<std::string>& dict_dirs_list_rel
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+		abs_path_to_data_dir(dict_dirs_list_rel, dict_dirs_list);
+	}
+#else
+	const std::list<std::string>& dict_dirs_list
+		= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+#endif
 	for_each_file_restricted(
-		conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
+		dict_dirs_list, ".ifo",
 		dict_order_list, dict_disable_list, GetAllDictList(dict_all_list));
 }
 
@@ -141,7 +152,11 @@ static void config_parse_start_element(GMarkupParseContext *context, const gchar
 			DictManageItem item;
 			item.type = LOCAL_DICT;
 			item.enable = enable;
+#ifdef _WIN32
+			item.file_or_id = abs_path_to_data_dir(file);
+#else
 			item.file_or_id = file;
+#endif
 			if (Data->in_querydict) {
 				Data->info->groups.back().querydict.push_back(item);
 			} else if (Data->in_scandict) {
@@ -166,7 +181,11 @@ static void config_parse_start_element(GMarkupParseContext *context, const gchar
 			DictManageItem item;
 			item.type = VIRTUAL_DICT;
 			item.enable = enable;
+#ifdef _WIN32
+			item.file_or_id = abs_path_to_data_dir(id);
+#else
 			item.file_or_id = id;
+#endif
 			if (Data->in_querydict) {
 				Data->info->groups.back().querydict.push_back(item);
 			} else if (Data->in_scandict) {
@@ -191,7 +210,11 @@ static void config_parse_start_element(GMarkupParseContext *context, const gchar
 			DictManageItem item;
 			item.type = NET_DICT;
 			item.enable = enable;
+#ifdef _WIN32
+			item.file_or_id = abs_path_to_data_dir(id);
+#else
 			item.file_or_id = id;
+#endif
 			if (Data->in_querydict) {
 				Data->info->groups.back().querydict.push_back(item);
 			} else if (Data->in_scandict) {
@@ -253,7 +276,11 @@ static void itemlist_to_xml(std::string &newxml, std::list<DictManageItem> &item
 			newxml  += "\" file=\"";
 		else
 			newxml += "\" id=\"";
+#ifdef _WIN32
+		estr = g_markup_escape_text(rel_path_to_data_dir(j->file_or_id).c_str(), -1);
+#else
 		estr = g_markup_escape_text(j->file_or_id.c_str(), -1);
+#endif
 		newxml += estr;
 		g_free(estr);
 		newxml  += "\"/>";
@@ -330,10 +357,23 @@ static void update_configxml(
 	const std::list<std::string> &dict_new_install_list,
 	const std::list<std::string> &plugin_new_install_list)
 {
+#ifdef _WIN32
+	std::list<std::string> dict_all_list;
+	std::list<std::string> plugin_all_list;
+	{
+		const std::list<std::string> &dict_all_list_rel
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+		const std::list<std::string> &plugin_all_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+		abs_path_to_data_dir(dict_all_list_rel, dict_all_list);
+		abs_path_to_data_dir(plugin_all_list_rel, plugin_all_list);
+	}
+#else
 	const std::list<std::string> &dict_all_list
 		= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
 	const std::list<std::string> &plugin_all_list
 		= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+#endif
 	const std::string &configxml
 		= conf->get_string("/apps/stardict/manage_dictionaries/dict_config_xml");
 	DictConfigXmlToInfo(configxml.c_str(), gpAppFrame->dictinfo);
@@ -452,7 +492,16 @@ void LoadDictInfo(const std::list<std::string> &plugin_new_install_list)
 {
 	std::list<std::string> dict_all_list;
 	get_all_dict_list(dict_all_list);
+#ifdef _WIN32
+	std::list<std::string> dict_order_list;
+	{
+		const std::list<std::string>& dict_order_list_rel
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+		abs_path_to_data_dir(dict_order_list_rel, dict_order_list);
+	}
+#else
 	std::list<std::string> dict_order_list(conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"));
+#endif
 	// remove dictionaries that are not available
 	remove_list_items(dict_order_list, dict_all_list);
 	// find new dictionaries
@@ -463,7 +512,15 @@ void LoadDictInfo(const std::list<std::string> &plugin_new_install_list)
 		}
 	}
 	dict_order_list.insert(dict_order_list.end(), dict_new_install_list.begin(), dict_new_install_list.end());
+#ifdef _WIN32
+	{
+		std::list<std::string> dict_order_list_rel;
+		rel_path_to_data_dir(dict_order_list, dict_order_list_rel);
+		conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", dict_order_list_rel);
+	}
+#else
 	conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", dict_order_list);
+#endif
 	
 	update_configxml(dict_new_install_list, plugin_new_install_list);
 }
@@ -475,7 +532,15 @@ void UpdatePluginList(std::list<std::string> &plugin_new_install_list)
 	std::list<std::string> plugin_order_list;
 
 	get_all_plugin_list(plugin_all_list);
+#ifdef _WIN32
+	{
+		const std::list<std::string>& plugin_order_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+		abs_path_to_data_dir(plugin_order_list_rel, plugin_order_list);
+	}
+#else
 	plugin_order_list = conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+#endif
 	// remove plugins that are not available
 	remove_list_items(plugin_order_list, plugin_all_list);
 	// find new plugins
@@ -484,20 +549,54 @@ void UpdatePluginList(std::list<std::string> &plugin_new_install_list)
 			plugin_new_install_list.push_back(*i);
 	}
 	plugin_order_list.insert(plugin_order_list.end(), plugin_new_install_list.begin(), plugin_new_install_list.end());
+#ifdef _WIN32
+	{
+		std::list<std::string> plugin_order_list_rel;
+		rel_path_to_data_dir(plugin_order_list, plugin_order_list_rel);
+		conf->set_strlist("/apps/stardict/manage_plugins/plugin_order_list", plugin_order_list_rel);
+	}
+#else
 	conf->set_strlist("/apps/stardict/manage_plugins/plugin_order_list", plugin_order_list);
+#endif
 
+#ifdef _WIN32
+	std::list<std::string> plugin_disable_list;
+	{
+		const std::list<std::string> &plugin_disable_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list");
+		abs_path_to_data_dir(plugin_disable_list_rel, plugin_disable_list);
+	}
+#else
 	std::list<std::string> plugin_disable_list(
 		conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
+#endif
 	remove_list_items(plugin_disable_list, plugin_all_list);
+#ifdef _WIN32
+	{
+		std::list<std::string> plugin_disable_list_rel;
+		rel_path_to_data_dir(plugin_disable_list, plugin_disable_list_rel);
+		conf->set_strlist("/apps/stardict/manage_plugins/plugin_disable_list",
+			plugin_disable_list_rel);
+	}
+#else
 	conf->set_strlist("/apps/stardict/manage_plugins/plugin_disable_list",
 		plugin_disable_list);
+#endif
 }
 
 void RemoveCacheFiles(void)
 {
 	/* We may not simply remove all ".oft" and ".clt" files in all known
 	 * directories, there are resource storage directories! */
+#ifdef _WIN32
+	std::list<std::string> dict_list;
+	{
+		const std::list<std::string>& dict_list_rel = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+		abs_path_to_data_dir(dict_list_rel, dict_list);
+	}
+#else
 	const std::list<std::string>& dict_list = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+#endif
 	std::list<std::string> dir_list;
 	glib::CharStr gdir;
 	/* Collect a list of directories where to remove cache files. */

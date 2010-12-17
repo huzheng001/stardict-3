@@ -20,7 +20,13 @@
 ReadWord::ReadWord()
 {
 	const std::list<std::string> &pathlist = conf->get_strlist_at("dictionary/tts_path");
+#ifdef _WIN32
+	std::list<std::string> paths;
+	abs_path_to_data_dir(pathlist, paths);
+	LoadRealTtsPath(paths);
+#else
 	LoadRealTtsPath(pathlist);
+#endif
 	use_command_tts = conf->get_bool("/apps/stardict/preferences/dictionary/use_tts_program");
 	tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
 }
@@ -49,24 +55,12 @@ void ReadWord::read(const gchar *word, ReadWordType type)
 
 void ReadWord::LoadRealTtsPath(const std::list<std::string>& pathlist)
 {
-	std::string str;
 	ttspath.clear();
 	for (std::list<std::string>::const_iterator it=pathlist.begin(); it!=pathlist.end(); ++it) {
 		if(it->empty())
 			continue;
-#ifdef _WIN32
-		if (it->length()>1 && (*it)[1]==':') {
-			if (g_file_test(it->c_str(), G_FILE_TEST_EXISTS))
-				ttspath.push_back(*it);
-		} else {
-			str = build_path(conf_dirs->get_data_dir(), *it);
-			if (g_file_test(str.c_str(), G_FILE_TEST_EXISTS))
-				ttspath.push_back(str);
-		}
-#else
 		if (g_file_test(it->c_str(), G_FILE_TEST_EXISTS))
 			ttspath.push_back(*it);
-#endif
 	}
 }
 

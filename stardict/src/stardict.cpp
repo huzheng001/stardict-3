@@ -287,9 +287,26 @@ void AppCore::Create(const gchar *queryword)
 	oStarDictPluginSystemService.ShowPangoTips = ShowPangoTips;
 	std::list<std::string> plugin_new_install_list;
 	UpdatePluginList(plugin_new_install_list);
+#ifdef _WIN32
+	std::list<std::string> plugin_order_list;
+	std::list<std::string> plugin_disable_list;
+	{
+		const std::list<std::string>& plugin_order_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+		const std::list<std::string>& plugin_disable_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list");
+		abs_path_to_data_dir(plugin_order_list_rel, plugin_order_list);
+		abs_path_to_data_dir(plugin_disable_list_rel, plugin_disable_list);
+	}
+#else
+	const std::list<std::string>& plugin_order_list
+		= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+	const std::list<std::string>& plugin_disable_list
+		= conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list");
+#endif
 	oStarDictPlugins = new StarDictPlugins(conf_dirs->get_plugin_dir(),
-		conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"),
-		conf->get_strlist("/apps/stardict/manage_plugins/plugin_disable_list"));
+		plugin_order_list,
+		plugin_disable_list);
 	oLibs.set_show_progress(&load_show_progress);
 	LoadDictInfo(plugin_new_install_list); // Need to run after plugins are loaded.
 	std::list<std::string> load_list;
@@ -2063,8 +2080,19 @@ void AppCore::PopupPluginManageDlg()
 		if (exiting)
 			return;
 		if (order_changed) {
-			oStarDictPlugins->VirtualDictPlugins.reorder(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"));
-			oStarDictPlugins->NetDictPlugins.reorder(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"));
+#ifdef _WIN32
+			std::list<std::string> plugin_order_list;
+			{
+				const std::list<std::string>& plugin_order_list_rel
+					= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+				abs_path_to_data_dir(plugin_order_list_rel, plugin_order_list);
+			}
+#else
+			const std::list<std::string>& plugin_order_list
+				= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+#endif
+			oStarDictPlugins->VirtualDictPlugins.reorder(plugin_order_list);
+			oStarDictPlugins->NetDictPlugins.reorder(plugin_order_list);
 			oMidWin.oToolWin.UpdatePronounceMenu();
 		}
 		if (dict_changed) {
@@ -2122,7 +2150,11 @@ void AppCore::Init(const gchar *queryword)
 			 sigc::mem_fun(this, &AppCore::on_scan_modifier_key_changed));
 
 	g_debug("loading skin...");
+#ifdef _WIN32
+	oAppSkin.load(abs_path_to_data_dir(conf->get_string_at("main_window/skin")));
+#else
 	oAppSkin.load(conf->get_string_at("main_window/skin"));
+#endif
 	g_debug("skin loaded");
 
 	if (!CmdLineOptions::get_hide())
