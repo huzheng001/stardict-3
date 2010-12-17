@@ -694,8 +694,12 @@ void PrefsDlg::setup_dictionary_export_page()
 	GtkWidget *label=gtk_label_new(_("File name:"));
 	gtk_box_pack_start(GTK_BOX(hbox1), label, FALSE, FALSE, 0);
 	GtkWidget *e = gtk_entry_new();
-	const std::string &exportfile= conf->get_string_at("dictionary/export_file");
+	const std::string &exportfile = conf->get_string_at("dictionary/export_file");
+#ifdef _WIN32
+	gtk_entry_set_text(GTK_ENTRY(e), abs_path_to_data_dir(exportfile).c_str());
+#else
 	gtk_entry_set_text(GTK_ENTRY(e), exportfile.c_str());
+#endif
 	gtk_box_pack_start(GTK_BOX(hbox1), e, TRUE, TRUE, 0);
 	eExportFile=GTK_ENTRY(e);
 
@@ -797,6 +801,9 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(tts_textview), GTK_WRAP_CHAR);
 	std::string ttspath;
 	{
+#ifdef _WIN32
+		/* Let's the user see paths as they is, that is relative paths. */
+#endif
 		const std::list<std::string> &ttspathlist = conf->get_strlist_at("dictionary/tts_path");
 		for(std::list<std::string>::const_iterator it = ttspathlist.begin();
 			it != ttspathlist.end(); ++it) {
@@ -1277,9 +1284,13 @@ void PrefsDlg::on_setup_mainwin_skin_changed(GtkComboBox *combobox, PrefsDlg *oP
 			gtk_widget_destroy(message_dlg);
 		}
 		oPrefsDlg->skin_changed = true;
-		conf->set_string_at("main_window/skin", oPrefsDlg->skins[index].path);
+		const std::string skin_path(oPrefsDlg->skins[index].path);
+#ifdef _WIN32
+		conf->set_string_at("main_window/skin", rel_path_to_data_dir(skin_path));
+#else
+		conf->set_string_at("main_window/skin", skin_path);
+#endif
 	}
-	//std::string current_skin_path = conf->get_string_at("main_window/skin");
 }
 
 class SkinDetector {
@@ -1368,7 +1379,11 @@ void PrefsDlg::setup_mainwin_options_page()
 	GtkWidget *lbl = gtk_label_new(_("Skin:"));
 	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(lbl),FALSE,FALSE,0);
 	GtkWidget *cb = gtk_combo_box_new_text();
+#ifdef _WIN32
+	std::string current_skin_path = abs_path_to_data_dir(conf->get_string_at("main_window/skin"));
+#else
 	std::string current_skin_path = conf->get_string_at("main_window/skin");
+#endif
 	find_skins();
 	for (int i = 0; i < int(skins.size()); i++) {
 		gtk_combo_box_append_text(GTK_COMBO_BOX(cb), skins[i].name.c_str());
@@ -2042,8 +2057,13 @@ bool PrefsDlg::ShowModal()
 	if (result != GTK_RESPONSE_NONE) {
 		const gchar *ch;
 		ch = gtk_entry_get_text(eExportFile);
-		if (ch)
+		if (ch) {
+#ifdef _WIN32
+			conf->set_string_at("dictionary/export_file", rel_path_to_data_dir(ch));
+#else
 			conf->set_string_at("dictionary/export_file", ch);
+#endif
+		}
 #ifndef _WIN32
 		ch = gtk_entry_get_text(eTTSCommandline);
 		if (ch) {
@@ -2097,6 +2117,17 @@ bool PrefsDlg::ShowModal()
 				p = q + 1;
 			}
 		}
+#ifdef _WIN32
+		/* Convert paths to relative paths.
+		The text buffer was initialized with relative paths. 
+		If the user has not changed them, convertion will not mangle paths, they'll be unchanged.
+		When the user added a new path it'll be converted to a relative path if possible. */
+		{
+			std::list<std::string> paths;
+			rel_path_to_data_dir(ttspathlist, paths);
+			std::swap(paths, ttspathlist);
+		}
+#endif
 		conf->set_strlist_at("dictionary/tts_path", ttspathlist);
 		gpAppFrame->oReadWord.LoadRealTtsPath(ttspathlist);
 		g_free(text);

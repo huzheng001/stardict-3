@@ -536,18 +536,54 @@ GtkTreeModel* DictManageDlg::create_tree_model(int istreedict)
 		model = gtk_list_store_new(9, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_LONG, 
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
-		for_each_file(conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list"), ".ifo",
-				conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list"),
-				conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list"),
+		const std::list<std::string>& treedict_order_list
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list");
+		const std::list<std::string>& treedict_disable_list
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list");
+		const std::list<std::string>& treedict_dirs_list
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list");
+#ifdef _WIN32
+		std::list<std::string> treedict_order_list_abs;
+		std::list<std::string> treedict_disable_list_abs;
+		std::list<std::string> treedict_dirs_list_abs;
+		abs_path_to_data_dir(treedict_order_list, treedict_order_list_abs);
+		abs_path_to_data_dir(treedict_disable_list, treedict_disable_list_abs);
+		abs_path_to_data_dir(treedict_dirs_list, treedict_dirs_list_abs);
+		for_each_file(treedict_dirs_list_abs, ".ifo",
+				treedict_order_list_abs,
+				treedict_disable_list_abs,
 				GetInfo(model, 1));
+#else
+		for_each_file(treedict_dirs_list, ".ifo",
+				treedict_order_list,
+				treedict_disable_list,
+				GetInfo(model, 1));
+#endif
 	} else if (istreedict == 0) {
 		model = gtk_list_store_new(9, G_TYPE_INT, G_TYPE_STRING, G_TYPE_LONG, 
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
 					 G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
 		std::list<std::string> dict_disable_list;
+#ifdef _WIN32
+		std::list<std::string> dict_order_list;
+		std::list<std::string> dict_dirs_list;
+		{
+			const std::list<std::string>& dict_order_list_rel
+				= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+			const std::list<std::string>& dict_dirs_list_rel
+				= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+			abs_path_to_data_dir(dict_order_list_rel, dict_order_list);
+			abs_path_to_data_dir(dict_dirs_list_rel, dict_dirs_list);
+		}
+#else
+		const std::list<std::string>& dict_order_list
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list");
+		const std::list<std::string>& dict_dirs_list
+			= conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+#endif
 		for_each_file_restricted(
-			conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list"), ".ifo",
-			conf->get_strlist("/apps/stardict/manage_dictionaries/dict_order_list"),
+			dict_dirs_list, ".ifo",
+			dict_order_list,
 			dict_disable_list, GetInfo(model, 0));
 		size_t n = gpAppFrame->oStarDictPlugins->VirtualDictPlugins.ndicts();
 		const char *dictname, *dictid;
@@ -615,6 +651,13 @@ void DictManageDlg::on_treedict_enable_toggled (GtkCellRendererToggle *cell, gch
 		}
 		have_iter = gtk_tree_model_iter_next(model, &iter);
 	}
+#ifdef _WIN32
+	{
+		std::list<std::string> disable_list_rel;
+		rel_path_to_data_dir(disable_list, disable_list_rel);
+		std::swap(disable_list, disable_list_rel);
+	}
+#endif
 	conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
 }
 
@@ -1037,7 +1080,14 @@ void DictManageDlg::write_treedict_order_list()
 		g_free(filename);
 		have_iter = gtk_tree_model_iter_next(treedict_tree_model, &iter);
 	}
-	
+
+#ifdef _WIN32
+	{
+		std::list<std::string> order_list_rel;
+		rel_path_to_data_dir(order_list, order_list_rel);
+		std::swap(order_list, order_list_rel);
+	}
+#endif
 	conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_order_list", order_list);
 }
 
@@ -1076,7 +1126,11 @@ static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *paren
 				configxml += "true";
 			else
 				configxml += "false";
+#ifdef _WIN32
+			gchar *estr = g_markup_escape_text(rel_path_to_data_dir(file).c_str(), -1);
+#else
 			gchar *estr = g_markup_escape_text(file, -1);
+#endif
 			g_free(file);
 			configxml += "\" file=\"";
 			configxml += estr;
@@ -1088,7 +1142,11 @@ static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *paren
 				configxml += "true";
 			else
 				configxml += "false";
+#ifdef _WIN32
+			gchar *estr = g_markup_escape_text(rel_path_to_data_dir(file).c_str(), -1);
+#else
 			gchar *estr = g_markup_escape_text(file, -1);
+#endif
 			g_free(file);
 			configxml += "\" id=\"";
 			configxml += estr;
@@ -1100,7 +1158,11 @@ static void process_dictmanage_type_iter(GtkTreeModel *model, GtkTreeIter *paren
 				configxml += "true";
 			else
 				configxml += "false";
+#ifdef _WIN32
+			gchar *estr = g_markup_escape_text(rel_path_to_data_dir(file).c_str(), -1);
+#else
 			gchar *estr = g_markup_escape_text(file, -1);
+#endif
 			g_free(file);
 			configxml += "\" id=\"";
 			configxml += estr;
@@ -1170,7 +1232,13 @@ void DictManageDlg::SaveDictManageList()
 		}
 		have_iter = gtk_tree_model_iter_next(dict_tree_model, &iter);
 	}
-	
+#ifdef _WIN32
+	{
+		std::list<std::string> order_list_rel;
+		rel_path_to_data_dir(order_list, order_list_rel);
+		std::swap(order_list, order_list_rel);
+	}
+#endif
 	conf->set_strlist("/apps/stardict/manage_dictionaries/dict_order_list", order_list);
 }
 
@@ -1774,6 +1842,13 @@ void DictManageDlg::on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, D
 			g_free(filename);
 			have_iter = gtk_tree_model_iter_next(model, &iter);
 		}
+#ifdef _WIN32
+		{
+			std::list<std::string> disable_list_rel;
+			rel_path_to_data_dir(disable_list, disable_list_rel);
+			std::swap(disable_list, disable_list_rel);
+		}
+#endif
 		conf->set_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list", disable_list);
 	}
 }

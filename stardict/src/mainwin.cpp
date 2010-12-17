@@ -670,7 +670,12 @@ void TopWin::InsertHisList(const gchar *word)
 
 void TopWin::SaveHistory()
 {
-	FILE *f=g_fopen(conf->get_string_at("dictionary/history").c_str(), "w");
+	const std::string& filePath = conf->get_string_at("dictionary/history");
+#ifdef _WIN32
+	FILE *f=g_fopen(abs_path_to_data_dir(filePath).c_str(), "w");
+#else
+	FILE *f=g_fopen(filePath.c_str(), "w");
+#endif
 	if (!f)
 		return;
 	GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(WordCombo));
@@ -692,9 +697,13 @@ void TopWin::SaveHistory()
 
 void TopWin::LoadHistory(GtkListStore* list_store)
 {
-	const gchar *filename = conf->get_string_at("dictionary/history").c_str();
+	const std::string& filePath = conf->get_string_at("dictionary/history");
 	gchar *buffer;
-	if(!g_file_get_contents(filename, &buffer, NULL, NULL))
+#ifdef _WIN32
+	if(!g_file_get_contents(abs_path_to_data_dir(filePath).c_str(), &buffer, NULL, NULL))
+#else
+	if(!g_file_get_contents(filePath.c_str(), &buffer, NULL, NULL))
+#endif
 		return;
 	gchar *p,*p1;
 	p=buffer;
@@ -1088,10 +1097,29 @@ void ListWin::on_selection_changed(GtkTreeSelection *selection, ListWin *oListWi
 /**************************************************/
 bool TreeWin::Create(GtkWidget *notebook)
 {
-  GtkTreeStore *model =
-		gpAppFrame->oTreeDicts.Load(conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list"),
-					conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list"),
-					conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list"));
+	const std::list<std::string>& treedict_order_list
+		= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_order_list");
+	const std::list<std::string>& treedict_disable_list
+		= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_disable_list");
+	const std::list<std::string>& treedict_dirs_list
+		= conf->get_strlist("/apps/stardict/manage_dictionaries/treedict_dirs_list");
+#ifdef _WIN32
+	std::list<std::string> treedict_order_list_abs;
+	std::list<std::string> treedict_disable_list_abs;
+	std::list<std::string> treedict_dirs_list_abs;
+	abs_path_to_data_dir(treedict_order_list, treedict_order_list_abs);
+	abs_path_to_data_dir(treedict_disable_list, treedict_disable_list_abs);
+	abs_path_to_data_dir(treedict_dirs_list, treedict_dirs_list_abs);
+	GtkTreeStore *model =
+		gpAppFrame->oTreeDicts.Load(treedict_dirs_list_abs,
+					treedict_order_list_abs,
+					treedict_disable_list_abs);
+#else
+	GtkTreeStore *model =
+		gpAppFrame->oTreeDicts.Load(treedict_dirs_list,
+					treedict_order_list,
+					treedict_disable_list);
+#endif
 	if (!model)
 		return false;
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
@@ -1647,8 +1675,13 @@ void ToolWin::do_save()
 
 	if (conf->get_bool_at("dictionary/only_export_word")) {
 		if (!oTextWin.queryWord.empty()) {
-			FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
-        	        if(fp) {
+			const std::string& filePath = conf->get_string_at("dictionary/export_file");
+#ifdef _WIN32
+			FILE *fp = fopen(abs_path_to_data_dir(filePath).c_str(), "a+");
+#else
+			FILE *fp = fopen(filePath.c_str(), "a+");
+#endif
+			if(fp) {
 				fputs(oTextWin.queryWord.c_str(),fp);
 				fputs("\n",fp);
 				fclose(fp);
@@ -1661,7 +1694,12 @@ void ToolWin::do_save()
 		GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTextWin.view->widget()));
 		if (gtk_text_buffer_get_selection_bounds(buffer, &start, &end))
 			 str = gtk_text_buffer_get_text(buffer, &start, &end, false);
-		FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
+		const std::string& filePath = conf->get_string_at("dictionary/export_file");
+#ifdef _WIN32
+		FILE *fp = fopen(abs_path_to_data_dir(filePath).c_str(), "a+");
+#else
+		FILE *fp = fopen(filePath.c_str(), "a+");
+#endif
 		if(fp) {
 			if(str) {
 				fputs(oTextWin.queryWord.c_str(),fp);
@@ -1802,7 +1840,15 @@ void TextWin::ShowInitFailed()
 				 sizeof("http://stardict.sourceforge.net") - 1, "http://stardict.sourceforge.net"));
 	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
 	std::string dirs_str;
+#ifdef _WIN32
+	std::list<std::string> dirs;
+	{
+		const std::list<std::string>& dirs_rel = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+		abs_path_to_data_dir(dirs_rel, dirs);
+	}
+#else
 	const std::list<std::string>& dirs = conf->get_strlist("/apps/stardict/manage_dictionaries/dict_dirs_list");
+#endif
 	for(std::list<std::string>::const_iterator it = dirs.begin(); it != dirs.end(); ++it) {
 		if(!dirs_str.empty())
 			dirs_str += ", ";

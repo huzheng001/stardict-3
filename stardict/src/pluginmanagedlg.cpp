@@ -97,6 +97,13 @@ void PluginManageDlg::on_plugin_enable_toggled (GtkCellRendererToggle *cell, gch
 
 	std::list<std::string> disable_list;
 	gtk_tree_model_foreach(model, get_disable_list, &disable_list);
+#ifdef _WIN32
+	{
+		std::list<std::string> disable_list_rel;
+		rel_path_to_data_dir(disable_list, disable_list_rel);
+		std::swap(disable_list, disable_list_rel);
+	}
+#endif
 	conf->set_strlist("/apps/stardict/manage_plugins/plugin_disable_list", disable_list);
 }
 
@@ -184,7 +191,18 @@ static void add_tree_model(GtkTreeStore *tree_model, GtkTreeIter*parent, const s
 static void init_tree_model(GtkTreeStore *tree_model)
 {
 	std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > plugin_list;
-	gpAppFrame->oStarDictPlugins->get_plugin_list(conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list"), plugin_list);
+	{
+#ifdef _WIN32
+		std::list<std::string> plugin_order_list;
+		const std::list<std::string>& plugin_order_list_rel
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+		abs_path_to_data_dir(plugin_order_list_rel, plugin_order_list);
+#else
+		const std::list<std::string>& plugin_order_list
+			= conf->get_strlist("/apps/stardict/manage_plugins/plugin_order_list");
+#endif
+		gpAppFrame->oStarDictPlugins->get_plugin_list(plugin_order_list, plugin_list);
+	}
 	GtkTreeIter iter;
 	for (std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > >::iterator i = plugin_list.begin(); i != plugin_list.end(); ++i) {
 		switch (i->first) {
@@ -284,6 +302,13 @@ void PluginManageDlg::write_order_list()
 		}
 		have_iter = gtk_tree_model_iter_next(now_tree_model, &iter);
 	}
+#ifdef _WIN32
+	{
+		std::list<std::string> order_list_rel;
+		rel_path_to_data_dir(order_list, order_list_rel);
+		std::swap(order_list, order_list_rel);
+	}
+#endif
 	conf->set_strlist("/apps/stardict/manage_plugins/plugin_order_list", order_list);
 }
 

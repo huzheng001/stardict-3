@@ -483,20 +483,21 @@ void FloatWin::on_query_click(GtkWidget *widget, FloatWin *oFloatWin)
 
 void FloatWin::on_save_click(GtkWidget *widget, FloatWin *oFloatWin)
 {
-	if (conf->get_bool_at("dictionary/only_export_word")) {
-		FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
-		if(fp) {
+	const std::string& filePath = conf->get_string_at("dictionary/export_file");
+#ifdef _WIN32
+	FILE *fp = fopen(abs_path_to_data_dir(filePath).c_str(), "a+");
+#else
+	FILE *fp = fopen(filePath.c_str(), "a+");
+#endif
+	if(fp) {
+		if (conf->get_bool_at("dictionary/only_export_word")) {
 			fputs(oFloatWin->QueryingWord.c_str(),fp);
 			fputs("\n",fp);
-			fclose(fp);
-		}
-	} else {
-		FILE *fp = fopen(conf->get_string_at("dictionary/export_file").c_str(), "a+");
-		if(fp) {
+		} else {
 			fputs(oFloatWin->view->get_text().c_str(),fp);
 			fputs("\n\n",fp);
-			fclose(fp);
 		}
+		fclose(fp);
 	}
 	play_sound_on_event("buttonactive");
 }

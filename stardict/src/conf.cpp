@@ -87,6 +87,58 @@ int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path)
 	return EXIT_SUCCESS;
 }
 
+/* 
+rel_path_to_data_dir functions:
+convert a full path into a relative path using the application directory as the base dir
+If a relative path cannot be created, for example, different disk or any error 
+occurred in the convertion routine, return the original path.
+
+abs_path_to_data_dir functions:
+convert a path relative to the application directory to an absolute path
+If the path is absolute or cannot be resolved, return the original path. */
+std::string rel_path_to_data_dir(const std::string& path)
+{
+	std::string path_norm;
+	if(resolve_path_win(path, path_norm))
+		return path;
+	if(!is_absolute_path_win(path_norm))
+		return path_norm;
+	std::string path_rel;
+	if(build_relative_path(conf_dirs->get_data_dir(), path_norm, path_rel))
+		return path_norm;
+	return path_rel;
+}
+
+std::string abs_path_to_data_dir(const std::string& path)
+{
+	std::string path_norm;
+	if(resolve_path_win(path, path_norm))
+		return path;
+	if(is_absolute_path_win(path_norm))
+		return path_norm;
+	std::string path_abs(build_path(conf_dirs->get_data_dir(), path_norm));
+	std::string path_abs_norm;
+	if(resolve_path_win(path_abs, path_abs_norm))
+		return path_abs;
+	return path_abs_norm;
+}
+
+void rel_path_to_data_dir(const std::list<std::string>& paths_abs, 
+	std::list<std::string>& paths_rel)
+{
+	paths_rel.clear();
+	for(std::list<std::string>::const_iterator it=paths_abs.begin(); it != paths_abs.end(); ++it)
+		paths_rel.push_back(rel_path_to_data_dir(*it));
+}
+
+void abs_path_to_data_dir(const std::list<std::string>& paths_rel,
+	std::list<std::string>& paths_abs)
+{
+	paths_abs.clear();
+	for(std::list<std::string>::const_iterator it=paths_rel.begin(); it != paths_rel.end(); ++it)
+		paths_abs.push_back(abs_path_to_data_dir(*it));
+}
+
 #endif // #ifdef _WIN32
 
 //---------------------------------------------------------------------------------
@@ -109,7 +161,8 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/port", 2628);
 	add_entry("/apps/stardict/preferences/network/user", std::string());
 	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
-	add_entry("/apps/stardict/preferences/main_window/skin", std::string()); // absolute?
+	// may store relative path
+	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/search_while_typing", true);
 	add_entry("/apps/stardict/preferences/main_window/word_change_timeout", 300);
@@ -119,7 +172,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
-	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string()); // absolute?
+	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string()); // absolute command
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
 	add_entry("/apps/stardict/preferences/dictionary/markup_search_word", false);
@@ -155,7 +208,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/max_window_height", DEFAULT_MAX_FLOATWIN_HEIGHT);
 
 #ifdef _WIN32
-	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_win32_custom_font()); //absolute?
+	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_win32_custom_font());
 #else
 #ifdef CONFIG_DARWIN
 	add_entry("/apps/stardict/preferences/dictionary/custom_font", get_darwin_custom_font());
@@ -168,15 +221,15 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/enable_collation", false);
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 
-	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute?
+	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command
 #if defined(_WIN32) || defined(CONFIG_GNOME)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif
-	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play")); // absolute?
+	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play")); // absolute command
 #if defined(CONFIG_GPE)
 	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("gpe-mini-browser"));
 #else
-	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("firefox")); //absolute?
+	add_entry("/apps/stardict/preferences/dictionary/url_open_command", std::string("firefox")); // absolute command
 #endif
 #if defined(_WIN32) || defined(CONFIG_GNOME)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_open_url_command", false);
@@ -188,45 +241,69 @@ AppConf::AppConf() :
 		pathlist.push_back("C:\\Program Files\\OtdRealPeopleTTS");
 		pathlist.push_back("WyabdcRealPeopleTTS");
 		pathlist.push_back("OtdRealPeopleTTS");
-		add_entry("/apps/stardict/preferences/dictionary/tts_path", pathlist); //absolute?
+		// stores absolute and relative paths
+		add_entry("/apps/stardict/preferences/dictionary/tts_path", pathlist);
 #else
 		pathlist.push_back("/usr/share/WyabdcRealPeopleTTS");
 		pathlist.push_back("/usr/share/OtdRealPeopleTTS");
 		add_entry("/apps/stardict/preferences/dictionary/tts_path", pathlist);
 #endif
 	}
-	add_entry("/apps/stardict/preferences/dictionary/history", get_default_history_filename()); //absolute
+	// may store relative path
+	add_entry("/apps/stardict/preferences/dictionary/history", get_default_history_filename());
 	add_entry("/apps/stardict/preferences/dictionary/only_export_word", true);
-	add_entry("/apps/stardict/preferences/dictionary/export_file", get_default_export_filename()); //absolute
+	// may store relative path
+	add_entry("/apps/stardict/preferences/dictionary/export_file", get_default_export_filename());
 
 	add_entry("/apps/stardict/preferences/main_window/search_website_list", std::list<std::string>());
-	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>()); //absolute
-	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>()); //absolute
-	add_entry("/apps/stardict/manage_dictionaries/dict_order_list", std::list<std::string>()); //absolute
-	add_entry("/apps/stardict/manage_dictionaries/dict_config_xml", std::string()); //absolute
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_dictionaries/treedict_order_list", std::list<std::string>());
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_dictionaries/treedict_disable_list", std::list<std::string>());
+	add_entry("/apps/stardict/manage_dictionaries/dict_order_list", std::list<std::string>());
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_dictionaries/dict_config_xml", std::string());
 	add_entry("/apps/stardict/manage_dictionaries/dict_default_group", std::string());
 
-	add_entry("/apps/stardict/manage_plugins/plugin_order_list", std::list<std::string>()); //absolute
-	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>()); //absolute
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_plugins/plugin_order_list", std::list<std::string>());
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_plugins/plugin_disable_list", std::list<std::string>());
 
 	std::list<std::string> dirs;
-	dirs.push_back(build_path(conf_dirs->get_data_dir(), "dic"));
+	{
+		std::string dir(build_path(conf_dirs->get_data_dir(), "dic"));
+#ifdef _WIN32
+		dirs.push_back(rel_path_to_data_dir(dir));
+#else
+		dirs.push_back(dir);
+#endif
+	}
 #ifndef _WIN32
 	if (conf_dirs->get_data_dir() != "/usr/share/stardict") {
 		dirs.push_back("/usr/share/stardict/dic");
 	}
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/dic");
 #endif
-	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs); //absolute
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_dictionaries/dict_dirs_list", dirs);
 
 	dirs.clear();
-	dirs.push_back(build_path(conf_dirs->get_data_dir(), "treedict"));
+	{
+		std::string dir(build_path(conf_dirs->get_data_dir(), "treedict"));
+#ifdef _WIN32
+		dirs.push_back(abs_path_to_data_dir(dir));
+#else
+		dirs.push_back(dir);
+#endif
+	}
 #ifndef _WIN32
 	dirs.push_back(std::string(g_get_home_dir())+"/.stardict/treedict");
 #endif
-	add_entry("/apps/stardict/manage_dictionaries/treedict_dirs_list", dirs); //absolute
+	// stores absolute and relative paths
+	add_entry("/apps/stardict/manage_dictionaries/treedict_dirs_list", dirs);
 
-  Load();
+	Load();
 }
 //---------------------------------------------------------------------------------
 AppConf::~AppConf()
@@ -279,6 +356,7 @@ std::string AppConf::get_default_history_filename()
 	std::string histname;
 #ifdef _WIN32
 	histname = build_path(conf_dirs->get_user_config_dir(), "history.txt");
+	histname = rel_path_to_data_dir(histname);
 #else
 	histname = build_path(conf_dirs->get_user_config_dir(), "history");
 #endif
@@ -291,6 +369,7 @@ std::string AppConf::get_default_export_filename()
 	std::string exportname;
 #ifdef _WIN32
 	exportname = build_path(conf_dirs->get_data_dir(), "dic.txt");
+	exportname = rel_path_to_data_dir(exportname);
 #else
 	exportname = g_get_home_dir();
 	exportname+= G_DIR_SEPARATOR_S "dic.txt";

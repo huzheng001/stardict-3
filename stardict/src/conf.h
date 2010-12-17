@@ -33,6 +33,12 @@ extern HINSTANCE stardictexe_hInstance;
 
 std::string get_application_dir(void);
 int resolve_rel_app_dir_path(const std::string& path, std::string& abs_path);
+std::string rel_path_to_data_dir(const std::string& path);
+std::string abs_path_to_data_dir(const std::string& path);
+void rel_path_to_data_dir(const std::list<std::string>& paths_abs, 
+	std::list<std::string>& paths_rel);
+void abs_path_to_data_dir(const std::list<std::string>& paths_rel,
+	std::list<std::string>& paths_abs);
 #endif
 
 template <typename T>
