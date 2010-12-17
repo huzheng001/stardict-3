@@ -93,7 +93,7 @@ extern bool utf8_to_file_name(const std::string& str, std::string& out);
 typedef std::basic_string<TCHAR> std_win_string;
 extern bool utf8_to_windows(const std::string& str_utf8, std_win_string& out);
 extern bool windows_to_utf8(const std_win_string& str, std::string& out_utf8);
-extern int resolve_path_win(const std::string& path, std::string& result);
+extern int norm_path_win(const std::string& path, std::string& result);
 extern bool is_absolute_path_win(const std::string& path);
 extern bool is_valid_path_win(const std::string& path);
 extern int build_relative_path(const std::string& base_dir, const std::string& path, std::string& rel_path);

@@ -353,7 +353,7 @@ T* path_root_end_winW(T* str)
 	return str;
 }
 
-/* Resolve relative components in a path.
+/* normalize path - resolve relative components in a path.
 For example, path "c:\dir1\dir2\..\file" is converted to "c:\dir1\file".
 This function accepts the following paths:
 - an absolute path starting with disk name: "c:\", "c:\file", "c:\dir\file", ... 
@@ -370,8 +370,18 @@ If the path is relative, this function may leave references to the parent direct
 if they cannot be resolved in the path given. 
 For example, "dir\..\..\..\dir2\dir3" is converted to "..\..\dir2\dir3".
 Strip "." components.
+
+If after all transformations we get an empty string,
+replace it with the current directory reference, that is '.'.
+Empty string is not a valid path.
+For example, we get an empty path for "abcd\.." and "abcd\..\".
+If the original path is not blank and it ends on backslash, 
+append backslash to the '.'. That is:
+"abcd\.." -> "."
+"abcd\..\' -> ".\"
+
 Return value: EXIT_FAILURE or EXIT_SUCCESS. */
-int resolve_path_win(const std::string& path, std::string& result)
+int norm_path_win(const std::string& path, std::string& result)
 {
 	result.clear();
 	/* std::vector will free the allocated memory block
@@ -462,6 +472,14 @@ int resolve_path_win(const std::string& path, std::string& result)
 	}
 	/* p1[-1] == '\0' if the last char of the path is not '\\' */
 	*p1 = '\0';
+	if(str[0] == '\0') { // blank path
+		str[0] = '.';
+		if(!path.empty() && path[path.length()-1] == '\\') {
+			str[1] = '\\';
+			str[2] = '\0';
+		} else
+			str[1] = '\0';
+	}
 	result = str;
 	return EXIT_SUCCESS;
 }
