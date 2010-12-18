@@ -306,7 +306,7 @@ void AppCore::Create(const gchar *queryword)
 #endif
 	oStarDictPlugins = new StarDictPlugins(conf_dirs->get_plugin_dir(),
 		plugin_order_list,
-		plugin_disable_list, conf_dirs.get());
+		plugin_disable_list);
 	oLibs.set_show_progress(&load_show_progress);
 	LoadDictInfo(plugin_new_install_list); // Need to run after plugins are loaded.
 	std::list<std::string> load_list;
@@ -2377,6 +2377,7 @@ int main(int argc,char **argv)
 	CmdLineOptions::pre_parse_arguments(argc, argv);
 	const char* const dirs_config_file = CmdLineOptions::get_dirs_config_pre();
 	conf_dirs.reset(new AppDirs(dirs_config_file ? dirs_config_file : ""));
+	app_dirs = conf_dirs.get();
 	bindtextdomain (GETTEXT_PACKAGE, conf_dirs->get_locale_dir().c_str());
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);

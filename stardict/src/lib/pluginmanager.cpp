@@ -52,11 +52,9 @@ const char *StarDictPluginBase::get_filename()
 
 StarDictPlugins::StarDictPlugins(const std::string& dirpath,
 	const std::list<std::string>& order_list,
-	const std::list<std::string>& disable_list,
-	IAppDirs* appDirs)
+	const std::list<std::string>& disable_list)
 {
 	plugindirpath = dirpath;
-	this->appDirs = appDirs;
 	load(dirpath, order_list, disable_list);
 }
 
@@ -210,7 +208,7 @@ void StarDictPlugins::get_plugin_info(const char *filename, StarDictPlugInType &
 		return;
 	}
 	StarDictPlugInObject *plugin_obj = new StarDictPlugInObject();
-	bool failed = func.stardict_plugin_init(plugin_obj, appDirs);
+	bool failed = func.stardict_plugin_init(plugin_obj, app_dirs);
 	if (failed) {
 		g_print("Load %s failed!\n", filename);
 		g_module_close (module);
@@ -260,7 +258,7 @@ void StarDictPlugins::load_plugin(const char *filename)
 		return;
 	}
 	StarDictPlugInObject *plugin_obj = new StarDictPlugInObject();
-	bool failed = func.stardict_plugin_init(plugin_obj, appDirs);
+	bool failed = func.stardict_plugin_init(plugin_obj, app_dirs);
 	if (failed) {
 		g_print("Load %s failed!\n", filename);
 		g_module_close (module);

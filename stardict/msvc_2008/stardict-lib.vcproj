@@ -193,6 +193,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\src\lib\iappdirs.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\src\lib\ifo_file.cpp"
 					>
 				</File>

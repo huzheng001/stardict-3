@@ -654,6 +654,19 @@ int build_relative_path(const std::string& base_dir, const std::string& path, st
 	return EXIT_SUCCESS;
 }
 
+/* performs case-insensitive comparision of two paths 
+returns true if paths are equal */
+bool is_equal_paths_win(const std::string& path1, const std::string& path2)
+{
+	std_win_string path1_win;
+	std_win_string path2_win;
+	if(!utf8_to_windows(path1, path1_win))
+		return false;
+	if(!utf8_to_windows(path2, path2_win))
+		return false;
+	return StrCmpI(path1_win.c_str(), path2_win.c_str()) == 0;
+}
+
 #endif // #ifdef _WIN32
 
 #if DB_DIR_SEPARATOR == G_DIR_SEPARATOR
