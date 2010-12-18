@@ -387,7 +387,7 @@ static void configure()
 {
 }
 
-bool stardict_plugin_init(StarDictPlugInObject *obj)
+bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Gucharmap plugin version doesn't match!\n");
@@ -404,7 +404,7 @@ void stardict_plugin_exit(void)
 {
 }
 
-bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj, IAppDirs* appDirs)
+bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Gucharmap");
