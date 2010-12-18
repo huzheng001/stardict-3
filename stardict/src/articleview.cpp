@@ -776,11 +776,13 @@ void ArticleView::append_data_res_sound(
 				g_object_ref_sink(G_OBJECT(widget));
 				gtk_container_add(GTK_CONTAINER(button), image);
 				gtk_container_add(GTK_CONTAINER(widget), button);
+#ifdef DEBUG
 				/* when the tooltip appears a number of gtk-warnings are generated:
 				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
 				 * can't get coords for private windows */
 				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
 					pResData->get_key().c_str());
+#endif
 				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
 				gtk_widget_show_all(widget);
 				g_signal_connect(G_OBJECT(button), "destroy",
@@ -830,11 +832,13 @@ void ArticleView::append_data_res_video(
 				g_object_ref_sink(G_OBJECT(widget));
 				gtk_container_add(GTK_CONTAINER(button), image);
 				gtk_container_add(GTK_CONTAINER(widget), button);
+#ifdef DEBUG
 				/* when the tooltip appears a number of gtk-warnings are generated:
 				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
 				 * can't get coords for private windows */
 				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
 					pResData->get_key().c_str());
+#endif
 				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
 				gtk_widget_show_all(widget);
 				g_signal_connect(G_OBJECT(button), "destroy",
@@ -884,11 +888,13 @@ void ArticleView::append_data_res_attachment(
 				g_object_ref_sink(G_OBJECT(widget));
 				gtk_container_add(GTK_CONTAINER(button), image);
 				gtk_container_add(GTK_CONTAINER(widget), button);
+#ifdef DEBUG
 				/* when the tooltip appears a number of gtk-warnings are generated:
 				 * Gtk-WARNING **: IA__gtk_text_view_window_to_buffer_coords: 
 				 * can't get coords for private windows */
 				gtk_widget_set_tooltip_text(GTK_WIDGET(widget),
 					pResData->get_key().c_str());
+#endif
 				gtk_event_box_set_above_child(GTK_EVENT_BOX(widget), FALSE);
 				gtk_widget_show_all(widget);
 				g_signal_connect(G_OBJECT(button), "destroy",
