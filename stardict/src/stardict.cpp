@@ -306,7 +306,7 @@ void AppCore::Create(const gchar *queryword)
 #endif
 	oStarDictPlugins = new StarDictPlugins(conf_dirs->get_plugin_dir(),
 		plugin_order_list,
-		plugin_disable_list);
+		plugin_disable_list, conf_dirs.get());
 	oLibs.set_show_progress(&load_show_progress);
 	LoadDictInfo(plugin_new_install_list); // Need to run after plugins are loaded.
 	std::list<std::string> load_list;
@@ -2286,7 +2286,7 @@ gboolean stardict_on_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gp
 
 #ifdef CONFIG_GNOME
 static void
-stardict_handle_automation_cmdline (gchar *queryword)
+stardict_handle_automation_cmdline (const gchar *queryword)
 {
 	CORBA_Environment env;
 	GNOME_Stardict_Application server;
@@ -2375,7 +2375,8 @@ int main(int argc,char **argv)
 	stardictexe_hInstance = hInstance;
 #endif // #if defined(_WIN32)
 	CmdLineOptions::pre_parse_arguments(argc, argv);
-	conf_dirs.reset(new AppDirs(CmdLineOptions::get_dirs_config_pre()));
+	const char* const dirs_config_file = CmdLineOptions::get_dirs_config_pre();
+	conf_dirs.reset(new AppDirs(dirs_config_file ? dirs_config_file : ""));
 	bindtextdomain (GETTEXT_PACKAGE, conf_dirs->get_locale_dir().c_str());
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
