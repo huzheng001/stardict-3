@@ -97,6 +97,7 @@ extern int norm_path_win(const std::string& path, std::string& result);
 extern bool is_absolute_path_win(const std::string& path);
 extern bool is_valid_path_win(const std::string& path);
 extern int build_relative_path(const std::string& base_dir, const std::string& path, std::string& rel_path);
+extern bool is_equal_paths_win(const std::string& path1, const std::string& path2);
 #endif
 #define DB_DIR_SEPARATOR '/'
 #define DB_DIR_SEPARATOR_S "/"

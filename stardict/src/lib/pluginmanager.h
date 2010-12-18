@@ -194,8 +194,7 @@ class StarDictPlugins {
 public:
 	StarDictPlugins(const std::string& dirpath,
 		const std::list<std::string>& order_list,
-		const std::list<std::string>& disable_list,
-		IAppDirs* appDirs);
+		const std::list<std::string>& disable_list);
 	~StarDictPlugins();
 	void get_plugin_list(const std::list<std::string>& order_list, std::list<std::pair<StarDictPlugInType, std::list<StarDictPluginInfo> > > &plugin_list);
 	bool get_loaded(const char *filename);
@@ -214,7 +213,6 @@ private:
 	/* Plugins that we've tried to load irrespective of the fact were they loaded
 	 * successfully or not. */
 	std::list<std::string> loaded_plugin_list;
-	IAppDirs* appDirs;
 	void load(const std::string& dirpath, const std::list<std::string>& order_list, const std::list<std::string>& disable_list);
 	void get_plugin_info(const char *filename, StarDictPlugInType &plugin_type, std::string &info_xml, bool &can_configure);
 	friend class PluginLoader;
