@@ -1067,7 +1067,7 @@ bool is_ascii_alpha(wchar_t ch)
 	static const wchar_t alphabet[] = 
 		L"abcdefghijklmnopqrstuvwxyz"
 		L"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	for(int i=0; i<sizeof(alphabet)/sizeof(alphabet[0])-1; ++i)
+	for(size_t i=0; i<sizeof(alphabet)/sizeof(alphabet[0])-1; ++i)
 		if(ch == alphabet[i])
 			return true;
 	return false;
