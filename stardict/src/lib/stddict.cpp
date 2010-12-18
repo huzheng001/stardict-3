@@ -38,6 +38,7 @@
 #include "distance.h"
 #include "kmp.h"
 #include "mapfile.hpp"
+#include "iappdirs.h"
 
 #include "stddict.hpp"
 #include "utils.h"
@@ -340,7 +341,12 @@ MapFile* cache_file::get_cache_for_load(const gchar *filename,
 	if (!p3)
 		return NULL;
 	std::string tmpstr(p2, p3-p2);
+#ifdef _WIN32
+	tmpstr = abs_path_to_data_dir(tmpstr);
+	if (is_equal_paths_win(saveurl, tmpstr)) {
+#else
 	if (saveurl == tmpstr) {
+#endif
 		if (cachefiletype == CacheFileType_clt) {
 			p2 = strstr(p, "\nfunc=");
 			if (!p2)
@@ -383,7 +389,7 @@ bool cache_file::load_cache(const std::string& url, const std::string& saveurl,
 {
 	g_assert(!wordoffset);
 	std::string oftfilename;
-	get_filename(saveurl, cltfunc, oftfilename);
+	get_primary_cache_filename(saveurl, cltfunc, oftfilename);
 	/* First search the file in the dictionary directory, then in the cache 
 	 * directory. */
 	for (int i=0; i<2; i++) {
@@ -420,7 +426,7 @@ bool cache_file::get_cache_filename(const std::string& url, std::string &cachefi
 	}
 
 	gchar *base=g_path_get_basename(url.c_str());
-	get_filename(cache_dir+G_DIR_SEPARATOR_S+base, cltfunc, cachefilename);
+	get_primary_cache_filename(cache_dir+G_DIR_SEPARATOR_S+base, cltfunc, cachefilename);
 	g_free(base);
 	return true;
 }
@@ -466,7 +472,12 @@ FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &s
 		return fopen(filename, "wb");
 	}
 	std::string tmpstr(p2, p3-p2);
+#ifdef _WIN32
+	tmpstr = abs_path_to_data_dir(tmpstr);
+	if (is_equal_paths_win(saveurl, tmpstr)) {
+#else
 	if (saveurl == tmpstr) {
+#endif
 		return fopen(filename, "wb");
 	}
 	mf.close();
@@ -485,7 +496,7 @@ FILE* cache_file::get_cache_for_save(const gchar *filename, const std::string &s
 bool cache_file::save_cache(const std::string& saveurl, CollateFunctions cltfunc, gulong npages)
 {
 	std::string oftfilename;
-	get_filename(saveurl, cltfunc, oftfilename);
+	get_primary_cache_filename(saveurl, cltfunc, oftfilename);
 	for (int i=0;i<2;i++) {
 		if (i==1) {
 			if (!get_cache_filename(saveurl, oftfilename, true, cltfunc))
@@ -503,7 +514,12 @@ bool cache_file::save_cache(const std::string& saveurl, CollateFunctions cltfunc
 		else
 			fwrite(COLLATIONFILE_MAGIC_DATA, 1, sizeof(COLLATIONFILE_MAGIC_DATA)-1, out);
 		fwrite("url=", 1, sizeof("url=")-1, out);
+#ifdef _WIN32
+		const std::string url_rel(rel_path_to_data_dir(saveurl));
+		fwrite(url_rel.c_str(), 1, url_rel.length(), out);
+#else
 		fwrite(saveurl.c_str(), 1, saveurl.length(), out);
+#endif
 		if (cachefiletype == CacheFileType_clt) {
 #ifdef _MSC_VER
 			fprintf_s(out, "\nfunc=%d", cltfunc);
@@ -537,7 +553,7 @@ gchar *cache_file::get_next_filename(
 		return g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s(%d).%s.%d.clt", dirname, basename, num, extendname, cltfunc);
 }
 
-void cache_file::get_filename(const std::string &url, CollateFunctions cltfunc,
+void cache_file::get_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
 	std::string &filename) const
 {
 	if (cachefiletype == CacheFileType_oft) {

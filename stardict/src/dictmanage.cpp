@@ -618,7 +618,8 @@ void RemoveCacheFiles(void)
 				continue;
 			std::string fullfilename(build_path(*it, filename));
 			if (!g_file_test(fullfilename.c_str(), G_FILE_TEST_IS_DIR)) {
-				g_unlink(fullfilename.c_str());
+				if(g_unlink(fullfilename.c_str()))
+					g_warning(_("Unable to remove file: %s"), fullfilename.c_str());
 			}
 		}
 		g_dir_close(dir);

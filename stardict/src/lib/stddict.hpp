@@ -99,7 +99,7 @@ private:
 	gchar *get_next_filename(
 		const gchar *dirname, const gchar *basename, int num,
 		const gchar *extendname, CollateFunctions cltfunc) const;
-	void get_filename(const std::string &url, CollateFunctions cltfunc,
+	void get_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
 		std::string &filename) const;
 };
 
