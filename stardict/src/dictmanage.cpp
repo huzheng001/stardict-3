@@ -605,7 +605,7 @@ void RemoveCacheFiles(void)
 		if(dir_list.end() == std::find(dir_list.begin(), dir_list.end(), std::string(get_impl(gdir))))
 			dir_list.push_back(get_impl(gdir));
 	}
-	dir_list.push_back(std::string(g_get_user_cache_dir()) + G_DIR_SEPARATOR_S "stardict");
+	dir_list.push_back(conf_dirs->get_user_cache_dir());
 	// remove cache files
 	const gchar *filename;
 	GDir *dir;

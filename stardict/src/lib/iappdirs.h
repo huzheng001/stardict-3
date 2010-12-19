@@ -18,6 +18,7 @@ class IAppDirs
 {
 public:
 	virtual std::string get_user_config_dir(void) const = 0;
+	virtual std::string get_user_cache_dir(void) const = 0;
 	virtual std::string get_data_dir(void) const = 0;
 };
 

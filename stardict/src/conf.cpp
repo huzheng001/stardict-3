@@ -475,6 +475,16 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 				user_config_dir.c_str());
 	}
 
+	path = app_conf.get_string_at("user_cache_dir");
+	user_cache_dir = path.empty() ? get_default_user_cache_dir() : path;
+#ifdef _WIN32
+	if(abs_path_to_app_dir(user_cache_dir, t_path)) {
+		g_error(_("Unable to resolve user cache directory: %s."), 
+			user_cache_dir.c_str());
+	}
+	user_cache_dir = t_path;
+#endif
+
 	path = app_conf.get_string_at("data_dir");
 	data_dir = path.empty() ? get_default_data_dir() : path;
 #ifdef _WIN32
@@ -559,6 +569,13 @@ std::string AppDirs::get_default_user_config_dir(void) const
 	res += G_DIR_SEPARATOR_S ".stardict";
 	return res;
 #endif
+}
+
+std::string AppDirs::get_default_user_cache_dir(void) const
+{
+	std::string res = g_get_user_cache_dir();
+	res += G_DIR_SEPARATOR_S "stardict";
+	return res;
 }
 
 std::string AppDirs::get_default_data_dir(void) const

@@ -1957,6 +1957,20 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 		</varlistentry>
 		
 		<varlistentry>
+		<term>user_cache_dir
+		</term>
+		<listitem>
+		<para>User cache directory.</para>
+		<para>Windows default: <filename>C:\Documents and Settings\%USERNAME%\Temporary Internet Files\stardict</filename>.
+		</para>
+		<para>Other default: <filename>~/.cache/stardict</filename>.
+		</para>
+		<para><filename>stardict-dirs.cfg</filename> key: user_cache_dir.
+		</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
 		<term>data_dir
 		</term>
 		<listitem>

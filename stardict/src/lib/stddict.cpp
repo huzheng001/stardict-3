@@ -408,25 +408,18 @@ bool cache_file::load_cache(const std::string& url, const std::string& saveurl,
 
 bool cache_file::get_cache_filename(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc)
 {
-	if (create) {
-		if (!g_file_test(g_get_user_cache_dir(), G_FILE_TEST_EXISTS) &&
-		    g_mkdir(g_get_user_cache_dir(), 0700)==-1)
-			return false;
-	}
-
-	std::string cache_dir=g_get_user_cache_dir();
-	cache_dir += G_DIR_SEPARATOR_S "stardict";
-
+	const std::string cache_dir(app_dirs->get_user_cache_dir());
 	if (create) {
 		if (!g_file_test(cache_dir.c_str(), G_FILE_TEST_EXISTS)) {
-			if (g_mkdir(cache_dir.c_str(), 0700)==-1)
+			if (g_mkdir_with_parents(cache_dir.c_str(), 0700)==-1)
 				return false;
-		} else if (!g_file_test(cache_dir.c_str(), G_FILE_TEST_IS_DIR))
-			return false;
+		}
 	}
+	if (!g_file_test(cache_dir.c_str(), G_FILE_TEST_IS_DIR))
+		return false;
 
 	gchar *base=g_path_get_basename(url.c_str());
-	get_primary_cache_filename(cache_dir+G_DIR_SEPARATOR_S+base, cltfunc, cachefilename);
+	get_primary_cache_filename(build_path(cache_dir, base), cltfunc, cachefilename);
 	g_free(base);
 	return true;
 }
