@@ -205,6 +205,7 @@ class AppDirs: public IAppDirs
 public:
 	explicit AppDirs(const std::string& dirs_config_file);
 	std::string get_user_config_dir(void) const { return user_config_dir; }
+	std::string get_user_cache_dir(void) const { return user_cache_dir; }
 	std::string get_data_dir(void) const { return data_dir; }
 	std::string get_log_dir(void) const { return log_dir; }
 #ifdef _WIN32
@@ -225,6 +226,7 @@ public:
 private:
 	std::string get_dirs_config_file(const std::string& dirs_config_file) const;
 	std::string get_default_user_config_dir(void) const;
+	std::string get_default_user_cache_dir(void) const;
 	std::string get_default_data_dir(void) const;
 	std::string get_default_log_dir(void) const;
 	std::string get_default_plugin_dir(void) const;
@@ -233,6 +235,7 @@ private:
 	
 private:
 	std::string user_config_dir;
+	std::string user_cache_dir;
 	/* contains subdirs: dic, treedict, sounds, skins, pixmaps, locale */
 	std::string data_dir;
 	std::string log_dir;
