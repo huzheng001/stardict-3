@@ -10,10 +10,15 @@ var InstallDirMustNotExist = false;
 var VSConfig = "release"; // release or debug
 var UnixDistDir = "stardict-unix-dist";
 var UnixBuildDir = "stardict-build";
+var Portable = false;
+var MakeNSISExe = "c:\\Program Files\\NSIS\\makensis.exe";
 
 var BaseDir = GetBaseDir();
-var InstallDir = BaseDir + "win32-install-dir\\";
+var InstallRootDir;
+var InstallDir; // application directory, it contains stardict.exe, stardict.dll, etc.
+var MSVSOutputDir;
 var MSVSDir = BaseDir + "msvc_2008\\";
+var NSISLog = "StarDictPortableLaucher.log";
 var fso = WScript.CreateObject("Scripting.FileSystemObject");
 var shell = WScript.CreateObject("WScript.Shell");
 
@@ -26,6 +31,7 @@ function usage()
 	txt += "Options can be specified in the form <option>=<value>.\n\n";
 	txt += "\nDefault value given in parentheses:\n\n";
 	txt += "  vsconfig:     Visual Studio configuration [release|debug] (" + VSConfig + ") \n";
+	txt += "  portable:     Build portable version of StarDict [yes|no] (" + (Portable ? "yes" : "no") + ") \n";
 	txt += "  distdir:      StarDict source directory after executing `make dist` or\n";
 	txt += "                a directory with unpacked distribution tarball for Unix.\n";
 	txt += "                Used to get html help files.\n";
@@ -33,6 +39,8 @@ function usage()
 	txt += "  builddir:     StarDict build directory or.\n";
 	txt += "                Used to get compiled translation files.\n";
 	txt += "                (" + UnixBuildDir + ") \n";
+	txt += "  makensis:     Path to makensis.exe.\n";
+	txt += "                (" + MakeNSISExe + ") \n";
 	WScript.Echo(txt);
 }
 
@@ -48,10 +56,14 @@ function ParseCommandLine() {
 		if (opt.length > 0) {
 			if (opt == "vsconfig")
 				VSConfig = arg.substring(opt.length + 1, arg.length);
+			else if (opt == "portable")
+				Portable = strToBool(arg.substring(opt.length + 1, arg.length));
 			else if (opt == "distdir")
 				UnixDistDir = arg.substring(opt.length + 1, arg.length);
 			else if (opt == "builddir")
 				UnixBuildDir = arg.substring(opt.length + 1, arg.length);
+			else if (opt == "makensis")
+				MakeNSISExe = arg.substring(opt.length + 1, arg.length);
 		} else if (i == 0) {
 			if (arg == "help") {
 				usage();
@@ -66,6 +78,18 @@ function ParseCommandLine() {
 		usage();
 		WScript.Quit(error);
 	}
+}
+
+/* Helper function, transforms the argument string into a boolean
+   value. */
+function strToBool(opt)
+{
+	if (opt == 0 || opt == "no")
+		return false;
+	else if (opt == 1 || opt == "yes")
+		return true;
+	error = 1;
+	return false;
 }
 
 function GetBaseDir() {
@@ -130,7 +154,16 @@ function CreateFolder(path) {
 	} while(i >= 0);
 }
 
+/* Remove traling backslash if present */
+function CanonizePath(path) {
+	if(path.charAt(path.length-1) == "\\")
+		return path.substr(0, path.length-1);
+	else
+		return path;
+}
+
 function DeleteFolder(path) {
+	path = CanonizePath(path);
 	if(fso.FolderExists(path)) {
 		fso.DeleteFolder(path);
 	}
@@ -160,7 +193,16 @@ if (!fso.FileExists(BaseDir + "stardict-installer.nsi")) {
 
 ParseCommandLine();
 
-var MSVSOutputDir = MSVSDir + VSConfig + "\\";
+{	// assign global variables
+	MSVSOutputDir = MSVSDir + VSConfig + "\\";
+	if(Portable) {
+		InstallRootDir = BaseDir + "win32-portable-install-dir\\";
+		InstallDir = InstallRootDir + "StarDictPortable\\App\\StarDict\\";
+	} else {
+		InstallRootDir = BaseDir + "win32-install-dir\\";
+		InstallDir = InstallRootDir;
+	}
+}
 
 if(!fso.FolderExists(UnixDistDir)) {
 	WScript.Echo("StarDict distribution directory does not exist.\n"
@@ -179,14 +221,15 @@ if(!fso.FolderExists(UnixBuildDir)) {
 }
 
 if(InstallDirMustNotExist) {
-	if (fso.FolderExists(BaseDir + "win32-install-dir")) {
-		WScript.Echo("Directory win32-install-dir already exists, "
+	if (fso.FolderExists(InstallRootDir)) {
+		WScript.Echo("Directory " + InstallRootDir + " already exists, "
 			+ "remove it and start this script again.");
 		WScript.Quit(1);
 	} 
 } else {
-	DeleteFolder(BaseDir + "win32-install-dir");
+	DeleteFolder(InstallRootDir);
 }
+CreateFolder(InstallRootDir);
 CreateFolder(InstallDir);
 CopyFile(MSVSOutputDir + "stardict-loader.exe", InstallDir + "stardict.exe");
 CopyFile(MSVSOutputDir + "stardict.dll", InstallDir);
@@ -281,7 +324,9 @@ CreateFolder(InstallDir + "skins\\");
 	}
 }
 
-CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
+if(!Portable) {
+	CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
+}
 {
 	var LibSigcDir = MSVSDir + "libsigc++\\";
 	var files = FindFiles(LibSigcDir, /sigc-.*\.dll/i);
@@ -321,5 +366,65 @@ CopyFile(MSVSOutputDir + "StarDict.api", InstallDir);
 		WScript.Quit(status);
 	}
 }
+
+if(!Portable) {
+	WScript.Echo("Done.");
+	WScript.Quit(0);
+}
+
+{ // launcher
+	var cmd = "\"" + MakeNSISExe + "\" /O" + NSISLog + " src\\win32\\nsis\\StarDictPortable.nsi";
+	var status = shell.Run(cmd, 1, true);
+	if(status != 0) {
+		WScript.Echo("Building StarDict launcher failed.");
+		WScript.Quit(status);
+	}
+	CopyFile(BaseDir + "src\\win32\\nsis\\StarDictPortable.exe", InstallRootDir + "StarDictPortable\\");
+}
+
+{ // stardict-dirs.cfg
+	var contents =
+			"[general]\n"
+		+	"user_config_dir=..\\\\..\\\\Data\\\\settings\\\\stardict\n"
+		+	"user_cache_dir=..\\\\..\\\\Data\\\\cache\n"
+		+	"log_dir=..\\\\..\\\\Data\\\\log\n"
+	;
+	var CfgDir = InstallRootDir + "StarDictPortable\\App\\DefaultData\\settings\\"
+	CreateFolder(CfgDir);
+	var filePath = CfgDir + "stardict-dirs.cfg";
+	var file = fso.CreateTextFile(filePath, true, false);
+	file.Write(contents);
+	file.Close();
+}
+
+{ // StarDictPortableSettings.ini
+	var contents =
+			"[Language]\n"
+		+	"STARDICTLANG=\n"
+	;
+	var CfgDir = InstallRootDir + "StarDictPortable\\App\\DefaultData\\settings\\"
+	CreateFolder(CfgDir);
+	var filePath = CfgDir + "StarDictPortableSettings.ini";
+	var file = fso.CreateTextFile(filePath, true, false);
+	file.Write(contents);
+	file.Close();
+}
+
+{ // gtkrc
+	var contents =
+			"gtk-theme-name = \"MS-Windows\"\n"
+	;
+	var CfgDir = InstallRootDir + "StarDictPortable\\App\\DefaultData\\settings\\"
+	CreateFolder(CfgDir);
+	var filePath = CfgDir + "gtkrc";
+	var file = fso.CreateTextFile(filePath, true, false);
+	file.Write(contents);
+	file.Close();
+}
+
+/* StarDict-loader sets $HOME enviroment variable to "StarDictPortable\\App":
+Set $HOME so that the GTK+ settings get stored in the right place 
+GTK will store settings in "StarDictPortable\\App\GTK" subfolder. */
+CreateFolder(InstallRootDir + "StarDictPortable\\App\\GTK");
 
 WScript.Echo("Done.");
