@@ -211,18 +211,17 @@ static BOOL dll_prep(const wchar_t *pidgin_dir) {
 	return common_dll_prep(path);
 }
 
-#if 0
 static void portable_mode_dll_prep(const wchar_t *pidgin_dir) {
 	/* need to be able to fit MAX_PATH + "PURPLEHOME=" in path2 */
 	wchar_t path[MAX_PATH + 1];
 	wchar_t path2[MAX_PATH + 12];
 	const wchar_t *prev = NULL;
 
-	/* We assume that GTK+ is installed under \\path\to\Pidgin\..\GTK
+	/* We assume that GTK+ is installed under \\path\to\StarDict\..\GTK
 	 * First we find \\path\to
 	 */
 	if (*pidgin_dir)
-		/* pidgin_dir points to \\path\to\Pidgin */
+		/* pidgin_dir points to \\path\to\StarDict */
 		prev = wcsrchr(pidgin_dir, L'\\');
 
 	if (prev) {
@@ -240,11 +239,13 @@ static void portable_mode_dll_prep(const wchar_t *pidgin_dir) {
 	_snwprintf(path2, sizeof(path2) / sizeof(wchar_t), L"HOME=%s", path);
 	_wputenv(path2);
 
+#if 0
 	/* Set up the settings dir base to be \\path\to
 	 * The actual settings dir will be \\path\to\.purple */
 	_snwprintf(path2, sizeof(path2) / sizeof(wchar_t), L"PURPLEHOME=%s", path);
 	wprintf(L"Setting settings dir: %s\n", path2);
 	_wputenv(path2);
+#endif
 
 	if (!dll_prep(pidgin_dir)) {
 		/* set the GTK+ path to be \\path\to\GTK\bin */
@@ -252,7 +253,6 @@ static void portable_mode_dll_prep(const wchar_t *pidgin_dir) {
 		common_dll_prep(path);
 	}
 }
-#endif
 
 static wchar_t* winpidgin_lcid_to_posix(LCID lcid) {
 	wchar_t *posix = NULL;
@@ -782,11 +782,12 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 		portable_mode = TRUE;
 	}
 
-#if 0
 	if (portable_mode)
 		portable_mode_dll_prep(pidgin_dir);
+#if 0
 	else if (!getenv("PIDGIN_NO_DLL_CHECK"))
 #endif
+	else
 		dll_prep(pidgin_dir);
 
 	winpidgin_set_locale();
