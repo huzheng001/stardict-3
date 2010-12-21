@@ -347,14 +347,12 @@ msgid "Unknown data type, please upgrade StarDict!"
 msgstr "未知数据类型，请升级星际译王！"
 
 #: ../src/articleview.cpp:462 ../src/articleview.cpp:487
-#, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
-msgstr "<span foreground=\"red\">[加载图片错误！]</span>"
+msgstr "<span foreground=\"red\">[资源文件列表：格式错误！]</span>"
 
 #: ../src/articleview.cpp:944
-#, fuzzy
 msgid "Save File"
-msgstr "保存到文件"
+msgstr "保存文件"
 
 #. Default stardictd server.
 #: ../src/conf.cpp:64 ../src/prefsdlg.cpp:2050
@@ -426,7 +424,7 @@ msgstr "darwin_custom_font=STSong 12"
 #: ../src/desktop.cpp:199 ../src/desktop.cpp:207
 #, c-format
 msgid "Unable to find help file %s."
-msgstr ""
+msgstr "无法找到帮助文件%s。"
 
 #: ../src/dictmanage.cpp:89 ../src/dictmanage.cpp:118
 msgid "Default Group"
@@ -648,12 +646,11 @@ msgstr "退出(_Q)"
 
 #: ../src/eggtrayicon.c:132
 msgid "Orientation"
-msgstr ""
+msgstr "方向"
 
 #: ../src/eggtrayicon.c:133
-#, fuzzy
 msgid "The orientation of the tray."
-msgstr "软件的版本"
+msgstr "通知栏方向。"
 
 #: ../src/floatwin.cpp:144 ../src/mainwin.cpp:1977 ../src/mainwin.cpp:2007
 #: ../src/stardict.cpp:999 ../src/stardict.cpp:1013 ../src/stardict.cpp:1018
@@ -728,18 +725,16 @@ msgid "_Fuzzy Query"
 msgstr "模糊查询(_F)"
 
 #: ../src/floatwin.cpp:1140
-#, fuzzy
 msgid "Looking up..."
-msgstr "加载中..."
+msgstr "查找中..."
 
 #: ../src/log.cpp:207
 msgid "Error"
-msgstr ""
+msgstr "错误"
 
 #: ../src/log.cpp:227
-#, fuzzy
 msgid "Log window"
-msgstr "浮动窗口"
+msgstr "日志窗口"
 
 #: ../src/mainwin.cpp:91
 msgid "Clear the search box"
@@ -1006,11 +1001,11 @@ msgstr "朗读(_P)"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Afrikaans"
-msgstr ""
+msgstr "南非荷兰语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Albanian"
-msgstr ""
+msgstr "Albanian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Arabic"
@@ -1018,16 +1013,15 @@ msgstr "阿拉伯语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Belarusian"
-msgstr ""
+msgstr "Belarusian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgarian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Catalan"
-msgstr "意大利语"
+msgstr "加泰隆语"
 
 #: ../src/mainwin.cpp:2211
 msgid "Chinese"
@@ -1035,17 +1029,15 @@ msgstr "中文"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Croatian"
-msgstr ""
+msgstr "克罗地亚语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Czech"
-msgstr "缓存"
+msgstr "捷克语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Danish"
-msgstr "西班牙语"
+msgstr "丹麦语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1063,15 +1055,15 @@ msgstr "英语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Estonian"
-msgstr ""
+msgstr "爱沙尼亚语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Filipino"
-msgstr ""
+msgstr "菲律宾人"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Finnish"
-msgstr ""
+msgstr "芬兰语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2223 ../src/mainwin.cpp:2227
@@ -1081,9 +1073,8 @@ msgid "French"
 msgstr "法语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Galician"
-msgstr "意大利语"
+msgstr "卡黎堪语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1097,32 +1088,31 @@ msgstr "希腊语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Haitian Creole ALPHA"
-msgstr ""
+msgstr "海地语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Hebrew"
-msgstr ""
+msgstr "希伯来语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Hindi"
-msgstr "搜索"
+msgstr "印地语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Hungarian"
-msgstr ""
+msgstr "匈牙利语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Icelandic"
-msgstr ""
+msgstr "冰岛语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Indonesian"
-msgstr ""
+msgstr "印尼语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Irish"
-msgstr ""
+msgstr "爱尔兰语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1142,39 +1132,35 @@ msgstr "韩语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Latvian"
-msgstr ""
+msgstr "拉脱维亚语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Lithuanian"
-msgstr ""
+msgstr "立陶宛语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Macedonian"
-msgstr ""
+msgstr "马其顿人"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Malay"
-msgstr "朗读(_P)"
+msgstr "马来语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Maltese"
-msgstr ""
+msgstr "马尔他语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Norwegian"
-msgstr "韩语"
+msgstr "挪威语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Persian"
-msgstr "打印"
+msgstr "波斯语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Polish"
-msgstr "英语"
+msgstr "波兰语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1182,9 +1168,8 @@ msgid "Portuguese"
 msgstr "葡萄牙语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Romanian"
-msgstr "命令行："
+msgstr "罗马尼亚语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221
@@ -1192,17 +1177,16 @@ msgid "Russian"
 msgstr "俄语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Serbian"
-msgstr "德语"
+msgstr "Serbian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Slovak"
-msgstr ""
+msgstr "斯洛伐克语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Slovenian"
-msgstr ""
+msgstr "Slovenian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2216
 #: ../src/mainwin.cpp:2221 ../src/mainwin.cpp:2225
@@ -1211,7 +1195,7 @@ msgstr "西班牙语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Swedish"
@@ -1219,28 +1203,27 @@ msgstr "瑞典语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Thai"
-msgstr ""
+msgstr "泰语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Turkish"
-msgstr ""
+msgstr "土耳其语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrainian语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
-#, fuzzy
 msgid "Vietnamese"
-msgstr "文件名"
+msgstr "越南语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Welsh"
-msgstr ""
+msgstr "威尔士语"
 
 #: ../src/mainwin.cpp:2211 ../src/mainwin.cpp:2212
 msgid "Yiddish"
-msgstr ""
+msgstr "Yiddish语"
 
 #.
 #. static const char *altavista_fromlangs[] = {N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Dutch"), N_("English"), N_("French"), N_("German"), N_("Greek"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Portuguese"), N_("Russian"), NULL};
@@ -1450,7 +1433,7 @@ msgstr "音效"
 
 #: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:834
 msgid "Video"
-msgstr ""
+msgstr "视频"
 
 #: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:718
 msgid "Article rendering"
@@ -1462,7 +1445,7 @@ msgstr "网络词典"
 
 #: ../src/prefsdlg.cpp:94 ../src/prefsdlg.cpp:1111
 msgid "Web browser"
-msgstr ""
+msgstr "网站浏览器"
 
 #: ../src/prefsdlg.cpp:100 ../src/prefsdlg.cpp:1160
 msgid "Input"
@@ -1592,13 +1575,12 @@ msgid "_Enable sound event."
 msgstr "打开音效(_E)。"
 
 #: ../src/prefsdlg.cpp:773
-#, fuzzy
 msgid "Command for playing sound files:"
-msgstr "播放Wav文件的命令："
+msgstr "播放声音文件的命令："
 
 #: ../src/prefsdlg.cpp:785
 msgid "Always use sound play command."
-msgstr ""
+msgstr "总是使用声音播放命令。"
 
 #: ../src/prefsdlg.cpp:792
 msgid "RealPeopleTTS search path:"
@@ -1609,14 +1591,12 @@ msgid "Enable _TTS program."
 msgstr "开启TTS程序(_T)。"
 
 #: ../src/prefsdlg.cpp:818
-#, fuzzy
 msgid "Command line:"
 msgstr "命令行："
 
 #: ../src/prefsdlg.cpp:839
-#, fuzzy
 msgid "Command for playing video files:"
-msgstr "播放Wav文件的命令："
+msgstr "播放视频文件的命令："
 
 #: ../src/prefsdlg.cpp:866
 msgid "Account"
@@ -1675,13 +1655,12 @@ msgid "_Register an account"
 msgstr "注册一个帐号(_R)"
 
 #: ../src/prefsdlg.cpp:1116
-#, fuzzy
 msgid "Command for opening URLs:"
-msgstr "播放Wav文件的命令："
+msgstr "打开网址的命令："
 
 #: ../src/prefsdlg.cpp:1129
 msgid "Always use this command for opening URLs."
-msgstr ""
+msgstr "总是用此命令打开网址。"
 
 #: ../src/prefsdlg.cpp:1167
 msgid "_Search while typing."
@@ -1701,7 +1680,7 @@ msgstr "未找到时显示第一个单词(_F)。"
 
 #: ../src/prefsdlg.cpp:1264
 msgid "Skin change will take effect after application restart"
-msgstr ""
+msgstr "皮肤的改变将会在应用程序重启后生效"
 
 #: ../src/prefsdlg.cpp:1303
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:36
@@ -1715,7 +1694,7 @@ msgstr "开机自动运行星际译王(_A)。"
 
 #: ../src/prefsdlg.cpp:1359
 msgid "Skin:"
-msgstr ""
+msgstr "皮肤："
 
 #: ../src/prefsdlg.cpp:1372
 msgid "Hide main window when _starting StarDict."
@@ -1760,24 +1739,21 @@ msgid ""
 msgstr "网站搜索地址应该包含一个 \"%%s\" 字符串以表示要搜索的单词。"
 
 #: ../src/prefsdlg.cpp:1777
-#, fuzzy
 msgid "When middle mouse button is clicked:"
-msgstr "当中鼠标键按下时在浮动窗口中查询"
+msgstr "当鼠标中键按下时："
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
 #: ../src/prefsdlg.cpp:1781
-#, fuzzy
 msgid "Query selection in floating window"
-msgstr "在主窗口中查询"
+msgstr "在浮动窗口中查询选中区"
 
 #: ../src/prefsdlg.cpp:1782
-#, fuzzy
 msgid "Query selection in main window"
-msgstr "在主窗口中查询"
+msgstr "在主窗口中查询选中区"
 
 #: ../src/prefsdlg.cpp:1783
 msgid "Do nothing"
-msgstr ""
+msgstr "什么也不做"
 
 #: ../src/prefsdlg.cpp:1808
 msgid "_Pronounce the word when it pops up."
@@ -1825,17 +1801,16 @@ msgstr "TTS命令"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../src/splash.cpp:86
-#, fuzzy
 msgid "StarDict starting..."
-msgstr "星际译王 | 正在取词"
+msgstr "星际译王正在启动..."
 
 #: ../src/stardict.cpp:101
 msgid "How many messages print to console (0-6)"
-msgstr ""
+msgstr "多少信息打印到终端（0-6）"
 
 #: ../src/stardict.cpp:103
 msgid "How many messages print to log (0-6)"
-msgstr ""
+msgstr "多少信息打印到记录（0-6）"
 
 #: ../src/stardict.cpp:105
 msgid "Hide the main window, do not show splash screen"
