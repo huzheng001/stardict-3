@@ -12,6 +12,7 @@ var UnixDistDir = "stardict-unix-dist";
 var UnixBuildDir = "stardict-build";
 var Portable = false;
 var MakeNSISExe = "c:\\Program Files\\NSIS\\makensis.exe";
+var PortableInstallerExe = "c:\\portableapps\\PortableApps\\PortableApps.comInstaller\\PortableApps.comInstaller.exe";
 
 var BaseDir = GetBaseDir();
 var InstallRootDir;
@@ -41,6 +42,8 @@ function usage()
 	txt += "                (" + UnixBuildDir + ") \n";
 	txt += "  makensis:     Path to makensis.exe.\n";
 	txt += "                (" + MakeNSISExe + ") \n";
+	txt += "  portinst:     Path to portable installer (PortableApps.comInstaller.exe).\n";
+	txt += "                (" + PortableInstallerExe + ") \n";
 	WScript.Echo(txt);
 }
 
@@ -64,6 +67,8 @@ function ParseCommandLine() {
 				UnixBuildDir = arg.substring(opt.length + 1, arg.length);
 			else if (opt == "makensis")
 				MakeNSISExe = arg.substring(opt.length + 1, arg.length);
+			else if (opt == "portinst")
+				PortableInstallerExe = arg.substring(opt.length + 1, arg.length);
 		} else if (i == 0) {
 			if (arg == "help") {
 				usage();
@@ -218,6 +223,21 @@ if(!fso.FolderExists(UnixBuildDir)) {
 		+ "Folder: " + UnixBuildDir);
 	usage();
 	WScript.Quit(1);
+}
+
+if(Portable) {
+	if(!fso.FileExists(MakeNSISExe)) {
+		WScript.Echo("Unable to find makensis.exe.\n"
+			+	"Path: " + MakeNSISExe + "\n"
+			+	"Use makensis parameter to specify the path.");
+		WScript.Quit(1);
+	}
+	if(!fso.FileExists(PortableInstallerExe)) {
+		WScript.Echo("Unable to find portable installer.\n"
+			+	"Path: " + PortableInstallerExe + "\n"
+			+	"Use portinst parameter to specify the path.");
+		WScript.Quit(1);
+	}
 }
 
 if(InstallDirMustNotExist) {
@@ -426,5 +446,50 @@ if(!Portable) {
 Set $HOME so that the GTK+ settings get stored in the right place 
 GTK will store settings in "StarDictPortable\\App\GTK" subfolder. */
 CreateFolder(InstallRootDir + "StarDictPortable\\App\\GTK");
+
+{ // AppInfo
+	var appInfoDir = InstallRootDir + "StarDictPortable\\App\\AppInfo\\";
+	CreateFolder(appInfoDir);
+	CopyFile(BaseDir + "src\\win32\\PortableApps.com\\appinfo.ini", appInfoDir + "appinfo.ini");
+	CopyFile(BaseDir + "pixmaps\\stardict_16.png", appInfoDir + "appicon_16.png");
+	CopyFile(BaseDir + "pixmaps\\stardict_32.png", appInfoDir + "appicon_32.png");
+	CopyFile(BaseDir + "stardict.ico", appInfoDir + "appicon.ico");
+}
+
+{ // Other
+	var sourceDir = InstallRootDir + "StarDictPortable\\Other\\Source\\";
+	CreateFolder(sourceDir);
+	CopyFile(BaseDir + "src\\win32\\PortableApps.com\\other-source-readme.txt", sourceDir + "Readme.txt");
+}
+
+{ // root application directory
+	var appDir = InstallRootDir + "StarDictPortable\\";
+	CreateFolder(appDir);
+	CopyFile(BaseDir + "src\\win32\\PortableApps.com\\help.html", appDir);
+}
+
+{ // package the portable application
+	var cmd = "\"" + PortableInstallerExe + "\" \"" + InstallRootDir + "StarDictPortable\"";
+	var status = shell.Run(cmd, 1, true);
+	if(status != 0) {
+		WScript.Echo("Packaging StarDict portable failed.");
+		WScript.Quit(status);
+	}
+	var oFolder = fso.GetFolder(InstallRootDir);
+	var oFiles = new Enumerator(oFolder.Files);
+	var cnt = 0;
+	for (; !oFiles.atEnd(); oFiles.moveNext())
+	{
+		var oFile = oFiles.item();
+		if(oFile.name.match(/\.paf\.exe$/i)) {
+			++cnt;
+			CopyFile(oFile.Path, BaseDir);
+		}
+	}
+	if(cnt == 0) {
+		WScript.Echo("StarDict portable package is not found.");
+		WScript.Quit(1);
+	}
+}
 
 WScript.Echo("Done.");
