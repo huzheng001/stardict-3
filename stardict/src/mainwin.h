@@ -261,6 +261,7 @@ public:
 	bool IsSearchPanelHasFocus() { return GTK_WIDGET_HAS_FOCUS(eSearch); } 
 
 	void ShowSearchPanel();
+	void HideSearchPanel();
 
 private:
 	GtkButton *btClose;
@@ -268,13 +269,6 @@ private:
 	GtkWidget *hbSearchPanel;
 	ReadWordType selection_readwordtype;
 	
-
-	void HideSearchPanel(void) 
-		{
-			gtk_widget_hide_all(hbSearchPanel);
-		}
-
-
 	static void SelectionCallback(GtkWidget* widget,GtkSelectionData *selection_data, guint time, TextWin *oTextWin);
 	static gboolean on_button_press(GtkWidget * widget, GdkEventButton * event, TextWin *oTextWin);
 	static void on_query_menu_item_activate(GtkMenuItem *menuitem, TextWin *oTextWin);
