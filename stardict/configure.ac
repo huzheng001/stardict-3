@@ -456,6 +456,7 @@ src/win32/acrobat/Makefile
 src/win32/acrobat/sources/Makefile
 src/win32/acrobat/win32/Makefile
 src/win32/nsis/Makefile
+src/win32/PortableApps.com/Makefile
 stardict-plugins/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
 stardict-plugins/stardict-qqwry-plugin/Makefile

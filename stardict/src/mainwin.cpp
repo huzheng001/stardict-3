@@ -1755,16 +1755,16 @@ void ToolWin::SearchCallback(GtkWidget *widget, ToolWin *oToolWin)
 
 void TextWin::OnCloseSearchPanel(GtkWidget *widget, TextWin *oTextWin)
 {
-  oTextWin->HideSearchPanel();
+	oTextWin->HideSearchPanel();
 }
 
 gboolean TextWin::OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
 																	 TextWin *oTextWin)
 {
-  if (event->type==GDK_KEY_PRESS && event->keyval==GDK_Return)
-    gtk_button_clicked(oTextWin->btFind);
+	if (event->type==GDK_KEY_PRESS && event->keyval==GDK_Return)
+		gtk_button_clicked(oTextWin->btFind);
 
-  return FALSE;
+	return FALSE;
 }
 
 void TextWin::OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin)
@@ -1786,47 +1786,51 @@ void TextWin::ShowSearchPanel()
   gtk_widget_grab_focus(GTK_WIDGET(eSearch));
 }
 
+void TextWin::HideSearchPanel()
+{
+	gtk_widget_hide_all(hbSearchPanel);
+}
+
 void TextWin::Create(GtkWidget *vbox)
 {
-  view.reset(new ArticleView(GTK_BOX(vbox)));
+	view.reset(new ArticleView(GTK_BOX(vbox)));
 
-  view->connect_on_link(sigc::mem_fun(gpAppFrame, &AppCore::on_link_click));
-  g_signal_connect(G_OBJECT(view->widget()), "button_press_event",
-		   G_CALLBACK(on_button_press), this);
-  g_signal_connect(G_OBJECT(view->widget()), "selection_received",
-		   G_CALLBACK(SelectionCallback), this);
-  g_signal_connect(G_OBJECT(view->widget()), "populate-popup",
-		   G_CALLBACK(on_populate_popup), this);
+	view->connect_on_link(sigc::mem_fun(gpAppFrame, &AppCore::on_link_click));
+	g_signal_connect(G_OBJECT(view->widget()), "button_press_event",
+		G_CALLBACK(on_button_press), this);
+	g_signal_connect(G_OBJECT(view->widget()), "selection_received",
+		G_CALLBACK(SelectionCallback), this);
+	g_signal_connect(G_OBJECT(view->widget()), "populate-popup",
+		G_CALLBACK(on_populate_popup), this);
 
 	hbSearchPanel = gtk_hbox_new(FALSE, 0);
-  btClose = GTK_BUTTON(gtk_button_new());
-  GtkWidget *image =
-    gtk_image_new_from_stock(GTK_STOCK_CANCEL,
-           GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_widget_show(image);
-  gtk_container_add(GTK_CONTAINER(btClose), image);
-  gtk_button_set_relief(btClose, GTK_RELIEF_NONE);
-  GTK_WIDGET_UNSET_FLAGS(btClose, GTK_CAN_FOCUS);
+	btClose = GTK_BUTTON(gtk_button_new());
+	GtkWidget *image =
+	gtk_image_new_from_stock(GTK_STOCK_CANCEL,
+		GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_widget_show(image);
+	gtk_container_add(GTK_CONTAINER(btClose), image);
+	gtk_button_set_relief(btClose, GTK_RELIEF_NONE);
+	GTK_WIDGET_UNSET_FLAGS(btClose, GTK_CAN_FOCUS);
 	g_signal_connect(G_OBJECT(btClose), "clicked",
-									 G_CALLBACK(OnCloseSearchPanel), this);
+		G_CALLBACK(OnCloseSearchPanel), this);
 	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(btClose), FALSE, FALSE, 3);
 	eSearch = GTK_ENTRY(gtk_entry_new());
 	gtk_widget_set_size_request(GTK_WIDGET(eSearch), 20, -1);
-  g_signal_connect(G_OBJECT(eSearch), "key_press_event",
-									 G_CALLBACK(OnSearchKeyPress), this);
+	g_signal_connect(G_OBJECT(eSearch), "key_press_event",
+		G_CALLBACK(OnSearchKeyPress), this);
 
-  gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(eSearch), TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(eSearch), TRUE, TRUE, 0);
 	btFind = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_FIND));
-  gtk_button_set_relief(btFind, GTK_RELIEF_NONE);
-  GTK_WIDGET_UNSET_FLAGS(btFind, GTK_CAN_FOCUS);
-  g_signal_connect(G_OBJECT(btFind), "clicked",
-									 G_CALLBACK(OnFindSearchPanel), this);
+	gtk_button_set_relief(btFind, GTK_RELIEF_NONE);
+	GTK_WIDGET_UNSET_FLAGS(btFind, GTK_CAN_FOCUS);
+	g_signal_connect(G_OBJECT(btFind), "clicked",
+		G_CALLBACK(OnFindSearchPanel), this);
 
-  gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(btFind), FALSE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(btFind), FALSE, FALSE, 5);
 
-  //gtk_widget_show_all(hbSearchPanel);
-  gtk_box_pack_start(GTK_BOX(vbox), hbSearchPanel, FALSE, FALSE, 0);
-
+	//gtk_widget_show_all(hbSearchPanel);
+	gtk_box_pack_start(GTK_BOX(vbox), hbSearchPanel, FALSE, FALSE, 0);
 }
 
 void TextWin::ShowInitFailed()

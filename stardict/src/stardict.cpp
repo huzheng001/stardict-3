@@ -617,7 +617,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 			oAppCore->oTopWin.grab_focus();
 			oAppCore->TopWinEnterWord();
 		}
-	}	else if (event->type==GDK_KEY_PRESS &&
+	} else if (event->type==GDK_KEY_PRESS &&
 						 event->keyval == 0x20 &&
 						 !oAppCore->oTopWin.has_focus() &&
 						 !oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
@@ -625,17 +625,13 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
 		oAppCore->oTopWin.grab_focus();
+	} else if(event->type==GDK_KEY_PRESS && event->keyval == GDK_Escape) {
+		if(oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus())
+			oAppCore->oMidWin.oTextWin.HideSearchPanel();
+		else
+			oAppCore->new_query_action();
 	} else {
-		switch (event->keyval) {
-		case GDK_Escape:
-			if (event->type==GDK_KEY_PRESS) {
-				oAppCore->new_query_action();
-			}
-			break;
-		default:
-			return_val=false;
-			break;
-		}
+		return_val=false;
 	}
 	return return_val;
 }

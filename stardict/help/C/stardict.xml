@@ -1137,7 +1137,17 @@
 			<term><keycombo><keycap>Escape</keycap></keycombo>
 			</term>
 			<listitem>
-			<para>The same as <keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>.</para>
+				<orderedlist>
+				<listitem>
+				<para>The focus is in Definition area Search bar.</para>
+				<para>Hide the search bar.</para>
+				</listitem>
+				
+				<listitem>
+				<para>Otherwise, this hotkey has the same effect as 
+				<keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>.</para>
+				</listitem>
+				</orderedlist>
 			</listitem>
 			</varlistentry>
 			
