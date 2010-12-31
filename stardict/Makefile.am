@@ -16,6 +16,7 @@ EXTRA_DIST = \
 	dictionary.spec	\
 	treedict.spec	\
 	stardict.ico stardict-uninst.ico stardict-installer.nsi stardict-prepare-installer.js \
+	stardict-editor.ico	\
 	omf.make		\
 	intltool-extract.in 	\
 	intltool-merge.in 	\
