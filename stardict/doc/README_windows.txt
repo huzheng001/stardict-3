@@ -267,6 +267,34 @@ StarDict version
 
 StarDict version for MSVC build can be specified in the msvc_2008\stardictrc.rc.
 
+Two copies of CRT
+=================
+
+When StarDict is build with MS Visual Studio, 
+the resulting application has two copies (maybe more) of C Runtime library.
+The first copy comes with GTK+ libraries, the second is supplied by Visual Studio. 
+The C Runtime library from Visual Studio resides in msvcr90.dll, that is a part of
+Microsoft.VC90.CRT assembly. Where is C Runtime Library that comes with GTK+ library,
+I do not know, but it surely can not be in msvcr90.dll. Having two copies of 
+the library is a headache. There are two copies of environment variables.
+Setting an environment variable with function from one library, does not make 
+that variable set in the other library. For example,
+
+_wputenv(L"LANG=ru") - sets LANG variable to ru in MS C Runtime Library
+g_getenv("LANG") - returns the value of the LANG variable in GTK+ C Runtime Library.
+This may be any value, _wputenv does not change the environment variable in 
+GTK+ C Runtime Library.
+
+We may live with two copies of the library pretty fine aside from special cases.
+In particular we need to synchronize LANG environment variable.
+StarDict Loader sets LANG environment variable to customize GUI interface.
+It specifies the language to use in interface. StarDict loader defines LANG
+variable in MS CRT only, the GTK+ CRT is not available yet.
+If we do nothing about the environment variable LANG in GTK+ CRT library,
+gettext library will use the default language for user interface.
+In order for StarDict loader to influence the GUI translation we must set 
+the LANG variable in the GTK+ CRT too.
+
 ============
 StarDict's win32 port got many experience from ReciteWord (my another project, http://reciteword.sourceforge.net) and Pidgin: http://www.pidgin.im
 

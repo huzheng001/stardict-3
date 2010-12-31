@@ -2361,6 +2361,31 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 }
 #endif
 
+#if defined(_WIN32) && defined(_MSC_VER)
+/* Synchronize environment varaibles in CRTs.
+See section "Two copies of CRT" in doc/README_windows.txt for more details. */
+void synchronize_crt_enviroment(void)
+{
+	const char* varname = "LANG";
+	size_t size;
+	if(getenv_s(&size, NULL, 0, varname)) {
+		g_warning("Unable to get the value of the %s environment variable", varname);
+		return;
+	}
+	if(size == 0)
+		return; // variable is not found
+	std::vector<char> buf(size);
+	if(getenv_s(&size, &buf[0], size, varname)) {
+		g_warning("Unable to get the value of the %s environment variable", varname);
+		return;
+	}
+	if(!g_setenv(varname, &buf[0], TRUE)) {
+		g_warning("Unable to set the %s enviroment variable.", varname);
+		return;
+	}
+}
+#endif
+
 #ifdef _WIN32
 DLLIMPORT int stardict_main(HINSTANCE hInstance, int argc, char **argv)
 #else
@@ -2379,6 +2404,9 @@ int main(int argc,char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	g_thread_init (NULL);
+#if defined(_WIN32) && defined(_MSC_VER)
+	synchronize_crt_enviroment();
+#endif
 #if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 	gtk_set_locale();
 	gtk_init(&argc, &argv);
