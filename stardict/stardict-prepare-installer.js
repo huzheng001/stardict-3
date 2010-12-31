@@ -1,4 +1,4 @@
-/* prepares directory structure for NSIS installer (stardict-installer.nsi file)
+/* prepares StarDict installer
 To run the script, execute the command in Windows Console:
 cscript //nologo stardict-prepare-installer.js
 this script must run in the root StarDict directory
@@ -19,7 +19,7 @@ var InstallRootDir;
 var InstallDir; // application directory, it contains stardict.exe, stardict.dll, etc.
 var MSVSOutputDir;
 var MSVSDir = BaseDir + "msvc_2008\\";
-var NSISLog = "StarDictPortableLaucher.log";
+var NSISLog = "nsis.log";
 var fso = WScript.CreateObject("Scripting.FileSystemObject");
 var shell = WScript.CreateObject("WScript.Shell");
 
@@ -225,13 +225,14 @@ if(!fso.FolderExists(UnixBuildDir)) {
 	WScript.Quit(1);
 }
 
+if(!fso.FileExists(MakeNSISExe)) {
+	WScript.Echo("Unable to find makensis.exe.\n"
+		+	"Path: " + MakeNSISExe + "\n"
+		+	"Use makensis parameter to specify the path.");
+	WScript.Quit(1);
+}
+
 if(Portable) {
-	if(!fso.FileExists(MakeNSISExe)) {
-		WScript.Echo("Unable to find makensis.exe.\n"
-			+	"Path: " + MakeNSISExe + "\n"
-			+	"Use makensis parameter to specify the path.");
-		WScript.Quit(1);
-	}
 	if(!fso.FileExists(PortableInstallerExe)) {
 		WScript.Echo("Unable to find portable installer.\n"
 			+	"Path: " + PortableInstallerExe + "\n"
@@ -388,11 +389,21 @@ if(!Portable) {
 }
 
 if(!Portable) {
+
+	{ // installer
+		var cmd = "\"" + MakeNSISExe + "\" /O" + NSISLog + " stardict-installer.nsi";
+		var status = shell.Run(cmd, 1, true);
+		if(status != 0) {
+			WScript.Echo("Building StarDict installer failed.");
+			WScript.Quit(status);
+		}
+	}
+
 	WScript.Echo("Done.");
 	WScript.Quit(0);
 }
 
-{ // launcher
+{ // StarDict launcher
 	var cmd = "\"" + MakeNSISExe + "\" /O" + NSISLog + " src\\win32\\nsis\\StarDictPortable.nsi";
 	var status = shell.Run(cmd, 1, true);
 	if(status != 0) {
@@ -400,6 +411,16 @@ if(!Portable) {
 		WScript.Quit(status);
 	}
 	CopyFile(BaseDir + "src\\win32\\nsis\\StarDictPortable.exe", InstallRootDir + "StarDictPortable\\");
+}
+
+{ // StarDict Editor launcher
+	var cmd = "\"" + MakeNSISExe + "\" /O" + NSISLog + " src\\win32\\nsis\\StarDictEditorPortable.nsi";
+	var status = shell.Run(cmd, 1, true);
+	if(status != 0) {
+		WScript.Echo("Building StarDict Editor launcher failed.");
+		WScript.Quit(status);
+	}
+	CopyFile(BaseDir + "src\\win32\\nsis\\StarDictEditorPortable.exe", InstallRootDir + "StarDictPortable\\");
 }
 
 { // stardict-dirs.cfg
@@ -453,7 +474,13 @@ CreateFolder(InstallRootDir + "StarDictPortable\\App\\GTK");
 	CopyFile(BaseDir + "src\\win32\\PortableApps.com\\appinfo.ini", appInfoDir + "appinfo.ini");
 	CopyFile(BaseDir + "pixmaps\\stardict_16.png", appInfoDir + "appicon_16.png");
 	CopyFile(BaseDir + "pixmaps\\stardict_32.png", appInfoDir + "appicon_32.png");
+	CopyFile(BaseDir + "pixmaps\\stardict_16.png", appInfoDir + "appicon1_16.png");
+	CopyFile(BaseDir + "pixmaps\\stardict_32.png", appInfoDir + "appicon1_32.png");
+	CopyFile(BaseDir + "pixmaps\\stardict-editor_16.png", appInfoDir + "appicon2_16.png");
+	CopyFile(BaseDir + "pixmaps\\stardict-editor_32.png", appInfoDir + "appicon2_32.png");
 	CopyFile(BaseDir + "stardict.ico", appInfoDir + "appicon.ico");
+	CopyFile(BaseDir + "stardict.ico", appInfoDir + "appicon1.ico");
+	CopyFile(BaseDir + "stardict-editor.ico", appInfoDir + "appicon2.ico");
 }
 
 { // Other
