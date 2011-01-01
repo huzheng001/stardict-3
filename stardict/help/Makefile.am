@@ -18,7 +18,8 @@ DOC_FIGURES = \
 	figures/stardict_notification_area.png	\
 	figures/stardict_full_text_translation.png	\
 	figures/stardict_windows_console.png	\
-	figures/acrobat_toolbar.png
+	figures/acrobat_toolbar.png	\
+	figures/portable_apps_menu.png
 
 DOC_LINGUAS = mk nl ru uk zh_CN zh_TW
 
