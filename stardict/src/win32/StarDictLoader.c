@@ -776,8 +776,10 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 	}
 
 	/* Determine if we're running in portable mode */
-	if (wcsstr(cmdLine, L"--portable-mode")
+	if (wcsstr(cmdLine, L"--portable-mode")) {
+#if 0
 			|| (exe_name != NULL && wcsstr(exe_name, L"-portable.exe"))) {
+#endif
 		printf("Running in PORTABLE mode.\n");
 		portable_mode = TRUE;
 	}
@@ -832,8 +834,11 @@ WinMain (struct HINSTANCE__ *hInstance, struct HINSTANCE__ *hPrevInstance,
 	k = 0;
 	for (i = 0; i < j; i++) {
 		success = FALSE;
+#if 0
 		/* Remove the --portable-mode arg from the args passed to stardict so it doesn't choke */
 		if (wcsstr(szArglist[i], L"--portable-mode") == NULL) {
+#endif
+		{
 			int len = WideCharToMultiByte(CP_UTF8, 0, szArglist[i],
 				-1, NULL, 0, NULL, NULL);
 			if (len != 0) {
