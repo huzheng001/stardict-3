@@ -20,6 +20,10 @@ static gboolean quit_option = FALSE;
 static gchar **query_words = NULL;
 static gchar *dirs_config_option = NULL;
 static gchar *dirs_config_option_pre = NULL;
+#if defined(_WIN32)
+static gboolean portable_mode_option = FALSE;
+static gboolean portable_mode_option_pre = FALSE;
+#endif
 
 static const GOptionEntry options [] =
 {
@@ -39,6 +43,10 @@ static const GOptionEntry options [] =
 #endif
 	{ "dirs-config", 0, 0, G_OPTION_ARG_FILENAME, &dirs_config_option,
 	  N_("StarDict directories configuration file"), N_("config-file") },
+#if defined(_WIN32)
+	{ "portable-mode", 0, 0, G_OPTION_ARG_NONE, &portable_mode_option,
+	  N_("Activate portable mode"), NULL },
+#endif
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_STRING_ARRAY, &query_words, NULL, NULL },
 	{NULL}
 };
@@ -72,6 +80,10 @@ void CmdLineOptions::pre_parse_arguments(int argc, char **argv)
 			else if(strcmp(argv[i], "--dirs-config") == 0 && i + 1 < argc)
 				dirs_config_option_pre = g_strdup(argv[i+1]);
 		}
+#if defined(_WIN32)
+		if(strcmp(argv[i], "--portable-mode") == 0)
+			portable_mode_option_pre = TRUE;
+#endif
 	}
 }
 
@@ -123,3 +135,15 @@ gchar const * CmdLineOptions::get_dirs_config_pre(void)
 {
 	return dirs_config_option_pre;
 }
+
+#if defined(_WIN32)
+gboolean CmdLineOptions::get_portable_mode(void)
+{
+	return portable_mode_option;
+}
+
+gboolean CmdLineOptions::get_portable_mode_pre(void)
+{
+	return portable_mode_option_pre;
+}
+#endif

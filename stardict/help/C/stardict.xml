@@ -1874,6 +1874,18 @@
 		<listitem>
 		<para>Specifies path to the &app_t; directory configuration file. See <xref linkend="stardict-details-dirs"/> for details about &app_t; directories and configuration file.
 		</para>
+		<para>This option is only available in &winedition; of &app_t;.
+		</para>
+		</listitem>
+	</varlistentry>
+		
+	<varlistentry>
+		<term>--portable-mode</term>
+		<listitem>
+		<para>Activate portable mode, see <xref linkend="stardict-portable"/>. Specifying the option is not enough to make &app_t; to be &app_port_t;. You should avoid using this option unless you know what you are doing.
+		</para>
+		<para>This option is only available in &winedition; of &app_t;.
+		</para>
 		</listitem>
 	</varlistentry>
 	</variablelist>

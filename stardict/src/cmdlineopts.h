@@ -17,4 +17,8 @@ public:
 	static gchar const * const* get_query_words(void);
 	static gchar const * get_dirs_config(void);
 	static gchar const * get_dirs_config_pre(void);
+#if defined(_WIN32)
+	static gboolean get_portable_mode(void);
+	static gboolean get_portable_mode_pre(void);
+#endif
 };
