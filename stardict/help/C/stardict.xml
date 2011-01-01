@@ -6,7 +6,9 @@
   <!ENTITY manrevision "3.0.2">
   <!ENTITY date "Nov 2010">
   <!ENTITY app "StarDict">
+  <!ENTITY app_port "StarDict Portable">
   <!ENTITY app_t "<application>StarDict</application>">
+  <!ENTITY app_port_t "<application>StarDict Portable</application>">
   <!ENTITY winedition "Windows edition">
   <!ENTITY gnomeedition "Gnome edition">
   <!ENTITY mdash "&#x2012;">
@@ -2070,6 +2072,270 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 	<para>
 	For default location of the log directory see <xref linkend="stardict-details-dirs"/>, log_dir parameter. &app_t; log files are named like <filename>stardict-<replaceable>process_number</replaceable>.log</filename>. We need to use process numbers to create unique log files, since multiple &app_t; instances may run at the same time. To find the log file belonging to the most recently started instance of &app_t;, consider file creation time.
 	</para>
+	
+	</sect2>
+	
+	<sect2 id="stardict-details-GUI-lang">
+	<title>Interface language</title>
+	<para>
+	This section describes the algorithm used to select interface language in &app_t;.
+	</para>
+	
+	<orderedlist>
+	<!-- stardict-loader project, winpidgin_set_locale function. -->
+	<listitem>
+	<anchor id="GUILangStarDictLoader" xreflabel="1"/>
+	<para>
+	Retrieve <varname>STARDICTLANG</varname> environment variable. Goto <xref linkend="GUILangSetLANG"/> if the variable is defined.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangUserDefLocale" xreflabel="2"/>
+	<para>
+	Retrieve the user default locale
+	(to set the default locale:
+	<menuchoice>
+	<guibutton>Control Panel</guibutton>
+	<guibutton>Regional and Language Options</guibutton>
+	<guibutton>Regional Options</guibutton>
+	<guilabel>Standards and formats</guilabel>
+	<guilabel>Language</guilabel>
+	</menuchoice>).
+	If locale is not defined, use "en".
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangSetLANG" xreflabel="3"/>
+	<para>
+	Assign the language code to the <varname>LANG</varname> environment variable.
+	</para>
+	</listitem>
+	
+	<!-- gettext package, dcigettext.c file, guess_category_value function 
+	The steps below are based on comments in this function. -->
+	<listitem>
+	<anchor id="GUILangGetLANGUAGE" xreflabel="4"/>
+	<para>
+	Retrieve the value of the environment variable <varname>LANGUAGE</varname>.
+	This is a GNU extension.  Its value can be a colon-separated list of locale names.
+	If defined, goto <xref linkend="GUILangAvailableTransl"/>.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangGetPOSIXVars" xreflabel="5"/>
+	<para>
+	The value of the environment variable <varname>LC_ALL</varname>, <varname>LC_xxx</varname>, or <varname>LANG</varname>.
+	More precisely, the first among these that is set to a non-empty value.
+	This is how POSIX specifies it.  The value is a single locale name.
+	If defined, goto <xref linkend="GUILangAvailableTransl"/>.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangGetSystemLangs" xreflabel="6"/>
+	<para>
+	A system-dependent preference list of languages.  Its value can be a
+	colon-separated list of locale names.
+	If defined, goto <xref linkend="GUILangAvailableTransl"/>.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangGetDefaultLocale" xreflabel="7"/>
+	<para>
+	A system-dependent default locale name.
+	If defined, goto <xref linkend="GUILangAvailableTransl"/>.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangAvailableTransl" xreflabel="8"/>
+	<para>
+	Processes the found value as a colon-separated list of language codes. Select the first available language. If none is available, select no translation.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
+	<warning>
+	<para>Steps <xref linkend="GUILangGetLANGUAGE"/> through <xref linkend="GUILangAvailableTransl"/> describe translation selection algorithm of the gettext package. The actual procedure may be different.
+	</para>
+	</warning>
+	
+	<para>
+	The best way to specify interface language of &app_t; is to define <varname>STARDICTLANG</varname> environment variable. It should contain language code. See <filename class="directory">$StarDictDataDir/locale</filename> for the list of supported languages.
+	</para>
+	</sect2>
+	
+	</sect1>
+
+	<sect1 id="stardict-portable">
+	<title>&app_port;</title>
+	<para>&app_port_t; is special edition of &app_t; for Windows that works with any hardware you like (USB flash drive, portable hard drive, etc). Now you can carry &app_t; along with all settings with you. Use them on any Windows computer. All personal data are saved along with application.
+	</para>
+	
+	<para>
+	&app_port_t; relies on the <ulink url="http://portableapps.com" type="http">PortableApps.com Platform</ulink>. It provides convenient shell to start and configure portable applications. On the screenshot below you may see PortableApps.com menu with &app_port_t; and <application>&app; Editor portable</application>. You may change interface language of the menu and &app_port_t;. 
+	To do that click 
+	<menuchoice>
+	<guibutton>Options</guibutton>
+	<guimenu>Language</guimenu>
+	</menuchoice>
+	and select the desired language.
+	</para>
+	
+	<figure id="portable-apps-menu-fig"> 
+	<title>PortableApps.com menu</title> 
+	<screenshot> 
+		<mediaobject> 
+			<imageobject><imagedata fileref="figures/portable_apps_menu.png" format="PNG"/> 
+			</imageobject>
+			<textobject> 
+				<phrase>PortableApps.com menu with &app_port_t;.</phrase>
+			</textobject> 
+		</mediaobject> 
+	</screenshot> 
+	</figure>
+  
+  <sect2 id="stardict-portable-differences">
+  <title>Differences from non-portable version</title>
+  <para>
+  Functionality of &app_port_t; is almost identical to the non-portable version. Only features that ties application to the specific machine are disabled. The list below details the deferences.
+  </para>
+  
+	<variablelist>
+	<title>&app_port; features</title>
+		<varlistentry>
+		<term>WordPick Adobe Acrobat plugin
+		</term>
+		<listitem>
+		<para>WordPick Adobe Acrobat plugin is disabled in portable version. Portable application policies forbids to modify the host machine.</para>
+		</listitem>
+		</varlistentry>
+		
+		<varlistentry>
+		<term>Run &app_t; when Windows starts
+		</term>
+		<listitem>
+		<para>This option is disabled in portable version. It does not make sense to autostart application residing on removable storage.</para>
+		</listitem>
+		</varlistentry>
+	</variablelist>
+	
+	</sect2>
+	
+	<sect2 id="stardict-portable-install">
+	<title>Installing &app_port;</title>
+	<para>
+	This section describes &app_port_t; installation procedure.
+	</para>
+	
+	<orderedlist>
+	<listitem>
+	<para>
+	Download and install <ulink url="http://portableapps.com" type="http">PortableApps.com Suite</ulink> on a USB flash drive or wherever you want.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>
+	Download &app_port_t; package from <ulink url="https://sourceforge.net/projects/stardict/files/" type="http">&app; website</ulink>. The package file ends with <filename>.paf.exe</filename>, for example, <filename>StarDictPortable-stardict.sourceforge.com_3.0.2.paf.exe</filename>.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>
+	Launch PortableApps.com menu.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>
+	Click
+	<menuchoice>
+	<guibutton>Options</guibutton>
+	<guimenu>Install a New Apps</guimenu>
+	</menuchoice>.
+	Select &app_port_t; package you've just downloaded, click <guibutton>OK</guibutton> and proceed with installer.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<para>
+	When installation completes, you will have two new items in the menu: &app_port_t; and <application>&app; Editor portable</application>. You are ready to use &app_port_t;.
+	</para>
+	</listitem>
+	</orderedlist>
+	
+	</sect2>
+	
+	<sect2 id="stardict-portable-no-menu">
+	<title>Launching &app_port; directly</title>
+	
+	<para>
+	You may use &app_port_t; without PortableApps.com menu. In the <filename class="directory">$PortableAppsRoot\PortableApps\StarDictPortable-stardict.sourceforge.com</filename> directory you may find two executables: <filename>StarDictPortable.exe</filename> and <filename>StarDictEditorPortable.exe</filename>, they start &app_port_t; and <application>&app; Editor Portable</application> respectively. <varname>$PortableAppsRoot</varname> here is the directory where PortableApps.com suite was installed, normally this is the root of a drive, like <filename>X:\</filename>.
+	</para>
+	
+	<para>
+	You may pass parameters to &app_port_t; as with normal &app_t;, see <xref linkend="stardict-details-command-line"/>. This maybe useful to enable logging, for example.
+	</para>
+	
+	<caution>
+	<para>
+	Do not start files in the <filename class="directory">$PortableAppsRoot\PortableApps\StarDictPortable-stardict.sourceforge.com\App\StarDict</filename> directory directly! In this case &app_t; runs in normal non-portable mode, it will search applications settings and other data file in usually places on the host machine instead of directories near the portable application. First, your settings will not be found, second, new settings will be saved on the host machine.
+	</para>
+	</caution>
+	
+	</sect2>
+	
+	<sect2 id="stardict-portable-GUI-lang">
+	<title>Interface language</title>
+	<para>
+	This section describes the algorithm used to select interface language in &app_port_t;.
+	</para>
+	
+	<orderedlist>
+	<listitem>
+	<anchor id="GUILangPortableAppsLang" xreflabel="1"/>
+	 <!-- PortableApps.comLocaleglibc environment variable -->
+	<para>Inspect PortableApps.com suite interface language
+	(<menuchoice>
+	<guibutton>Options</guibutton>
+	<guimenu>Language</guimenu>
+	</menuchoice>).
+	If the language is not selected, <!-- ="" --> goto <xref linkend="GUILangSettingsFile"/>.
+	If the language is "en_US", goto <xref linkend="GUILangLanguageVariable"/>.
+	Check if &app_t; provides translation to the specified language. Goto <xref linkend="GUILangLanguageVariable"/> if yes, and goto <xref linkend="GUILangSettingsFile"/> otherwise.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangSettingsFile" xreflabel="2"/>
+	<para>
+	Read the <filename class="directory">$PortableAppsRoot\PortableApps\StarDictPortable-stardict.sourceforge.com\Data\settings\StarDictPortableSettigns.ini</filename> file. Inspect value of the <varname>STARDICTLANG</varname> option in the <varname>Language</varname> section. If the option is not specified, goto <xref linkend="GUILangLaunchStarDict"/>. If the value is "en_US", goto <xref linkend="GUILangLanguageVariable"/>. Check if &app_t; provides translation to the specified language. Goto <xref linkend="GUILangLanguageVariable"/> if yes, and goto <xref linkend="GUILangLaunchStarDict"/> otherwise.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangLanguageVariable" xreflabel="3"/>
+	<para>
+	Assign the language code to the <varname>STARDICTLANG</varname> environment variable.
+	</para>
+	</listitem>
+	
+	<listitem>
+	<anchor id="GUILangLaunchStarDict" xreflabel="4"/>
+	<para>
+	Launch &app_t; executable, namely <filename>stardict.exe</filename>.
+	For subsequent steps see <xref linkend="stardict-details-GUI-lang"/>.
+	</para>
+	</listitem>
+	
+	</orderedlist>
+	
 	</sect2>
 	
 	</sect1>
