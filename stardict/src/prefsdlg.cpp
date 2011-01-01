@@ -41,6 +41,7 @@
 
 #include "prefsdlg.h"
 #include "hotkeyeditor.h"
+#include "cmdlineopts.h"
 
 #ifndef CONFIG_GPE
 enum {
@@ -1216,6 +1217,8 @@ void PrefsDlg::on_setup_mainwin_startup_ckbutton_toggled(GtkToggleButton *button
 #ifdef _WIN32
 void PrefsDlg::on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
+	if(CmdLineOptions::get_portable_mode())
+		return;
 	gboolean b = gtk_toggle_button_get_active(button);
 	HKEY hKEY;
 	LONG lRet;
@@ -1371,8 +1374,10 @@ void PrefsDlg::setup_mainwin_options_page()
 	}
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), autorun);
+	if(CmdLineOptions::get_portable_mode())
+		gtk_widget_set_sensitive(check_button, FALSE);
 	g_signal_connect(G_OBJECT(check_button), "toggled",
-									 G_CALLBACK(on_setup_mainwin_autorun_ckbutton_toggled), this);
+		G_CALLBACK(on_setup_mainwin_autorun_ckbutton_toggled), this);
 #endif
 	hbox = gtk_hbox_new(false, 12);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
