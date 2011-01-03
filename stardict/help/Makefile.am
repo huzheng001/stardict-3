@@ -130,3 +130,9 @@ stardict-uninstall-html:
 		rm -rf $${install_dir}; \
 	done;
 endif
+
+.PHONY: update-po
+update-po:
+	for lc in $(DOC_LINGUAS); do \
+		$(_xml2po) -u $(srcdir)/$${lc}/$${lc}.po $(srcdir)/C/$(DOC_MODULE).xml; \
+	done;
