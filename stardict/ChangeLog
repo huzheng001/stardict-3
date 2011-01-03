@@ -1,4 +1,12 @@
 2010.
+Update documentation.
+Revive StarDict Portable for Windows. StarDict and StarDict Editor are made compatible with PortableApps.com Platform (http://portableapps.com/).
+Change StarDict configuration on Windows, store relative paths in configuration file if possible. The changes effects options that contains paths of dictionaries, plugins, skins, tts's, history file, exports file, etc.
+enhance StarDict directories configuration. Using configuration file we can redirect almost any directory used by StarDict. That is we can change where the application saves and loads user settings, cache file for dictionaries, plugins, dictionaries, etc.
+change StarDict and StarDict Editor for Windows to load GTK Runtime from the application directory. This change improves application robustness. StarDict always load the version of GTK Runtime it was build with. Updating StarDict does not effect other Windows applications depending on GTK Runtime, and updating system wide GTK Runtime, if any, cannot break StarDict.
+change StarDict and StarDict Editor for Windows. Install CRT assembly into the application directory when the installer do not have administrative rights. This allows to install StarDict by a user without administrative rights into its home directory, for example.
+fix and update Dict.cn plugin (interface of the web service has changed). Show a list of suggested words when the requested word is not found.
+StarDict-3.0.2-RC3.2 and StarDict-tools-3.0.2-RC3.2 released
 Switch to MS Visual Studio 2008 to build StarDict under Windows.
 StarDict-3.0.2-RC2 and StarDict-tools-3.0.2-RC2 released.
 Add stardict-bin2text and stardict_text2bin tools to stardict-editor.
