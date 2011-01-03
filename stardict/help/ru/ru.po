@@ -66,9 +66,8 @@ msgid ""
 msgstr ""
 
 #: C/stardict.xml:29(title) C/stardict.xml:126(revnumber)
-#, fuzzy
 msgid "StarDict Manual V3.0.2"
-msgstr "StarDict Руководство В2.4.2"
+msgstr "StarDict Руководство 3.0.2"
 
 #: C/stardict.xml:31(year)
 msgid "2003"
@@ -133,7 +132,7 @@ msgstr ""
 
 #: C/stardict.xml:63(orgname)
 msgid "Stanford University"
-msgstr ""
+msgstr "Стэнфордский университет"
 
 #: C/stardict.xml:64(email)
 msgid "wsr23@stanford.edu"
@@ -141,7 +140,7 @@ msgstr ""
 
 #: C/stardict.xml:66(contrib)
 msgid "Cleaning up English"
-msgstr ""
+msgstr "Исправление английского текста"
 
 #: C/stardict.xml:70(firstname)
 msgid "Новица"
@@ -229,16 +228,15 @@ msgstr "StarDict Руководство В2.4.2"
 
 #: C/stardict.xml:119(date)
 msgid "Nov 2003"
-msgstr ""
+msgstr "Ноябрь 2003"
 
 #: C/stardict.xml:127(date)
 msgid "Nov 2010"
-msgstr ""
+msgstr "Ноябрь 2010"
 
 #: C/stardict.xml:130(releaseinfo)
-#, fuzzy
 msgid "This manual describes version 3.0.2 of StarDict."
-msgstr "В данном руководстве описывается версия 2.4.2 программы StarDict."
+msgstr "В данном руководстве описывается версия 3.0.2 программы StarDict."
 
 #: C/stardict.xml:133(title)
 msgid "Feedback"
@@ -256,7 +254,7 @@ msgstr ""
 
 #: C/stardict.xml:141(para)
 msgid "User manual for the StarDict dictionary."
-msgstr ""
+msgstr "Руководство пользователя словаря StarDict"
 
 #: C/stardict.xml:145(primary)
 msgid "StarDict"
@@ -286,9 +284,8 @@ msgid "Getting Started"
 msgstr "Начало"
 
 #: C/stardict.xml:163(title)
-#, fuzzy
 msgid "Starting <application>StarDict</application>"
-msgstr "<application>StarDict</application> можно запустить следующим образом:"
+msgstr "Запуск <application>StarDict</application>"
 
 #: C/stardict.xml:165(para)
 msgid ""
@@ -297,7 +294,7 @@ msgstr "<application>StarDict</application> можно запустить сле
 
 #: C/stardict.xml:169(term)
 msgid "<guimenu>Applications</guimenu> menu"
-msgstr ""
+msgstr "Меню <guimenu>Applications</guimenu>"
 
 #: C/stardict.xml:171(para)
 msgid ""
@@ -314,17 +311,16 @@ msgstr "Командная строка"
 #: C/stardict.xml:177(para)
 msgid "Type <command>stardict</command>, then press <keycap>Return</keycap>."
 msgstr ""
-"Напечатайте <command>stardict</command>, затем нажмите <keycap>Return</"
+"Введите <command>stardict</command>, затем нажмите <keycap>Return</"
 "keycap>."
 
 #: C/stardict.xml:178(para)
-#, fuzzy
 msgid "You can specify a word to query too:"
-msgstr "Можно указать также слово для поиска :"
+msgstr "Можно указать также слово для поиска:"
 
 #: C/stardict.xml:182(replaceable)
 msgid "word"
-msgstr ""
+msgstr "слово"
 
 #: C/stardict.xml:182(command) C/stardict.xml:188(command)
 #: C/stardict.xml:194(command)
@@ -332,18 +328,16 @@ msgid "stardict <placeholder-1/>"
 msgstr ""
 
 #: C/stardict.xml:184(para)
-#, fuzzy
 msgid "or a Glob-style pattern matching string:"
-msgstr "или шаблон для поиска :"
+msgstr "или шаблон для поиска:"
 
 #: C/stardict.xml:188(replaceable)
 msgid "wo?d*"
 msgstr ""
 
 #: C/stardict.xml:190(para)
-#, fuzzy
 msgid "or do a fuzzy query:"
-msgstr "или сделать нечёткий запрос :"
+msgstr "или выполнить нечёткий запрос:"
 
 #: C/stardict.xml:194(replaceable)
 msgid "/word"
@@ -358,43 +352,46 @@ msgid ""
 "<application>StarDict</application>, queries the word in that instance if "
 "one was supplied on the command line, then terminates."
 msgstr ""
+"Если <application>StarDict</application> уже запушен. В Windows "
+"версии <application>StarDict</application> активирует первый экземпляр "
+"<application>StarDict</application>, затем завершается. В Gnome версии "
+"<application>StarDict</application> активирует первый экземпляр "
+"<application>StarDict</application>, запрашивает слово в этом экземпляре (если "
+"оно было указано в командной строке), затем завершается."
 
 #: C/stardict.xml:205(para)
 msgid ""
 "See <xref linkend=\"stardict-details-command-line\"/> for complete "
 "description of command line options."
 msgstr ""
+"Смотри <xref linkend=\"stardict-details-command-line\"/> для полного "
+"описания опций командной строки.."
 
 #: C/stardict.xml:210(title)
-#, fuzzy
 msgid "<application>StarDict</application> Main window"
-msgstr "<application>StarDict</application> иконка области уведомления"
+msgstr "Главное окно <application>StarDict</application>"
 
 #: C/stardict.xml:212(para)
-#, fuzzy
 msgid ""
 "When you start <application>StarDict</application>, the following window "
 "appears."
 msgstr ""
-"Когда запустите <application>StarDict</application>, появится следующее окно."
+"Когда вы запускаете <application>StarDict</application>, появляется следующее окно."
 
 #: C/stardict.xml:216(title)
-#, fuzzy
 msgid "<application>StarDict</application> Main Window"
-msgstr "<application>StarDict</application> иконка области уведомления"
+msgstr "Главное окно <application>StarDict</application>"
 
 #: C/stardict.xml:223(phrase)
-#, fuzzy
 msgid ""
 "Shows <application>StarDict</application> main window. Contains Search "
 "field, Tool buttons, Word list, Definition area and Setting buttons."
 msgstr ""
-"Показывает StarDict главное окно. Содержит строку запроса, кнопки "
+"Показывает главное окно <application>StarDict</application>. Содержит строку запроса, кнопки "
 "инструментов, список слов, область перевода и кнопки настроек."
 
 #. ==== End of Figure ====
 #: C/stardict.xml:230(para)
-#, fuzzy
 msgid ""
 "The <application>StarDict</application><firstterm>Main window</firstterm> "
 "consists of the following elements:"
@@ -403,7 +400,7 @@ msgstr ""
 
 #: C/stardict.xml:233(term)
 msgid "Top bar"
-msgstr ""
+msgstr "Верхняя панель"
 
 #: C/stardict.xml:235(para)
 msgid ""
@@ -420,18 +417,16 @@ msgid "Clears the Search field."
 msgstr ""
 
 #: C/stardict.xml:247(firstterm)
-#, fuzzy
 msgid "Search field"
-msgstr "Поиск в интернете"
+msgstr "Поисковое поле"
 
 #: C/stardict.xml:249(para)
-#, fuzzy
 msgid ""
 "Use the Search field to enter the word that you want to look up. You can "
 "also access recently-queried words through the dropdown box."
 msgstr ""
-"Используйте данное поле для ввода слов, которые хотите искать. Также, в "
-"выпадающем списке отображены последние запрошенные слова."
+"Используйте поле поиска для ввода слов, которые хотите найти. "
+"В выпадающем списке отображены последние запрошенные слова."
 
 #: C/stardict.xml:256(guilabel)
 msgid "Fuzzy Query"
@@ -452,17 +447,15 @@ msgid ""
 msgstr ""
 
 #: C/stardict.xml:272(guilabel)
-#, fuzzy
 msgid "Main menu"
-msgstr "Главное окно"
+msgstr "Главное меню"
 
 #: C/stardict.xml:274(para)
-#, fuzzy
 msgid ""
 "A button on the right end of the Top bar. It pops up the "
 "<application>StarDict</application> Main menu."
 msgstr ""
-"Настройки шрифта войдут в силу только после перезапуска "
+"Кнопка в правом углу верхней панели. Она открывает главное меню "
 "<application>StarDict</application>."
 
 #: C/stardict.xml:284(term)
@@ -480,9 +473,8 @@ msgid "Word list"
 msgstr "Список слов"
 
 #: C/stardict.xml:292(para)
-#, fuzzy
 msgid "Opens a list words that have been found in search."
-msgstr "Отображает слова которые найдены при поиске."
+msgstr "Открывается список слов, которые были найдены при поиске."
 
 #: C/stardict.xml:298(guilabel)
 msgid "Results list"
@@ -507,9 +499,8 @@ msgid ""
 msgstr ""
 
 #: C/stardict.xml:314(guilabel)
-#, fuzzy
 msgid "Dictionary groups"
-msgstr "Словарь"
+msgstr "Группы словарей"
 
 #: C/stardict.xml:316(para)
 msgid ""
@@ -537,9 +528,8 @@ msgid "The left part of the bar in the order from left to right:"
 msgstr ""
 
 #: C/stardict.xml:341(term)
-#, fuzzy
 msgid "<guilabel>Scan selection</guilabel> checkbox"
-msgstr "<guilabel>Поиск</guilabel> строка запроса"
+msgstr "<guilabel>Поиск выделенного</guilabel> checkbox"
 
 #: C/stardict.xml:343(para)
 msgid ""
@@ -554,20 +544,18 @@ msgid "Info"
 msgstr ""
 
 #: C/stardict.xml:354(para)
-#, fuzzy
 msgid ""
 "Shows an introduction to using <application>StarDict</application> in the "
 "Definition area."
-msgstr "<application>StarDict</application> можно запустить следующим образом:"
+msgstr ""
 
 #: C/stardict.xml:360(guilabel)
 msgid "Quit"
 msgstr ""
 
 #: C/stardict.xml:362(para)
-#, fuzzy
 msgid "Quits <application>StarDict</application>."
-msgstr "<application>StarDict</application> иконка области уведомления."
+msgstr "Закрыть <application>StarDict</application>."
 
 #: C/stardict.xml:368(para)
 msgid "The right part of the bar in the order from left to right:"
@@ -592,10 +580,9 @@ msgid "StarDict project website"
 msgstr ""
 
 #: C/stardict.xml:382(para)
-#, fuzzy
 msgid ""
 "Opens <application>StarDict</application> project website in a web browser."
-msgstr "<application>StarDict</application> иконка области уведомления."
+msgstr "Открыть веб-сайт проекта <application>StarDict</application> в веб-браузере."
 
 #: C/stardict.xml:388(guilabel)
 msgid "Manage dictionaries"
@@ -674,9 +661,8 @@ msgid "Show pop-up menu."
 msgstr ""
 
 #: C/stardict.xml:458(firstterm)
-#, fuzzy
 msgid "Definition area toolbar"
-msgstr "Область перевода"
+msgstr "Панель инструментов области перевода"
 
 #: C/stardict.xml:459(para)
 msgid ""
@@ -744,9 +730,8 @@ msgid "Festival TTS plugin."
 msgstr ""
 
 #: C/stardict.xml:515(guimenuitem)
-#, fuzzy
 msgid "Command TTS"
-msgstr "Командная строка"
+msgstr "Команда TTS"
 
 #: C/stardict.xml:517(para)
 msgid ""
