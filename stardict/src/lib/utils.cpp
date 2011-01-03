@@ -33,6 +33,9 @@
 #elif defined(_WIN32)
 #  include <gdk/gdkwin32.h>
 #  include <Shlwapi.h>
+#  include <io.h>
+#  include <Fcntl.h>
+#  include <ERRNO.H>
 #endif
 
 #include "my_global.h"
@@ -705,6 +708,248 @@ std::string build_path(const std::string& path1, const std::string& path2)
 	else
 		res.append(path2);
 	return res;
+}
+
+std::string create_temp_file(void)
+{
+#ifdef _WIN32
+	/* g_file_open_tmp does not work reliably on Windows
+	Use platform specific API here. */
+	{
+		UINT uRetVal   = 0;
+		DWORD dwRetVal = 0;
+		TCHAR szTempFileName[MAX_PATH];
+		TCHAR lpTempPathBuffer[MAX_PATH];
+		dwRetVal = GetTempPath(MAX_PATH, lpTempPathBuffer);
+		if (dwRetVal > MAX_PATH || (dwRetVal == 0))
+			return "";
+
+		uRetVal = GetTempFileName(lpTempPathBuffer, // directory for tmp files
+			TEXT("temp"),     // temp file name prefix
+			0,                // create unique name
+			szTempFileName);  // buffer for name
+		if (uRetVal == 0)
+			return "";
+		std::string tmp_url_utf8;
+		std::string tmp_url;
+		if(!windows_to_utf8(szTempFileName, tmp_url_utf8)
+			|| !utf8_to_file_name(tmp_url_utf8, tmp_url))
+			return "";
+		FILE * f = g_fopen(tmp_url.c_str(), "wb");
+		if(!f)
+			return "";
+		fwrite(" ", 1, 1, f);
+		fclose(f);
+		return tmp_url;
+	}
+#else
+	{
+		std::string tmp_url;
+		gchar * buf = NULL;
+		gint fd = g_file_open_tmp(NULL, &buf, NULL);
+		if(fd == -1)
+			return "";
+		tmp_url = buf;
+		g_free(buf);
+		write(fd, " ", 1);
+		close(fd);
+		return tmp_url;
+	}
+#endif
+}
+
+/* based on g_mkstemp_full 
+#if defined(_WIN32)
+	flags is type of operation allowed parameter of _wsopen_s function
+	mode is permission settings parameter of _wsopen_s function
+#else
+	for the meaning of flags and mode parameters see g_mkstemp_full function
+#endif
+*/
+gint
+stardict_mkstemp_full (gchar *tmpl,
+	int    flags,
+	int    mode)
+{
+	char *XXXXXX;
+	int count, fd;
+	static const char letters[] =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	static const int NLETTERS = sizeof (letters) - 1;
+	glong value;
+	GTimeVal tv;
+	static int counter = 0;
+
+	g_return_val_if_fail (tmpl != NULL, -1);
+
+
+	/* find the last occurrence of "XXXXXX" */
+	XXXXXX = g_strrstr (tmpl, "XXXXXX");
+
+	if (!XXXXXX || strncmp (XXXXXX, "XXXXXX", 6))
+	{
+		errno = EINVAL;
+		return -1;
+	}
+#if defined(_WIN32)
+	std::string tmpl_utf8;
+	if(!file_name_to_utf8(tmpl, tmpl_utf8))
+		return -1;
+	std_win_string tmpl_win;
+	if(!utf8_to_windows(tmpl_utf8, tmpl_win))
+		return -1;
+	size_t XXXXXXind = tmpl_win.rfind(TEXT("XXXXXX"));
+	if(XXXXXXind == std_win_string::npos)
+		return -1;
+#endif
+
+	/* Get some more or less random data.  */
+	g_get_current_time (&tv);
+	value = (tv.tv_usec ^ tv.tv_sec) + counter++;
+
+	for (count = 0; count < 100; value += 7777, ++count)
+	{
+		glong v = value;
+
+		/* Fill in the random bits.  */
+		XXXXXX[0] = letters[v % NLETTERS];
+		v /= NLETTERS;
+		XXXXXX[1] = letters[v % NLETTERS];
+		v /= NLETTERS;
+		XXXXXX[2] = letters[v % NLETTERS];
+		v /= NLETTERS;
+		XXXXXX[3] = letters[v % NLETTERS];
+		v /= NLETTERS;
+		XXXXXX[4] = letters[v % NLETTERS];
+		v /= NLETTERS;
+		XXXXXX[5] = letters[v % NLETTERS];
+
+#if defined(_WIN32)
+		tmpl_win[XXXXXXind + 0] = (TCHAR)XXXXXX[0];
+		tmpl_win[XXXXXXind + 1] = (TCHAR)XXXXXX[1];
+		tmpl_win[XXXXXXind + 2] = (TCHAR)XXXXXX[2];
+		tmpl_win[XXXXXXind + 3] = (TCHAR)XXXXXX[3];
+		tmpl_win[XXXXXXind + 4] = (TCHAR)XXXXXX[4];
+		tmpl_win[XXXXXXind + 5] = (TCHAR)XXXXXX[5];
+		errno_t err = _wsopen_s(&fd, tmpl_win.c_str(),
+			flags | _O_CREAT | _O_EXCL,
+			_SH_DENYWR, mode);
+		if(err == EEXIST || err == EACCES)
+			continue;
+		if(err != 0)
+			return -1;
+		if(fd >= 0)
+			return fd;
+#else
+		/* tmpl is in UTF-8 on Windows, thus use g_open() */
+		fd = g_open (tmpl, flags | O_CREAT | O_EXCL, mode);
+
+		if (fd >= 0)
+			return fd;
+		else if (errno != EEXIST)
+			/* Any other error will apply also to other names we might
+			*  try, and there are 2^32 or so of them, so give up now.
+			*/
+			return -1;
+#endif
+	}
+
+	/* We got out of the loop because we ran out of combinations to try.  */
+	errno = EEXIST;
+	return -1;
+}
+
+/* based on g_mkstemp */
+gint
+stardict_mkstemp (gchar *tmpl)
+{
+#if defined(_WIN32)
+	return stardict_mkstemp_full (tmpl, _O_RDWR | _O_BINARY, _S_IREAD | _S_IWRITE);
+#else
+	return stardict_mkstemp_full (tmpl, O_RDWR | O_BINARY, 0600);
+#endif
+}
+
+/* based on g_file_open_tmp */
+gint
+stardict_file_open_tmp (const gchar  *tmpl,
+				 gchar       **name_used,
+				 GError      **error)
+{
+	int retval;
+	const char *tmpdir;
+	const char *sep;
+	char *fulltemplate;
+	const char *slash;
+
+	if (tmpl == NULL)
+		tmpl = ".XXXXXX";
+
+	if ((slash = strchr (tmpl, G_DIR_SEPARATOR)) != NULL
+#ifdef G_OS_WIN32
+		|| (strchr (tmpl, '/') != NULL && (slash = "/"))
+#endif
+		)
+	{
+		gchar *display_tmpl = g_filename_display_name (tmpl);
+		char c[2];
+		c[0] = *slash;
+		c[1] = '\0';
+
+		g_set_error (error,
+			G_FILE_ERROR,
+			G_FILE_ERROR_FAILED,
+			_("Template '%s' invalid, should not contain a '%s'"),
+			display_tmpl, c);
+		g_free (display_tmpl);
+
+		return -1;
+	}
+
+	if (strstr (tmpl, "XXXXXX") == NULL)
+	{
+		gchar *display_tmpl = g_filename_display_name (tmpl);
+		g_set_error (error,
+			G_FILE_ERROR,
+			G_FILE_ERROR_FAILED,
+			_("Template '%s' doesn't contain XXXXXX"),
+			display_tmpl);
+		g_free (display_tmpl);
+		return -1;
+	}
+
+	tmpdir = g_get_tmp_dir ();
+
+	if (G_IS_DIR_SEPARATOR (tmpdir [strlen (tmpdir) - 1]))
+		sep = "";
+	else
+		sep = G_DIR_SEPARATOR_S;
+
+	fulltemplate = g_strconcat (tmpdir, sep, tmpl, NULL);
+
+	retval = stardict_mkstemp (fulltemplate);
+
+	if (retval == -1)
+	{
+		int save_errno = errno;
+		gchar *display_fulltemplate = g_filename_display_name (fulltemplate);
+
+		g_set_error (error,
+			G_FILE_ERROR,
+			g_file_error_from_errno (save_errno),
+			_("Failed to create file '%s': %s"),
+			display_fulltemplate, g_strerror (save_errno));
+		g_free (display_fulltemplate);
+		g_free (fulltemplate);
+		return -1;
+	}
+
+	if (name_used)
+		*name_used = fulltemplate;
+	else
+		g_free (fulltemplate);
+
+	return retval;
 }
 
 static const char* html_entrs[] =     { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };
