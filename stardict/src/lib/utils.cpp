@@ -28,6 +28,7 @@
 #include <cstdlib>
 #include <gtk/gtk.h>
 #include <fcntl.h>
+#include <cerrno>
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
