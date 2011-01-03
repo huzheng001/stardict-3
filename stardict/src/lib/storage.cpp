@@ -128,7 +128,13 @@ void FileHolder::clear(void)
  * 2. may be a string with "XXXXXX" substring indicating variable part
  * 3. may be a simple string, then "XXXXXX" will be added to the front
  * 
- * fh - file handle, close it with close() when not needed. 
+ * fh - file handle, close it with 
+#if defined(_WIN32)
+ * _close()
+#else
+ * close() 
+#endif
+ * when not needed. 
  * -1 if file open failed. */
 static FileHolder open_temp_file(const std::string &pattern, gint &fh)
 {
@@ -138,7 +144,7 @@ static FileHolder open_temp_file(const std::string &pattern, gint &fh)
 			name_pattern.insert(0, "XXXXXX");
 	}
 	gchar * tmp_url = NULL;
-	fh = g_file_open_tmp(name_pattern.empty() ? NULL : name_pattern.c_str(), 
+	fh = stardict_file_open_tmp(name_pattern.empty() ? NULL : name_pattern.c_str(), 
 		&tmp_url, NULL);
 	FileHolder file(fh == -1 ? "" : tmp_url, true);
 	g_free(tmp_url);
@@ -770,7 +776,7 @@ FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 	FileHolder file(open_temp_file(name_pattern, fd));
 	if(file.empty())
 		return file;
-#ifdef _MSC_VER
+#ifdef _WIN32
 	_write(fd, data+sizeof(guint32), entry_size);
 	_close(fd);
 #else

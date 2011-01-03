@@ -118,6 +118,30 @@ extern std::string dir_separator_fs_to_db(const std::string& path);
 extern std::string dir_separator_db_to_fs(const std::string& path);
 #endif
 extern std::string build_path(const std::string& path1, const std::string& path2);
+/* Create a new temporary file. Return file name in file name encoding.
+Return an empty string if file cannot be created. */
+std::string create_temp_file(void);
+/* stardict_mkstemp_full, stardict_mkstemp, stardict_file_open_tmp
+functions were created after g_mkstemp_full, g_mkstemp, g_file_open_tmp
+respectively. Implementation is identical to glib functions besides 
+on Windows platform new functions use native Windows API. 
+In particular _wsopen_s is called instead of g_open on Windows. 
+g_open works on Windows, but we cannot close the returned handle properly.
+The handle must be closed with close() function from GTK+ CRL, 
+but we have no access to it. We only have _close() from MS CRL, 
+it cannot close the handler returned from other CRL. 
+When StarDict is build with Visual Studio we have two copies of CRL:
+one from Microsoft and one from GTK+ runtime. */
+gint
+stardict_mkstemp_full (gchar *tmpl,
+	int    flags,
+	int    mode);
+gint
+stardict_mkstemp (gchar *tmpl);
+gint
+stardict_file_open_tmp (const gchar  *tmpl,
+				 gchar       **name_used,
+				 GError      **error);
 
 void html_decode(const char *str, std::string& decoded);
 void GetPureEnglishAlpha(char *dst, const char *src); // not used
