@@ -24,8 +24,10 @@
 #include <cstring>
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include <cstdlib>
 #include <gtk/gtk.h>
+#include <fcntl.h>
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
@@ -34,8 +36,11 @@
 #  include <gdk/gdkwin32.h>
 #  include <Shlwapi.h>
 #  include <io.h>
-#  include <Fcntl.h>
 #  include <ERRNO.H>
+#endif
+
+#ifndef O_BINARY
+#define O_BINARY 0
 #endif
 
 #include "my_global.h"
