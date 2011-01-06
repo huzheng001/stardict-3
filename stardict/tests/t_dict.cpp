@@ -33,6 +33,7 @@
 
 #include "file.hpp"
 #include "lib.h"
+#include "iappdirs.h"
 
 typedef std::vector<Dict *> dicts_list_t;
 
@@ -91,6 +92,25 @@ static bool test_dict_lookup_success(Dict *d)
 		}
 	}
 	return true;
+}
+
+namespace {
+	class TestAppDirs : public IAppDirs {
+	public:
+		virtual std::string get_user_config_dir(void) const {
+			return g_get_tmp_dir();
+		}
+		virtual std::string get_user_cache_dir(void) const {
+			return g_get_tmp_dir();
+		}
+		virtual std::string get_data_dir(void) const {
+			return g_get_tmp_dir();
+		}
+		TestAppDirs() {
+			app_dirs = this;
+		}
+	} g_test_app_dirs;
+
 }
 
 int main(int argc, char *argv[])
