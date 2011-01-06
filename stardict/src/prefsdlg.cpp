@@ -348,7 +348,7 @@ void PrefsDlg::on_setup_dictionary_scan_clipboard_ckbutton_toggled(GtkToggleButt
 	conf->set_bool_at("dictionary/scan_clipboard", b);
 }
 #endif
-
+#ifndef CONFIG_DARWIN
 void PrefsDlg::on_setup_dictionary_use_scan_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
 	gboolean b = gtk_toggle_button_get_active(button);
@@ -363,7 +363,7 @@ void PrefsDlg::on_setup_dictionary_use_scan_hotkey_ckbutton_toggled(GtkToggleBut
 	}
 	conf->set_bool_at("dictionary/use_scan_hotkey", b);
 }
-
+#endif
 void PrefsDlg::on_setup_dictionary_scan_combobox_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
 {
   gint key = gtk_combo_box_get_active(combobox);
@@ -1248,7 +1248,7 @@ void PrefsDlg::on_setup_mainwin_autorun_ckbutton_toggled(GtkToggleButton *button
 	}
 }
 #endif
-
+#ifndef CONFIG_DARWIN
 void PrefsDlg::on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
 	gboolean b = gtk_toggle_button_get_active(button);
@@ -1263,7 +1263,7 @@ void PrefsDlg::on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled(GtkToggle
 	}
 	conf->set_bool_at("dictionary/use_mainwindow_hotkey", b);
 }
-
+#endif
 void PrefsDlg::on_setup_mainwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg)
 {
 	gint transparent = (gint)gtk_range_get_value(range);
