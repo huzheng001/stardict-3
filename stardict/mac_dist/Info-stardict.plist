@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>10.3.9</key>
+	<string>LSMinimumSystemVersion</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>StarDict</string>
+	<key>CFBundleExecutable</key>
+	<string>StarDict</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Stardict 1.7.13 Copyright 2007</string>
+	<key>CFBundleIconFile</key>
+	<string>Stardict.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.stardict</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>StarDict</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.7.13</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.7.13</string>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>APP_BUNDLER</key>
+		<string>Platypus-3.2</string>
+	</dict>
+	<key>LSHasLocalizedDisplayName</key>
+	<false/>
+	<key>LSUIElement</key>
+	<false/>
+	<key>NSAppleScriptEnabled</key>
+	<false/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Stardict 1.7.13 Copyright 2007</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
