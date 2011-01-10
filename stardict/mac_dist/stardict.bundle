@@ -52,6 +52,14 @@
 
   <main-binary>${prefix}/bin/stardict</main-binary>
 
+  <binary>
+    ${prefix}/share/stardict/pixmaps/*.png
+  </binary>
+
+  <binary>
+    ${prefix}/share/pixmaps/stardict.png
+  </binary>
+
   <!-- Copy in GTK+ modules.  Note the ${gtkdir} macro, which expands
        to the correct library subdirectory for the specified gtk
        version.
