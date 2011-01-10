@@ -28,7 +28,7 @@ if test ! -d /tmp/skl; then
 	mkdir /tmp/skl
 fi
 
-ln -s $bundle_res /tmp/skl/StarDict.app
+ln -s "$bundle_res" /tmp/skl/StarDict.app
 
 export DYLD_LIBRARY_PATH="$bundle_lib"
 export XDG_CONFIG_DIRS="$bundle_etc"/xdg
@@ -41,6 +41,7 @@ export GTK2_RC_FILES="$bundle_etc/gtk-2.0/gtkrc"
 export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
 export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 export PANGO_RC_FILE="$bundle_etc/pango/pangorc"
+export FONTCONFIG_PATH=/tmp/skl/StarDict.app/etc/fonts
 
 APP=name
 I18NDIR="$bundle_data/locale"
