@@ -124,7 +124,7 @@
 		</revision>
 		<revision>
 			<revnumber>&app; Manual V3.0.2</revnumber>
-			<date>Nov 2010</date>
+			<date>Jan 2011</date>
 		</revision>
 	</revhistory>
 	<releaseinfo> This manual describes version &appversion; of &app;.
@@ -1179,6 +1179,80 @@
 			
 		</variablelist>
 	</sect2>
+	
+  <sect2 id="stardict-usage-add-dicts">
+    <title>Installing new dictionaries</title>
+    <para>Dictionaries for &app_t; you download are normally packed in archives. 
+    You must unpack them and copy into one of the &app_t; dictionary directories.
+    If you simply copy an archive file into the dictionary directory, &app_t; will not find the dictionary. It is recommended to place each dictionary in its own directory. 
+    You may build a hierarchy of directories to organize your dictionary collection.
+    &app_t; search directories recursively. See also <xref linkend="stardict-details-dictionaries"/>.
+    </para>
+    
+  <orderedlist>
+  <title>Installing a dictionary</title>
+  <listitem>
+  <para>Download a dictionary. Normally a dictionary is packed in an archive file, for example, <filename>WineEnRu.zip</filename>.
+  </para>
+  </listitem>
+  
+  <listitem>
+  <para>Unpack the archive in a new directory. You may name the directory after the archive name, though that is not required.
+  </para>
+    <screen>
+WineEnRu/WineEnRu.dict
+WineEnRu/WineEnRu.idx
+WineEnRu/WineEnRu.ifo</screen>
+  </listitem>
+  
+  <listitem>
+  <para>Copy the dictionary directory into one of &app_t; dictionary directories, see <xref linkend="stardict-details-dictionaries-dirs"/>.
+  </para>
+  </listitem>
+  
+  <listitem>
+  <para>Restart &app_t;. The new dictionary will be added into the default dictionary group.
+  </para>
+  </listitem>
+  
+  </orderedlist>
+
+  <caution>
+  <title>Broken dictionaries</title>
+  <para>Some dictionaries you may find on Internet violate restrictions of &app_t; dictionary file format. Using such a dictionary may result in &app_t; crash. If &app_t; becomes unstable, check your dictionaries, especially new ones, with <application>&app; Editor</application> or <application>stardict-verify</application> command line tool.
+  </para>
+  </caution>
+  
+  </sect2>
+
+  <sect2 id="stardict-usage-remove-dicts">
+    <title>Removing dictionaries</title>
+    <para>To remove a dictionary it's enough to remove all files belonging to that dictionary.
+    All files of a dictionary share the same base name, for example.
+    </para>
+    <screen>
+WineEnRu.dict
+WineEnRu.idx
+WineEnRu.idx.oft
+WineEnRu.ifo</screen>
+    <para>Some dictionaries may include resource database that is named differently. For complete list of file see <xref linkend="stardict-details-dictionaries"/>. If you follow the rule "one dictionary &mdash; one directory", removing a dictionary will be easer.
+    </para>
+    
+  <orderedlist>
+  <title>Removing a dictionary</title>
+  <listitem>
+  <para>Quit &app_t;. Make sure that &app_t; has really terminated, not just minimized into tray icon!
+  </para>
+  </listitem>
+  
+  <listitem>
+  <para>Remove dictionary files.
+  </para>
+  </listitem>
+  </orderedlist>
+  
+  </sect2>
+  
   </sect1>
   
   
@@ -2180,6 +2254,165 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
 	<para>
 	The best way to specify interface language of &app_t; is to define <varname>STARDICTLANG</varname> environment variable. It should contain language code. See <filename class="directory">$StarDictDataDir/locale</filename> for the list of supported languages.
 	</para>
+	</sect2>
+	
+	<sect2 id="stardict-details-dictionaries">
+	<title>&app; dictionaries</title>
+    <para>
+    &app_t; supports two types of dictionaries: index (normal) dictionaries and tree dictionaries.
+    The vast majority of dictionaries for &app_t; you may find on Internet are of the index type.
+    In fact, you hardly find a tree dictionary for &app_t;. 
+    An index dictionary contain a list of words in one file and corresponding definitions in other file.
+    That index of words is the reason we call it an index dictionary.
+    An index dictionary may contain other data as well. 
+    In a tree dictionary data are organized in a tree that is why it name.
+    &app_t; searches index and tree dictionaries in different directories.
+    </para>
+    
+    <note>
+    <para>Almost all files constituting a dictionary are binary. It does not make sense to open them in a text editor. A notable exception is <filename>.ifo</filename> file, it contains dictionary description.
+    </para>
+    </note>
+    
+    <variablelist>
+    <title>Index dictionary files and directories</title>
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.ifo
+      </term>
+      <listitem>
+      <para>Information about the dictionary. This a text file, you may open it in a text editor. You may found useful information here like dictionary description, author name and e-mail.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.idx or <replaceable>dictname</replaceable>.idx.gz
+      </term>
+      <listitem>
+      <para>Index of words available in the dictionary.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.dict or <replaceable>dictname</replaceable>.dict.dz
+      </term>
+      <listitem>
+      <para>Main content of the dictionary &mdash; articles.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.syn
+      </term>
+      <listitem>
+      <para>Index of synonyms. Optional.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.ind.oft
+      </term>
+      <listitem>
+      <para>Cache for the index file. This file is created by &app_t; to speedup dictionaries loading. You should not redistribute this file.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.syn.oft
+      </term>
+      <listitem>
+      <para>Cache for the synonyms file. This file is created by &app_t; to speedup dictionaries loading. You should not redistribute this file.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.ind.clt
+      </term>
+      <listitem>
+      <para>Collation file for the index file. This file is created by &app_t; when you use collations to modify sorting order of words. You should not redistribute this file.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.syn.clt
+      </term>
+      <listitem>
+      <para>Collation file for the synonyms file. This file is created by &app_t; when you use collations to modify sorting order of words. You should not redistribute this file.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term>res.rifo, res.ridx, res.rdic
+      </term>
+      <listitem>
+      <para>Files of resource database. It contains resources like images, sound and video files used in the dictionary. Optional.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term>res.ridx.oft
+      </term>
+      <listitem>
+      <para>Cache for the resource index file. This file is created by &app_t; to speedup resource database loading. You should not redistribute this file.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term>res
+      </term>
+      <listitem>
+      <para>A directory containing dictionary resources. This is alternative to <filename>res.rifo</filename>, <filename>res.ridx</filename>, <filename>res.rdic</filename> collection of files. Optional.</para>
+      </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    
+    <variablelist>
+    <title>Tree dictionary files</title>
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.ifo
+      </term>
+      <listitem>
+      <para>Information about the dictionary. This a text file, you may open it in a text editor. You may found useful information here like dictionary description, author name and e-mail.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.tdx or <replaceable>dictname</replaceable>.tdx.gz
+      </term>
+      <listitem>
+      <para>A word list forming a tree.</para>
+      </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+      <term><replaceable>dictname</replaceable>.dict or <replaceable>dictname</replaceable>.dict.dz
+      </term>
+      <listitem>
+      <para>Main content of the dictionary &mdash; articles.</para>
+      </listitem>
+      </varlistentry>
+    </variablelist>
+    
+    <sect3 id="stardict-details-dictionaries-dirs">
+    <title>Directories</title>
+    <para>This section describes directories where &app_t; searches dictionaries.
+    </para>
+    
+    <para>Under <productname>Unix</productname>, &app_t; searches <filename>~/.stardict/dic</filename> and <filename>/usr/share/stardict/dic</filename> directories for index dictionaries and <filename>~/.stardict/treedict</filename> and <filename>/usr/share/stardict/treedict</filename> directories for tree dictionaries. If you build &app_t; with non-standard prefix, the application searches a pair of additional directories for dictionaries. It checks <filename><varname>$(datadir)</varname>/dic</filename> for index dictionaries and <filename><varname>$(datadir)</varname>/treedict</filename> for tree dictionaries. Here <varname>$(datadir)</varname> is an <application>autoconf</application> directory variable.
+    <!-- http://www.gnu.org/software/hello/manual/autoconf/Installation-Directory-Variables.html -->
+    </para>
+    
+    <para>Under <productname>Windows</productname>, &app_t; searches <filename>C:\Program Files\StarDict\dic</filename> for index dictionaries and <filename>C:\Program Files\StarDict\treedict</filename> for tree dictionaries, assuming that &app_t; was installed into <filename>C:\Program Files\StarDict</filename>. If you've install &app_t; into a different directory, replace <filename>C:\Program Files\StarDict</filename> with real installation path.
+    </para>
+    
+    <para>Under <productname>Windows</productname>, you may overwrite <varname>$data_dir</varname> variable, see <xref linkend="stardict-details-dirs"/>. By default it matches the &app_t; installation directory. In this case &app_t; will search <filename><varname>$data_dir</varname>\dic</filename> for index dictionaries and <filename><varname>$data_dir</varname>\treedict</filename> for tree dictionaries.
+    </para>
+    
+    <note>
+    <para>All directories are processed recusively.
+    </para>
+    </note>
+    </sect3>
 	</sect2>
 	
 	</sect1>
