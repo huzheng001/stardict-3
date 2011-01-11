@@ -437,6 +437,7 @@ stardict-withoutgnome.spec
 data/Makefile
 doc/Makefile
 debian-upstream/Makefile
+mac_dist/Makefile
 msvc_2008/Makefile
 po/Makefile.in
 m4/Makefile
