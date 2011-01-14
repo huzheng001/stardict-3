@@ -104,7 +104,7 @@ stardict-install-html:
 else
 stardict-install-html:
 	for lc in $(STARDICT_ALL_LINGUAS); do \
-		install_dir=$(STARDICT_HTML_INSTALL_DIR)/$${lc}; \
+		install_dir=$(DESTDIR)$(STARDICT_HTML_INSTALL_DIR)/$${lc}; \
 		htmldir=$(srcdir)/$${lc}/html; \
 		for file in `find $${htmldir} -type f -print`; do \
 			relfile=$${file#$${htmldir}/}; \
@@ -126,7 +126,7 @@ stardict-uninstall-html:
 else
 stardict-uninstall-html:
 	for lc in $(STARDICT_ALL_LINGUAS); do \
-		install_dir=$(STARDICT_HTML_INSTALL_DIR)/$${lc}; \
+		install_dir=$(DESTDIR)$(STARDICT_HTML_INSTALL_DIR)/$${lc}; \
 		rm -rf $${install_dir}; \
 	done;
 endif
