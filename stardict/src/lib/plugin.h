@@ -6,7 +6,7 @@
 #include <list>
 
 
-#define PLUGIN_SYSTEM_VERSION "3.0.2"
+#define PLUGIN_SYSTEM_VERSION "3.0.3"
 
 enum StarDictPlugInType {
 	StarDictPlugInType_UNKNOWN,

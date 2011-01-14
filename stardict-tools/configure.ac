@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(stardict-tools, 3.0.2, http://stardict.sourceforge.net)
+AC_INIT(stardict-tools, 3.0.3, http://stardict.sourceforge.net)
 AC_CONFIG_SRCDIR([src/stardict-editor.cpp])
 AM_INIT_AUTOMAKE([dist-bzip2])
 AC_CONFIG_HEADERS([config.h])

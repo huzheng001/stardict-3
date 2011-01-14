@@ -2,8 +2,8 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" 
 "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "3.0.2">
-  <!ENTITY manrevision "3.0.2">
+  <!ENTITY appversion "3.0.3">
+  <!ENTITY manrevision "3.0.3">
   <!ENTITY date "Nov 2010">
   <!ENTITY app "StarDict">
   <!ENTITY app_port "StarDict Portable">
