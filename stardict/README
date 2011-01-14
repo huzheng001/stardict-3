@@ -3,7 +3,7 @@ package: StarDict
 StarDict version
 ----------------
 
-See AC_INIT macro in the configure.in file. It looks like this:
+See AC_INIT macro in the configure.ac file. It looks like this:
 
 AC_INIT(stardict, 3.0.2, http://stardict.sourceforge.net)
 
