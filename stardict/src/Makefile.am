@@ -26,9 +26,10 @@ AM_CPPFLAGS =							                            \
 	-DSTARDICT_LIB_DIR=\""$(libdir)/stardict"\"
 
 
-stardict_DEPENDENCIES = $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a
+stardict_DEPENDENCIES = lib/libstardict.a $(LOCAL_SIGCPP_LIBFILE)
 stardict_LDFLAGS = 
-stardict_LDADD = $(STARDICT_LIBS) $(LOCAL_SIGCPP_LIBFILE) lib/libstardict.a
+## place libstardict.a before any system library, otherwise build with --as-needed linker option may fail
+stardict_LDADD = lib/libstardict.a $(STARDICT_LIBS) $(LOCAL_SIGCPP_LIBFILE)
 
 if !GNOME_SUPPORT
 if MAEMO_SUPPORT

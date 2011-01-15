@@ -244,7 +244,8 @@ wordnet_SOURCES = wordnet.cpp
 
 bgl2txt_DEPENDENCIES = libbgl2txt.a
 bgl2txt_LDFLAGS =
-bgl2txt_LDADD = $(STARDICT_LIBS) -lz libbgl2txt.a
+## place libbgl2txt.a before any system library, otherwise build with --as-needed linker option may fail
+bgl2txt_LDADD = libbgl2txt.a $(STARDICT_LIBS)
 bgl2txt_SOURCES = bgl2txt.cpp libcommon.h libcommon.cpp
 
 stardict_index_LDFLAGS =
@@ -282,7 +283,8 @@ stardict_text2bin_SOURCES = stardict_text2bin.cpp \
 stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS)
 stardict_editor_DEPENDENCIES = libbgl2txt.a
 stardict_editor_LDFLAGS =
-stardict_editor_LDADD = $(STARDICT_LIBS) $(LIBXML_LIBS) -lz libbgl2txt.a
+## place libbgl2txt.a before any system library, otherwise build with --as-needed linker option may fail
+stardict_editor_LDADD = libbgl2txt.a $(STARDICT_LIBS) $(LIBXML_LIBS)
 stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	libcommon.cpp libcommon.h libbabylonfile.cpp libbabylonfile.h \
 	libstardict2txt.cpp libstardict2txt.h libstardictverify.cpp \

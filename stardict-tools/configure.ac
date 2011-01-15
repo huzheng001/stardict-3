@@ -69,7 +69,7 @@ AC_SUBST(MYSQL_CFLAGS)
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
-DEP_MODULES="gtk+-2.0 >= 2.6 glib-2.0 >= 2.8"
+DEP_MODULES="gtk+-2.0 >= 2.6 glib-2.0 >= 2.8 zlib"
 PKG_CHECK_MODULES(STARDICT, $DEP_MODULES)
 
 # mysqlclient
