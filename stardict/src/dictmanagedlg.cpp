@@ -1384,7 +1384,7 @@ void DictManageDlg::on_move_down_button_clicked(GtkWidget *widget, DictManageDlg
 			else
     				oDictManageDlg->write_treedict_order_list();
 		}
-		gtk_tree_path_free(path);		
+		gtk_tree_path_free(path);
 	}	
 }
 

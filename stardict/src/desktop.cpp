@@ -237,3 +237,38 @@ void play_sound_on_event(const gchar *eventname)
 		play_sound_file(build_path(conf_dirs->get_data_dir(),
 			std::string("sounds" G_DIR_SEPARATOR_S) +eventname+".wav"));
 }
+
+/* Enabling network dictionaries poses a security risk.
+ * When Enable Net Dict is configured, StarDict sends the contents
+ * of the clipboard to a dictionary server, which allows remote attackers
+ * to obtain sensitive information by sniffing the network.
+ * Warn the user about the risk and let him/her cancel the request. */
+bool confirm_enable_network_dicts(GtkWidget *parent_window)
+{
+	if(!parent_window)
+		parent_window = gpAppFrame->window;
+	const char* msg = _("You are about to enable network dictionaries. "
+		"Be aware that enabling network dictionaries poses a security risk. "
+		"Your text will be sent to remote servers. "
+		"Additionally, since network requests do not use any encryption, "
+		"anyone able to sniff communication can see that text. "
+		"Text will be send when you type into the Search field of the Main window and "
+		"when you select some text if Scan selection feature is enabled. "
+		"There may be other cases when network queries are done.\n"
+		"\n"
+		"Do you want to enable network dictionaries anyway?"
+		);
+	GtkWidget *dialog = gtk_message_dialog_new(
+			GTK_WINDOW(parent_window),
+			GTK_DIALOG_MODAL,
+			GTK_MESSAGE_WARNING,
+			GTK_BUTTONS_YES_NO,
+			msg);
+	bool confirmed = false;
+	gint response = gtk_dialog_run (GTK_DIALOG (dialog));
+	if (response == GTK_RESPONSE_YES) {
+		confirmed = true;
+	}
+	gtk_widget_destroy(dialog);
+	return confirmed;
+}

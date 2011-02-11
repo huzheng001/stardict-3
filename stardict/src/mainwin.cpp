@@ -1441,7 +1441,12 @@ void LeftWin::UpdateChooseGroup()
 
 void LeftWin::on_enable_netdict_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin)
 {
-	conf->set_bool_at("network/enable_netdict", gtk_check_menu_item_get_active(menuitem));
+	bool enable_netdict = static_cast<bool>(gtk_check_menu_item_get_active(menuitem));
+	if(enable_netdict) {
+		if(!confirm_enable_network_dicts())
+			enable_netdict = false;
+	}
+	conf->set_bool_at("network/enable_netdict", enable_netdict);
 }
 
 void LeftWin::on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftWin *oLeftWin)

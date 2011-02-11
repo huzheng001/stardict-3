@@ -867,8 +867,15 @@ void PrefsDlg::setup_dictionary_video_page()
 
 void PrefsDlg::on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
-	conf->set_bool_at("network/enable_netdict",
-			  gtk_toggle_button_get_active(button));
+	bool enable_netdict = gtk_toggle_button_get_active(button);
+	if(enable_netdict) {
+		if(!confirm_enable_network_dicts(oPrefsDlg->window)) {
+			enable_netdict = false;
+			// revert button state
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
+		}
+	}
+	conf->set_bool_at("network/enable_netdict", enable_netdict);
 }
 
 static void on_account_passwd_entry_activated(GtkEntry *entry, GtkDialog *dialog)
