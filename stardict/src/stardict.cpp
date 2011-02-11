@@ -2060,7 +2060,6 @@ void AppCore::PopupDictManageDlg()
 		oLibs.set_show_progress(&rsp);
 		reload_dicts();
 		oLibs.set_show_progress(old_progress);
-		oMidWin.oLeftWin.UpdateChooseGroup();
 	}
 }
 

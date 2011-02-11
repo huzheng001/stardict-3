@@ -283,8 +283,8 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 		gpAppFrame->LookupWithRegexToMainWin(res.c_str());
 		break;
 	case qtDATA:
-               	gpAppFrame->LookupDataToMainWin(res.c_str());
-                break;
+		gpAppFrame->LookupDataToMainWin(res.c_str());
+		break;
 	default:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
 	}
@@ -1276,6 +1276,7 @@ void ResultWin::on_selection_changed(GtkTreeSelection *selection, ResultWin *oRe
 /**************************************************/
 LeftWin::LeftWin()
 {
+	choosegroup_menu = NULL;
 }
 
 LeftWin::~LeftWin()
@@ -1342,8 +1343,6 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	g_signal_connect(G_OBJECT(choosegroup_button),"clicked", G_CALLBACK(on_choose_group_button_clicked),this);
 	gtk_box_pack_start(GTK_BOX(vbox),choosegroup_button,false,false,0);
 	gtk_widget_set_tooltip_text(choosegroup_button, _("Choose dict group"));
-	choosegroup_menu = NULL;
-	UpdateChooseGroup();
 
 	GtkWidget *button;
 	button=gtk_button_new();
@@ -1460,6 +1459,7 @@ void LeftWin::on_choose_group_menuitem_toggled(GtkCheckMenuItem *menuitem, LeftW
 
 void LeftWin::on_choose_group_button_clicked(GtkWidget *widget, LeftWin *oLeftWin)
 {
+	oLeftWin->UpdateChooseGroup();
 	if (oLeftWin->choosegroup_menu) {
 		play_sound_on_event("menushow");
 		gtk_menu_popup(GTK_MENU(oLeftWin->choosegroup_menu), NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time());

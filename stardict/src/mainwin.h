@@ -197,9 +197,9 @@ public:
 	LeftWin();
 	~LeftWin();
 	void Create(GtkWidget *hbox, bool has_treedict);
-	void UpdateChooseGroup();
 private:
 	GtkWidget *choosegroup_menu;
+	void UpdateChooseGroup();
 	static void on_wazard_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
