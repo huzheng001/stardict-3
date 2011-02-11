@@ -122,8 +122,8 @@ void convert(char *filename, char *wikiname, char *wikidate)
 	parser.error = NULL;
 	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
 	size_t length;
-	for (size_t offset = 0; offset < stats.st_size; offset += 10240000) {
-		if (offset + 10240000 > stats.st_size) {
+	for (size_t offset = 0; offset < static_cast<size_t>(stats.st_size); offset += 10240000) {
+		if (offset + 10240000 > static_cast<size_t>(stats.st_size)) {
 			length = stats.st_size - offset;
 		} else {
 			length = 10240000;
@@ -135,7 +135,7 @@ void convert(char *filename, char *wikiname, char *wikidate)
 		}
 		if (g_markup_parse_context_parse(context, data, length, NULL) == FALSE) {
 			if (!g_utf8_validate(data, length, NULL))
-				g_print("invalide UTF-8.\n");
+				g_print("invalid UTF-8.\n");
 			g_print("Parse error!\n");
 			g_file_set_contents("error.xml", data, length, NULL);
 			return;
