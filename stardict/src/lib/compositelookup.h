@@ -5,7 +5,7 @@
 #include <list>
 
 /* A lookup may consist of a number of requests: to local dictionaries, 
-to net dictiories, to StarDict net dictionary. 
+to net dictionaries, to StarDict net dictionary.
 This class tracks all requests making up one lookup. 
 This class can tell when all responses are got. */
 class CompositeLookup
@@ -37,7 +37,7 @@ private:
 	that will make up the lookup. */
 	bool BuildingLookup;
 	typedef std::list<NetDictRequest> NetDictRequestsList;
-	/* all requests sent to net dictionaries that have not got responces yet */
+	/* all requests sent to net dictionaries that have not got responses yet */
 	NetDictRequestsList NetDictRequests;
 	/* expected seq of the StarDict net response, 0 - nothing is expected */
 	unsigned int StarDictNetSeq;
