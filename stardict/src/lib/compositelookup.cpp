@@ -35,7 +35,7 @@ void CompositeLookup::send_net_dict_request(const std::string& dict_id, const st
 	NetDictRequests.push_back(request);
 }
 
-/* returns true if got expected responce */
+/* returns true if got expected response */
 bool CompositeLookup::got_net_dict_responce(const std::string& dict_id, const std::string& key)
 {
 	NetDictRequest response(dict_id, key);
@@ -52,7 +52,7 @@ void CompositeLookup::send_StarDict_net_request(unsigned int seq)
 	StarDictNetSeq = seq;
 }
 
-/* returns true if got expected responce */
+/* returns true if got expected response */
 bool CompositeLookup::got_StarDict_net_responce(unsigned int seq)
 {
 	if(StarDictNetSeq == 0)
