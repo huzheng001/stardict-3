@@ -162,10 +162,12 @@ gpointer Socket::dns_thread(gpointer data)
 #ifdef HAVE_GETHOSTBYNAME_R
     struct  hostent hostinfo;
     char buf[1024];
-    int ret;
-    if (!gethostbyname_r(query_data->host.c_str(), &hostinfo, buf,
-        sizeof(buf), &phost, &ret)) {
-	query_data->sa = ((in_addr*)(hostinfo.h_addr))->s_addr;
+    int ret, ret2;
+    ret2 = gethostbyname_r(query_data->host.c_str(), &hostinfo, buf,
+        sizeof(buf), &phost, &ret);
+
+    if (ret2 == 0 && ret == 0 && phost != NULL) {
+        query_data->sa = ((in_addr*)(hostinfo.h_addr))->s_addr;
         query_data->resolved = true;
     } else {
         query_data->resolved = false;
