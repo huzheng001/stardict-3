@@ -103,7 +103,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", false);
 #endif
 #endif
-	add_entry("/apps/stardict/preferences/network/enable_netdict", true);
+	add_entry("/apps/stardict/preferences/network/enable_netdict", false);
 	// Default stardictd server.
 	add_entry("/apps/stardict/preferences/network/server", std::string(_("dict.stardict.org")));
 	add_entry("/apps/stardict/preferences/network/port", 2628);
