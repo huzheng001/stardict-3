@@ -1627,7 +1627,7 @@ WineEnRu.ifo</screen>
 				<term><guilabel>Search while typing</guilabel></term>
 				<listitem>
 				<para>
-				When this option is checked, &app_t; search for the word you are typing in the search field automatically. &app_t; monitors key-press events, it starts searching the word entered as soon as there is no activity for more than a specified amount of time. The time span can be changed in the field below.
+				When this option is checked, &app_t; search for the word you are typing in the search field automatically. &app_t; monitors key-press events, it starts searching the word entered as soon as there is no activity for more than a specified amount of time. The time span can be changed in the field below. If the time span is 0, search is started immediately after you change the search field.
 				</para>
 				<para>
 				When this option is not checked, you need to press 
