@@ -94,6 +94,7 @@ static std::string guess_html_help_dir(void)
 		return dir;
 	return "";
 }
+#endif
 
 /* show error in modal dialog */
 void show_error(const char* message)
@@ -111,7 +112,6 @@ void show_error(const char* message)
 	gtk_dialog_run(GTK_DIALOG(message_dlg));
 	gtk_widget_destroy(message_dlg);
 }
-#endif
 
 static void spawn_command(const gchar *exe, const gchar *arg)
 {
@@ -185,7 +185,12 @@ void play_video_file(const std::string& filename)
 void show_help(const gchar *section)
 {
 #if defined(CONFIG_GNOME)
-	gnome_help_display ("stardict.xml", section, NULL);
+	glib::Error err;
+	if(!gnome_help_display ("stardict.xml", section, get_addr(err))) {
+		glib::CharStr message(g_strdup_printf(_("Show help action failed with the following error message: \"%s\""),
+			err->message));
+		show_error(get_impl(message));
+	}
 #else
 	std::string dir = guess_html_help_dir();
 	if(dir.empty()) {
