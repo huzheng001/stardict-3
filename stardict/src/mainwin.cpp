@@ -282,13 +282,13 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 	case qtREGEX:
 		gpAppFrame->LookupWithRegexToMainWin(res.c_str());
 		break;
-	case qtDATA:
+	case qtFULLTEXT:
 		gpAppFrame->LookupDataToMainWin(res.c_str());
 		break;
 	default:
 		gpAppFrame->LookupWithFuzzyToMainWin(res.c_str());
 	}
-	if (qt != qtDATA) {
+	if (qt != qtFULLTEXT) {
 		bool enable_netdict = conf->get_bool_at("network/enable_netdict");
 		if (enable_netdict) {
 			std::string word;

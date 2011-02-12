@@ -1176,7 +1176,6 @@ void PrefsDlg::on_setup_mainwin_input_timeout_spinbutton_changed(GtkSpinButton *
 {
 	gint timeout = gtk_spin_button_get_value_as_int(button);
 	conf->set_int_at("main_window/word_change_timeout", timeout);
-	gpAppFrame->word_change_timeout = timeout;
 }
 
 void PrefsDlg::setup_mainwin_input_page()
@@ -1200,7 +1199,7 @@ void PrefsDlg::setup_mainwin_input_page()
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Word change _timeout:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
 	GtkWidget *spin_button;
-	spin_button = gtk_spin_button_new_with_range(50,2000,50);
+	spin_button = gtk_spin_button_new_with_range(0,2000,50);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), spin_button);
 	gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin_button), GTK_UPDATE_IF_VALID);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button), conf->get_int_at("main_window/word_change_timeout"));

@@ -17,7 +17,7 @@ static inline gchar* stardict_datadup(gconstpointer mem)
 }
 
 typedef enum {
-	qtSIMPLE, qtPATTERN, qtFUZZY, qtREGEX, qtDATA
+	qtSIMPLE, qtPATTERN, qtFUZZY, qtREGEX, qtFULLTEXT
 } query_t;
 	
 extern query_t analyse_query(const char *s, std::string& res); 

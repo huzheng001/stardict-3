@@ -70,7 +70,7 @@ private:
 	static gboolean on_io_event(GIOChannel *, GIOCondition, gpointer);
 	static int get_status_code(gchar *line);
 	void connect();
-    static void on_resolved(gpointer data, struct hostent *ret);
+	static void on_resolved(gpointer data, struct hostent *ret);
 	bool parse(gchar *line, int status_code);
 };
 
