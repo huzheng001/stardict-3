@@ -248,8 +248,6 @@ void AppCore::ShowPangoTips(const char *word, const char *text)
 
 void AppCore::Create(const gchar *queryword)
 {
-	word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
-
 	if (conf->get_bool_at("dictionary/use_custom_font")) {
 		const std::string &custom_font(conf->get_string_at("dictionary/custom_font"));
 
@@ -1476,7 +1474,7 @@ void AppCore::TopWinEnterWord()
 	case qtREGEX:
 		LookupWithRegexToMainWin(res.c_str());
 		break;
-	case qtDATA:
+	case qtFULLTEXT:
 		LookupDataToMainWin(res.c_str());
 		return;
 	default:
@@ -1593,14 +1591,18 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 		if (strlen(sWord)==1)
 			oMidWin.oTextWin.Show(_("Fuzzy query..."));
 		break;
-	case qtDATA:
+	case qtFULLTEXT:
 		if (strlen(sWord)==1)
 			oMidWin.oTextWin.Show(_("Full-text search..."));
 		break;
 	default:
 		stop_word_change_timer();
 		delayed_word_ = res;
-		word_change_timeout_id = g_timeout_add(word_change_timeout, on_word_change_timeout, this);
+		int word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
+		if(word_change_timeout > 0)
+			word_change_timeout_id = g_timeout_add(word_change_timeout, on_word_change_timeout, this);
+		else
+			on_word_change_timeout(this);
 	}
 }
 

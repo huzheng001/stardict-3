@@ -35,7 +35,7 @@ int main()
 	std::vector<std::pair<std::string, std::pair<query_t, std::string> > > aq_tests;
 
 	add_analyse_query_test(aq_tests, "/fuzzy", qtFUZZY, "fuzzy");
-	add_analyse_query_test(aq_tests, "|data", qtDATA, "data");
+	add_analyse_query_test(aq_tests, "|data", qtFULLTEXT, "data");
 	add_analyse_query_test(aq_tests, "\\|data", qtSIMPLE, "|data");
 	add_analyse_query_test(aq_tests, "\\/fuzzy", qtSIMPLE, "/fuzzy");
 	add_analyse_query_test(aq_tests, "re?ex*", qtPATTERN, "re?ex*");

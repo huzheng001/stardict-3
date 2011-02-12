@@ -21,7 +21,7 @@ query_t analyse_query(const char *s, std::string& res)
 
 	if (*s=='|') {
 		res=s+1;
-		return qtDATA;
+		return qtFULLTEXT;
 	}
 
 	bool pattern=false;

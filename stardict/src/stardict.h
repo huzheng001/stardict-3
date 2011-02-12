@@ -113,7 +113,6 @@ public:
 	DictManageInfo dictinfo;
 	std::vector<InstantDictIndex> query_dictmask;
 	std::vector<InstantDictIndex> scan_dictmask;
-	guint word_change_timeout;
 
 	AppCore();
 	~AppCore();
