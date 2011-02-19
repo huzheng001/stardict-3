@@ -2,6 +2,7 @@
 #include <glib/gi18n.h>
 #include <cstring>
 #include <cstdlib>
+#include <vector>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -89,6 +90,8 @@ static char *strcasestr (const char *phaystack, const char *pneedle)
 }
 #endif
 
+/* pango_len length of the produced pango text in chars, but '&lt;', '&gt;', '&amp;', etc
+ * are counted as one char. */
 static void html_topango(const std::string& str, std::string &pango, size_t &pango_len)
 {
 	const char *q, *p;
@@ -156,83 +159,189 @@ static void html_topango(const std::string& str, std::string &pango, size_t &pan
 
 static void xml_decode(const char *str, std::string& decoded)
 {
-	static const char raw_entrs[] = { 
+	static const char raw_entrs[] = {
 		'<',   '>',   '&',    '\'',    '\"',    0 
 	};
-	static const char* xml_entrs[] = { 
+	static const char* xml_entrs[] = {
 		"lt;", "gt;", "amp;", "apos;", "quot;", 0 
 	};
-	static const int xml_ent_len[] = { 
+	static const int xml_ent_len[] = {
 		3,     3,     4,      5,       5 
 	};
 	int ient;
-        const char *amp = strchr(str, '&');
+	const char *amp = strchr(str, '&');
 
-        if (amp == NULL) {
+	if (amp == NULL) {
 		decoded = str;
-                return;
-        }
-        decoded.assign(str, amp - str);
-        
-        while (*amp)
-                if (*amp == '&') {
-                        for (ient = 0; xml_entrs[ient] != 0; ++ient)
-                                if (strncmp(amp + 1, xml_entrs[ient],
-					    xml_ent_len[ient]) == 0) {
-                                        decoded += raw_entrs[ient];
-                                        amp += xml_ent_len[ient]+1;
-                                        break;
-                                }
-                        if (xml_entrs[ient] == 0)    // unrecognized sequence
-                                decoded += *amp++;
+		return;
+	}
+	decoded.assign(str, amp - str);
 
-                } else {
-                        decoded += *amp++;
-                }        
+	while (*amp)
+		if (*amp == '&') {
+			for (ient = 0; xml_entrs[ient] != 0; ++ient) {
+				if (strncmp(amp + 1, xml_entrs[ient], xml_ent_len[ient]) == 0) {
+					decoded += raw_entrs[ient];
+					amp += xml_ent_len[ient]+1;
+					break;
+				}
+			}
+			if (xml_entrs[ient] == 0)    // unrecognized sequence
+				decoded += *amp++;
+		} else {
+			decoded += *amp++;
+		}
 }
 
-static void html2result(const char *p, ParseResult &result)
+class HtmlParser
 {
-	LinksPosList links_list;
-	std::string res;
-	const char *tag, *next;
-	std::string name;
-	std::string::size_type cur_pos;
-	int i;
-
+private:
+	enum TagType { elOpen, elClose, elEmpty, elNone };
+	enum Tag { tagNone, tagB, tagBig, tagI, tagS, tagSub, tagSup, tagSmall, tagTT, tagU, tagFont };
 	struct ReplaceTag {
 		const char *match_;
 		int match_len_;
 		const char *replace_;
 		int char_len_;
+		Tag tag;
+		TagType type;
 	};
-	static const ReplaceTag replace_arr[] = {
-		{ "b>", 2, "<b>", 0 },
-		{ "/b>", 3, "</b>", 0 },
-		{ "big>", 4, "<big>", 0},
-		{ "/big>", 5, "</big>", 0},
-		{ "i>", 2, "<i>", 0  },
-		{ "/i>", 3, "</i>", 0 },
-		{ "s>", 2, "<s>", 0  },
-		{ "/s>", 3, "</s>", 0 },
-		{ "sub>", 4, "<sub>", 0 },
-		{ "/sub>", 5, "</sub>", 0},
-		{ "sup>", 4, "<sup>", 0},
-		{ "/sup>", 5, "</sup>", 0},
-		{ "small>", 6, "<small>", 0},
-		{ "/small>", 7, "</small>", 0},
-		{ "tt>", 3, "<tt>", 0},
-		{ "/tt>", 4, "</tt>", 0},
-		{ "u>", 2, "<u>", 0  },
-		{ "/u>", 3, "</u>", 0 },
-		{ "br>", 3, "\n", 1 },
-		{ "nl>", 3, "", 0 },
-		{ "hr>", 3, "\n<span foreground=\"gray\"><s>     </s></span>\n", 7 },
-		{ "/font>", 6, "</span>", 0 },
-		{ NULL, 0, NULL },
-	};
+	static const ReplaceTag replace_arr[];
+	typedef std::vector<Tag> TTagStack;
+	TTagStack tagStack;
+	std::string res;
+	std::string::size_type cur_pos;
 
-	for (cur_pos = 0; *p && (tag = strchr(p, '<')) != NULL;) {
+	void add_tag(Tag tag, TagType type);
+	const ReplaceTag* find_tag(Tag tag, TagType type);
+	const ReplaceTag* find_tag(Tag tag);
+	void apply_tag(const ReplaceTag* p);
+	void end_of_input();
+public:
+	void html2result(const char *p, ParseResult &result);
+};
+
+const HtmlParser::ReplaceTag HtmlParser::replace_arr[] = {
+	{ "b>", 2, "<b>", 0, tagB, elOpen },
+	{ "/b>", 3, "</b>", 0, tagB, elClose },
+	{ "big>", 4, "<big>", 0, tagBig, elOpen },
+	{ "/big>", 5, "</big>", 0, tagBig, elClose },
+	{ "i>", 2, "<i>", 0, tagI, elOpen },
+	{ "/i>", 3, "</i>", 0, tagI, elClose },
+	{ "s>", 2, "<s>", 0, tagS, elOpen },
+	{ "/s>", 3, "</s>", 0, tagS, elClose },
+	{ "sub>", 4, "<sub>", 0, tagSub, elOpen },
+	{ "/sub>", 5, "</sub>", 0, tagSub, elClose },
+	{ "sup>", 4, "<sup>", 0, tagSup, elOpen },
+	{ "/sup>", 5, "</sup>", 0, tagSup, elClose },
+	{ "small>", 6, "<small>", 0, tagSmall, elOpen },
+	{ "/small>", 7, "</small>", 0, tagSmall, elClose },
+	{ "tt>", 3, "<tt>", 0, tagTT, elOpen },
+	{ "/tt>", 4, "</tt>", 0, tagTT, elClose },
+	{ "u>", 2, "<u>", 0, tagU, elOpen },
+	{ "/u>", 3, "</u>", 0, tagU, elClose },
+	{ "br>", 3, "\n", 1, tagNone, elNone },
+	{ "nl>", 3, "", 0, tagNone, elNone },
+	{ "hr>", 3, "\n<span foreground=\"gray\"><s>     </s></span>\n", 7, tagNone, elNone },
+	{ "/font>", 6, "</span>", 0, tagFont, elClose },
+	{ NULL, 0, NULL, 0, tagNone, elNone },
+};
+
+void HtmlParser::add_tag(Tag tag, TagType type)
+{
+	switch(type)
+	{
+	case elNone:
+	case elEmpty:
+	{
+		const ReplaceTag* p = find_tag(tag);
+		g_assert(p);
+		if(p)
+			apply_tag(p);
+		break;
+	}
+	case elOpen:
+	{
+		const ReplaceTag* p = find_tag(tag, elOpen);
+		g_assert(p);
+		if(p) {
+			apply_tag(p);
+			tagStack.push_back(tag);
+		}
+		break;
+	}
+	case elClose:
+	{
+		// search the paired open tag
+		int openTagInd = -1;
+		for(int i=static_cast<int>(tagStack.size())-1; i>=0; --i)
+			if(tagStack[i] == tag) {
+				openTagInd = i;
+				break;
+			}
+		if (openTagInd < 0) {
+			/* no matching open tag. Skip this close tag. */
+		} else {
+			/* close tags with indexes [openTagInd, tagStack.size()) */
+			for(int i=static_cast<int>(tagStack.size())-1; i>=openTagInd; --i) {
+				const ReplaceTag* p = find_tag(tagStack[i], elClose);
+				g_assert(p);
+				if(p)
+					apply_tag(p);
+			}
+			tagStack.resize(openTagInd);
+		}
+		break;
+	}
+	}
+}
+
+void HtmlParser::end_of_input()
+{
+	// close all open tags
+	for(int i=static_cast<int>(tagStack.size())-1; i>=0; --i) {
+		const ReplaceTag* p = find_tag(tagStack[i], elClose);
+		g_assert(p);
+		if(p)
+			apply_tag(p);
+	}
+	tagStack.clear();
+}
+
+const HtmlParser::ReplaceTag* HtmlParser::find_tag(Tag tag, TagType type)
+{
+	for (int i = 0; replace_arr[i].match_; ++i)
+		if(replace_arr[i].tag == tag && replace_arr[i].type == type)
+			return &replace_arr[i];
+	return NULL;
+}
+
+const HtmlParser::ReplaceTag* HtmlParser::find_tag(Tag tag)
+{
+	for (int i = 0; replace_arr[i].match_; ++i)
+		if(replace_arr[i].tag == tag)
+			return &replace_arr[i];
+	return NULL;
+}
+
+void HtmlParser::apply_tag(const ReplaceTag* p)
+{
+	res += p->replace_;
+	cur_pos += p->char_len_;
+}
+
+void HtmlParser::html2result(const char *p, ParseResult &result)
+{
+	tagStack.clear();
+	res.clear();
+	cur_pos = 0;
+
+	LinksPosList links_list;
+	const char *tag, *next;
+	std::string name;
+	int i;
+
+	for (; *p && (tag = strchr(p, '<')) != NULL;) {
 		std::string chunk(p, tag - p);
 		size_t pango_len;
 		std::string pango;
@@ -244,9 +353,8 @@ static void html2result(const char *p, ParseResult &result)
 		for (i = 0; replace_arr[i].match_; ++i)
 			if (strncasecmp(replace_arr[i].match_, p + 1,
 						replace_arr[i].match_len_) == 0) {
-				res += replace_arr[i].replace_;
+				add_tag(replace_arr[i].tag, replace_arr[i].type);
 				p += 1 + replace_arr[i].match_len_;
-				cur_pos += replace_arr[i].char_len_;
 				goto cycle_end;
 			}
 
@@ -303,6 +411,7 @@ static void html2result(const char *p, ParseResult &result)
 				}
 			}
 			res += ">";
+			tagStack.push_back(tagFont);
 			p = next + 1;
 		} else if ((*(p + 1) == 'a' || *(p + 1) == 'A') && *(p + 2) == ' ') {
 			next = strchr(p, '>');
@@ -426,6 +535,7 @@ cycle_end:
 		;
 	}
 	res += p;
+	end_of_input();
 	ParseResultItem item;
 	item.type = ParseResultItemType_link;
 	item.link = new ParseResultLinkItem;
@@ -441,7 +551,8 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 	p++;
 	size_t len = strlen(p);
 	if (len) {
-		html2result(p, result);
+		HtmlParser parser;
+		parser.html2result(p, result);
 	}
 	*parsed_size = 1 + len + 1;
 	return true;
