@@ -1,6 +1,9 @@
 #include "stardict_xdxf_parsedata.h"
 #include <glib/gi18n.h>
 #include <cstring>
+#include <vector>
+#include <string>
+#include <iostream>
 
 #include <stdlib.h>
 #include <string.h>
@@ -53,77 +56,123 @@ static void xml_decode(const char *str, std::string& decoded)
 		3,     3,     4,      5,       5 
 	};
 	int ient;
-        const char *amp = strchr(str, '&');
+	const char *amp = strchr(str, '&');
 
-        if (amp == NULL) {
-		decoded = str;
-                return;
-        }
-        decoded.assign(str, amp - str);
-        
-        while (*amp)
-                if (*amp == '&') {
-                        for (ient = 0; xml_entrs[ient] != 0; ++ient)
-                                if (strncmp(amp + 1, xml_entrs[ient],
-					    xml_ent_len[ient]) == 0) {
-                                        decoded += raw_entrs[ient];
-                                        amp += xml_ent_len[ient]+1;
-                                        break;
-                                }
-                        if (xml_entrs[ient] == 0)    // unrecognized sequence
-                                decoded += *amp++;
+	if (amp == NULL) {
+	decoded = str;
+		return;
+	}
+	decoded.assign(str, amp - str);
 
-                } else {
-                        decoded += *amp++;
-                }        
+	while (*amp)
+		if (*amp == '&') {
+			for (ient = 0; xml_entrs[ient] != 0; ++ient)
+				if (strncmp(amp + 1, xml_entrs[ient],
+						xml_ent_len[ient]) == 0) {
+					decoded += raw_entrs[ient];
+					amp += xml_ent_len[ient]+1;
+					break;
+				}
+			if (xml_entrs[ient] == 0)    // unrecognized sequence
+				decoded += *amp++;
+		} else {
+			decoded += *amp++;
+		}
 }
 
+static std::string print_pango_color(guint32 c)
+{
+	char buf[8]; // #001122
+	gint n = g_snprintf(buf, sizeof(buf), "#%06x", c & 0xffffff);
+	if(n != sizeof(buf)-1)
+		return "";
+	else
+		return buf;
+}
+
+struct ColorScheme {
+	guint32 abr;
+	guint32 ex;
+	guint32 k;
+	guint32 c;
+	guint32 ref;
+};
+
+struct ReplaceTag {
+	ReplaceTag(const char* match, int match_len, const std::string& replace, int char_len)
+	:
+		match_(match),
+		match_len_(match_len),
+		replace_(replace),
+		char_len_(char_len)
+	{
+	}
+	const char *match_;
+	int match_len_;
+	std::string replace_;
+	int char_len_;
+};
 
 class XDXFParser {
 public:
 	XDXFParser(const char *p, ParseResult &result);
+	static void fill_replace_arr(void);
+	static void fill_color_scheme(void);
 private:
 	void flush(void);
-private:
-	struct ReplaceTag {
-		const char *match_;
-		int match_len_;
-		const char *replace_;
-		int char_len_;
-	};
 private:
 	ParseResult& result_;
 	LinksPosList links_list_;
 	std::string res_;
 	std::string::size_type cur_pos_;
 
-	static const ReplaceTag replace_arr_[];
+	static std::vector<ReplaceTag> replace_arr_;
+	static ColorScheme color_scheme_;
 };
 
-const XDXFParser::ReplaceTag XDXFParser::replace_arr_[] = {
-		{ "abr>", 4, "<span foreground=\"green\" style=\"italic\">", 0 },
-		{ "/abr>", 5, "</span>", 0 },
-		{ "b>", 2, "<b>", 0 },
-		{ "/b>", 3, "</b>", 0 },
-		{ "i>", 2, "<i>", 0  },
-		{ "/i>", 3, "</i>", 0 },
-		{ "sub>", 4, "<sub>", 0 },
-		{ "/sub>", 5, "</sub>", 0},
-		{ "sup>", 4, "<sup>", 0},
-		{ "/sup>", 5, "</sup>", 0},
-		{ "tt>", 3, "<tt>", 0},
-		{ "/tt>", 4, "</tt>", 0},
-		{ "big>", 4, "<big>", 0},
-		{ "/big>", 5, "</big>", 0},
-		{ "small>", 6, "<small>", 0},
-		{ "/small>", 7, "</small>", 0},
-		{ "tr>", 3, "<b>[", 1 },
-		{ "/tr>", 4, "]</b>", 1 },
-		{ "ex>", 3, "<span foreground=\"violet\">", 0 },
-		{ "/ex>", 4, "</span>", 0 },
-		{ "/c>", 3, "</span>", 0 },
-		{ NULL, 0, NULL, 0 },
-	};
+std::vector<ReplaceTag> XDXFParser::replace_arr_;
+ColorScheme XDXFParser::color_scheme_;
+
+void XDXFParser::fill_replace_arr(void)
+{
+	replace_arr_.clear();
+	std::string value;
+	replace_arr_.push_back(ReplaceTag("abr>", 4,
+		std::string("<span foreground=\"") + print_pango_color(color_scheme_.abr) + "\" style=\"italic\">",
+		0));
+	replace_arr_.push_back(ReplaceTag("/abr>", 5, "</span>", 0));
+	replace_arr_.push_back(ReplaceTag("b>", 2, "<b>", 0));
+	replace_arr_.push_back(ReplaceTag("/b>", 3, "</b>", 0));
+	replace_arr_.push_back(ReplaceTag("i>", 2, "<i>", 0));
+	replace_arr_.push_back(ReplaceTag("/i>", 3, "</i>", 0));
+	replace_arr_.push_back(ReplaceTag("sub>", 4, "<sub>", 0));
+	replace_arr_.push_back(ReplaceTag("/sub>", 5, "</sub>", 0));
+	replace_arr_.push_back(ReplaceTag("sup>", 4, "<sup>", 0));
+	replace_arr_.push_back(ReplaceTag("/sup>", 5, "</sup>", 0));
+	replace_arr_.push_back(ReplaceTag("tt>", 3, "<tt>", 0));
+	replace_arr_.push_back(ReplaceTag("/tt>", 4, "</tt>", 0));
+	replace_arr_.push_back(ReplaceTag("big>", 4, "<big>", 0));
+	replace_arr_.push_back(ReplaceTag("/big>", 5, "</big>", 0));
+	replace_arr_.push_back(ReplaceTag("small>", 6, "<small>", 0));
+	replace_arr_.push_back(ReplaceTag("/small>", 7, "</small>", 0));
+	replace_arr_.push_back(ReplaceTag("tr>", 3, "<b>[", 1));
+	replace_arr_.push_back(ReplaceTag("/tr>", 4, "]</b>", 1));
+	replace_arr_.push_back(ReplaceTag("ex>", 3,
+		std::string("<span foreground=\"") + print_pango_color(color_scheme_.ex) + "\">",
+		0));
+	replace_arr_.push_back(ReplaceTag("/ex>", 4, "</span>", 0));
+	replace_arr_.push_back(ReplaceTag("/c>", 3, "</span>", 0));
+}
+
+void XDXFParser::fill_color_scheme(void)
+{
+	// ABBYY Lingvo 12 default color scheme
+	color_scheme_.abr = 0x007F00;
+	color_scheme_.ex = 0x7F7F7F;
+	color_scheme_.k = 0x000000;
+	color_scheme_.c = 0x0066FF;
+	color_scheme_.ref = 0x00007F;
+}
 
 XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 	result_(result)
@@ -140,7 +189,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 		cur_pos_ += xml_strlen(chunk);
 
 		p = tag;
-		for (i = 0; replace_arr_[i].match_; ++i)
+		for (i = 0; i < static_cast<int>(replace_arr_.size()); ++i)
 			if (strncmp(replace_arr_[i].match_, p + 1,
 						replace_arr_[i].match_len_) == 0) {
 				res_ += replace_arr_[i].replace_;
@@ -157,7 +206,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 					if (*(next + 4) == '\n')
 						next++;
 				} else {
-					res_ += "<span foreground=\"blue\">";
+					res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.k) + "\">";
 					std::string chunk(p+3, next-(p+3));
 					res_ += chunk;
 					size_t xml_len = xml_strlen(chunk);
@@ -187,7 +236,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 				else
 					res_ += "<span>";
 			} else
-				res_ += "<span foreground=\"blue\">";
+				res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.c) + "\">";
 			p = next + 1;
 		} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' 
 			&& *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
@@ -272,7 +321,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 			if (!next)
 				continue;
 
-			res_ += "<span foreground=\"blue\" underline=\"single\">";
+			res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.ref) + "\" underline=\"single\">";
 			std::string::size_type link_len = next - p;
 			std::string chunk(p, link_len);
 			size_t xml_len = xml_strlen(chunk);
@@ -392,6 +441,8 @@ DLLIMPORT void stardict_plugin_exit(void)
 
 DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
+	XDXFParser::fill_color_scheme();
+	XDXFParser::fill_replace_arr();
 	obj->parse_func = parse;
 	g_print(_("XDXF data parsing plug-in loaded.\n"));
 	return false;
