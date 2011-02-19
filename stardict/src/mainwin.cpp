@@ -1879,7 +1879,7 @@ void TextWin::ShowTips()
   query_result = TEXT_WIN_TIPS;
   view->set_text(
 	  _("        Welcome to StarDict!\n\n"
-	    "   Press Ctrl+Q to quit. Press Alt+Z to iconify the window or Alt+X to hide the window.\n"
+	    "   Press Ctrl+Q to quit. Press Alt+Z to iconify (minimize) the window or Alt+X to minimize to tray.\n"
 	    "   Press Alt+C or ESC to clear the input entry's text.\n"
 	    "   Press Space key to move focus to the input entry.\n"
 	    "   If the query word was not found, you can press Tab key to select the first word in the word list.\n"
