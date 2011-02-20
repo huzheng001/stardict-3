@@ -170,7 +170,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 
 	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command
-#if defined(_WIN32) || defined(CONFIG_GNOME)
+#if defined(_WIN32)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif
 	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play")); // absolute command

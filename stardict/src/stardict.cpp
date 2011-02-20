@@ -135,17 +135,11 @@ AppCore::AppCore() :
 	plugin_manage_dlg = NULL;
 	prefs_dlg = NULL;
 	oStarDictPlugins = NULL;
-#ifdef CONFIG_GNOME
-	gnome_sound_init(NULL);
-#endif
 }
 
 AppCore::~AppCore()
 {
 	stop_word_change_timer();
-#ifdef CONFIG_GNOME
-	gnome_sound_shutdown();
-#endif
 	delete dict_manage_dlg;
 	delete plugin_manage_dlg;
 	delete prefs_dlg;
@@ -1559,7 +1553,7 @@ void AppCore::TopWinEnterWord()
 					oMidWin.oIndexWin.oListWin.treeview_, path, NULL, FALSE, 0, 0);
 				gtk_tree_path_free(path);
 			} else {
-				if (GTK_WIDGET_SENSITIVE(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton)))
+				if (gtk_widget_get_sensitive(GTK_WIDGET(oMidWin.oToolWin.PronounceWordMenuButton)))
 					oReadWord.read(oMidWin.oTextWin.pronounceWord.c_str(), oMidWin.oTextWin.readwordtype);
 			}
 			return;
@@ -1730,7 +1724,7 @@ void AppCore::ListClick(const gchar *word)
 void AppCore::on_stardict_client_error(const char *error_msg)
 {
 	GtkWindow *parent;
-	if (dict_manage_dlg && dict_manage_dlg->window && GTK_WIDGET_VISIBLE(dict_manage_dlg->window)) {
+	if (dict_manage_dlg && dict_manage_dlg->window && gtk_widget_get_visible(GTK_WIDGET(dict_manage_dlg->window))) {
 		parent = GTK_WINDOW(dict_manage_dlg->window);
 	} else if (prefs_dlg && prefs_dlg->window) {
 		parent = GTK_WINDOW(prefs_dlg->window);
@@ -1834,7 +1828,7 @@ void AppCore::on_http_client_error(HttpClient *http_client, const char *error_ms
 		http_client->callback_func_(NULL, 0, http_client->userdata);
 	} else {
 		GtkWindow *parent;
-		if (dict_manage_dlg && dict_manage_dlg->window && GTK_WIDGET_VISIBLE(dict_manage_dlg->window)) {
+		if (dict_manage_dlg && dict_manage_dlg->window && gtk_widget_get_visible(GTK_WIDGET(dict_manage_dlg->window))) {
 			parent = GTK_WINDOW(dict_manage_dlg->window);
 		} else if (prefs_dlg && prefs_dlg->window) {
 			parent = GTK_WINDOW(prefs_dlg->window);
@@ -2213,7 +2207,7 @@ void AppCore::on_dict_scan_select_changed(const baseconfval* scanval)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(oBottomWin.ScanSelectionCheckButton), scan);
 
 	oDockLet->set_scan_mode(scan);
-	if (GTK_WIDGET_VISIBLE(window))
+	if (gtk_widget_get_visible(GTK_WIDGET(window)))
 		oDockLet->hide_state();
 	if (scan) {
 		bool lock=conf->get_bool_at("floating_window/lock");
@@ -2343,7 +2337,7 @@ static gboolean save_yourself_cb (GnomeClient       *client,
     argv[0] = (gchar *)client_data;
 
 	if (gpAppFrame->window) {
-		if (!GTK_WIDGET_VISIBLE(gpAppFrame->window))
+		if (!gtk_widget_get_visible(GTK_WIDGET(gpAppFrame->window)))
 			argv[argc++] = (gchar *)"-h";
 	}
 

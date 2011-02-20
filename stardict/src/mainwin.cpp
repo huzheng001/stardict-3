@@ -65,7 +65,7 @@ TopWin::~TopWin()
 static void unfocus_combo_arrow(GtkWidget *widget, gpointer data)
 {
 	if (!GTK_IS_ENTRY(widget)) {
-		GTK_WIDGET_UNSET_FLAGS(widget, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus(widget, FALSE);
 	}
 }
 
@@ -84,7 +84,7 @@ void TopWin::Create(GtkWidget *vbox)
 	button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
 	gtk_widget_show(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(ClearCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,3);
@@ -113,7 +113,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(GoCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
@@ -124,7 +124,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_UNDO,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(BackCallback),this);
 	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_back_button_press),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
@@ -140,7 +140,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_HOME,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(MenuCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
@@ -325,7 +325,7 @@ void TopWin::do_back()
   }
   InsertHisList(get_text());
   SetText(((BackListData *)(list->data))->word);
-  if (GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
+  if (gtk_widget_has_focus(GTK_WIDGET(GTK_BIN(WordCombo)->child)))
     gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child),0,-1);
   if (((BackListData *)(list->data))->adjustment_value != -1) {
     ProcessGtkEvent(); // so all the definition text have been inserted.
@@ -854,7 +854,7 @@ void ListWin::ReScroll()
 	GtkTreePath *path = gtk_tree_path_new_from_string ("0");
 	gtk_tree_view_scroll_to_cell(treeview_, path, NULL, FALSE, 0, 0);
 	gtk_tree_path_free(path);
-	/*if (GTK_WIDGET_REALIZED(treeview))
+	/*if (gtk_widget_get_realized(GTK_WIDGET(treeview)))
 		gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(treeview),0,0);*/
 }
 
@@ -1293,7 +1293,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_box_pack_start(GTK_BOX(hbox),vbox, false, false, 0);
 
 	GtkWidget *wazard_button = gtk_radio_button_new(NULL);
-	GTK_WIDGET_UNSET_FLAGS (wazard_button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (wazard_button, FALSE);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(wazard_button), false);
 	gtk_box_pack_start(GTK_BOX(vbox),wazard_button, false, false, 0);
 	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_wazard));
@@ -1304,7 +1304,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	g_signal_connect(G_OBJECT(wazard_button),"toggled", G_CALLBACK(on_wazard_button_toggled), this);
 
 	GtkWidget *result_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
-	GTK_WIDGET_UNSET_FLAGS (result_button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (result_button, FALSE);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(result_button), false);
 	gtk_box_pack_start(GTK_BOX(vbox),result_button, false, false, 0);
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_dictlist));
@@ -1314,7 +1314,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	g_signal_connect(G_OBJECT(result_button),"toggled", G_CALLBACK(on_result_button_toggled), this);
 	
 	GtkWidget *translate_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(result_button));
-	GTK_WIDGET_UNSET_FLAGS (translate_button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (translate_button, FALSE);
 	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(translate_button), false);
 	gtk_box_pack_start(GTK_BOX(vbox),translate_button, false, false, 0);
 	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
@@ -1325,7 +1325,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 
 	if (has_treedict) {
 		GtkWidget *appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(translate_button));
-		GTK_WIDGET_UNSET_FLAGS (appendix_button, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (appendix_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(appendix_button), false);
 		gtk_box_pack_start(GTK_BOX(vbox),appendix_button, false, false, 0);
 		image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_appendix));
@@ -1339,7 +1339,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_container_add(GTK_CONTAINER(choosegroup_button),gtk_image_new_from_stock(GTK_STOCK_CONVERT,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(choosegroup_button);
 	gtk_button_set_relief (GTK_BUTTON (choosegroup_button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (choosegroup_button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (choosegroup_button, FALSE);
 	g_signal_connect(G_OBJECT(choosegroup_button),"clicked", G_CALLBACK(on_choose_group_button_clicked),this);
 	gtk_box_pack_start(GTK_BOX(vbox),choosegroup_button,false,false,0);
 	gtk_widget_set_tooltip_text(choosegroup_button, _("Choose dict group"));
@@ -1349,7 +1349,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_DOWN,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NextCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
@@ -1359,7 +1359,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_GO_UP,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreviousCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(vbox),button,false,false,0);
@@ -1528,7 +1528,7 @@ void ToolWin::UpdatePronounceMenu()
 
 static void unfocus_menu_button(GtkWidget *widget, gpointer data)
 {
-	GTK_WIDGET_UNSET_FLAGS(widget, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(widget, FALSE);
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_forall(GTK_CONTAINER(widget), unfocus_menu_button, data);
 }
@@ -1550,7 +1550,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_widget_show(image);
 	gtk_container_add(GTK_CONTAINER(ShowListButton),image);
 	gtk_button_set_relief (GTK_BUTTON (ShowListButton), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (ShowListButton, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (ShowListButton, FALSE);
 	g_signal_connect(G_OBJECT(ShowListButton),"clicked", G_CALLBACK(ShowListCallback),NULL);
 	g_signal_connect(G_OBJECT(ShowListButton),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 #ifdef CONFIG_GPE
@@ -1565,7 +1565,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_widget_show(image);
 	gtk_container_add(GTK_CONTAINER(HideListButton),image);
 	gtk_button_set_relief (GTK_BUTTON (HideListButton), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (HideListButton, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (HideListButton, FALSE);
 	g_signal_connect(G_OBJECT(HideListButton),"clicked", G_CALLBACK(HideListCallback),NULL);
 	g_signal_connect(G_OBJECT(HideListButton),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 #ifdef CONFIG_GPE
@@ -1588,7 +1588,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_COPY,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(CopyCallback),this);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 	gtk_widget_set_tooltip_text(button,_("Copy"));
@@ -1597,7 +1597,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	PronounceWordMenuButton = gtk_menu_tool_button_new_from_stock(GTK_STOCK_EXECUTE);
 	UpdatePronounceMenu();
 	gtk_widget_show(GTK_WIDGET(PronounceWordMenuButton));
-	GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET(PronounceWordMenuButton), GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (GTK_WIDGET(PronounceWordMenuButton), FALSE);
 	gtk_container_forall(GTK_CONTAINER(PronounceWordMenuButton), unfocus_menu_button, this);
 	g_signal_connect(G_OBJECT(PronounceWordMenuButton),"clicked", G_CALLBACK(PlayCallback),this);
 #ifdef CONFIG_GPE
@@ -1612,7 +1612,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_SAVE,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(SaveCallback),this);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
@@ -1626,7 +1626,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PRINT,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PrintCallback),this);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,5);
 	gtk_widget_set_tooltip_text(button,_("Print"));
@@ -1637,7 +1637,7 @@ void ToolWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(SearchCallback),this);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
@@ -1816,7 +1816,7 @@ void TextWin::Create(GtkWidget *vbox)
 	gtk_widget_show(image);
 	gtk_container_add(GTK_CONTAINER(btClose), image);
 	gtk_button_set_relief(btClose, GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS(btClose, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(GTK_WIDGET(btClose), FALSE);
 	g_signal_connect(G_OBJECT(btClose), "clicked",
 		G_CALLBACK(OnCloseSearchPanel), this);
 	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(btClose), FALSE, FALSE, 3);
@@ -1828,7 +1828,7 @@ void TextWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(eSearch), TRUE, TRUE, 0);
 	btFind = GTK_BUTTON(gtk_button_new_from_stock(GTK_STOCK_FIND));
 	gtk_button_set_relief(btFind, GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS(btFind, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus(GTK_WIDGET(btFind), FALSE);
 	g_signal_connect(G_OBJECT(btFind), "clicked",
 		G_CALLBACK(OnFindSearchPanel), this);
 
@@ -2790,7 +2790,7 @@ void BottomWin::Create(GtkWidget *vbox)
 
 	ScanSelectionCheckButton = gtk_check_button_new_with_mnemonic(_("_Scan"));
 	gtk_widget_show(ScanSelectionCheckButton);
-	GTK_WIDGET_UNSET_FLAGS (ScanSelectionCheckButton, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (ScanSelectionCheckButton, FALSE);
   bool scan=conf->get_bool_at("dictionary/scan_selection");
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ScanSelectionCheckButton), scan);
@@ -2803,7 +2803,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(AboutCallback), NULL);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 #ifdef CONFIG_GPE
@@ -2817,7 +2817,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_QUIT,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(QuitCallback), NULL);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
@@ -2859,7 +2859,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PREFERENCES,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(PreferenceCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
@@ -2869,7 +2869,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(DictManageCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
@@ -2879,7 +2879,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_INDEX,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(NewVersionCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_end(GTK_BOX(hbox),button,false,false,0);
@@ -2890,7 +2890,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_JUMP_TO,GTK_ICON_SIZE_SMALL_TOOLBAR));
 	gtk_widget_show_all(button);
 	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(InternetSearchCallback),this);
 	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_internetsearch_button_press),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);

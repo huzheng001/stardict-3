@@ -137,7 +137,7 @@ void DockLet::show_menu(int x, int y)
 
 void DockLet::on_left_btn()
 {
-	if (GTK_WIDGET_VISIBLE(mainwin_)) {
+	if (gtk_widget_get_visible(GTK_WIDGET(mainwin_))) {
 		HWND hwnd =
 			static_cast<HWND>(GDK_WINDOW_HWND(mainwin_->window));
 		if (IsIconic(hwnd))
@@ -146,7 +146,7 @@ void DockLet::on_left_btn()
 			minimize_to_tray();
 	} else {
 		maximize_from_tray();
-        on_maximize_.emit();
+		on_maximize_.emit();
 	}
 }
 
@@ -245,7 +245,7 @@ void DockLet::minimize_to_tray()
 
 void DockLet::maximize_from_tray()
 {
-	if (!GTK_WIDGET_VISIBLE(mainwin_))
+	if (!gtk_widget_get_visible(GTK_WIDGET(mainwin_)))
 		RestoreWndFromTray((HWND)(GDK_WINDOW_HWND(mainwin_->window)));
 	TrayBase::maximize_from_tray();
 }

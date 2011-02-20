@@ -541,7 +541,7 @@ gint FloatWin::vHideWindowTimeOutCallback(gpointer data)
 	FloatWin *oFloatWin = static_cast<FloatWin *>(data);
 	bool lock=
 		conf->get_bool_at("floating_window/lock");
-	if(lock || oFloatWin->ismoving || !GTK_WIDGET_VISIBLE(oFloatWin->FloatWindow))
+	if(lock || oFloatWin->ismoving || !gtk_widget_get_visible(GTK_WIDGET(oFloatWin->FloatWindow)))
 		return true;
 
 	bool only_scan_while_modifier_key=
@@ -593,7 +593,7 @@ gboolean FloatWin::vEnterNotifyCallback (GtkWidget *widget, GdkEventCrossing *ev
 #else
 	if ((event->detail==GDK_NOTIFY_NONLINEAR) || (event->detail==GDK_NOTIFY_NONLINEAR_VIRTUAL)) {
 #endif
-		if (!GTK_WIDGET_VISIBLE(oFloatWin->button_hbox)) {
+		if (!gtk_widget_get_visible(GTK_WIDGET(oFloatWin->button_hbox))) {
 			gtk_widget_show(oFloatWin->button_hbox);
 		
 			if (!oFloatWin->button_box_once_shown) {
@@ -801,7 +801,7 @@ void FloatWin::float_window_size(gint& window_width, gint& window_height)
 		window_height = get_window_border_width() + requisition.height;
 	}
 	
-	gboolean button_hbox_visible = GTK_WIDGET_VISIBLE(button_hbox);
+	gboolean button_hbox_visible = gtk_widget_get_visible(GTK_WIDGET(button_hbox));
 	if (button_hbox_visible) {
 		window_height += button_hbox->allocation.height;
 		if (window_width < button_hbox->allocation.width + get_window_border_width())
@@ -857,7 +857,7 @@ void FloatWin::Popup(gboolean updatePosition)
 		// need to make window's resize relate to other corner?
 	} else {
 		gint iCurrentX,iCurrentY;
-		gboolean newPosition = (!GTK_WIDGET_VISIBLE(FloatWindow)) || updatePosition;
+		gboolean newPosition = (!gtk_widget_get_visible(GTK_WIDGET(FloatWindow))) || updatePosition;
 		float_window_position(newPosition, window_width, window_height, iCurrentX, iCurrentY);
 		if (newPosition) {
 			button_box_once_shown = false;
@@ -1042,7 +1042,7 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_query_activate), this);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 
-	if (GTK_WIDGET_SENSITIVE(PronounceWordButton)) {
+	if (gtk_widget_get_sensitive(GTK_WIDGET(PronounceWordButton))) {
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Play"));
 		image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);

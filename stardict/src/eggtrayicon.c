@@ -182,7 +182,7 @@ make_transparent_again (GtkWidget *widget, GtkStyle *previous_style,
 static void
 make_transparent (GtkWidget *widget, gpointer user_data)
 {
-	if (GTK_WIDGET_NO_WINDOW (widget) || GTK_WIDGET_APP_PAINTABLE (widget))
+	if (!gtk_widget_get_has_window(widget) || gtk_widget_get_app_paintable (widget))
 		return;
 
 	gtk_widget_set_app_paintable (widget, TRUE);
@@ -387,7 +387,7 @@ egg_tray_icon_update_manager_window (EggTrayIcon *icon,
       
       gdk_window_add_filter (gdkwin, egg_tray_icon_manager_filter, icon);
 
-      if (dock_if_realized && GTK_WIDGET_REALIZED (icon))
+      if (dock_if_realized && gtk_widget_get_realized(GTK_WIDGET(icon)))
 	egg_tray_icon_send_dock_request (icon);
 
       egg_tray_icon_get_orientation_property (icon);

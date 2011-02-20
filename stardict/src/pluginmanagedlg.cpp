@@ -267,7 +267,7 @@ void PluginManageDlg::on_plugin_treeview_selection_changed(GtkTreeSelection *sel
 gboolean PluginManageDlg::on_treeview_button_press(GtkWidget * widget, GdkEventButton * event, PluginManageDlg *oPluginManageDlg)
 {
 	if (event->type==GDK_2BUTTON_PRESS) {
-		if (GTK_WIDGET_SENSITIVE(oPluginManageDlg->pref_button))
+		if (gtk_widget_get_sensitive(GTK_WIDGET(oPluginManageDlg->pref_button)))
 			gtk_dialog_response(GTK_DIALOG(oPluginManageDlg->window), STARDICT_RESPONSE_CONFIGURE);
 		return true;
 	} else {
