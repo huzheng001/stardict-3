@@ -147,7 +147,7 @@ gboolean DockLet::on_btn_press(GtkWidget *button, GdkEventButton *event,
 			dock->on_change_scan_.emit(!dock->is_scan_on());
 			return TRUE;
 		} else {
-			if (GTK_WIDGET_VISIBLE(dock->mainwin_))
+			if (gtk_widget_get_visible(GTK_WIDGET(dock->mainwin_)))
 				gtk_widget_hide(dock->mainwin_);
 			else {
 				dock->maximize_from_tray();

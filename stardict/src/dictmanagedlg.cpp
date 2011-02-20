@@ -199,7 +199,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	vbox = gtk_vbox_new(false,6);
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_add_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 #ifdef CONFIG_MAEMO
@@ -207,7 +207,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 #else
 	button = gtk_button_new_from_stock(GTK_STOCK_INFO);
 #endif
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_info_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox, false, false, 0);
@@ -1863,19 +1863,19 @@ GtkWidget *DictManageDlg::create_buttons()
 #endif
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_GOTO_TOP);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_top_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_GO_UP);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_up_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_GO_DOWN);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_down_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_GOTO_BOTTOM);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_bottom_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
@@ -1894,21 +1894,21 @@ GtkWidget *DictManageDlg::create_dictmanage_buttons()
 	image = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Add"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_add_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_DELETE, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Delete"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_delete_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Information"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_info_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	vbox = gtk_vbox_new(false,6);
@@ -1917,28 +1917,28 @@ GtkWidget *DictManageDlg::create_dictmanage_buttons()
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_TOP, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Move to top"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_top_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Move up"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_up_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Move down"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_down_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_BOTTOM, GTK_ICON_SIZE_BUTTON);
 	gtk_button_set_image(GTK_BUTTON(button), image);
 	gtk_widget_set_tooltip_text(button,_("Move to bottom"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_move_bottom_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return hbox;
@@ -1954,19 +1954,19 @@ GtkWidget *DictManageDlg::create_network_buttons()
 #endif
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_add_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_REMOVE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_remove_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_GO_UP);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_up_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_GO_DOWN);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_down_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
@@ -2012,7 +2012,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_box_pack_start(GTK_BOX(vbox),hbox, false, false, 0);
 		
 		wazard_button = gtk_radio_button_new(NULL);
-		GTK_WIDGET_UNSET_FLAGS (wazard_button, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (wazard_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(wazard_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), wazard_button, false, false, 0);	
 		GtkWidget *hbox1 = gtk_hbox_new(false, 2);
@@ -2027,7 +2027,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		g_signal_connect(G_OBJECT(wazard_button),"toggled", G_CALLBACK(on_wazard_button_toggled), this);
 		
 		manage_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
-		GTK_WIDGET_UNSET_FLAGS (manage_button, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (manage_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(manage_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), manage_button, false, false, 0);	
 		hbox1 = gtk_hbox_new(false, 2);
@@ -2041,7 +2041,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		g_signal_connect(G_OBJECT(manage_button),"toggled", G_CALLBACK(on_manage_button_toggled), this);
 
 		appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(manage_button));
-		GTK_WIDGET_UNSET_FLAGS (appendix_button, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (appendix_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(appendix_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), appendix_button, false, false, 0);	
 		hbox1 = gtk_hbox_new(false, 2);
@@ -2055,7 +2055,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		g_signal_connect(G_OBJECT(appendix_button),"toggled", G_CALLBACK(on_appendix_button_toggled), this);
 		
 		GtkWidget *network_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(appendix_button));
-		GTK_WIDGET_UNSET_FLAGS (network_button, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (network_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(network_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), network_button, false, false, 0);	
 		hbox1 = gtk_hbox_new(false, 2);

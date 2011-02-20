@@ -106,7 +106,7 @@ public:
 
 	gboolean TextSelected();
 	bool has_focus() {
-		return GTK_WIDGET_HAS_FOCUS(GTK_BIN(WordCombo)->child);
+		return gtk_widget_has_focus(GTK_WIDGET(GTK_BIN(WordCombo)->child));
 	}
 	static void ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *text, gpointer data);
 
@@ -153,7 +153,7 @@ public:
 	void MergeFuzzyList(std::list<char *> *wordlist);
 	void MergeWordList(std::list<char *> *wordlist);
 	bool treeview_has_focus() const {
-		return GTK_WIDGET_HAS_FOCUS(GTK_WIDGET(treeview_));
+		return gtk_widget_has_focus(GTK_WIDGET(treeview_));
 	}
 };
 
@@ -258,7 +258,7 @@ public:
   void Show(const struct STARDICT::LookupResponse::DictResponse *dict_response, STARDICT::LookupResponse::ListType list_type);
   void Show(NetDictResponse *resp);
   gboolean Find (const gchar *text, gboolean start);
-	bool IsSearchPanelHasFocus() { return GTK_WIDGET_HAS_FOCUS(eSearch); } 
+	bool IsSearchPanelHasFocus() { return gtk_widget_has_focus(GTK_WIDGET(eSearch)); }
 
 	void ShowSearchPanel();
 	void HideSearchPanel();
@@ -286,7 +286,7 @@ public:
 	TransWin();
 	void Create(GtkWidget *notebook);
 	void SetText(const char *text, int len = -1);
-	bool IsInputViewHasFocus() { return GTK_WIDGET_HAS_FOCUS(input_textview); }
+	bool IsInputViewHasFocus() { return gtk_widget_has_focus(GTK_WIDGET(input_textview)); }
 private:
 	GtkWidget *input_textview;
 	GtkWidget *result_textview;

@@ -163,12 +163,6 @@ mci_end:
 		} else
 			return; // error
 	}
-#elif defined(CONFIG_GNOME)
-	if(!conf->get_bool_at("dictionary/always_use_sound_play_command")) {
-		// Fails quietly if playing is not possible.
-		gnome_sound_play(filename.c_str());
-		return;
-	}
 #endif
 	const std::string &playcmd=
 		conf->get_string_at("dictionary/sound_play_command");

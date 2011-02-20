@@ -706,7 +706,7 @@ void PrefsDlg::setup_dictionary_export_page()
 
 	GtkWidget *button;
 	button = gtk_button_new_with_mnemonic(_("_Browse..."));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_dictionary_export_browse_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox1, FALSE, FALSE, 0);
@@ -740,7 +740,7 @@ void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *butto
   conf->set_bool_at("dictionary/enable_sound_event",enable);
 }
 
-#if defined(_WIN32) || defined(CONFIG_GNOME)
+#if defined(_WIN32)
 void PrefsDlg::on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   gboolean enable = gtk_toggle_button_get_active(button);
@@ -786,7 +786,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	eSoundPlayCommand=GTK_ENTRY(e);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 
-#if defined(_WIN32) || defined(CONFIG_GNOME)
+#if defined(_WIN32)
 	check_button = gtk_check_button_new_with_mnemonic(_("Always use sound play command."));
 	enable = conf->get_bool_at("dictionary/always_use_sound_play_command");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
@@ -803,7 +803,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	std::string ttspath;
 	{
 #ifdef _WIN32
-		/* Let's the user see paths as they is, that is relative paths. */
+		/* Let's the user see paths as they are, that is relative paths. */
 #endif
 		const std::list<std::string> &ttspathlist = conf->get_strlist_at("dictionary/tts_path");
 		for(std::list<std::string>::const_iterator it = ttspathlist.begin();
@@ -1760,17 +1760,17 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 	button = gtk_button_new();
 	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
 	gtk_container_add(GTK_CONTAINER(button), image);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_mainwin_searchwebsite_moveup_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
 	gtk_container_add(GTK_CONTAINER(button), image);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_mainwin_searchwebsite_movedown_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
 	button = gtk_button_new_from_stock(GTK_STOCK_REMOVE);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_mainwin_searchwebsite_remove_button_clicked), this);
 	gtk_box_pack_end (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
 
@@ -1785,12 +1785,12 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 	image = gtk_image_new_from_stock (GTK_STOCK_CONVERT, GTK_ICON_SIZE_BUTTON);
 	gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 0);
 	gtk_box_pack_end (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_mainwin_searchwebsite_edit_button_clicked), this);
 	gtk_box_pack_end (GTK_BOX (hbox1), button, FALSE, FALSE, 0);*/
 
 	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_mainwin_searchwebsite_add_button_clicked), this);
 	gtk_box_pack_end (GTK_BOX (hbox1), button, FALSE, FALSE, 0);
 
