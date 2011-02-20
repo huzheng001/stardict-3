@@ -164,7 +164,7 @@ bool Babylon::readBlock( bgl_block &block )
 			print_info("gzread error\n");
 			return false;
 		}
-		if(res != length) {
+		if(res != static_cast<int>(length)) {
 			print_info("gzread: unexpected end of file\n");
 			return false;
 		}
@@ -278,7 +278,7 @@ bool Babylon::read(const std::string &source_charset, const std::string &target_
 					break;
 				{
 					int code = (unsigned char)(block.data[5]);
-					if(sizeof(bgl_language)/sizeof(bgl_language[0]) <= code)
+					if(sizeof(bgl_language)/sizeof(bgl_language[0]) <= static_cast<size_t>(code))
 						break;
 					m_sourceLang = bgl_language[code];
 				}
@@ -288,7 +288,7 @@ bool Babylon::read(const std::string &source_charset, const std::string &target_
 					break;
 				{
 					int code = (unsigned char)(block.data[5]);
-					if(sizeof(bgl_language)/sizeof(bgl_language[0]) <= code)
+					if(sizeof(bgl_language)/sizeof(bgl_language[0]) <= static_cast<size_t>(code))
 						break;
 					m_targetLang = bgl_language[code];
 				}
@@ -430,7 +430,7 @@ bgl_entry Babylon::readEntry()
 					if ( x == 0x14 ) {
 						if( a <= pos+len - 3 && (unsigned char)block.data[a+1] == 0x02 ) {
 							int index = (unsigned char)block.data[a+2] - 0x30;
-							if (index < sizeof(partOfSpeech)/sizeof(partOfSpeech[0])) {
+							if (static_cast<size_t>(index) < sizeof(partOfSpeech)/sizeof(partOfSpeech[0])) {
 								definition = "<font color=\"blue\">" + partOfSpeech[index] + "</font> " + definition;
 							}
 						}
