@@ -534,7 +534,13 @@ void HtmlParser::html2result(const char *p, ParseResult &result)
 cycle_end:
 		;
 	}
-	res += p;
+	{
+		size_t pango_len;
+		std::string pango;
+		html_topango(p, pango, pango_len);
+		res += pango;
+		cur_pos += pango_len;
+	}
 	end_of_input();
 	ParseResultItem item;
 	item.type = ParseResultItemType_link;
