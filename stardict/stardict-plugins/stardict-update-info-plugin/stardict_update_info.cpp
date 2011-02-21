@@ -17,6 +17,7 @@ static std::string latest_news;
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static const StarDictPluginSystemService *plugin_service;
 static IAppDirs* gpAppDirs = NULL;
+#define UTF8_BOM "\xEF\xBB\xBF"
 
 /* concatenate path1 and path2 inserting a path separator in between if needed. */
 static std::string build_path(const std::string& path1, const std::string& path2)
@@ -149,6 +150,8 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		return;
 	}
 	p += 4;
+	if(g_str_has_prefix(p, UTF8_BOM))
+		p += strlen(UTF8_BOM);
 	updateinfo_ParseUserData Data;
 	Data.latest_version_num = 0;
 	const gchar* const *languages = g_get_language_names();
