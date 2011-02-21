@@ -10,6 +10,14 @@ gtk
 
 You need to install developer packages into "msvc_2008\gtk" directory.
 Download All-in-one bundle gtk+-bundle_2.22.*_win32.zip at http://www.gtk.org/download-windows.html.
+
+Note. bundle gtk+-bundle_2.22.1-20101227_win32.zip
+You may notice the following warning when building StarDict:
+<<<
+zdll.lib(d000034.o) : warning LNK4078: multiple '.text' sections found with different attributes (E0300020)
+>>>
+The zdll library that comes with this bundle should be replaced. Try this  http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/zlib-dev_1.2.5-1_win32.zip. Unpack it into "msvc_2008\gtk" directory overwritting all files.
+
 Download libiconv-1.9-w32.2.bin.woe32.zip at http://sourceforge.net/projects/gettext/files/.
 Extract them into "msvc_2008\gtk\".
 
@@ -33,6 +41,7 @@ I. building with prebuild binaries
 II. building libxml library from source
 ---------------------------------------
 1. download libxml archive (for example libxml2-2.7.7.tar.gz) from ftp://xmlsoft.org/libxml2/
+	Note, I recommend against libxml2-2.7.8.tar.gz, it seems to be broken.
 2. extract the archive into msvc_2008, rename msvc_2008\libxml2-* to msvc_2008\libxml2-src
 3. Windows menu->All Programs->Microsoft Visual Studio 2008->Visual Studio Tools->Visual Studio 2008 Command Prompt
 4. cd to msvc_2008\libxml2-src\win32 in the opened console window.
@@ -81,14 +90,11 @@ Building libsigc++
 
 libsigc++ have static link problem on vs2008 (?).
 
-Notes
------
+sapi-tts plugin
+===============
 
-For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
-For wordnet plugin files, they are the same.
-(8 May 2010. Compilation succeeds without the fix. It is not needed anymore?)
-
-For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSDK51.exe file. Install it into "C:\Program Files\Microsoft Speech SDK 5.1". Fix these compile errors in sphelper.h:
+For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSDK51.exe file. Install it into "C:\Program Files\Microsoft Speech SDK 5.1" (into "C:\Program Files (x86)\Microsoft Speech SDK 5.1" on x64 platform). 
+Fix these compile errors in sphelper.h (only for x86):
 =====
 1) add to the top of the file to prevent many errors
 #pragma warning( disable : 4430 )
@@ -110,6 +116,26 @@ For sapi-tts plugin, you need to install Microsoft Speech SDK. Download SpeechSD
 	with
     pphoneId += wcslen((const wchar_t *)pphoneId) + 1;
 =====
+
+Fix these compile warnings in shphelper.h (only for x64):
+=====
+1) line 1194
+	replace
+    if( ( ::GetVersionEx( &ver ) == TRUE ) && ( ver.dwMajorVersion >= 6 ) )
+	with
+    if( ( ::GetVersionEx( &ver ) ) && ( ver.dwMajorVersion >= 6 ) )
+=====
+
+Acrobat wordpick plugin
+=======================
+See stardict\src\win32\acrobat\readme.txt file.
+
+Notes
+-----
+
+For stardict_powerword_parsedata.cpp, you need to add a UTF-8 BOM in its head to fix the compile problem. Just use the notepad to open it then save.
+For wordnet plugin files, they are the same.
+(8 May 2010. Compilation succeeds without the fix. It is not needed anymore?)
 
 There are two crash bug with vs2005 (and likely with vs2008), which you need to notice.
 1. Use stardict_g_fopen instead of g_fopen. See http://bugzilla.gnome.org/show_bug.cgi?id=476810
@@ -145,14 +171,14 @@ It's recommended to build Unicode (versus ANSI) version of StarDict. That's done
 Build the installer
 ===================
 
-Grab and install NSIS: http://www.nullsoft.com/free/nsis
-I was using the 2.44 version.
+Grab and install NSIS: http://nsis.sourceforge.net/Download
+I was using the 2.46 version.
 
 Use stardict-prepare-installer.js to build win32-install-dir directory structure. You must have all the required files in place before running the script. See comment at the head of the file for details of running the script.
 
 Some of the required files cannot be created on Windows, you need Linux to prepare them.
 
-1. Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into redist.
+1. Download gtk2-runtime-*.exe from http://sourceforge.net/projects/gtk-win and put it into stardcit\redist.
 
 2. Download Microsoft Visual C++ 2008 Redistributable Package and put into redist. The file is named vcredist_x86.exe.
 	VS 2008 pre-SP1 version:
