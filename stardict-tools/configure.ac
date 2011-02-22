@@ -99,6 +99,15 @@ fi
 AC_SUBST(MYSQL_LIBS)
 AC_SUBST(MYSQL_LDFLAGS)
 
+AC_ARG_ENABLE([deprecations],
+  AS_HELP_STRING([--disable-deprecations],[Disable deprecated gtk functions (default: enabled)]),
+  [enable_deprecations=$enableval],
+  [enable_deprecations=yes])
+
+if test "x$enable_deprecations" = "xno" ; then
+  STARDICT_CFLAGS="$STARDICT_CFLAGS -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED"
+fi
+
 STARDICT_CFLAGS="-Wall $STARDICT_CFLAGS"
 
 LFS_CFLAGS=`getconf LFS_CFLAGS`
