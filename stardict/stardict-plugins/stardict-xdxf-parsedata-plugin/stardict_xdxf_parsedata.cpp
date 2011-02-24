@@ -12,6 +12,20 @@
 #include <windows.h>
 #endif
 
+static const StarDictPluginSystemInfo *plugin_info = NULL;
+static IAppDirs* gpAppDirs = NULL;
+const char config_section[] = "xdxf";
+
+struct ColorScheme {
+	guint32 abr;
+	guint32 ex;
+	guint32 k;
+	guint32 c;
+	guint32 ref;
+};
+
+ColorScheme color_scheme;
+
 static size_t xml_strlen(const std::string& str)
 {
 	const char *q;
@@ -80,6 +94,26 @@ static void xml_decode(const char *str, std::string& decoded)
 		}
 }
 
+/* concatenate path1 and path2 inserting a path separator in between if needed. */
+static std::string build_path(const std::string& path1, const std::string& path2)
+{
+	std::string res;
+	res.reserve(path1.length() + 1 + path2.length());
+	res = path1;
+	if(!res.empty() && res[res.length()-1] != G_DIR_SEPARATOR)
+		res += G_DIR_SEPARATOR_S;
+	if(!path2.empty() && path2[0] == G_DIR_SEPARATOR)
+		res.append(path2, 1, std::string::npos);
+	else
+		res.append(path2);
+	return res;
+}
+
+static std::string get_cfg_filename()
+{
+	return build_path(gpAppDirs->get_user_config_dir(), "xdxf_parser.cfg");
+}
+
 static std::string print_pango_color(guint32 c)
 {
 	char buf[8]; // #001122
@@ -90,13 +124,91 @@ static std::string print_pango_color(guint32 c)
 		return buf;
 }
 
-struct ColorScheme {
-	guint32 abr;
-	guint32 ex;
-	guint32 k;
-	guint32 c;
-	guint32 ref;
-};
+static GdkColor guint32_2_gdkcolor(guint32 c)
+{
+	GdkColor gdkcolor;
+	gdkcolor.red = ((c & 0xff0000) >> 16) * 0x100;
+	gdkcolor.green = ((c & 0x00ff00) >> 8) * 0x100;
+	gdkcolor.blue = ((c & 0x0000ff) >> 0) * 0x100;
+	return gdkcolor;
+}
+
+static guint32 gdkcolor_2_guint32(GdkColor c)
+{
+	return ((c.red / 0x100) << 16)
+		| ((c.green / 0x100) << 8)
+		| (c.blue / 0x100);
+}
+
+static std::string generate_config_content(const ColorScheme& cs)
+{
+	gchar *data = g_strdup_printf("[%s]\n"
+		"abr_color=%u\n"
+		"ex_color=%u\n"
+		"k_color=%u\n"
+		"c_color=%u\n"
+		"ref_color=%u\n",
+		config_section,
+		cs.abr,
+		cs.ex,
+		cs.k,
+		cs.c,
+		cs.ref
+	);
+	std::string res = data;
+	g_free(data);
+	return res;
+}
+
+static void load_config_file(ColorScheme& cs)
+{
+	std::string confPath = get_cfg_filename();
+	GKeyFile *keyfile = g_key_file_new();
+	g_key_file_load_from_file(keyfile, confPath.c_str(), G_KEY_FILE_NONE, NULL);
+	GError *err = NULL;
+	gint value;
+	value = g_key_file_get_integer(keyfile, config_section, "abr_color", &err);
+	if (err) {
+		g_error_free (err);
+		err = NULL;
+	} else
+		cs.abr = value;
+	value = g_key_file_get_integer(keyfile, config_section, "ex_color", &err);
+	if (err) {
+		g_error_free (err);
+		err = NULL;
+	} else
+		cs.ex = value;
+	value = g_key_file_get_integer(keyfile, config_section, "k_color", &err);
+	if (err) {
+		g_error_free (err);
+		err = NULL;
+	} else
+		cs.k = value;
+	value = g_key_file_get_integer(keyfile, config_section, "c_color", &err);
+	if (err) {
+		g_error_free (err);
+		err = NULL;
+	} else
+		cs.c = value;
+	value = g_key_file_get_integer(keyfile, config_section, "ref_color", &err);
+	if (err) {
+		g_error_free (err);
+		err = NULL;
+	} else
+		cs.ref = value;
+	g_key_file_free(keyfile);
+}
+
+static void set_default_color_scheme(void)
+{
+	// ABBYY Lingvo 12 default color scheme
+	color_scheme.abr = 0x007F00;
+	color_scheme.ex = 0x7F7F7F;
+	color_scheme.k = 0x000000;
+	color_scheme.c = 0x0066FF;
+	color_scheme.ref = 0x00007F;
+}
 
 struct ReplaceTag {
 	ReplaceTag(const char* match, int match_len, const std::string& replace, int char_len)
@@ -117,7 +229,6 @@ class XDXFParser {
 public:
 	XDXFParser(const char *p, ParseResult &result);
 	static void fill_replace_arr(void);
-	static void fill_color_scheme(void);
 private:
 	void flush(void);
 private:
@@ -127,18 +238,16 @@ private:
 	std::string::size_type cur_pos_;
 
 	static std::vector<ReplaceTag> replace_arr_;
-	static ColorScheme color_scheme_;
 };
 
 std::vector<ReplaceTag> XDXFParser::replace_arr_;
-ColorScheme XDXFParser::color_scheme_;
 
 void XDXFParser::fill_replace_arr(void)
 {
 	replace_arr_.clear();
 	std::string value;
 	replace_arr_.push_back(ReplaceTag("abr>", 4,
-		std::string("<span foreground=\"") + print_pango_color(color_scheme_.abr) + "\" style=\"italic\">",
+		std::string("<span foreground=\"") + print_pango_color(color_scheme.abr) + "\" style=\"italic\">",
 		0));
 	replace_arr_.push_back(ReplaceTag("/abr>", 5, "</span>", 0));
 	replace_arr_.push_back(ReplaceTag("b>", 2, "<b>", 0));
@@ -158,20 +267,10 @@ void XDXFParser::fill_replace_arr(void)
 	replace_arr_.push_back(ReplaceTag("tr>", 3, "<b>[", 1));
 	replace_arr_.push_back(ReplaceTag("/tr>", 4, "]</b>", 1));
 	replace_arr_.push_back(ReplaceTag("ex>", 3,
-		std::string("<span foreground=\"") + print_pango_color(color_scheme_.ex) + "\">",
+		std::string("<span foreground=\"") + print_pango_color(color_scheme.ex) + "\">",
 		0));
 	replace_arr_.push_back(ReplaceTag("/ex>", 4, "</span>", 0));
 	replace_arr_.push_back(ReplaceTag("/c>", 3, "</span>", 0));
-}
-
-void XDXFParser::fill_color_scheme(void)
-{
-	// ABBYY Lingvo 12 default color scheme
-	color_scheme_.abr = 0x007F00;
-	color_scheme_.ex = 0x7F7F7F;
-	color_scheme_.k = 0x000000;
-	color_scheme_.c = 0x0066FF;
-	color_scheme_.ref = 0x00007F;
 }
 
 XDXFParser::XDXFParser(const char *p, ParseResult &result) :
@@ -206,7 +305,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 					if (*(next + 4) == '\n')
 						next++;
 				} else {
-					res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.k) + "\">";
+					res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme.k) + "\">";
 					std::string chunk(p+3, next-(p+3));
 					res_ += chunk;
 					size_t xml_len = xml_strlen(chunk);
@@ -236,7 +335,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 				else
 					res_ += "<span>";
 			} else
-				res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.c) + "\">";
+				res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme.c) + "\">";
 			p = next + 1;
 		} else if (*(p + 1) == 'r' && *(p + 2) == 'r' && *(p + 3) == 'e' 
 			&& *(p + 4) == 'f' && (*(p + 5) == ' ' || *(p + 5) == '>')) {
@@ -321,7 +420,7 @@ XDXFParser::XDXFParser(const char *p, ParseResult &result) :
 			if (!next)
 				continue;
 
-			res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme_.ref) + "\" underline=\"single\">";
+			res_ += std::string("<span foreground=\"") + print_pango_color(color_scheme.ref) + "\" underline=\"single\">";
 			std::string::size_type link_len = next - p;
 			std::string chunk(p, link_len);
 			size_t xml_len = xml_strlen(chunk);
@@ -421,6 +520,74 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 
 static void configure()
 {
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("XDXF parser configuration"), 
+		GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, 
+		GTK_STOCK_OK, GTK_RESPONSE_OK, 
+		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
+		NULL);
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 5);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox),5);
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 5);
+	GtkWidget *label = gtk_label_new(_("Abbreviation"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	GdkColor color;
+	color = guint32_2_gdkcolor(color_scheme.abr);
+	GtkWidget *colorbutton_abr = gtk_color_button_new_with_color(&color);
+	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_abr, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 5);
+	label = gtk_label_new(_("Example"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	color = guint32_2_gdkcolor(color_scheme.ex);
+	GtkWidget *colorbutton_ex = gtk_color_button_new_with_color(&color);
+	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_ex, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 5);
+	label = gtk_label_new(_("Extra key phrase"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	color = guint32_2_gdkcolor(color_scheme.k);
+	GtkWidget *colorbutton_k = gtk_color_button_new_with_color(&color);
+	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_k, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 5);
+	label = gtk_label_new(_("Emphasize"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	color = guint32_2_gdkcolor(color_scheme.c);
+	GtkWidget *colorbutton_c = gtk_color_button_new_with_color(&color);
+	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_c, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	hbox = gtk_hbox_new(FALSE, 5);
+	label = gtk_label_new(_("Reference"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+	color = guint32_2_gdkcolor(color_scheme.ref);
+	GtkWidget *colorbutton_ref = gtk_color_button_new_with_color(&color);
+	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_ref, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+	gtk_widget_show_all(vbox);
+	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gint result = gtk_dialog_run(GTK_DIALOG(window));
+	if(result == GTK_RESPONSE_OK) {
+		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_abr), &color);
+		color_scheme.abr = gdkcolor_2_guint32(color);
+		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_ex), &color);
+		color_scheme.ex = gdkcolor_2_guint32(color);
+		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_k), &color);
+		color_scheme.k = gdkcolor_2_guint32(color);
+		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_c), &color);
+		color_scheme.c = gdkcolor_2_guint32(color);
+		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_ref), &color);
+		color_scheme.ref = gdkcolor_2_guint32(color);
+		XDXFParser::fill_replace_arr();
+		const std::string confPath = get_cfg_filename();
+		const std::string contents(generate_config_content(color_scheme));
+		g_file_set_contents(confPath.c_str(), contents.c_str(), -1, NULL);
+	}
+	gtk_widget_destroy (window);
 }
 
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
@@ -432,16 +599,26 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 	obj->type = StarDictPlugInType_PARSEDATA;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("XDXF data parsing"), _("XDXF data parsing engine."), _("Parse the XDXF data."));
 	obj->configure_func = configure;
+	plugin_info = obj->plugin_info;
+	gpAppDirs = appDirs;
 	return false;
 }
 
 DLLIMPORT void stardict_plugin_exit(void)
 {
+	plugin_info = NULL;
+	gpAppDirs = NULL;
 }
 
 DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj)
 {
-	XDXFParser::fill_color_scheme();
+	set_default_color_scheme();
+	const std::string confPath = get_cfg_filename();
+	if (!g_file_test(confPath.c_str(), G_FILE_TEST_EXISTS)) {
+		const std::string contents(generate_config_content(color_scheme));
+		g_file_set_contents(confPath.c_str(), contents.c_str(), -1, NULL);
+	} else
+		load_config_file(color_scheme);
 	XDXFParser::fill_replace_arr();
 	obj->parse_func = parse;
 	g_print(_("XDXF data parsing plug-in loaded.\n"));
