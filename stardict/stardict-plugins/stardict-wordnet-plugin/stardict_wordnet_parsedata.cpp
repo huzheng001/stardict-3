@@ -120,10 +120,6 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 	return true;
 }
 
-static void configure()
-{
-}
-
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
@@ -132,7 +128,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 	}
 	obj->type = StarDictPlugInType_PARSEDATA;
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng_001@163.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("WordNet data parsing"), _("WordNet data parsing engine."), _("Parse the WordNet data."));
-	obj->configure_func = configure;
+	obj->configure_func = NULL;
 	return false;
 }
 
