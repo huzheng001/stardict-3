@@ -1881,6 +1881,126 @@ WineEnRu.ifo</screen>
 	</sect2>
   </sect1>
 
+  <sect1 id="manage-plugins">
+  <title>Manage Plugins</title>
+  <para>Mange plug-in dialog allows you to view, configure, enable/disable &app_t; plug-ins.
+  Plug-ins extends &app_t; functionality, they may be independently turned on and off.
+  Some plug-ins provides a number of options that may be configured via a GUI dialog.
+  Some settings take effect immediately, other may require restarting &app_t;.
+  List of available plug-in depends on &app_t; edition. 
+  If you build &app_t; from source, you may permanently disable some plug-ins, they will not be available in the Mange Plugins dialog.
+  </para>
+  
+  <para>Selecting a plug-in in the list activates two functions. You may see plug-in details, clicking on <guilabel>Plug-in Details</guilabel> link at the bottom of the dialog. Here you may see short plug-in description, author, web site and file name. <guibutton>Configure Plug-in</guibutton> button is made available for plug-ins that have configurable options.
+  </para>
+  
+  <para>
+  <variablelist>
+  <title>Plugin categories</title>
+  <varlistentry>
+  <term><guilabel>Virtual Dictionary</guilabel></term>
+  <listitem>
+  <para>A plug-in of this category acts like as a normal dictionary, it returns some information per key phrase, but it does not use a &app_t; dictionary. Plug-in may take information from different sources: a database file, OS service, it may generate response on the fly. For example, Man plug-in displays system man pages.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Network Dictionary</guilabel></term>
+  <listitem>
+  <para>A plug-in of this category uses a network service or network dictionary as a source of information. Once you type a key phrase into the Search field of the Main window, the plug-in sends a network request to a service. Once response is received, result are displayed in &app_t;. You need a working Internet connection for this type of plug-in.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Special Dictionary</guilabel></term>
+  <listitem>
+  <para>There currently only one dictionary assigned to this category &mdash; WordNet dict rendering. It displays results in special interactive widget while other dictionaries produce static content.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>TTS Engine</guilabel></term>
+  <listitem>
+  <para>Text to Speech engines. TTS Engines allows you to &quot;Read&quot; text. Plug-ins of this category do not add any content to the results window. To activate this type of plug-in, you need to click a button or a menu item, then you should hear sound.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Data Parsing Engine</guilabel></term>
+  <listitem>
+  <para>Plug-ins of the category convert contents of a dictionary into a format understandable by &app_t;. Articles of &app_t; dictionary may use a number of textual formats, like HTML, XDXF, WordNet, Wiki. In order for &app_t; to be able to render the article, data must be converted to Pango text, that is the format &app_t; now work with. If you do not have the required plug-in to render the dictionary article, instead of article you'll see a message like this, &quot;XDXF data parsing plug-in is not found!&quot;.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Misc</guilabel></term>
+  <listitem>
+  <para>This is a category for plug-ins that do not fit into other categories.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  </variablelist>
+  </para>
+  
+  <sect2 id="manage-plugins-xdxf">
+  <title>XDXF data parsing plug-in</title>
+  <para>This is a plug-in of Data Parsing Engine category that parses XDXF data format.
+  This plug-in allows you to configure colors used to render an article.
+  
+  <variablelist>
+  <title>XDXF plug-in options, colors</title>
+  <varlistentry>
+  <term><guilabel>Abbreviation</guilabel></term>
+  <listitem>
+  <para>Abbreviations like n. (noun), v. (verb), adj. (adjective), etc.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Example</guilabel></term>
+  <listitem>
+  <para>Example that demonstrates use of the key phrase.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Extra key phrase</guilabel></term>
+  <listitem>
+  <para>The first key phrase is rendered uniformly for all articles, irrespective of the data format of the article, information source and other factors. Some articles may contain extra key phrases, you may assign special color to render them.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Emphasize</guilabel></term>
+  <listitem>
+  <para>An article may contain emphasized text. Normally the article specify the color to use for such text, but in case it is not specified, this color will be used.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  <varlistentry>
+  <term><guilabel>Reference</guilabel></term>
+  <listitem>
+  <para>A web link or a link to other word in the dictionary.
+  </para>
+  </listitem>
+  </varlistentry>
+  
+  </variablelist>
+  </para>
+  </sect2>
+  
+  </sect1>
+  
 	<sect1 id="stardict-details">
 	<title>Details</title>
 	<sect2 id="stardict-details-command-line">
