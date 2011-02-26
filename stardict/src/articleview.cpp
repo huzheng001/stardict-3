@@ -403,6 +403,8 @@ void ArticleView::AppendHeaderMark()
 
 void ArticleView::AppendHeader(const char *dict_name, const char *dict_link)
 {
+	if(bookindex > 0)
+		append_pango_text("\n");
 	AppendHeaderMark();
 	if (dict_link) {
 		std::string mark= "<span foreground=\"blue\">&lt;--- <u>";
