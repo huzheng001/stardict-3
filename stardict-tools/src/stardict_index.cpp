@@ -30,7 +30,7 @@ private:
 		g_option_context_set_summary(get_impl(opt_cnt),
 			"Print context of StarDict index file in human readable form.\n"
 			"\n"
-			"Supported files: .idx, .ridx\n"
+			"Supported files: .idx, .ridx, .syn\n"
 			);
 		glib::Error err;
 		if (!g_option_context_parse(get_impl(opt_cnt), &argc, &argv, get_addr(err))) {
@@ -46,10 +46,12 @@ private:
 		}
 		idx_file_name = argv[1];
 		if(!g_str_has_suffix(idx_file_name.c_str(), ".idx")
+				&& !g_str_has_suffix(idx_file_name.c_str(), ".syn")
 				&& !g_str_has_suffix(idx_file_name.c_str(), ".ridx")) {
 			std::cerr << "Unsupported index type." << std::endl;
 			return EXIT_FAILURE;
 		}
+		syn_file = g_str_has_suffix(idx_file_name.c_str(), ".syn");
 		return EXIT_SUCCESS;
 	}
 	void print_index(std::string& idx_file_name)
@@ -60,22 +62,38 @@ private:
 			std::cerr << "Unable to open file " << idx_file_name << std::endl;
 			return;
 		}
-		if(!quiet_mode)
-			std::cout << "    OFFSET       SIZE KEY" << std::endl;
+		if(!quiet_mode) {
+			if(syn_file)
+				std::cout << "     INDEX KEY" << std::endl;
+			else
+				std::cout << "    OFFSET       SIZE KEY" << std::endl;
+		}
 		gchar *p1 = get_impl(contents);
 		gchar *end = p1+cont_len;
 		int rec_no = 0;
 		const gchar* key;
-		guint32 offset, size;
-		while(p1<end) {
-			key = p1;
-			p1 += strlen(p1) + 1;
-			offset = g_ntohl(*reinterpret_cast<guint32*>(p1));
-			p1 += sizeof(guint32);
-			size = g_ntohl(*reinterpret_cast<guint32*>(p1));
-			p1 += sizeof(guint32);
-			++rec_no;
-			std::cout << std::setw(10) << offset << " " << std::setw(10) << size << " "<< key << std::endl;
+		if(syn_file) {
+			guint32 index;
+			while(p1<end) {
+				key = p1;
+				p1 += strlen(p1) + 1;
+				index = g_ntohl(*reinterpret_cast<guint32*>(p1));
+				p1 += sizeof(guint32);
+				++rec_no;
+				std::cout << std::setw(10) << index << " " << key << std::endl;
+			}
+		} else {
+			guint32 offset, size;
+			while(p1<end) {
+				key = p1;
+				p1 += strlen(p1) + 1;
+				offset = g_ntohl(*reinterpret_cast<guint32*>(p1));
+				p1 += sizeof(guint32);
+				size = g_ntohl(*reinterpret_cast<guint32*>(p1));
+				p1 += sizeof(guint32);
+				++rec_no;
+				std::cout << std::setw(10) << offset << " " << std::setw(10) << size << " "<< key << std::endl;
+			}
 		}
 		if(!quiet_mode)
 			std::cout << "number of entries: " << rec_no << std::endl;
@@ -83,6 +101,7 @@ private:
 private:
 	std::string idx_file_name;
 	gboolean quiet_mode;
+	gboolean syn_file;
 };
 
 
