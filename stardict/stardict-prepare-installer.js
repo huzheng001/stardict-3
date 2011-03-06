@@ -478,9 +478,9 @@ CreateFolder(InstallRootDir + "StarDictPortable\\App\\GTK");
 	CopyFile(BaseDir + "pixmaps\\stardict_32.png", appInfoDir + "appicon1_32.png");
 	CopyFile(BaseDir + "pixmaps\\stardict-editor_16.png", appInfoDir + "appicon2_16.png");
 	CopyFile(BaseDir + "pixmaps\\stardict-editor_32.png", appInfoDir + "appicon2_32.png");
-	CopyFile(BaseDir + "stardict.ico", appInfoDir + "appicon.ico");
-	CopyFile(BaseDir + "stardict.ico", appInfoDir + "appicon1.ico");
-	CopyFile(BaseDir + "stardict-editor.ico", appInfoDir + "appicon2.ico");
+	CopyFile(BaseDir + "pixmaps\\stardict.ico", appInfoDir + "appicon.ico");
+	CopyFile(BaseDir + "pixmaps\\stardict.ico", appInfoDir + "appicon1.ico");
+	CopyFile(BaseDir + "pixmaps\\stardict-editor.ico", appInfoDir + "appicon2.ico");
 }
 
 { // Other

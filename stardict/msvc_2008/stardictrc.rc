@@ -2,7 +2,7 @@
 
 #include "../src/win32/resource.h"
 
-A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "../stardict.ico"
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "../pixmaps/stardict.ico"
 
 //
 // TO CHANGE VERSION INFORMATION, EDIT PROJECT OPTIONS...

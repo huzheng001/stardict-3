@@ -1,6 +1,6 @@
 #include <windows.h> // include for version info constants
 
-A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "../stardict-editor.ico"
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "../pixmaps/stardict-editor.ico"
 
 //
 // TO CHANGE VERSION INFORMATION, EDIT PROJECT OPTIONS...

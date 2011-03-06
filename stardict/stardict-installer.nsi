@@ -37,8 +37,8 @@ RequestExecutionLevel highest
 ;--------------------------------
 ;Defines
 
-!define MUI_ICON                     .\stardict.ico
-!define MUI_UNICON                   .\stardict-uninst.ico
+!define MUI_ICON                     .\pixmaps\stardict.ico
+!define MUI_UNICON                   .\pixmaps\stardict-uninst.ico
 !define MUI_SPECIALBITMAP            .\src\win32\nsis\stardict-intro.bmp
 !define MUI_HEADERBITMAP             .\src\win32\nsis\stardict-header.bmp
 !define MUI_FINISHPAGE_NOAUTOCLOSE
