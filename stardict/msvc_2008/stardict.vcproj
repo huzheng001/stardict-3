@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="stardict"
 	ProjectGUID="{A7776EE3-84FC-48A7-87AE-E67CACC3C8E9}"
 	RootNamespace="stardict"
@@ -222,6 +222,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\docklet.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\floatwin.cpp"
 				>
 			</File>
@@ -317,15 +321,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\win32\MinimizeToTray.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\src\win32\mouseover.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win32\systray.cpp"
 					>
 				</File>
 				<File
@@ -365,6 +361,10 @@
 			</File>
 			<File
 				RelativePath="..\src\dictmanagedlg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\docklet.h"
 				>
 			</File>
 			<File
@@ -468,10 +468,6 @@
 				</File>
 				<File
 					RelativePath="..\src\win32\StdAfx.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win32\systray.h"
 					>
 				</File>
 				<File

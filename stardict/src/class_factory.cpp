@@ -33,13 +33,14 @@
 
 #ifdef _WIN32
 #  include "win32/win32_iskeyspressed.h"
-#  include "win32/systray.h"
 #else
 #ifdef CONFIG_DARWIN
 #  include "gtk_iskeyspressed.hpp"
 #else
 #  include "x11_iskeyspressed.hpp"
 #endif
+#endif
+#ifndef CONFIG_DARWIN
 #  include "docklet.h"
 #endif
 
@@ -75,13 +76,9 @@ void *PlatformFactory::create_class_by_name(const std::string& name, void *param
 TrayBase *PlatformFactory::create_tray_icon(GtkWidget *win, bool scan,
 					    const AppSkin& skin)
 {
-#ifdef _WIN32
-	return new DockLet(win, scan);
-#else
 #ifdef CONFIG_DARWIN
 	return new TrayBase(win, scan);
 #else
 	return new DockLet(win, scan, skin);
-#endif
 #endif
 }
