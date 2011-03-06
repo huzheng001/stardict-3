@@ -15,13 +15,11 @@ EXTRA_DIST = \
 	stardict.spec.in stardict-withoutgnome.spec.in \
 	dictionary.spec	\
 	treedict.spec	\
-	stardict.ico stardict-uninst.ico stardict-installer.nsi stardict-prepare-installer.js \
-	stardict-editor.ico	\
+	stardict-installer.nsi stardict-prepare-installer.js \
 	omf.make		\
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in	\
-	stardictrc.rc	\
 	gnome-doc-utils.make \
 	config-custom.h
 

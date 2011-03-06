@@ -70,7 +70,7 @@ SetDatablockOptimize On
 !include LogicLib.nsh
 
 ;=== Program Icon
-Icon "..\..\..\stardict-editor.ico"
+Icon "..\..\..\pixmaps\stardict-editor.ico"
 
 ;=== Languages
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\${LAUNCHERLANGUAGE}.nlf"
