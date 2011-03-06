@@ -151,7 +151,9 @@ void AppSkin::load()
 	filename=pixmaps_dir+"stardict.png";
 	icon.reset(load_image_from_file(filename));
 #else // #ifdef _WIN32
-	icon.reset(load_image_from_file(build_path(conf_dirs->get_system_icon_dir(), "stardict.png")));
+	filename=build_path(conf_dirs->get_system_icon_dir(), "stardict.png");
+	icon.reset(load_image_from_file(filename));
+#endif // #ifdef _WIN32
 #ifdef CONFIG_GPE
 	filename=pixmaps_dir+"docklet_gpe_normal.png";
 #else
@@ -170,7 +172,6 @@ void AppSkin::load()
 	filename=pixmaps_dir+"docklet_stop.png";
 #endif
 	docklet_stop_icon.reset(load_image_from_file(filename));
-#endif // #ifdef _WIN32
 	filename=pixmaps_dir+"index_wazard.png";
 	index_wazard.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"index_appendix.png";

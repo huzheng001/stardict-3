@@ -2,10 +2,6 @@
 
 #include "../src/win32/resource.h"
 
-STARDICT_NORMAL_TRAY_ICON	ICON "../src/win32/systray-normal.ico"
-STARDICT_SCAN_TRAY_ICON		ICON "../src/win32/systray-scan.ico"
-STARDICT_STOP_TRAY_ICON		ICON "../src/win32/systray-stop.ico"
-
 A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "../stardict.ico"
 
 //

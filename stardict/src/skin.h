@@ -28,11 +28,9 @@ public:
 	SkinCursor normal_cursor;
 	SkinCursor watch_cursor;
 	Skin_pixbuf_1 icon;
-#ifndef _WIN32
 	Skin_pixbuf_1 docklet_normal_icon;
 	Skin_pixbuf_1 docklet_scan_icon;
 	Skin_pixbuf_1 docklet_stop_icon;
-#endif
 	Skin_pixbuf_1 index_wazard;
 	Skin_pixbuf_1 index_appendix;
 	Skin_pixbuf_1 index_dictlist;

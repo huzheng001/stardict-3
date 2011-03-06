@@ -284,7 +284,7 @@ CopyFile(MSVSOutputDir + "stardict-editor-loader.exe", InstallDir + "stardict-ed
 	CreateFolder(PixmapsDir);
 	CopyFile(BaseDir + "pixmaps\\stardict.png", PixmapsDir);
 	fso.CopyFile(BaseDir + "src\\pixmaps\\*.png", PixmapsDir);
-	fso.DeleteFile(PixmapsDir + "docklet_*.png");
+	fso.DeleteFile(PixmapsDir + "docklet_gpe_*.png");
 }
 
 {
