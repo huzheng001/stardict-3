@@ -11,14 +11,14 @@ class AppSkin;//forward declaration
 class DockLet : public TrayBase {
 public:
 	DockLet(GtkWidget *, bool, const AppSkin&);
- 	~DockLet();
+	~DockLet();
 	void minimize_to_tray();
 	void set_scan_mode(bool);
 private:
 	EggTrayIcon *docklet_;
 	GtkWidget *image_; //icon image.
 	typedef  ResourceWrapper<GtkWidget, GtkWidget, void, gtk_widget_destroy> GMenu;
-        GMenu menu_;
+	GMenu menu_;
 	GtkWidget *scan_menuitem_;
 	bool embedded_;
 	GdkPixbuf *normal_icon_, *stop_icon_, *scan_icon_;
@@ -34,7 +34,7 @@ private:
 	void create_docklet();
 	void scan_on();
 	void scan_off();
-        void show_normal_icon();
+	void show_normal_icon();
 };
 
 
