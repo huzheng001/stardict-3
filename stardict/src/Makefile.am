@@ -53,7 +53,7 @@ endif
 
 if !DARWIN_SUPPORT
 KEYPRESS_FILE_MODULE = x11_iskeyspressed.cpp x11_iskeyspressed.hpp
-DOCKLET_FILE_MODULE = docklet.cpp docklet.h eggtrayicon.c eggtrayicon.h
+DOCKLET_FILE_MODULE = docklet.cpp docklet.h
 endif
 
 stardict_SOURCES = 			                \
