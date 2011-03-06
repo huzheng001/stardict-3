@@ -25,23 +25,23 @@
 
 void TrayBase::set_scan_mode(bool is_on)
 {
-        if (!hide_state_ && is_on == is_scan_on_)
-                return;
+	if (!hide_state_ && is_on == is_scan_on_)
+		return;
 
-        hide_state_ = false;
+	hide_state_ = false;
 
-        if (is_on)
-                scan_on();
-        else
-                scan_off();
+	if (is_on)
+		scan_on();
+	else
+		scan_off();
 
-        is_scan_on_ = is_on;
+	is_scan_on_ = is_on;
 }
 
 void TrayBase::hide_state()
 {
-        if (hide_state_)
-                return;
-        show_normal_icon();
-        hide_state_ = true;
+	if (hide_state_)
+		return;
+	show_normal_icon();
+	hide_state_ = true;
 }

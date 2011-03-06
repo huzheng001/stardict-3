@@ -72,7 +72,7 @@ void DockLet::on_destroyed(GtkWidget *widget, DockLet *oDockLet)
 	while (g_source_remove_by_user_data(&oDockLet->docklet_))
 		;
 	g_object_unref(G_OBJECT(oDockLet->docklet_));
-	//when user add Nofification area applet again,it will show icon again.
+	//when user add Notification area applet again,it will show icon again.
 	g_idle_add(on_docklet_create, oDockLet);
 }
 
@@ -178,27 +178,27 @@ void DockLet::minimize_to_tray()
 
 void DockLet::scan_on()
 {
-        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Scanning"));
-        gtk_image_set_from_pixbuf(GTK_IMAGE(image_), scan_icon_);
+	gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Scanning"));
+	gtk_image_set_from_pixbuf(GTK_IMAGE(image_), scan_icon_);
 }
 
 void DockLet::scan_off()
 {
-        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Stopped"));
-        gtk_image_set_from_pixbuf(GTK_IMAGE(image_), stop_icon_);
+	gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict - Stopped"));
+	gtk_image_set_from_pixbuf(GTK_IMAGE(image_), stop_icon_);
 }
 
 void DockLet::show_normal_icon()
 {
-        if (!image_)
-                return;
-        gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict"));
-        gtk_image_set_from_pixbuf(GTK_IMAGE(image_), normal_icon_);
+	if (!image_)
+		return;
+	gtk_widget_set_tooltip_text(GTK_WIDGET(docklet_), _("StarDict"));
+	gtk_image_set_from_pixbuf(GTK_IMAGE(image_), normal_icon_);
 }
 
 void DockLet::set_scan_mode(bool is_on)
 {
-        if (!image_)
-                return;
-        TrayBase::set_scan_mode(is_on);
+	if (!image_)
+		return;
+	TrayBase::set_scan_mode(is_on);
 }
