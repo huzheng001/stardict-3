@@ -302,4 +302,5 @@ EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh \
 	exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py \
 	extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
-	lingea-trd-decoder.py
+	lingea-trd-decoder.py \
+	stardict_images.sh stardict_images.py
