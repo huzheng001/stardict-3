@@ -61,6 +61,9 @@ stardict_text2bin	convert textual xml-based dictionary into binary StarDict
 babylon	convert from babylon source file format to StarDict dictionary
 	see doc/HowToCreateDictionary for information about babylon source file format
 
+stardict_images.sh create images for StarDict like application icon, tray icons, Acrobat plugin icons
+  see src/stardict_images.sh
+
 ------------------------------------------------------------------------------------
 External tools
 
