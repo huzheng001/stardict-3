@@ -46,6 +46,11 @@ struct TLingvoSoundFileData {
 	 * ResDbBase + ".ridx",
 	 * ResDbBase + ".rdic" */
 	std::string ResDbBase;
+	// output format, extension of sample files without dot
+	std::string OutputExt;
+	// sox effects applied to each produced sample
+	// This string is appended to each sox command.
+	std::string SoxEffects;
 	
 	// options
 	// print additional debugging information
@@ -57,6 +62,7 @@ struct TLingvoSoundFileData {
 	:
 	NumSamples(0), 
 	SoundDataOffset(0),
+	OutputExt("ogg"),
 	op_verbose(FALSE),
 	op_no_split(FALSE),
 	op_no_sound_extract(FALSE)
@@ -194,7 +200,7 @@ void ExtractSoundData(TLingvoSoundFileData& LingvoData)
 void PrepareDir(const std::string& dir)
 {
 	if (!g_file_test(dir.c_str(), 
-		GFileTest(G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))) {
+		GFileTest(G_FILE_TEST_IS_DIR))) {
 		if (g_mkdir(dir.c_str(), 0700)==-1) {
 			std::cerr << "Unable to create directory: " << dir << std::endl;
 			exit(1);
@@ -207,7 +213,7 @@ void GenerateTmpFileNames(TLingvoSoundFileData& LingvoData)
 {
 	for(guint32 i=0; i<LingvoData.NumSamples; ++i) {
 		std::ostringstream out;
-		out << LingvoData.SoundSamplesDir << G_DIR_SEPARATOR << i << ".ogg";
+		out << LingvoData.SoundSamplesDir << G_DIR_SEPARATOR << i << "." << LingvoData.OutputExt;
 		LingvoData.Samples[i].TmpFileName = out.str();
 	}
 }
@@ -221,7 +227,8 @@ void SplitSoundFile(TLingvoSoundFileData& LingvoData)
 		cmd << "sox \"" << LingvoData.SoundDataFile + "\" \""
 			<< LingvoData.Samples[i].TmpFileName << "\" trim "
 			<< LingvoData.Samples[i].Start << "s "
-			<< LingvoData.Samples[i].Duration << "s";
+			<< LingvoData.Samples[i].Duration << "s "
+			<< LingvoData.SoxEffects;
 		if(!g_spawn_command_line_sync(cmd.str().c_str(), NULL, NULL, NULL, NULL)) {
 			std::cerr << "Error splitting sound file" << std::endl;
 			exit(1);
@@ -240,7 +247,7 @@ void GenerateDatabaseFileNames(TLingvoSoundFileData& LingvoData)
 				<< OrigFileName << std::endl;
 			exit(1);
 		}
-		LingvoData.Samples[i].DbFileName = OrigFileName.substr(0, pos) + ".ogg";
+		LingvoData.Samples[i].DbFileName = OrigFileName.substr(0, pos+1) + LingvoData.OutputExt;
 	}
 }
 
@@ -349,6 +356,8 @@ void ParseCommandLine(TLingvoSoundFileData& LingvoData, int argc,char * argv [])
 	gchar *temp_sound_file_name = NULL;
 	gchar *samples_dir_name = NULL;
 	gchar *rifo_file_name = NULL;
+	gchar *output_ext = NULL;
+	gchar *sox_effects = NULL;
 	static GOptionEntry entries[] = {
 		{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &LingvoData.op_verbose,
 			"print additional debugging information", NULL },
@@ -367,6 +376,12 @@ void ParseCommandLine(TLingvoSoundFileData& LingvoData, int argc,char * argv [])
 		{ "res-info-file", 'i', 0, G_OPTION_ARG_FILENAME, &rifo_file_name,
 			"Stardict resource file with .rifo extension", 
 			"file_name"},
+		{ "output-ext", 0, 0, G_OPTION_ARG_STRING, &output_ext,
+			"extension of sample files without dot",
+			"ext"},
+		{ "sox-effects", 0, 0, G_OPTION_ARG_STRING, &sox_effects,
+			"sox effects applied to each sample",
+			"effects"},
 		{ NULL },
 	};
 	/* Here is a short explanation of how this utility works. That helps
@@ -444,6 +459,10 @@ void ParseCommandLine(TLingvoSoundFileData& LingvoData, int argc,char * argv [])
 		// erase extension
 		LingvoData.ResDbBase.erase(len-5);
 	}
+	if(output_ext)
+		LingvoData.OutputExt = output_ext;
+	if(sox_effects)
+		LingvoData.SoxEffects = sox_effects;
 	
 	g_option_context_free(popt_cnt);
 	if(perr)
@@ -452,6 +471,8 @@ void ParseCommandLine(TLingvoSoundFileData& LingvoData, int argc,char * argv [])
 	g_free(temp_sound_file_name);
 	g_free(samples_dir_name);
 	g_free(rifo_file_name);
+	g_free(output_ext);
+	g_free(sox_effects);
 }
 
 int
