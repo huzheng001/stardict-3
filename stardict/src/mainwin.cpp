@@ -2011,7 +2011,7 @@ void TextWin::Show(NetDictResponse *resp)
 		InstantDictIndex dict_index;
 		dict_index.type = InstantDictType_UNKNOWN;
 		view->SetDictIndex(dict_index);
-		gchar *mark = g_strdup_printf("%d", view->bookindex);
+		gchar *mark = g_strdup_printf("%d", view->get_bookindex());
 		gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast(resp->bookname, mark);
 		g_free(mark);
 		view->AppendHeader(resp->bookname, resp->booklink);
@@ -2067,7 +2067,7 @@ void TextWin::Show(const struct STARDICT::LookupResponse::DictResponse *dict_res
 		dict_index.type = InstantDictType_UNKNOWN;
 		view->SetDictIndex(dict_index);
 		for (std::list<struct STARDICT::LookupResponse::DictResponse::DictResult *>::const_iterator i = dict_response->dict_result_list.begin(); i != dict_response->dict_result_list.end(); ++i) {
-			gchar *mark = g_strdup_printf("%d", view->bookindex);
+			gchar *mark = g_strdup_printf("%d", view->get_bookindex());
 			gpAppFrame->oMidWin.oIndexWin.oResultWin.InsertLast((*i)->bookname, mark);
 			g_free(mark);
 			view->AppendHeader((*i)->bookname);
