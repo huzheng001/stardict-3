@@ -12,10 +12,10 @@ class ArticleView {
 public:
 	ArticleView(GtkContainer *owner, bool floatw=false)
 		: bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)),
-		for_float_win(floatw) {}
+		for_float_win(floatw), headerindex(-1) {}
 	ArticleView(GtkBox *owner, bool floatw=false)
 		: pango_view_(PangoWidgetBase::create(owner, floatw)),
-		for_float_win(floatw) {}
+		for_float_win(floatw), headerindex(-1) {}
 
 	void SetDictIndex(InstantDictIndex index);
 	void AppendHeaderMark();
@@ -38,7 +38,7 @@ public:
 					  const LinksPosList& links) {
 		pango_view_->append_pango_text_with_links(str, links);
 	}
-	void clear() { pango_view_->clear(); bookindex = 0;}
+	void clear() { pango_view_->clear(); bookindex = 0; headerindex = -1; }
 	void append_mark(const char *mark) { pango_view_->append_mark(mark); }
 	void begin_update() { pango_view_->begin_update(); }
 	void end_update() { pango_view_->end_update(); }
@@ -59,6 +59,8 @@ private:
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 	InstantDictIndex dict_index;
+	/* Count headers. Add extra space before headers with index > 0. */
+	int headerindex;
 
 	std::string xdxf2pango(const char *p, const gchar *oword, LinksPosList& links_list);
 	void append_and_mark_orig_word(const std::string& mark,
