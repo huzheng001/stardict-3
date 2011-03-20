@@ -10,7 +10,6 @@
 //class which show dictionary's articles
 class ArticleView {
 public:
-    unsigned int bookindex;
 	ArticleView(GtkContainer *owner, bool floatw=false)
 		: bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)),
 		for_float_win(floatw) {}
@@ -52,9 +51,11 @@ public:
 	GtkWidget *window() { return pango_view_->window(); }
 	gdouble scroll_pos() { return pango_view_->scroll_pos(); }
 	void connect_on_link(const sigc::slot<void, const std::string &>& s);
+	unsigned int get_bookindex(void) { return bookindex; }
 private:
 	struct ParseResultItemWithMark;
 
+	unsigned int bookindex;
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 	InstantDictIndex dict_index;
