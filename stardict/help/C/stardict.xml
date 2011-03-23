@@ -1571,7 +1571,11 @@ WineEnRu.ifo</screen>
 		This configuration page allows you to register an account, select a server to use, and specify other related parameters. 
 		</para>
 		<para>
-		At the present time &app_t; may be configured to query only one server. The list of dictionaries used on the server is preset and cannot be changed. When network dictionaries are enabled, each time you ask &app_t; to lookup a word or phrase, the application sends a request to the configured server. Note that network dictionaries are enabled globally, they are used in both Main and Floating windows, they do not depend on the dictionary group selected.
+		At the present time &app_t; may be configured to query only one server. When network dictionaries are enabled, each time you ask &app_t; to lookup a word or phrase, the application sends a request to the configured server. Note that network dictionaries are enabled globally, they are used in both Main and Floating windows, they do not depend on the dictionary group selected.
+		</para>
+		<para>To configure the list of dictionaries on the server, use the Manage Dictionaries dialog, Network dictionaries tab.
+		</para>
+		<para>You need to register on the server to use this feature. Click <guilabel>Register an account</guilabel> button on this page to register an account.
 		</para>
 		<caution>
 		<para>Enabling network dictionaries poses a security risk.
