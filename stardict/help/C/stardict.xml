@@ -313,7 +313,7 @@
 			<varlistentry>
 			<term><guilabel>Dictionary groups</guilabel></term>
 			<listitem>
-			<para>Shows a pop-up menu that allows to select a group of dictionaries where to search words. The menu also contains a checkbox to enable network dictionaries.
+			<para>Shows a pop-up menu that allows to select a group of dictionaries where to search words. The menu also contains a checkbox to enable network dictionaries. See <xref linkend="stardict-prefs-network-net-dict"/> for information about network dictionaries and how to configure them.
 			</para>
 			</listitem>
 			</varlistentry>
@@ -1568,16 +1568,25 @@ WineEnRu.ifo</screen>
 		<sect3 id="stardict-prefs-network-net-dict">
 		<title>Net Dict</title>
 		<para>&app_t; may look up words in network dictionaries using a custom &app_t; network protocol.
-		This configuration page allows you to register an account, select a server to use, and specify other related parameters.
+		This configuration page allows you to register an account, select a server to use, and specify other related parameters. 
 		</para>
+		<para>
+		At the present time &app_t; may be configured to query only one server. The list of dictionaries used on the server is preset and cannot be changed. When network dictionaries are enabled, each time you ask &app_t; to lookup a word or phrase, the application sends a request to the configured server. Note that network dictionaries are enabled globally, they are used in both Main and Floating windows, they do not depend on the dictionary group selected.
+		</para>
+		<caution>
+		<para>Enabling network dictionaries poses a security risk.
+    Your text will be sent to remote servers.
+    Additionally, since network requests do not use any encryption, 
+    anyone able to sniff communication can see that text.
+		</para>
+		</caution>
 			<variablelist>
 				<varlistentry>
 				<term><guilabel>Enable network dictionaries</guilabel></term>
 				<listitem>
-				<para>Enables to use network dictionaries.
-				You need to specify the dictionaries to use in the Manage Dictionaries dialog if you enable this option.
+				<para>Enables network dictionaries.
 				</para>
-				<para>Default: TRUE.</para>
+				<para>Default: FALSE.</para>
 				</listitem>
 				</varlistentry>
 			</variablelist>
