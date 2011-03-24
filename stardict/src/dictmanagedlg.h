@@ -22,18 +22,18 @@ public:
 };
 
 class DictManageDlg {
-private:	
-	GtkWidget *wazard_button;
+private:
+	GtkWidget *dict_list_button;
 	GtkWidget *manage_button;
-	GtkWidget *appendix_button;
+	GtkWidget *tree_dict_button;
 	GtkWidget *notebook;
 	GtkWidget *button_notebook;
 	GtkWidget *download_hbox;
 	GtkWidget *info_label;
 	GtkWidget *upgrade_eventbox;
 	GtkWidget *popup_menu;
-	GtkWidget *dict_treeview;
-	GtkTreeModel *dict_tree_model;
+	GtkWidget *dict_list_treeview;
+	GtkTreeModel *dict_list_tree_model;
 	GtkWidget *dictmanage_treeview;
 	GtkTreeModel *dictmanage_tree_model;
 	GtkWidget *treedict_treeview;
@@ -49,11 +49,12 @@ private:
 	bool dictmanage_list_changed;
 	bool dictmanage_config_changed;
 
-	static GtkTreeModel* create_tree_model(int istreedict);
-	GtkWidget *create_dict_tree(int istreedict);
+	enum TDictTree { DictTree_DictList, DictTree_TreeDict, DictTree_NetworkDict };
+	static GtkTreeModel* create_tree_model(TDictTree dicttree);
+	GtkWidget *create_dict_tree(TDictTree dicttree);
 	static GtkTreeModel* create_dictmanage_tree_model();
 	GtkWidget *create_dictmanage_tree();
-		
+
 	GtkWidget *create_buttons();
 	GtkWidget *create_dictmanage_buttons();
 	GtkWidget *create_network_buttons();
@@ -69,9 +70,9 @@ private:
 	void show_delete_subgroup_dialog(GtkTreeIter *iter);
 	void show_add_dict_dialog(GtkTreeIter *iter);
 
-	static void on_wazard_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
+	static void on_dict_list_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_manage_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
-	static void on_appendix_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
+	static void on_tree_dict_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_network_button_toggled(GtkToggleButton *button, DictManageDlg *oDictManageDlg);
 	static void on_download_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static void on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
@@ -81,7 +82,7 @@ private:
 	static void on_popup_menu_unselect_all_activate(GtkMenuItem *menuitem, DictManageDlg *oDictManageDlg);
 
 	static gboolean on_dictlist_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
-	static gboolean on_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
+	static gboolean on_dicttree_and_manage_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static gboolean on_network_treeview_button_press(GtkWidget * widget, GdkEventButton *event, DictManageDlg *oDictManageDlg);
 	static void response_handler (GtkDialog *dialog, gint res_id, DictManageDlg *oDictManageDlg);
 	static void on_network_add_button_clicked(GtkWidget *widget, DictManageDlg *oDictManageDlg);
@@ -115,7 +116,7 @@ public:
 	void network_dictinfo(const char *xml);
 	void network_maxdictcount(int count);
 
-    friend class NetworkAddDlg;
+	friend class NetworkAddDlg;
 };
 
 #endif
