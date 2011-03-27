@@ -31,6 +31,7 @@ enum DictListColumns {
 	DICTLIST_DESCRIPTION_COLUMN, // 6
 	DICTLIST_DATE_COLUMN, // 7
 	DICTLIST_ID_COLUMN, // 8
+	DICTLIST_ID_TYPE_STR_COLUMN, // 9
 	DICTLIST_COLUMN_NUMBER
 };
 
@@ -96,7 +97,8 @@ enum AddDictDlgColumns {
 	ADD_DICT_DESCRIPTION_COLUMN, // 6
 	ADD_DICT_DATE_COLUMN, // 7
 	ADD_DICT_ID_COLUMN, // 8
-	ADD_DICT_COLUMN_NUMBER // 9
+	ADD_DICT_TYPE_STR_COLUMN, // 9
+	ADD_DICT_COLUMN_NUMBER // 10
 };
 
 NetworkAddDlg::NetworkAddDlg(DictManageDlg *dlg)
@@ -727,6 +729,7 @@ public:
 					DICTLIST_DESCRIPTION_COLUMN, dictinfo.get_description().c_str(),
 					DICTLIST_DATE_COLUMN, dictinfo.get_date().c_str(),
 					DICTLIST_ID_COLUMN, url.c_str(),
+					DICTLIST_ID_TYPE_STR_COLUMN, _("Local"),
 					-1
 				);
 			}
@@ -785,7 +788,8 @@ GtkTreeModel* DictManageDlg::create_tree_model(TDictTree dicttree)
 			G_TYPE_STRING, // 5 - DICTLIST_WEB_SITE_COLUMN
 			G_TYPE_STRING, // 6 - DICTLIST_DESCRIPTION_COLUMN
 			G_TYPE_STRING, // 7 - DICTLIST_DATE_COLUMN
-			G_TYPE_STRING // 8 - DICTLIST_ID_COLUMN
+			G_TYPE_STRING, // 8 - DICTLIST_ID_COLUMN
+			G_TYPE_STRING // 9 - DICTLIST_ID_TYPE_STR_COLUMN
 		);
 		std::list<std::string> dict_disable_list;
 #ifdef _WIN32
@@ -827,6 +831,7 @@ GtkTreeModel* DictManageDlg::create_tree_model(TDictTree dicttree)
 				DICTLIST_DESCRIPTION_COLUMN, _("Virtual Dictionary"),
 				DICTLIST_DATE_COLUMN, "",
 				DICTLIST_ID_COLUMN, dictid,
+				DICTLIST_ID_TYPE_STR_COLUMN, _("Virtual"),
 				-1
 			);
 		}
@@ -846,6 +851,7 @@ GtkTreeModel* DictManageDlg::create_tree_model(TDictTree dicttree)
 				DICTLIST_DESCRIPTION_COLUMN, _("Network Dictionary"),
 				DICTLIST_DATE_COLUMN, "",
 				DICTLIST_ID_COLUMN, dictid,
+				DICTLIST_ID_TYPE_STR_COLUMN, _("Network"),
 				-1
 			);
 		}
@@ -1283,8 +1289,16 @@ GtkWidget *DictManageDlg::create_dict_tree(TDictTree dicttree)
 	else if (dicttree == DictTree_NetworkDict)
 		store_column = NETWORKDICT_NAME_COLUMN;
 	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "text", store_column, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_expand(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, store_column);
+	if(dicttree == DictTree_DictList)
+		g_signal_connect(column, "clicked", G_CALLBACK(on_dict_list_dict_name_column_clicked), this);
+	else if(dicttree == DictTree_TreeDict)
+		g_signal_connect(column, "clicked", G_CALLBACK(on_treedict_dict_name_column_clicked), this);
+	else if(dicttree == DictTree_NetworkDict)
+		g_signal_connect(column, "clicked", G_CALLBACK(on_network_dict_name_column_clicked), this);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
 
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
@@ -1297,6 +1311,15 @@ GtkWidget *DictManageDlg::create_dict_tree(TDictTree dicttree)
 	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", store_column, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	if(dicttree == DictTree_DictList)
+	{
+		renderer = gtk_cell_renderer_text_new ();
+		g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+		column = gtk_tree_view_column_new_with_attributes (_("Type"), renderer, "text", DICTLIST_ID_TYPE_STR_COLUMN, NULL);
+		gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+		gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+	}
 
 	GtkTargetEntry gte[] = {{(gchar *)"STARDICT_DICTMANAGE", GTK_TARGET_SAME_APP, 0}};
 	gtk_tree_view_enable_model_drag_source(GTK_TREE_VIEW(now_treeview), GDK_BUTTON1_MASK, gte, 1, GDK_ACTION_COPY);
@@ -1373,6 +1396,8 @@ GtkWidget *DictManageDlg::create_dictmanage_tree()
 		"editable", DICT_MANAGE_EDITABLE_COLUMN,
 		NULL
 	);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_expand(column, TRUE);
 	g_signal_connect (renderer, "edited", G_CALLBACK (on_group_name_cell_edited), this);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(dictmanage_treeview), column);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
@@ -1860,7 +1885,19 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_widget_set_size_request (sw, 350, 230);
-	GtkListStore *now_tree_model = gtk_list_store_new(ADD_DICT_COLUMN_NUMBER, G_TYPE_INT, G_TYPE_STRING, G_TYPE_LONG, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	GtkListStore *now_tree_model = gtk_list_store_new(
+		ADD_DICT_COLUMN_NUMBER,
+		G_TYPE_INT,
+		G_TYPE_STRING,
+		G_TYPE_LONG,
+		G_TYPE_STRING,
+		G_TYPE_STRING,
+		G_TYPE_STRING,
+		G_TYPE_STRING,
+		G_TYPE_STRING,
+		G_TYPE_STRING,
+		G_TYPE_STRING
+	);
 	std::list<std::string> added_dictlist;
 	GtkTreeIter iter;
 	gboolean have_next = gtk_tree_model_iter_children(dictmanage_tree_model, &iter, parent_iter);
@@ -1885,7 +1922,7 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 		if (!added) {
 			DictManageItemType dicttype;
 			gint intdicttype;
-			gchar *bookname, *author, *email, *website, *description, *date;
+			gchar *bookname, *author, *email, *website, *description, *date, *type_str;
 			glong wordcount;
 			gtk_tree_model_get (
 				dict_list_tree_model, &iter,
@@ -1897,6 +1934,7 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 				DICTLIST_WEB_SITE_COLUMN, &website,
 				DICTLIST_DESCRIPTION_COLUMN, &description,
 				DICTLIST_DATE_COLUMN, &date,
+				DICTLIST_ID_TYPE_STR_COLUMN, &type_str,
 				-1
 			);
 			dicttype = (DictManageItemType)intdicttype;
@@ -1913,6 +1951,7 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 				ADD_DICT_DESCRIPTION_COLUMN, description,
 				ADD_DICT_DATE_COLUMN, date,
 				ADD_DICT_ID_COLUMN, file,
+				ADD_DICT_TYPE_STR_COLUMN, type_str,
 				-1
 			);
 			g_free(bookname);
@@ -1921,6 +1960,7 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 			g_free(website);
 			g_free(description);
 			g_free(date);
+			g_free(type_str);
 		}
 		g_free(file);
 		have_next = gtk_tree_model_iter_next(dict_list_tree_model, &iter);
@@ -1934,16 +1974,36 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
+
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
 	column = gtk_tree_view_column_new_with_attributes (_("Dictionary Name"), renderer, "text", ADD_DICT_NAME_COLUMN, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_expand(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, ADD_DICT_NAME_COLUMN);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
-	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
 	renderer = gtk_cell_renderer_text_new ();
 	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
 	column = gtk_tree_view_column_new_with_attributes (_("Word count"), renderer, "text", ADD_DICT_WORD_COUNT_COLUMN, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
 	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Type"), renderer, "text", ADD_DICT_TYPE_STR_COLUMN, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+	gtk_tree_view_column_set_clickable (GTK_TREE_VIEW_COLUMN (column), FALSE);
+
+	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	column = gtk_tree_view_column_new_with_attributes (_("Path"), renderer, "text", ADD_DICT_ID_COLUMN, NULL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_expand(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, ADD_DICT_ID_COLUMN);
+	gtk_tree_view_column_set_reorderable(column, TRUE);
+	gtk_tree_view_append_column (GTK_TREE_VIEW(now_treeview), column);
+
 	gtk_container_add (GTK_CONTAINER (sw), now_treeview);
 	gtk_widget_show_all(vbox);
 	gint response = gtk_dialog_run(GTK_DIALOG(dialog));
@@ -2430,6 +2490,21 @@ void DictManageDlg::on_download_eventbox_clicked(GtkWidget *widget, GdkEventButt
 void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
 	show_url("http://www.stardict.org/finance.php");
+}
+
+void DictManageDlg::on_dict_list_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg)
+{
+	oDictManageDlg->dictmanage_list_changed = true;
+}
+
+void DictManageDlg::on_treedict_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg)
+{
+	oDictManageDlg->write_treedict_order_list();
+}
+
+void DictManageDlg::on_network_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg)
+{
+	oDictManageDlg->network_dictmask_changed = true;
 }
 
 bool DictManageDlg::Show(bool &dictmanage_config_changed_)
