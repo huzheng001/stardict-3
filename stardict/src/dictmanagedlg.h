@@ -101,12 +101,14 @@ private:
 	static void on_group_name_cell_edited(GtkCellRendererText *cell, const gchar *path_string, const gchar *new_text, DictManageDlg *oDictManageDlg);
 	static void on_dictmanage_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
 	static void on_treedict_enable_toggled (GtkCellRendererToggle *cell, gchar *path_str, DictManageDlg *oDictManageDlg);
+	static void on_dict_list_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg);
+	static void on_treedict_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg);
+	static void on_network_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg);
 
 	static void drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg);
 	static void drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg);
 	static void dictmanage_drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg);
 
-	void print_word_count(const char* title);
 public:
 	GtkWidget *window;
 
