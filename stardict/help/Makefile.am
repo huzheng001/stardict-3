@@ -18,6 +18,12 @@ DOC_FIGURES = \
 	figures/stardict_notification_area.png	\
 	figures/stardict_full_text_translation.png	\
 	figures/stardict_windows_console.png	\
+	figures/stardict_manage_dicts_add_dict.png	\
+	figures/stardict_manage_dicts_dict_list.png	\
+	figures/stardict_manage_dicts_manage_dict.png	\
+	figures/stardict_manage_dicts_network_dicts_browse.png	\
+	figures/stardict_manage_dicts_network_dicts.png	\
+	figures/stardict_manage_dicts_tree_dict.png	\
 	figures/acrobat_toolbar.png	\
 	figures/portable_apps_menu.png
 
