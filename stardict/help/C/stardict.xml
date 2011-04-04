@@ -1894,6 +1894,217 @@ WineEnRu.ifo</screen>
 	</sect2>
   </sect1>
 
+  <sect1 id="manage-dicts">
+  <title>Manage dictionaries</title>
+  
+  <para>This section of the manual describes the 
+  Manage dictionaries dialog that allows you to view and organize all dictionaries available in &app_t;.
+  You may work with the following types of dictionaries: normal (index-based) dictionaries, virtual plugins, network plugins, network dictionaries, tree dictionaries.
+  The dialog consists of 4 tabs: <xref linkend="manage-dicts-dict-list"/>, 
+  <xref linkend="manage-dicts-manage-dict"/>, <xref linkend="manage-dicts-manage-dict"/>,
+  <xref linkend="manage-dicts-tree-dict"/>. 
+  Each tab is described in details below.
+  </para>
+  
+  <sect2 id="manage-dicts-dict-list">
+  <title>Dict list tab</title>
+  <para>Dict list tab allows you to view and reorder a list of all dictionaries of the following types: normal (index-based) dictionaries, virtual plugins, network plugins.
+  Dictionaries of these types may be organized into groups. 
+  To work with dictionaries groups, switch to <xref linkend="manage-dicts-manage-dict"/>.
+  This tab shows all dictionaries that are known to &app_t;, irrespective of whether they are used in some dictionary group or not.
+  </para>
+  
+  <figure id="manage-dicts-dict-list-fig"> 
+  <title>Dict list tab</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_dict_list.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>Columns of the dictionary list as self-explaining. <guilabel>Dictionary name</guilabel> &mdash; name of the dictionary for a normal dictionary and the name of plugin for plugins. 
+  <guilabel>Word count</guilabel> &mdash; number of word in a normal dictionary. For plugins this column always contains 0. <guilabel>Type</guilabel> &mdash; type of the dictionary <guilabel>Local</guilabel> for normal dictionaries, <guilabel>Virtual</guilabel> for Virtual plugins, <guilabel>Network</guilabel> for Network plugins.
+  </para>
+  
+  <para>You may reorder dictionaries in the list with buttons on the right or using drag and drop technology.
+  Note that you can select only one dictionary at a time.
+  This list specifies the default order of dictionaries for Add dictionary dialog. 
+  That dialog is used to add new dictionaries to groups, see <xref linkend="manage-dicts-manage-dict"/>.
+  The order of dictionaries is saved between application restarts.
+  Note, however, that virtual and network plugins are always appear at the end of the list.
+  Their order is not saved, &app_t; saves only the order of normal dictionaries.
+  </para>
+  
+  <para>To get detailed information about a dictionary, double-click on a list item. 
+  <guilabel>Dictionary information</guilabel> dialog appears.
+  Here you may see dictionary name, word count, author, email and other fields.
+  </para>
+  
+  </sect2>
+  
+  <sect2 id="manage-dicts-manage-dict">
+  <title>Manage dict tab</title>
+  <para>This tab allows you organize all dictionaries listed on <xref linkend="manage-dicts-dict-list"/> in groups. 
+  By default &app_t; has one group including all dictionaries.
+  You may create new groups to organize your dictionaries better.
+  Switching dictionary group allows you to quickly change a set of dictionaries where &app_t; searches words.
+  See <xref linkend="stardict-main-window"/>, Left bar for information about how to switch dictionary group.
+  For example, you may organize your dictionaries by a language pairs: English to Chinese, Chinese to German, German to Russian, etc.
+  </para>
+  
+  <figure id="manage-dicts-manage-dict-fig"> 
+  <title>Manage dict tab</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_manage_dict.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>Each group consists of two subgroups: Query Dict and Scan Dict.
+  The first subgroups is used for queries in the Main window, while the second is used in Scan mode.
+  Subgroups contain lists of dictionaries.
+  The order of dictionaries this dialog correspond to the order of results in Main window or Floating window, depending on subgroup.
+  Note, however, that results from Network plugins are always added at the bottom.
+  That is because response from a Network plugin is normally asynchronous and comes with unpredictable delay.
+  </para>
+  
+  <para>Dictionary list is organized in a tree, you may collapse groups and subgroups to save space.
+  You may reorder dictionary groups and dictionaries inside a subgroup using buttons at the right or using drag and drop technology.
+  Note, that can select only one item at a time. You cannot move dictionaries between groups and subgroups.
+  </para>
+  
+  <para>To get detailed information about a dictionary, double-click on a row, or select a row and click the button with a bulb, or click <guimenuitem>Show information</guimenuitem> in context menu.
+  </para>
+  
+  <para>
+  To remove a dictionary from a subgroup, or to remove a group, select that list item, then click on the button with a trash can. Note that removing a dictionary does not affect the corresponding file on the hard disk. Clicking the remove button on a subgroup, removes all dictionaries from that subgroup.
+  </para>
+  
+  <para>Each dictionary in the list can be independently enabled/disabled. 
+  Disabling a dictionary has the same effect as removing it from the list, it will not be used to search words when the corresponding dictionary group is selected. 
+  Disabled dictionary retains its position in the list, you can easily enable it later.
+  In the context menu you may find <guimenuitem>Select all</guimenuitem>, <guimenuitem>Unselect all</guimenuitem> items. They select (unselect) all dictionaries in a subgroup.
+  </para>
+  
+  <para>To add new dictionaries into subgroup, you need to select a subgroup or a dictionary inside it, and click the button with a plus sign.
+  Add dictionary dialog appears.
+  Here you see a list of all dictionaries that are not yet added to the selected subgroup.
+  The order of dictionaries is the same as on <xref linkend="manage-dicts-dict-list"/>.
+  You may select any number of items in this list.
+  Some columns are clickable. Clicking on a column title sort the list by that column.
+  Sorting by <guilabel>Path</guilabel> column is especially useful if your dictionaries are organized in directories corresponding to dictionary groups. 
+  After sorting all dictionaries from the same directory will be located in adjacent rows.
+  </para>
+  
+  <figure id="manage-dicts-add-dict-fig"> 
+  <title>Add dictionary dialog</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_add_dict.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>To rename a group, select it, then click on the selected row again.
+  Now you may edit the group name in place.
+  </para>
+  
+  </sect2>
+
+  <sect2 id="manage-dicts-tree-dict">
+  <title>Tree dictionaries tab</title>
+  <para>On this tab you may see a list of all tree dictionaries.
+  Tree dictionaries are not used when you type a word into the Main window or use the Scan feature.
+  Tree dictionaries are shown on a tab of its own in the Main window, see <xref linkend="stardict-main-window"/>, <guibutton>Tree</guibutton> button on the Left bar.
+  </para>
+  
+  <figure id="manage-dicts-tree-dict-fig"> 
+  <title>Tree dictionary tab</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_tree_dict.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>You may reorder dictionaries with the buttons on the right or using drag and drop technology.
+  </para>
+  
+  <para>To get detailed information about a dictionaries, double-click on it or select <guimenuitem>Show information</guimenuitem> from the context menu.
+  </para>
+  
+  <para>You may disable any dictionaries using a checkbox in the first column.
+  In the context menu you may find <guimenuitem>Select all</guimenuitem>, <guimenuitem>Unselect all</guimenuitem> items that selects/unselect all dictionaries in the list.
+  </para>
+  
+  </sect2>
+
+  <sect2 id="manage-dicts-network-dict">
+  <title>Network dictionaries tab</title>
+  <para>Network dictionaries tab contains a list of network dictionaries.
+  As the name implies, network dictionaries are not installed on your machine, they reside on a server in Internet.
+  &app_t; uses a custom protocol to query remote dictionaries and get results.
+  Before you can add dictionaries into this list, you need to register on the server, 
+  see <xref linkend="stardict-prefs-network-net-dict"/>. 
+  </para>
+  
+  <figure id="manage-dicts-network-dict-fig"> 
+  <title>Network dictionaries tab</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_network_dicts.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>You may reorder the dictionaries using the buttons on the right of the dialog or using drag and drop technology.
+  </para>
+  
+  <para>To get detailed information about a dictionary, double-click on it.
+  </para>
+  
+  <note>
+  <para>
+  It's perfectly normal that &app_t; does not react immediately to your activity.
+  Many action in this dialog require access to the remote server.
+  The response comes with unpredictable delay.
+  </para>
+  </note>
+  
+  <para>To add new dictionaries, click on the <guibutton>Add</guibutton> button.
+  <guilabel>Browse dictionaries</guilabel> dialog appears.
+  </para>
+  
+  <para>
+  In <guilabel>Browse dictionaries</guilabel> dialog, expand dictionary groups to see dictionaries.
+  To get information about a dictionary, select a dictionary, then click the <guibutton>Information</guibutton> button.
+  To add a dictionary, select a dictionary on the list, then click the <guibutton>Add</guibutton> button.
+  </para>
+  
+  <figure id="manage-dicts-network-dict-browse-fig"> 
+  <title>Browse dictionaries dialog</title> 
+  <screenshot> 
+    <mediaobject> 
+      <imageobject><imagedata fileref="figures/stardict_manage_dicts_network_dicts_browse.png" format="PNG"/> 
+      </imageobject>
+    </mediaobject> 
+  </screenshot> 
+  </figure>
+    
+  <para>To remove dictionaries from your list, click on the <guibutton>Remove</guibutton> button.
+  </para>
+  
+  </sect2>
+  
+  </sect1>
+  
   <sect1 id="manage-plugins">
   <title>Manage Plugins</title>
   <para>Mange plug-in dialog allows you to view, configure, enable/disable &app_t; plug-ins.
