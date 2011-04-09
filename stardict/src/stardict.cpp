@@ -76,6 +76,7 @@
 #include "pluginmanagedlg.h"
 #include "prefsdlg.h"
 #include "lib/netdictcache.h"
+#include "lib/full_text_trans.h"
 #include "log.h"
 #include "cmdlineopts.h"
 
