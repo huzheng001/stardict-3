@@ -308,7 +308,7 @@ int textual_dict_gen_t::generate_field_unescaped(const char type_id, const char*
 int textual_dict_gen_t::generate_field_r(const resource_vect_t& resources)
 {
 	glib::CharStr temp;
-	contents_puts("\n<definition type=\"r\">\n");
+	contents_puts("\n<definition-r>\n");
 	for(size_t i=0; i<resources.size(); ++i) {
 		temp.reset(g_markup_printf_escaped("<resource type=\"%s\" key=\"%s\"/>\n"
 			, resources[i].type.c_str()
@@ -316,7 +316,7 @@ int textual_dict_gen_t::generate_field_r(const resource_vect_t& resources)
 		));
 		contents_puts(temp);
 	}
-	contents_puts("</definition>\n");
+	contents_puts("</definition-r>\n");
 	return EXIT_SUCCESS;
 }
 
