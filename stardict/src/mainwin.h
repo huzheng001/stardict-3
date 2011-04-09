@@ -10,7 +10,6 @@
 const guint MAX_HISTORY_WORD_ITEM_NUM=20;
 const guint MAX_BACK_WORD_ITEM_NUM=20;
 
-
 const int MIN_WINDOW_WIDTH=200;
 const int MIN_WINDOW_HEIGHT=100;
 
@@ -28,16 +27,6 @@ enum TextWinQueryResult
 	TEXT_WIN_NET_NOT_FOUND,
 	TEXT_WIN_NET_SHOW_FIRST,
 };
-
-enum TranslateEngineCode {
-	TranslateEngine_Google,
-	TranslateEngine_Yahoo,
-	// TranslateEngine_Altavista,
-	//TranslateEngine_SystranBox,
-	TranslateEngine_ExciteJapan,
-	TranslateEngine_Size // number of active engines. Must be the last item.
-};
-
 
 enum ListWinListWordType {
 	LIST_WIN_NORMAL_LIST,
@@ -306,7 +295,6 @@ private:
 	static void on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin);
 	void SetLink(const char *linkname);
 	void SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index);
-	void GetHostFile(std::string &host, std::string &file, const char *text);
 };
 
 class MidWin {
