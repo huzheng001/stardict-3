@@ -2358,7 +2358,7 @@ static gboolean save_yourself_cb (GnomeClient       *client,
 #endif
 
 #if defined(_WIN32) && defined(_MSC_VER)
-/* Synchronize environment varaibles in CRTs.
+/* Synchronize environment variables in CRTs.
 See section "Two copies of CRT" in doc/README_windows.txt for more details. */
 void synchronize_crt_enviroment(void)
 {
@@ -2376,7 +2376,7 @@ void synchronize_crt_enviroment(void)
 		return;
 	}
 	if(!g_setenv(varname, &buf[0], TRUE)) {
-		g_warning("Unable to set the %s enviroment variable.", varname);
+		g_warning("Unable to set the %s environment variable.", varname);
 		return;
 	}
 }

@@ -2260,14 +2260,15 @@ void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_i
 {
 	if (engine_index!= -1) {
 		gtk_combo_box_set_active(GTK_COMBO_BOX(engine_combobox), engine_index);
-		const char ** fromlangs = trans_engines[engine_index].fromlangs;
+		const TransEngine& engine = gpAppFrame->oFullTextTrans.get_engine(engine_index);
+		const size_t fromlangcnt = engine.get_source_lang_cnt();
 		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 		GtkTreeIter iter;
-		size_t i = 0;
-		while (fromlangs[i]) {
+		for(size_t i = 0; i<fromlangcnt; ++i) {
 			gtk_list_store_append(list_store, &iter);
-			gtk_list_store_set(list_store, &iter, 0, gettext(fromlangs[i]), -1);
-			i++;
+			gtk_list_store_set(list_store, &iter,
+				0, engine.get_source_lang(i).c_str(),
+			-1);
 		}
 		gtk_combo_box_set_model(GTK_COMBO_BOX(fromlang_combobox), GTK_TREE_MODEL(list_store));
 		g_object_unref (G_OBJECT(list_store));
@@ -2284,16 +2285,16 @@ void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_i
 		else
 			real_fromlang_index = fromlang_index;
 		gtk_combo_box_set_active(GTK_COMBO_BOX(fromlang_combobox), real_fromlang_index);
-		const char ** tolangs = trans_engines[real_engine_index].tolangs
-			? trans_engines[real_engine_index].tolangs[real_fromlang_index]
-			: trans_engines[real_engine_index].tolangs2;
+		const TransEngine& engine = gpAppFrame->oFullTextTrans.get_engine(real_engine_index);
+		const size_t tolangcnt = engine.get_target_lang_cnt(real_fromlang_index);
 		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 		GtkTreeIter iter;
-		size_t i = 0;
-		while (tolangs[i]) {
+		for(size_t i = 0; i<tolangcnt; ++i) {
 			gtk_list_store_append(list_store, &iter);
-			gtk_list_store_set(list_store, &iter, 0, gettext(tolangs[i]), -1);
-			i++;
+			gtk_list_store_set(list_store, &iter,
+				0, engine.get_target_lang(real_fromlang_index, i).c_str(),
+				-1
+			);
 		}
 		gtk_combo_box_set_model(GTK_COMBO_BOX(tolang_combobox), GTK_TREE_MODEL(list_store));
 		g_object_unref (G_OBJECT(list_store));
@@ -2358,10 +2359,12 @@ void TransWin::Create(GtkWidget *notebook)
 
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 	GtkTreeIter iter;
-	for (size_t i = 0; trans_engines[i].name; i++) {
-		const char *name = gettext(trans_engines[i].name);
+	for (size_t i = 0; i<TranslateEngine_Size; i++) {
 		gtk_list_store_append(list_store, &iter);
-		gtk_list_store_set(list_store, &iter, 0, name, -1);
+		gtk_list_store_set(list_store, &iter,
+			0, gpAppFrame->oFullTextTrans.get_engine(i).get_name().c_str(),
+			-1
+		);
 	}
 	engine_combobox = gtk_combo_box_new_with_model(GTK_TREE_MODEL(list_store));
 	g_object_unref (G_OBJECT(list_store));
@@ -2465,13 +2468,13 @@ void TransWin::SetLink(const char *linkname)
 void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin)
 {
 	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
-	show_url(trans_engines[index].website);
+	show_url(gpAppFrame->oFullTextTrans.get_engine(index).get_website_name().c_str());
 }
 
 void TransWin::on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
 	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	oTransWin->SetLink(trans_engines[index].website_name);
+	oTransWin->SetLink(gpAppFrame->oFullTextTrans.get_engine(index).get_website_url().c_str());
 	oTransWin->SetComboBox(index, -1, -1);
 	conf->set_int_at("translate/engine", index);
 }
@@ -2519,7 +2522,7 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	g_free(text);
 	std::string host;
 	std::string file;
-	GetHostFile(
+	gpAppFrame->oFullTextTrans.GetHostFile(
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox)),
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->fromlang_combobox)),
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->tolang_combobox)),

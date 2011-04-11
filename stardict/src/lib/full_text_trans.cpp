@@ -6,6 +6,18 @@
 
 #include "full_text_trans.h"
 
+struct TransEngineInt {
+	const char * name;
+	const char ** fromlangs;
+	const char *** tolangs;
+	const char ** tolangs2;
+	const char *** code;
+	const char ** fromcode;
+	const char ** tocode;
+	const char * website_name;
+	const char * website;
+};
+
 static const char *google_fromlangs[] = {N_("Afrikaans"), N_("Albanian"), N_("Arabic"), N_("Belarusian"), N_("Bulgarian"), N_("Catalan"), N_("Chinese"), N_("Croatian"), N_("Czech"), N_("Danish"), N_("Dutch"), N_("English"), N_("Estonian"), N_("Filipino"), N_("Finnish"), N_("French"), N_("Galician"), N_("German"), N_("Greek"), N_("Haitian Creole ALPHA"), N_("Hebrew"), N_("Hindi"), N_("Hungarian"), N_("Icelandic"), N_("Indonesian"), N_("Irish"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Latvian"), N_("Lithuanian"), N_("Macedonian"), N_("Malay"), N_("Maltese"), N_("Norwegian"), N_("Persian"), N_("Polish"), N_("Portuguese"), N_("Romanian"), N_("Russian"), N_("Serbian"), N_("Slovak"), N_("Slovenian"), N_("Spanish"), N_("Swahili"), N_("Swedish"), N_("Thai"), N_("Turkish"), N_("Ukrainian"), N_("Vietnamese"), N_("Welsh"), N_("Yiddish"), NULL};
 static const char *google_intolangs[] = {N_("Afrikaans"), N_("Albanian"), N_("Arabic"), N_("Belarusian"), N_("Bulgarian"), N_("Catalan"), N_("Chinese (Simplified)"), N_("Chinese (Traditional)"), N_("Croatian"), N_("Czech"), N_("Danish"), N_("Dutch"), N_("English"), N_("Estonian"), N_("Filipino"), N_("Finnish"), N_("French"), N_("Galician"), N_("German"), N_("Greek"), N_("Haitian Creole ALPHA"), N_("Hebrew"), N_("Hindi"), N_("Hungarian"), N_("Icelandic"), N_("Indonesian"), N_("Irish"), N_("Italian"), N_("Japanese"), N_("Korean"), N_("Latvian"), N_("Lithuanian"), N_("Macedonian"), N_("Malay"), N_("Maltese"), N_("Norwegian"), N_("Persian"), N_("Polish"), N_("Portuguese"), N_("Romanian"), N_("Russian"), N_("Serbian"), N_("Slovak"), N_("Slovenian"), N_("Spanish"), N_("Swahili"), N_("Swedish"), N_("Thai"), N_("Turkish"), N_("Ukrainian"), N_("Vietnamese"), N_("Welsh"), N_("Yiddish"), NULL};
 static const char *google_fromlangs_code[] = {"af", "sq", "ar", "be", "bg", "ca", "zh-CN", "hr", "cs", "da", "nl", "en", "et", "tl", "fi", "fr", "gl", "de", "el", "ht", "iw", "hi", "hu", "is", "id", "ga", "it", "ja", "ko", "lv", "lt", "mk", "ms", "mt", "no", "fa", "pl", "pt", "ro", "ru", "sr", "sk", "sl", "es", "sw", "sv", "th", "tr", "uk", "vi", "cy", "yi", NULL};
@@ -125,7 +137,7 @@ static const char **kingsoft_tolangs[] = {kingsoft_english_tolangs, kingsoft_chi
 
 
 /* keep in sync with enum TranslateEngineCode! */
-TranslateEngine trans_engines[] = {
+TransEngineInt trans_engines[] = {
 	// name,                        fromlangs,            tolangs,            tolangs2,         code,            fromcode,              tocode,                website_name,   website
 	{N_("Google Translate"),        google_fromlangs,     NULL,               google_intolangs, NULL,            google_fromlangs_code, google_intolangs_code, "Google",       "http://translate.google.com"},
 	{ N_("Yahoo Translate"),        yahoo_fromlangs,      yahoo_tolangs,      NULL,             yahoo_code,      NULL,                  NULL,                  "Yahoo",        "http://babelfish.yahoo.com"},
@@ -136,19 +148,65 @@ TranslateEngine trans_engines[] = {
 	{ NULL }
 };
 
-void GetHostFile(gint engine_index, gint fromlang_index, gint tolang_index,
-		std::string &host, std::string &file, const char *text)
+std::string TransEngine::get_source_lang(size_t src_lang) const
+{
+	if(src_lang >= srclangs.size())
+		return "";
+	return srclangs[src_lang].name;
+}
+
+size_t TransEngine::get_source_lang_cnt() const
+{
+	return srclangs.size();
+}
+
+std::string TransEngine::get_target_lang(size_t src_lang, size_t tgt_lang) const
+{
+	if(src_lang >= srclangs.size())
+		return "";
+	const size_t tolangind = srclangs[src_lang].tolangind;
+	if(tgt_lang >= tgtlangs[tolangind].size())
+		return "";
+	return tgtlangs[tolangind][tgt_lang].name;
+}
+
+size_t TransEngine::get_target_lang_cnt(size_t src_lang) const
+{
+	if(src_lang >= srclangs.size())
+		return 0;
+	const size_t tolangind = srclangs[src_lang].tolangind;
+	return tgtlangs[tolangind].size();
+}
+
+FullTextTrans::FullTextTrans()
+{
+	for(size_t engine=0; engine<TranslateEngine_Size; ++engine) {
+		engines[engine].name = gettext(trans_engines[engine].name);
+		engines[engine].website_name = trans_engines[engine].website_name;
+		engines[engine].website_url = trans_engines[engine].website;
+		init_engine(engines[engine], trans_engines[engine]);
+	}
+}
+
+const TransEngine& FullTextTrans::get_engine(size_t engine_ind) const
+{
+	return engines[engine_ind];
+}
+
+void FullTextTrans::GetHostFile(
+	size_t engine_index, size_t fromlang_index, size_t tolang_index,
+	std::string &host, std::string &file, const char *text) const
 {
 	if(engine_index==TranslateEngine_Google){
 		host = "translate.google.com";
 		file = "/translate_t?ie=UTF-8";
-	}else if(engine_index==TranslateEngine_Yahoo){
+	} else if(engine_index==TranslateEngine_Yahoo){
 		host = "babelfish.yahoo.com";
 		file = "/translate_txt?ei=UTF-8&lp=";
 	/*}else if(engine_index==TranslateEngine_SystranBox){
 		host = "www.systranbox.com";
 		file = "/systran/box?systran_id=SystranSoft-en&systran_charset=UTF-8&systran_lp="; */
-	}else if(engine_index==TranslateEngine_ExciteJapan){
+	} else if(engine_index==TranslateEngine_ExciteJapan){
 		host = "www.excite.co.jp";
 		file = "/world";
 	} /*else if(engine_index==5){
@@ -157,21 +215,20 @@ void GetHostFile(gint engine_index, gint fromlang_index, gint tolang_index,
 	} */
 
 	if(engine_index==TranslateEngine_Google) {
-		g_assert(trans_engines[engine_index].fromcode);
-		g_assert(trans_engines[engine_index].tocode);
 		file += "&sl=";
-		file += trans_engines[engine_index].fromcode[fromlang_index];
+		file += engines[engine_index].srclangs[fromlang_index].code;
 		file += "&tl=";
-		file += trans_engines[engine_index].tocode[tolang_index];
+		const size_t tolangind = engines[engine_index].srclangs[fromlang_index].tolangind;
+		file += engines[engine_index].tgtlangs[tolangind][tolang_index].code;
 	} else {
-		g_assert(trans_engines[engine_index].code);
-		const char *lang_code = trans_engines[engine_index].code[fromlang_index][tolang_index];
+		const size_t tolangind = engines[engine_index].srclangs[fromlang_index].tolangind;
+		std::string lang_code = engines[engine_index].tgtlangs[tolangind][tolang_index].code;
 		if(engine_index==TranslateEngine_ExciteJapan) {
-			if(strcmp(lang_code,"KOJA")==0 || strcmp(lang_code,"JAKO")==0){
+			if(strcmp(lang_code.c_str(),"KOJA")==0 || strcmp(lang_code.c_str(),"JAKO")==0){
 				file += "/korean?wb_lp=";
-			}else if(strcmp(lang_code,"ENJA")==0 || strcmp(lang_code,"JAEN")==0){
+			}else if(strcmp(lang_code.c_str(),"ENJA")==0 || strcmp(lang_code.c_str(),"JAEN")==0){
 				file += "/english?wb_lp=";
-			}else if(strcmp(lang_code,"CHJA")==0 || strcmp(lang_code,"JACH")==0){
+			}else if(strcmp(lang_code.c_str(),"CHJA")==0 || strcmp(lang_code.c_str(),"JACH")==0){
 				file += "/chinese?wb_lp=";
 			}else{
 				file += "/english?wb_lp=";
@@ -185,9 +242,48 @@ void GetHostFile(gint engine_index, gint fromlang_index, gint tolang_index,
 	/*}else if(engine_index == TranslateEngine_SystranBox) {
 		file += "&systran_text=";
 		file += text; */
-	}else if(engine_index == TranslateEngine_ExciteJapan) {
+	} else if(engine_index == TranslateEngine_ExciteJapan) {
 		file += "&before=";
 		file += text;
 	}
 }
 
+void FullTextTrans::init_engine(TransEngine& engine, const TransEngineInt& engine_src)
+{
+	engine.srclangs.resize(calculate_cnt(engine_src.fromlangs));
+	for(size_t i = 0; engine_src.fromlangs[i]; ++i) {
+		engine.srclangs[i].name = gettext(engine_src.fromlangs[i]);
+		if(engine_src.fromcode)
+			engine.srclangs[i].code = engine_src.fromcode[i];
+		if(engine_src.tolangs2) {
+			if(engine.tgtlangs.empty()) {
+				engine.tgtlangs.resize(1);
+				std::vector<TransLanguage>& langs = engine.tgtlangs[0];
+				langs.resize(calculate_cnt(engine_src.tolangs2));
+				for(size_t j = 0; engine_src.tolangs2[j]; ++j) {
+					langs[j].name = gettext(engine_src.tolangs2[j]);
+					langs[j].code = engine_src.tocode[j];
+				}
+			}
+			engine.srclangs[i].tolangind = 0;
+		} else if(engine_src.tolangs) {
+			if(engine.tgtlangs.empty())
+				engine.tgtlangs.resize(engine.srclangs.size());
+			std::vector<TransLanguage>& langs = engine.tgtlangs[i];
+			langs.resize(calculate_cnt(engine_src.tolangs[i]));
+			for(size_t j=0; engine_src.tolangs[i][j]; ++j) {
+				langs[j].name = gettext(engine_src.tolangs[i][j]);
+				langs[j].code = engine_src.code[i][j];
+			}
+			engine.srclangs[i].tolangind = i;
+		}
+	}
+}
+
+size_t FullTextTrans::calculate_cnt(const char** arr)
+{
+	size_t cnt = 0;
+	while(arr[cnt])
+		++cnt;
+	return cnt;
+}
