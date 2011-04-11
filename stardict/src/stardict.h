@@ -35,6 +35,7 @@ class AppCore;
 #include "dictmanage.h"
 #include "globalhotkeys.h"
 #include "lib/compositelookup.h"
+#include "lib/full_text_trans.h"
 
 extern AppCore *gpAppFrame;
 
@@ -105,6 +106,7 @@ public:
 	std::auto_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
 	ReadWord oReadWord;
+	FullTextTrans oFullTextTrans;
 
 #ifdef CONFIG_GNOME
 	BonoboObject *stardict_app_server;
