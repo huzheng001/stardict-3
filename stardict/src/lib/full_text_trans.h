@@ -64,6 +64,7 @@ public:
 };
 
 class TransEngineInt;
+class TransLanguageInt;
 
 class FullTextTrans
 {
@@ -76,6 +77,7 @@ private:
 	void init_engine(TransEngine& engine, const TransEngineInt& engine_src);
 	// calculate size of a NULL-terminated array
 	static size_t calculate_cnt(const char** arr);
+	static size_t calculate_cnt(const TransLanguageInt* arr);
 	TransEngine engines[TranslateEngine_Size];
 };
 
