@@ -1496,14 +1496,7 @@ Libs::Libs(show_progress_t *sp, bool create, CollationLevelType level, int funct
 	CreateCacheFile = create;
 	CollateFunction = (CollateFunctions)function;
 	iMaxFuzzyDistance  = MAX_FUZZY_DISTANCE; //need to read from cfg.
-	if (CollationLevel == CollationLevel_NONE) {
-	} else if (CollationLevel == CollationLevel_SINGLE) {
-		if (utf8_collate_init(CollateFunction))
-			g_print("Init collate function failed!\n");
-	} else if (CollationLevel == CollationLevel_MULTI){
-		if (utf8_collate_init_all())
-			g_print("Init collate functions failed!\n");
-	}
+	init_collations();
 }
 
 Libs::~Libs()
@@ -1514,7 +1507,7 @@ Libs::~Libs()
 #endif
 	for (std::vector<Dict *>::iterator p=oLib.begin(); p!=oLib.end(); ++p)
 		delete *p;
-	utf8_collate_end();
+	free_collations();
 }
 
 bool Libs::load_dict(const std::string& url, show_progress_t *sp)
@@ -2094,16 +2087,10 @@ void Libs::reload(const std::list<std::string> &load_list, CollationLevelType Ne
 		for (std::vector<Dict *>::iterator it = oLib.begin(); it != oLib.end(); ++it)
 			delete *it;
 		oLib.clear();
+		free_collations();
 		CollationLevel = NewCollationLevel;
 		CollateFunction = CollateFunctions(collf);
-		if (CollationLevel == CollationLevel_NONE) {
-		} else if (CollationLevel == CollationLevel_SINGLE) {
-			if (utf8_collate_init(CollateFunction))
-				g_print("Init collate function failed!\n");
-		} else if (CollationLevel == CollationLevel_MULTI) {
-			if (utf8_collate_init_all())
-				g_print("Init collate functions failed!\n");
-		}
+		init_collations();
 		load(load_list);
 	}
 }
@@ -3351,4 +3338,23 @@ const char *Libs::GetStorageFileContent(size_t iLib, const std::string &key)
 	if (oLib[iLib]->storage == NULL)
 		return NULL;
 	return oLib[iLib]->storage->get_file_content(key);
+}
+
+void Libs::init_collations()
+{
+	if (CollationLevel == CollationLevel_SINGLE) {
+		if (utf8_collate_init(CollateFunction))
+			g_print("Init collate function failed!\n");
+	} else if (CollationLevel == CollationLevel_MULTI){
+		if (utf8_collate_init_all())
+			g_print("Init collate functions failed!\n");
+	}
+}
+
+void Libs::free_collations()
+{
+	if(CollationLevel == CollationLevel_SINGLE)
+		utf8_collate_end(CollateFunction);
+	else if(CollationLevel == CollationLevel_MULTI)
+		utf8_collate_end_all();
 }

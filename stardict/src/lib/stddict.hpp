@@ -364,6 +364,8 @@ public:
 	StorageType GetStorageType(size_t iLib);
 	FileHolder GetStorageFilePath(size_t iLib, const std::string &key);
 	const char *GetStorageFileContent(size_t iLib, const std::string &key);
+	void init_collations();
+	void free_collations();
 private:
 	bool LookupSimilarWordTryWord(const gchar *sTryWord, const gchar *sWord,
 		int servercollatefunc, size_t iLib,
