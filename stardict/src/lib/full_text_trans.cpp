@@ -3,7 +3,9 @@
 #endif
 
 #include <glib/gi18n.h>
+#include <algorithm>
 
+#include "collation.h"
 #include "full_text_trans.h"
 
 struct TransLanguageInt
@@ -393,14 +395,19 @@ size_t TransEngine::get_target_lang_cnt(size_t src_lang) const
 	return tgtlangs[tolangind].size();
 }
 
+const CollateFunctions FullTextTransCollation = UTF8_UNICODE_CI;
+
 FullTextTrans::FullTextTrans()
 {
+	utf8_collate_init(FullTextTransCollation);
 	for(size_t engine=0; engine<TranslateEngine_Size; ++engine) {
 		engines[engine].name = gettext(trans_engines[engine].name);
 		engines[engine].website_name = trans_engines[engine].website_name;
 		engines[engine].website_url = trans_engines[engine].website_url;
 		init_engine(engines[engine], trans_engines[engine]);
+		sort_engine(engines[engine]);
 	}
+	utf8_collate_end(FullTextTransCollation);
 }
 
 const TransEngine& FullTextTrans::get_engine(size_t engine_ind) const
@@ -493,6 +500,18 @@ void FullTextTrans::init_engine(TransEngine& engine, const TransEngineInt& engin
 			engine.srclangs[i].tolangind = i;
 		}
 	}
+}
+
+void FullTextTrans::sort_engine(TransEngine& engine)
+{
+	std::sort(engine.srclangs.begin(), engine.srclangs.end(), trans_engine_comp);
+	for(size_t i=0; i < engine.tgtlangs.size(); ++i)
+		std::sort(engine.tgtlangs[i].begin(), engine.tgtlangs[i].end(), trans_engine_comp);
+}
+
+bool FullTextTrans::trans_engine_comp(const TransLanguage& left, const TransLanguage& right)
+{
+	return utf8_collate(left.name.c_str(), right.name.c_str(), FullTextTransCollation) < 0;
 }
 
 size_t FullTextTrans::calculate_cnt(const char** arr)
