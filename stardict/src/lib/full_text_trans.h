@@ -75,6 +75,8 @@ public:
 		std::string &host, std::string &file, const char *text) const;
 private:
 	void init_engine(TransEngine& engine, const TransEngineInt& engine_src);
+	void sort_engine(TransEngine& engine);
+	static bool trans_engine_comp(const TransLanguage& left, const TransLanguage& right);
 	// calculate size of a NULL-terminated array
 	static size_t calculate_cnt(const char** arr);
 	static size_t calculate_cnt(const TransLanguageInt* arr);
