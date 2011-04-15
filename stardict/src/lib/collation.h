@@ -29,7 +29,8 @@ typedef enum {
 extern int utf8_collate_init(CollateFunctions func);
 extern int utf8_collate_init_all();
 extern int utf8_collate(const char *str1, const char *str2, CollateFunctions func);
-extern void utf8_collate_end();
+extern void utf8_collate_end(CollateFunctions func);
+extern void utf8_collate_end_all();
 
 
 #endif

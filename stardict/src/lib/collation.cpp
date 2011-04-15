@@ -1,9 +1,8 @@
-#include "my_global.h"
-#include "m_ctype.h"
-
 #include <string.h>
 #include <glib.h>
 
+#include "my_global.h"
+#include "m_ctype.h"
 #include "collation.h"
 
 using namespace stardict_collation;
@@ -58,32 +57,80 @@ static CHARSET_INFO *get_cs(CollateFunctions func)
 	return cs;
 }
 
-static GSList *my_once_root_block = NULL;
-
-static void *my_once_alloc(uint size)
+/* This template class is instantiated once for each item of CollateFunctions enumeration,
+ * excluding COLLATE_FUNC_NUMS.
+ * Each instance has a separate static field root_block,
+ * independent static functions alloc and free_all.
+ * For example, CollationAllocator<UTF8_GENERAL_CI>::alloc() saves allocated blocks
+ * in CollationAllocator<UTF8_GENERAL_CI>::root_block list.
+ * */
+template<CollateFunctions f>
+class CollationAllocator
 {
-	void *mem = g_malloc(size);
-	my_once_root_block = g_slist_prepend (my_once_root_block, mem);
-	return mem;
-}
-
-static void my_once_free()
-{
-	GSList *list = my_once_root_block;
-	while (list) {
-		g_free(list->data);
-		list = list->next;
+private:
+	static GSList *root_block;
+public:
+	static void* alloc(uint size)
+	{
+		void *mem = g_malloc(size);
+		root_block = g_slist_prepend (root_block, mem);
+		return mem;
 	}
-	g_slist_free(my_once_root_block);
-	my_once_root_block = NULL;
-}
+	static void free_all()
+	{
+		GSList *list = root_block;
+		while (list) {
+			g_free(list->data);
+			list = list->next;
+		}
+		g_slist_free(root_block);
+		root_block = NULL;
+	}
+};
+
+template<CollateFunctions f>
+GSList* CollationAllocator<f>::root_block = NULL;
+
+struct CollationData
+{
+	void *(*alloc)(uint);
+	void (*free_all)();
+	/* reference count. How many times this collation was initialized. */
+	int ref;
+};
+
+CollationData coll_data[] = {
+	{ CollationAllocator<UTF8_GENERAL_CI>::alloc, CollationAllocator<UTF8_GENERAL_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_UNICODE_CI>::alloc, CollationAllocator<UTF8_UNICODE_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_BIN>::alloc, CollationAllocator<UTF8_BIN>::free_all, 0 },
+	{ CollationAllocator<UTF8_CZECH_CI>::alloc, CollationAllocator<UTF8_CZECH_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_DANISH_CI>::alloc, CollationAllocator<UTF8_DANISH_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_ESPERANTO_CI>::alloc, CollationAllocator<UTF8_ESPERANTO_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_ESTONIAN_CI>::alloc, CollationAllocator<UTF8_ESTONIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_HUNGARIAN_CI>::alloc, CollationAllocator<UTF8_HUNGARIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_ICELANDIC_CI>::alloc, CollationAllocator<UTF8_ICELANDIC_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_LATVIAN_CI>::alloc, CollationAllocator<UTF8_LATVIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_LITHUANIAN_CI>::alloc, CollationAllocator<UTF8_LITHUANIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_PERSIAN_CI>::alloc, CollationAllocator<UTF8_PERSIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_POLISH_CI>::alloc, CollationAllocator<UTF8_POLISH_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_ROMAN_CI>::alloc, CollationAllocator<UTF8_ROMAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_ROMANIAN_CI>::alloc, CollationAllocator<UTF8_ROMANIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_SLOVAK_CI>::alloc, CollationAllocator<UTF8_SLOVAK_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_SLOVENIAN_CI>::alloc, CollationAllocator<UTF8_SLOVENIAN_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_SPANISH_CI>::alloc, CollationAllocator<UTF8_SPANISH_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_SPANISH2_CI>::alloc, CollationAllocator<UTF8_SPANISH2_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_SWEDISH_CI>::alloc, CollationAllocator<UTF8_SWEDISH_CI>::free_all, 0 },
+	{ CollationAllocator<UTF8_TURKISH_CI>::alloc, CollationAllocator<UTF8_TURKISH_CI>::free_all, 0 }
+};
 
 int utf8_collate_init(CollateFunctions func)
 {
+	if(coll_data[func].ref++ > 0)
+		return FALSE;
 	CHARSET_INFO *cs = get_cs(func);
 	if (cs) {
-		if ((cs->cset->init && cs->cset->init(cs, my_once_alloc)) ||
-        		(cs->coll->init && cs->coll->init(cs, my_once_alloc)))
+		if ((cs->cset->init && cs->cset->init(cs, coll_data[func].alloc)) ||
+			(cs->coll->init && cs->coll->init(cs, coll_data[func].alloc)))
 			return TRUE;
 		else
 			return FALSE;
@@ -95,10 +142,12 @@ int utf8_collate_init_all()
 {
 	CHARSET_INFO *cs;
 	for (int func=0; func<COLLATE_FUNC_NUMS; func++) {
+		if(coll_data[func].ref++ > 0)
+			continue;
 		cs = get_cs((CollateFunctions)func);
 		if (cs) {
-			if ((cs->cset->init && cs->cset->init(cs, my_once_alloc)) ||
-        			(cs->coll->init && cs->coll->init(cs, my_once_alloc)))
+			if ((cs->cset->init && cs->cset->init(cs, coll_data[func].alloc)) ||
+				(cs->coll->init && cs->coll->init(cs, coll_data[func].alloc)))
 				return TRUE;
 		} else
 			return TRUE;
@@ -115,7 +164,24 @@ int utf8_collate(const char *str1, const char *str2, CollateFunctions func)
 		return 0; //Should never happen.
 }
 
-void utf8_collate_end()
+void utf8_collate_end(CollateFunctions func)
 {
-	my_once_free();
+	if(coll_data[func].ref <= 0) {
+		coll_data[func].ref = 0;
+		return;
+	}
+	if(--coll_data[func].ref == 0)
+		coll_data[func].free_all();
+}
+
+void utf8_collate_end_all()
+{
+	for (int func=0; func<COLLATE_FUNC_NUMS; func++) {
+		if(coll_data[func].ref <= 0) {
+			coll_data[func].ref = 0;
+			continue;
+		}
+		if(--coll_data[func].ref == 0)
+			coll_data[func].free_all();
+	}
 }
