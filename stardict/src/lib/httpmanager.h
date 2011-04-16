@@ -7,8 +7,7 @@ class HttpManager {
 public:
 	HttpManager();
 	~HttpManager();
-	void SendHttpGetRequest(const char* shost, const char* sfile, gpointer userdata);
-	void SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata);
+	void Add(HttpClient* client);
 	void Remove(HttpClient *http_client);
 private:
 	std::list<HttpClient *> client_list;

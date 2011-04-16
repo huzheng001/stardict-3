@@ -19,8 +19,8 @@ typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpoint
 
 class HttpClient {
 public:
-	static sigc::signal<void, HttpClient*, const char *> on_error_;
-	static sigc::signal<void, HttpClient *> on_response_;
+	sigc::signal<void, HttpClient*, const char *> on_error_;
+	sigc::signal<void, HttpClient *> on_response_;
 
 	HttpClient();
 	~HttpClient();

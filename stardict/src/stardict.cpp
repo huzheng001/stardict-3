@@ -199,7 +199,11 @@ void AppCore::on_link_click(const std::string &link)
 
 void AppCore::do_send_http_request(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata)
 {
-	gpAppFrame->oHttpManager.SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
+	HttpClient *client = new HttpClient();
+	client->on_error_.connect(sigc::mem_fun(gpAppFrame, &AppCore::on_http_client_error));
+	client->on_response_.connect(sigc::mem_fun(gpAppFrame, &AppCore::on_http_client_response));
+	gpAppFrame->oHttpManager.Add(client);
+	client->SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
 }
 
 void AppCore::set_news(const char *news, const char *links)
@@ -323,11 +327,6 @@ void AppCore::Create(const gchar *queryword)
 	oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
 	oStarDictClient.on_previous_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_previous_end));
 	oStarDictClient.on_next_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_next_end));
-
-	// If the plugin send http request before this, then the response won't be processed,
-	// you need to always use gtk_init_add() instead of g_idle_add() in this case.
-	HttpClient::on_error_.connect(sigc::mem_fun(this, &AppCore::on_http_client_error));
-	HttpClient::on_response_.connect(sigc::mem_fun(this, &AppCore::on_http_client_response));
 
 	UpdateDictMask();
 
@@ -1856,146 +1855,6 @@ void AppCore::on_http_client_response(HttpClient *http_client)
 		http_client->callback_func_(http_client->buffer, http_client->buffer_len, http_client->userdata);
 		oHttpManager.Remove(http_client);
 		return;
-	}
-	if (http_client->buffer == NULL) {
-		oMidWin.oTransWin.SetText(_("Not found!\n"));
-		oHttpManager.Remove(http_client);
-		return;
-	}
-	const char *buffer = http_client->buffer;
-	size_t buffer_len = http_client->buffer_len;
-	glong engine_index = (glong)(http_client->userdata);
-
-	bool found = false;
-	std::string result_text;
-	if (engine_index == TranslateEngine_ExciteJapan) {
-		#define ExicuteTranslateStartMark "name=\"after\""
-		char *p_E = g_strstr_len(buffer, buffer_len, ExicuteTranslateStartMark);
-		if(p_E){
-			p_E = strchr(p_E, '>');
-			if (p_E) {
-				p_E++;
-				char *p2_E = g_strstr_len(p_E, buffer_len - (p_E - buffer), "</textarea>");
-				if(p2_E){
-					result_text.assign(p_E, p2_E-p_E);
-					found = true;
-				}
-			}
-		}
-	/*} else if (engine_index == TranslateEngine_SystranBox) {
-		#define SystranBoxTranslateStartMark "<textarea name=\"translation\" rows=\"10\" cols=\"3\" style=\"float:left; clear:none; background-color:#FFFFFF; color:#000000; border-color:#FFFFFF;\">"
-		char *p_S = g_strstr_len(buffer, buffer_len, SystranBoxTranslateStartMark);
-		if(p_S){
-			p_S += sizeof(SystranBoxTranslateStartMark) -1;
-			char *p2_S = g_strstr_len(p_S, buffer_len - (p_S - buffer), "</textarea>");
-			if(p2_S){
-				result_text.assign(p_S, p2_S-p_S);
-				found = true;
-			}
-		} */
-	} else if (engine_index == TranslateEngine_Yahoo) {
-		#define YahooTranslateStartMark "<div id=\"result\">"
-		const char *p_y = g_strstr_len(buffer, buffer_len, YahooTranslateStartMark);
-		if(p_y) {
-			p_y += sizeof(YahooTranslateStartMark) -1;
-			const char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
-			const char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), ">");
-			if(p2_y && p3_y) {
-				p3_y += 1;
-				result_text.assign(p3_y, p2_y-p3_y);
-				found = true;
-			}
-		}
-	} else if (engine_index == TranslateEngine_Google) {
-		static const char * const GoogleTranslateStartMark = "<span id=result_box ";
-		static const char * const GoogleTranslateEndMark = "</div>";
-		
-		do {
-			char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
-			if(!p)
-				break;
-			char *p1 = g_strstr_len(p, buffer_len - (p - buffer) , ">");
-			if(!p1)
-				break;
-			p = p1 + 1;
-			p1 = g_strstr_len(p, buffer_len - (p - buffer) , GoogleTranslateEndMark);
-			if(!p1)
-				break;
-			result_text.assign(p, p1-p);
-			found = true;
-		} while(false);
-		// remove spans
-		if(found) {
-			std::string temp;
-			temp.reserve(result_text.length());
-			size_t pos1, pos2, pos3;
-			pos1 = 0;
-			while(true) {
-				pos2 = result_text.find('<', pos1);
-				if(pos2 == std::string::npos) {
-					temp.append(result_text, pos1, std::string::npos);
-					break;
-				}
-				if(0 == result_text.compare(pos2, sizeof("<span")-1, "<span")) {
-					temp.append(result_text, pos1, pos2-pos1);
-					pos3 = result_text.find('>', pos2);
-					if(pos3 == std::string::npos) {
-						break;
-					} else {
-						pos1 = pos3 + 1;
-					}
-				} else if(0 == result_text.compare(pos2, sizeof("</span>")-1, "</span>")) {
-					temp.append(result_text, pos1, pos2-pos1);
-					pos1 = pos2 + sizeof("</span>") - 1;
-				} else {
-					pos3 = result_text.find('>', pos2);
-					if(pos3 == std::string::npos) {
-						temp.append(result_text, pos1, std::string::npos);
-						break;
-					} else {
-						pos3 += 1;
-						temp.append(result_text, pos1, pos3-pos1);
-						pos1 = pos3;
-					}
-				}
-			}
-			result_text.swap(temp);
-		}
-	}
-
-	if (found) {
-		std::string charset;
-		char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
-		if (p3) {
-			p3 += sizeof("charset=") -1;
-			char *p4 = p3;
-			int len = buffer_len - (p3 - buffer);
-			while (true) {
-				if (p4 - p3 > len) {
-					p4 = NULL;
-					break;
-				}
-				if (*p4 == '"' || *p4 == '\r')
-					break;
-				p4++;
-			}
-			if (p4) {
-				charset.assign(p3, p4-p3);
-			}
-		}
-		if (charset.empty()) {
-			oMidWin.oTransWin.SetText(result_text.c_str());
-		} else {
-			glib::CharStr text(g_convert(result_text.c_str(), result_text.length(), "UTF-8", charset.c_str(), NULL, NULL, NULL));
-			if (text) {
-				html_decode(get_impl(text), result_text);
-				oMidWin.oTransWin.SetText(result_text.c_str());
-			} else {
-				oMidWin.oTransWin.SetText(_("Conversion error!\n"));
-			}
-		}
-	} else {
-		oMidWin.oTransWin.SetText(_("Not found!\n"));
 	}
 	oHttpManager.Remove(http_client);
 }

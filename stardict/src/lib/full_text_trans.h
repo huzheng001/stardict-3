@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "httpmanager.h"
 
 enum TranslateEngineCode {
 	TranslateEngine_Google,
@@ -74,18 +75,27 @@ class TransLanguageInt;
 class FullTextTrans
 {
 public:
+	sigc::signal<void, const char *> on_error_;
+	sigc::signal<void, const char *> on_response_;
+
 	FullTextTrans();
 	const TransEngine& get_engine(size_t engine_ind) const;
+	void Translate(size_t engine_index, size_t fromlang_index, size_t tolang_index,
+		const char *text);
+private:
 	void GetHostFile(size_t engine_index, size_t fromlang_index, size_t tolang_index,
 		std::string &host, std::string &file, const char *text) const;
-private:
 	void init_engine(TransEngine& engine, const TransEngineInt& engine_src);
 	void sort_engine(TransEngine& engine);
 	static bool trans_engine_comp(const TransLanguage& left, const TransLanguage& right);
+	void on_http_client_error(HttpClient* http_client, const char *error_msg);
+	void on_http_client_response(HttpClient* http_client);
+	void parse_response(const char* buffer, size_t buffer_len, glong engine_index);
 	// calculate size of a NULL-terminated array
 	static size_t calculate_cnt(const char** arr);
 	static size_t calculate_cnt(const TransLanguageInt* arr);
 	TransEngine engines[TranslateEngine_Size];
+	HttpManager oHttpManager;
 };
 
 #endif  // _FULL_TEXT_TRANS_H_

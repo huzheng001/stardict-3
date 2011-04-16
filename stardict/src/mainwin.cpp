@@ -2454,6 +2454,9 @@ void TransWin::Create(GtkWidget *notebook)
 	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
 	gdk_window_set_cursor(link_eventbox->window, cursor);
 	gdk_cursor_unref(cursor);
+
+	gpAppFrame->oFullTextTrans.on_error_.connect(sigc::mem_fun(this, &TransWin::on_translate_error));
+	gpAppFrame->oFullTextTrans.on_response_.connect(sigc::mem_fun(this, &TransWin::on_translate_response));
 }
 
 void TransWin::SetLink(const char *linkname)
@@ -2488,12 +2491,6 @@ void TransWin::on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin
 {
 }
 
-void TransWin::SetText(const char *text, int len)
-{
-	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
-	gtk_text_buffer_set_text(buffer, text, len);
-}
-
 void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWin)
 {
 	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->input_textview));
@@ -2514,22 +2511,15 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 		gtk_widget_show(message_dlg);
 		return;
 	}
-	gchar *etext = common_encode_uri_string(text);
-	g_free(text);
-	std::string host;
-	std::string file;
-	gpAppFrame->oFullTextTrans.GetHostFile(
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
+	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
+	gpAppFrame->oFullTextTrans.Translate(
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox)),
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->fromlang_combobox)),
 		gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->tolang_combobox)),
-		host, file, etext
+		text
 	);
-	g_free(etext);
-
-	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
-	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
-	glong engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
-	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
+	g_free(text);
 }
 
 void TransWin::on_destroy(GtkObject *object, TransWin* oTransWin)
@@ -2540,6 +2530,29 @@ void TransWin::on_destroy(GtkObject *object, TransWin* oTransWin)
 	conf->set_int_at("translate/engine", engine_index);
 	conf->set_int_at("translate/fromlang", fromlang_index);
 	conf->set_int_at("translate/tolang", tolang_index);
+}
+
+void TransWin::on_translate_error(const char * error_msg)
+{
+	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
+	gtk_text_buffer_set_text(buffer, "", -1);
+	GtkWindow *parent = GTK_WINDOW(gpAppFrame->window);
+	GtkWidget *message_dlg =
+		gtk_message_dialog_new(
+			parent,
+			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+			GTK_MESSAGE_ERROR,  GTK_BUTTONS_OK,
+			"%s", error_msg);
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+	gtk_widget_show(message_dlg);
+}
+
+void TransWin::on_translate_response(const char * text)
+{
+	GtkTextBuffer* buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(result_textview));
+	gtk_text_buffer_set_text(buffer, text, -1);
 }
 
 /*********************************************/
