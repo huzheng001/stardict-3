@@ -2446,6 +2446,8 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_box_pack_start (GTK_BOX (hbox), link_eventbox, FALSE, FALSE, 0);
 	label = gtk_label_new(NULL);
 	gtk_box_pack_end(GTK_BOX(hbox), label, true, true, 0);
+	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
+	SetLink(engine_index);
 
 	g_signal_connect(G_OBJECT(frame), "destroy", G_CALLBACK(on_destroy), this);
 	gtk_widget_show_all(frame);
@@ -2459,12 +2461,18 @@ void TransWin::Create(GtkWidget *notebook)
 	gpAppFrame->oFullTextTrans.on_response_.connect(sigc::mem_fun(this, &TransWin::on_translate_response));
 }
 
+void TransWin::SetLink(gint engine_index)
+{
+	SetLink(gpAppFrame->oFullTextTrans.get_engine(engine_index).get_website_url().c_str());
+}
+
 void TransWin::SetLink(const char *linkname)
 {
 	gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", linkname);
 	gtk_label_set_markup(GTK_LABEL(link_label), markup);
 	g_free(markup);
 }
+
 
 void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin)
 {
@@ -2475,7 +2483,7 @@ void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event
 void TransWin::on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
 	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	oTransWin->SetLink(gpAppFrame->oFullTextTrans.get_engine(engine_index).get_website_url().c_str());
+	oTransWin->SetLink(engine_index);
 	oTransWin->SetFromLang(true, -1);
 	oTransWin->SetToLang(true, -1);
 }

@@ -295,6 +295,7 @@ private:
 	static void on_destroy(GtkObject *object, TransWin* oTransWin);
 	void on_translate_error(const char * error_msg);
 	void on_translate_response(const char * text);
+	void SetLink(gint engine_index);
 	void SetLink(const char *linkname);
 	void SetEngine(gint index);
 	void SetFromLang(bool load, gint index);
