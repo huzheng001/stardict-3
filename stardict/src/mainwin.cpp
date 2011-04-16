@@ -23,6 +23,7 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
+#include <algorithm>
 
 #ifdef _WIN32
 #define VERSION "3.0.3"
@@ -38,7 +39,6 @@
 #include "lib/full_text_trans.h"
 
 #include "mainwin.h"
-#include <algorithm>
 
 
 /**************************************************/
@@ -2256,10 +2256,17 @@ TransWin::TransWin()
 {
 }
 
-void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index)
+void TransWin::SetEngine(gint index)
 {
-	if (engine_index!= -1) {
-		gtk_combo_box_set_active(GTK_COMBO_BOX(engine_combobox), engine_index);
+	if(index < 0 || index >= TranslateEngine_Size)
+		index = 0;
+	gtk_combo_box_set_active(GTK_COMBO_BOX(engine_combobox), index);
+}
+
+void TransWin::SetFromLang(bool load, gint index)
+{
+	if(load) {
+		const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
 		const TransEngine& engine = gpAppFrame->oFullTextTrans.get_engine(engine_index);
 		const size_t fromlangcnt = engine.get_source_lang_cnt();
 		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
@@ -2273,40 +2280,33 @@ void TransWin::SetComboBox(gint engine_index, gint fromlang_index, gint tolang_i
 		gtk_combo_box_set_model(GTK_COMBO_BOX(fromlang_combobox), GTK_TREE_MODEL(list_store));
 		g_object_unref (G_OBJECT(list_store));
 	}
-	if (engine_index!= -1 || fromlang_index != -1) {
-		gint real_engine_index;
-		if (engine_index == -1)
-			real_engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
-		else
-			real_engine_index = engine_index;
-		gint real_fromlang_index;
-		if (fromlang_index == -1)
-			real_fromlang_index = 0;
-		else
-			real_fromlang_index = fromlang_index;
-		gtk_combo_box_set_active(GTK_COMBO_BOX(fromlang_combobox), real_fromlang_index);
-		const TransEngine& engine = gpAppFrame->oFullTextTrans.get_engine(real_engine_index);
-		const size_t tolangcnt = engine.get_target_lang_cnt(real_fromlang_index);
+	if(index < 0)
+		index = 0;
+	gtk_combo_box_set_active(GTK_COMBO_BOX(fromlang_combobox), index);
+}
+
+void TransWin::SetToLang(bool load, gint index)
+{
+	if(load) {
+		const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(engine_combobox));
+		const TransEngine& engine = gpAppFrame->oFullTextTrans.get_engine(engine_index);
+		const gint fromlang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(fromlang_combobox));
+		const size_t tolangcnt = engine.get_target_lang_cnt(fromlang_index);
 		GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 		GtkTreeIter iter;
 		for(size_t i = 0; i<tolangcnt; ++i) {
 			gtk_list_store_append(list_store, &iter);
 			gtk_list_store_set(list_store, &iter,
-				0, engine.get_target_lang(real_fromlang_index, i).c_str(),
+				0, engine.get_target_lang(fromlang_index, i).c_str(),
 				-1
 			);
 		}
 		gtk_combo_box_set_model(GTK_COMBO_BOX(tolang_combobox), GTK_TREE_MODEL(list_store));
 		g_object_unref (G_OBJECT(list_store));
 	}
-	if (engine_index!= -1 || fromlang_index != -1 || tolang_index != -1) {
-		gint real_tolang_index;
-		if (tolang_index == -1)
-			real_tolang_index = 0;
-		else
-			real_tolang_index = tolang_index;
-		gtk_combo_box_set_active(GTK_COMBO_BOX(tolang_combobox), real_tolang_index);
-	}
+	if(index < 0)
+		index = 0;
+	gtk_combo_box_set_active(GTK_COMBO_BOX(tolang_combobox), index);
 }
 
 void TransWin::on_pronounce_menu_item_activate(GtkMenuItem *menuitem, TransWin *oTransWin)
@@ -2390,11 +2390,9 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (tolang_combobox), renderer, "text", 0, NULL);
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(tolang_combobox), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox), tolang_combobox, false, false, 0);
-	gint engine_index = conf->get_int_at("translate/engine");
-	if(engine_index >= TranslateEngine_Size)
-		engine_index = 0;
-	gint fromlang_index = conf->get_int_at("translate/fromlang");
-	gint tolang_index = conf->get_int_at("translate/tolang");
+	SetEngine(conf->get_int_at("translate/engine"));
+	SetFromLang(true, conf->get_int_at("translate/fromlang"));
+	SetToLang(true, conf->get_int_at("translate/tolang"));
 	g_signal_connect(G_OBJECT(engine_combobox),"changed", G_CALLBACK(on_engine_combobox_changed), this);
 	g_signal_connect(G_OBJECT(fromlang_combobox),"changed", G_CALLBACK(on_fromlang_combobox_changed), this);
 	g_signal_connect(G_OBJECT(tolang_combobox),"changed", G_CALLBACK(on_tolang_combobox_changed), this);
@@ -2449,13 +2447,13 @@ void TransWin::Create(GtkWidget *notebook)
 	label = gtk_label_new(NULL);
 	gtk_box_pack_end(GTK_BOX(hbox), label, true, true, 0);
 
+	g_signal_connect(G_OBJECT(frame), "destroy", G_CALLBACK(on_destroy), this);
 	gtk_widget_show_all(frame);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), frame, NULL);
 	gtk_widget_realize(link_eventbox);
 	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
 	gdk_window_set_cursor(link_eventbox->window, cursor);
 	gdk_cursor_unref(cursor);
-	SetComboBox(engine_index, fromlang_index, tolang_index);
 }
 
 void TransWin::SetLink(const char *linkname)
@@ -2473,23 +2471,21 @@ void TransWin::on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event
 
 void TransWin::on_engine_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
-	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	oTransWin->SetLink(gpAppFrame->oFullTextTrans.get_engine(index).get_website_url().c_str());
-	oTransWin->SetComboBox(index, -1, -1);
-	conf->set_int_at("translate/engine", index);
+	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	oTransWin->SetLink(gpAppFrame->oFullTextTrans.get_engine(engine_index).get_website_url().c_str());
+	oTransWin->SetFromLang(true, -1);
+	oTransWin->SetToLang(true, -1);
 }
 
 void TransWin::on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
-	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	oTransWin->SetComboBox(-1, index, -1);
-	conf->set_int_at("translate/fromlang", index);
+	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
+	if(!gpAppFrame->oFullTextTrans.get_engine(engine_index).independent_target_lang())
+		oTransWin->SetToLang(false, -1);
 }
 
 void TransWin::on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
 {
-	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	conf->set_int_at("translate/tolang", index);
 }
 
 void TransWin::SetText(const char *text, int len)
@@ -2534,6 +2530,16 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	gtk_text_buffer_set_text(buffer, _("Connecting..."), -1);
 	glong engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
 	gpAppFrame->oHttpManager.SendHttpGetRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
+}
+
+void TransWin::on_destroy(GtkObject *object, TransWin* oTransWin)
+{
+	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
+	const gint fromlang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->fromlang_combobox));
+	const gint tolang_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->tolang_combobox));
+	conf->set_int_at("translate/engine", engine_index);
+	conf->set_int_at("translate/fromlang", fromlang_index);
+	conf->set_int_at("translate/tolang", tolang_index);
 }
 
 /*********************************************/
