@@ -11,18 +11,9 @@ HttpManager::~HttpManager()
 	}
 }
 
-void HttpManager::SendHttpGetRequest(const char* shost, const char* sfile, gpointer userdata)
+void HttpManager::Add(HttpClient* client)
 {
-	HttpClient *client = new HttpClient();
 	client_list.push_back(client);
-	client->SendHttpGetRequest(shost, sfile, userdata);
-}
-
-void HttpManager::SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer userdata)
-{
-	HttpClient *client = new HttpClient();
-	client_list.push_back(client);
-	client->SendHttpGetRequestWithCallback(shost, sfile, callback_func, userdata);
 }
 
 void HttpManager::Remove(HttpClient *http_client)

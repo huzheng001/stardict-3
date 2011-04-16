@@ -5,13 +5,10 @@
 #if HAVE_STRING_H
 #include <string.h>
 #endif
+#include <cstring>
 
 #include "http_client.h"
 #include "sockets.hpp"
-#include <cstring>
-
-sigc::signal<void, HttpClient *, const char *> HttpClient::on_error_;
-sigc::signal<void, HttpClient *> HttpClient::on_response_;
 
 HttpClient::HttpClient()
 {
@@ -71,7 +68,7 @@ void HttpClient::on_resolved(gpointer data, bool resolved, in_addr_t sa)
 	if (!resolved) {
 		gchar *mes = g_strdup_printf("Can not resolve %s: %s\n",
 			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
-		on_error_.emit(oHttpClient, mes);
+		oHttpClient->on_error_.emit(oHttpClient, mes);
 		g_free(mes);
 		return;
 	}
@@ -79,7 +76,7 @@ void HttpClient::on_resolved(gpointer data, bool resolved, in_addr_t sa)
 	oHttpClient->sd_ = Socket::socket();
 	if (oHttpClient->sd_ == -1) {
 		std::string str = "Can not create socket: " + Socket::get_error_msg();
-		on_error_.emit(oHttpClient, str.c_str());
+		oHttpClient->on_error_.emit(oHttpClient, str.c_str());
 		return;
 	}
 	Socket::connect(oHttpClient->sd_, sa, 80, oHttpClient, on_connected);
@@ -91,7 +88,7 @@ void HttpClient::on_connected(gpointer data, bool succeeded)
 	if (!succeeded) {
 		gchar *mes = g_strdup_printf("Can not connect to %s: %s\n",
 			oHttpClient->host_.c_str(), Socket::get_error_msg().c_str());
-		on_error_.emit(oHttpClient, mes);
+		oHttpClient->on_error_.emit(oHttpClient, mes);
 		g_free(mes);
 		return;
 	}
@@ -108,7 +105,7 @@ void HttpClient::on_connected(gpointer data, bool succeeded)
 	g_io_channel_set_flags(oHttpClient->channel_, GIOFlags(flags), &err);
 	if (err) {
 		gchar *str = g_strdup_printf("Unable to set the channel as non-blocking: %s", err->message);
-		on_error_.emit(oHttpClient, str);
+		oHttpClient->on_error_.emit(oHttpClient, str);
 		g_free(str);
 		g_error_free(err);
 		return;
@@ -171,7 +168,7 @@ gboolean HttpClient::on_io_out_event(GIOChannel *ch, GIOCondition cond, gpointer
 	if (res == G_IO_STATUS_AGAIN) {
 		return TRUE;
 	} else if (err) {
-		on_error_.emit(http_client, err->message);
+		http_client->on_error_.emit(http_client, err->message);
 		g_error_free(err);
 	}
 	return FALSE;
@@ -181,11 +178,11 @@ gboolean HttpClient::on_io_in_event(GIOChannel *ch, GIOCondition cond, gpointer 
 {
 	HttpClient *http_client = static_cast<HttpClient *>(user_data);
 	if (cond & G_IO_ERR) {
-		on_error_.emit(http_client, "Http client error!");
+		http_client->on_error_.emit(http_client, "Http client error!");
 		return FALSE;
 	}
 	if (cond & G_IO_STATUS_EOF) {
-		on_response_.emit(http_client);
+		http_client->on_response_.emit(http_client);
 		return FALSE;
 	}
 	GIOStatus res;
@@ -196,7 +193,7 @@ gboolean HttpClient::on_io_in_event(GIOChannel *ch, GIOCondition cond, gpointer 
 	res = g_io_channel_read_to_end(http_client->channel_, &str_return, &length, &err);
 	if (err) {
 		gchar *str = g_strdup_printf("Error while reading reply from server: %s", err->message);
-		on_error_.emit(http_client, str);
+		http_client->on_error_.emit(http_client, str);
 		g_free(str);
 		g_error_free(err);
 		return FALSE;
@@ -210,7 +207,7 @@ gboolean HttpClient::on_io_in_event(GIOChannel *ch, GIOCondition cond, gpointer 
 	if (res == G_IO_STATUS_NORMAL) {
 		http_client->buffer = (char *)g_realloc(http_client->buffer, http_client->buffer_len + 1);
 		http_client->buffer[http_client->buffer_len] = '\0'; // So the text is end by a extra '\0'.
-		on_response_.emit(http_client);
+		http_client->on_response_.emit(http_client);
 		return FALSE;
 	}
 	return TRUE;

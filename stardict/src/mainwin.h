@@ -274,7 +274,6 @@ class TransWin {
 public:
 	TransWin();
 	void Create(GtkWidget *notebook);
-	void SetText(const char *text, int len = -1);
 	bool IsInputViewHasFocus() { return gtk_widget_has_focus(GTK_WIDGET(input_textview)); }
 private:
 	GtkWidget *input_textview;
@@ -294,6 +293,8 @@ private:
 	static void on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin);
 	static void on_destroy(GtkObject *object, TransWin* oTransWin);
+	void on_translate_error(const char * error_msg);
+	void on_translate_response(const char * text);
 	void SetLink(const char *linkname);
 	void SetEngine(gint index);
 	void SetFromLang(bool load, gint index);

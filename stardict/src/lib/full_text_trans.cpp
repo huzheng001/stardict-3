@@ -7,6 +7,7 @@
 
 #include "collation.h"
 #include "full_text_trans.h"
+#include "utils.h"
 
 struct TransLanguageInt
 {
@@ -415,6 +416,21 @@ const TransEngine& FullTextTrans::get_engine(size_t engine_ind) const
 	return engines[engine_ind];
 }
 
+void FullTextTrans::Translate(size_t engine_index, size_t fromlang_index, size_t tolang_index,
+	const char *text)
+{
+	std::string host;
+	std::string file;
+	gchar *etext = common_encode_uri_string(text);
+	GetHostFile(engine_index, fromlang_index, tolang_index, host, file, etext);
+	g_free(etext);
+	HttpClient *client = new HttpClient();
+	client->on_error_.connect(sigc::mem_fun(this, &FullTextTrans::on_http_client_error));
+	client->on_response_.connect(sigc::mem_fun(this, &FullTextTrans::on_http_client_response));
+	oHttpManager.Add(client);
+	client->SendHttpGetRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
+}
+
 void FullTextTrans::GetHostFile(
 	size_t engine_index, size_t fromlang_index, size_t tolang_index,
 	std::string &host, std::string &file, const char *text) const
@@ -512,6 +528,161 @@ void FullTextTrans::sort_engine(TransEngine& engine)
 bool FullTextTrans::trans_engine_comp(const TransLanguage& left, const TransLanguage& right)
 {
 	return utf8_collate(left.name.c_str(), right.name.c_str(), FullTextTransCollation) < 0;
+}
+
+void FullTextTrans::on_http_client_error(HttpClient* http_client, const char *error_msg)
+{
+	on_error_.emit(error_msg);
+	oHttpManager.Remove(http_client);
+}
+
+void FullTextTrans::on_http_client_response(HttpClient* http_client)
+{
+	if (http_client->buffer == NULL) {
+		on_error_.emit(_("Not found!\n"));
+		oHttpManager.Remove(http_client);
+		return;
+	}
+	const char *buffer = http_client->buffer;
+	size_t buffer_len = http_client->buffer_len;
+	glong engine_index = (glong)(http_client->userdata);
+	parse_response(buffer, buffer_len, engine_index);
+	oHttpManager.Remove(http_client);
+}
+
+void FullTextTrans::parse_response(const char* buffer, size_t buffer_len, glong engine_index)
+{
+	bool found = false;
+	std::string result_text;
+	if (engine_index == TranslateEngine_ExciteJapan) {
+		#define ExicuteTranslateStartMark "name=\"after\""
+		char *p_E = g_strstr_len(buffer, buffer_len, ExicuteTranslateStartMark);
+		if(p_E){
+			p_E = strchr(p_E, '>');
+			if (p_E) {
+				p_E++;
+				char *p2_E = g_strstr_len(p_E, buffer_len - (p_E - buffer), "</textarea>");
+				if(p2_E){
+					result_text.assign(p_E, p2_E-p_E);
+					found = true;
+				}
+			}
+		}
+	/*} else if (engine_index == TranslateEngine_SystranBox) {
+		#define SystranBoxTranslateStartMark "<textarea name=\"translation\" rows=\"10\" cols=\"3\" style=\"float:left; clear:none; background-color:#FFFFFF; color:#000000; border-color:#FFFFFF;\">"
+		char *p_S = g_strstr_len(buffer, buffer_len, SystranBoxTranslateStartMark);
+		if(p_S){
+			p_S += sizeof(SystranBoxTranslateStartMark) -1;
+			char *p2_S = g_strstr_len(p_S, buffer_len - (p_S - buffer), "</textarea>");
+			if(p2_S){
+				result_text.assign(p_S, p2_S-p_S);
+				found = true;
+			}
+		} */
+	} else if (engine_index == TranslateEngine_Yahoo) {
+		#define YahooTranslateStartMark "<div id=\"result\">"
+		const char *p_y = g_strstr_len(buffer, buffer_len, YahooTranslateStartMark);
+		if(p_y) {
+			p_y += sizeof(YahooTranslateStartMark) -1;
+			const char *p2_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), "</div>");
+			const char *p3_y = g_strstr_len(p_y, buffer_len - (p_y - buffer), ">");
+			if(p2_y && p3_y) {
+				p3_y += 1;
+				result_text.assign(p3_y, p2_y-p3_y);
+				found = true;
+			}
+		}
+	} else if (engine_index == TranslateEngine_Google) {
+		static const char * const GoogleTranslateStartMark = "<span id=result_box ";
+		static const char * const GoogleTranslateEndMark = "</div>";
+
+		do {
+			char *p = g_strstr_len(buffer, buffer_len, GoogleTranslateStartMark);
+			if(!p)
+				break;
+			char *p1 = g_strstr_len(p, buffer_len - (p - buffer) , ">");
+			if(!p1)
+				break;
+			p = p1 + 1;
+			p1 = g_strstr_len(p, buffer_len - (p - buffer) , GoogleTranslateEndMark);
+			if(!p1)
+				break;
+			result_text.assign(p, p1-p);
+			found = true;
+		} while(false);
+		// remove spans
+		if(found) {
+			std::string temp;
+			temp.reserve(result_text.length());
+			size_t pos1, pos2, pos3;
+			pos1 = 0;
+			while(true) {
+				pos2 = result_text.find('<', pos1);
+				if(pos2 == std::string::npos) {
+					temp.append(result_text, pos1, std::string::npos);
+					break;
+				}
+				if(0 == result_text.compare(pos2, sizeof("<span")-1, "<span")) {
+					temp.append(result_text, pos1, pos2-pos1);
+					pos3 = result_text.find('>', pos2);
+					if(pos3 == std::string::npos) {
+						break;
+					} else {
+						pos1 = pos3 + 1;
+					}
+				} else if(0 == result_text.compare(pos2, sizeof("</span>")-1, "</span>")) {
+					temp.append(result_text, pos1, pos2-pos1);
+					pos1 = pos2 + sizeof("</span>") - 1;
+				} else {
+					pos3 = result_text.find('>', pos2);
+					if(pos3 == std::string::npos) {
+						temp.append(result_text, pos1, std::string::npos);
+						break;
+					} else {
+						pos3 += 1;
+						temp.append(result_text, pos1, pos3-pos1);
+						pos1 = pos3;
+					}
+				}
+			}
+			result_text.swap(temp);
+		}
+	}
+
+	if (found) {
+		std::string charset;
+		char *p3 = g_strstr_len(buffer, buffer_len, "charset=");
+		if (p3) {
+			p3 += sizeof("charset=") -1;
+			char *p4 = p3;
+			int len = buffer_len - (p3 - buffer);
+			while (true) {
+				if (p4 - p3 > len) {
+					p4 = NULL;
+					break;
+				}
+				if (*p4 == '"' || *p4 == '\r')
+					break;
+				p4++;
+			}
+			if (p4) {
+				charset.assign(p3, p4-p3);
+			}
+		}
+		if (charset.empty()) {
+			on_response_.emit(result_text.c_str());
+		} else {
+			glib::CharStr text(g_convert(result_text.c_str(), result_text.length(), "UTF-8", charset.c_str(), NULL, NULL, NULL));
+			if (text) {
+				html_decode(get_impl(text), result_text);
+				on_response_.emit(result_text.c_str());
+			} else {
+				on_error_.emit(_("Conversion error!\n"));
+			}
+		}
+	} else {
+		on_error_.emit(_("Not found!\n"));
+	}
 }
 
 size_t FullTextTrans::calculate_cnt(const char** arr)
