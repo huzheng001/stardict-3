@@ -293,8 +293,11 @@ private:
 	static void on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin);
+	static void on_destroy(GtkObject *object, TransWin* oTransWin);
 	void SetLink(const char *linkname);
-	void SetComboBox(gint engine_index, gint fromlang_index, gint tolang_index);
+	void SetEngine(gint index);
+	void SetFromLang(bool load, gint index);
+	void SetToLang(bool load, gint index);
 };
 
 class MidWin {

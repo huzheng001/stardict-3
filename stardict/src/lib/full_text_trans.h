@@ -61,6 +61,11 @@ public:
 	{
 		return website_url;
 	}
+	/* Returns true if the target language does not depend on the source language. */
+	bool independent_target_lang(void) const
+	{
+		return tgtlangs.size() == 1;
+	}
 };
 
 class TransEngineInt;
