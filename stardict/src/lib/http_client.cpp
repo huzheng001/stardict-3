@@ -19,6 +19,8 @@ HttpClient::HttpClient()
 	buffer = NULL;
 	buffer_len = 0;
 	callback_func_ = NULL;
+	httpMethod_ = HTTP_METHOD_GET;
+	allow_absolute_URI_ = true;
 }
 
 HttpClient::~HttpClient()
@@ -50,16 +52,22 @@ void HttpClient::disconnect()
 
 void HttpClient::SendHttpGetRequest(const char* shost, const char* sfile, gpointer data)
 {
-	host_ = shost;
-	file_ = sfile;
-	userdata = data;
-	Socket::resolve(host_, this, on_resolved);
+	httpMethod_ = HTTP_METHOD_GET;
+	SendHttpRequest(shost, sfile, data);
 }
 
 void HttpClient::SendHttpGetRequestWithCallback(const char* shost, const char* sfile, get_http_response_func_t callback_func, gpointer data)
 {
 	callback_func_ = callback_func;
 	SendHttpGetRequest(shost, sfile, data);
+}
+
+void HttpClient::SendHttpRequest(const char* shost, const char* sfile, gpointer data)
+{
+	host_ = shost;
+	file_ = sfile;
+	userdata = data;
+	Socket::resolve(host_, this, on_resolved);
 }
 
 void HttpClient::on_resolved(gpointer data, bool resolved, in_addr_t sa)
@@ -110,7 +118,7 @@ void HttpClient::on_connected(gpointer data, bool succeeded)
 		g_error_free(err);
 		return;
 	}
-	if (oHttpClient->SendGetRequest())
+	if (oHttpClient->SendRequest())
 		return;
 	oHttpClient->out_source_id_ = g_io_add_watch(oHttpClient->channel_, GIOCondition(G_IO_OUT), on_io_out_event, oHttpClient);
 	oHttpClient->in_source_id_ = g_io_add_watch(oHttpClient->channel_, GIOCondition(G_IO_IN | G_IO_ERR), on_io_in_event, oHttpClient);
@@ -132,12 +140,18 @@ void HttpClient::write_str(const char *str, GError **err)
 	res = g_io_channel_flush(channel_, err);
 }
 
-bool HttpClient::SendGetRequest()
+bool HttpClient::SendRequest()
 {
 	std::string request;
-
-	request += "GET HTTP://";
-	request += host_;
+	if(httpMethod_ == HTTP_METHOD_GET)
+		request += "GET";
+	else if(httpMethod_ == HTTP_METHOD_POST)
+		request += "POST";
+	request += " ";
+	if(allow_absolute_URI_) {
+		request += "HTTP://";
+		request += host_;
+	}
 	request += file_;
 	request += " HTTP/1.1\r\n";
 
@@ -148,8 +162,17 @@ bool HttpClient::SendGetRequest()
 	request += host_;
 	request += "\r\n";
 
+	request += headers_;
+	if(httpMethod_ == HTTP_METHOD_POST) {
+		gchar* str = g_strdup_printf("%lu", (unsigned long)body_.length());
+		request += "Content-Length: ";
+		request += str;
+		request += "\r\n";
+		g_free(str);
+	}
 	request += "Connection: close\r\n\r\n";
-	
+	request += body_;
+
 	GError *err = NULL;
 	write_str(request.c_str(), &err);
 	if (err) {

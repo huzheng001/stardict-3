@@ -83,8 +83,10 @@ public:
 	void Translate(size_t engine_index, size_t fromlang_index, size_t tolang_index,
 		const char *text);
 private:
-	void GetHostFile(size_t engine_index, size_t fromlang_index, size_t tolang_index,
-		std::string &host, std::string &file, const char *text) const;
+	void build_request(size_t engine_index, size_t fromlang_index, size_t tolang_index,
+		const char *text,
+		HttpMethod& httpMethod, std::string &host, std::string &file,
+		std::string& headers, std::string& body, bool& allow_absolute_URI) const;
 	void init_engine(TransEngine& engine, const TransEngineInt& engine_src);
 	void sort_engine(TransEngine& engine);
 	static bool trans_engine_comp(const TransLanguage& left, const TransLanguage& right);
