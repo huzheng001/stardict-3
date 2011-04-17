@@ -484,10 +484,12 @@ void FullTextTrans::build_request(
 		file = "/translate_t?ie=UTF-8";
 		allow_absolute_URI = true;
 	} else if(engine_index==TranslateEngine_Yahoo){
-		httpMethod = HTTP_METHOD_GET;
+		httpMethod = HTTP_METHOD_POST;
 		host = "babelfish.yahoo.com";
-		file = "/translate_txt?ei=UTF-8&lp=";
+		file = "/translate_txt";
+		body = "ei=UTF-8";
 		allow_absolute_URI = true;
+		headers += "Content-Type: application/x-www-form-urlencoded\r\n";
 	/*}else if(engine_index==TranslateEngine_SystranBox){
 		host = "www.systranbox.com";
 		file = "/systran/box?systran_id=SystranSoft-en&systran_charset=UTF-8&systran_lp="; */
@@ -537,12 +539,16 @@ void FullTextTrans::build_request(
 			body += "wb_lp=";
 			body += lang_code;
 		} else if(engine_index==TranslateEngine_Yahoo) {
-			file += lang_code;
+			body += "&lp=";
+			body += lang_code;
 		}
 	}
-	if (engine_index == TranslateEngine_Google || engine_index == TranslateEngine_Yahoo) {
+	if (engine_index == TranslateEngine_Google) {
 		file += "&text=";
 		file += text;
+	} else if(engine_index == TranslateEngine_Yahoo) {
+		body += "&trtext=";
+		body += text;
 	/*}else if(engine_index == TranslateEngine_SystranBox) {
 		file += "&systran_text=";
 		file += text; */
