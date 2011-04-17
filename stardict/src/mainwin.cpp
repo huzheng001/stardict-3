@@ -2492,7 +2492,7 @@ void TransWin::on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransW
 {
 	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
 	if(!gpAppFrame->oFullTextTrans.get_engine(engine_index).independent_target_lang())
-		oTransWin->SetToLang(false, -1);
+		oTransWin->SetToLang(true, -1);
 }
 
 void TransWin::on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin)
