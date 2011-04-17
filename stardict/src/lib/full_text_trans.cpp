@@ -308,18 +308,18 @@ static const char **systranbox_code[] = {systranbox_chinese_simplified_code,syst
 */
 
 static const TransLanguageInt excite_srclangs[] = {
-	{ N_("Chinese (Simplified)"), NULL},
-	{ N_("Chinese (Traditional)"), NULL},
+	{ N_("Chinese"), NULL},
 	{ N_("English"), NULL},
 	{ N_("Japanese"), NULL},
 	{ N_("Korean"), NULL},
+	{ N_("French"), NULL},
+	{ N_("German"), NULL},
+	{ N_("Italian"), NULL},
+	{ N_("Spanish"), NULL},
+	{ N_("Portuguese"), NULL},
 	{ NULL}
 };
-static const TransLanguageInt excite_chinese_simplified_tgtlangs[] = {
-	{ N_("Japanese"), "CHJA"},
-	{ NULL}
-};
-static const TransLanguageInt excite_chinese_traditional_tgtlangs[] = {
+static const TransLanguageInt excite_chinese_tgtlangs[] = {
 	{ N_("Japanese"), "CHJA"},
 	{ NULL}
 };
@@ -330,20 +330,53 @@ static const TransLanguageInt excite_english_tgtlangs[] = {
 static const TransLanguageInt excite_japanese_tgtlangs[] = {
 	{ N_("English"), "JAEN"},
 	{ N_("Korean"), "JAKO"},
-	{ N_("Chinese (Simplified)"), "JACH"},
-	{ N_("Chinese (Traditional)"), "JACH"},
+	{ N_("Chinese"), "JACH"},
+	{ N_("French"), "JAFR"},
+	{ N_("German"), "JADE"},
+	{ N_("Italian"), "JAIT"},
+	{ N_("Spanish"), "JAES"},
+	{ N_("Portuguese"), "JAPT"},
 	{ NULL}
 };
 static const TransLanguageInt excite_korean_tgtlangs[] = {
 	{ N_("Japanese"), "KOJA"},
 	{ NULL}
 };
+static const TransLanguageInt excite_french_tgtlangs[] = {
+	{ N_("Japanese"), "FRJA"},
+	{ N_("English"), "FREN"},
+	{ NULL}
+};
+static const TransLanguageInt excite_german_tgtlangs[] = {
+	{ N_("Japanese"), "DEJA"},
+	{ N_("English"), "DEEN"},
+	{ NULL}
+};
+static const TransLanguageInt excite_intalian_tgtlangs[] = {
+	{ N_("Japanese"), "ITJA"},
+	{ N_("English"), "ITEN"},
+	{ NULL}
+};
+static const TransLanguageInt excite_spanish_tgtlangs[] = {
+	{ N_("Japanese"), "ESJA"},
+	{ N_("English"), "ESEN"},
+	{ NULL}
+};
+static const TransLanguageInt excite_portuguese_tgtlangs[] = {
+	{ N_("Japanese"), "PTJA"},
+	{ N_("English"), "PTEN"},
+	{ NULL}
+};
 static const TransLanguageInt* excite_tgtlangs[] = {
-	excite_chinese_simplified_tgtlangs,
-	excite_chinese_traditional_tgtlangs,
+	excite_chinese_tgtlangs,
 	excite_english_tgtlangs,
 	excite_japanese_tgtlangs,
 	excite_korean_tgtlangs,
+	excite_french_tgtlangs,
+	excite_german_tgtlangs,
+	excite_intalian_tgtlangs,
+	excite_spanish_tgtlangs,
+	excite_portuguese_tgtlangs,
 	NULL
 };
 
@@ -419,34 +452,51 @@ const TransEngine& FullTextTrans::get_engine(size_t engine_ind) const
 void FullTextTrans::Translate(size_t engine_index, size_t fromlang_index, size_t tolang_index,
 	const char *text)
 {
-	std::string host;
-	std::string file;
+	HttpMethod httpMethod;
+	std::string host, file, headers, body;
+	bool allow_absolute_URI;
 	gchar *etext = common_encode_uri_string(text);
-	GetHostFile(engine_index, fromlang_index, tolang_index, host, file, etext);
+	build_request(engine_index, fromlang_index, tolang_index, etext,
+		httpMethod, host, file, headers, body, allow_absolute_URI);
 	g_free(etext);
 	HttpClient *client = new HttpClient();
 	client->on_error_.connect(sigc::mem_fun(this, &FullTextTrans::on_http_client_error));
 	client->on_response_.connect(sigc::mem_fun(this, &FullTextTrans::on_http_client_response));
 	oHttpManager.Add(client);
-	client->SendHttpGetRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
+	client->SetMethod(httpMethod);
+	client->SetHeaders(headers.c_str());
+	client->SetBody(body.c_str());
+	client->SetAllowAbsoluteURI(allow_absolute_URI);
+	client->SendHttpRequest(host.c_str(), file.c_str(), (gpointer)engine_index);
 }
 
-void FullTextTrans::GetHostFile(
+void FullTextTrans::build_request(
 	size_t engine_index, size_t fromlang_index, size_t tolang_index,
-	std::string &host, std::string &file, const char *text) const
+	const char *text,
+	HttpMethod& httpMethod, std::string &host, std::string &file,
+	std::string& headers, std::string& body, bool& allow_absolute_URI) const
 {
+	headers.clear();
+	body.clear();
 	if(engine_index==TranslateEngine_Google){
+		httpMethod = HTTP_METHOD_GET;
 		host = "translate.google.com";
 		file = "/translate_t?ie=UTF-8";
+		allow_absolute_URI = true;
 	} else if(engine_index==TranslateEngine_Yahoo){
+		httpMethod = HTTP_METHOD_GET;
 		host = "babelfish.yahoo.com";
 		file = "/translate_txt?ei=UTF-8&lp=";
+		allow_absolute_URI = true;
 	/*}else if(engine_index==TranslateEngine_SystranBox){
 		host = "www.systranbox.com";
 		file = "/systran/box?systran_id=SystranSoft-en&systran_charset=UTF-8&systran_lp="; */
 	} else if(engine_index==TranslateEngine_ExciteJapan){
+		httpMethod = HTTP_METHOD_POST;
 		host = "www.excite.co.jp";
 		file = "/world";
+		allow_absolute_URI = false;
+		headers += "Content-Type: application/x-www-form-urlencoded\r\n";
 	} /*else if(engine_index==5){
 		host = "fy.iciba.com";
 		file = "/?langpair=";
@@ -458,21 +508,37 @@ void FullTextTrans::GetHostFile(
 		file += "&tl=";
 		const size_t tolangind = engines[engine_index].srclangs[fromlang_index].tolangind;
 		file += engines[engine_index].tgtlangs[tolangind][tolang_index].code;
-	} else {
+	} else if(engine_index==TranslateEngine_Yahoo || engine_index==TranslateEngine_ExciteJapan) {
 		const size_t tolangind = engines[engine_index].srclangs[fromlang_index].tolangind;
 		std::string lang_code = engines[engine_index].tgtlangs[tolangind][tolang_index].code;
 		if(engine_index==TranslateEngine_ExciteJapan) {
 			if(strcmp(lang_code.c_str(),"KOJA")==0 || strcmp(lang_code.c_str(),"JAKO")==0){
-				file += "/korean?wb_lp=";
+				file += "/korean/";
 			}else if(strcmp(lang_code.c_str(),"ENJA")==0 || strcmp(lang_code.c_str(),"JAEN")==0){
-				file += "/english?wb_lp=";
+				file += "/english/";
 			}else if(strcmp(lang_code.c_str(),"CHJA")==0 || strcmp(lang_code.c_str(),"JACH")==0){
-				file += "/chinese?wb_lp=";
-			}else{
-				file += "/english?wb_lp=";
+				file += "/chinese/";
+			}else if(strcmp(lang_code.c_str(),"FRJA")==0 || strcmp(lang_code.c_str(),"JAFR")==0
+				|| strcmp(lang_code.c_str(),"FREN")==0 || strcmp(lang_code.c_str(),"ENFR")==0){
+				file += "/french/";
+			}else if(strcmp(lang_code.c_str(),"DEJA")==0 || strcmp(lang_code.c_str(),"JADE")==0
+				|| strcmp(lang_code.c_str(),"DEEN")==0 || strcmp(lang_code.c_str(),"ENDE")==0){
+				file += "/german/";
+			}else if(strcmp(lang_code.c_str(),"ITJA")==0 || strcmp(lang_code.c_str(),"JAIT")==0
+				|| strcmp(lang_code.c_str(),"ITEN")==0 || strcmp(lang_code.c_str(),"ENIT")==0){
+				file += "/italian/";
+			}else if(strcmp(lang_code.c_str(),"ESJA")==0 || strcmp(lang_code.c_str(),"JAES")==0
+				|| strcmp(lang_code.c_str(),"ESEN")==0 || strcmp(lang_code.c_str(),"ENES")==0){
+				file += "/spanish/";
+			}else if(strcmp(lang_code.c_str(),"PTJA")==0 || strcmp(lang_code.c_str(),"JAPT")==0
+				|| strcmp(lang_code.c_str(),"PTEN")==0 || strcmp(lang_code.c_str(),"ENPT")==0){
+				file += "/portuguese/";
 			}
+			body += "wb_lp=";
+			body += lang_code;
+		} else if(engine_index==TranslateEngine_Yahoo) {
+			file += lang_code;
 		}
-		file += lang_code;
 	}
 	if (engine_index == TranslateEngine_Google || engine_index == TranslateEngine_Yahoo) {
 		file += "&text=";
@@ -481,8 +547,8 @@ void FullTextTrans::GetHostFile(
 		file += "&systran_text=";
 		file += text; */
 	} else if(engine_index == TranslateEngine_ExciteJapan) {
-		file += "&before=";
-		file += text;
+		body += "&before=";
+		body += text;
 	}
 }
 
@@ -539,7 +605,7 @@ void FullTextTrans::on_http_client_error(HttpClient* http_client, const char *er
 void FullTextTrans::on_http_client_response(HttpClient* http_client)
 {
 	if (http_client->buffer == NULL) {
-		on_error_.emit(_("Not found!\n"));
+		on_error_.emit(_("Unable to interpret translation engine response!"));
 		oHttpManager.Remove(http_client);
 		return;
 	}
@@ -677,11 +743,14 @@ void FullTextTrans::parse_response(const char* buffer, size_t buffer_len, glong 
 				html_decode(get_impl(text), result_text);
 				on_response_.emit(result_text.c_str());
 			} else {
-				on_error_.emit(_("Conversion error!\n"));
+				std::string msg(_("Unable to interpret translation engine response!"));
+				msg += "\n";
+				msg += _("Conversion error.");
+				on_error_.emit(msg.c_str());
 			}
 		}
 	} else {
-		on_error_.emit(_("Not found!\n"));
+		on_error_.emit(_("Unable to interpret translation engine response!"));
 	}
 }
 
