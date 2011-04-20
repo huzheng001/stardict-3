@@ -379,6 +379,7 @@ static void configure()
 
 bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
+	g_debug(_("Loading Spelling plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: Spell plugin version doesn't match!\n");
 		return true;
