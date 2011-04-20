@@ -667,6 +667,7 @@ static bool parse(const char *p, unsigned int *parsed_size, ParseResult &result,
 
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
+	g_debug(_("Loading PowerWord data parsing plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
 		g_print("Error: PowerWord data parsing plugin version doesn't match!\n");
 		return true;

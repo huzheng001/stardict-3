@@ -2000,13 +2000,13 @@ void AppCore::Init(const gchar *queryword)
 	conf->notify_add("/apps/stardict/preferences/dictionary/scan_modifier_key",
 			 sigc::mem_fun(this, &AppCore::on_scan_modifier_key_changed));
 
-	g_debug("loading skin...");
+	g_debug(_("Loading skin..."));
 #ifdef _WIN32
 	oAppSkin.load(abs_path_to_data_dir(conf->get_string_at("main_window/skin")));
 #else
 	oAppSkin.load(conf->get_string_at("main_window/skin"));
 #endif
-	g_debug("skin loaded");
+	g_debug(_("Skin loaded."));
 
 	if (!CmdLineOptions::get_hide())
 		stardict_splash.show();
@@ -2350,9 +2350,9 @@ int main(int argc,char **argv)
 		g_signal_connect (client, "die", G_CALLBACK (client_die_cb), NULL);
 	}
 #endif // #ifndef CONFIG_GNOME
-	g_debug("loading config...");
+	g_debug(_("Loading StarDict configuration..."));
 	conf.reset(new AppConf);
-	g_debug("config loaded");
+	g_debug(_("StarDict configuration loaded."));
 	AppCore oAppCore;
 	gpAppFrame = &oAppCore;
 	oAppCore.Init(query_word);
