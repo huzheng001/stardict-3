@@ -25,15 +25,15 @@
 #include <algorithm>
 #include <ctime>
 #include <iterator>
-///#include <ios>
 #include <iostream>
 #include <cstdlib>
 #include <sys/resource.h>
 #include <vector>
 
-#include "file.hpp"
-#include "lib.h"
+#include "file-utils.h"
+#include "utils.h"
 #include "iappdirs.h"
+#include "stddict.hpp"
 
 typedef std::vector<Dict *> dicts_list_t;
 

@@ -35,7 +35,7 @@
 #include <memory>
 
 #include "ifo_file.hpp"
-#include "distance.h"
+#include "edit-distance.h"
 #include "kmp.h"
 #include "mapfile.hpp"
 #include "iappdirs.h"

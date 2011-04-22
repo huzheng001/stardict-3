@@ -30,9 +30,11 @@
 #include <numeric>
 #include <sys/resource.h>
 #include <vector>
+#include <gtk/gtk.h>
 
-#include "file.hpp"
-#include "lib.h"
+#include "file-utils.h"
+#include "utils.h"
+#include "stddict.hpp"
 
 static void fuzzy_lookup(Libs& libs, const gchar *s)
 {

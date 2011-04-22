@@ -5,9 +5,11 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <gtk/gtk.h>
 
-#include "file.hpp"
-#include "lib.h"
+#include "file-utils.h"
+#include "utils.h"
+#include "stddict.hpp"
 
 int main(int argc, char *argv[])
 {

@@ -37,7 +37,7 @@
 #include "lib/utils.h"
 #include "iskeyspressed.hpp"
 #include "lib/md5.h"
-#include "lib/file.hpp"
+#include "lib/file-utils.h"
 
 #include "prefsdlg.h"
 #include "hotkeyeditor.h"

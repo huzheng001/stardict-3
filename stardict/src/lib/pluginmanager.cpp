@@ -10,7 +10,7 @@
 #include <cstring>
 
 #include "pluginmanager.h"
-#include "file.hpp"
+#include "file-utils.h"
 #include "iappdirs.h"
 
 StarDictPluginBaseObject::StarDictPluginBaseObject(const char *filename, GModule *module_, plugin_configure_func_t configure_func_):

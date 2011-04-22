@@ -25,7 +25,7 @@
 #endif
 
 #include <cstring>
-#include "file.hpp"
+#include "file-utils.h"
 #include "utils.h"
 
 #include "treedict.hpp"

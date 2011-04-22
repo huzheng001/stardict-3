@@ -1,5 +1,5 @@
-#ifndef _FILE_HPP_
-#define _FILE_HPP_
+#ifndef _FILE_UTILS_H_
+#define _FILE_UTILS_H_
 
 #include <algorithm>
 #include <glib.h>
@@ -125,4 +125,4 @@ void for_each_dir(const List& dirs_list, Function f)
 		__for_each_dir(*it, f);
 }
 
-#endif//!_FILE_HPP_
+#endif//!_FILE_UTILS_H_

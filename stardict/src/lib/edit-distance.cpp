@@ -36,9 +36,8 @@ The Levenshtein distance algorithm has been used in:
 
 #include <stdlib.h>
 #include <string.h>
-//#include <stdio.h>
 
-#include "distance.h"
+#include "edit-distance.h"
 
 #define OPTIMIZE_ED
 /*

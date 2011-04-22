@@ -44,7 +44,6 @@
 #define O_BINARY 0
 #endif
 
-#include "my_global.h"
 #include "utils.h"
 
 
@@ -956,6 +955,65 @@ stardict_file_open_tmp (const gchar  *tmpl,
 		g_free (fulltemplate);
 
 	return retval;
+}
+
+query_t analyse_query(const char *s, std::string& res)
+{
+	if (!s || !*s) {
+		res="";
+		return qtSIMPLE;
+	}
+	if (*s=='/') {
+		res=s+1;
+		return qtFUZZY;
+	}
+	if (*s==':') {
+		res=s+1;
+		return qtREGEX;
+	}
+
+	if (*s=='|') {
+		res=s+1;
+		return qtFULLTEXT;
+	}
+
+	bool pattern=false;
+	const char *p=s;
+	res="";
+	for (; *p; res+=*p, ++p) {
+		if (*p=='\\') {
+			++p;
+			if (!*p)
+				break;
+			continue;
+		}
+		if (*p=='*' || *p=='?')
+			pattern=true;
+	}
+	if (pattern)
+		return qtPATTERN;
+
+	return qtSIMPLE;
+}
+
+void stardict_input_escape(const char *text, std::string &res)
+{
+	res.clear();
+	const char *p = text;
+	if (*p == '/' || *p == '|' || *p == ':') {
+		res = "\\";
+		res += *p;
+		p++;
+	}
+	while (*p) {
+		if (*p == '\\' || *p == '*' || *p == '?') {
+			res += '\\';
+			res += *p;
+		} else {
+			res += *p;
+		}
+		p++;
+	}
 }
 
 static const char* html_entrs[] =     { "lt;", "gt;", "amp;", "apos;", "quot;", 0 };

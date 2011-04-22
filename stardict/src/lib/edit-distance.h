@@ -1,5 +1,5 @@
-#ifndef DISTANCE_H
-#define DISTANCE_H
+#ifndef EDIT_DISTANCE_H
+#define EDIT_DISTANCE_H
 
 #include <glib.h>
 

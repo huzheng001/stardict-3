@@ -16,7 +16,7 @@
 #include "desktop.hpp"
 #include "lib/ifo_file.hpp"
 #include "lib/utils.h"
-#include "lib/file.hpp"
+#include "lib/file-utils.h"
 #include "dictmanage.h"
 
 #include "dictmanagedlg.h"
@@ -742,7 +742,7 @@ private:
 
 GtkTreeModel* DictManageDlg::create_tree_model(TDictTree dicttree)
 {
-	GtkListStore *model;
+	GtkListStore *model = NULL;
 	if (dicttree == DictTree_TreeDict) {
 		model = gtk_list_store_new(TREEDICT_COLUMN_NUMBER,
 			G_TYPE_BOOLEAN, // 0 - TREEDICT_ENABLED_COLUMN

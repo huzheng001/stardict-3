@@ -4,7 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "ifo_file.hpp"
-#include "data.hpp"
+#include "dictbase.h"
 
 typedef std::list<std::string> strlist_t;
 
