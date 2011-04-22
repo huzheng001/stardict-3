@@ -127,6 +127,7 @@ static std::string print_pango_color(guint32 c)
 static GdkColor guint32_2_gdkcolor(guint32 c)
 {
 	GdkColor gdkcolor;
+	gdkcolor.pixel = 0;
 	gdkcolor.red = ((c & 0xff0000) >> 16) * 0x100;
 	gdkcolor.green = ((c & 0x00ff00) >> 8) * 0x100;
 	gdkcolor.blue = ((c & 0x0000ff) >> 0) * 0x100;

@@ -1,7 +1,7 @@
 #include <string.h>
 #include <glib.h>
 
-#include "my_global.h"
+#include "utils.h"
 #include "m_ctype.h"
 #include "collation.h"
 

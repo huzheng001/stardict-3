@@ -1,18 +1,18 @@
 #ifndef _STARDICT_PLUG_MANAGER_H_
 #define _STARDICT_PLUG_MANAGER_H_
 
+#include <glib.h>
+#include <gmodule.h>
+#include <string>
+#include <vector>
+#include <list>
 #include "plugin.h"
 #include "virtualdictplugin.h"
 #include "netdictplugin.h"
 #include "specialdictplugin.h"
 #include "ttsplugin.h"
 #include "parsedata_plugin.h"
-#include <glib.h>
-#include <gmodule.h>
-#include <string>
-#include <vector>
-#include <list>
-#include "dictmask.h"
+#include "dictbase.h"
 #include "iappdirs.h"
 
 struct StarDictPluginBaseObject {

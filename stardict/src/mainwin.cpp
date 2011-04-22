@@ -34,7 +34,7 @@
 #include "desktop.hpp"
 #include "stardict.h"
 #include "lib/utils.h"
-#include "lib/distance.h"
+#include "lib/edit-distance.h"
 #include "lib/stddict.hpp"
 #include "lib/full_text_trans.h"
 

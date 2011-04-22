@@ -20,7 +20,7 @@
 
 #include <algorithm>
 
-#include "my_global.h"
+#include "utils.h"
 #include "m_ctype.h"
 
 using namespace stardict_collation;

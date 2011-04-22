@@ -9,9 +9,9 @@
 #include <list>
 #include <map>
 
-#include "data.hpp"
+#include "dictbase.h"
 #include "collation.h"
-#include "dictmask.h"
+#include "dictbase.h"
 #include "storage.h"
 
 const int MAX_FUZZY_DISTANCE= 3; // at most MAX_FUZZY_DISTANCE-1 differences allowed when find similar words

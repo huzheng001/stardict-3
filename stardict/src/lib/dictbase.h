@@ -1,5 +1,5 @@
-#ifndef _DATA_HPP_
-#define _DATA_HPP_
+#ifndef _DICTBASE_H_
+#define _DICTBASE_H_
 
 #include <glib.h>
 #include <vector>
@@ -8,6 +8,18 @@
 #include <stdio.h>
 
 #include "dictziplib.hpp"
+
+enum InstantDictType {
+	InstantDictType_UNKNOWN = 0,
+	InstantDictType_LOCAL,
+	InstantDictType_VIRTUAL,
+	InstantDictType_NET,
+};
+
+struct InstantDictIndex {
+	InstantDictType type;
+	size_t index;
+};
 
 struct cacheItem {
   guint32 offset;
@@ -45,4 +57,4 @@ private:
 	gint cache_cur;
 };
 
-#endif//!_DATA_HPP_
+#endif//!_DICTBASE_H_

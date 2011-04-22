@@ -3,15 +3,14 @@ EXTRA_DIST = dict_client.cpp dict_client.hpp
 noinst_LIBRARIES = libstardict.a
 
 libstardict_a_SOURCES = \
-	lib.cpp lib.h	\
 	dictziplib.cpp dictziplib.hpp	\
-	distance.cpp distance.h	\
-	mapfile.hpp file.hpp	\
+	edit-distance.cpp edit-distance.h	\
+	mapfile.hpp file-utils.h	\
 	kmp.cpp kmp.h	\
-	my_global.h m_ctype.h	\
+	m_ctype.h	\
 	ctype-mb.cpp ctype-utf8.cpp ctype-uca.cpp	\
 	collation.cpp collation.h \
-	data.hpp data.cpp \
+	dictbase.h dictbase.cpp \
 	stddict.cpp stddict.hpp \
 	storage.cpp storage.h storage_impl.h	\
 	treedict.cpp treedict.hpp	\
@@ -29,7 +28,6 @@ libstardict_a_SOURCES = \
 	ttsplugin.cpp ttsplugin.h	\
 	parsedata_plugin.cpp parsedata_plugin.h	\
 	pluginmanager.cpp pluginmanager.h	\
-	dictmask.h	\
 	xml_str.cpp xml_str.h	\
 	utils.cpp utils.h	\
 	compositelookup.cpp compositelookup.h \

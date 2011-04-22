@@ -173,7 +173,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\data.cpp"
+					RelativePath="..\src\lib\dictbase.cpp"
 					>
 				</File>
 				<File
@@ -181,7 +181,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\distance.cpp"
+					RelativePath="..\src\lib\edit-distance.cpp"
 					>
 				</File>
 				<File
@@ -202,10 +202,6 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\kmp.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\lib.cpp"
 					>
 				</File>
 				<File
@@ -295,7 +291,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\data.hpp"
+					RelativePath="..\src\lib\dictbase.h"
 					>
 				</File>
 				<File
@@ -303,19 +299,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\dictmask.h"
-					>
-				</File>
-				<File
 					RelativePath="..\src\lib\dictziplib.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\distance.h"
+					RelativePath="..\src\lib\edit-distance.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\file.hpp"
+					RelativePath="..\src\lib\file-utils.h"
 					>
 				</File>
 				<File
@@ -339,10 +331,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\lib\lib.h"
-					>
-				</File>
-				<File
 					RelativePath="..\src\lib\m_ctype.h"
 					>
 				</File>
@@ -352,10 +340,6 @@
 				</File>
 				<File
 					RelativePath="..\src\lib\md5.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\lib\my_global.h"
 					>
 				</File>
 				<File

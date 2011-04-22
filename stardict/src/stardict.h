@@ -16,7 +16,7 @@
 class AppCore;
 
 #include "conf.h"
-#include "lib/lib.h"
+#include "lib/utils.h"
 #include "lib/stardict_client.hpp"
 #include "lib/pluginmanager.h"
 #include "lib/httpmanager.h"
@@ -36,6 +36,8 @@ class AppCore;
 #include "globalhotkeys.h"
 #include "lib/compositelookup.h"
 #include "lib/full_text_trans.h"
+#include "lib/stddict.hpp"
+#include "lib/treedict.hpp"
 
 extern AppCore *gpAppFrame;
 

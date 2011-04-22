@@ -5,7 +5,7 @@
 #include <gtk/gtk.h>
 
 #include "pangoview.h" 
-#include "lib/dictmask.h"
+#include "lib/dictbase.h"
 
 //class which show dictionary's articles
 class ArticleView {

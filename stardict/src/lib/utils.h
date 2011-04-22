@@ -142,6 +142,18 @@ gint
 stardict_file_open_tmp (const gchar  *tmpl,
 				 gchar       **name_used,
 				 GError      **error);
+inline gchar* stardict_datadup(gconstpointer mem)
+{
+	return (gchar *)g_memdup(mem, sizeof(guint32) + *reinterpret_cast<const guint32 *>(mem));
+}
+
+typedef enum {
+	qtSIMPLE, qtPATTERN, qtFUZZY, qtREGEX, qtFULLTEXT
+} query_t;
+
+extern query_t analyse_query(const char *s, std::string& res);
+extern void stardict_input_escape(const char *text, std::string &res);
+
 
 void html_decode(const char *str, std::string& decoded);
 void GetPureEnglishAlpha(char *dst, const char *src); // not used
@@ -181,5 +193,19 @@ bool is_ascii_alpha(wchar_t ch);
 	"Unable open file %s for writing\n"
 #define create_temp_file_err \
 		"Unable to create a temporary file: %s.\n"
+
+#ifdef _WIN32
+#define bzero(p, l) memset(p, 0, l)
+#endif
+
+typedef unsigned int uint;
+typedef unsigned short  uint16; /* Short for unsigned integer >= 16 bits */
+typedef unsigned long   ulong;            /* Short for unsigned long */
+typedef unsigned long long int ulonglong; /* ulong or unsigned long long */
+typedef long long int   longlong;
+typedef char    pchar;          /* Mixed prototypes can take char */
+typedef char    pbool;          /* Mixed prototypes can take char */
+typedef unsigned char   uchar;  /* Short for unsigned char */
+typedef char            my_bool; /* Small bool */
 
 #endif/*UTILS_H*/

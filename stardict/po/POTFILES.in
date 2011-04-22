@@ -10,7 +10,6 @@ src/desktop.cpp
 src/dictmanage.cpp
 src/dictmanagedlg.cpp
 src/docklet.cpp
-src/eggtrayicon.c
 src/floatwin.cpp
 src/log.cpp
 src/mainwin.cpp
@@ -21,11 +20,11 @@ src/readword.cpp
 src/selection.cpp
 src/splash.cpp
 src/stardict.cpp
+src/lib/full_text_trans.cpp
 src/lib/stardict_client.cpp
 src/lib/stddict.cpp
 src/lib/utils.cpp
 src/win32/clipboard.cpp
-src/win32/systray.cpp
 stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp
 stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp
 stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp

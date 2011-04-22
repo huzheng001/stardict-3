@@ -7,7 +7,7 @@
 #include <utility>
 #include <iostream>
 
-#include "lib.h"
+#include "utils.h"
 
 static inline bool 
 test_analyse_query(const char *s, const std::pair<query_t, std::string>& res)

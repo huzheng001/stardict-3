@@ -2,7 +2,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include "dictmanage.h"
-#include "lib/file.hpp"
+#include "lib/file-utils.h"
 #include "conf.h"
 #include "stardict.h"
 

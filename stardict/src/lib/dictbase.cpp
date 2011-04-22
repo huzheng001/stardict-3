@@ -26,7 +26,7 @@
 
 #include "kmp.h"
 
-#include "data.hpp"
+#include "dictbase.h"
 #include "utils.h"
 
 /* may contain lower-case chars only, otherwise changes in DictBase::SearchData needed. */
