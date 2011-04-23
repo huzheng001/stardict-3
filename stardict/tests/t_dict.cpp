@@ -36,6 +36,7 @@
 #include "stddict.hpp"
 
 typedef std::vector<Dict *> dicts_list_t;
+static show_progress_t default_show_progress;
 
 class dict_loader {
 public:
@@ -43,7 +44,7 @@ public:
 	void operator()(const std::string& url, bool) { 
 		Dict *d=new Dict;
 		if (d->load(url, false, CollationLevel_NONE, UTF8_GENERAL_CI,
-			    &Libs::default_show_progress))
+			    &default_show_progress))
 			dicts_list.push_back(d);
 		else
 			delete d;
