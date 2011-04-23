@@ -1485,17 +1485,18 @@ bool Dict::LookupWithRegexSynonym(GRegex *regex, glong *aIndex, int iBuffLen)
 //===================================================================
 show_progress_t Libs::default_show_progress;
 
-Libs::Libs(show_progress_t *sp, bool create, CollationLevelType level, int function)
+Libs::Libs(show_progress_t *sp, bool create_cache_files, CollationLevelType level, CollateFunctions function)
 :
-	CollationLevel(level)
+	iMaxFuzzyDistance(MAX_FUZZY_DISTANCE),
+	show_progress(NULL),
+	CreateCacheFile(create_cache_files),
+	CollationLevel(level),
+	CollateFunction(function)
 {
 #ifdef SD_SERVER_CODE
 	root_info_item = NULL;
 #endif
 	set_show_progress(sp);
-	CreateCacheFile = create;
-	CollateFunction = (CollateFunctions)function;
-	iMaxFuzzyDistance  = MAX_FUZZY_DISTANCE; //need to read from cfg.
 	init_collations();
 }
 
@@ -2061,7 +2062,7 @@ void Libs::load(const std::list<std::string> &load_list)
 	}
 }
 
-void Libs::reload(const std::list<std::string> &load_list, CollationLevelType NewCollationLevel, int collf)
+void Libs::reload(const std::list<std::string> &load_list, CollationLevelType NewCollationLevel, CollateFunctions collf)
 {
 	if (NewCollationLevel == CollationLevel && collf == CollateFunction) {
 		std::vector<Dict *> prev(oLib);

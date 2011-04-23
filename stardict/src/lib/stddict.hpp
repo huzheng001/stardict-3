@@ -269,11 +269,7 @@ struct CurrentIndex {
 
 class Libs {
 public:
-	static show_progress_t default_show_progress;
-	CollationLevelType CollationLevel;
-	CollateFunctions CollateFunction;
-
-	Libs(show_progress_t *sp, bool create, CollationLevelType level, int function);
+	Libs(show_progress_t *sp, bool create_cache_files, CollationLevelType level, CollateFunctions function);
 	~Libs();
 	void set_show_progress(show_progress_t *sp) {
 		if (sp)
@@ -285,6 +281,8 @@ public:
 	{
 		return show_progress;
 	}
+	CollationLevelType get_CollationLevel() const { return CollationLevel; }
+	CollateFunctions get_CollateFunction() const { return CollateFunction; }
 	bool load_dict(const std::string& url, show_progress_t *sp);
 #ifdef SD_SERVER_CODE
 	void LoadFromXML();
@@ -299,28 +297,28 @@ public:
 #ifdef SD_CLIENT_CODE
 	bool find_lib_by_filename(const char *filename, size_t &iLib);
 	void load(const std::list<std::string> &load_list);
-	void reload(const std::list<std::string> &load_list, CollationLevelType NewCollationLevel, int collf);
+	void reload(const std::list<std::string> &load_list, CollationLevelType NewCollationLevel, CollateFunctions collf);
 #endif
 
-	glong narticles(size_t idict) { return oLib[idict]->narticles(); }
-	glong nsynarticles(size_t idict) { return oLib[idict]->nsynarticles(); }
-	const std::string& dict_name(size_t idict) { return oLib[idict]->dict_name(); }
-	const std::string& dict_type(size_t idict) { return oLib[idict]->dict_type(); }
-	bool has_dict() { return !oLib.empty(); }
+	glong narticles(size_t idict) const { return oLib[idict]->narticles(); }
+	glong nsynarticles(size_t idict) const { return oLib[idict]->nsynarticles(); }
+	const std::string& dict_name(size_t idict) const { return oLib[idict]->dict_name(); }
+	const std::string& dict_type(size_t idict) const { return oLib[idict]->dict_type(); }
+	bool has_dict() const { return !oLib.empty(); }
 
-	const gchar * poGetWord(glong iIndex,size_t iLib, int servercollatefunc) {
+	const gchar * poGetWord(glong iIndex,size_t iLib, int servercollatefunc) const {
 		return oLib[iLib]->idx_file->getWord(iIndex, CollationLevel, servercollatefunc);
 	}
-	const gchar * poGetOrigWord(glong iIndex,size_t iLib) {
+	const gchar * poGetOrigWord(glong iIndex,size_t iLib) const {
 		return oLib[iLib]->idx_file->getWord(iIndex, CollationLevel_NONE, 0);
 	}
-	const gchar * poGetSynonymWord(glong iSynonymIndex,size_t iLib, int servercollatefunc) {
+	const gchar * poGetSynonymWord(glong iSynonymIndex,size_t iLib, int servercollatefunc) const {
 		return oLib[iLib]->syn_file->getWord(iSynonymIndex, CollationLevel, servercollatefunc);
 	}
-	const gchar * poGetOrigSynonymWord(glong iSynonymIndex,size_t iLib) {
+	const gchar * poGetOrigSynonymWord(glong iSynonymIndex,size_t iLib) const {
 		return oLib[iLib]->syn_file->getWord(iSynonymIndex, CollationLevel_NONE, 0);
 	}
-	glong poGetOrigSynonymWordIdx(glong iSynonymIndex, size_t iLib) {
+	glong poGetOrigSynonymWordIdx(glong iSynonymIndex, size_t iLib) const {
 		oLib[iLib]->syn_file->getWord(iSynonymIndex, CollationLevel_NONE, 0);
 		return oLib[iLib]->syn_file->wordentry_index;
 	}
@@ -364,9 +362,9 @@ public:
 	StorageType GetStorageType(size_t iLib);
 	FileHolder GetStorageFilePath(size_t iLib, const std::string &key);
 	const char *GetStorageFileContent(size_t iLib, const std::string &key);
+private:
 	void init_collations();
 	void free_collations();
-private:
 	bool LookupSimilarWordTryWord(const gchar *sTryWord, const gchar *sWord,
 		int servercollatefunc, size_t iLib,
 		glong &iIndex, glong &idx_suggest, gint &best_match);
@@ -375,6 +373,9 @@ private:
 	int iMaxFuzzyDistance;
 	show_progress_t *show_progress;
 	bool CreateCacheFile;
+	CollationLevelType CollationLevel;
+	CollateFunctions CollateFunction;
+	static show_progress_t default_show_progress;
 
 #ifdef SD_SERVER_CODE
 	struct DictInfoItem;
@@ -448,9 +449,6 @@ private:
 	std::string cache_fromto;
 	void gen_fromto_info(struct DictInfoItem *info_item, std::map<std::string, std::list<FromTo> > &map_fromto);
 #endif
-
-	friend class DictLoader;
-	friend class DictReLoader;
 };
 
 
