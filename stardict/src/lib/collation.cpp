@@ -125,6 +125,7 @@ CollationData coll_data[] = {
 
 int utf8_collate_init(CollateFunctions func)
 {
+	g_assert(0<=func && func<COLLATE_FUNC_NUMS);
 	if(coll_data[func].ref++ > 0)
 		return FALSE;
 	CHARSET_INFO *cs = get_cs(func);
@@ -166,6 +167,7 @@ int utf8_collate(const char *str1, const char *str2, CollateFunctions func)
 
 void utf8_collate_end(CollateFunctions func)
 {
+	g_assert(0<=func && func<COLLATE_FUNC_NUMS);
 	if(coll_data[func].ref <= 0) {
 		coll_data[func].ref = 0;
 		return;
@@ -184,4 +186,11 @@ void utf8_collate_end_all()
 		if(--coll_data[func].ref == 0)
 			coll_data[func].free_all();
 	}
+}
+
+CollateFunctions int_to_colate_func(int func)
+{
+	if(0 <= func && func < COLLATE_FUNC_NUMS)
+		return CollateFunctions(func);
+	return COLLATE_FUNC_NONE;
 }

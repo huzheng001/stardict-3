@@ -71,15 +71,34 @@ enum CacheFileType {
  * for uncompressed index:
  * url = ".../mydict.idx"
  * saveurl = ".../mydict.idx"
+ *
+ * Cache file searching algorithm
+ *
+ * This algorithm is used in load_cache and save_cache functions.
+ * 1. Search for cache file in the directory of the saveurl parameter.
+ * 1.1. Build primary file name: saveurl + ".oft". (We use here .oft file as example)
+ * 1.2. Check if that file is the target cache file. If yes, stop search.
+ * 1.3. Build next file name: dirname(saveurl) + "/" + basename(saveurl) + "(" + num + ")" + ext(saveurl) + ".oft"
+ * 1.4. num++, goto 1.2.
+ * 2. Search for cache file in the user cache directory (app_dirs->get_user_cache_dir()).
+ * 2.1. Build primary file name: user_cache_dir + filename(saveurl) + ".oft"
+ * ...
  * */
 class cache_file {
 public:
 	cache_file(CacheFileType _cachefiletype);
 	~cache_file();
+	/* Return value: true - success, false - fault.
+	 * If loaded successfully, mf contains the loaded file,
+	 * wordoffset points to the portion of the mapped file containing offsets.
+	 * If load failed, mf and wordoffset are not changed. */
 	bool load_cache(const std::string& url, const std::string& saveurl, CollateFunctions cltfunc, glong filedatasize);
-	bool save_cache(const std::string& saveurl, CollateFunctions cltfunc, gulong npages);
+	/* (Re)create cache file. Member data do not change.
+	 * Content of the cache file is build from wordoffset array and parameters of this function.
+	 * Note that this function does not load the saved file, mf member is not used. */
+	bool save_cache(const std::string& saveurl, CollateFunctions cltfunc) const;
 	// datasize in bytes
-	void allocate_wordoffset(glong datasize);
+	void allocate_wordoffset(size_t _npages);
 	guint32& get_wordoffset(size_t ind)
 	{
 		return wordoffset[ind];
@@ -90,16 +109,21 @@ public:
 	}
 
 private:
+	/* If mf != NULL, then wordoffset points to part of mapped file, it should not be freed.
+	 * Otherwise wordoffset must be freed with g_free. */
 	guint32 *wordoffset;
+	/* size of the wordoffset array */
+	size_t npages;
 	CacheFileType cachefiletype;
 	MapFile *mf;
-	bool get_cache_filename(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc);
-	MapFile* get_cache_for_load(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next);
-	FILE* get_cache_for_save(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc);
+	/* The following functions do not change member data, they return result though parameters. */
+	bool build_primary_cache_filename_in_user_cache(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc) const;
+	MapFile* find_and_load_cache_file(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next) const;
+	FILE* find_and_open_for_overwrite_cache_file(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc) const;
 	gchar *get_next_filename(
 		const gchar *dirname, const gchar *basename, int num,
 		const gchar *extendname, CollateFunctions cltfunc) const;
-	void get_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
+	void build_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
 		std::string &filename) const;
 };
 
@@ -269,7 +293,9 @@ struct CurrentIndex {
 
 class Libs {
 public:
-	Libs(show_progress_t *sp, bool create_cache_files, CollationLevelType level, CollateFunctions function);
+	/* func is only used when level is CollationLevel_SINGLE,
+	 * otherwise function must be COLLATE_FUNC_NONE. */
+	Libs(show_progress_t *sp, bool create_cache_files, CollationLevelType level, CollateFunctions func);
 	~Libs();
 	void set_show_progress(show_progress_t *sp) {
 		if (sp)
@@ -368,8 +394,10 @@ private:
 	bool LookupSimilarWordTryWord(const gchar *sTryWord, const gchar *sWord,
 		int servercollatefunc, size_t iLib,
 		glong &iIndex, glong &idx_suggest, gint &best_match);
+	/* Validate and fix collate parameters */
+	static void ValidateCollateParams(CollationLevelType& level, CollateFunctions& func);
 
-	std::vector<Dict *> oLib; // word Libs.
+	std::vector<Dict *> oLib;
 	int iMaxFuzzyDistance;
 	show_progress_t *show_progress;
 	bool CreateCacheFile;

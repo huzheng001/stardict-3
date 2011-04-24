@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 {
 	gtk_init(&argc, &argv);
 	
-	Libs libs(NULL, false, CollationLevel_NONE, (CollateFunctions)0);
+	Libs libs(NULL, false, CollationLevel_NONE, COLLATE_FUNC_NONE);
 	List dict_list;
 	libs.load(dict_list);
 	std::vector<double> times;
