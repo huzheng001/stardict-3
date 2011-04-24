@@ -215,13 +215,13 @@ bool offset_rindex::load(const std::string& url, gulong _filecount, gulong fsize
 {
 	filecount = _filecount;
 	npages=(filecount-1)/ENTR_PER_PAGE+2;
-	if (!oft_file.load_cache(url, url, CollateFunctions(0), npages*sizeof(guint32))) {
+	if (!oft_file.load_cache(url, url, COLLATE_FUNC_NONE, npages*sizeof(guint32))) {
 		MapFile map_file;
 		if (!map_file.open(url.c_str(), fsize))
 			return false;
 		const gchar *idxdatabuffer=map_file.begin();
 		/* oft_file.wordoffset[i] holds offset of the i-th page in the index file */
-		oft_file.allocate_wordoffset(npages*sizeof(guint32));
+		oft_file.allocate_wordoffset(npages);
 		const gchar *p1 = idxdatabuffer;
 		gulong index_size;
 		guint32 j=0;
@@ -236,7 +236,7 @@ bool offset_rindex::load(const std::string& url, gulong _filecount, gulong fsize
 		oft_file.get_wordoffset(j)=p1-idxdatabuffer;
 		map_file.close();
 		if (CreateCacheFile) {
-			if (!oft_file.save_cache(url, CollateFunctions(0), npages))
+			if (!oft_file.save_cache(url, COLLATE_FUNC_NONE))
 				g_printerr("Cache update failed.\n");
 		}
 	}

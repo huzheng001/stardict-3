@@ -2,6 +2,7 @@
 #define _COLLATION_H_
 
 typedef enum {
+	COLLATE_FUNC_NONE = -1,
 	UTF8_GENERAL_CI = 0,
 	UTF8_UNICODE_CI,
 	UTF8_BIN,
@@ -31,6 +32,6 @@ extern int utf8_collate_init_all();
 extern int utf8_collate(const char *str1, const char *str2, CollateFunctions func);
 extern void utf8_collate_end(CollateFunctions func);
 extern void utf8_collate_end_all();
-
+extern CollateFunctions int_to_colate_func(int func);
 
 #endif
