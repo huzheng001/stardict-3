@@ -197,7 +197,7 @@ rindex_file* rindex_file::Create(const std::string& filebasename,
 
 offset_rindex::offset_rindex(void)
 :
-	oft_file(CacheFileType_oft),
+	oft_file(CacheFileType_oft, COLLATE_FUNC_NONE),
 	idxfile(NULL),
 	npages(0)
 {
@@ -215,7 +215,7 @@ bool offset_rindex::load(const std::string& url, gulong _filecount, gulong fsize
 {
 	filecount = _filecount;
 	npages=(filecount-1)/ENTR_PER_PAGE+2;
-	if (!oft_file.load_cache(url, url, COLLATE_FUNC_NONE, npages*sizeof(guint32))) {
+	if (!oft_file.load_cache(url, url, npages*sizeof(guint32))) {
 		MapFile map_file;
 		if (!map_file.open(url.c_str(), fsize))
 			return false;
@@ -236,7 +236,7 @@ bool offset_rindex::load(const std::string& url, gulong _filecount, gulong fsize
 		oft_file.get_wordoffset(j)=p1-idxdatabuffer;
 		map_file.close();
 		if (CreateCacheFile) {
-			if (!oft_file.save_cache(url, COLLATE_FUNC_NONE))
+			if (!oft_file.save_cache(url))
 				g_printerr("Cache update failed.\n");
 		}
 	}

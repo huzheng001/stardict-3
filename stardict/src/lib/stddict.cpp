@@ -225,7 +225,7 @@ private:
 	std::vector<gchar *> wordlist;
 };
 
-offset_index::offset_index() : oft_file(CacheFileType_oft)
+offset_index::offset_index() : oft_file(CacheFileType_oft, COLLATE_FUNC_NONE)
 {
 	idxfile = NULL;
 	npages = 0;
@@ -285,12 +285,13 @@ inline const gchar *offset_index::get_first_on_page_key(glong page_idx)
 		return middle.keystr.c_str();
 }
 
-cache_file::cache_file(CacheFileType _cachefiletype)
+cache_file::cache_file(CacheFileType _cachefiletype, CollateFunctions _cltfunc)
 {
 	wordoffset = NULL;
 	npages = 0;
 	mf = NULL;
 	cachefiletype = _cachefiletype;
+	cltfunc = _cltfunc;
 }
 
 
@@ -307,7 +308,7 @@ cache_file::~cache_file()
 
 MapFile* cache_file::find_and_load_cache_file(const gchar *filename,
 	const std::string &url, const std::string &saveurl,
-	CollateFunctions cltfunc, glong filedatasize, int next) const
+	glong filedatasize, int next) const
 {
 	stardict_stat_t cachestat;
 	if (g_stat(filename, &cachestat)!=0)
@@ -381,24 +382,24 @@ MapFile* cache_file::find_and_load_cache_file(const gchar *filename,
 	gchar *extendname = p+1;
 	glib::CharStr dirname(g_path_get_dirname(filename));
 	glib::CharStr nextfilename(get_next_filename(get_impl(dirname),
-		get_impl(basename), next, extendname, cltfunc));
-	return find_and_load_cache_file(get_impl(nextfilename), url, saveurl, cltfunc, filedatasize, next+1);
+		get_impl(basename), next, extendname));
+	return find_and_load_cache_file(get_impl(nextfilename), url, saveurl, filedatasize, next+1);
 }
 
 bool cache_file::load_cache(const std::string& url, const std::string& saveurl,
-	CollateFunctions cltfunc, glong filedatasize)
+	glong filedatasize)
 {
 	g_assert(!wordoffset);
 	std::string oftfilename;
-	build_primary_cache_filename(saveurl, cltfunc, oftfilename);
+	build_primary_cache_filename(saveurl, oftfilename);
 	/* First search the file in the dictionary directory, then in the cache 
 	 * directory. */
 	for (int i=0; i<2; i++) {
 		if (i==1) {
-			if (!build_primary_cache_filename_in_user_cache(saveurl, oftfilename, false, cltfunc))
+			if (!build_primary_cache_filename_in_user_cache(saveurl, oftfilename, false))
 				break;
 		}
-		mf = find_and_load_cache_file(oftfilename.c_str(), url, saveurl, cltfunc, filedatasize, 2);
+		mf = find_and_load_cache_file(oftfilename.c_str(), url, saveurl, filedatasize, 2);
 		if (!mf)
 			continue;
 		wordoffset = reinterpret_cast<guint32 *>(mf->begin()) + 1;
@@ -408,7 +409,7 @@ bool cache_file::load_cache(const std::string& url, const std::string& saveurl,
 	return false;
 }
 
-bool cache_file::build_primary_cache_filename_in_user_cache(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc) const
+bool cache_file::build_primary_cache_filename_in_user_cache(const std::string& url, std::string &cachefilename, bool create) const
 {
 	const std::string cache_dir(app_dirs->get_user_cache_dir());
 	if (create) {
@@ -421,12 +422,12 @@ bool cache_file::build_primary_cache_filename_in_user_cache(const std::string& u
 		return false;
 
 	gchar *base=g_path_get_basename(url.c_str());
-	build_primary_cache_filename(build_path(cache_dir, base), cltfunc, cachefilename);
+	build_primary_cache_filename(build_path(cache_dir, base), cachefilename);
 	g_free(base);
 	return true;
 }
 
-FILE* cache_file::find_and_open_for_overwrite_cache_file(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc) const
+FILE* cache_file::find_and_open_for_overwrite_cache_file(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename) const
 {
 	cfilename = filename;
 	stardict_stat_t oftstat;
@@ -484,21 +485,21 @@ FILE* cache_file::find_and_open_for_overwrite_cache_file(const gchar *filename, 
 	gchar *extendname = p+1;
 	glib::CharStr dirname(g_path_get_dirname(filename));
 	glib::CharStr nextfilename(get_next_filename(get_impl(dirname),
-		get_impl(basename), next, extendname, cltfunc));
-	return find_and_open_for_overwrite_cache_file(get_impl(nextfilename), saveurl, next+1, cfilename, cltfunc);
+		get_impl(basename), next, extendname));
+	return find_and_open_for_overwrite_cache_file(get_impl(nextfilename), saveurl, next+1, cfilename);
 }
 
-bool cache_file::save_cache(const std::string& saveurl, CollateFunctions cltfunc) const
+bool cache_file::save_cache(const std::string& saveurl) const
 {
 	std::string oftfilename;
-	build_primary_cache_filename(saveurl, cltfunc, oftfilename);
+	build_primary_cache_filename(saveurl, oftfilename);
 	for (int i=0;i<2;i++) {
 		if (i==1) {
-			if (!build_primary_cache_filename_in_user_cache(saveurl, oftfilename, true, cltfunc))
+			if (!build_primary_cache_filename_in_user_cache(saveurl, oftfilename, true))
 				break;
 		}
 		std::string cfilename;
-		FILE *out= find_and_open_for_overwrite_cache_file(oftfilename.c_str(), saveurl, 2, cfilename, cltfunc);
+		FILE *out= find_and_open_for_overwrite_cache_file(oftfilename.c_str(), saveurl, 2, cfilename);
 		if (!out)
 			continue;
 		guint32 nentries = npages;
@@ -543,7 +544,7 @@ void cache_file::allocate_wordoffset(size_t _npages)
 
 gchar *cache_file::get_next_filename(
 	const gchar *dirname, const gchar *basename, int num,
-	const gchar *extendname, CollateFunctions cltfunc) const
+	const gchar *extendname) const
 {
 	if (cachefiletype == CacheFileType_oft)
 		return g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s(%d).%s.oft", dirname, basename, num, extendname);
@@ -553,7 +554,7 @@ gchar *cache_file::get_next_filename(
 		return g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s(%d).%s.%d.clt", dirname, basename, num, extendname, cltfunc);
 }
 
-void cache_file::build_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
+void cache_file::build_primary_cache_filename(const std::string &url,
 	std::string &filename) const
 {
 	if (cachefiletype == CacheFileType_oft) {
@@ -569,9 +570,8 @@ void cache_file::build_primary_cache_filename(const std::string &url, CollateFun
 
 collation_file::collation_file(idxsyn_file *_idx_file, CacheFileType _cachefiletype,
 	CollateFunctions _CollateFunction)
-: cache_file(_cachefiletype),
-	idx_file(_idx_file),
-	CollateFunction(_CollateFunction)
+: cache_file(_cachefiletype, _CollateFunction),
+	idx_file(_idx_file)
 {
 	g_assert(_cachefiletype == CacheFileType_clt || _cachefiletype == CacheFileType_server_clt);
 
@@ -591,10 +591,10 @@ bool collation_file::lookup(const char *sWord, glong &idx, glong &idx_suggest)
 {
 	bool bFound=false;
 	glong iTo=idx_file->get_word_count()-1;
-	if (stardict_collate(sWord, GetWord(0), CollateFunction)<0) {
+	if (stardict_collate(sWord, GetWord(0), get_CollateFunction())<0) {
 		idx = 0;
 		idx_suggest = 0;
-	} else if (stardict_collate(sWord, GetWord(iTo), CollateFunction) >0) {
+	} else if (stardict_collate(sWord, GetWord(iTo), get_CollateFunction()) >0) {
 		idx = INVALID_INDEX;
 		idx_suggest = iTo;
 	} else {
@@ -603,7 +603,7 @@ bool collation_file::lookup(const char *sWord, glong &idx, glong &idx_suggest)
 		gint cmpint;
 		while (iFrom<=iTo) {
 			iThisIndex=(iFrom+iTo)/2;
-			cmpint = stardict_collate(sWord, GetWord(iThisIndex), CollateFunction);
+			cmpint = stardict_collate(sWord, GetWord(iThisIndex), get_CollateFunction());
 			if (cmpint>0)
 				iFrom=iThisIndex+1;
 			else if (cmpint<0)
@@ -719,7 +719,7 @@ collation_file * idxsyn_file::collate_load_impl(
 	CollateFunctions collf, show_progress_t *sp, CacheFileType CacheType)
 {
 	collation_file * _clt_file = new collation_file(this, CacheType, collf);
-	if (!_clt_file->load_cache(_url, _saveurl, collf, wordcount*sizeof(guint32))) {
+	if (!_clt_file->load_cache(_url, _saveurl, wordcount*sizeof(guint32))) {
 		if(sp)
 			sp->notify_about_start(_("Sorting, please wait..."));
 		_clt_file->allocate_wordoffset(wordcount);
@@ -729,7 +729,7 @@ collation_file * idxsyn_file::collate_load_impl(
 		data.idx_file = this;
 		data.cltfunc = collf;
 		g_qsort_with_data(_clt_file->get_wordoffset(), wordcount, sizeof(guint32), sort_collation_index, &data);
-		if (!_clt_file->save_cache(_saveurl, collf))
+		if (!_clt_file->save_cache(_saveurl))
 			g_printerr("Cache update failed.\n");
 	}
 	return _clt_file;
@@ -741,7 +741,7 @@ bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
 {
 	wordcount=wc;
 	npages=(wc-1)/ENTR_PER_PAGE+2;
-	if (!oft_file.load_cache(url, url, _CollateFunction, npages*sizeof(guint32))) {
+	if (!oft_file.load_cache(url, url, npages*sizeof(guint32))) {
 		MapFile map_file;
 		if (!map_file.open(url.c_str(), fsize))
 			return false;
@@ -762,7 +762,7 @@ bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
 		oft_file.get_wordoffset(j)=p1-idxdatabuffer;
 		map_file.close();
 		if (CreateCacheFile) {
-			if (!oft_file.save_cache(url, _CollateFunction))
+			if (!oft_file.save_cache(url))
 				g_printerr("Cache update failed.\n");
 		}
 	}
@@ -1071,7 +1071,7 @@ void synonym_file::page_t::fill(gchar *data, gint nent, glong idx_)
 	}
 }
 
-synonym_file::synonym_file() : oft_file(CacheFileType_oft)
+synonym_file::synonym_file() : oft_file(CacheFileType_oft, COLLATE_FUNC_NONE)
 {
 }
 
@@ -1112,7 +1112,7 @@ bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
 {
 	wordcount=wc;
 	npages=(wc-1)/ENTR_PER_PAGE+2;
-	if (!oft_file.load_cache(url, url, _CollateFunction, npages*sizeof(guint32))) {
+	if (!oft_file.load_cache(url, url, npages*sizeof(guint32))) {
 		stardict_stat_t stats;
 		if (g_stat(url.c_str(), &stats) == -1)
 			return false;
@@ -1135,7 +1135,7 @@ bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
 		oft_file.get_wordoffset(j)=p1-syndatabuffer;
 		map_file.close();
 		if (CreateCacheFile) {
-			if (!oft_file.save_cache(url, _CollateFunction))
+			if (!oft_file.save_cache(url))
 				g_printerr("Cache update failed.\n");
 		}
 	}
