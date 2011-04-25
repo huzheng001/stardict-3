@@ -86,17 +86,17 @@ enum CacheFileType {
  * */
 class cache_file {
 public:
-	cache_file(CacheFileType _cachefiletype);
+	cache_file(CacheFileType _cachefiletype, CollateFunctions _cltfunc);
 	~cache_file();
 	/* Return value: true - success, false - fault.
 	 * If loaded successfully, mf contains the loaded file,
 	 * wordoffset points to the portion of the mapped file containing offsets.
 	 * If load failed, mf and wordoffset are not changed. */
-	bool load_cache(const std::string& url, const std::string& saveurl, CollateFunctions cltfunc, glong filedatasize);
+	bool load_cache(const std::string& url, const std::string& saveurl, glong filedatasize);
 	/* (Re)create cache file. Member data do not change.
 	 * Content of the cache file is build from wordoffset array and parameters of this function.
 	 * Note that this function does not load the saved file, mf member is not used. */
-	bool save_cache(const std::string& saveurl, CollateFunctions cltfunc) const;
+	bool save_cache(const std::string& saveurl) const;
 	// datasize in bytes
 	void allocate_wordoffset(size_t _npages);
 	guint32& get_wordoffset(size_t ind)
@@ -107,6 +107,10 @@ public:
 	{
 		return wordoffset;
 	}
+	CollateFunctions get_CollateFunction(void) const
+	{
+		return cltfunc;
+	}
 
 private:
 	/* If mf != NULL, then wordoffset points to part of mapped file, it should not be freed.
@@ -116,14 +120,15 @@ private:
 	size_t npages;
 	CacheFileType cachefiletype;
 	MapFile *mf;
+	CollateFunctions cltfunc;
 	/* The following functions do not change member data, they return result though parameters. */
-	bool build_primary_cache_filename_in_user_cache(const std::string& url, std::string &cachefilename, bool create, CollateFunctions cltfunc) const;
-	MapFile* find_and_load_cache_file(const gchar *filename, const std::string &url, const std::string &saveurl, CollateFunctions cltfunc, glong filedatasize, int next) const;
-	FILE* find_and_open_for_overwrite_cache_file(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename, CollateFunctions cltfunc) const;
+	bool build_primary_cache_filename_in_user_cache(const std::string& url, std::string &cachefilename, bool create) const;
+	MapFile* find_and_load_cache_file(const gchar *filename, const std::string &url, const std::string &saveurl, glong filedatasize, int next) const;
+	FILE* find_and_open_for_overwrite_cache_file(const gchar *filename, const std::string &saveurl, int next, std::string &cfilename) const;
 	gchar *get_next_filename(
 		const gchar *dirname, const gchar *basename, int num,
-		const gchar *extendname, CollateFunctions cltfunc) const;
-	void build_primary_cache_filename(const std::string &url, CollateFunctions cltfunc,
+		const gchar *extendname) const;
+	void build_primary_cache_filename(const std::string &url,
 		std::string &filename) const;
 };
 
@@ -137,7 +142,6 @@ public:
 	glong GetOrigIndex(glong cltidx);
 private:
 	idxsyn_file *idx_file;
-	CollateFunctions CollateFunction;
 };
 
 class idxsyn_file {
@@ -201,6 +205,8 @@ private:
 	static const gint ENTR_PER_PAGE=32;
 	gulong npages;
 
+	/* offset cache file. Contains offsets in the original synonym file.
+	 * Selected collation level and collate function have no effect on this cache. */
 	cache_file oft_file;
 	FILE *synfile;
 
