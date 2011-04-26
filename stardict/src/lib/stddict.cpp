@@ -676,7 +676,7 @@ const gchar *idxsyn_file::getWord(glong idx, CollationLevelType CollationLevel, 
 		return clt_file->GetWord(idx);
 	if (servercollatefunc == 0)
 		return get_key(idx);
-	collate_load((CollateFunctions)(servercollatefunc-1));
+	collate_load((CollateFunctions)(servercollatefunc-1), CollationLevel_MULTI);
 	return clt_files[servercollatefunc-1]->GetWord(idx);
 }
 
@@ -688,17 +688,8 @@ bool idxsyn_file::Lookup(const char *str, glong &idx, glong &idx_suggest, Collat
 		return clt_file->lookup(str, idx, idx_suggest);
 	if (servercollatefunc == 0)
 		return lookup(str, idx, idx_suggest);
-	collate_load((CollateFunctions)(servercollatefunc-1));
+	collate_load((CollateFunctions)(servercollatefunc-1), CollationLevel_MULTI);
 	return clt_files[servercollatefunc-1]->lookup(str, idx, idx_suggest);
-}
-
-void idxsyn_file::collate_sort(const std::string& _url,
-			       const std::string& _saveurl,
-			       CollateFunctions collf,
-			       show_progress_t *sp)
-{
-	g_assert(!clt_file);
-	clt_file = collate_load_impl(_url, _saveurl, collf, sp, CacheFileType_clt);
 }
 
 void idxsyn_file::collate_save_info(const std::string& _url, const std::string& _saveurl)
@@ -707,11 +698,18 @@ void idxsyn_file::collate_save_info(const std::string& _url, const std::string& 
 	saveurl = _saveurl;
 }
 
-void idxsyn_file::collate_load(CollateFunctions collf)
+void idxsyn_file::collate_load(CollateFunctions collf, CollationLevelType CollationLevel, show_progress_t *sp)
 {
-	if (clt_files[collf])
-		return;
-	clt_files[collf] = collate_load_impl(url, saveurl, collf, NULL, CacheFileType_server_clt);
+	g_assert(CollationLevel == CollationLevel_SINGLE || CollationLevel == CollationLevel_MULTI);
+	if(CollationLevel == CollationLevel_SINGLE) {
+		if(clt_file)
+			return;
+		clt_file = collate_load_impl(url, saveurl, collf, sp, CacheFileType_clt);
+	} else if(CollationLevel == CollationLevel_MULTI) {
+		if (clt_files[collf])
+			return;
+		clt_files[collf] = collate_load_impl(url, saveurl, collf, sp, CacheFileType_server_clt);
+	}
 }
 
 collation_file * idxsyn_file::collate_load_impl(
@@ -778,7 +776,8 @@ bool offset_index::load(const std::string& url, gulong wc, gulong fsize,
 
 	if (CollationLevel == CollationLevel_NONE) {
 	} else if (CollationLevel == CollationLevel_SINGLE) {
-		collate_sort(url, url, _CollateFunction, sp);
+		collate_save_info(url, url);
+		collate_load(_CollateFunction, CollationLevel_SINGLE, sp);
 	} else if (CollationLevel == CollationLevel_MULTI) {
 		collate_save_info(url, url);
 	}
@@ -964,7 +963,8 @@ bool compressed_index::load(const std::string& url, gulong wc, gulong fsize,
 		std::string saveurl = url;
 		saveurl.erase(saveurl.length()-sizeof(".gz")+1, sizeof(".gz")-1);
 		if (CollationLevel == CollationLevel_SINGLE) {
-			collate_sort(url, saveurl, _CollateFunction, sp);
+			collate_save_info(url, saveurl);
+			collate_load(_CollateFunction, CollationLevel_SINGLE, sp);
 		} else if (CollationLevel == CollationLevel_MULTI) {
 			collate_save_info(url, saveurl);
 		}
@@ -1150,9 +1150,10 @@ bool synonym_file::load(const std::string& url, gulong wc, bool CreateCacheFile,
 	real_last.assign(wc-1, get_key(wc-1));
 
 	if (CollationLevel == CollationLevel_NONE) {
-	} else if (CollationLevel == CollationLevel_SINGLE)
-		collate_sort(url, url, _CollateFunction, sp);
-	else if (CollationLevel == CollationLevel_MULTI) {
+	} else if (CollationLevel == CollationLevel_SINGLE) {
+		collate_save_info(url, url);
+		collate_load(_CollateFunction,CollationLevel_SINGLE, sp);
+	} else if (CollationLevel == CollationLevel_MULTI) {
 		collate_save_info(url, url);
 	}
 
@@ -2045,9 +2046,9 @@ void Libs::LoadCollateFile(std::vector<InstantDictIndex> &dictmask, CollateFunct
 {
 	for (std::vector<InstantDictIndex>::iterator i = dictmask.begin(); i!=dictmask.end(); ++i) {
 		if ((*i).type == InstantDictType_LOCAL) {
-			oLib[(*i).index]->idx_file->collate_load(cltfuc);
+			oLib[(*i).index]->idx_file->collate_load(cltfuc, CollationLevel_MULTI);
 			if (oLib[(*i).index]->syn_file.get() != NULL)
-				oLib[(*i).index]->syn_file->collate_load(cltfuc);
+				oLib[(*i).index]->syn_file->collate_load(cltfuc, CollationLevel_MULTI);
 		}
 	}
 }
@@ -2121,7 +2122,7 @@ glong Libs::CltIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 		return cltidx;
 	if (cltidx == INVALID_INDEX)
 		return cltidx;
-	oLib[iLib]->idx_file->collate_load((CollateFunctions)(servercollatefunc-1));
+	oLib[iLib]->idx_file->collate_load((CollateFunctions)(servercollatefunc-1), CollationLevel_MULTI);
 	return oLib[iLib]->idx_file->get_clt_file(servercollatefunc-1)->GetOrigIndex(cltidx);
 }
 
@@ -2138,7 +2139,7 @@ glong Libs::CltSynIndexToOrig(glong cltidx, size_t iLib, int servercollatefunc)
 		return cltidx;
 	if (cltidx == UNSET_INDEX || cltidx == INVALID_INDEX)
 		return cltidx;
-	oLib[iLib]->syn_file->collate_load((CollateFunctions)(servercollatefunc-1));
+	oLib[iLib]->syn_file->collate_load((CollateFunctions)(servercollatefunc-1), CollationLevel_MULTI);
 	return oLib[iLib]->syn_file->get_clt_file(servercollatefunc-1)->GetOrigIndex(cltidx);
 }
 

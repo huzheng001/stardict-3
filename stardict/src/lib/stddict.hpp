@@ -144,6 +144,30 @@ private:
 	idxsyn_file *idx_file;
 };
 
+/* This class serves as root for classes representing index and synonym files.
+ * The class provides two main services getWord and Lookup and
+ * declares get_key and lookup pure virtual functions that must be implemented in derived classes.
+ *
+ * We may access the underlying index (synonym) file either directly or
+ * in the order specified by collate function.
+ * Direct access to the underlying file is possible immediately after the derived class completed
+ * initialization process (which include assigning protected wordcount member).
+ * To access the file in collate function order, additional initialization is required.
+ *
+ * First, you must specify the underlying index (synonym) file url with collate_save_info method.
+ * Second, you must initialize the collation object with collate_load method.
+ * This class is initialized either for CollationLevel_SINGLE or for CollationLevel_MULTI
+ * collation level type.
+ *
+ * In the CollationLevel_SINGLE case, clt_file is initialized.
+ * Now getWord and Lookup may be called with CollationLevel = CollationLevel_SINGLE,
+ * get_clt_file() returns non-NULL collation file.
+ *
+ * In the CollationLevel_MULTI case, clt_files[your_collate_func] is initialized.
+ * Since now, you may invoke getWord and Lookup with CollationLevel = CollationLevel_MULTI,
+ * servercollatefunc = your_collate_func. get_clt_file(your_collate_func) returns non-NULL.
+ * In fact, for getWord and Lookup invoke the collate_load internally, should a need be.
+ */
 class idxsyn_file {
 public:
 	idxsyn_file();
@@ -152,10 +176,8 @@ public:
 	bool Lookup(const char *str, glong &idx, glong &idx_suggest, CollationLevelType CollationLevel, int servercollatefunc);
 	virtual const gchar *get_key(glong idx) = 0;
 	virtual bool lookup(const char *str, glong &idx, glong &idx_suggest) = 0;
-	void collate_sort(const std::string& _url, const std::string& _saveurl,
-			  CollateFunctions collf, show_progress_t *sp);
 	void collate_save_info(const std::string& _url, const std::string& _saveurl);
-	void collate_load(CollateFunctions collf);
+	void collate_load(CollateFunctions collf, CollationLevelType CollationLevel, show_progress_t *sp = 0);
 	collation_file * get_clt_file(void) { return clt_file; }
 	collation_file * get_clt_file(size_t ind) { return clt_files[ind]; }
 	glong get_word_count(void) const { return wordcount; }
