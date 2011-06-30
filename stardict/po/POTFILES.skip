@@ -1,3 +1,0 @@
-# List of source files to ignore
-# Please keep this file sorted alphabetically.
-tests/t_dict_client.cpp
