@@ -1,0 +1,8 @@
+Welcome to help us to translate StarDict to your local language.
+
+You can copy po/stardict.pot to yourlocale.po file, then edit it manually while taking other .po files as the example. You can use a tool too, such as gtranslator, KBabel and poedit.
+
+After it is finished, you can mail it to the maintainer as the attachment file. I will contact you for future update too.
+
+Here is a tip for translating:
+To change the order of printf string, you can use the form as "%2$d %1$s", which has the original form as "%s %d".

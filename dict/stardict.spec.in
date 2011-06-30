@@ -1,0 +1,76 @@
+%define name	@PACKAGE@
+%define version @VERSION@
+
+Name:		%{name}
+Summary: 	A powerful dictionary platform written in GTK+2
+Version:	%{version}
+Release:	1%{?dist}
+Group: 		Applications/System
+License: 	GPLv3
+URL: 		http://stardict.sourceforge.net
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Requires: enchant, espeak, gucharmap >= 2.22.1, libbonobo >= 2.2.0, libgnome >= 2.2.0, libgnomeui >= 2.2.0, libsigc++20 >= 2.0.17
+#Requires: festival, speech-tools
+Requires(preun): GConf2
+Requires(post): GConf2, scrollkeeper
+Requires(postun): scrollkeeper
+
+BuildRequires: autoconf, automake, libtool
+BuildRequires: desktop-file-utils, enchant-devel, espeak-devel, gettext, gucharmap-devel >= 2.22.1, intltool, libgnomeui-devel >= 2.2.0, libsigc++20-devel, libtool, perl-XML-Parser, scrollkeeper
+#BuildRequires: festival-devel, speech-tools-devel
+
+%description
+StarDict is a Cross-Platform and international dictionary written in Gtk2.
+It has powerful features such as "Glob-style pattern matching,"
+"Scan selection word," "Fuzzy query," etc.
+
+%prep
+%setup -q
+
+%build
+%{__aclocal}
+%{__autoconf}
+%{__libtoolize}
+%configure --disable-schemas-install --disable-festival
+make -k %{_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install
+rm -f `find $RPM_BUILD_ROOT%{_libdir}/stardict/plugins -name "*.la"`
+%find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+
+%files -f %{name}.lang
+%defattr(-, root, root)
+%{_bindir}/stardict
+%{_datadir}/applications/*.desktop
+%{_datadir}/stardict
+%{_libdir}/stardict
+%{_datadir}/idl/*
+%{_libdir}/bonobo/servers/*.server
+%{_datadir}/pixmaps/stardict.png
+%{_sysconfdir}/gconf/schemas/*.schemas
+%{_datadir}/omf/*
+%{_mandir}/man1/*
+%doc %{_datadir}/gnome/help/stardict
+%doc README COPYING ChangeLog AUTHORS doc/FAQ doc/HACKING doc/HowToCreateDictionary doc/StarDictFileFormat doc/Translation
+
+
+%preun
+if [ "$1" -gt 1 ] ; then
+  export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/stardict.schemas >/dev/null || :
+fi
+
+%post
+GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/stardict.schemas >/dev/null || :
+if which scrollkeeper-update>/dev/null 2>&1; then scrollkeeper-update; fi
+
+%postun
+if which scrollkeeper-update>/dev/null 2>&1; then scrollkeeper-update; fi
+

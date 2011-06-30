@@ -1,0 +1,4 @@
+
+* Modify the automake to minimize the dependency of stardict-tools
+* Confirm the copyright issue of the remain dictionary file in stardict.sf.net
+

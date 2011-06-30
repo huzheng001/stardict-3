@@ -1,0 +1,6 @@
+StarDict documentation
+======================
+
+StarDict primary documentation format is DocBook. You need to have Gnome installed, or at least yelp, to view the documentation in DocBook format. There are a number of editions of StarDict that does not impose that yelp will be available and in all the cases it means that documentation will be unusable. In fact, documentation is not even distributed in non-Gnome editions. In Windows edition documentation is distributed in a .chm file that must be build specially.
+
+In order to make documentation usable in all editions of StarDict it was decided to distribute documentation in html format in addition to documentation in DocBook format. Preparing documentation in html format requires special tools to convert from DocBook to html. Distribution tarball should contain documentation in html format. Additional tools for building and installing the application should not be necessary. You need speciall tool to prepare a distribution tarball. Install target should install documentation is html format when other documentation formats are not usable. It's ok to install html documentation in addition to documentation in DocBook.

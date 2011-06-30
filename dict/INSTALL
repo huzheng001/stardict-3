@@ -1,0 +1,33 @@
+You must invoke configure script in the top level project directory, configure script in this directory will be called automatically. If you run configure in this directory, the project will not be properly configured and fail to build. See ../README for more information. 
+
+The following text describes options specific to StarDict dictionary project. Pass these options to the top level script.
+
+To Install StarDict:
+type:
+=============
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
+make
+make install
+=============
+If compile festival plugin failed, you can add "--disable-festival" option to configure command.
+
+You can use:
+=============
+./configure --disable-gnome-support --prefix=/usr
+=============
+to build the "gtk library only" version of StarDict.
+
+You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
+You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
+
+StarDict does not support staged installs, that is you may not use DESTDIR variable to install the application into a custom place like this:
+============
+make DESTDIR=/custom/path install
+============
+StarDict needs to know at compile time all details of the installation otherwise it would not be able to find its data and it'd fail to start. If you need to change installation dirs use configure parameters like --prefix.
+
+For windows version, read doc/README_windows.txt.
+For Mac OS X version, read doc/Readme.mac.
+
+Notice: you can download dictionaries on the StarDict forum:
+http://www.stardict.org/forum

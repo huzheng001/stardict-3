@@ -1,0 +1,47 @@
+start = element stardict { stardict-content }
+
+stardict-content = 
+	element info { info-content } &
+	contents-content 
+
+info-content =
+	element version { text } &
+	element bookname { text } &
+	element author { text } &
+	element email { text } ? &
+	element website { text } ? &
+	element description { text } ? &
+	element date { text } ? &
+	element dicttype { text } ?
+
+contents-content = 
+	content-type-attribute ? &
+	element contents { contents-content } * &
+	element article { article-content } *
+
+article-content =
+	content-type-attribute ? &
+	element key { key-content } &
+	element synonym { synonym-content } * &
+	(
+		element definition { definition-content } |
+		element definition-r { definition-r-content }
+	) +
+
+key-content = text
+
+synonym-content = text
+
+definition-content =
+	content-type-attribute ? &
+	text
+
+definition-r-content =
+	element resource { resource-content } +
+
+resource-content =
+	attribute type { "img" | "snd" | "vdo" | "att" },
+	attribute key { text }
+
+content-type-attribute =
+	attribute type { "m" | "g" | "t" | "x" | "y" | "k" | "w" | "h" | "n" }

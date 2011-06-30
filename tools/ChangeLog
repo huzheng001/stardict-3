@@ -1,0 +1,16 @@
+2011
+add stardict-repair tool - repair broken dictionaries
+update stardict-verify tool: 
+- range errors by importance, 
+- update message, 
+- add new options, 
+- make it accept a list of files and directories to check
+Remove bgl2txt utility (it was outdated by PyGlossary, see http://sourceforge.net/apps/trac/stardict/wiki/Babylon)
+Remove dsl2dict utility (it was outdated by makedict, see http://sourceforge.net/apps/trac/stardict/wiki/LingvoToStarDict)
+redesign message logging system: use g_critical, g_warning, g_message, etc to report messages. To redirect output to the specific target, register a custom log handler.
+update lingvosound2resdb tool: allow to select format of samples, apply custom effects to samples
+add stardict_images tool. It creates StarDict icons using stardict.xcf GIMP file
+update stardict-index tool to support .syn files
+2006.7.18
+StarDict-2.4.8 (capacity) released.
+Move StarDict's tools to this package.

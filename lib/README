@@ -1,0 +1,5 @@
+StarDict library
+
+This library contains common code of StarDict and StarDict tools project.
+
+The target library does not meant to be  installed on the client machine, it's linked statically with StarDict components.

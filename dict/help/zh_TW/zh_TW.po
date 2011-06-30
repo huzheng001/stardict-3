@@ -1,0 +1,3573 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-01-03 19:16+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:220(None)
+msgid ""
+"@@image: 'figures/stardict_main_window.png'; "
+"md5=57a578791fe28cecf1340ff1d258b5d6"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:573(None)
+msgid ""
+"@@image: 'figures/stardict_notification_area.png'; "
+"md5=3bbf96c94a67556e90fe92effeee3d11"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:627(None)
+msgid ""
+"@@image: 'figures/stardict_float_window.png'; "
+"md5=04c6552722813638119430b39524a7ee"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:713(None)
+msgid ""
+"@@image: 'figures/acrobat_toolbar.png'; md5=fdf57bc46f1d93d7912db86f3472e983"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:780(None)
+msgid ""
+"@@image: 'figures/stardict_full_text_translation.png'; "
+"md5=41e7ba7b5b7a3fb404463af6e352ec19"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:2206(None)
+msgid ""
+"@@image: 'figures/portable_apps_menu.png'; "
+"md5=8049bc04d86465438aa96a7763225f80"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/stardict.xml:2369(None)
+msgid ""
+"@@image: 'figures/stardict_windows_console.png'; "
+"md5=bc8427b14e7ef3e8044cf3df90072482"
+msgstr ""
+
+#: C/stardict.xml:29(title) C/stardict.xml:126(revnumber)
+#, fuzzy
+msgid "StarDict Manual V3.0.2"
+msgstr "星際譯王 使用手冊 V2.4.2"
+
+#: C/stardict.xml:31(year)
+msgid "2003"
+msgstr ""
+
+#: C/stardict.xml:32(year)
+msgid "2004"
+msgstr ""
+
+#: C/stardict.xml:33(year)
+msgid "2005"
+msgstr ""
+
+#: C/stardict.xml:34(year)
+msgid "2006"
+msgstr ""
+
+#: C/stardict.xml:35(year)
+msgid "2007"
+msgstr ""
+
+#: C/stardict.xml:36(year)
+msgid "2008"
+msgstr ""
+
+#: C/stardict.xml:37(year)
+msgid "2009"
+msgstr ""
+
+#: C/stardict.xml:38(year)
+msgid "2010"
+msgstr ""
+
+#: C/stardict.xml:39(holder) C/stardict.xml:121(para)
+msgid "Hu Zheng"
+msgstr "胡正"
+
+#: C/stardict.xml:43(publishername) C/stardict.xml:51(orgname)
+#: C/stardict.xml:122(para)
+msgid "GNOME Documentation Project"
+msgstr ""
+
+#: C/stardict.xml:48(firstname) C/stardict.xml:2571(firstname)
+msgid "Hu"
+msgstr "胡"
+
+#: C/stardict.xml:49(surname) C/stardict.xml:2572(surname)
+msgid "Zheng"
+msgstr "正"
+
+#: C/stardict.xml:52(email) C/stardict.xml:2574(email)
+msgid "huzheng001@gmail.com"
+msgstr ""
+
+#: C/stardict.xml:60(firstname)
+msgid "Will"
+msgstr ""
+
+#: C/stardict.xml:61(surname)
+msgid "Robinson"
+msgstr ""
+
+#: C/stardict.xml:63(orgname)
+msgid "Stanford University"
+msgstr ""
+
+#: C/stardict.xml:64(email)
+msgid "wsr23@stanford.edu"
+msgstr ""
+
+#: C/stardict.xml:66(contrib)
+msgid "Cleaning up English"
+msgstr ""
+
+#: C/stardict.xml:70(firstname)
+msgid "Новица"
+msgstr ""
+
+#: C/stardict.xml:71(surname)
+msgid "Наков"
+msgstr ""
+
+#: C/stardict.xml:73(orgname)
+msgid "Слободен софтвер Македонија"
+msgstr ""
+
+#: C/stardict.xml:74(email)
+msgid "acivon@mail.com.mk"
+msgstr ""
+
+#: C/stardict.xml:76(contrib)
+msgid "Македонски превод"
+msgstr ""
+
+#: C/stardict.xml:80(firstname)
+msgid "Ruud"
+msgstr ""
+
+#: C/stardict.xml:81(surname)
+msgid "Slaats"
+msgstr ""
+
+#: C/stardict.xml:83(orgname)
+msgid "Eurotech Group"
+msgstr ""
+
+#: C/stardict.xml:84(email)
+msgid "ruudslaats@eurotechgroup.nl"
+msgstr ""
+
+#: C/stardict.xml:86(contrib)
+msgid "Nederlandse vertaling"
+msgstr ""
+
+#: C/stardict.xml:90(firstname)
+msgid "Александр"
+msgstr ""
+
+#: C/stardict.xml:91(surname)
+msgid "Мурыгин"
+msgstr ""
+
+#: C/stardict.xml:93(orgname)
+msgid "AITOC"
+msgstr ""
+
+#: C/stardict.xml:94(email)
+msgid "murygin@aitoc.com"
+msgstr ""
+
+#: C/stardict.xml:96(contrib)
+msgid "Русский перевод"
+msgstr ""
+
+#: C/stardict.xml:100(firstname)
+msgid "Сергій"
+msgstr ""
+
+#: C/stardict.xml:101(surname)
+msgid "Дубик"
+msgstr ""
+
+#: C/stardict.xml:103(orgname)
+msgid "ЛНБ"
+msgstr ""
+
+#: C/stardict.xml:104(email)
+msgid "dubyk@library.lviv.ua"
+msgstr ""
+
+#: C/stardict.xml:106(contrib)
+msgid "український переклад"
+msgstr ""
+
+#: C/stardict.xml:118(revnumber)
+msgid "StarDict Manual V2.4.2"
+msgstr "星際譯王 使用手冊 V2.4.2"
+
+#: C/stardict.xml:119(date)
+msgid "Nov 2003"
+msgstr ""
+
+#: C/stardict.xml:127(date)
+msgid "Nov 2010"
+msgstr ""
+
+#: C/stardict.xml:130(releaseinfo)
+#, fuzzy
+msgid "This manual describes version 3.0.2 of StarDict."
+msgstr "這本手冊描述了2.4.2版本的星際譯王。"
+
+#: C/stardict.xml:133(title)
+msgid "Feedback"
+msgstr "提出意見"
+
+#: C/stardict.xml:134(para)
+msgid ""
+"To report a bug or make a suggestion regarding the <application>StarDict</"
+"application> application or this manual, follow the directions in the <ulink "
+"url=\"ghelp:gnome-feedback\" type=\"help\">GNOME Feedback Page</ulink>."
+msgstr ""
+"提出關於<application>星際譯王</application>或本文件的建議或者報告臭蟲請與下面"
+"地址聯絡： <ulink url=\"ghelp:gnome-feedback\" type=\"help\"> GNOME 意見頁</"
+"ulink>。"
+
+#: C/stardict.xml:141(para)
+msgid "User manual for the StarDict dictionary."
+msgstr ""
+
+#: C/stardict.xml:145(primary)
+msgid "StarDict"
+msgstr "星際譯王"
+
+#: C/stardict.xml:146(primary) C/stardict.xml:1193(title)
+msgid "Dictionary"
+msgstr "辭典"
+
+#: C/stardict.xml:152(title)
+msgid "Introduction"
+msgstr "簡介"
+
+#: C/stardict.xml:153(para)
+msgid ""
+"<application>StarDict</application> is a Cross-Platform and international "
+"dictionary written in Gtk2. It has powerful features such as \"Glob-style "
+"pattern matching,\" \"Scan selected word,\" \"Fuzzy query,\" etc."
+msgstr ""
+"<application>星際譯王</application>是一個用Gtk2開發的跨平台的國際化的辭典軟"
+"體。她具有強大的功能，如“萬用字元匹配”，“掃描選擇”，“模糊查詢”，等等。"
+
+#: C/stardict.xml:160(title)
+msgid "Getting Started"
+msgstr "啟動"
+
+#: C/stardict.xml:163(title)
+#, fuzzy
+msgid "Starting <application>StarDict</application>"
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:165(para)
+msgid ""
+"You can start <application>StarDict</application> in the following ways:"
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:169(term)
+msgid "<guimenu>Applications</guimenu> menu"
+msgstr "<guimenu>應用程式</guimenu>選單"
+
+#: C/stardict.xml:171(para)
+msgid ""
+"Choose <menuchoice><guisubmenu>Accessories</"
+"guisubmenu><guimenuitem>StarDict</guimenuitem></menuchoice>."
+msgstr ""
+"選擇<menuchoice><guisubmenu>附屬應用程式</guisubmenu><guimenuitem>星際譯王</"
+"guimenuitem></menuchoice>。"
+
+#: C/stardict.xml:175(term)
+msgid "Command line"
+msgstr "指令行"
+
+#: C/stardict.xml:177(para)
+msgid "Type <command>stardict</command>, then press <keycap>Return</keycap>."
+msgstr "輸入<command>stardict</command>，然後按<keycap>回車鍵</keycap>。"
+
+#: C/stardict.xml:178(para)
+#, fuzzy
+msgid "You can specify a word to query too:"
+msgstr "你也可以指定一個單詞來查詢："
+
+#: C/stardict.xml:182(replaceable)
+msgid "word"
+msgstr ""
+
+#: C/stardict.xml:182(command) C/stardict.xml:188(command)
+#: C/stardict.xml:194(command)
+msgid "stardict <placeholder-1/>"
+msgstr ""
+
+#: C/stardict.xml:184(para)
+#, fuzzy
+msgid "or a Glob-style pattern matching string:"
+msgstr "或者使用萬用字元查詢："
+
+#: C/stardict.xml:188(replaceable)
+msgid "wo?d*"
+msgstr ""
+
+#: C/stardict.xml:190(para)
+#, fuzzy
+msgid "or do a fuzzy query:"
+msgstr "或者進行模糊查詢："
+
+#: C/stardict.xml:194(replaceable)
+msgid "/word"
+msgstr ""
+
+#: C/stardict.xml:200(para)
+msgid ""
+"If <application>StarDict</application> is already running. In Windows "
+"edition <application>StarDict</application> activates the first instance of "
+"<application>StarDict</application>, then terminates. In Gnome edition "
+"<application>StarDict</application> actives the first instance of "
+"<application>StarDict</application>, queries the word in that instance if "
+"one was supplied on the command line, then terminates."
+msgstr ""
+
+#: C/stardict.xml:205(para)
+msgid ""
+"See <xref linkend=\"stardict-details-command-line\"/> for complete "
+"description of command line options."
+msgstr ""
+
+#: C/stardict.xml:210(title)
+#, fuzzy
+msgid "<application>StarDict</application> Main window"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:212(para)
+#, fuzzy
+msgid ""
+"When you start <application>StarDict</application>, the following window "
+"appears."
+msgstr "當你啟動了<application>星際譯王</application>，就會出現下面的視窗。"
+
+#: C/stardict.xml:216(title)
+#, fuzzy
+msgid "<application>StarDict</application> Main Window"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:223(phrase)
+#, fuzzy
+msgid ""
+"Shows <application>StarDict</application> main window. Contains Search "
+"field, Tool buttons, Word list, Definition area and Setting buttons."
+msgstr ""
+"顯示 星際譯王 的主視窗，包含了查詢輸入框，工具按鈕，單詞列表，釋義區和設定按"
+"鈕。"
+
+#. ==== End of Figure ====
+#: C/stardict.xml:230(para)
+#, fuzzy
+msgid ""
+"The <application>StarDict</application><firstterm>Main window</firstterm> "
+"consists of the following elements:"
+msgstr "<guilabel>星際譯王</guilabel>主視窗包含了下面的元素："
+
+#: C/stardict.xml:233(term)
+msgid "Top bar"
+msgstr ""
+
+#: C/stardict.xml:235(para)
+msgid ""
+"The top bar consists of the <firstterm>Search field</firstterm> and a number "
+"of buttons. Here they are in the order from left to right."
+msgstr ""
+
+#: C/stardict.xml:239(guilabel)
+msgid "Clear"
+msgstr ""
+
+#: C/stardict.xml:241(para)
+msgid "Clears the Search field."
+msgstr ""
+
+#: C/stardict.xml:247(firstterm)
+#, fuzzy
+msgid "Search field"
+msgstr "搜尋網站"
+
+#: C/stardict.xml:249(para)
+#, fuzzy
+msgid ""
+"Use the Search field to enter the word that you want to look up. You can "
+"also access recently-queried words through the dropdown box."
+msgstr "在這裡輸入你想查詢的單詞。你也可以通過用下拉選單來選取最近查過的單詞。"
+
+#: C/stardict.xml:256(guilabel)
+msgid "Fuzzy Query"
+msgstr ""
+
+#: C/stardict.xml:258(para)
+msgid "Fuzzy queries the word entered into the Search field."
+msgstr ""
+
+#: C/stardict.xml:264(guilabel)
+msgid "Go Back"
+msgstr ""
+
+#: C/stardict.xml:266(para)
+msgid ""
+"Go back to the word you queried before. Right-click to see a list of words "
+"you queried earlier."
+msgstr ""
+
+#: C/stardict.xml:272(guilabel)
+#, fuzzy
+msgid "Main menu"
+msgstr "主視窗"
+
+#: C/stardict.xml:274(para)
+#, fuzzy
+msgid ""
+"A button on the right end of the Top bar. It pops up the "
+"<application>StarDict</application> Main menu."
+msgstr "下次運行<application>星際譯王</application>時字型設定就生效了。"
+
+#: C/stardict.xml:284(term)
+msgid "Left bar"
+msgstr ""
+
+#: C/stardict.xml:286(para)
+msgid ""
+"The Left bar contains a number of buttons, here they are in the order from "
+"top to bottom:"
+msgstr ""
+
+#: C/stardict.xml:290(guilabel) C/stardict.xml:407(firstterm)
+msgid "Word list"
+msgstr "單詞列表"
+
+#: C/stardict.xml:292(para)
+#, fuzzy
+msgid "Opens a list words that have been found in search."
+msgstr "顯示了所有這次查到的單詞。"
+
+#: C/stardict.xml:298(guilabel)
+msgid "Results list"
+msgstr ""
+
+#: C/stardict.xml:300(para)
+msgid ""
+"Opens a list of sources, mainly dictionaries, where the current word has "
+"been found. The Definition area combines results from all the sources. "
+"Clicking a source in the list scrolls the Definition area window to the "
+"definition from that source."
+msgstr ""
+
+#: C/stardict.xml:306(guilabel) C/stardict.xml:766(title)
+msgid "Full-Text Translation"
+msgstr ""
+
+#: C/stardict.xml:308(para)
+msgid ""
+"Switches to the Full-text translation mode that allows to translate blocks "
+"of text, see <xref linkend=\"stardict-translation\"/>."
+msgstr ""
+
+#: C/stardict.xml:314(guilabel)
+#, fuzzy
+msgid "Dictionary groups"
+msgstr "辭典"
+
+#: C/stardict.xml:316(para)
+msgid ""
+"Shows a pop-up menu that allows to select a group of dictionaries where to "
+"search words. The menu also contains a checkbox to enable network "
+"dictionaries."
+msgstr ""
+
+#: C/stardict.xml:322(term)
+msgid "<guilabel>Previous word</guilabel> and <guilabel>Next word</guilabel>"
+msgstr ""
+
+#: C/stardict.xml:324(para)
+msgid ""
+"These buttons are at the bottom part of the Left bar. They work with the "
+"Word list and allow to switch to previous and next words in the Word list."
+msgstr ""
+
+#: C/stardict.xml:335(term)
+msgid "Bottom bar"
+msgstr ""
+
+#: C/stardict.xml:337(para)
+msgid "The left part of the bar in the order from left to right:"
+msgstr ""
+
+#: C/stardict.xml:341(term)
+#, fuzzy
+msgid "<guilabel>Scan selection</guilabel> checkbox"
+msgstr "<guilabel>查詢</guilabel>輸入框"
+
+#: C/stardict.xml:343(para)
+msgid ""
+"Enable and disables the Scan mode. Checking the <guibutton>Scan selection</"
+"guibutton> check button will cause <application>StarDict</application> to "
+"automatically look up words that you highlight in any application. See <xref "
+"linkend=\"stardict-scan-selection\"/> for more details about the Scan mode."
+msgstr ""
+
+#: C/stardict.xml:352(guilabel)
+msgid "Info"
+msgstr ""
+
+#: C/stardict.xml:354(para)
+#, fuzzy
+msgid ""
+"Shows an introduction to using <application>StarDict</application> in the "
+"Definition area."
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:360(guilabel)
+msgid "Quit"
+msgstr ""
+
+#: C/stardict.xml:362(para)
+#, fuzzy
+msgid "Quits <application>StarDict</application>."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#: C/stardict.xml:368(para)
+msgid "The right part of the bar in the order from left to right:"
+msgstr ""
+
+#: C/stardict.xml:372(guilabel)
+msgid "Internet search"
+msgstr ""
+
+#: C/stardict.xml:374(para)
+msgid ""
+"Click the button to initiate Internet search. By default, the first website "
+"is used, but you may select any configured website right-clicking the "
+"button. <application>StarDict</application> queries the word in the Search "
+"field sending a GET request to the configured web page. Result are shown in "
+"a web browser. To configure the list of websites see <xref linkend="
+"\"stardict-prefs-main-window-searchwebsite\"/>."
+msgstr ""
+
+#: C/stardict.xml:380(guilabel)
+msgid "StarDict project website"
+msgstr ""
+
+#: C/stardict.xml:382(para)
+#, fuzzy
+msgid ""
+"Opens <application>StarDict</application> project website in a web browser."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#: C/stardict.xml:388(guilabel)
+msgid "Manage dictionaries"
+msgstr ""
+
+#: C/stardict.xml:390(para)
+msgid ""
+"Opens <firstterm>Manage dictionaries</firstterm> dialog that allows to "
+"configure dictionaries to use, organize them in groups and more."
+msgstr ""
+
+#: C/stardict.xml:396(guilabel) C/stardict.xml:1187(title)
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: C/stardict.xml:398(para)
+msgid ""
+"Opens the <firstterm>Preferences</firstterm> dialog that allows to "
+"configuration a multitude of parameters pertaining to <application>StarDict</"
+"application>. See <xref linkend=\"stardict-prefs\"/>."
+msgstr ""
+
+#: C/stardict.xml:409(para)
+msgid ""
+"The smallest half of the <application>StarDict</application> Main window on "
+"the left. It contains a list of words that have been found in search. Click "
+"a word to show the related articles in the Definition area. You may use a "
+"spliter in the middle of the <application>StarDict</application> Main window "
+"to divide the space between the Word list and the Definition area."
+msgstr ""
+
+#: C/stardict.xml:418(firstterm) C/stardict.xml:677(term)
+msgid "Definition area"
+msgstr "釋義區"
+
+#: C/stardict.xml:420(para)
+msgid ""
+"The largest half of the <application>StarDict</application> Main window on "
+"the right. <application>StarDict</application> displays definition of a word "
+"in this area of the window. You may use a spliter in the middle of the "
+"StarDict main window to divide the space between the Word list and the "
+"Definition area. The Definition area has its own bars: a top toolbar (see "
+"<xref linkend=\"stardict-definition-aria-toolbar\"/>) and a bottom search "
+"bar (only visible when you search in the Definition area)."
+msgstr ""
+
+#: C/stardict.xml:429(para)
+msgid "The following hotkeys are available in the Main window."
+msgstr ""
+
+#: C/stardict.xml:433(title)
+msgid "Hotkeys"
+msgstr ""
+
+#: C/stardict.xml:435(term)
+msgid "<mousebutton>middle</mousebutton> mouse button"
+msgstr ""
+
+#: C/stardict.xml:437(para)
+msgid "This hotkey applies to the Definition area only."
+msgstr ""
+
+#: C/stardict.xml:440(para)
+msgid ""
+"Query the text selected in the Definition area into the Main window. In "
+"Windows edition of <application>StarDict</application>, if there is no "
+"selected text, query clipboard content into the Main window."
+msgstr ""
+
+#: C/stardict.xml:447(term)
+msgid "<mousebutton>right</mousebutton> mouse button"
+msgstr ""
+
+#: C/stardict.xml:449(para)
+msgid "Show pop-up menu."
+msgstr ""
+
+#: C/stardict.xml:458(firstterm)
+#, fuzzy
+msgid "Definition area toolbar"
+msgstr "釋義區"
+
+#: C/stardict.xml:459(para)
+msgid ""
+"The Definition area toolbar is at the top of the <guilabel>Definition area</"
+"guilabel>. It contains a number of buttons. Here they are in the left-to-"
+"right order."
+msgstr ""
+
+#: C/stardict.xml:464(guilabel)
+msgid "Hide(Show) the Word list"
+msgstr ""
+
+#: C/stardict.xml:466(para)
+msgid ""
+"Hide or show the Word list or the Results list, depending on what is active "
+"now."
+msgstr ""
+
+#: C/stardict.xml:471(guilabel)
+msgid "Copy"
+msgstr ""
+
+#: C/stardict.xml:473(para)
+msgid "Copy the Definition area text into clipboard, all the text."
+msgstr ""
+
+#: C/stardict.xml:480(guilabel)
+msgid "Pronounce the word"
+msgstr ""
+
+#: C/stardict.xml:482(para)
+msgid ""
+"This is a button with an additional dropdown menu. Clicking the button you "
+"make <application>StarDict</application> pronounce the current word using "
+"the first TTS engine that can do that. The dropdown menu allows you to "
+"select the TTS engine to use."
+msgstr ""
+
+#: C/stardict.xml:486(title)
+msgid "TTS engines"
+msgstr ""
+
+#: C/stardict.xml:488(guimenuitem)
+msgid "Real People TTS"
+msgstr ""
+
+#: C/stardict.xml:490(para)
+msgid "This engine use sound samples performed by real people."
+msgstr ""
+
+#: C/stardict.xml:497(guimenuitem)
+msgid "Espeak TTS"
+msgstr ""
+
+#: C/stardict.xml:499(para)
+msgid "Espeak TTS plugin."
+msgstr ""
+
+#: C/stardict.xml:506(guimenuitem)
+msgid "Festival TTS"
+msgstr ""
+
+#: C/stardict.xml:508(para)
+msgid "Festival TTS plugin."
+msgstr ""
+
+#: C/stardict.xml:515(guimenuitem)
+#, fuzzy
+msgid "Command TTS"
+msgstr "指令行"
+
+#: C/stardict.xml:517(para)
+msgid ""
+"TTS command you may specify in the Preferences dialog. See <xref linkend="
+"\"stardict-prefs-dictionary-sound\"/>."
+msgstr ""
+
+#: C/stardict.xml:524(para)
+msgid ""
+"Depending on configuration settings, installed plugins and other factors, "
+"the list of TTS engines may be shorter."
+msgstr ""
+
+#: C/stardict.xml:531(guilabel)
+msgid "Save to file"
+msgstr ""
+
+#: C/stardict.xml:533(para)
+msgid ""
+"Save Definition area text into a file. The new text is appended to the end "
+"of the file. The file to use is specified in the <xref linkend=\"stardict-"
+"prefs-dictionary-export\"/> section of the <guilabel>Preferences</guilabel> "
+"dialog. You may also specify to export only the found word, not its "
+"definition. <application>StarDict</application> exports not the word you "
+"searched for but the word that was found, the one which translation is shown "
+"in the Definition area. When \"export only word\" is not specified, "
+"selection is taken into account. When text is selected in the Definition "
+"area, the selected text is exported prepended with the found word. When "
+"there are no selected text, all text of the Definition area is exported."
+msgstr ""
+
+#: C/stardict.xml:542(para)
+msgid "Hotkey: <keycombo><keycap>Alt</keycap><keycap>e</keycap></keycombo>"
+msgstr ""
+
+#: C/stardict.xml:548(guilabel)
+msgid "Search in the Definition text"
+msgstr ""
+
+#: C/stardict.xml:550(para)
+msgid ""
+"Search for text in the Definition area. This button opens the Definitiona "
+"area Search bar at the bottom of the Definition area where you may type a "
+"word to search."
+msgstr ""
+
+#: C/stardict.xml:553(para)
+msgid "Hotkey: <keycombo><keycap>Ctrl</keycap><keycap>f</keycap></keycombo>"
+msgstr ""
+
+#: C/stardict.xml:561(title) C/stardict.xml:1700(title)
+msgid "Notification area icon"
+msgstr "狀態通知區圖示"
+
+#: C/stardict.xml:562(para)
+#, fuzzy
+msgid ""
+"<application>StarDict</application> will also add an icon to the "
+"Notification area. When you iconify the Main window, the window will be "
+"hiden. After you click the icon, the window will be shown again. If you "
+"right click this icon, it will popup a menu where you can choose to toggle "
+"<guimenuitem>Scan selection</guimenuitem>, or to <guimenuitem>Quit</"
+"guimenuitem>. You can toggle <guimenuitem>Scan selection</guimenuitem> "
+"directly by ctrl-clicking the icon. Clicking the middle mouse button on the "
+"icon will query the selected word."
+msgstr ""
+"<application>星際譯王</application>也會在狀態通知區中加入一個圖示。當你最小化"
+"視窗後，視窗就會被隱藏。當你按一下圖示後，視窗就會出現。如果右擊鼠標，會彈出"
+"一個選單讓你選擇切換<guimenuitem>取詞</guimenuitem>狀態，或者<guimenuitem>離"
+"開</guimenuitem>。你可以按下Ctrl鍵後按一下圖示來直接切換取詞狀態。在圖示上點"
+"鼠標中鍵可以查詢選擇中的文字。"
+
+#: C/stardict.xml:570(title)
+msgid "<application>StarDict</application>'s notification area icon"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:576(phrase)
+msgid "<application>StarDict</application>'s notification area icon."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#: C/stardict.xml:584(title)
+msgid "Scan selection"
+msgstr "選擇取詞"
+
+#: C/stardict.xml:586(para)
+#, fuzzy
+msgid ""
+"<application>StarDict</application> can automatically scan selections. This "
+"means that when you select a word or phrase in <application>StarDict</"
+"application> or in any other application, <application>StarDict</"
+"application> will get the text that you selected and search for it, then "
+"display the Floating window containing the result of the search."
+msgstr ""
+"<application>星際譯王</application>能夠自動掃描選擇區。這意味著當你在"
+"<application>星際譯王</application>中或其它應用程式中選擇了一個單詞或詞組時，"
+"<application>星際譯王</application> 就會取得你要選中的單詞或詞組，然後彈出一"
+"個浮動視窗顯示查詢結果。"
+
+#: C/stardict.xml:589(para)
+msgid ""
+"In Windows the Scan mode works differently. It has nothing to do with "
+"selection in fact. <application>StarDict</application> extracts the text "
+"under the pointer when you pause the mouse for a while. Normally "
+"<application>StarDict</application> looks up a word under the pointer, if "
+"the pointer is not over a word, then words to the left and the right of the "
+"pointer are considered. It is time to say what <application>StarDict</"
+"application> considers as a word. <application>StarDict</application> gives "
+"a number of tries. First, it considers a word may include anything but "
+"spaces and punctuations; second, a word consisting of only letters; a word "
+"of lower case letters; a word of upper case letters; a capitalized word of "
+"letters. Finally, <application>StarDict</application> uses one of the tried "
+"word to find the longest prefix making a word. You may help "
+"<application>StarDict</application> to extract the right word or a part of a "
+"word selecting it. Although <application>StarDict</application> does not "
+"work with selections, selection may effect the text <application>StarDict</"
+"application> gets."
+msgstr ""
+
+#: C/stardict.xml:600(para)
+msgid ""
+"Scanning in Windows may not work with some applications. For example, it's "
+"known that scanning does not work with <application>FireFox 3.x</"
+"application> and <application>Windows Console</application> (cmd.exe "
+"process). The scanning feature depends on the way application outputs text. "
+"If scanning does not work, you may harness another <application>StarDict</"
+"application> feature ‒ <firstterm>Clipboard scanning</firstterm>, see <xref "
+"linkend=\"stardict-prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:609(para)
+msgid ""
+"In Windows <application>StarDict</application> works specially with some "
+"applications. First, <application>StarDict</application> itself. To scan a "
+"word in <application>StarDict</application> Main window you need to select "
+"it. The Scan mode in <application>StarDict</application> Main window works "
+"exactly as it should in general case, the fact that it's Windows does not "
+"matter. You can not scan in other <application>StarDict</application> "
+"windows however."
+msgstr ""
+
+#: C/stardict.xml:617(para)
+msgid ""
+"Second, there is special plugin to scan in PDF documents, see <xref linkend="
+"\"stardict-acrobat-plugin\"/>."
+msgstr ""
+
+#: C/stardict.xml:623(title)
+#, fuzzy
+msgid "<application>StarDict</application> Floating Window"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:630(phrase)
+#, fuzzy
+msgid ""
+"Shows <application>StarDict</application> the Floating window. Contains Tool "
+"buttons and Definition area."
+msgstr "顯示 星際譯王 浮動視窗。包含了工具按鈕和釋義區。"
+
+#: C/stardict.xml:638(title)
+#, fuzzy
+msgid "Usage tips"
+msgstr "使用方法"
+
+#: C/stardict.xml:640(para)
+#, fuzzy
+msgid "You may drag the Floating window to move it."
+msgstr "設定浮動視窗寬度的最大值。"
+
+#: C/stardict.xml:643(para)
+#, fuzzy
+msgid ""
+"The Floating window will disappear when you move your pointer some distance "
+"away."
+msgstr "你能夠拖動視窗。當把鼠標指針移出浮動視窗一定距離後，它就會消失。"
+
+#: C/stardict.xml:646(para)
+msgid ""
+"You may configure <application>StarDict</application> so it will do scanning "
+"only when a special modifier key is held down. See <xref linkend=\"stardict-"
+"prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:649(para)
+msgid ""
+"You may switch the Scan mode on and off by pressing the "
+"<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></"
+"keycombo> shortcut. See <xref linkend=\"stardict-prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:654(para)
+msgid ""
+"<application>StarDict</application> remembers the last text looked up in the "
+"Floating window and will not lookup it again. If you need to see the "
+"translation again, you should lookup another word first (it's not enough to "
+"simply change selection) and then lookup the original word. Another "
+"possibility is to middle-click on the Notification area icon, "
+"<application>StarDict</application> will lookup the selection "
+"unconditionally."
+msgstr ""
+
+#: C/stardict.xml:662(para)
+#, fuzzy
+msgid ""
+"The <application>StarDict</application> Floating window consists of the "
+"following elements:"
+msgstr "<guilabel>星際譯王</guilabel>浮動視窗包含下列元素："
+
+#: C/stardict.xml:665(term)
+#, fuzzy
+msgid "Tool buttons bar"
+msgstr "工具按鈕"
+
+#: C/stardict.xml:667(para)
+#, fuzzy
+msgid ""
+"A bar at the top of the Floating window. The bar will be hidden "
+"automatically to save display space. When your mouse pointer enters the "
+"Floating window, the Tool buttons bar will appear immediately, and disappear "
+"again as the mouse pointer leaves."
+msgstr ""
+"這些按鈕會自動隱藏以節省顯示空間。當把鼠標移入浮動視窗時，這些按鈕會立即出"
+"現，當鼠標離開後又會再度隱藏。"
+
+#: C/stardict.xml:669(para)
+#, fuzzy
+msgid ""
+"You can click these buttons to <guibutton>query</guibutton> a word in the "
+"Main window, <guibutton>copy</guibutton> the query result to clipboard, "
+"<guibutton>pronounce</guibutton> the word, <guibutton>stop</guibutton> "
+"selection scanning, etc. To the far right is the <guibutton>Lock floating "
+"window</guibutton> button. If the Floating window is locked, it will always "
+"be shown there."
+msgstr ""
+"你可以通過按一下這些按鈕來在主視窗<guibutton>查詢</guibutton>單詞，把查詢結果"
+"<guibutton>複製</guibutton>到剪貼板，<guibutton>朗讀</guibutton>單詞，"
+"<guibutton>停止</guibutton>選中區掃描等等。在最右邊是<guibutton>鎖定浮動視窗"
+"</guibutton>按鈕。如果浮動視窗被鎖定，她就會一直在那裡顯示。"
+
+#: C/stardict.xml:679(para)
+msgid "The query result is displayed in this area."
+msgstr "查詢的結果會顯示在這個區域。"
+
+#: C/stardict.xml:687(title) C/stardict.xml:2224(term)
+msgid "WordPick Adobe Acrobat plugin"
+msgstr ""
+
+#: C/stardict.xml:688(para)
+msgid ""
+"<application>StarDict</application> includes an Abode Acrobat plugin that "
+"can be used to extract and translate text from Portable Document Format "
+"(PDF) documents. The WordPick plugin is available in Windows edition of "
+"<application>StarDict</application> only. The main text extration mechanism "
+"does not work with PDF documents in Windows."
+msgstr ""
+
+#: C/stardict.xml:692(title)
+msgid "Limitations"
+msgstr ""
+
+#: C/stardict.xml:693(para)
+msgid ""
+"WordPick plugin requires non-free edition of Acrobat like Acrobat Stardard, "
+"Pro or richer, it does not work with the free Acrobat Reader product. The "
+"plugin is know to work with versions 7-9 of Acrobat. PDF document security "
+"restrictions must allow extracting document content."
+msgstr ""
+
+#: C/stardict.xml:701(para)
+msgid ""
+"WordPick plugin embeds an icon into the stardard Acrobat toolbar near the "
+"Hand Tool. In Acrobat Reader you will not see that icon ‒ plugin is not "
+"available. If the current document does not allow for text extraction, the "
+"icon is disabled, the plugin is not operational."
+msgstr ""
+
+#: C/stardict.xml:709(title)
+msgid "Adobe Acrobat Toolbar with WordPick plugin icon"
+msgstr ""
+
+#: C/stardict.xml:716(phrase)
+msgid "Shows Adobe Acrobat Toolbar with WordPick plugin icon."
+msgstr ""
+
+#: C/stardict.xml:724(title)
+msgid "How to inspect document security permissions"
+msgstr ""
+
+#: C/stardict.xml:725(para)
+msgid ""
+"In the main menu open <guimenu>File</guimenu>, <guimenuitem>Document "
+"properties</guimenuitem>. <guilabel>Document properties</guilabel> dialog "
+"pops up. Proceed to <guilabel>Security</guilabel> tab. Look into "
+"<guilabel>Document Restrictions Summary</guilabel> group. <guilabel>Content "
+"Copying or Extraction</guilabel> must be allowed."
+msgstr ""
+
+#: C/stardict.xml:732(title)
+msgid "Translate text with WordPick plugin"
+msgstr ""
+
+#: C/stardict.xml:734(para)
+msgid ""
+"Select WordPick and Select tools. Cursor changes to a vertical bar. Now you "
+"can select text with mouse."
+msgstr ""
+
+#: C/stardict.xml:740(para)
+#, fuzzy
+msgid ""
+"Start <application>StarDict</application> if you have not already done that, "
+"and enable Scan mode."
+msgstr ""
+"<application>星際譯王</application>在視窗的這塊區域列出了本單詞的所有釋義。"
+
+#: C/stardict.xml:745(para)
+#, fuzzy
+msgid ""
+"Select a word in the PDF document, <application>StarDict</application> shows "
+"the Floating window with translation if the word is found."
+msgstr "當你啟動了<application>星際譯王</application>，就會出現下面的視窗。"
+
+#: C/stardict.xml:752(para)
+msgid ""
+"You may select consecutive words and phrases. If <application>StarDict</"
+"application> is unable to find the phrase, it tries to cut words from the "
+"end. You will be shown translation of the first word if nothing else has "
+"been found."
+msgstr ""
+
+#: C/stardict.xml:758(para)
+msgid ""
+"Note that the Scan modifier key (<xref linkend=\"stardict-prefs-dictionary-"
+"scan\"/>) has no effect in Acrobat. WordPick search for text when you select "
+"something in the document regardless of the state of modifiers. To turn off "
+"the text translation mode, deselect the WordPick tool on the toolbar, "
+"deselecting the Select tool is not necessary."
+msgstr ""
+
+#: C/stardict.xml:768(para)
+msgid ""
+"<application>StarDict</application> provides full-text translation service. "
+"It allows you to translate short texts with up to 2000 characters "
+"approximately. The exact limit depends on the translation engine and other "
+"factors. To switch to Full-Text Translation mode click the <guilabel>Full-"
+"Text Translation</guilabel> button on the Left bar in <application>StarDict</"
+"application> Main window."
+msgstr ""
+
+#: C/stardict.xml:770(para)
+msgid ""
+"<application>StarDict</application> uses online translation services "
+"available for free on the Web to perform translation. <application>StarDict</"
+"application> collects text, source and target languages, constructs an HTTP "
+"request and sends it to online translation service. The application receives "
+"response of the service and shows results in a window. You may see "
+"<application>StarDict</application> interface to Full-Text Translation "
+"service below."
+msgstr ""
+
+#: C/stardict.xml:776(title)
+msgid "Full-Text Translation Mode"
+msgstr ""
+
+#: C/stardict.xml:783(phrase)
+#, fuzzy
+msgid ""
+"Shows <application>StarDict</application> in Full-Text Translation mode."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#. ==== End of Figure ====
+#: C/stardict.xml:790(para)
+msgid ""
+"The top line of the window from left to right contains: engine selection "
+"combobox, source language combobox, and target language combobox. Below you "
+"see a text area for the text to translate. The bottom part of the window "
+"contains a text area for translation results. The <guilabel>Translate</"
+"guilabel> button in the middle of the window initiates translation request. "
+"The bottom line of the window provides a link to the online translation "
+"engine. It opens in a web browser."
+msgstr ""
+
+#: C/stardict.xml:793(para)
+msgid ""
+"To translate something, first select a translation engine. You have the "
+"following choice: Google, Yahoo, Excite Japan. Select source and target "
+"languages. Available source and target languages depend on selected engine. "
+"Available target languages depend on source language as well. Type the text "
+"to translate into the source text area. Click the <guilabel>Translate</"
+"guilabel> button to start translation. You'll see results in the result text "
+"area. Sometimes it may show you <guilabel>Not found!</guilabel> text. It "
+"means that translation failed. There can be a number of reasons: source text "
+"is too long, the online service is down, the service has changed output "
+"format and <application>StarDict</application> is unable to parse it. You "
+"may see other errors in the results area."
+msgstr ""
+
+#: C/stardict.xml:806(title)
+msgid "Usage"
+msgstr "使用方法"
+
+#: C/stardict.xml:809(title)
+msgid "Looking Up a Word"
+msgstr "查詢單詞"
+
+#: C/stardict.xml:810(para)
+msgid "To look up the definition of a word, perform the following steps:"
+msgstr "要查詢一個單詞的釋義，可以按照下列步驟進行："
+
+#: C/stardict.xml:812(para)
+#, fuzzy
+msgid "Type the word that you want to look up in the Search field."
+msgstr "在<guilabel>搜索</guilabel>框中輸入你想要查找的單詞。"
+
+#: C/stardict.xml:814(para)
+msgid ""
+"<application>StarDict</application> will show the definition immediately. If "
+"not found, you can press <keycap>Return</keycap> to do a fuzzy query or just "
+"click the <guibutton>Fuzzy query</guibutton> button."
+msgstr ""
+"<application>星際譯王</application>會立即顯示所有的釋義。如果沒有找到，你可以"
+"按<keycap>回車鍵</keycap>來進行模糊查詢或者按一下<guibutton>模糊查詢</"
+"guibutton>按鈕。"
+
+#: C/stardict.xml:816(para)
+#, fuzzy
+msgid ""
+"Use the scrollbar to scroll through the definition. Select the words in the "
+"Word list to view the related words."
+msgstr "你可以利用捲動列來查看釋義區的內容，在單詞列表中選擇相關的單詞。"
+
+#: C/stardict.xml:822(title)
+msgid "Clearing the Display Area"
+msgstr "清除單字輸入框內容"
+
+#: C/stardict.xml:823(para)
+#, fuzzy
+msgid ""
+"To clear the text of the Search field, click the <guibutton>Clear</"
+"guibutton> button on the left, or just press <keycap>Alt-C</keycap> or "
+"<keycap>ESC</keycap>."
+msgstr ""
+"要清除<guilabel>查找</guilabel>輸入框中的內容，按一下位於左邊的<guibutton>清"
+"除</guibutton>按鈕或直接按<keycap>Alt-C</keycap> 或 <keycap>ESC</keycap>。"
+
+#: C/stardict.xml:828(title)
+msgid "To Copy Text to Another Application"
+msgstr "複製文本"
+
+#: C/stardict.xml:829(para)
+#, fuzzy
+msgid ""
+"There are two ways to copy the text in the Definition area to another "
+"application:"
+msgstr "複製釋義區的內容到另一個應用程式有兩種方式："
+
+#: C/stardict.xml:831(para)
+#, fuzzy
+msgid ""
+"To copy all of the text, click the <guibutton>Copy</guibutton> button by the "
+"top of the <guilabel>Definition area</guilabel>."
+msgstr ""
+"複製所有的內容：按一下位於<guilabel>釋義區</guilabel>頂部的<guibutton>複製</"
+"guibutton>按鈕。"
+
+#: C/stardict.xml:832(para)
+msgid ""
+"To copy some of the text, select the text that you want to copy, then click "
+"your mouse's right button and choose <guimenuitem>Copy</guimenuitem>."
+msgstr ""
+"選擇你想複製的文本，然後按一下鼠標的右鍵並選擇<guimenuitem>複製</"
+"guimenuitem>。"
+
+#: C/stardict.xml:838(title)
+#, fuzzy
+msgid "To Find Text in the Definition Area"
+msgstr "查找釋義區文本"
+
+#: C/stardict.xml:839(para)
+#, fuzzy
+msgid "To find text in the Definition area, perform the following steps:"
+msgstr "要查找位於釋義區的文本，可以按照下面的步驟進行："
+
+#: C/stardict.xml:841(para)
+msgid ""
+"click the <guibutton>Find</guibutton> button by the top of the "
+"<guilabel>Definition area</guilabel>."
+msgstr ""
+"按一下位於<guilabel>釋義區</guilabel>頂部的<guibutton>查找</guibutton>按鈕。"
+
+#: C/stardict.xml:842(para)
+msgid ""
+"Type the string that you want to find in the <guilabel>Find</guilabel> text "
+"box, then press <keycap>Return</keycap>. You cannot use wildcards."
+msgstr ""
+"在<guilabel>查找</guilabel>文本框中輸入你想要查找的單詞或詞組，然後按<keycap>"
+"回車鍵</keycap>。但不可以使用萬用字元。"
+
+#: C/stardict.xml:844(para)
+msgid ""
+"To find the next occurrence of the word, press <keycap>Return</keycap> again."
+msgstr "要查找下一個單詞，再按<keycap>回車鍵</keycap>即可。"
+
+#: C/stardict.xml:849(title)
+msgid "Scanning: operation guide"
+msgstr ""
+
+#: C/stardict.xml:853(para)
+msgid "Scenarios below assume that you make selection with mouse."
+msgstr ""
+
+#: C/stardict.xml:858(para)
+msgid ""
+"Scan key is the modifier set by the \"Scan modifier key\" option, see <xref "
+"linkend=\"stardict-prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:865(title)
+msgid "Scanning in Linux and Unix"
+msgstr ""
+
+#: C/stardict.xml:868(title) C/stardict.xml:945(title)
+#, fuzzy
+msgid "Case 1. \"Only scan while modifier key is being pressed\" option is off"
+msgstr "在修飾鍵被按下時才進行取詞。"
+
+#: C/stardict.xml:870(para)
+msgid "Select text to translate."
+msgstr ""
+
+#: C/stardict.xml:875(para) C/stardict.xml:894(para) C/stardict.xml:923(para)
+msgid "Wait for a few seconds. The Floating Window pops up."
+msgstr ""
+
+#: C/stardict.xml:882(title) C/stardict.xml:959(title)
+#, fuzzy
+msgid "Case 2. \"Only scan while modifier key is being pressed\" option is on"
+msgstr "在修飾鍵被按下時才進行取詞。"
+
+#: C/stardict.xml:884(para) C/stardict.xml:913(para) C/stardict.xml:966(para)
+msgid "Press and hold the Scan key."
+msgstr ""
+
+#: C/stardict.xml:889(para)
+msgid "Select the text."
+msgstr ""
+
+#: C/stardict.xml:899(para) C/stardict.xml:928(para) C/stardict.xml:976(para)
+msgid "Release the Scan key."
+msgstr ""
+
+#: C/stardict.xml:906(title)
+#, fuzzy
+msgid ""
+"Case 2.1. \"Only scan while modifier key is being pressed\" option is on. A "
+"variation"
+msgstr "在修飾鍵被按下時才進行取詞。"
+
+#: C/stardict.xml:908(para)
+msgid "Select the text and do not release the mouse button yet."
+msgstr ""
+
+#: C/stardict.xml:918(para)
+msgid "Release the mouse button."
+msgstr ""
+
+#: C/stardict.xml:934(para)
+msgid ""
+"Selection is made when you release mouse button. This is the time when the "
+"Scan key must be pressed down. It takes some time for StarDict to inspect "
+"selection, you must hold the Scan key all this time. What is why you need to "
+"hold the key for a few seconds after selection."
+msgstr ""
+
+#: C/stardict.xml:942(title)
+#, fuzzy
+msgid "Scanning in Windows"
+msgstr "星際譯王 主視窗"
+
+#: C/stardict.xml:947(para) C/stardict.xml:961(para)
+msgid "Place the mouse pointer over the word you want to traslate."
+msgstr ""
+
+#: C/stardict.xml:952(para) C/stardict.xml:971(para)
+msgid "Do not move the mouse for a few seconds. The Floating Window pops up."
+msgstr ""
+
+#: C/stardict.xml:982(para)
+msgid ""
+"For scanning in PDF documents see <xref linkend=\"stardict-acrobat-plugin\"/"
+">."
+msgstr ""
+
+#: C/stardict.xml:989(title)
+msgid "Toggle Scan Mode"
+msgstr ""
+
+#: C/stardict.xml:990(para)
+msgid ""
+"There are a number of ways to enable or disable the Scan selection mode. "
+"When in Scan mode, <application>StarDict</application> shows translation of "
+"the text you select in different windows. See <xref linkend=\"stardict-scan-"
+"selection\"/>."
+msgstr ""
+
+#: C/stardict.xml:993(title)
+msgid "Ways to enable the Scan mode"
+msgstr ""
+
+#: C/stardict.xml:994(para)
+msgid ""
+"Toggle the <guilabel>Scan selection</guilabel> checkbox at the bottom left "
+"corner of the <application>StarDict</application> Main window."
+msgstr ""
+
+#: C/stardict.xml:995(para)
+msgid ""
+"Right-click the Notification area icon and check <guimenuitem>Scan</"
+"guimenuitem> in the pop-up menu."
+msgstr ""
+
+#: C/stardict.xml:997(para)
+msgid ""
+"Press <keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>x</keycap></"
+"keycombo> shortcut (it toggles the Scan mode). To configure the shortcut see "
+"<xref linkend=\"stardict-prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:1005(title)
+#, fuzzy
+msgid "Main window hotkeys"
+msgstr "主視窗"
+
+#: C/stardict.xml:1008(keycap) C/stardict.xml:1048(keycap)
+#: C/stardict.xml:1088(keycap) C/stardict.xml:1096(keycap)
+#: C/stardict.xml:1157(keycap) C/stardict.xml:1170(keycap)
+msgid "Ctrl"
+msgstr ""
+
+#: C/stardict.xml:1008(keycap)
+msgid "q"
+msgstr ""
+
+#: C/stardict.xml:1011(para)
+#, fuzzy
+msgid "Quit <application>StarDict</application>."
+msgstr "<application>星際譯王</application>的狀態通知區圖示。"
+
+#: C/stardict.xml:1016(keycap) C/stardict.xml:1024(keycap)
+#: C/stardict.xml:1032(keycap) C/stardict.xml:1056(keycap)
+#: C/stardict.xml:1064(keycap) C/stardict.xml:1072(keycap)
+#: C/stardict.xml:1080(keycap) C/stardict.xml:1157(keycap)
+#: C/stardict.xml:1170(keycap)
+msgid "Alt"
+msgstr ""
+
+#: C/stardict.xml:1016(keycap) C/stardict.xml:1170(keycap)
+msgid "x"
+msgstr ""
+
+#: C/stardict.xml:1019(para)
+msgid ""
+"Minimize to tray. <application>StarDict</application> Main window is closed, "
+"taskbar item disappears, but the application continues to run. You may open "
+"the Main window again clicking on the Notification area icon."
+msgstr ""
+
+#: C/stardict.xml:1024(keycap) C/stardict.xml:1157(keycap)
+msgid "z"
+msgstr ""
+
+#: C/stardict.xml:1027(para)
+msgid ""
+"Iconify the application. The Main window is hidden, the taskbar item remains."
+msgstr ""
+
+#: C/stardict.xml:1032(keycap)
+msgid "e"
+msgstr ""
+
+#: C/stardict.xml:1035(para)
+msgid ""
+"Save word definition to a file. See <xref linkend=\"stardict-definition-aria-"
+"toolbar\"/> for more details."
+msgstr ""
+
+#: C/stardict.xml:1040(keycap)
+msgid "F1"
+msgstr ""
+
+#: C/stardict.xml:1043(para)
+msgid "Show help."
+msgstr ""
+
+#: C/stardict.xml:1048(keycap)
+msgid "f"
+msgstr ""
+
+#: C/stardict.xml:1051(para)
+msgid ""
+"Search in the Definition area. See <xref linkend=\"stardict-definition-aria-"
+"toolbar\"/> for more details."
+msgstr ""
+
+#: C/stardict.xml:1056(keycap)
+msgid "Left"
+msgstr ""
+
+#: C/stardict.xml:1059(para)
+msgid "Go Back. Return to the word that was queried before."
+msgstr ""
+
+#: C/stardict.xml:1064(keycap)
+msgid "Up"
+msgstr ""
+
+#: C/stardict.xml:1067(para)
+msgid "Previous word. Query the previous word in the Word index."
+msgstr ""
+
+#: C/stardict.xml:1072(keycap)
+msgid "Down"
+msgstr ""
+
+#: C/stardict.xml:1075(para)
+msgid "Next word. Query the next word in the Word index."
+msgstr ""
+
+#: C/stardict.xml:1080(keycap)
+msgid "m"
+msgstr ""
+
+#: C/stardict.xml:1083(para)
+msgid "Menu. Show the Main menu."
+msgstr ""
+
+#: C/stardict.xml:1088(keycap)
+msgid "v"
+msgstr ""
+
+#: C/stardict.xml:1091(para)
+#, fuzzy
+msgid "Query clipboard text in <application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1096(keycap)
+#, fuzzy
+msgid "u"
+msgstr "伏"
+
+#: C/stardict.xml:1099(para)
+msgid "Clear the Search field and focus it."
+msgstr ""
+
+#: C/stardict.xml:1104(keycap)
+msgid "BackSpace"
+msgstr ""
+
+#: C/stardict.xml:1107(para)
+msgid ""
+"The same as <keycombo><keycap>Ctrl</keycap><keycap>u</keycap></keycombo>."
+msgstr ""
+
+#: C/stardict.xml:1112(keycap)
+msgid "Enter"
+msgstr ""
+
+#: C/stardict.xml:1117(para)
+msgid "The focus is in the Word list."
+msgstr ""
+
+#: C/stardict.xml:1118(para)
+msgid ""
+"If the selected index item has children, expand or collapse the item. If the "
+"selected index item has no children, query the item in the main window."
+msgstr ""
+
+#: C/stardict.xml:1123(para)
+msgid "The focus is in the Definition area."
+msgstr ""
+
+#: C/stardict.xml:1124(para)
+msgid "Requery the text in the Search field."
+msgstr ""
+
+#: C/stardict.xml:1131(keycap)
+msgid "Space"
+msgstr ""
+
+#: C/stardict.xml:1134(para)
+msgid "Focus the Search field."
+msgstr ""
+
+#: C/stardict.xml:1139(keycap)
+msgid "Escape"
+msgstr ""
+
+#: C/stardict.xml:1144(para)
+msgid "The focus is in Definition area Search bar."
+msgstr ""
+
+#: C/stardict.xml:1145(para)
+msgid "Hide the search bar."
+msgstr ""
+
+#: C/stardict.xml:1149(para)
+msgid ""
+"Otherwise, this hotkey has the same effect as <keycombo><keycap>Ctrl</"
+"keycap><keycap>u</keycap></keycombo>."
+msgstr ""
+
+#: C/stardict.xml:1160(para)
+msgid ""
+"Open the Main window of <application>StarDict</application>. The Main window "
+"may be iconified, or <application>StarDict</application> may only exist as a "
+"Notification area icon. In all the cases pressing this hotkey presents the "
+"Main window to the user. You may change the hotkey in the Preferences "
+"dialog, see <xref linkend=\"stardict-prefs-main-window-options\"/>."
+msgstr ""
+
+#: C/stardict.xml:1173(para)
+msgid ""
+"Toggle the Scan mode. You may change the hotkey in the Preferences dialog, "
+"see <xref linkend=\"stardict-prefs-dictionary-scan\"/>."
+msgstr ""
+
+#: C/stardict.xml:1188(para)
+#, fuzzy
+msgid ""
+"To configure <application>StarDict</application>, click the "
+"<guibutton>Preferences</guibutton> button at the right-bottom corner of the "
+"Main window or click the <guibutton>Main menu</guibutton> button and choose "
+"<guimenuitem>Preferences</guimenuitem>."
+msgstr ""
+"要設定<application>星際譯王</application>，按一下位於主視窗右下部的"
+"<guibutton>偏好設定</guibutton>按鈕或者按一下<guibutton>主選單</guibutton>按"
+"鈕並選擇<guimenuitem>偏好設定</guimenuitem>。"
+
+#: C/stardict.xml:1195(title)
+msgid "Scan Selection"
+msgstr "選擇區取詞"
+
+#: C/stardict.xml:1199(guilabel)
+#, fuzzy
+msgid "Only scan while modifier key is being pressed."
+msgstr "在修飾鍵被按下時才進行取詞。"
+
+#: C/stardict.xml:1201(para)
+#, fuzzy
+msgid ""
+"Only do scanning while the modifier key being pressed. The modifier key is "
+"set by the <xref linkend=\"stardict-prefs-dictionary-scan\" endterm="
+"\"stardict-prefs-dictionary-scan-scan-key\"/> option."
+msgstr "是否在作用鍵被按下時才進行取詞。作用鍵由“取詞作用鍵”選項來設定。"
+
+#: C/stardict.xml:1203(para) C/stardict.xml:1239(para)
+#: C/stardict.xml:1268(para) C/stardict.xml:1317(para)
+#: C/stardict.xml:1393(para) C/stardict.xml:1438(para)
+#: C/stardict.xml:1484(para) C/stardict.xml:1540(para)
+#: C/stardict.xml:1613(para) C/stardict.xml:1747(para)
+#: C/stardict.xml:1784(para)
+msgid "Default: FALSE."
+msgstr "預設：否。"
+
+#: C/stardict.xml:1209(guilabel)
+#, fuzzy
+msgid "Hide floating window when modifier key released."
+msgstr "當點擊鼠標中鍵時在浮動視窗進行查詢。"
+
+#: C/stardict.xml:1211(para)
+msgid ""
+"When this option is set, the Floating window is hidden when user releases "
+"the modifier key. Note: the window is hidden only if the pointer has the "
+"same position it had when the window was shown. In addition to hiding the "
+"window, the last selected text is forgotten, which allow you to lookup the "
+"same text again simply pressing the modifier key. When this option is not "
+"set, releasing the modifier key has no effect on the Floating window."
+msgstr ""
+
+#: C/stardict.xml:1217(para) C/stardict.xml:1227(para)
+msgid ""
+"This option has effect only if <xref linkend=\"stardict-prefs-dictionary-scan"
+"\" endterm=\"stardict-prefs-dictionary-scan-scan-when-modifier\"/> is "
+"checked."
+msgstr ""
+
+#: C/stardict.xml:1219(para) C/stardict.xml:1287(para)
+#: C/stardict.xml:1341(para) C/stardict.xml:1375(para)
+#: C/stardict.xml:1506(para) C/stardict.xml:1623(para)
+#: C/stardict.xml:1755(para)
+msgid "Default: TRUE."
+msgstr "預設：是。"
+
+#: C/stardict.xml:1224(guilabel)
+msgid "Scan modifier key"
+msgstr ""
+
+#: C/stardict.xml:1226(para)
+msgid ""
+"This option allows to choose a modifier keys or a key combination that "
+"enables scanning."
+msgstr ""
+
+#: C/stardict.xml:1229(para)
+#, fuzzy
+msgid ""
+"Default key: <keycap>Win</keycap> (depends on <application>StarDict</"
+"application> edition)."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1234(guilabel)
+msgid "Scan clipboard."
+msgstr ""
+
+#: C/stardict.xml:1236(para)
+msgid ""
+"Enables Clipboard scanning. If enabled, when new text is copied into the "
+"clipboard, <application>StarDict</application> lookup the text into the "
+"Floating window."
+msgstr ""
+
+#: C/stardict.xml:1238(para)
+#, fuzzy
+msgid ""
+"This option is only available in <emphasis>Windows edition</emphasis> of "
+"<application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1244(term)
+msgid "Scan mode shortcut"
+msgstr ""
+
+#: C/stardict.xml:1246(para)
+msgid ""
+"The Scan mode shortcut enables or disables the Scan mode. Check the "
+"<guilabel>Use scan hotkey</guilabel> checkbox to enable this shortcut. You "
+"may change the shortcut in the field to the right of the label. Click inside "
+"the field and press the key combination you want to assign to this action."
+msgstr ""
+
+#: C/stardict.xml:1250(para) C/stardict.xml:1563(para)
+#: C/stardict.xml:1583(para)
+#, fuzzy
+msgid "Default: TRUE"
+msgstr "預設：是。"
+
+#: C/stardict.xml:1251(para)
+msgid ""
+"Default shortcut: <keycombo><keycap>Ctrl</keycap><keycap>Alt</"
+"keycap><keycap>x</keycap></keycombo>."
+msgstr ""
+
+#: C/stardict.xml:1259(title)
+msgid "Font"
+msgstr "字型"
+
+#: C/stardict.xml:1262(guilabel)
+msgid "Use custom font."
+msgstr "使用自訂的字型。"
+
+#: C/stardict.xml:1264(para)
+#, fuzzy
+msgid ""
+"Allows you to override the system's default for <application>StarDict</"
+"application>. If this option is turned on, the font selelected in the "
+"<guilabel>Dictionary font</guilabel> option will be used instead of the "
+"system font."
+msgstr ""
+"當運行<application>星際譯王</application>時允許你覆蓋掉系統的預設字型設定。如"
+"果這個選項是打開的，那麼在“辭典字型”中的字型就會取代系統預設的設定。"
+
+#: C/stardict.xml:1267(para)
+msgid "Font settings apply immediately."
+msgstr ""
+
+#: C/stardict.xml:1274(title)
+msgid "Cache"
+msgstr ""
+
+#: C/stardict.xml:1277(guilabel)
+msgid "Create cache files to speed up loading."
+msgstr ""
+
+#: C/stardict.xml:1279(para)
+msgid ""
+"Opening a dictionary the first time, <application>StarDict</application> "
+"does some calculations to access dictionary contents speedily. "
+"<application>StarDict</application> may save the results in special cache "
+"files that will be used the next time <application>StarDict</application> "
+"starts. With cache files <application>StarDict</application> starts quicker, "
+"since it does not need to do the same calculations again. It's highly "
+"recommended to enable caching. In the first place, <application>StarDict</"
+"application> tries to save a cache file along with the dictionary. If it "
+"fails, for example, because the directory is write-protected, "
+"<application>StarDict</application> creates a file under the user home "
+"directory, in <application>StarDict</application>'s directory."
+msgstr ""
+
+#: C/stardict.xml:1292(guilabel)
+msgid "Sort word list by collation function."
+msgstr ""
+
+#: C/stardict.xml:1294(para)
+msgid ""
+"Normally, <application>StarDict</application> uses an index of words to look "
+"up a word in a dictionary. When the word is present in the index, the "
+"corresponding article is shown. Otherwise adjacent words will be checked and "
+"may be used as result. <application>StarDict</application> uses heuristic "
+"algorithms to decide whether the particular word may be suggested as result "
+"of the search or not. The order of words in an index is very important and "
+"it would be handy if index items were sorted by alphabet or according to "
+"other rules. Collation functions allows you to specify a number of "
+"predefined sorting orders, that may be helpful when working with particular "
+"languages."
+msgstr ""
+
+#: C/stardict.xml:1304(para)
+msgid ""
+"To use a collation function check the <guilabel>Sort word list by collation "
+"function</guilabel> checkbox and select the desired function from the "
+"<guilabel>Collation function</guilabel> list. The collation function will be "
+"applied as soon as you close the Preferences dialog. It may take a "
+"considerable amount of time to apply the new collation function, please, be "
+"patient."
+msgstr ""
+
+#: C/stardict.xml:1313(para)
+msgid ""
+"It's highly recommended to enable the <xref linkend=\"stardict-prefs-"
+"dictionary-cache\" endterm=\"stardict-prefs-dictionary-scan-create-cache-"
+"files\"/> option, otherwise <application>StarDict</application> will do "
+"sorting each time the application starts."
+msgstr ""
+
+#: C/stardict.xml:1322(guilabel)
+msgid "Clean all cache files"
+msgstr ""
+
+#: C/stardict.xml:1324(para)
+#, fuzzy
+msgid "Remove all <application>StarDict</application> cache files."
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:1331(title)
+msgid "Export"
+msgstr ""
+
+#: C/stardict.xml:1332(para)
+msgid ""
+"<application>StarDict</application> may export search results into a file. "
+"You have two options: export only the found word or export the entire search "
+"result, the contents of the Definition area."
+msgstr ""
+
+#: C/stardict.xml:1337(guilabel)
+msgid "Only export words."
+msgstr ""
+
+#: C/stardict.xml:1339(para)
+#, fuzzy
+msgid ""
+"When this option is set, <application>StarDict</application> exports only "
+"the found word, otherwise exports the complete article."
+msgstr "當你啟動了<application>星際譯王</application>，就會出現下面的視窗。"
+
+#: C/stardict.xml:1346(guilabel)
+msgid "File name"
+msgstr ""
+
+#: C/stardict.xml:1348(para)
+msgid "Name of the file where to export data."
+msgstr ""
+
+#: C/stardict.xml:1356(title)
+msgid "Sound"
+msgstr "音效"
+
+#: C/stardict.xml:1357(para)
+msgid ""
+"There are a number of cases when <application>StarDict</application> needs "
+"to play sound files. <application>StarDict</application> may accompany GUI "
+"actions with sounds. <application>StarDict</application> may pronounce the "
+"words you search in the dictionary. Some articles may contain linked sound "
+"files you can play."
+msgstr ""
+
+#: C/stardict.xml:1362(para)
+msgid ""
+"To play sound files <application>StarDict</application> may harness platform-"
+"specific services or use commands you specify on this page."
+msgstr ""
+
+#: C/stardict.xml:1365(para)
+msgid ""
+"This page allows to configure some aspects of the TTS subsystem. The TTS "
+"subsystem is used to pronounce words by computer."
+msgstr ""
+
+#: C/stardict.xml:1371(guilabel)
+msgid "Enable sound event."
+msgstr "開啟事件音效。"
+
+#: C/stardict.xml:1373(para)
+#, fuzzy
+msgid ""
+"Whether to enable sound events. <application>StarDict</application> will "
+"play sound event when button is active, released, and when a menu pops up."
+msgstr ""
+"是否開啟事件音效。在選取了，按下按扭，彈起，選單彈出時<application>星際譯王</"
+"application>將播放音效。"
+
+#: C/stardict.xml:1380(guilabel)
+msgid "Command for playing sound files:"
+msgstr ""
+
+#: C/stardict.xml:1382(para)
+msgid ""
+"Specifies a command for playing sound files. You may specify a program name "
+"(with or without full path) accompaned with any options required. The file "
+"name to play will be appended to this command at run time."
+msgstr ""
+
+#: C/stardict.xml:1389(guilabel)
+msgid "Always use sound play command"
+msgstr ""
+
+#: C/stardict.xml:1391(para)
+msgid ""
+"On some platforms <application>StarDict</application> use platform-specific "
+"services to play sound files first, then retreats to the custom command "
+"provided by the user if the service is unable to play the file. You may "
+"specify to always use the custom command selecting this option."
+msgstr ""
+
+#: C/stardict.xml:1398(guilabel)
+msgid "RealPeopleTTS search path:"
+msgstr ""
+
+#: C/stardict.xml:1400(para)
+msgid ""
+"Allows to specify locations of RealPeopleTTS bundles. RealPeopleTTS bundle "
+"is a collection of sound files containing speech samples performed by real "
+"people. Normally, one file contains one recoded word, the file is named "
+"after that word. Sound files are organized into a number of directories. In "
+"the text field you must specify a path to the top level directory of the "
+"bundle. The order of paths in the text field is important. "
+"<application>StarDict</application> checks directories from top to bottom, "
+"the first found file will be used."
+msgstr ""
+
+#: C/stardict.xml:1405(title)
+#, fuzzy
+msgid "Default:"
+msgstr "預設：320。"
+
+#: C/stardict.xml:1407(term)
+#, fuzzy
+msgid "In Windows edition of <application>StarDict</application>"
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1409(para)
+msgid ""
+"<filename class=\"directory\">C:\\Program Files\\WyabdcRealPeopleTTS</"
+"filename>, <filename class=\"directory\">C:\\Program Files"
+"\\OtdRealPeopleTTS</filename>, <filename class=\"directory"
+"\">WyabdcRealPeopleTTS</filename>, <filename class=\"directory"
+"\">OtdRealPeopleTTS</filename>"
+msgstr ""
+
+#: C/stardict.xml:1419(term)
+#, fuzzy
+msgid "In other editions of <application>StarDict</application>"
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1421(para)
+msgid ""
+"<filename class=\"directory\">/usr/share/WyabdcRealPeopleTTS</filename>, "
+"<filename class=\"directory\">/usr/share/OtdRealPeopleTTS</filename>"
+msgstr ""
+
+#: C/stardict.xml:1432(guilabel)
+msgid "Enable TTS program."
+msgstr ""
+
+#: C/stardict.xml:1434(para)
+msgid ""
+"Allows to use the command below to read words. You need to restart "
+"<application>StarDict</application> for changes to take effect."
+msgstr ""
+
+#: C/stardict.xml:1443(term)
+msgid "TTS <guilabel>Command line:</guilabel>"
+msgstr ""
+
+#: C/stardict.xml:1445(para)
+msgid ""
+"This field allows to specify a command to use to pronounce words. You need "
+"to provide a print-like string, with \"%s\" specifing the place where the "
+"word (or phrase) to pronounce will be inserted. You need to restart "
+"<application>StarDict</application> for changes to take effect. Do not "
+"forget to check the checkbox above if you want to use this command."
+msgstr ""
+
+#: C/stardict.xml:1451(para)
+msgid "Default: <emphasis>nothing</emphasis>."
+msgstr ""
+
+#: C/stardict.xml:1459(title)
+msgid "Video"
+msgstr ""
+
+#: C/stardict.xml:1462(guilabel)
+msgid "Command for playing video files:"
+msgstr ""
+
+#: C/stardict.xml:1464(para)
+msgid ""
+"Specifies a command for playing video files. You may specify a program name "
+"(with or without full path) accompaned with any options required. The file "
+"name to play will be appended to this command at run time. Video files may "
+"be linked with dictionary articles."
+msgstr ""
+
+#: C/stardict.xml:1475(title)
+msgid "Article rendering"
+msgstr ""
+
+#: C/stardict.xml:1478(guilabel)
+msgid "Highlight search term"
+msgstr ""
+
+#: C/stardict.xml:1480(para)
+msgid ""
+"Whether to highlight the search term in the Definition area. A search term "
+"is a word that was found in dictionaries, a head word of an article."
+msgstr ""
+
+#: C/stardict.xml:1493(title)
+msgid "Network"
+msgstr ""
+
+#: C/stardict.xml:1495(title)
+#, fuzzy
+msgid "Net Dict"
+msgstr "星際譯王"
+
+#: C/stardict.xml:1496(para)
+msgid ""
+"<application>StarDict</application> may look up words in network "
+"dictionaries using a custom <application>StarDict</application> network "
+"protocol. This configuration page allows you to register an account, select "
+"a server to use, and specify other related parameters."
+msgstr ""
+
+#: C/stardict.xml:1501(guilabel)
+msgid "Enable network dictionaries"
+msgstr ""
+
+#: C/stardict.xml:1503(para)
+msgid ""
+"Enables to use network dictionaries. You need to specify the dictionaries to "
+"use in the Manage Dictionaries dialog if you enable this option."
+msgstr ""
+
+#: C/stardict.xml:1512(title)
+msgid "Web browser"
+msgstr ""
+
+#: C/stardict.xml:1513(para)
+msgid ""
+"<application>StarDict</application> may need to open a web link to start "
+"Internet search, show <application>StarDict</application> project website, "
+"show a web page to download new dictionaries, new version of the application "
+"and for other reasons. This configuration page allows to specify how a web "
+"link should be opened."
+msgstr ""
+
+#: C/stardict.xml:1518(guilabel)
+msgid "Command for opening URLs"
+msgstr ""
+
+#: C/stardict.xml:1520(para)
+msgid ""
+"This option allows you to specify a command to use for opening <acronym>URL</"
+"acronym>s. Some editions of <application>StarDict</application> use platform-"
+"specific services for opening <acronym>URL</acronym>s by default. To use the "
+"custom command you need to check the checkbox below. For other editions of "
+"<application>StarDict</application> the custom command is the only way to "
+"open a web link."
+msgstr ""
+
+#: C/stardict.xml:1524(para)
+msgid ""
+"You may specify a program name (with or without full path) accompaned with "
+"any options required. The <acronym>URL</acronym> to open will be appended to "
+"this command at run time."
+msgstr ""
+
+#: C/stardict.xml:1527(para)
+msgid "Default: <command>firefox</command> (depends on edition)."
+msgstr ""
+
+#: C/stardict.xml:1532(guilabel)
+msgid "Always use this command for opening URLs."
+msgstr ""
+
+#: C/stardict.xml:1534(para)
+msgid ""
+"This option is only available in editions of <application>StarDict</"
+"application> that can use other ways to open a web link."
+msgstr ""
+
+#: C/stardict.xml:1537(para)
+msgid ""
+"Check this option to use the custom command to open web links instead of "
+"platform-specific services."
+msgstr ""
+
+#: C/stardict.xml:1548(title)
+msgid "Main Window"
+msgstr "主視窗"
+
+#: C/stardict.xml:1550(title)
+msgid "Input"
+msgstr ""
+
+#: C/stardict.xml:1553(guilabel)
+msgid "Search while typing"
+msgstr ""
+
+#: C/stardict.xml:1555(para)
+msgid ""
+"When this option is checked, <application>StarDict</application> search for "
+"the word you are typing in the search field automatically. "
+"<application>StarDict</application> monitors key-press events, it starts "
+"searching the word entered as soon as there is no activity for more than a "
+"specified amount of time. The time span can be changed in the field below."
+msgstr ""
+
+#: C/stardict.xml:1558(para)
+msgid ""
+"When this option is not checked, you need to press <keycombo><keycap>Enter</"
+"keycap></keycombo> in order for <application>StarDict</application> to start "
+"searching the word."
+msgstr ""
+
+#: C/stardict.xml:1568(guilabel)
+msgid "Word change timeout"
+msgstr ""
+
+#: C/stardict.xml:1570(para)
+msgid ""
+"A word change timeout in milliseconds. See the option above for details."
+msgstr ""
+
+#: C/stardict.xml:1573(para)
+#, fuzzy
+msgid "Default: 300 ms"
+msgstr "預設：320。"
+
+#: C/stardict.xml:1578(guilabel)
+msgid "Show the first word when not found."
+msgstr ""
+
+#: C/stardict.xml:1580(para)
+msgid ""
+"When <application>StarDict</application> is unable to find the exact word "
+"requested, the application may propose another word that is close to the "
+"original. When this option is checked, the closest word will be shown in the "
+"Definition area, otherwise, <application>StarDict</application> tells that "
+"the original word is not found. Note, that this option applies to simple "
+"queries only, that is the queries that do not use regular expressions, "
+"patterns, fuzzy matchs and so on."
+msgstr ""
+
+#: C/stardict.xml:1590(title) C/stardict.xml:1702(title)
+#: C/stardict.xml:1741(title)
+msgid "Options"
+msgstr "選項"
+
+#: C/stardict.xml:1593(guilabel)
+msgid "Skin"
+msgstr ""
+
+#: C/stardict.xml:1595(para)
+msgid ""
+"Allows to customize graphical appearance of the application. Select the "
+"<emphasis>Default</emphasis> item to restore the original appearance of "
+"<application>StarDict</application>, no skins applied. You need to restart "
+"the application in order for changes to take effect. For instructions on how "
+"to prepare a custom skin see the <filename>doc/Skins</filename> file in "
+"<application>StarDict</application> sources."
+msgstr ""
+
+#: C/stardict.xml:1602(para)
+msgid "Default: <emphasis>Default</emphasis>."
+msgstr ""
+
+#: C/stardict.xml:1607(guilabel)
+msgid "Hide main window when starting StarDict."
+msgstr "啟動星際譯王時隱藏主視窗。"
+
+#: C/stardict.xml:1609(para)
+#, fuzzy
+msgid ""
+"Controls whether the Main window appears when you first start the program. "
+"If you select this option, you will only see the Notification area icon "
+"after starting <application>StarDict</application>. You may still get to the "
+"Main window by clicking on this icon."
+msgstr ""
+"控制啟動本軟體時是否顯示主視窗。如果你選擇了這一項，啟動<application>星際譯王"
+"</application>後你只會看到位於狀態通知區的圖示。但你可以通過按一下圖示來顯示"
+"主視窗。"
+
+#: C/stardict.xml:1618(guilabel)
+msgid "Use open main window hotkey"
+msgstr ""
+
+#: C/stardict.xml:1620(para)
+msgid ""
+"This option enable the hotkey that opens the Main window, and allows to "
+"change that hotkey. When enabled, when user presses the hotkey, the Main "
+"window is presented to the user."
+msgstr ""
+
+#: C/stardict.xml:1624(para)
+msgid ""
+"Default hotkey: <keycombo><keycap>Ctrl</keycap><keycap>Alt</"
+"keycap><keycap>z</keycap></keycombo>"
+msgstr ""
+
+#: C/stardict.xml:1631(guilabel) C/stardict.xml:1789(guilabel)
+msgid "Transparency"
+msgstr ""
+
+#: C/stardict.xml:1633(para)
+msgid ""
+"Allows to make the Main window transparent. Moving the slider you may change "
+"transparency degree. Transparency is measured in percents, it can range from "
+"0 to 80, where 0 ‒ fully opaque, 80 ‒ almost fully transparent. Moving the "
+"slider has an immediate effect on the window."
+msgstr ""
+
+#: C/stardict.xml:1640(para) C/stardict.xml:1798(para)
+msgid ""
+"On X11 this has any effect only on X screens with a compositing manager "
+"running. On Windows it should work always."
+msgstr ""
+
+#: C/stardict.xml:1644(para) C/stardict.xml:1802(para)
+msgid "Default: 0 ‒ fully opaque."
+msgstr ""
+
+#: C/stardict.xml:1650(title)
+#, fuzzy
+msgid "Search website"
+msgstr "搜尋網站"
+
+#: C/stardict.xml:1651(para)
+msgid ""
+"<application>StarDict</application> may use Web search engines, Web "
+"dictionaries, databases providing web-based interface and other web sites "
+"providing information by request. The text to search is incorporated into "
+"<acronym>URL</acronym>. Normally, the text is assigned to a GET request "
+"parameter. For example, to search for word <emphasis>stardict</emphasis> in "
+"<ulink url=\"http://www.google.com\" type=\"http\">Google search engine</"
+"ulink> you may use the following <acronym>URL</acronym><uri>http://www."
+"google.com/search?q=<replaceable>stardict</replaceable></uri>. You can "
+"search websites in <application>StarDict</application> right-clicking the "
+"<guibutton>Internet search</guibutton> button in the Main window."
+msgstr ""
+
+#: C/stardict.xml:1661(para)
+msgid ""
+"<application>StarDict</application> does not handle the web request itself, "
+"it only composes a <acronym>URL</acronym> and invokes an external program "
+"like a web browser or use platform-specific services to open the "
+"<acronym>URL</acronym>."
+msgstr ""
+
+#: C/stardict.xml:1664(para)
+msgid ""
+"On this page you may see a list of websites. Use <guilabel>Add</guilabel> "
+"and <guilabel>Remove</guilabel> buttons to add new sites and remove existing "
+"records. Use <guilabel>Up</guilabel> and <guilabel>Down</guilabel> arrow "
+"buttons to reorder records in the list. Each record consists of three items:"
+msgstr ""
+
+#: C/stardict.xml:1670(title)
+msgid "Website record"
+msgstr ""
+
+#: C/stardict.xml:1672(guilabel)
+msgid "Website name"
+msgstr ""
+
+#: C/stardict.xml:1674(para)
+msgid "This is a label you see in menu. Use a meaningful name."
+msgstr ""
+
+#: C/stardict.xml:1679(guilabel)
+msgid "Website link"
+msgstr ""
+
+#: C/stardict.xml:1681(para)
+msgid ""
+"Link to the main page of the website. This link is opened when there is "
+"nothing to search for, the Search field is empty."
+msgstr ""
+
+#: C/stardict.xml:1687(guilabel)
+msgid "Website search link"
+msgstr ""
+
+#: C/stardict.xml:1689(para)
+msgid ""
+"Link to perform request. <emphasis>%s</emphasis> identifies the place where "
+"to insert the search text. For example, <uri>http://www.google.com/search?"
+"q=<replaceable>%s</replaceable></uri>."
+msgstr ""
+
+#: C/stardict.xml:1705(guilabel)
+#, fuzzy
+msgid "When middle mouse button is clicked:"
+msgstr "當點擊鼠標中鍵時在浮動視窗進行查詢。"
+
+#: C/stardict.xml:1707(para)
+#, fuzzy
+msgid ""
+"Specifies an action to perform when user clicks the middle mouse button on "
+"the Notification area icon. There are the following choices:"
+msgstr ""
+"是否在浮動視窗中進行查詢，否則為在主視窗查詢。這在當用戶在通知區圖示上點鼠標"
+"中鍵時發生。"
+
+#: C/stardict.xml:1711(guilabel)
+msgid "Query selection in floating window"
+msgstr ""
+
+#: C/stardict.xml:1714(guilabel)
+msgid "Query selection in main window"
+msgstr ""
+
+#: C/stardict.xml:1717(guilabel)
+msgid "Do nothing"
+msgstr ""
+
+#: C/stardict.xml:1720(para)
+msgid ""
+"In the <guilabel>Do nothing</guilabel> case <application>StarDict</"
+"application> simply ignores middle button clicks, otherwise "
+"<application>StarDict</application> get text of the current selection, "
+"search for it and displays the results either in the Floating window or in "
+"the Main window."
+msgstr ""
+
+#: C/stardict.xml:1724(para)
+msgid ""
+"In case there are a number of windows on desktop having text selected, there "
+"might be a confusion what text will be used. <application>StarDict</"
+"application> works with the <emphasis>X</emphasis><emphasis>Primary</"
+"emphasis> selection. Only one application can own a selection at a time, so "
+"when you select something in an application that application becomes the "
+"selection owner, the previous owner loses selection ownership. Now back to "
+"the question. <application>StarDict</application> will use the text that was "
+"selected last."
+msgstr ""
+
+#: C/stardict.xml:1731(para)
+msgid "Default: <guilabel>Query selection in floating window</guilabel>."
+msgstr ""
+
+#: C/stardict.xml:1739(title)
+msgid "Floating Window"
+msgstr "浮動視窗"
+
+#: C/stardict.xml:1744(guilabel)
+msgid "Pronounce the word when it pops up."
+msgstr ""
+
+#: C/stardict.xml:1746(para)
+msgid ""
+"When set, pronounce the word when the Floating window shows translation."
+msgstr ""
+
+#: C/stardict.xml:1752(guilabel)
+#, fuzzy
+msgid "Show floating window if word not found."
+msgstr "設定浮動視窗寬度的最大值。"
+
+#: C/stardict.xml:1754(para)
+msgid ""
+"This option allows to configure what to do if the word to be shown in the "
+"Floating window is not found. You have two choices: 1) do not show the "
+"Floating window at all ‒ this option is unset, 2) show the Floating window "
+"with text indicating that the word was not found ‒ this option is set."
+msgstr ""
+
+#: C/stardict.xml:1762(title)
+#, fuzzy
+msgid "Settings"
+msgstr "設定按鈕"
+
+#: C/stardict.xml:1765(guilabel)
+msgid "Max window width."
+msgstr "最大視窗寬度。"
+
+#: C/stardict.xml:1767(para)
+#, fuzzy
+msgid "Sets the Floating window's max width."
+msgstr "設定浮動視窗寬度的最大值。"
+
+#: C/stardict.xml:1768(para)
+msgid "Default: 320."
+msgstr "預設：320。"
+
+#: C/stardict.xml:1773(guilabel)
+msgid "Max window height."
+msgstr "最大視窗高度。"
+
+#: C/stardict.xml:1775(para)
+#, fuzzy
+msgid "Sets the Floating window's max height."
+msgstr "設定浮動視窗高度的最大值。"
+
+#: C/stardict.xml:1776(para)
+msgid "Default: 240."
+msgstr "預設：240。"
+
+#: C/stardict.xml:1781(guilabel)
+msgid "Use custom background color:"
+msgstr ""
+
+#: C/stardict.xml:1783(para)
+msgid ""
+"Enables to use custom color for background in the Floating window and select "
+"that color."
+msgstr ""
+
+#: C/stardict.xml:1791(para)
+msgid ""
+"Allows to make the Floating window transparent. Moving the slider you may "
+"change transparency degree. Transparency is measured in percents, it can "
+"range from 0 to 80, where 0 ‒ fully opaque, 80 ‒ almost fully transparent. "
+"Moving the slider has an immediate effect on the window."
+msgstr ""
+
+#: C/stardict.xml:1811(title)
+msgid "Details"
+msgstr ""
+
+#: C/stardict.xml:1813(title)
+#, fuzzy
+msgid "Command line options"
+msgstr "指令行"
+
+#: C/stardict.xml:1814(para)
+#, fuzzy
+msgid "<application>StarDict</application> usage:"
+msgstr "<application>星際譯王</application>的狀態通知區圖示"
+
+#: C/stardict.xml:1816(replaceable)
+#, fuzzy
+msgid "options"
+msgstr "選項"
+
+#: C/stardict.xml:1816(replaceable) C/stardict.xml:1820(term)
+msgid "query_word"
+msgstr ""
+
+#: C/stardict.xml:1816(command)
+msgid "stardict <placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: C/stardict.xml:1822(para)
+msgid ""
+"With <replaceable>query_word</replaceable> you request "
+"<application>StarDict</application> to look up the specified word just after "
+"startup. It has the same effect as if you had typed that word in the Search "
+"field. You may use pattens, fuzzy query and other supported modes."
+msgstr ""
+
+#: C/stardict.xml:1828(term)
+msgid "-m, --message-level=<replaceable>integer</replaceable>"
+msgstr ""
+
+#: C/stardict.xml:1830(para)
+msgid ""
+"This option specifies the minimum severity level of message that should be "
+"printed on console. The value may range from 0 to 6, where 0 means to "
+"suppress all output, 6 ‒ print all produced messages, including debug ones. "
+"Default value is 4 which passes informational messages, like what "
+"dictionaries are loaded during startup."
+msgstr ""
+
+#: C/stardict.xml:1836(term)
+msgid "-l, --log-level=<replaceable>integer</replaceable>"
+msgstr ""
+
+#: C/stardict.xml:1838(para)
+msgid ""
+"This option specifies the minimum severity level of message that should be "
+"logged. The value may range from 0 to 6, where 0 means to suppress all "
+"output, 6 ‒ print all produced messages, including debug ones. Default value "
+"is 0, that is log file is not used. See <xref linkend=\"stardict-details-"
+"logging\"/> for details about <application>StarDict</application> log."
+msgstr ""
+
+#: C/stardict.xml:1844(term)
+msgid "-h, --hide"
+msgstr ""
+
+#: C/stardict.xml:1846(para)
+msgid ""
+"Do not show splash screen during startup and hide the Main window. Only "
+"notification area icon will be visible."
+msgstr ""
+
+#: C/stardict.xml:1852(term)
+msgid "-n, --new"
+msgstr ""
+
+#: C/stardict.xml:1854(para)
+msgid ""
+"Start a new instance of <application>StarDict</application>. By default "
+"<application>StarDict</application> checks if the application is already "
+"running and prevents starting the second instance."
+msgstr ""
+
+#: C/stardict.xml:1857(para)
+#, fuzzy
+msgid ""
+"This option is only available in Windows edition and Gnome edition of "
+"<application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1863(term)
+msgid "-q, --quit"
+msgstr ""
+
+#: C/stardict.xml:1865(para)
+#, fuzzy
+msgid "Quit an existing instance of <application>StarDict</application>."
+msgstr "cdict5 的辭典已被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1867(para)
+#, fuzzy
+msgid ""
+"This option is only available in Gnome edition of <application>StarDict</"
+"application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1873(term)
+msgid "--dirs-config"
+msgstr ""
+
+#: C/stardict.xml:1875(para)
+msgid ""
+"Specifies path to the <application>StarDict</application> directory "
+"configuration file. See <xref linkend=\"stardict-details-dirs\"/> for "
+"details about <application>StarDict</application> directories and "
+"configuration file."
+msgstr ""
+
+#: C/stardict.xml:1877(para) C/stardict.xml:1887(para)
+#, fuzzy
+msgid ""
+"This option is only available in Windows edition of <application>StarDict</"
+"application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:1883(term)
+msgid "--portable-mode"
+msgstr ""
+
+#: C/stardict.xml:1885(para)
+msgid ""
+"Activate portable mode, see <xref linkend=\"stardict-portable\"/>. "
+"Specifying the option is not enough to make <application>StarDict</"
+"application> to be <application>StarDict Portable</application>. You should "
+"avoid using this option unless you know what you are doing."
+msgstr ""
+
+#: C/stardict.xml:1895(title)
+msgid "Dictionary Management"
+msgstr "辭典管理"
+
+#: C/stardict.xml:1896(para)
+#, fuzzy
+msgid ""
+"To manage the dictionaries, click the <guibutton>Manage dictionaries</"
+"guibutton> button at the bottom-right corner of the Main window, or click "
+"the <guibutton>Main menu</guibutton> button and choose <guimenuitem>Dict "
+"manage</guimenuitem>."
+msgstr ""
+"要管理辭典，按一下位於主視窗右下角的<guibutton>辭典管理</guibutton>按鈕，或者"
+"按一下<guibutton>主選單</guibutton>按鈕並選擇<guimenuitem>辭典管理</"
+"guimenuitem>。"
+
+#: C/stardict.xml:1899(para)
+msgid ""
+"In the dictionary management dialog, you can disable dictionaries that you "
+"don't need, and you can set the order in which the dictonaries are queried."
+msgstr ""
+"在辭典管理對話框中，你可以關掉不需要的辭典，你也可以設定辭典查詢的順序。"
+
+#: C/stardict.xml:1902(para)
+msgid ""
+"<application>StarDict</application> will search the dictionary files at \"~/."
+"stardict/dic\" and \"/usr/share/stardict/dic\", and search tree dictionary "
+"files at \"~/.stardict/treedict\" and \"/usr/share/stardict/treedict\""
+msgstr ""
+"<application>星際譯王</application>將在 \"/usr/share/stardict/dic\" 和 \"~/."
+"stardict/dic\" 目錄查找辭典檔案，在 \"/usr/share/stardict/treedict\" 和 \"~/."
+"stardict/treedict\" 目錄查找樹型辭典檔案。"
+
+#: C/stardict.xml:1907(title)
+msgid "Help"
+msgstr ""
+
+#: C/stardict.xml:1908(para)
+msgid ""
+"Inside <application>StarDict</application> you may open documentation either "
+"by pressing the <keycombo><keycap>F1</keycap></keycombo> key or by clicking "
+"the <guibutton>Main menu</guibutton> button, then the <guimenuitem>Help</"
+"guimenuitem> item in the popup menu. <application>StarDict</application> "
+"documentation has different formats depending on application edition. The "
+"primary documentation format is DocBook. <application>StarDict</application> "
+"installs documentation in DocBook format only in Gnome edition. In this "
+"edition documentation seamlessly integrates with Gnome documentation system. "
+"It can be read through <application>Help Browser</application>. "
+"Documentation was translated into a number of languages. You are presented "
+"with localized version if it's available. Gnome allows to configure the "
+"prefered language."
+msgstr ""
+
+#: C/stardict.xml:1910(para)
+msgid ""
+"In other editions of <application>StarDict</application> documentation is "
+"available in html format. You need to configure Web browser to view "
+"documentation, see <xref linkend=\"stardict-prefs-network-web-browser\"/>. "
+"Choosing documentation language, <application>StarDict</application> roughly "
+"follows gettext package locale selection algorithm. The LANGUAGE enviroment "
+"variable is checked first. It's expected to contain a list of language codes "
+"in the order of preference. If the LANGUAGE variable is not set, the current "
+"locale is inspected. Finally, if documentation in prefered languages is not "
+"available, the english documentation is shown."
+msgstr ""
+
+#: C/stardict.xml:1912(para)
+msgid ""
+"In Windows edition of <application>StarDict</application> the default "
+"language corresponds to the language selected in the <guilabel>Regional and "
+"Language Options</guilabel> dialog."
+msgstr ""
+
+#: C/stardict.xml:1917(title)
+msgid "Changing default language"
+msgstr ""
+
+#: C/stardict.xml:1918(para)
+msgid ""
+"Open <guilabel>Control Panel</guilabel>, <guilabel>Regional and Language "
+"Options</guilabel>. <guilabel>Regional and Language Options</guilabel> "
+"dialog pops up. On the <guilabel>Regional Options</guilabel> tab select a "
+"language in the <guilabel>Stardards and formats</guilabel> group."
+msgstr ""
+
+#: C/stardict.xml:1923(para)
+msgid ""
+"You may override the default language with the LANGUAGE environment variable."
+msgstr ""
+
+#: C/stardict.xml:1926(para)
+msgid ""
+"Normally, help files can be found in the <filename>C:\\Program Files"
+"\\StarDict\\help</filename> directory. Each directory corresponds to one "
+"language. Directories are named after language codes."
+msgstr ""
+
+#: C/stardict.xml:1932(title) C/stardict.xml:1966(title)
+msgid "StarDict directories"
+msgstr ""
+
+#: C/stardict.xml:1933(para)
+msgid ""
+"<application>StarDict</application> uses a number of directories to store "
+"application data, load and save configuration settings. Default directories "
+"are assigned at build time, but some of them can be overriden with "
+"<filename>stardict-dirs.cfg</filename> file. Overriding StarDict directories "
+"is useful for debugging, preparing special configurations like StarDict-"
+"portable for Windows, an ordinary user does not need this."
+msgstr ""
+
+#: C/stardict.xml:1941(para)
+msgid ""
+"<application>StarDict</application> searches for the <filename>stardict-dirs."
+"cfg</filename> file in the <varname>user_config_dir</varname> directory. You "
+"may override location of the <filename>stardict-dirs.cfg</filename> file "
+"with <varname>STARDICT_DIRS_CONFIG_FILE</varname> environment variable or "
+"with <parameter class=\"command\">--dirs-config</parameter> command line "
+"option. Command line option takes the highest precedence, then the "
+"environment variable is inspected, and finally the file in the "
+"<varname>user_config_dir</varname> directory. The first specified file wins, "
+"it will be probed as a configuration file. If load fails, no other files "
+"will be tried."
+msgstr ""
+
+#: C/stardict.xml:1945(para)
+msgid ""
+"The <filename>stardict-dirs.cfg</filename> file is a .ini-like config file. "
+"The syntax of .ini files is described in detail in the <ulink url=\"http://"
+"freedesktop.org/wiki/Specifications/desktop-entry-spec\">Desktop Entry "
+"Specification</ulink>. All keys must belong to <quote>general</quote> group."
+msgstr ""
+
+#: C/stardict.xml:1950(para)
+msgid ""
+"Do not forget to double backslash characters in values. Backslash is used as "
+"path separator in Windows."
+msgstr ""
+
+#: C/stardict.xml:1954(para)
+msgid ""
+"Example of <filename>stardict-dirs.cfg</filename> file for Windows: "
+"<placeholder-1/>"
+msgstr ""
+
+#: C/stardict.xml:1968(term)
+msgid "user_config_dir"
+msgstr ""
+
+#: C/stardict.xml:1971(para)
+msgid "A directory of configuration files."
+msgstr ""
+
+#: C/stardict.xml:1972(para)
+msgid ""
+"Windows default: <filename>C:\\Documents and Settings\\%USERNAME%"
+"\\Application Data\\StarDict</filename>."
+msgstr ""
+
+#: C/stardict.xml:1974(para)
+msgid "Other default: <filename>~/.stardict</filename>."
+msgstr ""
+
+#: C/stardict.xml:1976(para)
+msgid "Environment variable: <varname>STARDICT_CONFIG_PATH</varname>."
+msgstr ""
+
+#: C/stardict.xml:1978(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: user_config_dir."
+msgstr ""
+
+#: C/stardict.xml:1984(term)
+msgid "user_cache_dir"
+msgstr ""
+
+#: C/stardict.xml:1987(para)
+msgid "User cache directory."
+msgstr ""
+
+#: C/stardict.xml:1988(para)
+msgid ""
+"Windows default: <filename>C:\\Documents and Settings\\%USERNAME%\\Temporary "
+"Internet Files\\stardict</filename>."
+msgstr ""
+
+#: C/stardict.xml:1990(para)
+msgid "Other default: <filename>~/.cache/stardict</filename>."
+msgstr ""
+
+#: C/stardict.xml:1992(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: user_cache_dir."
+msgstr ""
+
+#: C/stardict.xml:1998(term)
+msgid "data_dir"
+msgstr ""
+
+#: C/stardict.xml:2001(para)
+msgid "Data directory."
+msgstr ""
+
+#: C/stardict.xml:2003(para)
+msgid "Windows default: <filename>C:\\Program Files\\StarDict</filename>."
+msgstr ""
+
+#: C/stardict.xml:2005(para)
+msgid "Other default: <filename>/usr/share/stardict</filename>."
+msgstr ""
+
+#: C/stardict.xml:2007(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: data_dir."
+msgstr ""
+
+#: C/stardict.xml:2013(term)
+msgid "dll_dir"
+msgstr ""
+
+#: C/stardict.xml:2016(para)
+msgid "A directory of hook dlls, in Windows edition only."
+msgstr ""
+
+#: C/stardict.xml:2018(para)
+msgid "Windows default: <varname>data_dir</varname>."
+msgstr ""
+
+#: C/stardict.xml:2020(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: dll_dir."
+msgstr ""
+
+#: C/stardict.xml:2026(term)
+msgid "plugin_dir"
+msgstr ""
+
+#: C/stardict.xml:2029(para)
+msgid "A directory of StarDict plugins."
+msgstr ""
+
+#: C/stardict.xml:2031(para)
+msgid ""
+"Windows default: <varname>data_dir</varname> + <filename>\"/plugins\"</"
+"filename>."
+msgstr ""
+
+#: C/stardict.xml:2033(para)
+msgid "Other default: <filename>/usr/lib/stardict/plugins</filename>."
+msgstr ""
+
+#: C/stardict.xml:2035(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: plugins_dir."
+msgstr ""
+
+#: C/stardict.xml:2041(term)
+msgid "help_dir"
+msgstr ""
+
+#: C/stardict.xml:2044(para)
+msgid "A directory of help files, in all editions except Gnome edition."
+msgstr ""
+
+#: C/stardict.xml:2046(para)
+msgid "Default: <varname>data_dir</varname> + <filename>\"/help\"</filename>."
+msgstr ""
+
+#: C/stardict.xml:2048(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: help_dir."
+msgstr ""
+
+#: C/stardict.xml:2054(term)
+msgid "log_dir"
+msgstr ""
+
+#: C/stardict.xml:2057(para)
+msgid "A directory for log files."
+msgstr ""
+
+#: C/stardict.xml:2059(para)
+msgid ""
+"Windows default: <filename>C:\\Documents and Settings\\%USERNAME%\\Local "
+"Settings\\Temp\\StarDict</filename>."
+msgstr ""
+
+#: C/stardict.xml:2061(para)
+msgid "Other default: <filename>/var/tmp/stardict</filename>."
+msgstr ""
+
+#: C/stardict.xml:2063(para)
+msgid "<filename>stardict-dirs.cfg</filename> key: log_dir."
+msgstr ""
+
+#: C/stardict.xml:2071(para)
+msgid ""
+"Default values in the list above are given for the purpose of illustrating "
+"possible values of variables. Actual default value depends on a number of "
+"factors and cannot be computed easily. See AppDirs class in the "
+"<filename>conf.h</filename> file for details on how the default value is "
+"calculated."
+msgstr ""
+
+#: C/stardict.xml:2078(title)
+msgid "Logging"
+msgstr ""
+
+#: C/stardict.xml:2079(para)
+msgid ""
+"<application>StarDict</application> may log messages into a file. By default "
+"logging is turned off, you may enable it specifing non-zero log level with "
+"<parameter class=\"command\">--log-level</parameter> command line option, "
+"see <xref linkend=\"stardict-details-command-line\"/>."
+msgstr ""
+
+#: C/stardict.xml:2081(para)
+msgid ""
+"By default messages are printed on to console, log file may be useful if "
+"console is not available like in Windows. Log may be useful in "
+"troubleshooting startup problems."
+msgstr ""
+
+#: C/stardict.xml:2084(para)
+msgid ""
+"For default location of the log directory see <xref linkend=\"stardict-"
+"details-dirs\"/>, log_dir parameter. <application>StarDict</application> log "
+"files are named like <filename>stardict-<replaceable>process_number</"
+"replaceable>.log</filename>. We need to use process numbers to create unique "
+"log files, since multiple <application>StarDict</application> instances may "
+"run at the same time. To find the log file belonging to the most recently "
+"started instance of <application>StarDict</application>, consider file "
+"creation time."
+msgstr ""
+
+#: C/stardict.xml:2091(title) C/stardict.xml:2307(title)
+msgid "Interface language"
+msgstr ""
+
+#: C/stardict.xml:2092(para)
+#, fuzzy
+msgid ""
+"This section describes the algorithm used to select interface language in "
+"<application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:2100(para)
+msgid ""
+"Retrieve <varname>STARDICTLANG</varname> environment variable. Goto <xref "
+"linkend=\"GUILangSetLANG\"/> if the variable is defined."
+msgstr ""
+
+#: C/stardict.xml:2107(para)
+msgid ""
+"Retrieve the user default locale (to set the default locale: "
+"<menuchoice><guibutton>Control Panel</guibutton><guibutton>Regional and "
+"Language Options</guibutton><guibutton>Regional Options</"
+"guibutton><guilabel>Standards and formats</guilabel><guilabel>Language</"
+"guilabel></menuchoice>). If locale is not defined, use \"en\"."
+msgstr ""
+
+#: C/stardict.xml:2123(para)
+msgid ""
+"Assign the language code to the <varname>LANG</varname> environment variable."
+msgstr ""
+
+#: C/stardict.xml:2132(para)
+msgid ""
+"Retrieve the value of the environment variable <varname>LANGUAGE</varname>. "
+"This is a GNU extension. Its value can be a colon-separated list of locale "
+"names. If defined, goto <xref linkend=\"GUILangAvailableTransl\"/>."
+msgstr ""
+
+#: C/stardict.xml:2141(para)
+msgid ""
+"The value of the environment variable <varname>LC_ALL</varname>, "
+"<varname>LC_xxx</varname>, or <varname>LANG</varname>. More precisely, the "
+"first among these that is set to a non-empty value. This is how POSIX "
+"specifies it. The value is a single locale name. If defined, goto <xref "
+"linkend=\"GUILangAvailableTransl\"/>."
+msgstr ""
+
+#: C/stardict.xml:2151(para)
+msgid ""
+"A system-dependent preference list of languages. Its value can be a colon-"
+"separated list of locale names. If defined, goto <xref linkend="
+"\"GUILangAvailableTransl\"/>."
+msgstr ""
+
+#: C/stardict.xml:2160(para)
+msgid ""
+"A system-dependent default locale name. If defined, goto <xref linkend="
+"\"GUILangAvailableTransl\"/>."
+msgstr ""
+
+#: C/stardict.xml:2168(para)
+msgid ""
+"Processes the found value as a colon-separated list of language codes. "
+"Select the first available language. If none is available, select no "
+"translation."
+msgstr ""
+
+#: C/stardict.xml:2176(para)
+msgid ""
+"Steps <xref linkend=\"GUILangGetLANGUAGE\"/> through <xref linkend="
+"\"GUILangAvailableTransl\"/> describe translation selection algorithm of the "
+"gettext package. The actual procedure may be different."
+msgstr ""
+
+#: C/stardict.xml:2180(para)
+msgid ""
+"The best way to specify interface language of <application>StarDict</"
+"application> is to define <varname>STARDICTLANG</varname> environment "
+"variable. It should contain language code. See <filename class=\"directory\">"
+"$StarDictDataDir/locale</filename> for the list of supported languages."
+msgstr ""
+
+#: C/stardict.xml:2189(para)
+msgid ""
+"<application>StarDict Portable</application> is special edition of "
+"<application>StarDict</application> for Windows that works with any hardware "
+"you like (USB flash drive, portable hard drive, etc). Now you can carry "
+"<application>StarDict</application> along with all settings with you. Use "
+"them on any Windows computer. All personal data are saved along with "
+"application."
+msgstr ""
+
+#: C/stardict.xml:2192(para)
+msgid ""
+"<application>StarDict Portable</application> relies on the <ulink url="
+"\"http://portableapps.com\" type=\"http\">PortableApps.com Platform</ulink>. "
+"It provides convenient shell to start and configure portable applications. "
+"On the screenshot below you may see PortableApps.com menu with "
+"<application>StarDict Portable</application> and <application>StarDict "
+"Editor portable</application>. You may change interface language of the menu "
+"and <application>StarDict Portable</application>. To do that click "
+"<menuchoice><guibutton>Options</guibutton><guimenu>Language</guimenu></"
+"menuchoice> and select the desired language."
+msgstr ""
+
+#: C/stardict.xml:2203(title)
+msgid "PortableApps.com menu"
+msgstr ""
+
+#: C/stardict.xml:2209(phrase)
+#, fuzzy
+msgid ""
+"PortableApps.com menu with <application>StarDict Portable</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:2216(title)
+msgid "Differences from non-portable version"
+msgstr ""
+
+#: C/stardict.xml:2217(para)
+msgid ""
+"Functionality of <application>StarDict Portable</application> is almost "
+"identical to the non-portable version. Only features that ties application "
+"to the specific machine are disabled. The list below details the deferences."
+msgstr ""
+
+#: C/stardict.xml:2222(title)
+msgid "StarDict Portable features"
+msgstr ""
+
+#: C/stardict.xml:2227(para)
+msgid ""
+"WordPick Adobe Acrobat plugin is disabled in portable version. Portable "
+"application policies forbids to modify the host machine."
+msgstr ""
+
+#: C/stardict.xml:2232(term)
+#, fuzzy
+msgid "Run <application>StarDict</application> when Windows starts"
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:2235(para)
+msgid ""
+"This option is disabled in portable version. It does not make sense to "
+"autostart application residing on removable storage."
+msgstr ""
+
+#: C/stardict.xml:2243(title)
+#, fuzzy
+msgid "Installing StarDict Portable"
+msgstr "啟動星際譯王"
+
+#: C/stardict.xml:2244(para)
+#, fuzzy
+msgid ""
+"This section describes <application>StarDict Portable</application> "
+"installation procedure."
+msgstr "你可以從以下幾種方式啟動<application>星際譯王</application> :"
+
+#: C/stardict.xml:2250(para)
+msgid ""
+"Download and install <ulink url=\"http://portableapps.com\" type=\"http"
+"\">PortableApps.com Suite</ulink> on a USB flash drive or wherever you want."
+msgstr ""
+
+#: C/stardict.xml:2256(para)
+msgid ""
+"Download <application>StarDict Portable</application> package from <ulink "
+"url=\"https://sourceforge.net/projects/stardict/files/\" type=\"http"
+"\">StarDict website</ulink>. The package file ends with <filename>.paf.exe</"
+"filename>, for example, <filename>StarDictPortable-stardict.sourceforge."
+"com_3.0.2.paf.exe</filename>."
+msgstr ""
+
+#: C/stardict.xml:2262(para)
+msgid "Launch PortableApps.com menu."
+msgstr ""
+
+#: C/stardict.xml:2268(para)
+msgid ""
+"Click <menuchoice><guibutton>Options</guibutton><guimenu>Install a New Apps</"
+"guimenu></menuchoice>. Select <application>StarDict Portable</application> "
+"package you've just downloaded, click <guibutton>OK</guibutton> and proceed "
+"with installer."
+msgstr ""
+
+#: C/stardict.xml:2279(para)
+msgid ""
+"When installation completes, you will have two new items in the menu: "
+"<application>StarDict Portable</application> and <application>StarDict "
+"Editor portable</application>. You are ready to use <application>StarDict "
+"Portable</application>."
+msgstr ""
+
+#: C/stardict.xml:2288(title)
+msgid "Launching StarDict Portable directly"
+msgstr ""
+
+#: C/stardict.xml:2290(para)
+msgid ""
+"You may use <application>StarDict Portable</application> without "
+"PortableApps.com menu. In the <filename class=\"directory\">$PortableAppsRoot"
+"\\PortableApps\\StarDictPortable-stardict.sourceforge.com</filename> "
+"directory you may find two executables: <filename>StarDictPortable.exe</"
+"filename> and <filename>StarDictEditorPortable.exe</filename>, they start "
+"<application>StarDict Portable</application> and <application>StarDict "
+"Editor Portable</application> respectively. <varname>$PortableAppsRoot</"
+"varname> here is the directory where PortableApps.com suite was installed, "
+"normally this is the root of a drive, like <filename>X:\\</filename>."
+msgstr ""
+
+#: C/stardict.xml:2294(para)
+msgid ""
+"You may pass parameters to <application>StarDict Portable</application> as "
+"with normal <application>StarDict</application>, see <xref linkend="
+"\"stardict-details-command-line\"/>. This maybe useful to enable logging, "
+"for example."
+msgstr ""
+
+#: C/stardict.xml:2299(para)
+msgid ""
+"Do not start files in the <filename class=\"directory\">$PortableAppsRoot"
+"\\PortableApps\\StarDictPortable-stardict.sourceforge.com\\App\\StarDict</"
+"filename> directory directly! In this case <application>StarDict</"
+"application> runs in normal non-portable mode, it will search applications "
+"settings and other data file in usually places on the host machine instead "
+"of directories near the portable application. First, your settings will not "
+"be found, second, new settings will be saved on the host machine."
+msgstr ""
+
+#: C/stardict.xml:2308(para)
+#, fuzzy
+msgid ""
+"This section describes the algorithm used to select interface language in "
+"<application>StarDict Portable</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#. PortableApps.comLocaleglibc environment variable
+#: C/stardict.xml:2316(para)
+msgid ""
+"Inspect PortableApps.com suite interface language "
+"(<menuchoice><guibutton>Options</guibutton><guimenu>Language</guimenu></"
+"menuchoice>). If the language is not selected, goto <xref linkend="
+"\"GUILangSettingsFile\"/>. If the language is \"en_US\", goto <xref linkend="
+"\"GUILangLanguageVariable\"/>. Check if <application>StarDict</application> "
+"provides translation to the specified language. Goto <xref linkend="
+"\"GUILangLanguageVariable\"/> if yes, and goto <xref linkend="
+"\"GUILangSettingsFile\"/> otherwise."
+msgstr ""
+
+#: C/stardict.xml:2329(para)
+msgid ""
+"Read the <filename class=\"directory\">$PortableAppsRoot\\PortableApps"
+"\\StarDictPortable-stardict.sourceforge.com\\Data\\settings"
+"\\StarDictPortableSettigns.ini</filename> file. Inspect value of the "
+"<varname>STARDICTLANG</varname> option in the <varname>Language</varname> "
+"section. If the option is not specified, goto <xref linkend="
+"\"GUILangLaunchStarDict\"/>. If the value is \"en_US\", goto <xref linkend="
+"\"GUILangLanguageVariable\"/>. Check if <application>StarDict</application> "
+"provides translation to the specified language. Goto <xref linkend="
+"\"GUILangLanguageVariable\"/> if yes, and goto <xref linkend="
+"\"GUILangLaunchStarDict\"/> otherwise."
+msgstr ""
+
+#: C/stardict.xml:2336(para)
+msgid ""
+"Assign the language code to the <varname>STARDICTLANG</varname> environment "
+"variable."
+msgstr ""
+
+#: C/stardict.xml:2343(para)
+msgid ""
+"Launch <application>StarDict</application> executable, namely "
+"<filename>stardict.exe</filename>. For subsequent steps see <xref linkend="
+"\"stardict-details-GUI-lang\"/>."
+msgstr ""
+
+#: C/stardict.xml:2356(title)
+msgid "Troubleshooting"
+msgstr ""
+
+#: C/stardict.xml:2357(para)
+msgid ""
+"If you experience problems with <application>StarDict</application>, examine "
+"<application>StarDict</application> output. By default the application "
+"prints the most important messages to standard output and standard error. To "
+"see messages, start <application>StarDict</application> from the console. "
+"You may increase verbosity of the output using the <parameter class=\"command"
+"\">--message-level</parameter> command line option, see <xref linkend="
+"\"stardict-details-command-line\"/>."
+msgstr ""
+
+#: C/stardict.xml:2362(para)
+msgid ""
+"To see standard output and standard error on Windows, start "
+"<application>StarDict</application> from windows console and pass non-zero "
+"parameter to the <parameter class=\"command\">--message-level</parameter> "
+"command line option. Unfortunately, often windows console can not display "
+"all unicode characters that are sent to output. If this problem effects you, "
+"redirect output to a file or use <application>StarDict</application> logging "
+"facility."
+msgstr ""
+
+#: C/stardict.xml:2366(title)
+#, fuzzy
+msgid "Starting <application>StarDict</application> from windows console"
+msgstr "當你啟動了<application>星際譯王</application>，就會出現下面的視窗。"
+
+#: C/stardict.xml:2372(phrase)
+#, fuzzy
+msgid ""
+"Starting <application>StarDict</application> from windows console with --"
+"message-level option specified. Typical <application>StarDict</application> "
+"output."
+msgstr ""
+"沒有其它專案的支持和幫助<application>星際譯王</application>不會出現。下面是幫"
+"助了<application>星際譯王</application>的專案的簡短列表。"
+
+#: C/stardict.xml:2378(para)
+msgid ""
+"In some cases, <application>StarDict</application> prints nothing to console "
+"or console is not available. Then turn on logging function, see <xref "
+"linkend=\"stardict-details-logging\"/> for details."
+msgstr ""
+
+#: C/stardict.xml:2384(title)
+msgid "Related Projects"
+msgstr "相關專案"
+
+#: C/stardict.xml:2385(para)
+msgid ""
+"<application>StarDict</application> would not be possible without many other "
+"projects' contributions. Here is a short list of projects that helped "
+"<application>StarDict</application>."
+msgstr ""
+"沒有其它專案的支持和幫助<application>星際譯王</application>不會出現。下面是幫"
+"助了<application>星際譯王</application>的專案的簡短列表。"
+
+#: C/stardict.xml:2394(firstname)
+msgid "Ma"
+msgstr "馬"
+
+#: C/stardict.xml:2395(surname)
+msgid "Su'an"
+msgstr "蘇安"
+
+#: C/stardict.xml:2397(email)
+msgid "msa@wri.com.cn"
+msgstr ""
+
+#: C/stardict.xml:2402(title)
+msgid "StarDict 1.31"
+msgstr "星際譯王 1.31"
+
+#: C/stardict.xml:2403(para)
+msgid ""
+"The original Motif/LessTif-based StarDict 1.31 written in 1999. "
+"<application>StarDict</application> 2 got many good ideas from StarDict1.31 "
+"such as \"Scan selection.\" Many of <application>StarDict</application> 2's "
+"features, like \"Fuzzy query,\" come from StarDict1.31."
+msgstr ""
+"最初寫於1999年的星際譯王1.31版是基於 Motif/LessTif 開發的。<application>星際"
+"譯王</application> 2 吸收了星際譯王1.31版的許多好想法，比如\"掃描選擇區\"。許"
+"多 <application>星際譯王</application> 2的重要特色，比如“模糊查詢”就來源於星"
+"際譯王1.31版。"
+
+#: C/stardict.xml:2412(firstname)
+msgid "Opera"
+msgstr "王"
+
+#: C/stardict.xml:2413(surname)
+msgid "Wang"
+msgstr "煒"
+
+#: C/stardict.xml:2415(email)
+msgid "Opera.Wang@motorola.com"
+msgstr ""
+
+#: C/stardict.xml:2420(title)
+msgid "StarDict 1.33+"
+msgstr "星際譯王 1.33+"
+
+#: C/stardict.xml:2421(para)
+msgid ""
+"StarDict1.33+ is a big enhancement of StarDict1.31. It added many "
+"dictionaries, and so it made me realize that dictionary data was not a "
+"barrier to a new, GTK2-based dictionary program. If there had been no "
+"StarDict1.33+, I would not have started the <application>StarDict</"
+"application> 2 project. The author also helped me to port the StarDict 1.3 "
+"dictionary data files to <application>StarDict</application> 2."
+msgstr ""
+"星際譯王1.33+版是對1.31的極大改進。她增加了許多辭典，這使我意識到辭典數據對於"
+"一個全新的、基於GTK2的辭典專案已經不再是一個障礙。如果沒有星際譯王1.33+版，我"
+"也不會開始<application>星際譯王</application> 2 專案。作者還幫助我把辭典的數"
+"據轉換到了<application>星際譯王</application>2。"
+
+#: C/stardict.xml:2428(title)
+msgid "The DICT Project"
+msgstr "DICT 專案"
+
+#: C/stardict.xml:2429(para)
+msgid ""
+"Many dictd dictionaries have been ported to <application>StarDict</"
+"application>. dictzip, which came from dictd, is also used by "
+"<application>StarDict</application>."
+msgstr ""
+"很多編撰好的 dictd 辭典已經被轉換加入了<application>星際譯王</application>。"
+"來自 DICT 專案的 dictzip 也用在了<application>星際譯王</application>。"
+
+#: C/stardict.xml:2431(para)
+msgid ""
+"To find more information about the DICT Project, please visit <ulink url="
+"\"http://www.dict.org\" type=\"http\">www.dict.org</ulink>."
+msgstr ""
+"要獲得更多關於 DICT 專案的訊息，請訪問 <ulink url=\"http://www.dict.org\" "
+"type=\"http\">www.dict.org</ulink>。"
+
+#: C/stardict.xml:2438(title)
+msgid "*Quick"
+msgstr ""
+
+#: C/stardict.xml:2439(para)
+msgid ""
+"Many wquick dictionaries have been ported to <application>StarDict</"
+"application>."
+msgstr "wquick的許多辭典都轉換加入到了 <application>星際譯王</application>。"
+
+#: C/stardict.xml:2440(para)
+msgid ""
+"To find more information about *Quick, please visit <ulink url=\"http://www."
+"futureware.at/quick.htm\" type=\"http\">*Quick</ulink>."
+msgstr ""
+"要獲得更多關於*Quick專案的訊息，請訪問 <ulink url=\"http://www.futureware.at/"
+"quick.htm\" type=\"http\">*Quick</ulink>。"
+
+#: C/stardict.xml:2450(firstname)
+msgid "Terrence"
+msgstr ""
+
+#: C/stardict.xml:2451(surname)
+msgid "Miao"
+msgstr ""
+
+#: C/stardict.xml:2453(email)
+msgid "terence_miao@email.com"
+msgstr ""
+
+#: C/stardict.xml:2458(title)
+msgid "The Blowfish Project"
+msgstr "Blowfish 專案"
+
+#: C/stardict.xml:2459(para)
+msgid "The Blowfish Project provided the Oxford English-Chinese dictionary."
+msgstr "Blowfish 專案提供了牛津現代英漢雙解辭典。"
+
+#: C/stardict.xml:2460(para)
+msgid ""
+"To find more information about the Blowfish Project, please visit the <ulink "
+"url=\"http://igloo.its.unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish "
+"Project Web site</ulink>."
+msgstr ""
+"要獲得更多關於 Blowfish 專案的訊息，請訪問 <ulink url=\"http://igloo.its."
+"unimelb.edu.au/Blowfish/\" type=\"http\">Blowfish 專案網站</ulink>。"
+
+#: C/stardict.xml:2470(firstname)
+msgid "Fu"
+msgstr "伏"
+
+#: C/stardict.xml:2471(surname)
+msgid "Jianjun"
+msgstr "建軍"
+
+#: C/stardict.xml:2473(email)
+msgid "fujianjun@163.net"
+msgstr ""
+
+#: C/stardict.xml:2478(title)
+msgid "XDICT"
+msgstr ""
+
+#: C/stardict.xml:2479(para)
+msgid ""
+"XDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "XDICT 的辭典已經被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:2483(title)
+msgid "cdict5"
+msgstr ""
+
+#: C/stardict.xml:2484(para)
+msgid ""
+"cdict5's dictionary has been ported to <application>StarDict</application>."
+msgstr "cdict5 的辭典已被成功匯入<application>星際譯王</application>。"
+
+#: C/stardict.xml:2490(firstname)
+msgid "Leon"
+msgstr ""
+
+#: C/stardict.xml:2491(surname)
+msgid "Liang"
+msgstr ""
+
+#: C/stardict.xml:2493(email)
+msgid "Liang.Lu@CERN.CH"
+msgstr ""
+
+#: C/stardict.xml:2498(title)
+msgid "xcdict-tcltk"
+msgstr ""
+
+#: C/stardict.xml:2499(ulink)
+msgid "xcdict-tcltk Web site"
+msgstr "xcdict-tcltk 網站"
+
+#: C/stardict.xml:2506(firstname)
+msgid "Borg"
+msgstr ""
+
+#: C/stardict.xml:2507(surname)
+msgid "LU"
+msgstr ""
+
+#: C/stardict.xml:2509(email)
+msgid "dystopia@iname.com"
+msgstr ""
+
+#: C/stardict.xml:2514(title)
+msgid "cdict5 v1.3"
+msgstr ""
+
+#: C/stardict.xml:2515(para)
+msgid ""
+"To find more information about the cdict5 Project, please visit the <ulink "
+"url=\"http://www.freshports.org/chinese/cdict5/\" type=\"http\">cdict5 on "
+"freshports</ulink>."
+msgstr ""
+"要獲得更多關於 cdict5 專案的訊息，請訪問 <ulink url=\"http://www.freshports."
+"org/chinese/cdict5/\" type=\"http\">cdict5 專案網站</ulink>。"
+
+#: C/stardict.xml:2526(firstname)
+msgid "Paul"
+msgstr ""
+
+#: C/stardict.xml:2527(surname)
+msgid "Denisowski"
+msgstr ""
+
+#: C/stardict.xml:2529(email)
+msgid "cedict@chinesetools.com"
+msgstr ""
+
+#: C/stardict.xml:2534(title)
+msgid "CEDICT"
+msgstr ""
+
+#: C/stardict.xml:2535(para)
+msgid ""
+"CEDICT's dictionary has been ported to <application>StarDict</application>."
+msgstr "CEDICT 的辭典已經被匯入了<application>星際譯王</application>。"
+
+#: C/stardict.xml:2536(para)
+msgid ""
+"To find more information about the CEDICT Project, please visit the <ulink "
+"url=\"http://www.mandarintools.com/cedict.html\" type=\"http\">CEDICT "
+"Project Web site</ulink>."
+msgstr ""
+"要獲得更多關於 CEDICT 專案的訊息，請訪問 <ulink url=\"http://www."
+"mandarintools.com/cedict.html\" type=\"http\">CEDICT 專案網站</ulink>。"
+
+#: C/stardict.xml:2546(firstname)
+msgid "Kong"
+msgstr "孔"
+
+#: C/stardict.xml:2547(surname)
+msgid "Hui"
+msgstr "暉"
+
+#: C/stardict.xml:2549(email)
+msgid "konghui@xinhuanet.com"
+msgstr ""
+
+#: C/stardict.xml:2554(title)
+msgid "CFFD"
+msgstr ""
+
+#: C/stardict.xml:2555(para)
+msgid ""
+"<application>StarDict</application>'s icon was created with this software. "
+"CFFD also provided some useful information to me."
+msgstr ""
+"<application>星際譯王</application>的圖示是從這個軟體得來的。CFFD 同樣也為我"
+"提供了一些有用的訊息。"
+
+#: C/stardict.xml:2557(para)
+msgid ""
+"To find more information about the CFFD Project, please visit the <ulink url="
+"\"http://cffd.cosoft.org.cn\" type=\"http\">CFFD Project Web site</ulink>."
+msgstr ""
+"要獲得更多關於 CFFD 專案的訊息，請訪問 <ulink url=\"http://cffd.cosoft.org.cn"
+"\" type=\"http\"> CFFD 專案網站</ulink>。"
+
+#: C/stardict.xml:2579(title)
+msgid "Developers"
+msgstr "開發者"
+
+#: C/stardict.xml:2580(para)
+msgid ""
+"To find more information about <application>StarDict</application>, please "
+"visit the <ulink url=\"http://stardict.sourceforge.net/\" type=\"http"
+"\">StarDict Web site</ulink>."
+msgstr ""
+"要獲得更多的關於 <application>星際譯王</application>的訊息，請訪問 <ulink "
+"url=\"http://stardict.sourceforge.net/\" type=\"http\">星際譯王網站</ulink>。"
+
+#: C/stardict.xml:2586(para)
+#, fuzzy
+msgid ""
+"Send all comments, suggestions, and bug reports to Hu Zheng "
+"(<email>huzheng001@gmail.com</email>)."
+msgstr ""
+"請把所有該軟體的評論、建議、錯誤報告發送給胡正 (<email>huzheng_001@163.com</"
+"email>)。"
+
+#: C/stardict.xml:2591(para)
+msgid ""
+"Македонскиот превод е направен од Новица Наков (<email>acivon@mail.com.mk</"
+"email>). Сите коментари и предлози околу овој превод праќајте ги на горната "
+"адреса."
+msgstr ""
+
+#: C/stardict.xml:2597(para)
+msgid ""
+"Nederlandse vertaling is gedaan door Ruud Slaats "
+"(<email>ruudslaats@eurotechgroup.nl</email>). Stuur al u commentaar, "
+"suggesties betreffende deze vertaling naar <email>ruudslaats@eurotechgroup."
+"nl</email>."
+msgstr ""
+
+#: C/stardict.xml:2602(para)
+msgid ""
+"На русский язык переведено Александром Мурыгиным (<email>murygin@aitoc.com</"
+"email>). Пожалуйста присылайте все комментарии и предложения относящиеся к "
+"этому переводу на этот адрес."
+msgstr ""
+
+#: C/stardict.xml:2608(para)
+msgid ""
+"На українську мову перекладено Сергієм Дубиком (<email>dubyk@library.lviv."
+"ua</email>). Будь ласка присилайте всі коментарі та пропозиції, що "
+"відносяться до цього перекладу, на цю адресу."
+msgstr ""
+
+#: C/stardict.xml:2614(para)
+msgid ""
+"中文翻译由耿军军完成 (<email>geng82@163.com</email>)。请将有关本翻译的评论和"
+"建议发到我的邮箱。"
+msgstr ""
+
+#: C/stardict.xml:2619(para)
+msgid ""
+"繁體中文翻譯由陳曉陽完成 (<email>roy.chan@debian.org.hk</email>)。請將有關本"
+"翻譯的評論和建議電郵給我。"
+msgstr ""
+
+#. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
+#: C/stardict.xml:0(None)
+msgid "translator-credits"
+msgstr ""
+
+#~ msgid ""
+#~ "If <application>StarDict</application> is already running, it will "
+#~ "perform the query in the existing StarDict window."
+#~ msgstr ""
+#~ "如果<application>星際譯王</application>已經運行，她將會在已有的星際譯王視"
+#~ "窗中進行查詢。"
+
+#~ msgid "When You Start StarDict"
+#~ msgstr "當你啟動了星際譯王"
+
+#~ msgid ""
+#~ "You can click these buttons to do fuzzy quering, look up the previously "
+#~ "queried word, look up the next and previous words from the list on the "
+#~ "left, and pop up the main menu."
+#~ msgstr ""
+#~ "你可以通過按一下這些按鈕來進行模糊查詢、查詢先前查過的單詞、查詢位於左邊的"
+#~ "列表中的前後單詞和彈出主視窗選單。"
+
+#~ msgid ""
+#~ "The bottom-left of the window contains the <guibutton>Scan selection</"
+#~ "guibutton> check button, the <guibutton>Info</guibutton> button and the "
+#~ "<guibutton>Quit</guibutton> button. Checking the <guibutton>Scan "
+#~ "selection</guibutton> check button will cause <application>StarDict</"
+#~ "application> to automatically look up words that you highlight in any "
+#~ "application. The bottom-right of the window contains the "
+#~ "<guibutton>Internet search</guibutton> button, the <guibutton>StarDict "
+#~ "project website</guibutton> button, the <guibutton>Dictionary management</"
+#~ "guibutton> button and the <guibutton>Preferences</guibutton> button."
+#~ msgstr ""
+#~ "位於視窗左下角的按鈕包含了<guibutton>取詞</guibutton>核取方塊，<guibutton>"
+#~ "顯示訊息</guibutton>按鈕和<guibutton>離開</guibutton>按鈕。選上<guibutton>"
+#~ "取詞</guibutton>後會讓 <application>星際譯王</application>自動查詢你在任何"
+#~ "應用程式中的選中選擇了的單詞。視窗的右下部包含了<guibutton>搜尋網絡辭典</"
+#~ "guibutton>按鈕，<guibutton>瀏覽“星際譯王”網站</guibutton>按鈕，<guibutton>"
+#~ "辭典管理</guibutton>按鈕和<guibutton>偏好設定</guibutton>按鈕。"
+
+#~ msgid "StarDict Floating Window"
+#~ msgstr "星際譯王 浮動視窗"
+
+#~ msgid "Startup"
+#~ msgstr "啟動"
+
+#~ msgid "Search website list area"
+#~ msgstr "搜尋網站的列表"
+
+#~ msgid ""
+#~ "You can search the websites in this list when you right-click the "
+#~ "<guibutton>Internet search</guibutton> button in the main window."
+#~ msgstr ""
+#~ "通過右鍵按一下位於主視窗的<guibutton>搜尋網路辭典</guibutton>按鈕就出現這"
+#~ "些搜尋網站的列表選單。"
+
+#~ msgid "Size"
+#~ msgstr "大小"

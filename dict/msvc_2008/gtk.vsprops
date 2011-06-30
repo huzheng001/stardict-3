@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="gtk"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="gtk\include;&quot;gtk\include\pango-1.0&quot;;&quot;gtk\include\atk-1.0&quot;;&quot;gtk\lib\glib-2.0\include&quot;;&quot;gtk\lib\gtk-2.0\include&quot;;&quot;gtk\include\glib-2.0&quot;;gtk\include\cairo;&quot;gtk\include\gtk-2.0&quot;;&quot;gtk\include\gdk-pixbuf-2.0&quot;"
+	/>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="glib-2.0.lib intl.lib cairo.lib gdk-win32-2.0.lib gdk_pixbuf-2.0.lib gmodule-2.0.lib gobject-2.0.lib gthread-2.0.lib gtk-win32-2.0.lib pango-1.0.lib pangocairo-1.0.lib"
+		AdditionalLibraryDirectories="gtk\lib"
+	/>
+</VisualStudioPropertySheet>
