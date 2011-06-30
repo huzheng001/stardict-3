@@ -1,0 +1,25 @@
+Source: stardict
+Section: utils
+Priority: optional
+Maintainer: Roy Hiu-yeung Chan <hychan@glink.net.hk>
+Uploaders: Anthony Fok <foka@debian.org>, Andrew Lee <andrew@linux.org.tw>
+Build-Depends: debhelper (>= 5.0.0), python-dev, python-support (>= 0.4), libgnomeui-dev, scrollkeeper, libbonobo2-dev, libgconf2-dev, liborbit2-dev, zlib1g-dev, sharutils, libxml-parser-perl, libx11-dev, x-dev, libsigc++-2.0-dev, libgucharmap-dev, libespeak-dev, libenchant-dev
+Standards-Version: 3.7.2.0
+
+Package: stardict
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, scrollkeeper (>= 0.3.14-5), sgml-data (>= 2.0.2)
+Suggests: ttf-freefont | ttf-thryomanes
+Replaces: stardict-gtk
+Conflicts: stardict-gtk
+Description: International dictionary for GNOME 2
+ StarDict is a cross-platform and international dictionary written in
+ GTK+ 2.x.  It has powerful features such as "Glob-style pattern
+ matching", "Scan selection word", "Fuzzy search", etc.
+ .
+ This package is compiled with GNOME 2 support and contains only the
+ program of stardict and will be of limited use without the dictionary
+ files. For more information about how to get the dictionary files,
+ please read /usr/share/doc/stardict/README.Debian.
+ .
+ Home Page: http://stardict.sourceforge.net/

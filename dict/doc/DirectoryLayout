@@ -1,0 +1,20 @@
+Directory layout of Stardict source tree
+----------------------------------------
+
+- debian-upstream
+contains Debian OS specific files
+Do not name this directory "debian", that complicates Stardict packaging for
+Debian. See http://people.debian.org/~mpalmer/debian-mentors_FAQ.html,
+question "What's wrong with upstream shipping a debian/ directory?" for more
+details.
+
+source code
+-----------
+
+StarDict source code is concentrated in src directory and its subdirectory.
+
+src (not counting subdirectories) - contains GUI-specific code of StarDict. At present time GUI is based on the GTK+ toolkit. It's possible that other toolkits will be supported in the future. In that case each toolkit specific code will be placed in an independent directory, the current contents of the src directory will be moved to gtk+ subdirectory.
+
+src/lib - non-GUI code forming a library. This library is used by StarDict and StarDict test system. You may think to share this library with StarDict tools package, some tools require code that is part of StarDict, but actually only low percentage of the lib code may be used in tools. In general, src/lib library code is too specific to StarDict application to be useful as an independent library. Turning it into an independent library may be a task for the future, but right now it seams to be of no use.
+
+src/win32 - Microsoft Windows specific code of StarDict.

@@ -1,0 +1,74 @@
+This package contain some tools for StarDict.
+
+http://stardict.sourceforge.net
+
+Make sure you restart StarDict after using a converter!
+
+dictd2dic.sh	converter from dictd format (you may need dictzip package for .dz)
+(dictd2dic)
+
+exc.sh		converter of English irregular forms from WordNet-base package
+(exc2i2e)
+
+fest2dict	converter from Festival (CMU) file of transcriptions
+
+i2e.sh		converter for Spanish I2E (Inglés 2 Español) dictionaries
+(i2e2dict)
+
+myspell.sh	converter that allows to see Spanish and Polish verb forms 
+(myspell2dic)	in correct grammar order (venir=>yo vengo, tu vienes, el viene...
+		kochać=>ja kocham, ty kochasz, on kocha, my kochamy...)
+
+mova		converter from MOVA format
+
+ooo.sh		converter for OpenOffice (myspell) thesauri (synonyms) of
+(ooo2dict)	English, German and Italian. Sometimes they are easier
+		to grip than long GCIDE or WordNet description
+
+stardict2txt	converter from StarDict to text format. Useful for mobile phones
+
+testutf8	utility to test any dictionary's UTF-8 conformance (often
+		cause of weird symbols)
+
+ydp2dict	converter for Polish Collins proprietary dictionaries
+		(see also YDPDict project: http://toxygen.net/ydpdict/)
+
+lingvosound2resdb		converter from ABBYY Lingvo proprietary dictionary sound
+		file into Stardict resource database
+
+resdatabase2dir		converter from Stardict resource database file into resource 
+		directory. See dir2resdatabase for reverse conversion.
+
+dir2resdatabase		converter from resource directory into Stardict resource 
+		database file. See resdatabase2dir for reverse conversion.
+
+stardict_verify	check StarDict dictionary for errors
+
+stardict-editor	a GUI front-end combining a number of tools. They allows to convert 
+		StarDict dictionary <-> tab file, (Babylong file) -> StarDict dictionary,
+		verify dictionary.
+
+stardict_index	print content of StarDict index file in human readable form
+
+stardict_bin2text	convert normal binary StarDict dictionary into textual
+		xml-based dictionary. See doc/TextualDictionaryFileFormat
+
+stardict_text2bin	convert textual xml-based dictionary into binary StarDict
+		dictionary. See doc/TextualDictionaryFileFormat
+
+babylon	convert from babylon source file format to StarDict dictionary
+	see doc/HowToCreateDictionary for information about babylon source file format
+
+stardict_images.sh create images for StarDict like application icon, tray icons, Acrobat plugin icons
+  see src/stardict_images.sh
+
+stardict-repair repair broken StarDict dictionary
+
+------------------------------------------------------------------------------------
+External tools
+
+makedict	http://sourceforge.net/projects/xdxf/files/, under "converter many to many" section
+		Allows to create a StarDict dictionary from a number of file formats.
+
+pyglossary http://sourceforge.net/projects/pyglossary/
+    Allows to create a StarDict dictionary from a number of file formats.

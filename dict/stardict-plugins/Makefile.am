@@ -1,0 +1,3 @@
+DIST_SUBDIRS = stardict-dictdotcn-plugin stardict-man-plugin stardict-update-info-plugin stardict-html-parsedata-plugin stardict-xdxf-parsedata-plugin stardict-wordnet-plugin stardict-powerword-parsedata-plugin stardict-wiki-parsedata-plugin stardict-spell-plugin stardict-gucharmap-plugin stardict-festival-tts-plugin stardict-espeak-tts-plugin stardict-sapi-tts-plugin stardict-qqwry-plugin
+
+SUBDIRS = $(DICTDOTCN_PLUGIN_DIR) $(MAN_PLUGIN_DIR) $(UPDATE_INFO_PLUGIN_DIR) $(HTML_PARSEDATA_PLUGIN_DIR) $(XDXF_PARSEDATA_PLUGIN_DIR) $(WORDNET_PLUGIN_DIR) $(POWERWORD_PARSEDATA_PLUGIN_DIR) $(WIKI_PARSEDATA_PLUGIN_DIR) $(SPELL_PLUGIN_DIR) $(GUCHARMAP_PLUGIN_DIR) $(FESTIVAL_PLUGIN_DIR) $(ESPEAK_PLUGIN_DIR) $(QQWRY_PLUGIN_DIR) stardict-sapi-tts-plugin

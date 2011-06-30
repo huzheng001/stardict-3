@@ -1,0 +1,44 @@
+This is the top level directory of StarDict dictionary and StarDict tools projects. 
+It does not contain any code to be build, instead it passes control to subproject in order to configure and build them in correct order.
+
+The top level directory contains the following subdirectories:
+- dict - StarDict dictionary
+- tools - StarDict tools
+- lib - a library with common code used by StarDict dictionary and StarDict tools
+
+Each subdirectory contains an independent project with its own configure script.
+
+In version 3.0.2 and before StarDict dictionary and StarDict tools were independent projects,
+they were distributed in separate tarball. There are many code pieces that may be shared between
+both project. They are mainly small convenience functions, but large classes like ones that 
+read dictionary files may be shared as well. Common code was moved into a convenience library.
+This library does not mean to be installed on the client machine, it's linked statically with
+relevant programs. The new design of the project force that both StarDict dictionary and
+StarDict tools now be distributed in a single tarball.
+
+If you checkout StarDict source code from a repository, you need to bootstrap the project. 
+Execute the autogen.sh file in the root directory. Now you should have configure script and
+other files required to configure and build the project.
+Note that autogen.sh does not automatically invoke the configure script.
+
+Configuring the project. By default, both StarDict dictionary and StarDict tools will be configured.
+You may disable any subproject with configure options --disable-dict and --disable-tools.
+For example, to configure only StarDict dictionary, invoke configure script as follows:
+./configure --disable-tools
+
+It's recommended to configure and build StarDict in a separate directory to source code. 
+That preserve the source tree clean.
+
+StarDict dictionary and StarDict tools subprojects support their own configuration options.
+To see the list of supported option, invoke the top level configure script with --help=recursive option, 
+or invoke configure script in subprojects with --help option.
+
+Options passed to the top level configure script will be passed to configure script in subdirectories, 
+that allows you to configure subprojects.
+
+Now you may build and install the project:
+make
+make install
+
+For information about specific subproject, recurse into the respective subdirectory. 
+Read README, INSTALL and other files.

@@ -1,0 +1,228 @@
+stardict (3.0.1-1) gutsy; urgency=low
+
+  * New upstream version.
+
+ -- Hu Zheng <huzheng_001@163.com>  Tue, 23 Oct 2007 00:14:43 +0800
+
+stardict (3.0.0-1) feisty; urgency=low
+
+  * New upstream version.
+
+ -- Hu Zheng <huzheng_001@163.com>  Fri, 17 Aug 2007 22:09:08 +0800
+
+stardict (2.4.8-1) unstable; urgency=low
+
+  * Co-maintainer upload, agreed by Roy Chan.
+  * Update package to the last python policy by 
+    Pierre Habouzit <madcoder@debian.org>(Closes: 380962).
+
+ -- Andrew Lee <andrew@linux.org.tw>  Tue,  5 Sep 2006 17:12:22 +0800
+
+stardict (2.4.8-0.1) unstable; urgency=low
+
+  [ Andrew Lee ]
+  * NMU for new upstream release (Closes: #361667)
+  * Build stardict-gtk binary package (Closes: #328649)
+  * Changed packaging method back to original and clean up debian/rules
+  * Added watch file
+  * Added LGPL informations into copyright file
+  * Oops, upstream split stardict-tools as another tarball, I think
+    it's good if Debian can respect that, so I will make another NMU for
+    package the new stardict-tools as well.
+
+  [ Anthony Wong ]
+  * No longer Suggest: sdcv, agreed by Roy Chan.
+  * Corrected package summary and description.
+  * Corrected few things in README.Debian.
+
+ -- Andrew Lee <andrew@linux.org.tw>  Mon,  7 Aug 2006 23:51:21 +0800
+
+stardict (2.4.7-1) unstable; urgency=low
+
+  * New upstream version.  (Closes: Bug#361667)
+  * Changed packaging method: Now the pristine upstream bzip2 tarball is
+    placed as-is within the Debian source package.  The autogen.sh is also
+    run at build time.  (Closes: Bug#289996)
+   * Upgraded Standards-Version from 3.6.2 to 3.7.2.
+   * Updated package description and copyright information.
+
+ -- Anthony Fok <foka@debian.org>  Thu,  1 Jun 2006 04:46:49 +0800
+
+stardict (2.4.5-2) unstable; urgency=low
+
+  * Co-maintainer upload.  :-)
+  * Acknowledge NMU (2.4.5-1.1) by Justin Pryzby for xlibs-dev removal
+    reported by Adeodato Simó.  Many thanks  (Closes: Bug#347109)
+  * Fix "FTBFS with G++ 4.1: extra qualification".  Thanks to Martin Michlmayr
+    for notification and patch!  (Closes: Bug#357328)
+
+ -- Anthony Fok <foka@debian.org>  Sat, 18 Mar 2006 06:30:26 +0800
+
+stardict (2.4.5-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Update build-deps for xlibs-dev removal; closes: #347109.
+
+ -- Justin Pryzby <justinpryzby@users.sf.net>  Sat, 14 Jan 2006 15:24:45 -0500
+
+stardict (2.4.5-1) unstable; urgency=low
+
+  * [debian/control]
+     - Oops!  2.4.5-0.1 failed to build from source!  Mea culpa!
+       Added Build-Depends: libxml-parser-perl
+     - Added myself to the Uploaders field.  :-)
+
+  * While hunting down on libxml-parser-perl dependency, I decided to learn
+    more about intltools and to fix up "make distclean" leftovers:
+     - [autogen.sh]: Run intltoolize too.
+     - [Makefile.am]: Added "DISTCLEANFILES = intltool-extract intltool-merge
+        intltool-update"
+     - Updated omf.make and xmldocs.make from gnome-common (2.8.0-3).
+       This cleans out help/*/stardict-*.omf.out.
+     - Ran ./autogen.sh (with automake1.9 and intltools pre-installed).
+     - The new intltool (0.34) scripts clean up po/.intltool-merge-cache
+       and po/*.gmo.  Also, stardict.desktop (etc.) entries finally
+       show up in the PO files again.
+
+  * [debian/rules]: Changed --localstatedir=/var/lib to /var.
+
+ -- Anthony Fok <foka@debian.org>  Wed,  5 Oct 2005 04:22:16 +0800
+
+stardict (2.4.5-0.1) unstable; urgency=low
+
+  * NMU (with Roy Chan's permission)
+  * New upstream version.  (Closes: Bug#289451, Bug#330501)
+  * zh_TW help files are included in this new upstream release.
+    Removed stardict-help-zh_TW.tar.gz.uuencode from source.
+  * Updated Standards-Version: 3.6.1 -> 3.6.2.  No change.
+  * Added icon for menu.  Thanks to Li Daobing for the patch.
+    (Closes: Bug#289104)
+  * Removed superfluous build-dependency on libstdc++5-3.3-dev.
+    Thanks to Andreas Jochens for the patch.  (Closes: Bug#300358)
+  * Suggests: sdcv, the console version of StarDict packaged by Cai Qian.
+  * Fixed Lintian warnings:
+    - Removed bashism in postinst: "-a" in "[" test.
+    - Updated FSF address in copyright file.  
+
+ -- Anthony Fok <foka@debian.org>  Tue,  4 Oct 2005 03:47:21 +0800
+
+stardict (2.4.3-5) unstable; urgency=low
+
+  * Add build-depends xlibs-dev
+  * Sponsored by Anthony Fok <foka@debian.org>
+
+ -- Roy Hiu-yeung Chan <hychan@glink.net.hk>  Sun, 15 Aug 2004 00:00:03 +0800
+
+stardict (2.4.3-4) unstable; urgency=low
+
+  * Add build-depends python, thanks Andreas Jochens <aj@andaco.de>
+    and Bastian Kleineidam <calvin@debian.org> (Closes: Bug#263820)
+  * Fix configure.in to generate Makefile in help/zh_TW
+  * Rebuild to depend on gcrypt11/gnutls11 instead of gcrypt1/gnutls7
+    (Closes: Bug#264735)
+  * Suggest ttf-freefont or ttf-thryomanes for display phonetic symbol
+  * Change the gconf schemas location from /etc/gconf/schemas to
+    /usr/share/gconf/schemas via adding dh_scrollkeeper and dh_gconf in
+    debian/rules
+  * Sponsored by Anthony Wong <ypwong@debian.org>
+
+ -- Roy Hiu-yeung Chan <hychan@glink.net.hk>  Thu, 12 Aug 2004 14:21:36 +0800
+
+stardict (2.4.3-3) unstable; urgency=low
+
+  * Apply Sebastien Bacher <seb128@debian.org> patch to be able to
+    compile with gtk+ 2.4 (Closes: Bug#250063)
+  * Add Traditional Chinese Help Manual
+  * Sponsored by Anthony Fok <foka@debian.org>
+
+ -- Roy Hiu-yeung Chan <hychan@glink.net.hk>  Wed, 26 May 2004 18:30:53 +0800
+
+stardict (2.4.3-2) unstable; urgency=low
+
+  * Fix the dependency of stardict-tools in order to be installable on
+    alpha and i64 (Closes: Bug#249236, Bug#249237)
+  * Fix the DTD Url of the help file (Closes: Bug#207928)
+  * Fix the assume char is signed problem in arm (Closes: Bug#206479)
+  * Add dependency on sgml-data 2.x and scrollkeeper.
+    Thanks Anthony Wong <ypwong@debian.org>
+  * Sponsored by Anthony Wong <ypwong@debian.org>
+
+ -- Roy Hiu-yeung Chan <hychan@glink.net.hk>  Wed, 19 May 2004 19:39:01 +0800
+
+stardict (2.4.3-1) unstable; urgency=low
+
+  * New upstream release: 2.4.3 (Closes: Bug#199468)
+  * Split to arch-independent data and conversion tools to
+    stardict-common and stardict-tools. (Closes: Bug#233445)
+  * Sponsored by Anthony Fok <foka@debian.org>
+
+ -- Roy Hiu-yeung Chan <hychan@glink.net.hk>  Thu, 11 Mar 2004 20:29:37 +0800
+
+stardict (2.4.2-1) unstable; urgency=low
+
+  * New upstream release: 2.4.2
+
+ -- Chen YiFei <chern@linux.net>  Sat, 29 Nov 2003 00:40:21 +0800
+
+stardict (1.9.92+2.0.0-pre2-3.1) unstable; urgency=low
+
+  * Non-maintainer upload according to the release manager's plan.
+  * Fix compilation from sources, patch from Matt Kraai
+    <kraai@alumni.cmu.edu>.  (Closes: Bug#198113)
+
+ -- Roland Mas <lolando@debian.org>  Sun, 24 Aug 2003 14:55:28 +0200
+
+stardict (1.9.92+2.0.0-pre2-3) unstable; urgency=low
+
+  * I forgot to credit Opera Wang who worked on StarDict 1.31+, 1.32+ and
+    1.33+ in the second half of year 2002.  Updated debian/copyright.
+
+ -- Anthony Fok <foka@debian.org>  Sat, 19 Apr 2003 13:42:55 +0800
+
+stardict (1.9.92+2.0.0-pre2-2) unstable; urgency=low
+
+  * Oops, forgot to actually install the menu file.  :-)
+  * Removed the zero-byte NEWS and install NEWS.zh_CN instead, for now.
+
+ -- Anthony Fok <foka@debian.org>  Sat, 19 Apr 2003 10:55:25 +0800
+
+stardict (1.9.92+2.0.0-pre2-1) unstable; urgency=low
+
+  * Initial Release of Hu Zheng's GNOME-based StarDict 2.0.0 series.
+    Special thanks to Yu Guanghui for announcing it to the Debian community.
+  * Fixed some typos.
+
+ -- Anthony Fok <foka@debian.org>  Sat, 19 Apr 2003 05:08:16 +0800
+
+stardic (1.3.1-3) unstable; urgency=low
+
+  * Acknowledged Yu Guanghui's NMU on gcc-3.0 compile problem.  Thanks!
+    Also thanks to LaMont Jones for the bug report.  (Closes: Bug#105008)
+  * Updated Build-Dependency.  The obsolete xlib6g-dev is now xlibs-dev.
+    Thanks to Daniel Schepler for the bug report.  (Closes: Bug#170130)
+  * Updated copyright information to point to a possibly new upstream
+    project home page.
+
+ -- Anthony Fok <foka@debian.org>  Sat, 23 Nov 2002 13:32:50 +0800
+
+stardic (1.3.1-2.1) unstable; urgency=low
+
+  * NMU 
+  * Fixed gcc 3.0 compiling problem. (closes:Bug#105008)
+
+ -- Yu Guanghui <ygh@debian.org>  Sun, 22 Jul 2001 15:54:18 +0800
+
+stardic (1.3.1-2) unstable; urgency=low
+
+  * Contacted upstream author (MA Su An) who informed me where to find
+    the stardic Home Page.  Hence, the missing fields in
+    /usr/share/doc/stardic/copyright are now filled.  :-)
+
+ -- Anthony Fok <foka@debian.org>  Sun,  9 Jul 2000 13:38:09 -0600
+
+stardic (1.3.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Anthony Fok <foka@debian.org>  Wed, 28 Jun 2000 10:47:21 -0600
+

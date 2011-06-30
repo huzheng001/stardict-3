@@ -1,0 +1,1 @@
+EXTRA_DIST = StarDictFileFormat README_windows.txt HowToCreateDictionary FAQ HACKING Translation Readme.mac Skins Documentation stardict-textual-dict-example.xml stardict-textual-dict.rnc stardict-textual-dict.rng

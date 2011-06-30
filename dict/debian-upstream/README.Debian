@@ -1,0 +1,34 @@
+StarDict for Debian
+-------------------
+
+StarDict is an international dictionary that runs in GNOME 2
+environment. It has powerful features such as "Glob-style pattern
+matching", "Scan selection word", "Fuzzy query", etc.
+
+Dictionary
+
+The official site of StarDict (http://stardict.sourceforge.net/)
+provides many converted dictionaries, including English<->Chinese,
+Gemany<->English and French<->English. However, the dictionary files
+are split out from this package because of license issues. You can
+download them from http://stardict.sourceforge.net/Dictionaries.php
+and extract to the directory /usr/share/stardict/dic.
+
+Phonetic Symbol
+
+If stardict fails to display the phonetic symbol, install the package
+ttf-freefont or ttf-thryomanes.
+
+Convertion Tools
+
+StarDict also provide a set of convertion tools which can convert
+the dictionaries from other software to StarDict format. You can
+find them in the package stardict-tools.
+
+Dictionary Format
+
+You can find a brief description of Stardict dictionary format in
+/usr/share/doc/stardict/StarDictFileFormat.gz.
+
+Created by Roy Hiu-yeung Chan <hychan@glink.net.hk>, Wed, 25 Feb 2004 20:06:02 +0800
+Last modified by Anthony Wong <ypwong@debian.org>, Mon Aug 28 2006 16:56:49 +0800

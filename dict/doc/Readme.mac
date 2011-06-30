@@ -1,0 +1,31 @@
+StarDict have been ported to Mac OS X now.
+
+Here is a abstract introduction of compiling stardict and building the package.
+
+1. Install Xcode.
+
+2. Install fink.
+http://www.finkproject.org
+This should be optional.
+
+3. Install jhbuild.
+http://developer.imendio.com/projects/gtk-macosx
+http://developer.imendio.com/projects/gtk-macosx/build-instructions
+And build gtk by following the instructions.
+
+4. Compile stardict.
+Edit configure.in, remove the "AM_GCONF_SOURCE_2" lines.
+./autogen.sh
+export PKG_CONFIG=/opt/gtk/bin/pkg-config
+./configure --prefix=/opt/gtk --disable-festival --disable-espeak --disable-gucharmap --disable-spell --enable-darwin-support --mandir=/opt/gtk/share/man
+make
+make install
+
+5. Create the install package.
+Read documents in http://gimp-app.sourceforge.net/
+You can take the existing StarDict.pkg for the example.
+To get the gtk library files, you can do: "cd ~/Source/gnome/gtk+/;make DESTDIR=~/stardict-root install" and so on.
+After Created the package directory, you can use PackageMaker to build it.
+
+Any question, just mail to Hu Zheng :)
+2007.12.6

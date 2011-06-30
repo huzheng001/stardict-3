@@ -1,0 +1,55 @@
+#ifndef LIB_RES_STORE_H_
+#define LIB_RES_STORE_H_
+
+#include <string>
+#include "libcommon.h"
+#include "lib_dict_verify.h"
+
+class i_resource_storage {
+public:
+	virtual bool have_file(const std::string& filename) const = 0;
+};
+
+class resource_database;
+class resource_files;
+
+struct resitem_t {
+	std::string type;
+	std::string key;
+};
+
+enum StorageType {
+	StorageType_UNKNOWN,
+	// files in res directory
+	StorageType_FILE,
+	// database consisting of files: res.rifo, res.ridx, res.rdic
+	StorageType_DATABASE
+};
+
+typedef std::vector<resitem_t> resitem_vect_t;
+
+
+class resource_storage: public i_resource_storage
+{
+public:
+	resource_storage(void);
+	~resource_storage(void);
+	TLoadResult load(const std::string& dirname);
+	// filename uses database directory separator
+	bool have_file(const std::string& filename) const;
+	VerifResult get_verif_result(void) const { return verif_result; }
+	StorageType get_storage_type(void) const;
+	/* true if res.ridx.gz used, res.ridx otherwise
+	 * only when get_storage_type == StorageType_DATABASE */
+	bool res_ridx_compressed(void) const;
+	/* true if res.rdic.dz used, res.rdic otherwise
+	 * only when get_storage_type == StorageType_DATABASE */
+	bool res_rdic_compressed(void) const;
+private:
+	void clear(void);
+	resource_database *db;
+	resource_files *files;
+	VerifResult verif_result;
+};
+
+#endif /* LIB_RES_STORE_H_ */

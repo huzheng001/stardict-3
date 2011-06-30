@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <element name="stardict">
+      <ref name="stardict-content"/>
+    </element>
+  </start>
+  <define name="stardict-content">
+    <interleave>
+      <element name="info">
+        <ref name="info-content"/>
+      </element>
+      <ref name="contents-content"/>
+    </interleave>
+  </define>
+  <define name="info-content">
+    <interleave>
+      <element name="version">
+        <text/>
+      </element>
+      <element name="bookname">
+        <text/>
+      </element>
+      <element name="author">
+        <text/>
+      </element>
+      <optional>
+        <element name="email">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="website">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="description">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="date">
+          <text/>
+        </element>
+      </optional>
+      <optional>
+        <element name="dicttype">
+          <text/>
+        </element>
+      </optional>
+    </interleave>
+  </define>
+  <define name="contents-content">
+    <interleave>
+      <optional>
+        <ref name="content-type-attribute"/>
+      </optional>
+      <zeroOrMore>
+        <element name="contents">
+          <ref name="contents-content"/>
+        </element>
+      </zeroOrMore>
+      <zeroOrMore>
+        <element name="article">
+          <ref name="article-content"/>
+        </element>
+      </zeroOrMore>
+    </interleave>
+  </define>
+  <define name="article-content">
+    <interleave>
+      <optional>
+        <ref name="content-type-attribute"/>
+      </optional>
+      <element name="key">
+        <ref name="key-content"/>
+      </element>
+      <zeroOrMore>
+        <element name="synonym">
+          <ref name="synonym-content"/>
+        </element>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <element name="definition">
+            <ref name="definition-content"/>
+          </element>
+          <element name="definition-r">
+            <ref name="definition-r-content"/>
+          </element>
+        </choice>
+      </oneOrMore>
+    </interleave>
+  </define>
+  <define name="key-content">
+    <text/>
+  </define>
+  <define name="synonym-content">
+    <text/>
+  </define>
+  <define name="definition-content">
+    <interleave>
+      <optional>
+        <ref name="content-type-attribute"/>
+      </optional>
+      <text/>
+    </interleave>
+  </define>
+  <define name="definition-r-content">
+    <oneOrMore>
+      <element name="resource">
+        <ref name="resource-content"/>
+      </element>
+    </oneOrMore>
+  </define>
+  <define name="resource-content">
+    <attribute name="type">
+      <choice>
+        <value>img</value>
+        <value>snd</value>
+        <value>vdo</value>
+        <value>att</value>
+      </choice>
+    </attribute>
+    <attribute name="key"/>
+  </define>
+  <define name="content-type-attribute">
+    <attribute name="type">
+      <choice>
+        <value>m</value>
+        <value>g</value>
+        <value>t</value>
+        <value>x</value>
+        <value>y</value>
+        <value>k</value>
+        <value>w</value>
+        <value>h</value>
+        <value>n</value>
+      </choice>
+    </attribute>
+  </define>
+</grammar>
