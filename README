@@ -42,3 +42,15 @@ make install
 
 For information about specific subproject, recurse into the respective subdirectory. 
 Read README, INSTALL and other files.
+
+License notes
+-------------
+
+The project is licensed under GPL version 3 or (at your option) any later version.
+The following files are exceptions:
+dict/src/lib/ctype-utf8.cpp - GNU Library General Public License
+dict/src/lib/ctype-uca.cpp - GNU Library General Public License
+dict/src/eggaccelerators.h - GNU Library General Public License
+dict/src/eggaccelerators.cpp - GNU Library General Public License
+dict/stardict-plugins/stardict-wordnet-plugin/tenis.h - Common Public License
+dict/src/lib/edit-distance.cpp - GPL (which?)
