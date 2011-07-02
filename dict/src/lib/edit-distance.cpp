@@ -1,10 +1,20 @@
 /*
-    writer : Opera Wang
-    E-Mail : wangvisual AT sohu DOT com
-    License: GPL
+ * Copyright Opera Wang <wangvisual AT sohu DOT com>
+ *
+ * StarDict is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * StarDict is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* filename: distance.cc */
 /*
 http://www.merriampark.com/ld.htm
 What is Levenshtein Distance?
