@@ -1,6 +1,5 @@
 /*
  * This file part of StarDict - A international dictionary for GNOME.
- * http://stardict.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -471,7 +470,7 @@ void TopWin::on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *o
 
 void TopWin::on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
-  show_url("http://stardict.sourceforge.net");
+  show_url("http://www.stardict.org");
 }
 
 void TopWin::on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
@@ -499,7 +498,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 	gtk_show_about_dialog(GTK_WINDOW (gpAppFrame->window),
 			      "name", _("StarDict"),
 			      "version", VERSION,
-			      "website", "http://stardict.sourceforge.net",
+			      "website", "http://www.stardict.org",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
 			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy\n" "Copyright \xc2\xa9 2007-2010 by Hu Zheng",
 			      "authors", (const char **)authors,
@@ -1847,7 +1846,7 @@ void TextWin::ShowInitFailed()
 	const char *link_pos = strstr(fmt, "%s%s%s");
 	LinksPosList links;
 	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
-				 sizeof("http://stardict.sourceforge.net") - 1, "http://stardict.sourceforge.net"));
+				 sizeof("http://www.stardict.org") - 1, "http://www.stardict.org"));
 	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
 	std::string dirs_str;
 #ifdef _WIN32
@@ -1867,7 +1866,7 @@ void TextWin::ShowInitFailed()
 	glib::CharStr mes(
 		g_strdup_printf(get_impl(esc_fmt),
 				"<span foreground=\"blue\" underline=\"single\">",
-				"http://stardict.sourceforge.net",
+				"http://www.stardict.org",
 				"</span>",
 				dirs_str.c_str()));
 	view->clear();
@@ -2934,7 +2933,7 @@ void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
 #ifndef CONFIG_GPE
 void BottomWin::NewVersionCallback(GtkButton *button, BottomWin *oBottomWin)
 {
-  show_url("http://stardict.sourceforge.net");
+  show_url("http://www.stardict.org");
 }
 
 void BottomWin::DictManageCallback(GtkButton *button, BottomWin *oBottomWin)

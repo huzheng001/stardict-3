@@ -1,5 +1,4 @@
 /* dictziplib.c --
- * http://stardict.sourceforge.net
  * Copyright (C) 2003-2003 Hu Zheng <huzheng_001@163.com>
  * This file is a modify version of dictd-1.9.7's data.c
  *

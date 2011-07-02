@@ -14,7 +14,7 @@ Q) I get some problem when install StarDict from the source code tarball.
 A) Read INSTALL.
 
 Q) How the show the correct phonetics in some babylon dictionaries?
-A) Download http://stardict.sourceforge.net/files/ksphonet.ttf and install it. In linux, you can put it into ~/.fonts/ directory.
+A) Download http://www.stardict.org/files/ksphonet.ttf and install it. In linux, you can put it into ~/.fonts/ directory.
 
 Q) How to compile StarDict on Windows?
 A) read doc/README.win32
