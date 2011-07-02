@@ -1,14 +1,4 @@
 /*
- * This file was based on winpidgin.c file from Pidgin project
- * http://pidgin.im/. Preserve the code as close as possible to the ordinal version
- * in order to facilitate synchronising the code in the future.
- * Pidgin may come up with updates that will be useful for StarDict loader.
- * This code is used in both StarDict and StarDict-editor loader projects.
- * A large part of the code is identical in both projects.
- * Chunks that are specific to particular application should be included conditionally.
- * STARDICT macros is only defined in stardict project,
- * while STARDICT_EDITOR is unique to stardict-editor.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -22,6 +12,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02111-1301  USA
+ *
+ * This file was based on winpidgin.c file from Pidgin project
+ * http://pidgin.im/. Preserve the code as close as possible to the ordinal version
+ * in order to facilitate synchronising the code in the future.
+ * Pidgin may come up with updates that will be useful for StarDict loader.
+ * This code is used in both StarDict and StarDict-editor loader projects.
+ * A large part of the code is identical in both projects.
+ * Chunks that are specific to particular application should be included conditionally.
+ * STARDICT macros is only defined in stardict project,
+ * while STARDICT_EDITOR is unique to stardict-editor.
  *
  */
 
