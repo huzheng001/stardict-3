@@ -1,5 +1,5 @@
-This is the top level directory of StarDict dictionary and StarDict tools projects. 
-It does not contain any code to be build, instead it passes control to subproject in order to configure and build them in correct order.
+This is the top level directory of StarDict project. StarDict project consists of StarDict dictionary and StarDict tools subprojects.
+The directory does not contain any code to be build, instead it passes control to subproject in order to configure and build them in correct order.
 
 The top level directory contains the following subdirectories:
 - dict - StarDict dictionary
