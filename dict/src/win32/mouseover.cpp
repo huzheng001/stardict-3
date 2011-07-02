@@ -1,7 +1,5 @@
 /* 
  * This file part of StarDict - A international dictionary for GNOME.
- * http://stardict.sourceforge.net
- *
  * Copyright (C) 2006 Hu Zheng <huzheng_001@163.com>
  *
  * This program is free software; you can redistribute it and/or modify

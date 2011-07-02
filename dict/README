@@ -5,7 +5,7 @@ StarDict version
 
 See AC_INIT macro in the configure.ac file. It looks like this:
 
-AC_INIT(stardict, 3.0.2, http://stardict.sourceforge.net)
+AC_INIT(stardict, 3.0.2, http://www.stardict.org)
 
 3.0.2 - is the version.
 
@@ -15,7 +15,7 @@ general description
 StarDict is a Cross-Platform and international dictionary written in Gtk2.
 It has powerful features such as "Glob-style pattern matching," "Scan selection word," "Fuzzy query," etc.
 
-http://stardict.sourceforge.net
+http://www.stardict.org
 
 first-level subdirectories
 --------------------------

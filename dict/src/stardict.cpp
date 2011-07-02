@@ -1,5 +1,4 @@
 /* StarDict - A international dictionary for GNOME.
- * http://stardict.sourceforge.net
  * Copyright (C) 2003-2007 Hu Zheng <huzheng001@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,7 +19,7 @@
  * Modified by the StarDict Team and others 2003-2006.  See the AUTHORS
  * file for a list of people on the StarDict Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * StarDict at http://stardict.sourceforge.net.
+ * StarDict at http://www.stardict.org.
  */
 
 

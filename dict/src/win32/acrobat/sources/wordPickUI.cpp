@@ -5,7 +5,7 @@
  * 2006 Dewolf Xue <deWolf_maTri_X@msn.com>
  * 2006 Hu Zheng <huzheng_001@163.com>
  *
- * This plugin is special for StarDict (http://stardict.sourceforge.net)
+ * This plugin is special for StarDict
  *
  * Compile under Acrobat SDK 7 + M$ VS 2003.
  *

@@ -14,7 +14,7 @@ FILETYPE VFT_APP
 	 {
 		 BLOCK "040904E4"
 		 {
-			 VALUE "CompanyName", "http://stardict.sourceforge.net"
+			 VALUE "CompanyName", "http://www.stardict.org"
 			 VALUE "FileVersion", "3.0.3"
 			 VALUE "FileDescription", "StarDict Editor"
 			 VALUE "InternalName", ""

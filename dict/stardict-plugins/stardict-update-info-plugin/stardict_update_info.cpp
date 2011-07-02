@@ -72,7 +72,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 		return true;
 	}
 	obj->type = StarDictPlugInType_MISC;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("Update Info"), _("Update information."), _("Get the update information from the Internet."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Update Info"), _("Update information."), _("Get the update information from the Internet."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;
@@ -194,7 +194,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
 		gtk_window_set_title (GTK_WINDOW (dialog), version_msg_title.c_str());
 		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES) {
-			plugin_service->show_url("http://stardict.sourceforge.net");
+			plugin_service->show_url("http://www.stardict.org");
 		}
 		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(prompt))) {
 			updated = true;

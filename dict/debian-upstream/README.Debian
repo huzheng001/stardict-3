@@ -5,15 +5,6 @@ StarDict is an international dictionary that runs in GNOME 2
 environment. It has powerful features such as "Glob-style pattern
 matching", "Scan selection word", "Fuzzy query", etc.
 
-Dictionary
-
-The official site of StarDict (http://stardict.sourceforge.net/)
-provides many converted dictionaries, including English<->Chinese,
-Gemany<->English and French<->English. However, the dictionary files
-are split out from this package because of license issues. You can
-download them from http://stardict.sourceforge.net/Dictionaries.php
-and extract to the directory /usr/share/stardict/dic.
-
 Phonetic Symbol
 
 If stardict fails to display the phonetic symbol, install the package

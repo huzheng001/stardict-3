@@ -1,4 +1,5 @@
 Jun 2011
+StarDict project was removed from sourceforge.net. The project moved to http://code.google.com/p/stardict-3/, web site: http://www.stardict.org/.
 Verify dictionaries at application start. Prevent loading broken dictionaries. That change improves application robustness, broken dictionaries may crash StarDict.
 add options that allows to disable automatically adding new dictionaries and plug-ins to active dictionary group
 fix resource leak in StarDict: over a period of extensive use of Main window, you may notice considerable slowdown. Updating the Main window takes more and more time.

@@ -8,7 +8,7 @@ Version:	%{version}
 Release:	1%{?dist}
 Group: 		Applications/System
 License: 	GPLv3
-URL: 		http://stardict.sourceforge.net
+URL: 		http://www.stardict.org
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 

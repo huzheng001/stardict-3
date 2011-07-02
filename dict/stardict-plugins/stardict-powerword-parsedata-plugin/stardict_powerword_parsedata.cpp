@@ -673,7 +673,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 		return true;
 	}
 	obj->type = StarDictPlugInType_PARSEDATA;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict.sourceforge.net</website></plugin_info>", _("PowerWord data parsing"), _("PowerWord data parsing engine."), _("Parse the PowerWord data."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("PowerWord data parsing"), _("PowerWord data parsing engine."), _("Parse the PowerWord data."));
 	obj->configure_func = NULL;
 	return false;
 }

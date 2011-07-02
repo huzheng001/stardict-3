@@ -14,7 +14,7 @@ Source: stardict-%{dictname}-%{ver}.tar.bz2
 BuildRoot: /var/tmp/%{name}-%{version}-root
 BuildArchitectures: noarch
 
-URL: http://stardict.sourceforge.net
+URL: http://www.stardict.org
 
 Requires: stardict >= 2.4.2
 

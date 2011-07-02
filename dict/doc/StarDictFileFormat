@@ -1,8 +1,7 @@
 Format for StarDict dictionary files
 ------------------------------------
 
-StarDict homepage: http://stardict.sourceforge.net
-StarDict on-line dictionary: http://www.stardict.org
+StarDict homepage: http:///www.stardict.org
 
 {0}. Number and Byte-order Conventions
 When you record the numbers that identify sizes, offsets, etc., you
