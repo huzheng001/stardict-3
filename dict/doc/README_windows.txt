@@ -1,1 +1,1 @@
-See https://sourceforge.net/apps/trac/stardict/wiki/Building, Windows section
+See http://code.google.com/p/stardict-3/wiki/Building, Windows section
