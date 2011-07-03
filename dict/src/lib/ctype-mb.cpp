@@ -1,5 +1,6 @@
 /* 
  * Copyright (C) 2000 MySQL AB
+ * Copyright 2011 kubtek <kubtek@mail.com>
  *
  * This file is part of StarDict.
  *

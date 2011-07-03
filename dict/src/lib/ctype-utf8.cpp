@@ -1,6 +1,8 @@
 /* 
    Copyright (C) 2000 MySQL AB
 
+ * Copyright 2011 kubtek <kubtek@mail.com>
+ *
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
    License as published by the Free Software Foundation; either

@@ -6,7 +6,7 @@
  * Revised: Sat Mar 30 10:46:06 2002 by faith@dict.org
  * Copyright 1996, 1997, 1998, 2000, 2002 Rickard E. Faith (faith@dict.org)
  * Copyright (C) 2003-2003 Hu Zheng <huzheng_001@163.com>
- * 
+ * Copyright 2011 kubtek <kubtek@mail.com>
  *
  * This file is part of StarDict.
  *

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2005-2006 Evgeniy <dushistov@mail.ru>
+ * Copyright 2011 kubtek <kubtek@mail.com>
  *
  * This file is part of StarDict.
  *
