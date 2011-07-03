@@ -1,11 +1,11 @@
 /* dictziplib.c --
- * Copyright (C) 2003-2003 Hu Zheng <huzheng_001@163.com>
  * This file is a modify version of dictd-1.9.7's data.c
  *
  * data.c -- 
  * Created: Tue Jul 16 12:45:41 1996 by faith@dict.org
  * Revised: Sat Mar 30 10:46:06 2002 by faith@dict.org
  * Copyright 1996, 1997, 1998, 2000, 2002 Rickard E. Faith (faith@dict.org)
+ * Copyright (C) 2003-2003 Hu Zheng <huzheng_001@163.com>
  * 
  *
  * This file is part of StarDict.
