@@ -1,4 +1,6 @@
 /* 
+ * Copyright 2011 kubtek <kubtek@mail.com>
+ *
  * This file is part of StarDict.
  *
  * StarDict is free software: you can redistribute it and/or modify
