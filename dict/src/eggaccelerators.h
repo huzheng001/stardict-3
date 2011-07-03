@@ -1,5 +1,7 @@
 /* eggaccelerators.h
  * Copyright (C) 2002  Red Hat, Inc.
+ * Copyright 2011 kubtek <kubtek@mail.com>
+ *
  * Developed by Havoc Pennington
  *
  * This library is free software; you can redistribute it and/or

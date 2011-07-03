@@ -1,5 +1,6 @@
 /* StarDict - A international dictionary for GNOME.
  * Copyright (C) 2003-2007 Hu Zheng <huzheng001@gmail.com>
+ * Copyright 2011 kubtek <kubtek@mail.com>
  *
  * This file is part of StarDict.
  *

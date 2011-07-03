@@ -1,5 +1,6 @@
 /*
  * Copyright Opera Wang <wangvisual AT sohu DOT com>
+ * Copyright 2011 kubtek <kubtek@mail.com>
  *
  * This file is part of StarDict.
  *
