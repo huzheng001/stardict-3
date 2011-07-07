@@ -37,8 +37,10 @@ private:
 	int ParseCommandLine(int argc, char * argv [])
 	{
 		quiet_mode = FALSE;
+		key_only = FALSE;
 		static GOptionEntry entries[] = {
 			{ "quiet", 'q', 0, G_OPTION_ARG_NONE, &quiet_mode, "no additional information, only index entries", NULL },
+			{ "key-only", 'k', 0, G_OPTION_ARG_NONE, &key_only, "print only keys (implies --quiet option)", NULL },
 			{ NULL },
 		};
 		glib::OptionContext opt_cnt(g_option_context_new("INDEX_FILE"));
@@ -69,6 +71,8 @@ private:
 			return EXIT_FAILURE;
 		}
 		syn_file = g_str_has_suffix(idx_file_name.c_str(), ".syn");
+		if(key_only)
+			quiet_mode = TRUE;
 		return EXIT_SUCCESS;
 	}
 	void print_index(std::string& idx_file_name)
@@ -97,7 +101,10 @@ private:
 				index = g_ntohl(*reinterpret_cast<guint32*>(p1));
 				p1 += sizeof(guint32);
 				++rec_no;
-				std::cout << std::setw(10) << index << " " << key << std::endl;
+				if(key_only)
+					std::cout << key << std::endl;
+				else
+					std::cout << std::setw(10) << index << " " << key << std::endl;
 			}
 		} else {
 			guint32 offset, size;
@@ -109,7 +116,10 @@ private:
 				size = g_ntohl(*reinterpret_cast<guint32*>(p1));
 				p1 += sizeof(guint32);
 				++rec_no;
-				std::cout << std::setw(10) << offset << " " << std::setw(10) << size << " "<< key << std::endl;
+				if(key_only)
+					std::cout << key << std::endl;
+				else
+					std::cout << std::setw(10) << offset << " " << std::setw(10) << size << " "<< key << std::endl;
 			}
 		}
 		if(!quiet_mode)
@@ -118,6 +128,7 @@ private:
 private:
 	std::string idx_file_name;
 	gboolean quiet_mode;
+	gboolean key_only;
 	gboolean syn_file;
 };
 
