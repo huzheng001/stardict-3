@@ -14,6 +14,9 @@
 ^dict/m4/ltversion.m4$
 ^dict/m4/lt~obsolete.m4$
 
+(^|/).settings/
+(^|/).cproject$
+(^|/).project$
 (^|/)Makefile.in$
 (^|/)missing$
 (^|/)aclocal.m4$
