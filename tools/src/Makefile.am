@@ -11,7 +11,7 @@ noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 	soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile \
 	cedict edict duden stardict-dict-update degb2utf frgb2utf jpgb2utf gmx2utf \
 	rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict-verify \
-	fest2dict i2e2dict downloadwiki testutf8 ooo2dict myspell2dic exc2i2e \
+	fest2dict i2e2dict downloadwiki ooo2dict myspell2dic exc2i2e \
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi ydp2dict \
 	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
 	stardict-text2bin stardict-bin2text stardict-repair
@@ -181,10 +181,6 @@ stardict_dict_update_SOURCES = stardict_dict_update.cpp
 fest2dict_LDFLAGS = 
 fest2dict_LDADD = 
 fest2dict_SOURCES = fest2dict.c
-
-testutf8_LDFLAGS = 
-testutf8_LDADD = $(STARDICT_LIBS)
-testutf8_SOURCES = testutf8.c
 
 i2e2dict_LDFLAGS = 
 i2e2dict_LDADD = $(STARDICT_LIBS)
