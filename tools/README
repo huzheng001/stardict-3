@@ -27,9 +27,6 @@ ooo.sh		converter for OpenOffice (myspell) thesauri (synonyms) of
 
 stardict2txt	converter from StarDict to text format. Useful for mobile phones
 
-testutf8	utility to test any dictionary's UTF-8 conformance (often
-		cause of weird symbols)
-
 ydp2dict	converter for Polish Collins proprietary dictionaries
 		(see also YDPDict project: http://toxygen.net/ydpdict/)
 
