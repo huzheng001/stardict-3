@@ -327,12 +327,22 @@ ext_result_t dictionary_data_block::load_field_lower(const char type_id,
 	if (!g_utf8_validate(data, datalen, NULL)) {
 		g_warning(invalid_utf8_field_err, word, type_id, data);
 		ext_result.append(VERIF_RESULT_CRITICAL);
-		ext_result.append(FIELD_VERIF_RES_SKIP);
 		if(fix_errors) {
-			g_message(fixed_ignore_field_msg);
+			data_str = fix_utf8_str(std::string(data, datalen), 0);
+			data = data_str.c_str();
+			datalen = data_str.length();
+			g_message(fixed_utf8_drop_invalid_char_msg);
+			if(datalen == 0) {
+				g_warning(empty_field_err, word, type_id);
+				ext_result.append(VERIF_RESULT_WARNING);
+				g_message(fixed_ignore_field_msg);
+				ext_result.append(FIELD_VERIF_RES_SKIP);
+				return ext_result;
+			}
+		} else {
+			ext_result.append(FIELD_VERIF_RES_SKIP);
 			return ext_result;
-		} else
-			return ext_result;
+		}
 	}
 	{	// check for invalid chars
 		typedef std::list<const char*> str_list_t;
@@ -450,12 +460,22 @@ ext_result_t dictionary_data_block::load_field_sametypesequence_last_lower(const
 		std::string tmp(data, datalen);
 		g_warning(invalid_utf8_field_err, word, type_id, tmp.c_str());
 		ext_result.append(VERIF_RESULT_CRITICAL);
-		ext_result.append(FIELD_VERIF_RES_SKIP);
 		if(fix_errors) {
-			g_message(fixed_ignore_field_msg);
+			data_str = fix_utf8_str(std::string(data, datalen), 0);
+			data = data_str.c_str();
+			datalen = data_str.length();
+			g_message(fixed_utf8_drop_invalid_char_msg);
+			if(datalen == 0) {
+				g_warning(empty_field_err, word, type_id);
+				ext_result.append(VERIF_RESULT_WARNING);
+				g_message(fixed_ignore_field_msg);
+				ext_result.append(FIELD_VERIF_RES_SKIP);
+				return ext_result;
+			}
+		} else {
+			ext_result.append(FIELD_VERIF_RES_SKIP);
 			return ext_result;
-		} else
-			return ext_result;
+		}
 	}
 	{	// check for invalid chars
 		typedef std::list<const char*> str_list_t;

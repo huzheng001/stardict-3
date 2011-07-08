@@ -32,8 +32,7 @@ static bool compare_article_data_by_key(const article_data_t& left, const articl
 static void repair_text_data(std::string& text)
 {
 	if(!g_utf8_validate(text.c_str(), -1, NULL)) {
-		text.clear();
-		return;
+		text = fix_utf8_str(text, 0);
 	}
 	typedef std::list<const char*> str_list_t;
 	str_list_t invalid_chars;
