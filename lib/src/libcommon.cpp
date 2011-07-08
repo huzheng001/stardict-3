@@ -755,6 +755,32 @@ size_t truncate_utf8_string(const char* const beg, const size_t str_len, const s
 	}
 }
 
+
+/* convert str into a valid utf8 string
+We assume that str is a utf8-encoded string possibly containing invalid chars.
+Replace invalid chars with replacement_char, or strip them if replacement_char == 0. */
+std::string fix_utf8_str(const std::string& str, char replacement_char)
+{
+	std::string out;
+	// an utf8 encoded char occupies at most 6 bytes + 1 byte for terminating '\0'
+	char buf[7];
+	out.reserve(str.length());
+	const char* p = str.c_str();
+	gunichar uch;
+	while(p && *p) {
+		uch = g_utf8_get_char_validated(p, -1);
+		if(uch == (gunichar)-1 || uch == (gunichar)-2 || !g_unichar_validate(uch) || uch == 0) {
+			if(replacement_char)
+				out += replacement_char;
+		} else {
+			buf[g_unichar_to_utf8(uch, buf)] = '\0';
+			out += buf;
+		}
+		p = g_utf8_find_next_char(p+1, NULL);
+	}
+	return out;
+}
+
 /* print a comma-separated list of Unicode character codes
  * chars - a list of Unicode utf-8 encoded characters to print */
 std::string print_char_codes(const std::list<const char*>& chars) {

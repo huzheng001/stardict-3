@@ -201,6 +201,7 @@ bool is_known_resource_type(const char* str);
 
 void trim_spaces(const char* const src, const char*& new_beg, size_t& new_len);
 size_t truncate_utf8_string(const char* const beg, const size_t str_len, const size_t max_len);
+std::string fix_utf8_str(const std::string& str, char replacement_char = '?');
 std::string print_char_codes(const std::list<const char*>& chars);
 char* strrchr_len(char* str, size_t size, char c);
 bool is_ascii_alpha(wchar_t ch);

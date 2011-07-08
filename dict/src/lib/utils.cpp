@@ -757,30 +757,3 @@ gboolean is_not_lower(gunichar c)
 {
 	return !g_unichar_islower(c);
 }
-
-/* convert str into a valid utf8 string
-We assume that str is a utf8-encoded string possibly containing invalid chars.
-We replace invalid chars with '?' */
-std::string fix_utf8_str(const std::string& str)
-{
-	std::string out;
-	// an utf8 encoded char occupies at most 6 bytes + 1 byte for terminating '\0'
-	char buf[7];
-	out.reserve(str.length());
-	const char* p = str.c_str();
-	gunichar uch;
-	while(*p) {
-		uch = g_utf8_get_char_validated(p, -1);
-		if(uch == (gunichar)-1 || uch == (gunichar)-2 || !g_unichar_validate(uch))
-			out += '?';
-		else {
-			buf[g_unichar_to_utf8(uch, buf)] = '\0';
-			out += buf;
-		}
-		++p;
-		// locate the first byte of a character
-		while((((unsigned char)*p) & 0xC0) == 0x80)
-			++p;
-	}
-	return out;
-}

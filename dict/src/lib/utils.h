@@ -108,7 +108,6 @@ gboolean is_space_or_punct(gunichar c);
 gboolean is_not_alpha(gunichar c);
 gboolean is_not_upper(gunichar c);
 gboolean is_not_lower(gunichar c);
-std::string fix_utf8_str(const std::string& str);
 
 #ifdef _WIN32
 #define bzero(p, l) memset(p, 0, l)
