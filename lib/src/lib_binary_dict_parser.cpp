@@ -259,9 +259,9 @@ VerifResult binary_dict_parser_t::load_idx_file(void)
 			g_warning(word_invalid_utf8_err, worditem.word.c_str());
 			result = combine_result(result, VERIF_RESULT_CRITICAL);
 			if(fix_errors) {
-				worditem.word.clear();
-				wordlen = 0;
-				g_message(fixed_ignore_word_msg);
+				worditem.word = fix_utf8_str(worditem.word, 0);
+				wordlen = worditem.word.length();
+				g_message(fixed_utf8_drop_invalid_char_msg);
 			}
 		}
 		{	// check for invalid chars
@@ -484,9 +484,9 @@ VerifResult binary_dict_parser_t::load_syn_file(void)
 			g_warning(word_invalid_utf8_err, synitem.word.c_str());
 			result = combine_result(result, VERIF_RESULT_CRITICAL);
 			if(fix_errors) {
-				synitem.word.clear();
-				wordlen = 0;
-				g_message(fixed_ignore_word_msg);
+				synitem.word = fix_utf8_str(synitem.word);
+				wordlen = synitem.word.length();
+				g_message(fixed_utf8_drop_invalid_char_msg);
 			}
 		}
 		{	// check for invalid chars

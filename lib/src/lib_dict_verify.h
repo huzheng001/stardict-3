@@ -280,6 +280,8 @@ void verify_unused_regions(std::vector<item_t*>& sort_index,
 	"The problem was fixed. Take a zero-terminated string."
 #define fixed_trim_spaces \
 	"The problem was fixed. Leading and trailing spaces trimmed."
+#define fixed_utf8_drop_invalid_char_msg \
+	"The problem was fixed. Dropping invalid UTF-8 characters."
 
 #endif
 
