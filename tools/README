@@ -42,15 +42,15 @@ dir2resdatabase		converter from resource directory into Stardict resource
 stardict_verify	check StarDict dictionary for errors
 
 stardict-editor	a GUI front-end combining a number of tools. They allows to convert 
-		StarDict dictionary <-> tab file, (Babylong file) -> StarDict dictionary,
+		StarDict dictionary <-> tab file, (Babylon file) -> StarDict dictionary,
 		verify dictionary.
 
-stardict_index	print content of StarDict index file in human readable form
+stardict-index	print content of StarDict index file in human readable form
 
-stardict_bin2text	convert normal binary StarDict dictionary into textual
+stardict-bin2text	convert normal binary StarDict dictionary into textual
 		xml-based dictionary. See doc/TextualDictionaryFileFormat
 
-stardict_text2bin	convert textual xml-based dictionary into binary StarDict
+stardict-text2bin	convert textual xml-based dictionary into binary StarDict
 		dictionary. See doc/TextualDictionaryFileFormat
 
 babylon	convert from babylon source file format to StarDict dictionary

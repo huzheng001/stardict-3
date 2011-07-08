@@ -65,7 +65,7 @@ struct Main
 				"The utility silently overwrites any file in the output directory. "
 				"Original dictionaries are never changed.\n"
 				"\n"
-				"Note. 'compress-dict' option requires dictzip utility.\n"
+				"Note. '--compress-dict' option requires dictzip utility.\n"
 				"\n"
 				"EXIT STATUS\n"
 				"The utility exits with status 0 if conversion succeeds, with non-zero status otherwise."
