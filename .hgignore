@@ -5,6 +5,11 @@
 ^lib/autom4te.cache/
 ^tools/autom4te.cache/
 ^lib/m4/
+^dict/msvc_2008/[^/]+/
+^dict/src/win32/acrobat/Acrobat_Headers/
+^dict/src/win32/acrobat/win32/[^/]+/
+^dict/redist/
+^dict/stardict-unix-dist/
 
 ^dict/m4/gnome-doc-utils.m4$
 ^dict/m4/intltool.m4$
@@ -52,3 +57,4 @@
 ^tools/libtool$
 ^tools/stamp-h1$
 ^dict/po/stardict.pot$
+^dict/msvc_2008/stardict.ncb$
