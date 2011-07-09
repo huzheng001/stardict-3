@@ -15,6 +15,7 @@
 ^dict/m4/lt~obsolete.m4$
 
 (^|/).settings/
+(^|/).deps/
 (^|/).cproject$
 (^|/).project$
 (^|/)Makefile.in$
@@ -28,9 +29,23 @@
 (^|/)install-sh$
 (^|/)ltmain.sh$
 (^|/)gnome-doc-utils.make$
+(^|/)Makefile$
+(^|/)config.h$
+(^|/)config.log$
+(^|/)config.status$
 
 ^dict/intltool-extract.in$
 ^dict/intltool-merge.in$
 ^dict/intltool-update.in$
 ^dict/mkinstalldirs$
 ^dict/po/Makefile.in.in$
+^dict/libtool$
+^dict/po/POTFILES$
+^dict/po/stamp-it$
+^dict/stamp-h1$
+^dict/stardict-withoutgnome.spec$
+^dict/stardict.spec$
+^lib/libtool$
+^lib/stamp-h1$
+^tools/libtool$
+^tools/stamp-h1$
