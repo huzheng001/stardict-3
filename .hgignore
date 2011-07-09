@@ -49,3 +49,4 @@
 ^lib/stamp-h1$
 ^tools/libtool$
 ^tools/stamp-h1$
+^dict/po/stardict.pot$
