@@ -1,3 +1,5 @@
+Jul 2011
+StarDict 3.0.3 released
 Jun 2011
 StarDict project was removed from sourceforge.net. The project moved to http://code.google.com/p/stardict-3/, web site: http://www.stardict.org/.
 Verify dictionaries at application start. Prevent loading broken dictionaries. That change improves application robustness, broken dictionaries may crash StarDict.
