@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-12 12:05+0400\n"
+"POT-Creation-Date: 2011-07-09 11:07+0400\n"
 "PO-Revision-Date: 2007-08-12 21:52+0800\n"
 "Last-Translator: Tetralet <tetralet@gmail.com>\n"
 "Language-Team: Chinese/Traditional\n"
@@ -31,9 +31,9 @@ msgstr "星際譯王自動工廠"
 msgid "Lookup words"
 msgstr "查詢單字"
 
-#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:69
-#: ../src/docklet.cpp:282 ../src/mainwin.cpp:500 ../src/stardict.cpp:266
-#: ../src/stardict.cpp:356 ../src/stardict.cpp:2325
+#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:88
+#: ../src/docklet.cpp:301 ../src/mainwin.cpp:499 ../src/stardict.cpp:268
+#: ../src/stardict.cpp:358 ../src/stardict.cpp:2327
 msgid "StarDict"
 msgstr "星際譯王"
 
@@ -340,85 +340,85 @@ msgstr "視窗被鎖定時所在的 y 座標。"
 msgid "whether to lock the window or not"
 msgstr "是否鎖定視窗"
 
-#: ../src/articleview.cpp:305
+#: ../src/articleview.cpp:306
 #, fuzzy
 msgid "XDXF data parsing plug-in is not found!"
 msgstr "無法找到 XDXF 內容分析擴充元件！"
 
-#: ../src/articleview.cpp:310
+#: ../src/articleview.cpp:311
 #, fuzzy
 msgid "PowerWord data parsing plug-in is not found!"
 msgstr "無法找到 PowerWord 內容分析擴充元件！"
 
-#: ../src/articleview.cpp:315
+#: ../src/articleview.cpp:316
 #, fuzzy
 msgid "Wiki data parsing plug-in is not found!"
 msgstr "無法找到 Wiki 內容分析擴充元件！"
 
-#: ../src/articleview.cpp:320
+#: ../src/articleview.cpp:321
 #, fuzzy
 msgid "HTML data parsing plug-in is not found!"
 msgstr "無法找到 HTML 內容分析擴充元件！"
 
-#: ../src/articleview.cpp:325
+#: ../src/articleview.cpp:326
 #, fuzzy
 msgid "WordNet data parsing plug-in is not found!"
 msgstr "無法找到 PowerWord 內容分析擴充元件！"
 
-#: ../src/articleview.cpp:370
+#: ../src/articleview.cpp:371
 #, fuzzy
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "不明的資料類型，請升級星際譯王！"
 
-#: ../src/articleview.cpp:459 ../src/articleview.cpp:484
+#: ../src/articleview.cpp:460 ../src/articleview.cpp:485
 #, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
 msgstr "<span foreground=\"red\">[載入圖片時發生錯誤！]</span>"
 
-#: ../src/articleview.cpp:947
+#: ../src/articleview.cpp:948
 #, fuzzy
 msgid "Save File"
 msgstr "儲存至檔案"
 
-#: ../src/cmdlineopts.cpp:31
+#: ../src/cmdlineopts.cpp:50
 msgid "How many messages print to console (0-6)"
 msgstr ""
 
-#: ../src/cmdlineopts.cpp:33
+#: ../src/cmdlineopts.cpp:52
 msgid "How many messages print to log (0-6)"
 msgstr ""
 
-#: ../src/cmdlineopts.cpp:35
+#: ../src/cmdlineopts.cpp:54
 msgid "Hide the main window, do not show splash screen"
 msgstr "隱藏主視窗，不顯示載入畫面"
 
-#: ../src/cmdlineopts.cpp:38
+#: ../src/cmdlineopts.cpp:57
 msgid "Start a new instance of stardict"
 msgstr "啟動另一個星際譯王"
 
-#: ../src/cmdlineopts.cpp:42
+#: ../src/cmdlineopts.cpp:61
 msgid "Quit an existing instance of stardict"
 msgstr "關閉執行中的星際譯王"
 
-#: ../src/cmdlineopts.cpp:45
+#: ../src/cmdlineopts.cpp:64
 #, fuzzy
 msgid "StarDict directories configuration file"
 msgstr "辭典設定 xml"
 
-#: ../src/cmdlineopts.cpp:45
+#: ../src/cmdlineopts.cpp:64
 msgid "config-file"
 msgstr ""
 
-#: ../src/cmdlineopts.cpp:48
+#: ../src/cmdlineopts.cpp:67
 msgid "Activate portable mode"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:109 ../src/prefsdlg.cpp:2128
+#: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2129
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:334
+#: ../src/conf.cpp:335
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q="
@@ -460,88 +460,88 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:361
+#: ../src/conf.cpp:362
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:373
+#: ../src/conf.cpp:374
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:386
+#: ../src/conf.cpp:387
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:398
+#: ../src/conf.cpp:399
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
-#: ../src/conf.cpp:456
+#: ../src/conf.cpp:457
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr ""
 
-#: ../src/conf.cpp:470
+#: ../src/conf.cpp:471
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:477
+#: ../src/conf.cpp:478
 #, c-format
 msgid "Cannot create user config directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:485
+#: ../src/conf.cpp:486
 #, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:495
+#: ../src/conf.cpp:496
 #, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:505
+#: ../src/conf.cpp:506
 #, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:512
+#: ../src/conf.cpp:513
 #, c-format
 msgid "Cannot create log directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:518
+#: ../src/conf.cpp:519
 #, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:527
+#: ../src/conf.cpp:528
 #, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:539
+#: ../src/conf.cpp:540
 #, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr ""
 
-#: ../src/desktop.cpp:184
+#: ../src/desktop.cpp:185
 #, c-format
 msgid "Show help action failed with the following error message: \"%s\""
 msgstr ""
 
-#: ../src/desktop.cpp:193 ../src/desktop.cpp:201
+#: ../src/desktop.cpp:194 ../src/desktop.cpp:202
 #, c-format
 msgid "Unable to find help file %s."
 msgstr ""
 
-#: ../src/desktop.cpp:249
+#: ../src/desktop.cpp:250
 msgid ""
 "You are about to enable network dictionaries. Be aware that enabling network "
 "dictionaries poses a security risk. Your text will be sent to remote "
@@ -554,451 +554,451 @@ msgid ""
 "Do you want to enable network dictionaries anyway?"
 msgstr ""
 
-#: ../src/dictmanage.cpp:120 ../src/dictmanage.cpp:149
+#: ../src/dictmanage.cpp:139 ../src/dictmanage.cpp:168
 msgid "Default Group"
 msgstr "預設群組"
 
-#: ../src/dictmanage.cpp:734
+#: ../src/dictmanage.cpp:753
 #, c-format
 msgid "Unable to remove file: %s"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:146
+#: ../src/dictmanagedlg.cpp:165
 #, c-format
 msgid "Only level %d user can choose this dictionary!"
 msgstr "僅有第 %d 級的使用者能選擇該辭典！"
 
-#: ../src/dictmanagedlg.cpp:170 ../src/dictmanagedlg.cpp:554
-#: ../src/dictmanagedlg.cpp:2927
+#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:573
+#: ../src/dictmanagedlg.cpp:2946
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "你僅能夠選擇 %d 辭典。"
 
-#: ../src/dictmanagedlg.cpp:288 ../src/dictmanagedlg.cpp:1175
-#: ../src/dictmanagedlg.cpp:1291 ../src/dictmanagedlg.cpp:1394
-#: ../src/dictmanagedlg.cpp:1980 ../src/dictmanagedlg.cpp:2848
-#: ../src/stardict.cpp:1101
+#: ../src/dictmanagedlg.cpp:307 ../src/dictmanagedlg.cpp:1194
+#: ../src/dictmanagedlg.cpp:1310 ../src/dictmanagedlg.cpp:1413
+#: ../src/dictmanagedlg.cpp:1999 ../src/dictmanagedlg.cpp:2867
+#: ../src/stardict.cpp:1103
 msgid "Dictionary Name"
 msgstr "辭典名稱"
 
-#: ../src/dictmanagedlg.cpp:293 ../src/dictmanagedlg.cpp:1176
-#: ../src/dictmanagedlg.cpp:1311 ../src/dictmanagedlg.cpp:1408
-#: ../src/dictmanagedlg.cpp:1988 ../src/dictmanagedlg.cpp:2849
+#: ../src/dictmanagedlg.cpp:312 ../src/dictmanagedlg.cpp:1195
+#: ../src/dictmanagedlg.cpp:1330 ../src/dictmanagedlg.cpp:1427
+#: ../src/dictmanagedlg.cpp:2007 ../src/dictmanagedlg.cpp:2868
 msgid "Word count"
 msgstr "單字數量"
 
-#: ../src/dictmanagedlg.cpp:321
+#: ../src/dictmanagedlg.cpp:340
 msgid "Browse Dictionaries"
 msgstr "瀏覽辭典"
 
-#: ../src/dictmanagedlg.cpp:536
+#: ../src/dictmanagedlg.cpp:555
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "這些設定將在下次啟動星際譯王時生效。"
 
-#: ../src/dictmanagedlg.cpp:549 ../src/lib/stddict.cpp:1276
+#: ../src/dictmanagedlg.cpp:568 ../src/lib/stddict.cpp:1277
 msgid "Loading..."
 msgstr "載入中..."
 
-#: ../src/dictmanagedlg.cpp:571 ../src/dictmanagedlg.cpp:1836
+#: ../src/dictmanagedlg.cpp:590 ../src/dictmanagedlg.cpp:1855
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">查詢用辭典</span>"
 
-#: ../src/dictmanagedlg.cpp:581 ../src/dictmanagedlg.cpp:1846
+#: ../src/dictmanagedlg.cpp:600 ../src/dictmanagedlg.cpp:1865
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">取詞用辭典</span>"
 
-#: ../src/dictmanagedlg.cpp:629 ../src/dictmanagedlg.cpp:831
+#: ../src/dictmanagedlg.cpp:648 ../src/dictmanagedlg.cpp:850
 msgid "Virtual Dictionary"
 msgstr "虛擬辭典"
 
-#: ../src/dictmanagedlg.cpp:652 ../src/dictmanagedlg.cpp:851
+#: ../src/dictmanagedlg.cpp:671 ../src/dictmanagedlg.cpp:870
 #, fuzzy
 msgid "Network Dictionary"
 msgstr "網路辭典(_N)"
 
-#: ../src/dictmanagedlg.cpp:732
+#: ../src/dictmanagedlg.cpp:751
 msgid "Local"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:834
+#: ../src/dictmanagedlg.cpp:853
 msgid "Virtual"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:854 ../src/prefsdlg.cpp:128
+#: ../src/dictmanagedlg.cpp:873 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr "網路"
 
-#: ../src/dictmanagedlg.cpp:1102
+#: ../src/dictmanagedlg.cpp:1121
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
 "你可以設定多個辭典群組，例如：\"努力學英文\", \"德語通\"，然後直接切換使用。"
 
-#: ../src/dictmanagedlg.cpp:1113
+#: ../src/dictmanagedlg.cpp:1132
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr "查詢用辭典將會顯示於主視窗；取詞用辭典將會顯示於浮動視窗。"
 
-#: ../src/dictmanagedlg.cpp:1162 ../src/dictmanagedlg.cpp:2837
+#: ../src/dictmanagedlg.cpp:1181 ../src/dictmanagedlg.cpp:2856
 msgid "Dictionary Information"
 msgstr "辭典資訊"
 
-#: ../src/dictmanagedlg.cpp:1177 ../src/dictmanagedlg.cpp:2851
+#: ../src/dictmanagedlg.cpp:1196 ../src/dictmanagedlg.cpp:2870
 msgid "Author"
 msgstr "作者"
 
-#: ../src/dictmanagedlg.cpp:1178 ../src/dictmanagedlg.cpp:2852
+#: ../src/dictmanagedlg.cpp:1197 ../src/dictmanagedlg.cpp:2871
 msgid "Email"
 msgstr "電子郵件"
 
-#: ../src/dictmanagedlg.cpp:1179 ../src/dictmanagedlg.cpp:2853
+#: ../src/dictmanagedlg.cpp:1198 ../src/dictmanagedlg.cpp:2872
 msgid "Website"
 msgstr "網站"
 
-#: ../src/dictmanagedlg.cpp:1180 ../src/dictmanagedlg.cpp:2854
+#: ../src/dictmanagedlg.cpp:1199 ../src/dictmanagedlg.cpp:2873
 msgid "Description"
 msgstr "說明"
 
-#: ../src/dictmanagedlg.cpp:1181 ../src/dictmanagedlg.cpp:2855
+#: ../src/dictmanagedlg.cpp:1200 ../src/dictmanagedlg.cpp:2874
 msgid "Date"
 msgstr "日期"
 
-#: ../src/dictmanagedlg.cpp:1182
+#: ../src/dictmanagedlg.cpp:1201
 msgid "File name"
 msgstr "檔案名稱"
 
-#: ../src/dictmanagedlg.cpp:1277 ../src/dictmanagedlg.cpp:1383
-#: ../src/pluginmanagedlg.cpp:412
+#: ../src/dictmanagedlg.cpp:1296 ../src/dictmanagedlg.cpp:1402
+#: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "啟用"
 
-#: ../src/dictmanagedlg.cpp:1319 ../src/dictmanagedlg.cpp:1994
+#: ../src/dictmanagedlg.cpp:1338 ../src/dictmanagedlg.cpp:2013
 msgid "Type"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1769
+#: ../src/dictmanagedlg.cpp:1788
 #, fuzzy
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr "你確定要刪除這個辭典群組？"
 
-#: ../src/dictmanagedlg.cpp:1786
+#: ../src/dictmanagedlg.cpp:1805
 #, fuzzy
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr "你確定要刪除這個辭典群組？"
 
-#: ../src/dictmanagedlg.cpp:1806
+#: ../src/dictmanagedlg.cpp:1825
 msgid "New dict group"
 msgstr "新增辭典群組"
 
-#: ../src/dictmanagedlg.cpp:1809
+#: ../src/dictmanagedlg.cpp:1828
 msgid "Group name:"
 msgstr "群組名稱："
 
-#: ../src/dictmanagedlg.cpp:1871
+#: ../src/dictmanagedlg.cpp:1890
 msgid "Add dictionary"
 msgstr "新增辭典"
 
-#: ../src/dictmanagedlg.cpp:2000
+#: ../src/dictmanagedlg.cpp:2019
 msgid "Path"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2406 ../src/prefsdlg.cpp:1555
+#: ../src/dictmanagedlg.cpp:2425 ../src/prefsdlg.cpp:1556
 msgid "Add"
 msgstr "新增"
 
-#: ../src/dictmanagedlg.cpp:2413
+#: ../src/dictmanagedlg.cpp:2432
 msgid "Delete"
 msgstr "刪除"
 
-#: ../src/dictmanagedlg.cpp:2420
+#: ../src/dictmanagedlg.cpp:2439
 msgid "Information"
 msgstr "資訊"
 
-#: ../src/dictmanagedlg.cpp:2429
+#: ../src/dictmanagedlg.cpp:2448
 msgid "Move to top"
 msgstr "移到頂端"
 
-#: ../src/dictmanagedlg.cpp:2436
+#: ../src/dictmanagedlg.cpp:2455
 msgid "Move up"
 msgstr "往上移動"
 
-#: ../src/dictmanagedlg.cpp:2443
+#: ../src/dictmanagedlg.cpp:2462
 msgid "Move down"
 msgstr "往下移動"
 
-#: ../src/dictmanagedlg.cpp:2450
+#: ../src/dictmanagedlg.cpp:2469
 msgid "Move to bottom"
 msgstr "移到底端"
 
-#: ../src/dictmanagedlg.cpp:2547
+#: ../src/dictmanagedlg.cpp:2566
 msgid "D_ict List"
 msgstr "辭典列表(_i)"
 
-#: ../src/dictmanagedlg.cpp:2562 ../src/mainwin.cpp:541
+#: ../src/dictmanagedlg.cpp:2581 ../src/mainwin.cpp:540
 msgid "Manage _Dict"
 msgstr "辭典管理(_D)"
 
-#: ../src/dictmanagedlg.cpp:2576
+#: ../src/dictmanagedlg.cpp:2595
 msgid "T_ree dictionaries"
 msgstr "樹狀辭典(_r)"
 
-#: ../src/dictmanagedlg.cpp:2590
+#: ../src/dictmanagedlg.cpp:2609
 msgid "_Network dictionaries"
 msgstr "網路辭典(_N)"
 
-#: ../src/dictmanagedlg.cpp:2614
+#: ../src/dictmanagedlg.cpp:2633
 msgid "_Show information"
 msgstr "顯示資訊(_S)"
 
-#: ../src/dictmanagedlg.cpp:2621
+#: ../src/dictmanagedlg.cpp:2640
 msgid "Select _All"
 msgstr "全部選取(_A)"
 
-#: ../src/dictmanagedlg.cpp:2626
+#: ../src/dictmanagedlg.cpp:2645
 msgid "_Unselect all"
 msgstr "全部不選(_U)"
 
-#: ../src/dictmanagedlg.cpp:2645
+#: ../src/dictmanagedlg.cpp:2664
 msgid "Visit "
 msgstr "請參訪 "
 
-#: ../src/dictmanagedlg.cpp:2653
+#: ../src/dictmanagedlg.cpp:2672
 msgid " to download dictionaries!"
 msgstr " 並下載網路辭典！"
 
-#: ../src/dictmanagedlg.cpp:2662
+#: ../src/dictmanagedlg.cpp:2681
 msgid "Upgrade Now!"
 msgstr "立即更新！"
 
-#: ../src/dictmanagedlg.cpp:2683
+#: ../src/dictmanagedlg.cpp:2702
 msgid "Manage Dictionaries"
 msgstr "管理辭典"
 
-#: ../src/dictmanagedlg.cpp:2850
+#: ../src/dictmanagedlg.cpp:2869
 msgid "Synonym word count"
 msgstr "同義單字計數"
 
-#: ../src/dictmanagedlg.cpp:2865
+#: ../src/dictmanagedlg.cpp:2884
 msgid "Download Now!"
 msgstr "立即下載！"
 
-#: ../src/docklet.cpp:99
+#: ../src/docklet.cpp:118
 msgid "Scan"
 msgstr "取詞"
 
-#: ../src/docklet.cpp:104 ../src/floatwin.cpp:937 ../src/mainwin.cpp:2661
+#: ../src/docklet.cpp:123 ../src/floatwin.cpp:938 ../src/mainwin.cpp:2660
 msgid "Quit"
 msgstr "離開"
 
-#: ../src/docklet.cpp:120 ../src/mainwin.cpp:2628
+#: ../src/docklet.cpp:139 ../src/mainwin.cpp:2627
 msgid "_Scan"
 msgstr "取詞(_S)"
 
-#: ../src/docklet.cpp:130 ../src/mainwin.cpp:578
+#: ../src/docklet.cpp:149 ../src/mainwin.cpp:577
 msgid "_Quit"
 msgstr "離開(_Q)"
 
-#: ../src/docklet.cpp:270
+#: ../src/docklet.cpp:289
 msgid "StarDict - Scanning"
 msgstr "星際譯王 | 正在取詞"
 
-#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2025 ../src/mainwin.cpp:2055
-#: ../src/stardict.cpp:980 ../src/stardict.cpp:994 ../src/stardict.cpp:999
-#: ../src/stardict.cpp:1004 ../src/stardict.cpp:1493 ../src/stardict.cpp:1624
+#: ../src/floatwin.cpp:145 ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2054
+#: ../src/stardict.cpp:982 ../src/stardict.cpp:996 ../src/stardict.cpp:1001
+#: ../src/stardict.cpp:1006 ../src/stardict.cpp:1495 ../src/stardict.cpp:1626
 msgid "<Not Found!>"
 msgstr "<並未發現！>"
 
-#: ../src/floatwin.cpp:346
+#: ../src/floatwin.cpp:347
 msgid "Fuzzy query"
 msgstr "模糊查詢"
 
-#: ../src/floatwin.cpp:350
+#: ../src/floatwin.cpp:351
 msgid "has succeeded.\n"
 msgstr "已完成。\n"
 
-#: ../src/floatwin.cpp:352
+#: ../src/floatwin.cpp:353
 msgid "Found 1 word:\n"
 msgstr "查詢到 1 個單字：\n"
 
-#: ../src/floatwin.cpp:354
+#: ../src/floatwin.cpp:355
 #, c-format
 msgid "Found %d words:\n"
 msgstr "查詢到 %d 個單字：\n"
 
-#: ../src/floatwin.cpp:890
+#: ../src/floatwin.cpp:891
 msgid "Query in the main window"
 msgstr "在主視窗中查詢"
 
-#: ../src/floatwin.cpp:899
+#: ../src/floatwin.cpp:900
 msgid "Save to file"
 msgstr "儲存至檔案"
 
-#: ../src/floatwin.cpp:907
+#: ../src/floatwin.cpp:908
 msgid "Pronounce the word"
 msgstr "單字發音"
 
-#: ../src/floatwin.cpp:917
+#: ../src/floatwin.cpp:918
 msgid "Stop selection-scanning"
 msgstr "停止選擇文字取詞"
 
-#: ../src/floatwin.cpp:929
+#: ../src/floatwin.cpp:930
 msgid "Help"
 msgstr "求助"
 
-#: ../src/floatwin.cpp:948
+#: ../src/floatwin.cpp:949
 msgid "Lock floating window"
 msgstr "鎖定浮動視窗"
 
-#: ../src/floatwin.cpp:1028
+#: ../src/floatwin.cpp:1029
 msgid "_Copy"
 msgstr "複製(_C)"
 
-#: ../src/floatwin.cpp:1034
+#: ../src/floatwin.cpp:1035
 msgid "_Save"
 msgstr "儲存(_S)"
 
-#: ../src/floatwin.cpp:1039 ../src/mainwin.cpp:2221
+#: ../src/floatwin.cpp:1040 ../src/mainwin.cpp:2220
 msgid "_Query"
 msgstr "查詢(_Q)"
 
-#: ../src/floatwin.cpp:1046
+#: ../src/floatwin.cpp:1047
 msgid "_Play"
 msgstr "發音(_P)"
 
-#: ../src/floatwin.cpp:1053
+#: ../src/floatwin.cpp:1054
 msgid "_Fuzzy Query"
 msgstr "模糊查詢(_F)"
 
-#: ../src/floatwin.cpp:1141
+#: ../src/floatwin.cpp:1142
 #, fuzzy
 msgid "Looking up..."
 msgstr "載入中..."
 
-#: ../src/log.cpp:209
+#: ../src/log.cpp:228
 msgid "Error"
 msgstr ""
 
-#: ../src/log.cpp:229
+#: ../src/log.cpp:248
 #, fuzzy
 msgid "Log window"
 msgstr "浮動視窗"
 
-#: ../src/mainwin.cpp:92
+#: ../src/mainwin.cpp:91
 msgid "Clear the search box"
 msgstr "清除搜尋輸入欄"
 
-#: ../src/mainwin.cpp:121
+#: ../src/mainwin.cpp:120
 msgid "Fuzzy Query"
 msgstr "模糊查詢"
 
-#: ../src/mainwin.cpp:133
+#: ../src/mainwin.cpp:132
 msgid "Go Back - Right button: history (Alt+Left)"
 msgstr "返回 - 右鍵：歷史紀錄 (Alt+Left)"
 
-#: ../src/mainwin.cpp:148
+#: ../src/mainwin.cpp:147
 msgid "Show the main menu (Alt+M)"
 msgstr "顯示主選單 (Alt+M)"
 
-#: ../src/mainwin.cpp:196
+#: ../src/mainwin.cpp:195
 msgid "Clear _history"
 msgstr ""
 
-#: ../src/mainwin.cpp:497
+#: ../src/mainwin.cpp:496
 msgid "translator_credits"
 msgstr ""
 "Tetralet <tetralet@gmail.com>\n"
 "Semigod Ju <shinesemigod@gmail.com>"
 
-#: ../src/mainwin.cpp:503
+#: ../src/mainwin.cpp:502
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "星際譯王是 GNOME 的國際化辭典。"
 
-#: ../src/mainwin.cpp:534
+#: ../src/mainwin.cpp:533
 msgid "Pr_eferences"
 msgstr "偏好設定(_e)"
 
-#: ../src/mainwin.cpp:547
+#: ../src/mainwin.cpp:546
 msgid "Manage _Plugins"
 msgstr "管理擴充元件(_P)"
 
-#: ../src/mainwin.cpp:556
+#: ../src/mainwin.cpp:555
 msgid "_New Version"
 msgstr "版本更新(_N)"
 
-#: ../src/mainwin.cpp:564
+#: ../src/mainwin.cpp:563
 msgid "_Help"
 msgstr "求助(_H)"
 
-#: ../src/mainwin.cpp:570
+#: ../src/mainwin.cpp:569
 msgid "_About"
 msgstr "關於(_A)"
 
-#: ../src/mainwin.cpp:1303
+#: ../src/mainwin.cpp:1302
 msgid "List"
 msgstr "列表"
 
-#: ../src/mainwin.cpp:1314
+#: ../src/mainwin.cpp:1313
 msgid "Result"
 msgstr "結果"
 
-#: ../src/mainwin.cpp:1324
+#: ../src/mainwin.cpp:1323
 msgid "Full-Text Translation"
 msgstr "全文翻譯"
 
-#: ../src/mainwin.cpp:1335
+#: ../src/mainwin.cpp:1334
 msgid "Tree"
 msgstr "樹狀辭典"
 
-#: ../src/mainwin.cpp:1346
+#: ../src/mainwin.cpp:1345
 msgid "Choose dict group"
 msgstr "選擇辭典群組"
 
-#: ../src/mainwin.cpp:1357
+#: ../src/mainwin.cpp:1356
 msgid "Next word (Alt+Down)"
 msgstr "下一個單字(Alt+Down)"
 
-#: ../src/mainwin.cpp:1367
+#: ../src/mainwin.cpp:1366
 msgid "Previous word (Alt+Up)"
 msgstr "上一個單字(Alt+Up)"
 
-#: ../src/mainwin.cpp:1419
+#: ../src/mainwin.cpp:1418
 msgid "Enable Net Dict"
 msgstr "啟用網路辭典"
 
-#: ../src/mainwin.cpp:1562
+#: ../src/mainwin.cpp:1561
 msgid "Show the word list"
 msgstr "顯示單字列表"
 
-#: ../src/mainwin.cpp:1577
+#: ../src/mainwin.cpp:1576
 msgid "Hide the word list"
 msgstr "隱藏單字列表"
 
-#: ../src/mainwin.cpp:1595
+#: ../src/mainwin.cpp:1594
 msgid "Copy"
 msgstr "複製"
 
-#: ../src/mainwin.cpp:1609
+#: ../src/mainwin.cpp:1608
 #, fuzzy
 msgid "Pronounce the word (Enter)"
 msgstr "單字發音"
 
-#: ../src/mainwin.cpp:1623
+#: ../src/mainwin.cpp:1622
 #, fuzzy
 msgid "Save to file (Alt+E)"
 msgstr "儲存至檔案(Alt+E)"
 
-#: ../src/mainwin.cpp:1633
+#: ../src/mainwin.cpp:1632
 msgid "Print"
 msgstr "列印"
 
-#: ../src/mainwin.cpp:1648
+#: ../src/mainwin.cpp:1647
 #, fuzzy
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "在釋意區中搜尋(Ctrl+F)"
 
-#: ../src/mainwin.cpp:1844
+#: ../src/mainwin.cpp:1843
 #, fuzzy, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -1009,7 +1009,7 @@ msgstr ""
 "請至星際譯王網站下載辭典：\n"
 "%s%s%s 並且將其存放在 %s。"
 
-#: ../src/mainwin.cpp:1882
+#: ../src/mainwin.cpp:1881
 #, fuzzy
 msgid ""
 "        Welcome to StarDict!\n"
@@ -1042,7 +1042,7 @@ msgstr ""
 "   你可以在單字前加上 '/' 來進行模糊查詢。\n"
 "   當浮動視窗查詢單字失敗時，可利用雙擊來進行模糊查詢。\n"
 
-#: ../src/mainwin.cpp:1899
+#: ../src/mainwin.cpp:1898
 #, fuzzy
 msgid ""
 "       Welcome to StarDict\n"
@@ -1134,82 +1134,82 @@ msgstr ""
 "聲明：發佈這個程式乃是寄望它能對您有所幫助，但不提供任何擔保；也不保證單字拼"
 "寫、辭義及音標的正確性。\n"
 
-#: ../src/mainwin.cpp:2047 ../src/stardict.cpp:1330
+#: ../src/mainwin.cpp:2046 ../src/stardict.cpp:1332
 msgid "Found no words matching this pattern!"
 msgstr "未找到任何符合該條件的單字！"
 
-#: ../src/mainwin.cpp:2049 ../src/stardict.cpp:1355
+#: ../src/mainwin.cpp:2048 ../src/stardict.cpp:1357
 #, fuzzy
 msgid "Found no words matching this regular expression!"
 msgstr "未找到任何符合該條件的單字！"
 
-#: ../src/mainwin.cpp:2051 ../src/stardict.cpp:1242
+#: ../src/mainwin.cpp:2050 ../src/stardict.cpp:1244
 msgid "There are too many spelling errors :-("
 msgstr "拼寫錯誤過多 :-("
 
-#: ../src/mainwin.cpp:2053 ../src/stardict.cpp:1161 ../src/stardict.cpp:1206
+#: ../src/mainwin.cpp:2052 ../src/stardict.cpp:1163 ../src/stardict.cpp:1208
 #, fuzzy
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "在辭典裡的文字中並沒有這一個單字 :-("
 
-#: ../src/mainwin.cpp:2141
+#: ../src/mainwin.cpp:2140
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "找不到 \"%s\" 這個文字。"
 
-#: ../src/mainwin.cpp:2213 ../src/mainwin.cpp:2330
+#: ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2329
 msgid "_Pronounce"
 msgstr "單字發音(_P)"
 
-#: ../src/mainwin.cpp:2352
+#: ../src/mainwin.cpp:2351
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>全文翻譯</b>"
 
-#: ../src/mainwin.cpp:2385
+#: ../src/mainwin.cpp:2384
 msgid "To"
 msgstr "至"
 
-#: ../src/mainwin.cpp:2418
+#: ../src/mainwin.cpp:2417
 msgid "_Translate"
 msgstr "翻譯(_T)"
 
-#: ../src/mainwin.cpp:2440
+#: ../src/mainwin.cpp:2439
 msgid "Powered by -"
 msgstr "Powered by -"
 
-#: ../src/mainwin.cpp:2515
+#: ../src/mainwin.cpp:2514
 msgid "Please input some words to translate."
 msgstr "請輸入一些字詞以進行翻譯。"
 
-#: ../src/mainwin.cpp:2523
+#: ../src/mainwin.cpp:2522
 msgid "Connecting..."
 msgstr "正在連線中..."
 
-#: ../src/mainwin.cpp:2637
+#: ../src/mainwin.cpp:2636
 msgid "Scan the selection"
 msgstr "選擇文字取詞"
 
-#: ../src/mainwin.cpp:2651
+#: ../src/mainwin.cpp:2650
 msgid "Show info"
 msgstr "顯示訊息"
 
-#: ../src/mainwin.cpp:2703 ../src/prefsdlg.cpp:2098
+#: ../src/mainwin.cpp:2702 ../src/prefsdlg.cpp:2099
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: ../src/mainwin.cpp:2713
+#: ../src/mainwin.cpp:2712
 msgid "Manage dictionaries"
 msgstr "管理辭典"
 
-#: ../src/mainwin.cpp:2723
+#: ../src/mainwin.cpp:2722
 msgid "Go to the StarDict website"
 msgstr "瀏覽星際譯王網站"
 
-#: ../src/mainwin.cpp:2735
+#: ../src/mainwin.cpp:2734
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "搜尋網路辭典 - 右鍵：網站列表"
 
-#: ../src/pluginmanagedlg.cpp:140
+#: ../src/pluginmanagedlg.cpp:159
 #, c-format
 msgid ""
 "%s\n"
@@ -1224,183 +1224,183 @@ msgstr ""
 "<b>網站：</b>\t%s\n"
 "<b>檔案名稱：</b>\t%s"
 
-#: ../src/pluginmanagedlg.cpp:211
+#: ../src/pluginmanagedlg.cpp:230
 msgid "<b>Virtual Dictionary</b>"
 msgstr "<b>虛擬辭典</b>"
 
-#: ../src/pluginmanagedlg.cpp:216
+#: ../src/pluginmanagedlg.cpp:235
 #, fuzzy
 msgid "<b>Network Dictionary</b>"
 msgstr "<b>虛擬辭典</b>"
 
-#: ../src/pluginmanagedlg.cpp:221
+#: ../src/pluginmanagedlg.cpp:240
 #, fuzzy
 msgid "<b>Special Dictionary</b>"
 msgstr "<b>虛擬辭典</b>"
 
-#: ../src/pluginmanagedlg.cpp:226
+#: ../src/pluginmanagedlg.cpp:245
 msgid "<b>TTS Engine</b>"
 msgstr "<b>TTS 引擎</b>"
 
-#: ../src/pluginmanagedlg.cpp:231
+#: ../src/pluginmanagedlg.cpp:250
 #, fuzzy
 msgid "<b>Data Parsing Engine</b>"
 msgstr "<b>內容分析引擎</b>"
 
-#: ../src/pluginmanagedlg.cpp:236
+#: ../src/pluginmanagedlg.cpp:255
 msgid "<b>Misc</b>"
 msgstr "<b>雜項</b>"
 
-#: ../src/pluginmanagedlg.cpp:418
+#: ../src/pluginmanagedlg.cpp:437
 msgid "Plug-in Name"
 msgstr "擴充元件名稱"
 
-#: ../src/pluginmanagedlg.cpp:441
+#: ../src/pluginmanagedlg.cpp:460
 msgid "Configure Pl_ug-in"
 msgstr "設定擴充元件(_u)"
 
-#: ../src/pluginmanagedlg.cpp:451
+#: ../src/pluginmanagedlg.cpp:470
 msgid "<b>Plug-in Details</b>"
 msgstr "<b>擴充元件詳情</b>"
 
-#: ../src/pluginmanagedlg.cpp:460
+#: ../src/pluginmanagedlg.cpp:479
 msgid "Manage Plugins"
 msgstr "管理擴充元件"
 
-#: ../src/prefsdlg.cpp:84 ../src/prefsdlg.cpp:405
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:406
 msgid "Scan Selection"
 msgstr "選擇文字取詞"
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:536
+#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:537
 msgid "Font"
 msgstr "字型"
 
-#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:594
+#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:595
 msgid "Cache"
 msgstr "快取"
 
-#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:685
+#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:686
 msgid "Export"
 msgstr "匯出"
 
-#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:801
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:802
 msgid "Sound"
 msgstr "音效"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:888
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:889
 msgid "Video"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:725
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:726
 msgid "Article rendering"
 msgstr "文章翻譯"
 
-#: ../src/prefsdlg.cpp:91
+#: ../src/prefsdlg.cpp:92
 #, fuzzy
 msgid "Dict management"
 msgstr "辭典管理(_D)"
 
-#: ../src/prefsdlg.cpp:96 ../src/prefsdlg.cpp:1108
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1109
 msgid "Net Dict"
 msgstr "網路辭典"
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1172
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1173
 msgid "Web browser"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:103 ../src/prefsdlg.cpp:1220
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1221
 msgid "Input"
 msgstr "輸入"
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:112 ../src/prefsdlg.cpp:119
-#: ../src/prefsdlg.cpp:1379 ../src/prefsdlg.cpp:1845 ../src/prefsdlg.cpp:1877
+#: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
+#: ../src/prefsdlg.cpp:1380 ../src/prefsdlg.cpp:1846 ../src/prefsdlg.cpp:1878
 msgid "Options"
 msgstr "選項"
 
-#: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:1720
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1721
 msgid "Search website"
 msgstr "搜尋網站"
 
-#: ../src/prefsdlg.cpp:120 ../src/prefsdlg.cpp:1931
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:1932
 msgid "Settings"
 msgstr "設定"
 
-#: ../src/prefsdlg.cpp:127 ../src/stardict.cpp:2310
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2312
 msgid "Dictionary"
 msgstr "辭典"
 
-#: ../src/prefsdlg.cpp:129
+#: ../src/prefsdlg.cpp:130
 msgid "Main window"
 msgstr "主視窗"
 
-#: ../src/prefsdlg.cpp:130
+#: ../src/prefsdlg.cpp:131
 msgid "Notification area icon"
 msgstr "工作列圖示"
 
-#: ../src/prefsdlg.cpp:131
+#: ../src/prefsdlg.cpp:132
 msgid "Floating window"
 msgstr "浮動視窗"
 
-#: ../src/prefsdlg.cpp:271
+#: ../src/prefsdlg.cpp:272
 msgid "Categories"
 msgstr "類別"
 
-#: ../src/prefsdlg.cpp:408
+#: ../src/prefsdlg.cpp:409
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "唯有按下作用鍵時才會取詞(_O)。"
 
-#: ../src/prefsdlg.cpp:424
+#: ../src/prefsdlg.cpp:425
 msgid "H_ide floating window when modifier key released."
 msgstr "當放開作用鍵時隱藏浮動視窗(_i)。"
 
-#: ../src/prefsdlg.cpp:434
+#: ../src/prefsdlg.cpp:435
 msgid "Scan modifier _key:"
 msgstr "取詞作用鍵(_k)："
 
-#: ../src/prefsdlg.cpp:455
+#: ../src/prefsdlg.cpp:456
 msgid "_Scan clipboard."
 msgstr "剪貼簿取詞(_S)。"
 
-#: ../src/prefsdlg.cpp:465
+#: ../src/prefsdlg.cpp:466
 #, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "使用取詞熱鍵：Ctrl+Alt+F1(_U)。"
 
-#: ../src/prefsdlg.cpp:513
+#: ../src/prefsdlg.cpp:514
 msgid "Choose dictionary font"
 msgstr "選擇辭典字型"
 
-#: ../src/prefsdlg.cpp:516 ../src/prefsdlg.cpp:561
+#: ../src/prefsdlg.cpp:517 ../src/prefsdlg.cpp:562
 msgid "Choose"
 msgstr "選擇"
 
-#: ../src/prefsdlg.cpp:518
+#: ../src/prefsdlg.cpp:519
 msgid "Dictionary font"
 msgstr "辭典字型"
 
-#: ../src/prefsdlg.cpp:539
+#: ../src/prefsdlg.cpp:540
 msgid "_Use custom font."
 msgstr "使用自訂字型(_U)。"
 
-#: ../src/prefsdlg.cpp:551
+#: ../src/prefsdlg.cpp:552
 msgid "Dictionary _font:"
 msgstr "辭典字型(_f)："
 
-#: ../src/prefsdlg.cpp:598
+#: ../src/prefsdlg.cpp:599
 msgid "Create c_ache files to speed up loading."
 msgstr "建立快取檔以加速載入速度(_a)。"
 
-#: ../src/prefsdlg.cpp:603
+#: ../src/prefsdlg.cpp:604
 #, fuzzy
 msgid "_Sort word list by collation function."
 msgstr "透過核對功能進行單字清單排序(_S)。"
 
-#: ../src/prefsdlg.cpp:612
+#: ../src/prefsdlg.cpp:613
 #, fuzzy
 msgid "\tCollation _function:"
 msgstr "\t核對功能(_f)："
 
-#: ../src/prefsdlg.cpp:644
+#: ../src/prefsdlg.cpp:645
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
@@ -1408,664 +1408,664 @@ msgstr ""
 "當啟用了核對功能後，在第一次載入辭典時，將會花些時間進行排序，請耐心等待一"
 "下。"
 
-#: ../src/prefsdlg.cpp:650
+#: ../src/prefsdlg.cpp:651
 msgid "C_lean all cache files"
 msgstr "清除所有的快取檔(_l)"
 
-#: ../src/prefsdlg.cpp:667
+#: ../src/prefsdlg.cpp:668
 msgid "Open file..."
 msgstr "開啟檔案..."
 
-#: ../src/prefsdlg.cpp:690
+#: ../src/prefsdlg.cpp:691
 #, fuzzy
 msgid "_Only export words."
 msgstr "僅匯出單字(_O)。"
 
-#: ../src/prefsdlg.cpp:697
+#: ../src/prefsdlg.cpp:698
 msgid "File name:"
 msgstr "檔案名稱："
 
-#: ../src/prefsdlg.cpp:710
+#: ../src/prefsdlg.cpp:711
 msgid "_Browse..."
 msgstr "瀏覽...(_B)"
 
-#: ../src/prefsdlg.cpp:731
+#: ../src/prefsdlg.cpp:732
 msgid "_Highlight search term"
 msgstr "反白搜尋項目(_H)"
 
-#: ../src/prefsdlg.cpp:741
+#: ../src/prefsdlg.cpp:742
 #, fuzzy
 msgid "Dictionary management"
 msgstr "辭典名稱"
 
-#: ../src/prefsdlg.cpp:747
+#: ../src/prefsdlg.cpp:748
 msgid "Add new dictionaries to active dictionary group"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:754
+#: ../src/prefsdlg.cpp:755
 msgid "Add new plug-ins to active dictionary group"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:806
+#: ../src/prefsdlg.cpp:807
 msgid "_Enable sound event."
 msgstr "啟用事件音效(_E)。"
 
-#: ../src/prefsdlg.cpp:815
+#: ../src/prefsdlg.cpp:816
 #, fuzzy
 msgid "Command for playing sound files:"
 msgstr "WAV 檔的播放指令："
 
-#: ../src/prefsdlg.cpp:827
+#: ../src/prefsdlg.cpp:828
 msgid "Always use sound play command."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:834
+#: ../src/prefsdlg.cpp:835
 msgid "RealPeopleTTS search path:"
 msgstr "RealPeopleTTS 搜尋路徑："
 
-#: ../src/prefsdlg.cpp:864
+#: ../src/prefsdlg.cpp:865
 #, fuzzy
 msgid "Enable _TTS program."
 msgstr "使用 TTS(語音合成) 程式(_U)。"
 
-#: ../src/prefsdlg.cpp:872
+#: ../src/prefsdlg.cpp:873
 #, fuzzy
 msgid "Command line:"
 msgstr "指令列："
 
-#: ../src/prefsdlg.cpp:893
+#: ../src/prefsdlg.cpp:894
 #, fuzzy
 msgid "Command for playing video files:"
 msgstr "WAV 檔的播放指令："
 
-#: ../src/prefsdlg.cpp:927
+#: ../src/prefsdlg.cpp:928
 msgid "Account"
 msgstr "帳號"
 
-#: ../src/prefsdlg.cpp:938 ../src/prefsdlg.cpp:1035
+#: ../src/prefsdlg.cpp:939 ../src/prefsdlg.cpp:1036
 msgid "_User Name:"
 msgstr "使用者名稱(_U)："
 
-#: ../src/prefsdlg.cpp:944 ../src/prefsdlg.cpp:1041
+#: ../src/prefsdlg.cpp:945 ../src/prefsdlg.cpp:1042
 msgid "_Password:"
 msgstr "密碼(_P)："
 
-#: ../src/prefsdlg.cpp:967 ../src/prefsdlg.cpp:1066
+#: ../src/prefsdlg.cpp:968 ../src/prefsdlg.cpp:1067
 msgid "Please input the password."
 msgstr "請輸入密碼。"
 
-#: ../src/prefsdlg.cpp:1024
+#: ../src/prefsdlg.cpp:1025
 msgid "Register"
 msgstr "註冊"
 
-#: ../src/prefsdlg.cpp:1048
+#: ../src/prefsdlg.cpp:1049
 msgid "_Email:"
 msgstr "電子郵件(_E)："
 
-#: ../src/prefsdlg.cpp:1064
+#: ../src/prefsdlg.cpp:1065
 msgid "Please input the user name."
 msgstr "請輸入使用者名稱。"
 
-#: ../src/prefsdlg.cpp:1068
+#: ../src/prefsdlg.cpp:1069
 msgid "Please input the email."
 msgstr "請輸入電子郵件地址。"
 
-#: ../src/prefsdlg.cpp:1070
+#: ../src/prefsdlg.cpp:1071
 msgid "Please input a valid email."
 msgstr "請輸入正確的電子郵件地址。"
 
-#: ../src/prefsdlg.cpp:1114
+#: ../src/prefsdlg.cpp:1115
 msgid "Enable _network dictionaries."
 msgstr "啟用網路辭典(_n)。"
 
-#: ../src/prefsdlg.cpp:1126
+#: ../src/prefsdlg.cpp:1127
 msgid "StarDict server:"
 msgstr "星際譯王主機："
 
-#: ../src/prefsdlg.cpp:1135
+#: ../src/prefsdlg.cpp:1136
 msgid "Port:"
 msgstr "連接埠："
 
-#: ../src/prefsdlg.cpp:1144
+#: ../src/prefsdlg.cpp:1145
 msgid "Account:"
 msgstr "帳號："
 
-#: ../src/prefsdlg.cpp:1155
+#: ../src/prefsdlg.cpp:1156
 msgid "_Register an account"
 msgstr "註冊帳號(_R)"
 
-#: ../src/prefsdlg.cpp:1177
+#: ../src/prefsdlg.cpp:1178
 #, fuzzy
 msgid "Command for opening URLs:"
 msgstr "WAV 檔的播放指令："
 
-#: ../src/prefsdlg.cpp:1190
+#: ../src/prefsdlg.cpp:1191
 msgid "Always use this command for opening URLs."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1227
+#: ../src/prefsdlg.cpp:1228
 msgid "_Search while typing."
 msgstr "隨打即找(_S)。"
 
-#: ../src/prefsdlg.cpp:1236
+#: ../src/prefsdlg.cpp:1237
 msgid "Word change _timeout:"
 msgstr "單字變換逾時時間(_t)："
 
-#: ../src/prefsdlg.cpp:1245
+#: ../src/prefsdlg.cpp:1246
 #, fuzzy
 msgid "(default:300 ms)"
 msgstr "(預設：300)"
 
-#: ../src/prefsdlg.cpp:1247
+#: ../src/prefsdlg.cpp:1248
 msgid "Show the _first word when not found."
 msgstr "未找到時，顯示第一個單字(_f)。"
 
-#: ../src/prefsdlg.cpp:1326
+#: ../src/prefsdlg.cpp:1327
 msgid "Skin change will take effect after application restart"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1369
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:42
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:41
+#: ../src/prefsdlg.cpp:1370
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:61
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:60
 msgid "Default"
 msgstr "預設"
 
-#: ../src/prefsdlg.cpp:1386
+#: ../src/prefsdlg.cpp:1387
 msgid "_Auto run StarDict after boot."
 msgstr "開機後自動啟動星際譯王(_A)。"
 
-#: ../src/prefsdlg.cpp:1427
+#: ../src/prefsdlg.cpp:1428
 msgid "Skin:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1444
+#: ../src/prefsdlg.cpp:1445
 msgid "Hide main window when _starting StarDict."
 msgstr "啟動星際譯王時隱藏主視窗(_s)。"
 
-#: ../src/prefsdlg.cpp:1457
+#: ../src/prefsdlg.cpp:1458
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "開啟主視窗熱鍵(_U)：Ctrl+Alt+Z。"
 
-#: ../src/prefsdlg.cpp:1475 ../src/prefsdlg.cpp:1992
+#: ../src/prefsdlg.cpp:1476 ../src/prefsdlg.cpp:1993
 #, fuzzy
 msgid "_Transparency:"
 msgstr "翻譯(_T)"
 
-#: ../src/prefsdlg.cpp:1568 ../src/prefsdlg.cpp:1771
+#: ../src/prefsdlg.cpp:1569 ../src/prefsdlg.cpp:1772
 msgid "Website Name"
 msgstr "網站名稱"
 
-#: ../src/prefsdlg.cpp:1580 ../src/prefsdlg.cpp:1779
+#: ../src/prefsdlg.cpp:1581 ../src/prefsdlg.cpp:1780
 msgid "Website link"
 msgstr "網址"
 
-#: ../src/prefsdlg.cpp:1591 ../src/prefsdlg.cpp:1787
+#: ../src/prefsdlg.cpp:1592 ../src/prefsdlg.cpp:1788
 msgid "Website search link"
 msgstr "網站搜尋連結"
 
-#: ../src/prefsdlg.cpp:1612
+#: ../src/prefsdlg.cpp:1613
 msgid "Please input the website name."
 msgstr "請輸入網站名稱。"
 
-#: ../src/prefsdlg.cpp:1614
+#: ../src/prefsdlg.cpp:1615
 msgid "Please input the website link."
 msgstr "請輸入網址。"
 
-#: ../src/prefsdlg.cpp:1616
+#: ../src/prefsdlg.cpp:1617
 msgid "Please input the website search link."
 msgstr "請輸入網站搜尋連結。"
 
-#: ../src/prefsdlg.cpp:1618 ../src/prefsdlg.cpp:1697
+#: ../src/prefsdlg.cpp:1619 ../src/prefsdlg.cpp:1698
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
 msgstr "網站搜尋連結應包含一個 \"%%s\" 字串以代表查詢單字。"
 
-#: ../src/prefsdlg.cpp:1849
+#: ../src/prefsdlg.cpp:1850
 #, fuzzy
 msgid "When middle mouse button is clicked:"
 msgstr "當按下滑鼠中鍵時在浮動視窗中進行查詢"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:1853
+#: ../src/prefsdlg.cpp:1854
 #, fuzzy
 msgid "Query selection in floating window"
 msgstr "在主視窗中查詢"
 
-#: ../src/prefsdlg.cpp:1854
+#: ../src/prefsdlg.cpp:1855
 #, fuzzy
 msgid "Query selection in main window"
 msgstr "在主視窗中查詢"
 
-#: ../src/prefsdlg.cpp:1855
+#: ../src/prefsdlg.cpp:1856
 msgid "Do nothing"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1880
+#: ../src/prefsdlg.cpp:1881
 msgid "_Pronounce the word when it pops up."
 msgstr "彈現時單字發音(_P)。"
 
-#: ../src/prefsdlg.cpp:1889
+#: ../src/prefsdlg.cpp:1890
 msgid "_Show floating window if word not found."
 msgstr "未找到單字時顯示浮動視窗(_S)。"
 
-#: ../src/prefsdlg.cpp:1950
+#: ../src/prefsdlg.cpp:1951
 msgid "Max window _width:"
 msgstr "最大視窗寬度(_w)："
 
-#: ../src/prefsdlg.cpp:1960
+#: ../src/prefsdlg.cpp:1961
 msgid "(default:320)"
 msgstr "(預設：320)"
 
-#: ../src/prefsdlg.cpp:1964
+#: ../src/prefsdlg.cpp:1965
 msgid "Max window hei_ght:"
 msgstr "最大視窗高度(_g)："
 
-#: ../src/prefsdlg.cpp:1972
+#: ../src/prefsdlg.cpp:1973
 msgid "(default:240)"
 msgstr "(預設：240)"
 
-#: ../src/prefsdlg.cpp:1977
+#: ../src/prefsdlg.cpp:1978
 msgid "_Use custom background color:"
 msgstr "使用自訂的背景顏色(_U)："
 
-#: ../src/prefsdlg.cpp:2076
+#: ../src/prefsdlg.cpp:2077
 msgid "Cat_egories:"
 msgstr "類別(_e)："
 
-#: ../src/progresswin.cpp:42 ../src/progresswin.cpp:46 ../src/splash.cpp:72
+#: ../src/progresswin.cpp:43 ../src/progresswin.cpp:47 ../src/splash.cpp:73
 msgid "Loading"
 msgstr "載入中"
 
-#: ../src/readword.cpp:130
+#: ../src/readword.cpp:149
 msgid "Real People TTS"
 msgstr "真人 TTS"
 
-#: ../src/readword.cpp:137
+#: ../src/readword.cpp:156
 msgid "Command TTS"
 msgstr "指令式 TTS"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
-#: ../src/splash.cpp:86
+#: ../src/splash.cpp:87
 #, fuzzy
 msgid "StarDict starting..."
 msgstr "星際譯王 | 正在取詞"
 
-#: ../src/stardict.cpp:1069
+#: ../src/stardict.cpp:1071
 msgid "Full-text Search"
 msgstr "全文搜尋"
 
-#: ../src/stardict.cpp:1096
+#: ../src/stardict.cpp:1098
 msgid "Search"
 msgstr "搜尋"
 
-#: ../src/stardict.cpp:1181 ../src/stardict.cpp:1597
+#: ../src/stardict.cpp:1183 ../src/stardict.cpp:1599
 msgid "Full-text search..."
 msgstr "全文搜尋..."
 
-#: ../src/stardict.cpp:1586
+#: ../src/stardict.cpp:1588
 msgid "Press Enter to list the words that match the pattern."
 msgstr "按 <Enter> 鍵列出符合條件的單字。"
 
-#: ../src/stardict.cpp:1589
+#: ../src/stardict.cpp:1591
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr "按 <Enter> 鍵列出符合條件的單字。"
 
-#: ../src/stardict.cpp:1593
+#: ../src/stardict.cpp:1595
 msgid "Fuzzy query..."
 msgstr "模糊查詢中..."
 
-#: ../src/stardict.cpp:2012
+#: ../src/stardict.cpp:2014
 #, fuzzy
 msgid "Loading skin..."
 msgstr "載入中..."
 
-#: ../src/stardict.cpp:2018
+#: ../src/stardict.cpp:2020
 #, fuzzy
 msgid "Skin loaded."
 msgstr "已載入 Espeak 擴充元件。\n"
 
-#: ../src/stardict.cpp:2175
+#: ../src/stardict.cpp:2177
 msgid "StarDict is already running. Using the running process."
 msgstr "星際譯王已在執行，使用現有程序。"
 
-#: ../src/stardict.cpp:2294
+#: ../src/stardict.cpp:2296
 msgid "- Lookup words"
 msgstr "- 查詢單字"
 
-#: ../src/stardict.cpp:2299
+#: ../src/stardict.cpp:2301
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "選項分析失敗：%s\n"
 
-#: ../src/stardict.cpp:2362
+#: ../src/stardict.cpp:2364
 #, fuzzy
 msgid "Loading StarDict configuration..."
 msgstr "辭典資訊"
 
-#: ../src/stardict.cpp:2364
+#: ../src/stardict.cpp:2366
 #, fuzzy
 msgid "StarDict configuration loaded."
 msgstr "辭典設定 xml"
 
-#: ../src/lib/full_text_trans.cpp:29 ../src/lib/full_text_trans.cpp:85
+#: ../src/lib/full_text_trans.cpp:48 ../src/lib/full_text_trans.cpp:104
 msgid "Afrikaans"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:30 ../src/lib/full_text_trans.cpp:86
+#: ../src/lib/full_text_trans.cpp:49 ../src/lib/full_text_trans.cpp:105
 msgid "Albanian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:31 ../src/lib/full_text_trans.cpp:87
+#: ../src/lib/full_text_trans.cpp:50 ../src/lib/full_text_trans.cpp:106
 msgid "Arabic"
 msgstr "阿拉伯文"
 
-#: ../src/lib/full_text_trans.cpp:32 ../src/lib/full_text_trans.cpp:88
+#: ../src/lib/full_text_trans.cpp:51 ../src/lib/full_text_trans.cpp:107
 msgid "Belarusian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:33 ../src/lib/full_text_trans.cpp:89
+#: ../src/lib/full_text_trans.cpp:52 ../src/lib/full_text_trans.cpp:108
 msgid "Bulgarian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:34 ../src/lib/full_text_trans.cpp:90
+#: ../src/lib/full_text_trans.cpp:53 ../src/lib/full_text_trans.cpp:109
 #, fuzzy
 msgid "Catalan"
 msgstr "義大利文"
 
-#: ../src/lib/full_text_trans.cpp:35 ../src/lib/full_text_trans.cpp:312
-#: ../src/lib/full_text_trans.cpp:334
+#: ../src/lib/full_text_trans.cpp:54 ../src/lib/full_text_trans.cpp:331
+#: ../src/lib/full_text_trans.cpp:353
 msgid "Chinese"
 msgstr "中文"
 
-#: ../src/lib/full_text_trans.cpp:36 ../src/lib/full_text_trans.cpp:93
+#: ../src/lib/full_text_trans.cpp:55 ../src/lib/full_text_trans.cpp:112
 msgid "Croatian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:37 ../src/lib/full_text_trans.cpp:94
+#: ../src/lib/full_text_trans.cpp:56 ../src/lib/full_text_trans.cpp:113
 #, fuzzy
 msgid "Czech"
 msgstr "快取"
 
-#: ../src/lib/full_text_trans.cpp:38 ../src/lib/full_text_trans.cpp:95
+#: ../src/lib/full_text_trans.cpp:57 ../src/lib/full_text_trans.cpp:114
 #, fuzzy
 msgid "Danish"
 msgstr "西班牙文"
 
-#: ../src/lib/full_text_trans.cpp:39 ../src/lib/full_text_trans.cpp:96
-#: ../src/lib/full_text_trans.cpp:145 ../src/lib/full_text_trans.cpp:171
-#: ../src/lib/full_text_trans.cpp:189
+#: ../src/lib/full_text_trans.cpp:58 ../src/lib/full_text_trans.cpp:115
+#: ../src/lib/full_text_trans.cpp:164 ../src/lib/full_text_trans.cpp:190
+#: ../src/lib/full_text_trans.cpp:208
 msgid "Dutch"
 msgstr "荷蘭文"
 
-#: ../src/lib/full_text_trans.cpp:40 ../src/lib/full_text_trans.cpp:97
-#: ../src/lib/full_text_trans.cpp:144 ../src/lib/full_text_trans.cpp:159
-#: ../src/lib/full_text_trans.cpp:164 ../src/lib/full_text_trans.cpp:184
-#: ../src/lib/full_text_trans.cpp:190 ../src/lib/full_text_trans.cpp:199
-#: ../src/lib/full_text_trans.cpp:204 ../src/lib/full_text_trans.cpp:209
-#: ../src/lib/full_text_trans.cpp:214 ../src/lib/full_text_trans.cpp:218
-#: ../src/lib/full_text_trans.cpp:222 ../src/lib/full_text_trans.cpp:227
-#: ../src/lib/full_text_trans.cpp:231 ../src/lib/full_text_trans.cpp:313
-#: ../src/lib/full_text_trans.cpp:332 ../src/lib/full_text_trans.cpp:348
-#: ../src/lib/full_text_trans.cpp:353 ../src/lib/full_text_trans.cpp:358
-#: ../src/lib/full_text_trans.cpp:363 ../src/lib/full_text_trans.cpp:368
+#: ../src/lib/full_text_trans.cpp:59 ../src/lib/full_text_trans.cpp:116
+#: ../src/lib/full_text_trans.cpp:163 ../src/lib/full_text_trans.cpp:178
+#: ../src/lib/full_text_trans.cpp:183 ../src/lib/full_text_trans.cpp:203
+#: ../src/lib/full_text_trans.cpp:209 ../src/lib/full_text_trans.cpp:218
+#: ../src/lib/full_text_trans.cpp:223 ../src/lib/full_text_trans.cpp:228
+#: ../src/lib/full_text_trans.cpp:233 ../src/lib/full_text_trans.cpp:237
+#: ../src/lib/full_text_trans.cpp:241 ../src/lib/full_text_trans.cpp:246
+#: ../src/lib/full_text_trans.cpp:250 ../src/lib/full_text_trans.cpp:332
+#: ../src/lib/full_text_trans.cpp:351 ../src/lib/full_text_trans.cpp:367
+#: ../src/lib/full_text_trans.cpp:372 ../src/lib/full_text_trans.cpp:377
+#: ../src/lib/full_text_trans.cpp:382 ../src/lib/full_text_trans.cpp:387
 msgid "English"
 msgstr "英文"
 
-#: ../src/lib/full_text_trans.cpp:41 ../src/lib/full_text_trans.cpp:98
+#: ../src/lib/full_text_trans.cpp:60 ../src/lib/full_text_trans.cpp:117
 msgid "Estonian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:42 ../src/lib/full_text_trans.cpp:99
+#: ../src/lib/full_text_trans.cpp:61 ../src/lib/full_text_trans.cpp:118
 msgid "Filipino"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:43 ../src/lib/full_text_trans.cpp:100
+#: ../src/lib/full_text_trans.cpp:62 ../src/lib/full_text_trans.cpp:119
 msgid "Finnish"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:44 ../src/lib/full_text_trans.cpp:101
-#: ../src/lib/full_text_trans.cpp:146 ../src/lib/full_text_trans.cpp:172
-#: ../src/lib/full_text_trans.cpp:185 ../src/lib/full_text_trans.cpp:200
-#: ../src/lib/full_text_trans.cpp:205 ../src/lib/full_text_trans.cpp:210
-#: ../src/lib/full_text_trans.cpp:223 ../src/lib/full_text_trans.cpp:232
-#: ../src/lib/full_text_trans.cpp:316 ../src/lib/full_text_trans.cpp:335
+#: ../src/lib/full_text_trans.cpp:63 ../src/lib/full_text_trans.cpp:120
+#: ../src/lib/full_text_trans.cpp:165 ../src/lib/full_text_trans.cpp:191
+#: ../src/lib/full_text_trans.cpp:204 ../src/lib/full_text_trans.cpp:219
+#: ../src/lib/full_text_trans.cpp:224 ../src/lib/full_text_trans.cpp:229
+#: ../src/lib/full_text_trans.cpp:242 ../src/lib/full_text_trans.cpp:251
+#: ../src/lib/full_text_trans.cpp:335 ../src/lib/full_text_trans.cpp:354
 msgid "French"
 msgstr "法文"
 
-#: ../src/lib/full_text_trans.cpp:45 ../src/lib/full_text_trans.cpp:102
+#: ../src/lib/full_text_trans.cpp:64 ../src/lib/full_text_trans.cpp:121
 #, fuzzy
 msgid "Galician"
 msgstr "義大利文"
 
-#: ../src/lib/full_text_trans.cpp:46 ../src/lib/full_text_trans.cpp:103
-#: ../src/lib/full_text_trans.cpp:147 ../src/lib/full_text_trans.cpp:173
-#: ../src/lib/full_text_trans.cpp:191 ../src/lib/full_text_trans.cpp:317
-#: ../src/lib/full_text_trans.cpp:336
+#: ../src/lib/full_text_trans.cpp:65 ../src/lib/full_text_trans.cpp:122
+#: ../src/lib/full_text_trans.cpp:166 ../src/lib/full_text_trans.cpp:192
+#: ../src/lib/full_text_trans.cpp:210 ../src/lib/full_text_trans.cpp:336
+#: ../src/lib/full_text_trans.cpp:355
 msgid "German"
 msgstr "德文"
 
-#: ../src/lib/full_text_trans.cpp:47 ../src/lib/full_text_trans.cpp:104
-#: ../src/lib/full_text_trans.cpp:148 ../src/lib/full_text_trans.cpp:174
-#: ../src/lib/full_text_trans.cpp:192
+#: ../src/lib/full_text_trans.cpp:66 ../src/lib/full_text_trans.cpp:123
+#: ../src/lib/full_text_trans.cpp:167 ../src/lib/full_text_trans.cpp:193
+#: ../src/lib/full_text_trans.cpp:211
 msgid "Greek"
 msgstr "希臘文"
 
-#: ../src/lib/full_text_trans.cpp:48 ../src/lib/full_text_trans.cpp:105
+#: ../src/lib/full_text_trans.cpp:67 ../src/lib/full_text_trans.cpp:124
 msgid "Haitian Creole"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:49 ../src/lib/full_text_trans.cpp:106
+#: ../src/lib/full_text_trans.cpp:68 ../src/lib/full_text_trans.cpp:125
 msgid "Hebrew"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:50 ../src/lib/full_text_trans.cpp:107
+#: ../src/lib/full_text_trans.cpp:69 ../src/lib/full_text_trans.cpp:126
 #, fuzzy
 msgid "Hindi"
 msgstr "尋找"
 
-#: ../src/lib/full_text_trans.cpp:51 ../src/lib/full_text_trans.cpp:108
+#: ../src/lib/full_text_trans.cpp:70 ../src/lib/full_text_trans.cpp:127
 msgid "Hungarian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:52 ../src/lib/full_text_trans.cpp:109
+#: ../src/lib/full_text_trans.cpp:71 ../src/lib/full_text_trans.cpp:128
 msgid "Icelandic"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:53 ../src/lib/full_text_trans.cpp:110
+#: ../src/lib/full_text_trans.cpp:72 ../src/lib/full_text_trans.cpp:129
 msgid "Indonesian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:54 ../src/lib/full_text_trans.cpp:111
+#: ../src/lib/full_text_trans.cpp:73 ../src/lib/full_text_trans.cpp:130
 msgid "Irish"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:55 ../src/lib/full_text_trans.cpp:112
-#: ../src/lib/full_text_trans.cpp:149 ../src/lib/full_text_trans.cpp:175
-#: ../src/lib/full_text_trans.cpp:193 ../src/lib/full_text_trans.cpp:318
-#: ../src/lib/full_text_trans.cpp:337
+#: ../src/lib/full_text_trans.cpp:74 ../src/lib/full_text_trans.cpp:131
+#: ../src/lib/full_text_trans.cpp:168 ../src/lib/full_text_trans.cpp:194
+#: ../src/lib/full_text_trans.cpp:212 ../src/lib/full_text_trans.cpp:337
+#: ../src/lib/full_text_trans.cpp:356
 msgid "Italian"
 msgstr "義大利文"
 
-#: ../src/lib/full_text_trans.cpp:56 ../src/lib/full_text_trans.cpp:113
-#: ../src/lib/full_text_trans.cpp:150 ../src/lib/full_text_trans.cpp:176
-#: ../src/lib/full_text_trans.cpp:314 ../src/lib/full_text_trans.cpp:324
-#: ../src/lib/full_text_trans.cpp:328 ../src/lib/full_text_trans.cpp:343
-#: ../src/lib/full_text_trans.cpp:347 ../src/lib/full_text_trans.cpp:352
-#: ../src/lib/full_text_trans.cpp:357 ../src/lib/full_text_trans.cpp:362
-#: ../src/lib/full_text_trans.cpp:367
+#: ../src/lib/full_text_trans.cpp:75 ../src/lib/full_text_trans.cpp:132
+#: ../src/lib/full_text_trans.cpp:169 ../src/lib/full_text_trans.cpp:195
+#: ../src/lib/full_text_trans.cpp:333 ../src/lib/full_text_trans.cpp:343
+#: ../src/lib/full_text_trans.cpp:347 ../src/lib/full_text_trans.cpp:362
+#: ../src/lib/full_text_trans.cpp:366 ../src/lib/full_text_trans.cpp:371
+#: ../src/lib/full_text_trans.cpp:376 ../src/lib/full_text_trans.cpp:381
+#: ../src/lib/full_text_trans.cpp:386
 msgid "Japanese"
 msgstr "日文"
 
-#: ../src/lib/full_text_trans.cpp:57 ../src/lib/full_text_trans.cpp:114
-#: ../src/lib/full_text_trans.cpp:151 ../src/lib/full_text_trans.cpp:177
-#: ../src/lib/full_text_trans.cpp:315 ../src/lib/full_text_trans.cpp:333
+#: ../src/lib/full_text_trans.cpp:76 ../src/lib/full_text_trans.cpp:133
+#: ../src/lib/full_text_trans.cpp:170 ../src/lib/full_text_trans.cpp:196
+#: ../src/lib/full_text_trans.cpp:334 ../src/lib/full_text_trans.cpp:352
 msgid "Korean"
 msgstr "韓文"
 
-#: ../src/lib/full_text_trans.cpp:58 ../src/lib/full_text_trans.cpp:115
+#: ../src/lib/full_text_trans.cpp:77 ../src/lib/full_text_trans.cpp:134
 msgid "Latvian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:59 ../src/lib/full_text_trans.cpp:116
+#: ../src/lib/full_text_trans.cpp:78 ../src/lib/full_text_trans.cpp:135
 msgid "Lithuanian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:60 ../src/lib/full_text_trans.cpp:117
+#: ../src/lib/full_text_trans.cpp:79 ../src/lib/full_text_trans.cpp:136
 msgid "Macedonian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:61 ../src/lib/full_text_trans.cpp:118
+#: ../src/lib/full_text_trans.cpp:80 ../src/lib/full_text_trans.cpp:137
 #, fuzzy
 msgid "Malay"
 msgstr "發音(_P)"
 
-#: ../src/lib/full_text_trans.cpp:62 ../src/lib/full_text_trans.cpp:119
+#: ../src/lib/full_text_trans.cpp:81 ../src/lib/full_text_trans.cpp:138
 msgid "Maltese"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:63 ../src/lib/full_text_trans.cpp:120
+#: ../src/lib/full_text_trans.cpp:82 ../src/lib/full_text_trans.cpp:139
 #, fuzzy
 msgid "Norwegian"
 msgstr "韓文"
 
-#: ../src/lib/full_text_trans.cpp:64 ../src/lib/full_text_trans.cpp:121
+#: ../src/lib/full_text_trans.cpp:83 ../src/lib/full_text_trans.cpp:140
 #, fuzzy
 msgid "Persian"
 msgstr "列印"
 
-#: ../src/lib/full_text_trans.cpp:65 ../src/lib/full_text_trans.cpp:122
+#: ../src/lib/full_text_trans.cpp:84 ../src/lib/full_text_trans.cpp:141
 #, fuzzy
 msgid "Polish"
 msgstr "英文"
 
-#: ../src/lib/full_text_trans.cpp:66 ../src/lib/full_text_trans.cpp:123
-#: ../src/lib/full_text_trans.cpp:152 ../src/lib/full_text_trans.cpp:178
-#: ../src/lib/full_text_trans.cpp:194 ../src/lib/full_text_trans.cpp:320
-#: ../src/lib/full_text_trans.cpp:339
+#: ../src/lib/full_text_trans.cpp:85 ../src/lib/full_text_trans.cpp:142
+#: ../src/lib/full_text_trans.cpp:171 ../src/lib/full_text_trans.cpp:197
+#: ../src/lib/full_text_trans.cpp:213 ../src/lib/full_text_trans.cpp:339
+#: ../src/lib/full_text_trans.cpp:358
 msgid "Portuguese"
 msgstr "葡萄牙文"
 
-#: ../src/lib/full_text_trans.cpp:67 ../src/lib/full_text_trans.cpp:124
+#: ../src/lib/full_text_trans.cpp:86 ../src/lib/full_text_trans.cpp:143
 #, fuzzy
 msgid "Romanian"
 msgstr "指令列："
 
-#: ../src/lib/full_text_trans.cpp:68 ../src/lib/full_text_trans.cpp:125
-#: ../src/lib/full_text_trans.cpp:153 ../src/lib/full_text_trans.cpp:179
+#: ../src/lib/full_text_trans.cpp:87 ../src/lib/full_text_trans.cpp:144
+#: ../src/lib/full_text_trans.cpp:172 ../src/lib/full_text_trans.cpp:198
 msgid "Russian"
 msgstr "俄文"
 
-#: ../src/lib/full_text_trans.cpp:69 ../src/lib/full_text_trans.cpp:126
+#: ../src/lib/full_text_trans.cpp:88 ../src/lib/full_text_trans.cpp:145
 #, fuzzy
 msgid "Serbian"
 msgstr "德文"
 
-#: ../src/lib/full_text_trans.cpp:70 ../src/lib/full_text_trans.cpp:127
+#: ../src/lib/full_text_trans.cpp:89 ../src/lib/full_text_trans.cpp:146
 msgid "Slovak"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:71 ../src/lib/full_text_trans.cpp:128
+#: ../src/lib/full_text_trans.cpp:90 ../src/lib/full_text_trans.cpp:147
 msgid "Slovenian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:72 ../src/lib/full_text_trans.cpp:129
-#: ../src/lib/full_text_trans.cpp:154 ../src/lib/full_text_trans.cpp:180
-#: ../src/lib/full_text_trans.cpp:195 ../src/lib/full_text_trans.cpp:319
-#: ../src/lib/full_text_trans.cpp:338
+#: ../src/lib/full_text_trans.cpp:91 ../src/lib/full_text_trans.cpp:148
+#: ../src/lib/full_text_trans.cpp:173 ../src/lib/full_text_trans.cpp:199
+#: ../src/lib/full_text_trans.cpp:214 ../src/lib/full_text_trans.cpp:338
+#: ../src/lib/full_text_trans.cpp:357
 msgid "Spanish"
 msgstr "西班牙文"
 
-#: ../src/lib/full_text_trans.cpp:73 ../src/lib/full_text_trans.cpp:130
+#: ../src/lib/full_text_trans.cpp:92 ../src/lib/full_text_trans.cpp:149
 msgid "Swahili"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:74 ../src/lib/full_text_trans.cpp:131
+#: ../src/lib/full_text_trans.cpp:93 ../src/lib/full_text_trans.cpp:150
 msgid "Swedish"
 msgstr "瑞典文"
 
-#: ../src/lib/full_text_trans.cpp:75 ../src/lib/full_text_trans.cpp:132
+#: ../src/lib/full_text_trans.cpp:94 ../src/lib/full_text_trans.cpp:151
 msgid "Thai"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:76 ../src/lib/full_text_trans.cpp:133
+#: ../src/lib/full_text_trans.cpp:95 ../src/lib/full_text_trans.cpp:152
 msgid "Turkish"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:77 ../src/lib/full_text_trans.cpp:134
+#: ../src/lib/full_text_trans.cpp:96 ../src/lib/full_text_trans.cpp:153
 msgid "Ukrainian"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:78 ../src/lib/full_text_trans.cpp:135
+#: ../src/lib/full_text_trans.cpp:97 ../src/lib/full_text_trans.cpp:154
 #, fuzzy
 msgid "Vietnamese"
 msgstr "檔案名稱"
 
-#: ../src/lib/full_text_trans.cpp:79 ../src/lib/full_text_trans.cpp:136
+#: ../src/lib/full_text_trans.cpp:98 ../src/lib/full_text_trans.cpp:155
 msgid "Welsh"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:80 ../src/lib/full_text_trans.cpp:137
+#: ../src/lib/full_text_trans.cpp:99 ../src/lib/full_text_trans.cpp:156
 msgid "Yiddish"
 msgstr ""
 
-#: ../src/lib/full_text_trans.cpp:91 ../src/lib/full_text_trans.cpp:142
-#: ../src/lib/full_text_trans.cpp:165 ../src/lib/full_text_trans.cpp:169
+#: ../src/lib/full_text_trans.cpp:110 ../src/lib/full_text_trans.cpp:161
+#: ../src/lib/full_text_trans.cpp:184 ../src/lib/full_text_trans.cpp:188
 msgid "Chinese (Simplified)"
 msgstr "簡體中文"
 
-#: ../src/lib/full_text_trans.cpp:92 ../src/lib/full_text_trans.cpp:143
-#: ../src/lib/full_text_trans.cpp:160 ../src/lib/full_text_trans.cpp:170
+#: ../src/lib/full_text_trans.cpp:111 ../src/lib/full_text_trans.cpp:162
+#: ../src/lib/full_text_trans.cpp:179 ../src/lib/full_text_trans.cpp:189
 msgid "Chinese (Traditional)"
 msgstr "繁體中文"
 
 #. name,                         srclangs,            tgtlangs,            tgtlangs2,        website_name,   website_url
-#: ../src/lib/full_text_trans.cpp:397
+#: ../src/lib/full_text_trans.cpp:416
 msgid "Google Translate"
 msgstr "Google 翻譯"
 
-#: ../src/lib/full_text_trans.cpp:398
+#: ../src/lib/full_text_trans.cpp:417
 msgid "Yahoo Translate"
 msgstr "Yahoo 翻譯"
 
-#: ../src/lib/full_text_trans.cpp:399
+#: ../src/lib/full_text_trans.cpp:418
 msgid "Excite Japan Translate"
 msgstr "Excite 日文翻譯"
 
-#: ../src/lib/full_text_trans.cpp:615 ../src/lib/full_text_trans.cpp:753
-#: ../src/lib/full_text_trans.cpp:760
+#: ../src/lib/full_text_trans.cpp:634 ../src/lib/full_text_trans.cpp:772
+#: ../src/lib/full_text_trans.cpp:779
 #, fuzzy
 msgid "Unable to interpret translation engine response!"
 msgstr "翻譯引擎索引。"
 
-#: ../src/lib/full_text_trans.cpp:755
+#: ../src/lib/full_text_trans.cpp:774
 #, fuzzy
 msgid "Conversion error."
 msgstr "轉換錯誤！\n"
 
-#: ../src/lib/stardict_client.cpp:905
+#: ../src/lib/stardict_client.cpp:906
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "存取被拒：%s"
 
-#: ../src/lib/stardict_client.cpp:918
+#: ../src/lib/stardict_client.cpp:919
 #, c-format
 msgid "Register failed: %s"
 msgstr "註冊失敗：%s"
 
-#: ../src/lib/stardict_client.cpp:923
+#: ../src/lib/stardict_client.cpp:924
 msgid "Register success!"
 msgstr "註冊成功！"
 
-#: ../src/lib/stardict_client.cpp:958
+#: ../src/lib/stardict_client.cpp:959
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
 "您並未設定帳號。請開啟偏好設定對話盒中的【網路辭典】一頁，並先註冊一個帳號。"
 
-#: ../src/lib/stardict_client.cpp:1078
+#: ../src/lib/stardict_client.cpp:1079
 #, fuzzy
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
@@ -2073,433 +2073,433 @@ msgid ""
 msgstr ""
 "你並未選取任何辭典，請點選【辭典管理】→【網路辭典】→【新增】並加以選取。"
 
-#: ../src/lib/stddict.cpp:709
+#: ../src/lib/stddict.cpp:710
 msgid "Sorting, please wait..."
 msgstr "排序中，請稍待..."
 
-#: ../src/lib/stddict.cpp:3366
+#: ../src/lib/stddict.cpp:3367
 #, c-format
 msgid "Invalid collate function. Disable collation."
 msgstr ""
 
-#: ../src/lib/utils.cpp:116
+#: ../src/lib/utils.cpp:117
 #, c-format
 msgid "Can not load image. %s"
 msgstr "無法載入圖片。%s"
 
-#: ../src/lib/utils.cpp:328
+#: ../src/lib/utils.cpp:329
 #, c-format
 msgid "Template '%s' invalid, should not contain a '%s'"
 msgstr ""
 
-#: ../src/lib/utils.cpp:341
+#: ../src/lib/utils.cpp:342
 #, c-format
 msgid "Template '%s' doesn't contain XXXXXX"
 msgstr ""
 
-#: ../src/lib/utils.cpp:366
+#: ../src/lib/utils.cpp:367
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:291
+#: ../src/lib/verify_dict.cpp:310
 #, c-format
 msgid ""
 "Unable to create directory: '%s'. Verification cache file will not be saved. "
 "Error: '%s'"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:299
+#: ../src/lib/verify_dict.cpp:318
 #, c-format
 msgid "Unable to save the verification cache file '%s'. Error: '%s'"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:307
+#: ../src/lib/verify_dict.cpp:326
 msgid "Verifying..."
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:310
+#: ../src/lib/verify_dict.cpp:329
 #, c-format
 msgid "Unable to load information for dictionary '%s'"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:338
+#: ../src/lib/verify_dict.cpp:357
 #, c-format
 msgid "Unable to open the verification cache file '%s'. Error: '%s'"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:350 ../src/lib/verify_dict.cpp:357
+#: ../src/lib/verify_dict.cpp:369 ../src/lib/verify_dict.cpp:376
 #, c-format
 msgid ""
 "Unable to parse contents of the verification cache file '%s'. Error: '%s'"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:592
+#: ../src/lib/verify_dict.cpp:611
 #, c-format
 msgid ""
 "Error in parsing verification cache file: invalid value of the '%s' "
 "attribute. Line: %d, character: %d."
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:602
+#: ../src/lib/verify_dict.cpp:621
 #, c-format
 msgid ""
 "Error in parsing verification cache file: missing mandatory attribute '%s'. "
 "Line: %d, character: %d."
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:612
+#: ../src/lib/verify_dict.cpp:631
 #, c-format
 msgid ""
 "Error in parsing verification cache file: unknown attribute '%s'. Line: %d, "
 "character: %d."
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:622
+#: ../src/lib/verify_dict.cpp:641
 #, c-format
 msgid ""
 "Error in parsing verification cache file: unknown element '%s'. Line: %d, "
 "character: %d."
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:636
+#: ../src/lib/verify_dict.cpp:655
 #, c-format
 msgid "Verification status of '%s': dictionary is OK"
 msgstr ""
 
-#: ../src/lib/verify_dict.cpp:638
+#: ../src/lib/verify_dict.cpp:657
 #, c-format
 msgid "Verification status of '%s': dictionary is broken"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:241
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:248
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:260
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:267
 #, c-format
 msgid "Dict.cn plugin: context parse failed: %s"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:315
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:417
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:450
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:469
 msgid "Dict.cn"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:378
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:397
 #, fuzzy
 msgid "Dict.cn configuration"
 msgstr "辭典資訊"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:380
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:399
 msgid "Query by XML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:382
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:401
 msgid "Query by HTML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:411
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:430
 #, fuzzy
 msgid "Loading Dict.cn plug-in..."
 msgstr "已載入 Man 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:417
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
 #, fuzzy
 msgid "Dict.cn network dictionary."
 msgstr "啟用網路辭典(_n)。"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:417
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
 msgid "Query result from Dict.cn website."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:453
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:472
 #, fuzzy, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:37
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:56
 #, fuzzy
 msgid "Espeak TTS configuration"
 msgstr "Espeak TTS 設定"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:39
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:38
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:58
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:57
 msgid "Voice type:"
 msgstr "語音檔格式："
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:80
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:99
 #, fuzzy
 msgid "Loading Espeak plug-in..."
 msgstr "已載入 Espeak 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:86
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
 msgid "Espeak"
 msgstr "Espeak"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:86
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
 msgid "Espeak TTS."
 msgstr "Espeak TTS(語音合成)。"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:86
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
 msgid "Pronounce words by Espeak TTS engine."
 msgstr "使用 Espeak TTS(語音合成) 引擎進行單字發音。"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:119
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:138
 msgid "Espeak TTS"
 msgstr "Espeak TTS"
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:120
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:139
 #, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr "已載入 Espeak 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:36
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:55
 #, fuzzy
 msgid "Festival TTS configuration"
 msgstr "Festival TTS 設定"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:100
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:119
 #, fuzzy
 msgid "Loading Festival plug-in..."
 msgstr "已載入 Festival 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
 msgid "Festival"
 msgstr "Festival"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
 msgid "Festival TTS."
 msgstr "Festival TTS(語音合成)。"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
 msgid "Pronounce words by Festival TTS engine."
 msgstr "使用 Festival TTS(語音合成) 引擎進行單字發音。"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:140
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:159
 msgid "Festival TTS"
 msgstr "Festival TTS"
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:141
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:160
 #, c-format
 msgid "Festival plug-in loaded.\n"
 msgstr "已載入 Festival 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:218
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
 msgid "[not a printable character]"
 msgstr "[非列印字元]"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:235
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
 msgid "General Character Properties"
 msgstr "一般字元屬性"
 
 #. character category
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:238
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:257
 msgid "Unicode category:"
 msgstr "萬國碼分類："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:244
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:263
 msgid "Canonical decomposition:"
 msgstr "標準分解："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:257
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
 msgid "Various Useful Representations"
 msgstr "多種常用的表示方式"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:270
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:289
 msgid "UTF-8:"
 msgstr "UTF-8："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:277
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:296
 msgid "UTF-16:"
 msgstr "UTF-16："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:285
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
 msgid "C octal escaped UTF-8:"
 msgstr "C 八進制碼 UTF-8："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:293
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
 msgid "XML decimal entity:"
 msgstr "XML 十進制項目："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:296
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:315
 msgid "XML hexadecimal entity:"
 msgstr "XML 十六進制項目："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:307
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:326
 msgid "Alias names:"
 msgstr "別名："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:313
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:332
 msgid "Notes:"
 msgstr "注意事項："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:320
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:339
 msgid "See also:"
 msgstr "請參閱："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:326
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:345
 msgid "Approximate equivalents:"
 msgstr "近似同義："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:332
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:351
 msgid "Equivalents:"
 msgstr "同義："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:337
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
 msgid "Annotations and Cross References"
 msgstr "註解與對照索引"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:363
 msgid "Definition in English:"
 msgstr "英文定義："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:347
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:366
 msgid "Mandarin Pronunciation:"
 msgstr "華語發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:369
 msgid "Cantonese Pronunciation:"
 msgstr "粵語發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:353
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:372
 msgid "Japanese On Pronunciation:"
 msgstr "日語 On 發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:375
 msgid "Japanese Kun Pronunciation:"
 msgstr "日語 Kun 發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:359
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:378
 msgid "Tang Pronunciation:"
 msgstr "Tang 發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:381
 msgid "Korean Pronunciation:"
 msgstr "韓語發音："
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:365
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:384
 msgid "CJK Ideograph Information"
 msgstr "中日韓漢字資訊"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:392
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:411
 #, fuzzy
 msgid "Loading Gucharmap plug-in..."
 msgstr "已載入 Gucharmap 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:398
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:411
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:430
 msgid "Gucharmap"
 msgstr "Gucharmap"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:398
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
 msgid "Gucharmap virtual dictionary."
 msgstr "Gucharmap 虛擬辭典。"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:398
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
 #, fuzzy
 msgid "Show information about Unicode characters."
 msgstr "顯示萬國碼字元相關資訊。"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:412
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:431
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr "已載入 Gucharmap 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:569
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
 #, fuzzy
 msgid "Loading HTML data parsing plug-in..."
 msgstr "已載入 HTML 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:575
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 #, fuzzy
 msgid "HTML data parsing"
 msgstr "HTML 內容分析"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:575
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 #, fuzzy
 msgid "HTML data parsing engine."
 msgstr "HTML 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:575
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 msgid "Parse the HTML data."
 msgstr "分析 HTML 內容。"
 
-#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:587
+#: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
 #, fuzzy, c-format
 msgid "HTML data parsing plug-in loaded.\n"
 msgstr "已載入 HTML 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:161
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:180
 #, fuzzy
 msgid "Man configuration"
 msgstr "Man 設定"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:163
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:182
 msgid "_Input string requires the \"man \" prefix."
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:187
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:206
 #, fuzzy
 msgid "Loading Man plug-in..."
 msgstr "載入中..."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:193
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:209
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:228
 msgid "Man"
 msgstr "Man"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:193
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
 msgid "Man virtual dictionary."
 msgstr "Man 虛擬辭典。"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:193
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
 msgid "Show the man pages."
 msgstr "顯示 man 說明手冊。"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:224
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:243
 #, c-format
 msgid "Man plug-in loaded.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:670
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 #, fuzzy
 msgid "Loading PowerWord data parsing plug-in..."
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:676
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 #, fuzzy
 msgid "PowerWord data parsing"
 msgstr "PowerWord 內容分析"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:676
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 #, fuzzy
 msgid "PowerWord data parsing engine."
 msgstr "PowerWord 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:676
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 msgid "Parse the PowerWord data."
 msgstr "分析 PowerWord 內容。"
 
-#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:688
+#: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
 #, fuzzy, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:186
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:205
 #, c-format
 msgid "Error: Open file %s failed!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:230
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:249
 msgid "QQWry configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:236
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:238
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:257
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
@@ -2507,248 +2507,248 @@ msgid ""
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:254
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:273
 #, fuzzy
 msgid "Loading QQWry plug-in..."
 msgstr "已載入 Man 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:260
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:274
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:293
 msgid "QQWry"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:260
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
 #, fuzzy
 msgid "Show QQWry IP information."
 msgstr "顯示資訊(_S)"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:260
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
 #, fuzzy
 msgid "Show address information by IP."
 msgstr "從網際網路獲得更新資訊。"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:275
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:294
 #, fuzzy, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:88
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
 #, fuzzy
 msgid "SAPI TTS configuration"
 msgstr "Espeak TTS 設定"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:92
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:111
 msgid "TTS voice engine"
 msgstr ""
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:97
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:116
 #, fuzzy
 msgid "Voice :"
 msgstr "語音檔格式："
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:146
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:165
 msgid "Volume :"
 msgstr ""
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:155
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:174
 #, fuzzy
 msgid "Rate :"
 msgstr "日期"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:167
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:186
 msgid "Input the test text:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:175
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:194
 #, fuzzy
 msgid "Test"
 msgstr "結果"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:218
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:237
 #, fuzzy
 msgid "Loading SAPI tts plug-in..."
 msgstr "拼字擴充元件已載入。\n"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:224
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:286
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:243
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:305
 msgid "SAPI TTS"
 msgstr ""
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:224
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:243
 msgid "SAPI TTS."
 msgstr ""
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:224
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:243
 #, fuzzy
 msgid "Pronounce words by SAPI TTS engine."
 msgstr "使用 Espeak TTS(語音合成) 引擎進行單字發音。"
 
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:287
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
 #, fuzzy, c-format
 msgid "SAPI tts plug-in loaded.\n"
 msgstr "拼字擴充元件已載入。\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:262
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:281
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:311
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:287
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:330
 #, fuzzy, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr "錯誤，未發現任何拼寫辭典！\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:326
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:345
 #, fuzzy
 msgid "Spell check configuration"
 msgstr "拼字檢查設定"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:328
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:347
 msgid "_Use custom languages."
 msgstr "使用自訂語系(_U)。"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:331
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:350
 msgid "For example: \"en_US de\""
 msgstr "例如：\"en_US de\""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:337
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:356
 msgid "Custom languages:"
 msgstr "自訂語系："
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:382
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:401
 #, fuzzy
 msgid "Loading Spelling plug-in..."
 msgstr "拼字擴充元件已載入。\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:388
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
 msgid "Spell Check"
 msgstr "拼字檢查"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:388
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
 msgid "Spell check virtual dictionary."
 msgstr "拼字檢查虛辭典。"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:388
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
 msgid "Spell check the input words and show the correct suggestion."
 msgstr "替輸入的字詞進行拼字檢查，並顯示建議拼字。"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:413
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
 #, fuzzy
 msgid "Spelling Suggestion"
 msgstr "建議拼字"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:443
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:462
 #, fuzzy, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr "拼字擴充元件已載入。\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:46
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
 msgid "You are using an old version of StarDict!"
 msgstr "你正在使用的是舊版的星際譯王！"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:48
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "You are using the newest version of StarDict!"
 msgstr "你正在使用的星際譯王已是最新版本！"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:51
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:70
 msgid "Latest version information:"
 msgstr "最新版本資訊："
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:57
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:76
 msgid "Latest news:"
 msgstr "最新消息："
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:62
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:81
 msgid "Update information"
 msgstr "更新資訊"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:69
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:88
 #, fuzzy
 msgid "Loading Update info plug-in..."
 msgstr "已載入更新通知擴充元件。\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:75
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
 msgid "Update Info"
 msgstr "更新通知"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:75
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
 msgid "Update information."
 msgstr "更新資訊。"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:75
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
 msgid "Get the update information from the Internet."
 msgstr "從網際網路獲得更新資訊。"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:189
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:208
 msgid "Visit StarDict website now?"
 msgstr "是否現在就瀏覽星際譯王網站？"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:191
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:210
 msgid "_Don't show this until the next update."
 msgstr ""
 
 #. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
 #. g_idle_add(get_update_info, NULL);
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:271
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:290
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr "已載入更新通知擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:31
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
 #, fuzzy
 msgid "Loading Wiki data parsing plug-in..."
 msgstr "已載入 Wiki 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:37
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 #, fuzzy
 msgid "Wiki data parsing"
 msgstr "Wiki 內容分析"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:37
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 #, fuzzy
 msgid "Wiki data parsing engine."
 msgstr "Wiki 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:37
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 msgid "Parse the wiki data."
 msgstr "分析 wiki 內容。"
 
-#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:49
+#: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
 #, fuzzy, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
 msgstr "已載入 Wiki 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:64
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
 msgid "WordNet configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:66
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:85
 msgid "Graphic mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:68
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
 msgid "Text mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:88
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:107
 #, fuzzy
 msgid "Loading WordNet dict rendering plug-in..."
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:94
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
 #, fuzzy
 msgid "WordNet dict rendering"
 msgstr "文章翻譯"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:94
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
 #, fuzzy
 msgid "WordNet dict rendering engine."
 msgstr "PowerWord 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:94
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
 msgid ""
 "Render the WordNet dictionary.\n"
 "Statement: The engine of this plugin comes from dedict (http://sevenpie."
@@ -2756,82 +2756,82 @@ msgid ""
 "thanks for his open source sharing!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:138
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:157
 #, fuzzy, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:125
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
 #, fuzzy
 msgid "Loading WordNet data parsing plug-in..."
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:131
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 #, fuzzy
 msgid "WordNet data parsing"
 msgstr "PowerWord 內容分析"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:131
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 #, fuzzy
 msgid "WordNet data parsing engine."
 msgstr "PowerWord 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:131
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 #, fuzzy
 msgid "Parse the WordNet data."
 msgstr "分析 PowerWord 內容。"
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:143
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
 #, fuzzy, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:524
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:543
 #, fuzzy
 msgid "XDXF parser configuration"
 msgstr "Man 設定"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:532
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:551
 msgid "Abbreviation"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:541
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
 msgid "Example"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:549
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:568
 msgid "Extra key phrase"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:557
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:576
 msgid "Emphasize"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:565
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:584
 #, fuzzy
 msgid "Reference"
 msgstr "偏好設定"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:596
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:615
 #, fuzzy
 msgid "Loading XDXF data parsing plug-in..."
 msgstr "已載入 XDXF 內容分析擴充元件。\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:602
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
 #, fuzzy
 msgid "XDXF data parsing"
 msgstr "XDXF 內容分析"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:602
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
 #, fuzzy
 msgid "XDXF data parsing engine."
 msgstr "XDXF 內容分析引擎。"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:602
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
 msgid "Parse the XDXF data."
 msgstr "分析 XDXF 內容。"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:626
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:645
 #, fuzzy, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "已載入 XDXF 內容分析擴充元件。\n"
