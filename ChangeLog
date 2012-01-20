@@ -1,2 +1,7 @@
+See:
+dict/ChangeLog
+tools/ChangeLog
+lib/ChangeLog
+
 2011
 Reorganize project structure. Introduce common library that is linked with both StarDict dictionary and StarDict tools projects. Since now StarDict dictionary and StarDict tools are distributed in a single tarball. By default, configure script configures both project, but you may disable any of them with configure options. See README for more details.

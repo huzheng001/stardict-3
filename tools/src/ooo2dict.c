@@ -72,7 +72,7 @@ current2=malloc(10000);
 
 fprintf(stderr, "Enter thesaurus language [WordNet_English]: ");
 fflush(stderr);
-fgets(lang, 100, stdin);
+fgets(lang, sizeof(lang), stdin);
 if ((p=strchr(lang, '\n'))!=NULL) *p=0;
 if (*lang==0) strcpy(lang, "WordNet_English");
 F=fopen((argc>1)? argv[1]: "/usr/share/myspell/dicts/th_en_US_v2.dat", "rt");

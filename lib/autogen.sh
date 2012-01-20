@@ -45,4 +45,4 @@ autoconf || exit;
 echo "Running automake ...."
 automake || exit;
 cd "$topdir"
-#"${srcdir}/configure" --prefix=/usr --sysconfdir=/etc  --mandir=/usr/share/man "$@"
+#"${srcdir}/configure" --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man "$@"

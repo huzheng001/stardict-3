@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([StarDict tools], 3.0.3, [http://www.stardict.org])
+AC_INIT([StarDict tools], 3.0.4, [http://www.stardict.org])
 AC_CONFIG_SRCDIR([src/stardict-editor.cpp])
 AC_CONFIG_AUX_DIR([.])
 AM_INIT_AUTOMAKE([dist-bzip2])
@@ -12,22 +12,6 @@ AH_BOTTOM([#include <../lib/config-custom.h>])
 AC_CONFIG_MACRO_DIR([m4])
 LT_INIT
 
-AC_DEFUN([AC_FIND_FILE],
-[
-	$3=NO
-	for x in $2
-	do
-		for y in $1
-		do
-			if test -r "$x/$y"
-			then
-				$3=$x
-				break 2
-			fi
-		done
-	done
-]
-)
 
 # Checks for programs.
 AC_PROG_CC
@@ -40,34 +24,6 @@ AC_PROG_LIBTOOL
 AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h])
 
-# mysql.h
-MYSQLFOUND=NO
-AC_CHECK_HEADER([mysql.h],
-	[
-		MYSQL_CFLAGS=
-		MYSQLFOUND=YES
-	],
-	[], []
-)
-if test x$MYSQLFOUND = xNO; then
-	AC_FIND_FILE([mysql.h],
-		[/usr/local/mysql/include /usr/include/mysql /usr/local/include/mysql],
-		[MYSQLINCDIR])
-	if test x$MYSQLINCDIR != xNO; then
-		AC_CHECK_HEADER([$MYSQLINCDIR/mysql.h],
-			[
-				MYSQL_CFLAGS="-I${MYSQLINCDIR}"
-				MYSQLFOUND=YES
-			],
-			[], []
-		)
-	fi
-fi
-if test x$MYSQLFOUND = xNO; then
-	AC_ERROR([mysql.h header not found])
-fi
-AC_SUBST(MYSQL_CFLAGS)
-
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
@@ -75,31 +31,37 @@ DEP_MODULES="gtk+-2.0 >= 2.6 glib-2.0 >= 2.8 zlib gio-2.0"
 PKG_CHECK_MODULES(STARDICT, $DEP_MODULES)
 
 # mysqlclient
-MYSQLFOUND=NO
-AC_CHECK_LIB([mysqlclient], [mysql_real_connect],
-	[
-		MYSQL_LIBS="-lmysqlclient"
-		MYSQL_LDFLAGS=
-		MYSQLFOUND=YES
-	],
-	[]
-)
-if test x$MYSQLFOUND = xNO; then
-	AC_FIND_FILE([libmysqlclient.a],
-		[/usr/lib /usr/lib/mysql /usr/local/mysql/lib /usr/local/lib/mysql],
-		[MYSQLLIBDIR])
-	if test x$MYSQLLIBDIR != xNO; then
-		MYSQL_LIBS="-lmysqlclient"
-		MYSQL_LDFLAGS="-L${MYSQLLIBDIR}"
-		MYSQLFOUND=YES
-		AC_MSG_RESULT([libmysqlclient.a found at ${MYSQLLIBDIR}])
-	fi
+AC_ARG_WITH(mysql-config, 
+[  --with-mysql-config=PATH   The path to mysql-config if not in $PATH], [
+  MYSQLCONFIG=$withval
+], [
+  MYSQLCONFIG=mysql-config-was-not-found-by-configure
+])
+
+if test "x$MYSQLCONFIG" = "xmysql-config-was-not-found-by-configure"; then
+	AC_PATH_PROG( MYSQLCONFIG, mysql_config, mysql_config-was-not-found-by-configure,
+              $PATH:/usr/bin:/usr/local/bin)
 fi
-if test x$MYSQLFOUND = xNO; then
-	AC_ERROR([libmysqlclient.a not found])
+
+AC_SUBST(MYSQLCONFIG)
+if test "x$MYSQLCONFIG" = "xmysql_config-was-not-found-by-configure"; then
+  AC_MSG_ERROR([mysql_config wasn't found please install http://www.mysql.com ])
+else
+  MYSQL_CFLAGS=`$MYSQLCONFIG --cflags`
+  MYSQL_INCLUDES=`$MYSQLCONFIG --include`
+  MYSQL_LIBS=`$MYSQLCONFIG --libs_r`
 fi
+AC_SUBST(MYSQL_CFLAGS)
+AC_SUBST(MYSQL_INCLUDES)
 AC_SUBST(MYSQL_LIBS)
-AC_SUBST(MYSQL_LDFLAGS)
+
+AC_MSG_CHECKING(for MySQL CFLAGS)
+AC_MSG_RESULT($MYSQL_CFLAGS)
+AC_MSG_CHECKING(for MySQL includes)
+AC_MSG_RESULT($MYSQL_INCLUDES)
+AC_MSG_CHECKING(for MySQL libraries)
+AC_MSG_RESULT($MYSQL_LIBS)
+
 
 AC_ARG_ENABLE([deprecations],
   AS_HELP_STRING([--disable-deprecations],[Disable deprecated gtk functions (default: enabled)]),

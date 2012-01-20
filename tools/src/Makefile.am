@@ -155,12 +155,12 @@ wikipedia_LDADD = $(STARDICT_LIBS) $(LFS_LIBS)
 wikipedia_SOURCES = wikipedia.cpp
 
 wikipediaImage_CPPFLAGS = $(AM_CPPFLAGS) $(MYSQL_CFLAGS)
-wikipediaImage_LDFLAGS = $(MYSQL_LDFLAGS)
+wikipediaImage_INCLUDES = $(MYSQL_INCLUDES)
 wikipediaImage_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 wikipediaImage_SOURCES = wikipediaImage.cpp
 
 tabfile2sql_CPPFLAGS = $(AM_CPPFLAGS) $(MYSQL_CFLAGS)
-tabfile2sql_LDFLAGS = $(MYSQL_LDFLAGS)
+tabfile2sql_INCLUDES = $(MYSQL_INCLUDES)
 tabfile2sql_LDADD = $(STARDICT_LIBS) $(MYSQL_LIBS)
 tabfile2sql_SOURCES = tabfile2sql.cpp
 
