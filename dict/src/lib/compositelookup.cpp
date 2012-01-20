@@ -50,8 +50,11 @@ bool CompositeLookup::is_got_all_responses(void) const
 void CompositeLookup::send_net_dict_request(const std::string& dict_id, const std::string& key)
 {
 	NetDictRequest request(dict_id, key);
-	g_assert(NetDictRequests.end() == std::find(NetDictRequests.begin(), NetDictRequests.end(), request));
-	NetDictRequests.push_back(request);
+	//g_assert(NetDictRequests.end() == std::find(NetDictRequests.begin(), NetDictRequests.end(), request));
+	//NetDictRequests.push_back(request);
+	if (NetDictRequests.end() == std::find(NetDictRequests.begin(), NetDictRequests.end(), request)) {
+		NetDictRequests.push_back(request);
+	}
 }
 
 /* returns true if got expected response */

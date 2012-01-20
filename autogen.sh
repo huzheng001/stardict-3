@@ -46,7 +46,7 @@ autoconf || exit;
 echo "Running automake ...."
 automake || exit;
 cd "$topdir"
-#"${srcdir}/configure" --prefix=/usr --sysconfdir=/etc  --mandir=/usr/share/man "$@"
 ${srcdir}/lib/autogen.sh
 ${srcdir}/dict/autogen.sh
 ${srcdir}/tools/autogen.sh
+"${srcdir}/configure" --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-deprecations "$@"

@@ -687,7 +687,7 @@ bool AppCore::SimpleLookupToFloatLocal(const char* sWord)
 
 		bool bFound = false;
 		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
-			BuildResultData(scan_dictmask, SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+			BuildResultData(scan_dictmask, SearchWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 2);
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		if (bFound) {
@@ -1276,7 +1276,7 @@ void AppCore::LookupWithFuzzyToFloatWin(const gchar *sWord)
 
 			ppOriginWord[i] = fuzzy_reslist[i];
 			for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
-				BuildResultData(scan_dictmask, fuzzy_reslist[i], iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+				BuildResultData(scan_dictmask, fuzzy_reslist[i], iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 2);
 			for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 				BuildVirtualDictData(scan_dictmask, fuzzy_reslist[i], iLib, pppWord, ppppWordData, bFound);
 			if (bFound) {// it is certainly be true.
@@ -2304,8 +2304,8 @@ int main(int argc,char **argv)
 	}
 	g_option_context_free(context);
 #else // #ifndef CONFIG_GNOME
-	GnomeProgram *program;
-	program = gnome_program_init ("stardict", VERSION,
+	//GnomeProgram *program;
+	gnome_program_init ("stardict", VERSION,
 			    LIBGNOMEUI_MODULE, argc, argv,
 			    GNOME_PARAM_GOPTION_CONTEXT, context,
 			    GNOME_PARAM_HUMAN_READABLE_NAME,

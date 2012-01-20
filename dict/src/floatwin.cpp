@@ -201,10 +201,11 @@ void FloatWin::AppendTextLocalDict(gchar ***Word, gchar ****WordData, const gcha
 	gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sOriginWord);
 	if (readwordtype != READWORD_CANNOT) {
-		if (PronounceWord == sOriginWord)
+		if (PronounceWord == sOriginWord) {
 			pronounced = true;
-		else
+		} else {
 			PronounceWord = sOriginWord;
+		}
 	} else {
 		for (size_t i=0;i< gpAppFrame->scan_dictmask.size(); i++) {
 			if (Word[i] && strcmp(Word[i][0], sOriginWord)) {
@@ -440,13 +441,14 @@ void FloatWin::ShowPangoTips(const char *sWord, const char *text)
 	IgnoreScanModifierKey = false;
 	destroy_lookup_running_timer();
 
-	gboolean pronounced = false;
+	//gboolean pronounced = false;
 	readwordtype = gpAppFrame->oReadWord.canRead(sWord);
 	if (readwordtype != READWORD_CANNOT) {
-		if (PronounceWord == sWord)
-			pronounced = true;
-		else
+		if (PronounceWord == sWord) {
+			//pronounced = true;
+		} else {
 			PronounceWord = sWord;
+		}
 	}
 	gtk_widget_set_sensitive(PronounceWordButton, readwordtype != READWORD_CANNOT);
 

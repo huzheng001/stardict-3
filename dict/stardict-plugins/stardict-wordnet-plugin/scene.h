@@ -25,6 +25,8 @@
 #ifndef __PHYSICS_H__
 #define __PHYSICS_H__
 
+#include <cstddef>
+
 #include "partic.h"
 #include "spring.h"
 

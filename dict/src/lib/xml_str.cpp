@@ -248,10 +248,11 @@ void XMLCharData::mark_substring(std::string& out, const char* start_tag,
 	const char* xml_p = xml_str + byte_inds[cd_begin_ind];
 	const char* cd_p = char_data_str + cd_begin_ind;
 	const char* xml_b, *xml_p2;
-	const char* cd_b, *cd_p2;
+	//const char* cd_b;
+	const char* cd_p2;
 	while(true) {
 		xml_b = xml_p;
-		cd_b = cd_p;
+		//cd_b = cd_p;
 		while(true) {
 			xml_p2 = xml_utf8_end_of_char(xml_p)+1;
 			cd_p2 = g_utf8_next_char(cd_p);

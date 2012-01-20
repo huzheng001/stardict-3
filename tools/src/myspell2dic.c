@@ -134,7 +134,7 @@ if (argc<3)
 
 fprintf(stderr, "Enter grammar language [Spanish]: ");
 fflush(stderr);
-fgets(lang, 100, stdin);
+fgets(lang, sizeof(lang), stdin);
 if ((p=strchr(lang, '\n'))!=NULL) *p=0;
 if (*lang==0) strcpy(lang, "Spanish");
 

@@ -1454,7 +1454,7 @@ size_t LabelPangoWidget::get_index_by_offset(const char *where_mark_name,
 	const char *end = xml_utf8_offset_to_pointer(beg + pMark->index_, char_offset);
 	if(end == NULL) {
 		size_t len = xml_utf8_strlen(beg + pMark->index_);
-		g_warning("Incorrect offset %d. string length = %lu", char_offset, len);
+		g_warning("Incorrect offset %d. string length = %zu", char_offset, len);
 	}
 	return end ? (end - beg) : std::string::npos;
 }

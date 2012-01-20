@@ -45,11 +45,12 @@ void dump_file()
 	unsigned int num_fields;
 	num_fields = mysql_num_fields(res);
 	unsigned int i;
-	MYSQL_FIELD *fields;
+	//MYSQL_FIELD *fields;
 	MYSQL_ROW row;
 	while((row = mysql_fetch_row(res))) {
 		for (i=0 ; i < num_fields; i++) {
-			fields = mysql_fetch_field_direct(res, i);
+			//fields = mysql_fetch_field_direct(res, i);
+			mysql_fetch_field_direct(res, i);
 			
 		}
 	}

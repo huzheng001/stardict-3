@@ -152,9 +152,9 @@ void convert(char *filename,char *idxheadfilename)
 	fread (buffer, 1, stats.st_size, idxheadfile);
 	fclose (idxheadfile);
 	buffer[stats.st_size] = '\0';
-	gboolean sametypesequence = FALSE;
-	if (strstr(buffer,"sametypesequence="))
-		sametypesequence = TRUE;
+	//gboolean sametypesequence = FALSE;
+	//if (strstr(buffer,"sametypesequence="))
+		//sametypesequence = TRUE;
 	
 	//in the next code we will always treat sametypesequence to be TRUE.
 	//as now all old stardict dictionaries use these two feature.	
