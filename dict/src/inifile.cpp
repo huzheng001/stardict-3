@@ -36,7 +36,7 @@
 #include "inifile.h"
 
 static const guchar NEW_STRING_SEP = 1;
-static const guchar OLD_STRING_SEP = 0xFF;
+//static const guchar OLD_STRING_SEP = 0xFF;
 static const gchar *myversion = "1.0";
 
 bool inifile::save()
@@ -254,6 +254,17 @@ bool inifile::read_int(const gchar *sect, const gchar *key, int& val)
 	return true;
 }
 
+bool inifile::read_double(const gchar *sect, const gchar *key, gdouble& val)
+{
+	GError *err = NULL;
+	gint newval = g_key_file_get_double(gkeyfile_, sect, key, &err);
+	if (err)
+		return report_error(err, sect, key);
+
+	val = newval;
+	return true;
+}
+
 bool inifile::read_string(const gchar * sect, const gchar *key, std::string& val)
 {
 	GError *err = NULL;
@@ -296,6 +307,12 @@ void inifile::write_bool(const gchar *sect, const gchar *key, bool val)
 void inifile::write_int(const gchar *sect, const gchar *key, int val)
 {
 	g_key_file_set_integer(gkeyfile_, sect, key, val);
+	expose_event(sect, key, val);
+}
+
+void inifile::write_double(const gchar *sect, const gchar *key, gdouble val)
+{
+	g_key_file_set_double(gkeyfile_, sect, key, val);
 	expose_event(sect, key, val);
 }
 

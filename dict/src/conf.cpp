@@ -142,9 +142,9 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/lock", false);
 	add_entry("/apps/stardict/preferences/floating_window/show_if_not_found", true);
 	add_entry("/apps/stardict/preferences/floating_window/use_custom_bg", false);
-	add_entry("/apps/stardict/preferences/floating_window/bg_red", 65535);
-	add_entry("/apps/stardict/preferences/floating_window/bg_green", 65535);
-	add_entry("/apps/stardict/preferences/floating_window/bg_blue", 51200);
+	add_entry("/apps/stardict/preferences/floating_window/bg_red", 1.0);
+	add_entry("/apps/stardict/preferences/floating_window/bg_green", 1.0);
+	add_entry("/apps/stardict/preferences/floating_window/bg_blue", (double)(51200/65535));
 	add_entry("/apps/stardict/preferences/floating_window/transparent", 0);
 
 	add_entry("/apps/stardict/preferences/floating_window/lock_x", 0);
@@ -173,7 +173,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group", true);
 	add_entry("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group", true);
 
-	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command
+	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("aplay")); // absolute command
 #if defined(_WIN32)
 	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif

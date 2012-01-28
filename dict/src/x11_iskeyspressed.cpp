@@ -335,7 +335,7 @@ GdkFilterReturn x11_hotkeys::key_filter(GdkXEvent *gdk_xevent,
   
   xevent = (XKeyEvent *)gdk_xevent;
   type = xevent->type;
-  KeySym keysym = XKeycodeToKeysym(GDK_DISPLAY(), ((XKeyEvent *)xevent)->keycode, 0);
+  KeySym keysym = XKeycodeToKeysym(GDK_DISPLAY_XDISPLAY(gdk_display_get_default()), ((XKeyEvent *)xevent)->keycode, 0);
   unsigned int state=xevent->state;
   state &= ~(numlock_mask | capslock_mask | scrolllock_mask);
   if (type == KeyPress) {    

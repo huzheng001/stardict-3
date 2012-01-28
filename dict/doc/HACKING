@@ -49,3 +49,18 @@ Reason: see details in /usr/src/linux/Documentation/CodingStyle
 3)length of one line should be <=80 characters
 Reason: it's too hard read long lines of code.
 
+*****
+When update to a new version, you need to change the version number in these files:
+configure.ac
+dict/configure.ac
+lib/configure.ac
+tools/configure.ac
+dict/src/mainwin.cpp
+dict/src/lib/plugin.h
+dict/stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
+dict/stardict-installer.nsi
+dict/src/win32/nsis/StarDictPortable.nsi
+dict/src/win32/nsis/StarDictEditorPortable.nsi
+dict/src/win32/PortableApps.com/appinfo.ini
+dict/msvc_2008/stardict-editorrc.rc
+dict/msvc_2008/stardictrc.rc

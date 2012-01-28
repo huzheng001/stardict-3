@@ -545,9 +545,9 @@ static void configure()
 		GTK_STOCK_OK, GTK_RESPONSE_OK, 
 		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, 
 		NULL);
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 5);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),5);
-	GtkWidget *hbox = gtk_hbox_new(FALSE, 5);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	GtkWidget *label = gtk_label_new(_("Abbreviation"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	GdkColor color;
@@ -556,7 +556,7 @@ static void configure()
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_abr, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	hbox = gtk_hbox_new(FALSE, 5);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	label = gtk_label_new(_("Example"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	color = guint32_2_gdkcolor(color_scheme.ex);
@@ -564,7 +564,7 @@ static void configure()
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_ex, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	hbox = gtk_hbox_new(FALSE, 5);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	label = gtk_label_new(_("Extra key phrase"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	color = guint32_2_gdkcolor(color_scheme.k);
@@ -572,7 +572,7 @@ static void configure()
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_k, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	hbox = gtk_hbox_new(FALSE, 5);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	label = gtk_label_new(_("Emphasize"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	color = guint32_2_gdkcolor(color_scheme.c);
@@ -580,7 +580,7 @@ static void configure()
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_c, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
-	hbox = gtk_hbox_new(FALSE, 5);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	label = gtk_label_new(_("Reference"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 	color = guint32_2_gdkcolor(color_scheme.ref);
@@ -589,7 +589,7 @@ static void configure()
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
 	gtk_widget_show_all(vbox);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	gint result = gtk_dialog_run(GTK_DIALOG(window));
 	if(result == GTK_RESPONSE_OK) {
 		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_abr), &color);

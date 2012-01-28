@@ -213,7 +213,7 @@ int main(int argc, char *argv[])
 		printf("please type this:\n./xiaoxuetang-ja Sheetcj.xml\n");
 		return false;
 	}
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	g_type_init ();
 	convert_excelxmlfile(argv[argc-1]);
 	return false;

@@ -154,9 +154,9 @@ void Selection::SelectionReceivedCallback(GtkWidget* widget,GtkSelectionData *se
 		 * if we asked for compound_text and didn't get it, try string;
 		 * If we asked for anything else and didn't get it, give up.
 		 */
-		if (selection_data->target == oSelection->UTF8_STRING_Atom) {
+		if (gtk_selection_data_get_target(selection_data) == oSelection->UTF8_STRING_Atom) {
 			gtk_selection_convert (widget, GDK_SELECTION_PRIMARY, oSelection->COMPOUND_TEXT_Atom, GDK_CURRENT_TIME);
-		} else if (selection_data->target == oSelection->COMPOUND_TEXT_Atom) {
+		} else if (gtk_selection_data_get_target(selection_data) == oSelection->COMPOUND_TEXT_Atom) {
 			gtk_selection_convert (widget, GDK_SELECTION_PRIMARY, GDK_TARGET_STRING, GDK_CURRENT_TIME);
 		} else {
 			oSelection->IsBusy = 0;

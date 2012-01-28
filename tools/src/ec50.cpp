@@ -1138,7 +1138,7 @@ utf8_converter = g_iconv_open("UTF-8","BIG5");
 int
 main(int argc,char * argv [])
 {
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	g_type_init ();
 	
 	convert();	

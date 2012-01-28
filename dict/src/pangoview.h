@@ -91,7 +91,7 @@ public:
 	virtual void end_update();
 	virtual void goto_begin() {}
 	virtual void goto_end() {}
-	virtual void modify_bg(GtkStateType state, const GdkColor *color) {}
+	virtual void modify_bg(GtkStateFlags state, const GdkRGBA *color) {}
 	/* Indent a region specified by two marks. If the mark_end is invalid,
 	 * for instance NULL, assume the end mark is at the end of the buffer. */
 	virtual void indent_region(const char *mark_begin, int char_offset_begin = 0, 
@@ -100,7 +100,7 @@ public:
 	/* flush cache_ */
 	virtual void flush(void);
 
-	GtkWidget *vscroll_bar() { return scroll_win_->vscrollbar; }
+	GtkWidget *vscroll_bar() { return gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(scroll_win_)); }
 	void set_size(gint w, gint h) {
 		gtk_widget_set_size_request(GTK_WIDGET(scroll_win_), w, h);
 	}
@@ -157,4 +157,4 @@ public:
 };
 
 
-#endif//pangoview.h
+#endif //pangoview.h

@@ -78,6 +78,20 @@ bool gconf_file::read_int(const gchar *sect, const gchar *key, int& val)
 	return true;
 }
 
+bool gconf_file::read_double(const gchar *sect, const gchar *key, double& val)
+{
+	if (!gconf_client)
+		return false;
+	std::string real_key(std::string(sect)+"/"+key);
+	GConfValue *gval=gconf_client_get(gconf_client, real_key.c_str(), NULL);
+	if (!gval)
+		return false;
+	val=gconf_value_get_float(gval);
+	gconf_value_free(gval);
+
+	return true;
+}
+
 bool gconf_file::read_string(const gchar * sect, const gchar *key, std::string& val)
 {
 	if (!gconf_client)
@@ -133,6 +147,15 @@ void gconf_file::write_int(const gchar *sect, const gchar *key, int val)
 	g_free(real_key);
 }
 
+void gconf_file::write_double(const gchar *sect, const gchar *key, double val)
+{
+	if (!gconf_client)
+		return;
+	gchar *real_key=g_strdup_printf("%s/%s", sect, key);
+	gconf_client_set_float(gconf_client, real_key, val, NULL);
+	g_free(real_key);
+}
+
 void gconf_file::write_string(const gchar *sect, const gchar *key, const std::string& val)
 {
 	if(!gconf_client)
@@ -174,6 +197,11 @@ static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
 		cv.reset(new confval<int>);
 		static_cast<confval<int> *>(cv.get())->val_ =
 			gconf_value_get_int(entry->value);
+		break;
+	case GCONF_VALUE_FLOAT:
+		cv.reset(new confval<double>);
+		static_cast<confval<double> *>(cv.get())->val_ =
+			gconf_value_get_float(entry->value);
 		break;
 	case GCONF_VALUE_STRING: {
 		cv.reset(new confval<std::string>);

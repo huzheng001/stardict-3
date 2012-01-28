@@ -26,7 +26,7 @@ extern "C"
 #endif                          /* __cplusplus */
 
 
-#include <gtk/gtkentry.h>
+#include <gtk/gtk.h>
 
 #define STARDICT_TYPE_HOTKEY_EDITOR            (stardict_hotkey_editor_get_type ())
 #define STARDICT_HOTKEY_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), STARDICT_TYPE_HOTKEY_EDITOR, StardictHotkeyEditor))

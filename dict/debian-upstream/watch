@@ -3,4 +3,4 @@
 # to check for upstream updates and more.
 # Site		Directory		Pattern			Version	Script
 version=3
-http://sf.net/stardict/stardict-([\d.]*)\.tar\.bz2
+http://stardict-3.googlecode.com/files/stardict-([\d.]*)\.tar\.bz2

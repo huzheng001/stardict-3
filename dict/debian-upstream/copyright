@@ -2,12 +2,13 @@ This package (stardict) was debianized by Anthony Fok <foka@debian.org>
 on Wed,  9 Apr 2003 23:29:25 +0800.
 
 It was downloaded from
-http://downloads.sourceforge.net/stardict/stardict-3.0.0.tar.bz2
+http://stardict-3.googlecode.com/files/stardict-3.0.4.tar.bz2
 
 Upstream Authors:
-    Hu Zheng (胡正) <huzheng_001@163.com>
+    Hu Zheng (胡正) <huzheng001@gmail.com>
 
 Developers:
+    Sergey <kubtek@gmail.com>
     Evgeniy Dushistov <dushistov@mail.ru>
 
 Contributors:
@@ -15,12 +16,13 @@ Contributors:
 
 Home Pages:
     http://www.stardict.org/
-    http://forlinux.yeah.net/
+    http://code.google.com/p/stardict-3/
+    http://www.huzheng.org/
 
 Copyright:
 
-    StarDict 3.0.1, an international dictionary written in GTK+ 2.x
-    Copyright (C) 2003, 2004, 2005, 2006, 2007  Hu Zheng
+    StarDict 3.0.4, an international dictionary written in GTK.
+    Copyright (C) 2003 - 2012  Hu Zheng
    
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License

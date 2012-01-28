@@ -1,59 +1,65 @@
+2012.
+StarDict-3.0.4 (Biqibi) released.
+This version is mainly developed by Hu Zheng!
+Port to gtk3.
+
 Jul 2011
-StarDict 3.0.3 released
-Jun 2011
+StarDict 3.0.3 released.
+This version is mainly developed by Sergey!
 StarDict project was removed from sourceforge.net. The project moved to http://code.google.com/p/stardict-3/, web site: http://www.stardict.org/.
-Verify dictionaries at application start. Prevent loading broken dictionaries. That change improves application robustness, broken dictionaries may crash StarDict.
-add options that allows to disable automatically adding new dictionaries and plug-ins to active dictionary group
-fix resource leak in StarDict: over a period of extensive use of Main window, you may notice considerable slowdown. Updating the Main window takes more and more time.
-expand Troubleshooting section of User manual
-add debug messages to track StarDict loading process. That help diagnose the loading fails.
-update code implementing Full Text Translation service: adopt to new web service interface, add new languages
-enhance Full Text Translation service: sort language alphabetically, reload target language combobox only when needed, etc
-update User manual: describe Manage dictionaries dialog
-update Manage dictionaries dialog:
+Verify dictionaries at application start. Prevent loading broken dictionaries. This change improves application robustness, broken dictionaries may crash StarDict.
+Add options that allows to disable automatically adding new dictionaries and plug-ins to active dictionary group.
+Fix resource leak in StarDict: over a period of extensive use of Main window, you may notice considerable slowdown. Updating the Main window takes more and more time.
+Expand Troubleshooting section of User manual.
+Add debug messages to track StarDict loading process. That help diagnose the loading fails.
+Update code implementing Full Text Translation service: adopt to new web service interface, add new languages.
+Enhance Full Text Translation service: sort language alphabetically, reload target language combobox only when needed, etc.
+Update User manual: describe Manage dictionaries dialog.
+Update Manage dictionaries dialog:
 - add Type column to Dict list tab and to Add dictionary dialog
 - add Path column to Add dictionary dialog
 - change Dictionary name column on most tabs and in Add dictionary dialog to be resizable, expandable, sortable
-change formating of articles in Main and Floating windows: 
-- insert double new line between articles, 
+Change formating of articles in Main and Floating windows:
+- insert double new line between articles,
 - remove <-- --> in dictionary names
-Update StarDict icons: new design
-New implementation of StarDict icon in Notification area. Fix icon transparency problem.
+Update StarDict icons: new design.
+New implementation of StarDict icon in Notification area. Fixed icon transparency problem.
 
 Feb 2011
-update User Manual: document Manage Plugins dialog
-enhance XDXF parser plug-in: 
+Update User Manual: document Manage Plugins dialog.
+Enhance XDXF parser plug-in:
 - add GUI for configuring colors used to render articles
 - change default color scheme
-Update German translation
-fix update info plug-in: skip UTF-8 BOM in response
+Update German translation.
+Fix update info plug-in: skip UTF-8 BOM in response.
 Discontinue native support for playing sound files in Gnome edition, use external command.
-replace deprecated library functions in StarDict (gtk+-2.0 >= 2.20)
-update HTML parsing plugi-n: normalize HTML tags. Enhance support for badly formated HTML content. Earlier StarDict may show incomplete articles when HTML code in malformed.
-fix bug: StarDict can't play sounds from WyabdcRealPeopleTTS (the bug was introduced in StarDict 3.0.2 release)
+Replace deprecated library functions in StarDict (gtk+-2.0 >= 2.20)
+Update HTML parsing plug-in: normalize HTML tags. Enhance support for badly formated HTML content. Earlier StarDict may show incomplete articles when HTML code in malformed.
+Fix bug: StarDict can't play sounds from WyabdcRealPeopleTTS (the bug was introduced in StarDict 3.0.2 release)
 Allow Word change option timeout to be 0. When 0, StarDict starts search immediately after user changes text in the Search field.
 Fixed Common Vulnerabilities and Exposures CVE-2009-2260. Disable Net Dict by default. Warn user about the security risk when he/she enables Net Dicts.
 
 Jan 2011
-StarDict-3.0.2 released
+StarDict-3.0.2 released.
+This version is mainly developed by Sergey!
 Revive StarDict for Mac OS X.
 StarDict-3.0.2-RC4 released.
 
 2010.
 Update documentation.
 Revive StarDict Portable for Windows. StarDict and StarDict Editor are made compatible with PortableApps.com Platform (http://portableapps.com/).
-Change StarDict configuration on Windows, store relative paths in configuration file if possible. The changes effects options that contains paths of dictionaries, plugins, skins, tts's, history file, exports file, etc.
-enhance StarDict directories configuration. Using configuration file we can redirect almost any directory used by StarDict. That is we can change where the application saves and loads user settings, cache file for dictionaries, plugins, dictionaries, etc.
-change StarDict and StarDict Editor for Windows to load GTK Runtime from the application directory. This change improves application robustness. StarDict always load the version of GTK Runtime it was build with. Updating StarDict does not effect other Windows applications depending on GTK Runtime, and updating system wide GTK Runtime, if any, cannot break StarDict.
-change StarDict and StarDict Editor for Windows. Install CRT assembly into the application directory when the installer do not have administrative rights. This allows to install StarDict by a user without administrative rights into its home directory, for example.
-fix and update Dict.cn plugin (interface of the web service has changed). Show a list of suggested words when the requested word is not found.
+Change StarDict configuration on Windows, store relative paths in configuration file if possible. The changes effect options that contains paths of dictionaries, plugins, skins, tts's, history file, exports file, etc.
+Enhance StarDict directories configuration. Using configuration file we can redirect almost any directory used by StarDict. That is we can change where the application saves and loads user settings, cache file for dictionaries, plugins, dictionaries, etc.
+Change StarDict and StarDict Editor for Windows to load GTK Runtime from the application directory. This change improves application robustness. StarDict always load the version of GTK Runtime it was build with. Updating StarDict does not effect other Windows applications depending on GTK Runtime, and updating system wide GTK Runtime, if any, cannot break StarDict.
+Change StarDict and StarDict Editor for Windows. Install CRT assembly into the application directory when the installer do not have administrative rights. This allows to install StarDict by a user without administrative rights into its home directory, for example.
+Fix and update Dict.cn plugin (interface of the web service has changed). Show a list of suggested words when the requested word is not found.
 StarDict-3.0.2-RC3.2 and StarDict-tools-3.0.2-RC3.2 released
 Switch to MS Visual Studio 2008 to build StarDict under Windows.
 StarDict-3.0.2-RC2 and StarDict-tools-3.0.2-RC2 released.
 Add stardict-bin2text and stardict_text2bin tools to stardict-editor.
 Update Russian translation.
-replace advertisement plugin with a dictionary
-discontinue support for Dev-C++ IDE. Now use MS Visual Studio 2005 to build StarDict under Windows.
+Replace advertisement plugin with a dictionary.
+Discontinue support for Dev-C++ IDE. Now use MS Visual Studio to build StarDict under Windows.
 Introduce new textual dictionary format (see doc/TextualDictionaryFileFormat). Add new stardict_bin2text and stardict_text2bin tools for converting between old binary and new textual file formats.
 Update stardict-verifier tool: added new tests.
 Update Lithuanian translation.
@@ -61,9 +67,10 @@ Add Kazakh translation.
 Update Greek translation.
 Update Chinese translation.
 Added logging facility. Added command line options that specify verbosity level for log and console output.
+
 StarDict-3.0.2-RC1 released.
-update WordPick Acrobat plug-in
-fix full-text translation service
+Update WordPick Acrobat plug-in.
+Fix full-text translation service.
 Update end-user documentation, make it accessible in all versions of StarDict.
 Migrating to GNOME Documentation Build Utilities (used to configure and build StarDict on Linux-like OSs)
 Removed 'l', 'W', 'P' dictionary content type identifiers. Use 'm' instead of 'l', 'r' instead of 'W' and 'P'.
@@ -72,8 +79,8 @@ Thanks Mindaugas Baranauskas <embar@users.berlios.de> for Lithuanian translation
 Implemented resource storage. It allows to associate various files with a dictionary like images, sounds, videos. A dictionary article may show images, play sounds and video files, provide means to save attached files.
 
 2009.
-Skin support.
 StarDict-3.0.2-RC0 (Bodhisattva) released.
+Skin support.
 Mac OS X port.
 Fixed network dictionary authentication issue on 64bit platforms, fixed compilation with gcc-4.3, A.Leo. <tikkeri@gmail.com>
 Thanks Vlad Muraviev <rex.lux@gmail.com> for adding many lingvo dictionaries.
@@ -86,6 +93,7 @@ Hungarian translation update, thanks to Lisovszki Sandor <lisovszki@dunakanyar.n
 
 2007.11.8
 StarDict-3.0.1 (Perfection) released.
+This version is mainly developed by Hu Zheng!
 StarDict's total download count reached three millions in 2007.10.1.
 Add Debian support.
 Add dictdotcn plugin.
@@ -98,6 +106,7 @@ Many other changes.
 
 2007.8.13
 StarDict-3.0.0 (RedHat) released.
+This version is mainly developed by Hu Zheng!
 http://www.StarDict.org on-line dictionaries website is out in 2006.9.25. We have developed the stardictd dictionary server for it.
 StarDict's total download count reached two millions in 2007.3.8.
 Network dictionaries support.

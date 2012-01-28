@@ -1,7 +1,7 @@
 StarDict for Debian
 -------------------
 
-StarDict is an international dictionary that runs in GNOME 2
+StarDict is an international dictionary that runs in GNOME
 environment. It has powerful features such as "Glob-style pattern
 matching", "Scan selection word", "Fuzzy query", etc.
 

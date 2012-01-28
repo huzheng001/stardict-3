@@ -35,11 +35,13 @@ public:
 	bool load(const std::string& path, bool read_only = false, bool strict = true);
 	bool read_bool(const gchar *sect, const gchar *key, bool& val);
 	bool read_int(const gchar *sect, const gchar *key, int& val);
+	bool read_double(const gchar *sect, const gchar *key, double& val);
 	bool read_string(const gchar * sect, const gchar *key, std::string& val);
 	bool read_strlist(const gchar * sect, const gchar *key, std::list<std::string>& slist);
 
 	void write_bool(const gchar *sect, const gchar *key, bool val);
 	void write_int(const gchar *sect, const gchar *key, int val);
+	void write_double(const gchar *sect, const gchar *key, double val);
 	void write_string(const gchar *sect, const gchar *key, const std::string& val);
 	void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
 

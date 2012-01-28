@@ -247,7 +247,7 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("QQWry configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	std::string msg;
 	std::string datafilename = build_path(plugin_info->datadir,
 		"data" G_DIR_SEPARATOR_S "QQWry.Dat");
@@ -263,7 +263,7 @@ static void configure()
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox), label, true, true, 0);
 	gtk_widget_show_all(vbox);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	gtk_dialog_run(GTK_DIALOG(window));
 	gtk_widget_destroy (window);
 }

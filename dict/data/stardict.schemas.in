@@ -317,6 +317,42 @@
     </schema>
 
     <schema>
+      <key>/schemas/apps/stardict/preferences/floating_window/bg_red</key>
+      <applyto>/apps/stardict/preferences/floating_window/bg_red</applyto>
+      <owner>stardict</owner>
+      <type>float</type>
+      <default>0</default>
+      <locale name="C">
+	<short>background color: red</short>
+	<long>the red value of background color.</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/stardict/preferences/floating_window/bg_green</key>
+      <applyto>/apps/stardict/preferences/floating_window/bg_green</applyto>
+      <owner>stardict</owner>
+      <type>float</type>
+      <default>0</default>
+      <locale name="C">
+	<short>background color: green</short>
+	<long>the green value of background color.</long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/stardict/preferences/floating_window/bg_blue</key>
+      <applyto>/apps/stardict/preferences/floating_window/bg_blue</applyto>
+      <owner>stardict</owner>
+      <type>float</type>
+      <default>0</default>
+      <locale name="C">
+	<short>background color: blue</short>
+	<long>the blue value of background color.</long>
+      </locale>
+    </schema>
+
+    <schema>
       <key>/schemas/apps/stardict/manage_dictionaries/dict_order_list</key>
       <applyto>/apps/stardict/manage_dictionaries/dict_order_list</applyto>
       <owner>stardict</owner>

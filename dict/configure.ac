@@ -81,7 +81,7 @@ AC_ARG_ENABLE([gucharmap],
 	[enable_gucharmap=yes])
 
 if test "x$enable_gucharmap" = "xyes" ; then
-	PKG_CHECK_MODULES(GUCHARMAP, [gucharmap-2 >= 2.22.1], have_gucharmap=yes, have_gucharmap=no)
+	PKG_CHECK_MODULES(GUCHARMAP, [gucharmap-2.90], have_gucharmap=yes, have_gucharmap=no)
 	if test "x$have_gucharmap" = "xyes"; then
 		GUCHARMAP_CFLAGS="${GUCHARMAP_CFLAGS}"
 		GUCHARMAP_LIBS="${GUCHARMAP_LIBS}"
@@ -280,15 +280,15 @@ AM_CONDITIONAL(MAEMO_SUPPORT, test "x${enable_maemo_support}" = "xyes")
 AM_CONDITIONAL(DARWIN_SUPPORT, test "x${enable_darwin_support}" = "xyes")
 
 if test "x${enable_gpe_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.20 glib-2.0 >= 2.16 gthread-2.0 libgpewidget >= 0.109"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.16 gthread-2.0 libgpewidget >= 0.109"
 elif test "x${enable_maemo_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.20 glib-2.0 >= 2.16 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.16 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
 elif test "x${enable_darwin_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.20 glib-2.0 >= 2.16 gthread-2.0"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.16 gthread-2.0"
 elif test "x${enable_gnome_support}" = "xno" ; then
-  DEP_MODULES="gtk+-2.0 >= 2.20 glib-2.0 >= 2.16 gthread-2.0"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.16 gthread-2.0"
 else
-  DEP_MODULES="gtk+-2.0 >= 2.20 glib-2.0 >= 2.16 libgnomeui-2.0 >= 2.20"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.16 gthread-2.0 libgnome-2.0 libbonobo-2.0 gconf-2.0"
 fi
 
 dnl
@@ -351,6 +351,7 @@ AC_ARG_ENABLE([deprecations],
 
 if test "x$enable_deprecations" = "xno" ; then
 	STARDICT_CFLAGS="$STARDICT_CFLAGS -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED"
+	STARDICT_CFLAGS="$STARDICT_CFLAGS -DG_DISABLE_SINGLE_INCLUDES -DATK_DISABLE_SINGLE_INCLUDES -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES -DGTK_DISABLE_SINGLE_INCLUDES"
 fi
 
 STARDICT_CFLAGS="-Wall $STARDICT_CFLAGS"

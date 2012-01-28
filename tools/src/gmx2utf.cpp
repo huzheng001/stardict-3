@@ -123,7 +123,7 @@ int main(int argc,char * argv [])
                 printf("please type this:\n./gmx2utf lazyworm-E2C.pdb.tab.utf\n");
                 return FALSE;
         }
-	gtk_set_locale ();
+	//gtk_set_locale ();
         g_type_init ();
 	for (int i=1; i< argc; i++)
                 convert (argv[i]);

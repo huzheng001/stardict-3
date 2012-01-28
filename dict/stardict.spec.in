@@ -2,27 +2,29 @@
 %define version @VERSION@
 
 Name:		%{name}
-Summary: 	A powerful dictionary platform written in GTK+2
+Summary: 	A powerful dictionary platform written in GTK
 Version:	%{version}
 Release:	1%{?dist}
 Group: 		Applications/System
 License: 	GPLv3
 URL: 		http://www.stardict.org
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Source0:	http://stardict-3.googlecode.com/files/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires: enchant, espeak, gucharmap >= 2.22.1, libbonobo >= 2.2.0, libgnome >= 2.2.0, libgnomeui >= 2.2.0, libsigc++20 >= 2.0.17
+Requires: gtk3, enchant, espeak, gucharmap, libbonobo, libgnome, libsigc++20 >= 2.0.17
 #Requires: festival, speech-tools
 Requires(preun): GConf2
 Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
 BuildRequires: autoconf, automake, libtool
-BuildRequires: desktop-file-utils, enchant-devel, espeak-devel, gettext, gucharmap-devel >= 2.22.1, intltool, libgnomeui-devel >= 2.2.0, libsigc++20-devel, libtool, perl-XML-Parser, scrollkeeper
+BuildRequires: desktop-file-utils, gettext, intltool, perl-XML-Parser, scrollkeeper
+BuildRequires: enchant-devel, espeak-devel, gtk3-devel, libbonobo-devel, libgnome-devel, gucharmap-devel, libsigc++20-devel
 #BuildRequires: festival-devel, speech-tools-devel
 
+
 %description
-StarDict is a Cross-Platform and international dictionary written in Gtk2.
+StarDict is a Cross-Platform and international dictionary written in Gtk.
 It has powerful features such as "Glob-style pattern matching,"
 "Scan selection word," "Fuzzy query," etc.
 
@@ -33,7 +35,7 @@ It has powerful features such as "Glob-style pattern matching,"
 %{__aclocal}
 %{__autoconf}
 %{__libtoolize}
-%configure --disable-schemas-install --disable-festival
+%configure --disable-schemas-install --disable-festival --disable-tools
 make -k %{_smp_mflags}
 
 %install
@@ -59,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/omf/*
 %{_mandir}/man1/*
 %doc %{_datadir}/gnome/help/stardict
-%doc README COPYING ChangeLog AUTHORS doc/FAQ doc/HACKING doc/HowToCreateDictionary doc/StarDictFileFormat doc/Translation
+%doc dict/README COPYING dict/ChangeLog dict/AUTHORS dict/doc/FAQ dict/doc/HACKING dict/doc/HowToCreateDictionary dict/doc/StarDictFileFormat dict/doc/Translation
 
 
 %preun

@@ -93,6 +93,14 @@ public:
 		return get_at(name, Type2Type<int>());
 	}
 
+	double get_double(const char *name) const {
+		return get(name, Type2Type<double>());
+	}
+
+	double get_double_at(const char *name) const {
+		return get_at(name, Type2Type<double>());
+	}
+
 	const std::string& get_string(const char *name) const {
 		return get(name, Type2Type<std::string>());
 	}
@@ -122,6 +130,14 @@ public:
 	}
 
 	void set_int_at(const char *name, const int& v) {
+		set_value(name, v, false);
+	}
+
+	void set_double(const char *name, const double& v) {
+		set_value(name, v);
+	}
+
+	void set_double_at(const char *name, const double& v) {
 		set_value(name, v, false);
 	}
 

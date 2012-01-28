@@ -35,7 +35,7 @@ int main(int argc,char * argv [])
 		}
 	}
 
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	g_type_init ();
 	convert_babylonfile (argv[argc-1], strip_html);
 	return FALSE;

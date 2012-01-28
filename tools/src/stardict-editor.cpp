@@ -163,10 +163,10 @@ static void on_compile_page_combo_box_changed(GtkComboBox *widget, gpointer user
 
 static void create_compile_page(GtkWidget *notebook)
 {
-	GtkWidget *vbox = gtk_vbox_new(false, 6);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	GtkWidget *label = gtk_label_new("Compile");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	GtkWidget *hbox = gtk_hbox_new(false, 6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new("File name:");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -178,7 +178,6 @@ static void create_compile_page(GtkWidget *notebook)
 	label = gtk_label_new("This file should be encoded in UTF-8!");
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
 	GtkWidget *text_view = gtk_text_view_new();
-	gtk_widget_set_size_request(text_view, -1, 150);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
 	compile_page_text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 	gtk_text_buffer_set_text(compile_page_text_view_buffer,
@@ -228,20 +227,21 @@ static void create_compile_page(GtkWidget *notebook)
 		"See doc\\TextualDictionaryFileFormat in source tarball for information about Textual StarDict dictionary.\n"
 		"\n"
 		"\nFor converting Babylon (.bgl) files to StarDict format use PyGlossary. "
-		"See http://sourceforge.net/apps/trac/stardict/wiki/Babylon.\n"
+		"See http://code.google.com/p/stardict-3/wiki/ConvertBabylon\n"
 		, -1);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+	gtk_widget_set_size_request(scrolled_window, -1, 250);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
-	hbox = gtk_hbox_new(false, 6);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	
-	compile_page_combo_box = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Tab file");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Babylon file");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(compile_page_combo_box), "Textual StarDict dictionary");
+	compile_page_combo_box = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Tab file");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Babylon file");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Textual StarDict dictionary");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(compile_page_combo_box), 0);
 	gtk_box_pack_start(GTK_BOX(hbox), compile_page_combo_box, true, false, 0);
 
@@ -250,7 +250,7 @@ static void create_compile_page(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_compile_button_clicked), entry);
 
 	// parameter panel
-	compile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+	compile_page_textual_stardict_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), compile_page_textual_stardict_hbox, false, false, 3);
 	
 	compile_page_show_xinclude_check_box = gtk_check_button_new_with_label("show xincludes");
@@ -321,10 +321,10 @@ static void on_decompile_page_combo_box_changed(GtkComboBox *widget, gpointer us
 
 static void create_decompile_page(GtkWidget *notebook)
 {
-	GtkWidget *vbox = gtk_vbox_new(false, 6);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	GtkWidget *label = gtk_label_new("DeCompile/Verify");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	GtkWidget *hbox = gtk_hbox_new(false, 6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new("File name:");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -336,20 +336,20 @@ static void create_decompile_page(GtkWidget *notebook)
 	label = gtk_label_new("Please choose the somedict.ifo file.");
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
 	GtkWidget *text_view = gtk_text_view_new();
-	gtk_widget_set_size_request(text_view, -1, 150);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
 	decompile_page_text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+	gtk_widget_set_size_request(scrolled_window, -1, 250);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
-	hbox = gtk_hbox_new(false, 6);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 
-	decompile_page_combo_box = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(decompile_page_combo_box), "Tab file");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(decompile_page_combo_box), "Textual StarDict dictionary");
+	decompile_page_combo_box = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(decompile_page_combo_box), "Tab file");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(decompile_page_combo_box), "Textual StarDict dictionary");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(decompile_page_combo_box), 0);
 	gtk_box_pack_start(GTK_BOX(hbox), decompile_page_combo_box, true, false, 0);
 
@@ -361,7 +361,7 @@ static void create_decompile_page(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_decompile_page_verify_button_clicked), entry);
 
 	// parameter panel
-	decompile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+	decompile_page_textual_stardict_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), decompile_page_textual_stardict_hbox, false, false, 3);
 	label = gtk_label_new("Chunk size (in bytes, 0 - do not split):");
 	gtk_box_pack_start(GTK_BOX(decompile_page_textual_stardict_hbox), label, false, false, 0);
@@ -423,10 +423,10 @@ static void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 
 static void create_edit_page(GtkWidget *notebook)
 {
-	GtkWidget *vbox = gtk_vbox_new(false, 6);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	GtkWidget *label = gtk_label_new("Edit");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-	GtkWidget *hbox = gtk_hbox_new(false, 6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *button = gtk_button_new_with_mnemonic("_Open");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
@@ -435,13 +435,13 @@ static void create_edit_page(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_edit_page_saveas_button_clicked), NULL);
 	GtkWidget *text_view = gtk_text_view_new();
-	gtk_widget_set_size_request(text_view, -1, 150);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
 	edit_page_text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 	gtk_text_buffer_set_text(edit_page_text_view_buffer,
 		"This is a simple UTF-8 text file editor.\n"
 		, -1);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+	gtk_widget_set_size_request(scrolled_window, -1, 250);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_ETCHED_IN);
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
@@ -459,6 +459,7 @@ static void create_window()
 	main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_position (GTK_WINDOW (main_window), GTK_WIN_POS_CENTER);
 	gtk_window_set_title(GTK_WINDOW (main_window), "StarDict-Editor");
+	gtk_window_set_default_size(GTK_WINDOW (main_window), -1, 430);
 	gtk_container_set_border_width (GTK_CONTAINER (main_window), 5);
 	g_signal_connect (G_OBJECT (main_window), "delete_event", G_CALLBACK (on_delete_event), NULL);
 	GtkWidget *notebook = gtk_notebook_new();
@@ -487,7 +488,7 @@ DLLIMPORT int stardict_editor_main(HINSTANCE /*hInstance*/, int argc, char **arg
 int main(int argc,char **argv)
 #endif
 {
-	gtk_set_locale();
+	//gtk_set_locale();
 	gtk_init(&argc, &argv);
 	create_window();
 	gtk_main();

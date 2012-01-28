@@ -1,8 +1,8 @@
-README
-TODO
-debian/README.Debian
-debian/TODO.Debian
-doc/StarDictFileFormat
-doc/FAQ
-doc/HACKING
-doc/HowToCreateDictionary
+dict/README
+dict/TODO
+dict/debian-upstream/README.Debian
+dict/debian-upstream/TODO.Debian
+dict/doc/StarDictFileFormat
+dict/doc/FAQ
+dict/doc/HACKING
+dict/doc/HowToCreateDictionary

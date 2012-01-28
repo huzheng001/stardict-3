@@ -21,7 +21,7 @@
 !define NAME "StarDictEditorPortable"
 !define PORTABLEAPPNAME "StarDict Editor Portable"
 !define APPNAME "StarDict Editor"
-!define VER "3.0.3.0"
+!define VER "3.0.4.0"
 !define WEBSITE "www.stardict.org"
 !define DEFAULTEXE "stardict-editor.exe"
 !define DEFAULTAPPDIR "StarDict"

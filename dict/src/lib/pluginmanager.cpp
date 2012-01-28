@@ -942,6 +942,13 @@ void StarDictMiscPlugins::unload_plugin(const char *filename)
 	}
 }
 
+void StarDictMiscPlugins::on_mainwin_finish()
+{
+	for (std::vector<StarDictMiscPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
+		(*iter)->on_mainwin_finish();
+	}
+}
+
 void StarDictMiscPlugins::configure_plugin(const char *filename)
 {
 	for (std::vector<StarDictMiscPlugin *>::iterator iter = oPlugins.begin(); iter != oPlugins.end(); ++iter) {
@@ -964,6 +971,23 @@ StarDictMiscPlugin::StarDictMiscPlugin(StarDictPluginBaseObject *baseobj_):
 StarDictMiscPlugin::~StarDictMiscPlugin()
 {
 }
+
+typedef void (*stardict_misc_plugin_on_mainwin_finish_func_t)(void);
+
+void StarDictMiscPlugin::on_mainwin_finish()
+{
+	//This function will only run once, so slove the symbol here.
+	union {
+		stardict_misc_plugin_on_mainwin_finish_func_t stardict_misc_plugin_on_mainwin_finish;
+		gpointer stardict_misc_plugin_on_mainwin_finish_avoid_warning;
+	} func4;
+	func4.stardict_misc_plugin_on_mainwin_finish = 0;
+	if (!g_module_symbol (baseobj->module, "stardict_misc_plugin_on_mainwin_finish", (gpointer *)&(func4.stardict_misc_plugin_on_mainwin_finish_avoid_warning))) {
+		return;
+	}
+	func4.stardict_misc_plugin_on_mainwin_finish();
+}
+
 
 template<typename TV, typename TI>
 void plugins_reorder(TV &oPlugins, const std::list<std::string>& order_list)

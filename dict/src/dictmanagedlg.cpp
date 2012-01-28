@@ -287,7 +287,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
 	gtk_dialog_add_button (GTK_DIALOG (window), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 	gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_CLOSE);
-	GtkWidget *hbox = gtk_hbox_new(false, 6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *sw;
 	sw = gtk_scrolled_window_new (NULL, NULL);
 	gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
@@ -320,7 +320,7 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	gtk_container_add (GTK_CONTAINER (sw), treeview);
 	gtk_box_pack_start (GTK_BOX (hbox), sw, true, true, 0);
 	GtkWidget *vbox;
-	vbox = gtk_vbox_new(false,6);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
 	gtk_widget_set_can_focus (button, FALSE);
@@ -335,8 +335,8 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_network_adddlg_info_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox, false, false, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, true, true, 0);
-	gtk_widget_show_all(GTK_DIALOG (window)->vbox);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), hbox, true, true, 0);
+	gtk_widget_show_all(gtk_dialog_get_content_area(GTK_DIALOG (window)));
 	gtk_window_set_title(GTK_WINDOW (window), _("Browse Dictionaries"));
 	STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_DIR_INFO, "/");
 	if (!gpAppFrame->oStarDictClient.try_cache(c))
@@ -940,7 +940,7 @@ void DictManageDlg::on_treedict_enable_toggled (GtkCellRendererToggle *cell, gch
 
 void DictManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, DictManageDlg *oDictManageDlg)
 {
-	if (data->target == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE)) {
+	if (gtk_selection_data_get_target(data) == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE)) {
 		GtkTreeRowReference *ref;
 		GtkTreePath *source_row;
 
@@ -968,12 +968,12 @@ void DictManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, Gtk
 
 void DictManageDlg::dictmanage_drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg)
 {
-	if (sd->target == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE) && sd->data) {
+	if (gtk_selection_data_get_target(sd) == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE) && gtk_selection_data_get_data(sd)) {
 		GtkTreePath *path = NULL;
 		GtkTreeViewDropPosition position;
 
 		GtkTreeIter drag_iter;
-		memcpy(&drag_iter, sd->data, sizeof(drag_iter));
+		memcpy(&drag_iter, gtk_selection_data_get_data(sd), sizeof(drag_iter));
 
 		if (gtk_tree_view_get_dest_row_at_pos(GTK_TREE_VIEW(widget), x, y, &path, &position)) {
 
@@ -1029,12 +1029,12 @@ void DictManageDlg::dictmanage_drag_data_received_cb(GtkWidget *widget, GdkDragC
 
 void DictManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, DictManageDlg *oDictManageDlg)
 {
-	if (sd->target == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE) && sd->data) {
+	if (gtk_selection_data_get_target(sd) == gdk_atom_intern("STARDICT_DICTMANAGE", FALSE) && gtk_selection_data_get_data(sd)) {
 		GtkTreePath *path = NULL;
 		GtkTreeViewDropPosition position;
 
 		GtkTreeIter drag_iter;
-		memcpy(&drag_iter, sd->data, sizeof(drag_iter));
+		memcpy(&drag_iter, gtk_selection_data_get_data(sd), sizeof(drag_iter));
 
 		if (gtk_tree_view_get_dest_row_at_pos(GTK_TREE_VIEW(widget), x, y, &path, &position)) {
 
@@ -1186,7 +1186,7 @@ void DictManageDlg::show_dict_info()
 		gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 5);
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 			GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),scrolled_window,TRUE,TRUE,0);
+		gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),scrolled_window,TRUE,TRUE,0);
 		GtkWidget *label = gtk_label_new(NULL);
 		gchar *markup;
 		markup = g_markup_printf_escaped (
@@ -1823,8 +1823,8 @@ static void on_add_group_entry_activated(GtkEntry *entry, GtkDialog *dialog)
 void DictManageDlg::show_add_group_dialog(GtkTreeIter *sibling)
 {
 	GtkWidget *dialog = gtk_dialog_new_with_buttons(_("New dict group"), GTK_WINDOW(window), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-	GtkWidget *hbox = gtk_hbox_new(false, 5);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,0);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),hbox,false,false,0);
 	GtkWidget *label = gtk_label_new(_("Group name:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
 	GtkWidget *entry = gtk_entry_new();
@@ -1896,8 +1896,8 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 		GTK_RESPONSE_REJECT,
 		NULL
 	);
-	GtkWidget *vbox = gtk_vbox_new(false, 5);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),vbox,TRUE,TRUE,0);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+	gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),vbox,TRUE,TRUE,0);
 	GtkWidget *sw;
 	sw = gtk_scrolled_window_new (NULL, NULL);
 	gtk_box_pack_start(GTK_BOX(vbox),sw,TRUE,TRUE,0);
@@ -2386,9 +2386,9 @@ GtkWidget *DictManageDlg::create_buttons()
 {
 	GtkWidget *vbox;
 #ifdef CONFIG_GPE
-	vbox = gtk_vbox_new(false,2);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 #else
-	vbox = gtk_vbox_new(false,6);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 #endif
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_GOTO_TOP);
@@ -2416,8 +2416,8 @@ GtkWidget *DictManageDlg::create_dictmanage_buttons()
 	GtkWidget *vbox;
 	GtkWidget *button;
 	GtkWidget *image;
-	hbox = gtk_hbox_new(false, 6);
-	vbox = gtk_vbox_new(false,6);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
@@ -2440,7 +2440,7 @@ GtkWidget *DictManageDlg::create_dictmanage_buttons()
 	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_info_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-	vbox = gtk_vbox_new(false,6);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
 	button = gtk_button_new();
 	image = gtk_image_new_from_stock(GTK_STOCK_GOTO_TOP, GTK_ICON_SIZE_BUTTON);
@@ -2477,9 +2477,9 @@ GtkWidget *DictManageDlg::create_network_buttons()
 {
 	GtkWidget *vbox;
 #ifdef CONFIG_GPE
-	vbox = gtk_vbox_new(false,2);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 #else
-	vbox = gtk_vbox_new(false,6);
+	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 #endif
 	GtkWidget *button;
 	button = gtk_button_new_from_stock(GTK_STOCK_ADD);
@@ -2548,18 +2548,18 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		vbox = gtk_vbox_new (FALSE, 2);
 		gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 #else
-		vbox = gtk_vbox_new (FALSE, 6);
+		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 		gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
 #endif
 		
-		GtkWidget *hbox = gtk_hbox_new(false, 3);
+		GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
 		gtk_box_pack_start(GTK_BOX(vbox),hbox, false, false, 0);
 		
 		dict_list_button = gtk_radio_button_new(NULL);
 		gtk_widget_set_can_focus (dict_list_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(dict_list_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), dict_list_button, false, false, 0);
-		GtkWidget *hbox1 = gtk_hbox_new(false, 2);
+		GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_container_add (GTK_CONTAINER (dict_list_button), hbox1);
 		GtkWidget *image = gtk_image_new_from_pixbuf(dicts_icon);
 		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
@@ -2574,7 +2574,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_widget_set_can_focus (manage_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(manage_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), manage_button, false, false, 0);
-		hbox1 = gtk_hbox_new(false, 2);
+		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_container_add (GTK_CONTAINER (manage_button), hbox1);
 		image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_SMALL_TOOLBAR);
 		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
@@ -2588,7 +2588,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_widget_set_can_focus (tree_dict_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(tree_dict_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), tree_dict_button, false, false, 0);
-		hbox1 = gtk_hbox_new(false, 2);
+		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_container_add (GTK_CONTAINER (tree_dict_button), hbox1);
 		image = gtk_image_new_from_pixbuf(tree_dicts_icon);
 		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
@@ -2602,7 +2602,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_widget_set_can_focus (network_button, FALSE);
 		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(network_button), false);
 		gtk_box_pack_start (GTK_BOX (hbox), network_button, false, false, 0);
-		hbox1 = gtk_hbox_new(false, 2);
+		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 		gtk_container_add (GTK_CONTAINER (network_button), hbox1);
 		image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_SMALL_TOOLBAR);
 		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
@@ -2612,9 +2612,9 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_label_set_mnemonic_widget(GTK_LABEL(label), network_button);
 		g_signal_connect(G_OBJECT(network_button),"toggled", G_CALLBACK(on_network_button_toggled), this);
 #ifdef CONFIG_GPE
-		hbox = gtk_hbox_new (FALSE, 2);
+		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		hbox = gtk_hbox_new (FALSE, 18);
+		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 18);
 #endif
 		gtk_box_pack_start (GTK_BOX (vbox), hbox, true, true, 0);
 		
@@ -2657,9 +2657,9 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_dictmanage_buttons(), NULL);
 		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
 		
-		hbox = gtk_hbox_new (FALSE, 6);
+		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 		gtk_box_pack_start (GTK_BOX (vbox), hbox, false, false, 0);
-		download_hbox = gtk_hbox_new(FALSE, 0);
+		download_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 		gtk_box_pack_start (GTK_BOX (hbox), download_hbox, FALSE, FALSE, 0);
 		label = gtk_label_new(_("Visit "));
 		gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
@@ -2686,15 +2686,15 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);
 		gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
 		
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, true, true, 0);
-		gtk_widget_show_all(GTK_DIALOG (window)->vbox);
+		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), vbox, true, true, 0);
+		gtk_widget_show_all(gtk_dialog_get_content_area(GTK_DIALOG (window)));
 
 		GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
 		gtk_widget_realize(download_eventbox);
-		gdk_window_set_cursor(download_eventbox->window, cursor);
+		gdk_window_set_cursor(gtk_widget_get_window(download_eventbox), cursor);
 		gtk_widget_realize(upgrade_eventbox);
-		gdk_window_set_cursor(upgrade_eventbox->window, cursor);
-		gdk_cursor_unref(cursor);
+		gdk_window_set_cursor(gtk_widget_get_window(upgrade_eventbox), cursor);
+		g_object_unref(cursor);
 
 		gtk_widget_hide(info_label);
 		gtk_widget_hide(upgrade_eventbox);
@@ -2877,10 +2877,10 @@ static void dictinfo_parse_end_element(GMarkupParseContext *context, const gchar
 		g_free (markup);
 		gtk_label_set_selectable(GTK_LABEL(label), TRUE);
 		gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
-		gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),label,false,false,6);
+		gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),label,false,false,6);
 		if (!Data->dictinfo_download.empty()) {
-			GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
-			gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),hbox,false,false,6);
+			GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+			gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),hbox,false,false,6);
 			GtkWidget *button = gtk_button_new_with_label(_("Download Now!"));
 			g_object_set_data_full(G_OBJECT(button), "stardict_download", g_strdup(Data->dictinfo_download.c_str()), g_free);
 			g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_download_clicked), NULL);

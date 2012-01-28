@@ -239,7 +239,7 @@ void wncourt_t::updte_alpha(char d)
 
 gboolean WnCourt::expose_event_callback (GtkWidget *widget, GdkEventExpose *event, WnCourt *wncourt)
 {
-	cairo_t *cr = gdk_cairo_create(widget->window);
+	cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
 	if (wncourt->_secourt && wncourt->_secourt->get_alpha() != 0) {
 		wncourt->_secourt->updte_alpha(16);
 		if (wncourt->_secourt->get_alpha() != 0) {
@@ -276,7 +276,7 @@ void WnCourt::draw_dragbar(cairo_t *cr)
 	cairo_fill(cr);
 }
 
-void WnCourt::on_destroy_callback (GtkObject *object, WnCourt *wncourt)
+void WnCourt::on_destroy_callback (GtkWidget *object, WnCourt *wncourt)
 {
 	delete wncourt;
 }
@@ -284,8 +284,8 @@ void WnCourt::on_destroy_callback (GtkObject *object, WnCourt *wncourt)
 void WnCourt::on_realize_callback(GtkWidget *widget, WnCourt *wncourt)
 {
 	GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
-	gdk_window_set_cursor(widget->window, cursor);
-	gdk_cursor_unref(cursor);
+	gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
+	g_object_unref(cursor);
 }
 
 gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventButton *event, WnCourt *wncourt)
@@ -299,8 +299,8 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 			if (event->x > wncourt->widget_width - 15 && event->y > wncourt->widget_height - 15) {
 				wncourt->resizing = true;
 				GdkCursor* cursor = gdk_cursor_new(GDK_SIZING);
-				gdk_window_set_cursor(widget->window, cursor);
-				gdk_cursor_unref(cursor);
+				gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
+				g_object_unref(cursor);
 			} else if (wncourt->_court->hit((int)(event->x), (int)(event->y), &b)) {
 				wncourt->dragball = b;
 				wncourt->dragball->set_anchor(true);
@@ -343,8 +343,8 @@ gboolean WnCourt::on_button_release_event_callback(GtkWidget * widget, GdkEventB
 		}
 		if (wncourt->resizing) {
 			GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
-			gdk_window_set_cursor(widget->window, cursor);
-			gdk_cursor_unref(cursor);
+			gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
+			g_object_unref(cursor);
 			wncourt->resizing = false;
 		}
 		wncourt->panning = false;
@@ -432,11 +432,12 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 	drawing_area = gtk_drawing_area_new();
 	gtk_widget_set_size_request (drawing_area, widget_width, widget_height);
 	gtk_widget_add_events(drawing_area, GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK | GDK_POINTER_MOTION_MASK);
-	GdkColor color;
-	color.red = 65535;
-	color.green = 65535;
-	color.blue = 65535;
-	gtk_widget_modify_bg(drawing_area, GTK_STATE_NORMAL, &color);
+	GdkRGBA color;
+	color.red = 1;
+	color.green = 1;
+	color.blue = 1;
+	color.alpha = 1;
+	gtk_widget_override_background_color(drawing_area, GTK_STATE_FLAG_NORMAL, &color);
 	g_signal_connect (G_OBJECT (drawing_area), "expose_event", G_CALLBACK (expose_event_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "destroy", G_CALLBACK (on_destroy_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "realize", G_CALLBACK (on_realize_callback), this);
