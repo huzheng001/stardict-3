@@ -87,7 +87,7 @@ struct Main
 
 int main(int argc,char * argv [])
 {
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	Main oMain;
 	if(oMain.main(argc, argv))
 		return EXIT_FAILURE;

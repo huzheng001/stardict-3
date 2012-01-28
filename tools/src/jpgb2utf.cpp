@@ -102,7 +102,7 @@ int main(int argc,char * argv [])
                 printf("please type this:\n./jpgb2utf JC_KDic.pdb.tab\n");
                 return FALSE;
         }
-        gtk_set_locale ();
+        //gtk_set_locale ();
         g_type_init ();
         for (int i=1; i< argc; i++)
                 convert (argv[i]);

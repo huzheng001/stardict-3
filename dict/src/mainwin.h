@@ -114,23 +114,23 @@ public:
 
 	gboolean TextSelected();
 	bool has_focus() {
-		return gtk_widget_has_focus(GTK_WIDGET(GTK_BIN(WordCombo)->child));
+		return gtk_widget_has_focus(gtk_bin_get_child(GTK_BIN(WordCombo)));
 	}
 	static void ClipboardReceivedCallback(GtkClipboard *clipboard, const gchar *text, gpointer data);
 
 	void set_position_in_text(gint pos) {
-		gtk_editable_set_position(GTK_EDITABLE(GTK_BIN(WordCombo)->child), pos);
+		gtk_editable_set_position(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))), pos);
 	}
 	void select_region_in_text(gint beg, gint end) {
-		gtk_editable_select_region(GTK_EDITABLE(GTK_BIN(WordCombo)->child), beg, end);
+		gtk_editable_select_region(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))), beg, end);
 	}
 	const gchar *get_text() {
 		if (!WordCombo)
 			return "";
-		return gtk_entry_get_text(GTK_ENTRY(GTK_BIN(WordCombo)->child));
+		return gtk_entry_get_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(WordCombo))));
 	}
 	void grab_focus() {
-		gtk_widget_grab_focus(GTK_BIN(WordCombo)->child);
+		gtk_widget_grab_focus(gtk_bin_get_child(GTK_BIN(WordCombo)));
 	}
 };
 
@@ -311,7 +311,7 @@ private:
 	static void on_fromlang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_tolang_combobox_changed(GtkWidget *widget, TransWin *oTransWin);
 	static void on_link_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, TransWin *oTransWin);
-	static void on_destroy(GtkObject *object, TransWin* oTransWin);
+	static void on_destroy(GtkWidget *object, TransWin* oTransWin);
 	void on_translate_error(const char * error_msg);
 	void on_translate_response(const char * text);
 	void SetLink(gint engine_index);

@@ -166,7 +166,6 @@ static bool test_inifile()
 
 int main(int argc, char *argv[])
 {
-	gtk_set_locale();
 	if (!test_inifile()) {
 		std::cerr<<"ini file test failed"<<std::endl;
 		return EXIT_FAILURE;

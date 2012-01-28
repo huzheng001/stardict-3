@@ -30,7 +30,7 @@ class config_file;
 
 struct baseconfval {
 	enum Type {
-		UNKNOWN_TYPE, BOOL_TYPE, INT_TYPE,
+		UNKNOWN_TYPE, BOOL_TYPE, INT_TYPE, DOUBLE_TYPE,
 		STRING_TYPE, STRLIST_TYPE
 	} type_;
 
@@ -50,11 +50,13 @@ public:
 	virtual ~config_file() {}
 	virtual bool read_bool(const gchar *sect, const gchar *key, bool& val) = 0;
 	virtual bool read_int(const gchar *sect, const gchar *key, int& val) = 0;
+	virtual bool read_double(const gchar *sect, const gchar *key, double& val) = 0;
 	virtual bool read_string(const gchar *sect, const gchar *key, std::string& val) = 0;
 	virtual bool read_strlist(const gchar * sect, const gchar *key, std::list<std::string>& slist) = 0;
 
 	virtual void write_bool(const gchar *sect, const gchar *key, bool val) = 0;
 	virtual void write_int(const gchar *sect, const gchar *key, int val) = 0;
+	virtual void write_double(const gchar *sect, const gchar *key, double val) = 0;
 	virtual void write_string(const gchar *sect, const gchar *key, const std::string& val) = 0;
 	virtual void write_strlist(const gchar *, const gchar *, const std::list<std::string>&) = 0;
 	virtual void notify_add(const gchar *sect, const gchar *key,
@@ -77,6 +79,7 @@ public:
 
 DEFINE_CONFVAL(bool, BOOL_TYPE, bool);
 DEFINE_CONFVAL(int, INT_TYPE, int);
+DEFINE_CONFVAL(double, DOUBLE_TYPE, double);
 DEFINE_CONFVAL(std::string, STRING_TYPE, string);
 typedef std::list<std::string> StringList;
 DEFINE_CONFVAL(StringList, STRLIST_TYPE, strlist);

@@ -29,6 +29,7 @@ public:
 	splash_screen();
 	void display_action(const std::string& actname);
 	void show();
+	void on_mainwin_finish();
 private:
 	static gboolean vButtonPressCallback (GtkWidget * widget, GdkEventButton * event , splash_screen *oWin);
 	static gboolean vMotionNotifyCallback (GtkWidget * widget, GdkEventMotion * event , splash_screen *oWin);

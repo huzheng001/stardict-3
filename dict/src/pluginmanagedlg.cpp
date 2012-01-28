@@ -333,7 +333,7 @@ void PluginManageDlg::write_order_list()
 
 void PluginManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, GtkSelectionData *data, guint info, guint time, PluginManageDlg *oPluginManageDlg)
 {
-	if (data->target == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE)) {
+	if (gtk_selection_data_get_target(data) == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE)) {
 		GtkTreeRowReference *ref;
 		GtkTreePath *source_row;
 		ref = (GtkTreeRowReference *)g_object_get_data(G_OBJECT(ctx), "gtk-tree-view-source-row");
@@ -349,11 +349,11 @@ void PluginManageDlg::drag_data_get_cb(GtkWidget *widget, GdkDragContext *ctx, G
 
 void PluginManageDlg::drag_data_received_cb(GtkWidget *widget, GdkDragContext *ctx, guint x, guint y, GtkSelectionData *sd, guint info, guint t, PluginManageDlg *oPluginManageDlg)
 {
-	if (sd->target == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE) && sd->data) {
+	if (gtk_selection_data_get_target(sd) == gdk_atom_intern("STARDICT_PLUGINMANAGE", FALSE) && gtk_selection_data_get_data(sd)) {
 		GtkTreePath *path = NULL;
 		GtkTreeViewDropPosition position;
 		GtkTreeIter drag_iter;
-		memcpy(&drag_iter, sd->data, sizeof(drag_iter));
+		memcpy(&drag_iter, gtk_selection_data_get_data(sd), sizeof(drag_iter));
 		if (gtk_tree_view_get_dest_row_at_pos(GTK_TREE_VIEW(widget), x, y, &path, &position)) {
 			GtkTreeIter iter;
 			GtkTreeModel *model = GTK_TREE_MODEL(oPluginManageDlg->plugin_tree_model);
@@ -455,7 +455,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 	window = gtk_dialog_new();
 	oStarDictPluginSystemInfo.pluginwin = window;
 	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
-	gtk_dialog_set_has_separator(GTK_DIALOG(window), false);
+	//gtk_dialog_set_has_separator(GTK_DIALOG(window), false);
 	gtk_dialog_add_button(GTK_DIALOG(window), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
 	pref_button = gtk_dialog_add_button(GTK_DIALOG(window), _("Configure Pl_ug-in"), STARDICT_RESPONSE_CONFIGURE);
 	gtk_widget_set_sensitive(pref_button, FALSE);
@@ -463,7 +463,7 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 	gtk_dialog_set_default_response(GTK_DIALOG(window), GTK_RESPONSE_CLOSE);
 	g_signal_connect(G_OBJECT(window), "response", G_CALLBACK(response_handler), this);
 	GtkWidget *vbox;
-	vbox = gtk_vbox_new (FALSE, 5);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 	GtkWidget *pluginlist = create_plugin_list();
 	gtk_box_pack_start (GTK_BOX (vbox), pluginlist, true, true, 0);
@@ -474,8 +474,8 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 	gtk_label_set_line_wrap(GTK_LABEL(detail_label), TRUE);
 	gtk_label_set_selectable(GTK_LABEL (detail_label), TRUE);
 	gtk_container_add (GTK_CONTAINER (expander), detail_label);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, true, true, 0);
-	gtk_widget_show_all (GTK_DIALOG (window)->vbox);
+	gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG (window))), vbox, true, true, 0);
+	gtk_widget_show_all (gtk_dialog_get_content_area(GTK_DIALOG (window)));
 	gtk_window_set_title (GTK_WINDOW (window), _("Manage Plugins"));
 	gtk_window_set_default_size(GTK_WINDOW(window), 250, 350);
 	dict_changed_ = false;

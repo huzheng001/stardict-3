@@ -12,7 +12,7 @@ AC_INIT(stardict, 3.0.4, http://www.stardict.org)
 general description
 -------------------
 
-StarDict is a Cross-Platform and international dictionary written in Gtk2.
+StarDict is a Cross-Platform and international dictionary written in Gtk.
 It has powerful features such as "Glob-style pattern matching," "Scan selection word," "Fuzzy query," etc.
 
 http://www.stardict.org

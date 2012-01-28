@@ -48,6 +48,7 @@ public:
 	void ShowPangoTips(const char *word, const char *text);
 	void Show();
 	void Hide();
+	void set_bg(void);
 	const std::string& getQueryingWord(void) const { return QueryingWord; }
 private:
 	enum ContentState {
@@ -107,9 +108,6 @@ private:
 	void on_lock_x_changed(const baseconfval*);
 	void on_lock_y_changed(const baseconfval*);
 	void on_transparent_changed(const baseconfval*);
-	void on_bg_red_changed(const baseconfval*);
-	void on_bg_green_changed(const baseconfval*);
-	void on_bg_blue_changed(const baseconfval*);
 	void on_use_custom_bg_changed(const baseconfval*);
 	
 	gint get_vscrollbar_width(void);
@@ -124,7 +122,6 @@ private:
 	void button_box_show_first_time(void);
 	void show_popup_menu(GdkEventButton * event);
 	void set_transparent(int transparent);
-	void set_bg(void);
 	static const gchar* get_lock_image_stock_id(void);
 	void restore_locked_position(void);
 	static std::string get_not_found_markup(const gchar* sWord, const gchar* sReason);

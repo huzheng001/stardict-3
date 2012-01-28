@@ -53,17 +53,17 @@ static void saytext(const char *text)
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Festival TTS configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
-	GtkWidget *combobox = gtk_combo_box_new_text();
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), _("Default"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Male1-kal");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Male2-ked");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Male3-jmk");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Male4-bdl");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Male5-awb");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "Female1-slt");
+	GtkWidget *combobox = gtk_combo_box_text_new();
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), _("Default"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Male1-kal");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Male2-ked");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Male3-jmk");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Male4-bdl");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Male5-awb");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "Female1-slt");
 	gint old_index;
 	if (voice_engine == "voice_kal_diphone")
 		old_index = 1;
@@ -82,7 +82,7 @@ static void configure()
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), old_index);
 	gtk_box_pack_start(GTK_BOX(hbox), combobox, false, false, 0);
 	gtk_widget_show_all(hbox);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), hbox);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), hbox);
 	gtk_dialog_run(GTK_DIALOG(window));
 	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
 	if (index != old_index) {

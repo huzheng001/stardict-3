@@ -636,7 +636,7 @@ int main(int argc,char * argv [])
                 printf("please type this:\n./kingsoft /mnt/e/Program Files/kingsoft/PowerWord\\ 2006/dicts\n");
                 return FALSE;
         }
-	gtk_set_locale ();
+	//gtk_set_locale ();
         g_type_init ();
         convert (argv[1]);
 	return FALSE;

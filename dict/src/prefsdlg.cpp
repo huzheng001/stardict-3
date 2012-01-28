@@ -302,7 +302,7 @@ void PrefsDlg::setup_logo_page()
 static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
 			       const gchar *stock_id)
 {
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 12);
 #ifdef CONFIG_GPE
         gtk_container_set_border_width(GTK_CONTAINER (vbox), 5);
         GtkWidget *nb_label = gtk_label_new(caption);
@@ -311,9 +311,9 @@ static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
 	gtk_notebook_append_page(notebook, vbox, NULL);
 #endif
 
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 6);
-	GtkWidget *hbox = gtk_hbox_new(FALSE, 6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
 	GtkWidget *image =
 		gtk_image_new_from_stock(stock_id,
@@ -324,7 +324,7 @@ static GtkWidget *prepare_page(GtkNotebook *notebook, const gchar *caption,
 		g_markup_printf_escaped("<span weight=\"bold\" size=\"x-large\">%s</span>", caption));
 	gtk_label_set_markup(GTK_LABEL(label), get_impl(label_caption));
 	gtk_box_pack_start(GTK_BOX(hbox),label, FALSE, FALSE, 0);
-	GtkWidget *hseparator = gtk_hseparator_new();
+	GtkWidget *hseparator = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 	gtk_box_pack_start(GTK_BOX(vbox1),hseparator,FALSE,FALSE,0);
 
 	return vbox;
@@ -404,7 +404,7 @@ void mainwindow_hotkey_changed(GtkWidget *widget, guint key, guint modifiers)
 void PrefsDlg::setup_dictionary_scan_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Scan Selection"), GTK_STOCK_CONVERT);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 0);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Only scan while the modifier key is being pressed."));
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
@@ -416,7 +416,7 @@ void PrefsDlg::setup_dictionary_scan_page()
 	g_signal_connect(G_OBJECT(check_button), "toggled",
 									 G_CALLBACK(on_setup_dictionary_scan_ckbutton_toggled), this);
 
-	scan_modifier_key_vbox = gtk_vbox_new(FALSE, 6);
+	scan_modifier_key_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1), scan_modifier_key_vbox,
 										 FALSE, FALSE, 12);
 	gtk_widget_set_sensitive(scan_modifier_key_vbox,
@@ -429,18 +429,18 @@ void PrefsDlg::setup_dictionary_scan_page()
 															 conf->get_bool_at("dictionary/hide_floatwin_when_modifier_key_released"));
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_scan_hide_ckbutton_toggled), this);
 
-	GtkWidget *hbox = gtk_hbox_new(false, 12);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(scan_modifier_key_vbox), hbox,false,false,0);
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Scan modifier _key:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,false,false,0);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
-	GtkWidget *combobox = gtk_combo_box_new_text();
+	GtkWidget *combobox = gtk_combo_box_text_new();
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(combobox), FALSE);
 
 	for (std::list<std::string>::const_iterator p=key_combs.begin();
 	     p!=key_combs.end(); ++p) {
-	  gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), p->c_str());
+	  gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), p->c_str());
 	}
 
 	int scan_modifier_key=
@@ -461,7 +461,7 @@ void PrefsDlg::setup_dictionary_scan_page()
 
 #endif
 #ifndef CONFIG_DARWIN
-	hbox = gtk_hbox_new(false, 12);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,false,false,0);
 	check_button = gtk_check_button_new_with_mnemonic(_("_Use scan hotkey: Ctrl+Alt+X."));
 	gtk_box_pack_start(GTK_BOX(hbox),check_button,false,false,0);
@@ -486,11 +486,12 @@ void PrefsDlg::change_font_for_all_widgets(const std::string& fontname)
 	gchar *aa =
 		g_strdup_printf("style \"custom-font\" { font_name= \"%s\" }\n"
 										"class \"GtkWidget\" style \"custom-font\"\n", fontname.c_str());
-	gtk_rc_parse_string(aa);
+	GtkCssProvider *css_provider = gtk_css_provider_get_default();
+	gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
 	g_free(aa);
-	GdkScreen *screen = gtk_window_get_screen(parent_window);
-	GtkSettings *settings=gtk_settings_get_for_screen(screen);
-	gtk_rc_reset_styles(settings);
+	//GdkScreen *screen = gtk_window_get_screen(parent_window);
+	//GtkSettings *settings=gtk_settings_get_for_screen(screen);
+	//gtk_rc_reset_styles(settings);
 #ifndef CONFIG_GPE
 	resize_categories_tree();
 #endif
@@ -511,16 +512,15 @@ void PrefsDlg::on_setup_dictionary_font_ckbutton_toggled(GtkToggleButton *button
 
 void PrefsDlg::on_setup_dictionary_font_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
 {
-  GtkWidget *dlg = gtk_font_selection_dialog_new(_("Choose dictionary font"));
-  gtk_window_set_transient_for (GTK_WINDOW (dlg), GTK_WINDOW (oPrefsDlg->window));
+  GtkWidget *dlg = gtk_font_chooser_dialog_new(_("Choose dictionary font"), GTK_WINDOW (oPrefsDlg->window));
   const gchar *text = gtk_button_get_label(GTK_BUTTON(widget));
   if (strcmp(text,_("Choose")))
-    gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(dlg), text);
-  gtk_font_selection_dialog_set_preview_text(GTK_FONT_SELECTION_DIALOG(dlg),_("Dictionary font"));
+    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(dlg), text);
+  gtk_font_chooser_set_preview_text(GTK_FONT_CHOOSER(dlg),_("Dictionary font"));
   gint result = gtk_dialog_run (GTK_DIALOG (dlg));
   if (result==GTK_RESPONSE_OK) {
     gchar *font_name =
-      gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG(dlg));
+      gtk_font_chooser_get_font(GTK_FONT_CHOOSER(dlg));
     if (font_name) {
       gtk_button_set_label(GTK_BUTTON(widget),font_name);
       conf->set_string_at("dictionary/custom_font", std::string(font_name));
@@ -535,7 +535,7 @@ void PrefsDlg::on_setup_dictionary_font_button_clicked(GtkWidget *widget, PrefsD
 void PrefsDlg::setup_dictionary_font_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Font"), GTK_STOCK_SELECT_FONT);
-	GtkWidget *vbox1 = gtk_vbox_new(false,6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom font."));
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
@@ -545,7 +545,7 @@ void PrefsDlg::setup_dictionary_font_page()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button),
 															 use_custom_font);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_font_ckbutton_toggled), this);
-	custom_font_hbox = gtk_hbox_new(false, 12);
+	custom_font_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(vbox1),custom_font_hbox,false,false,0);
 	gtk_widget_set_sensitive(custom_font_hbox, use_custom_font);
 	GtkWidget *label=gtk_label_new(NULL);
@@ -593,7 +593,7 @@ void PrefsDlg::on_setup_dictionary_cache_cleanbutton_clicked(GtkWidget *widget, 
 void PrefsDlg::setup_dictionary_cache_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Cache"), GTK_STOCK_HARDDISK);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *check_button;
 	check_button = gtk_check_button_new_with_mnemonic(_("Create c_ache files to speed up loading."));
@@ -606,35 +606,35 @@ void PrefsDlg::setup_dictionary_cache_page()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_cache_EnableCollation_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
-	collation_hbox = gtk_hbox_new(false,6);
+	collation_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1),collation_hbox,false,false,0);
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("\tCollation _function:"));
 	gtk_box_pack_start(GTK_BOX(collation_hbox),label,false,false,0);
-	GtkWidget *combobox = gtk_combo_box_new_text();
+	GtkWidget *combobox = gtk_combo_box_text_new();
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(combobox), FALSE);
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_general_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_unicode_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_bin");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_czech_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_danish_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_esperanto_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_estonian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_hungarian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_icelandic_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_latvian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_lithuanian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_persian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_polish_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_roman_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_romanian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_slovak_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_slovenian_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_spanish_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_spanish2_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_swedish_ci");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(combobox), "utf8_turkish_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_general_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_unicode_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_bin");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_czech_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_danish_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_esperanto_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_estonian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_hungarian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_icelandic_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_latvian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_lithuanian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_persian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_polish_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_roman_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_romanian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_slovak_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_slovenian_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_spanish_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_spanish2_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_swedish_ci");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combobox), "utf8_turkish_ci");
 	int collate_function = conf->get_int_at("dictionary/collate_function");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), collate_function);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), combobox);
@@ -646,7 +646,7 @@ void PrefsDlg::setup_dictionary_cache_page()
 	gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
 	gtk_box_pack_start(GTK_BOX(vbox1),label,false,false,0);
 
-	GtkWidget *hbox = gtk_hbox_new(false,6);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,false,false,0);
 	GtkWidget *button = gtk_button_new_with_mnemonic(_("C_lean all cache files"));
 	gtk_button_set_image(GTK_BUTTON(button), gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON));
@@ -684,7 +684,7 @@ void PrefsDlg::on_setup_dictionary_export_browse_button_clicked(GtkButton *butto
 void PrefsDlg::setup_dictionary_export_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Export"), GTK_STOCK_SAVE);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
 	GtkWidget *check_button;
@@ -694,7 +694,7 @@ void PrefsDlg::setup_dictionary_export_page()
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_export_ckbutton_toggled), this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 
-	GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *label=gtk_label_new(_("File name:"));
 	gtk_box_pack_start(GTK_BOX(hbox1), label, FALSE, FALSE, 0);
 	GtkWidget *e = gtk_entry_new();
@@ -725,7 +725,7 @@ void PrefsDlg::setup_dictionary_article_rendering()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Article rendering"),
 				       GTK_STOCK_CONVERT);
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);
 
 	GtkWidget *ck_btn =
@@ -741,7 +741,7 @@ void PrefsDlg::setup_dictionary_dict_management()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Dictionary management"),
 				       GTK_STOCK_CONVERT);
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);
 
 	GtkWidget *ck_btn =
@@ -800,7 +800,7 @@ void PrefsDlg::on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleBut
 void PrefsDlg::setup_dictionary_sound_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Sound"), GTK_STOCK_YES);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
 	GtkWidget *check_button;
@@ -812,7 +812,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 	GtkWidget *label;
 
-	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	label=gtk_label_new(_("Command for playing sound files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
 	GtkWidget *e = gtk_entry_new();
@@ -867,17 +867,17 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_use_tts_program_ckbutton_toggled), this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
-	use_tts_program_hbox = gtk_hbox_new(FALSE, 6);
+	use_tts_program_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox1),use_tts_program_hbox,false,false,0);
 	gtk_widget_set_sensitive(use_tts_program_hbox,enable);
 	label = gtk_label_new(_("Command line:"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
 	gtk_box_pack_start(GTK_BOX(use_tts_program_hbox),label,false,false,0);
-	GtkWidget *comboboxentry = gtk_combo_box_entry_new_text();
+	GtkWidget *comboboxentry = gtk_combo_box_text_new_with_entry();
 	gtk_widget_set_size_request(comboboxentry, 30, -1);
-	gtk_combo_box_append_text(GTK_COMBO_BOX(comboboxentry), "echo %s | festival --tts &");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(comboboxentry), "espeak %s &");
-	eTTSCommandline = GTK_ENTRY(GTK_BIN(comboboxentry)->child);
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "echo %s | festival --tts &");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "espeak %s &");
+	eTTSCommandline = GTK_ENTRY(gtk_bin_get_child(GTK_BIN(comboboxentry)));
 	const std::string &tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
 	gtk_entry_set_text(eTTSCommandline, tts_program_cmdline.c_str());
 	gtk_box_pack_start(GTK_BOX(use_tts_program_hbox),comboboxentry,true,true,0);
@@ -887,10 +887,10 @@ void PrefsDlg::setup_dictionary_sound_page()
 void PrefsDlg::setup_dictionary_video_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Video"), GTK_STOCK_YES);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
-	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *label = gtk_label_new(_("Command for playing video files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
 	GtkWidget *entry = gtk_entry_new();
@@ -934,7 +934,7 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
                 GTK_RESPONSE_OK,
                 NULL);
     GtkWidget *table = gtk_table_new(2, 2, FALSE);
-    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(account_dialog)->vbox), table);
+    gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(account_dialog))), table);
     gtk_container_set_border_width(GTK_CONTAINER(table), 6);
     GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
@@ -1031,7 +1031,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
                 GTK_RESPONSE_OK,
                 NULL);
     GtkWidget *table = gtk_table_new(3, 2, FALSE);
-    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(register_dialog)->vbox), table);
+    gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(register_dialog))), table);
     gtk_container_set_border_width(GTK_CONTAINER(table), 6);
     GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
@@ -1108,7 +1108,7 @@ void PrefsDlg::setup_network_netdict()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Net Dict"),
 				       GTK_STOCK_NETWORK);
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);
 
 	GtkWidget *ck_btn =
@@ -1126,11 +1126,11 @@ void PrefsDlg::setup_network_netdict()
     gtk_box_pack_start(GTK_BOX(vbox1),table,false,false,0);
     GtkWidget *label=gtk_label_new(_("StarDict server:"));
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-	GtkWidget *comboboxentry = gtk_combo_box_entry_new_text();
+	GtkWidget *comboboxentry = gtk_combo_box_text_new_with_entry();
 	gtk_table_attach(GTK_TABLE(table), comboboxentry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-	gtk_combo_box_append_text(GTK_COMBO_BOX(comboboxentry), "dict.stardict.org");
-	gtk_combo_box_append_text(GTK_COMBO_BOX(comboboxentry), "dict.stardict.cn");
-	eStarDictServer=GTK_ENTRY(GTK_BIN(comboboxentry)->child);
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.org");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.cn");
+	eStarDictServer=GTK_ENTRY(gtk_bin_get_child(GTK_BIN(comboboxentry)));
 	const std::string &server= conf->get_string_at("network/server");
 	gtk_entry_set_text(eStarDictServer, server.c_str());
     label=gtk_label_new(_("Port:"));
@@ -1155,7 +1155,7 @@ void PrefsDlg::setup_network_netdict()
     bAccount = GTK_BUTTON(button);
     button = gtk_button_new_with_mnemonic(_("_Register an account"));
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_register_button_clicked), this);
-    GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
+    GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
     gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
     gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
 }
@@ -1171,10 +1171,10 @@ void PrefsDlg::on_setup_dictionary_always_url_cmd_ckbutton_toggled(GtkToggleButt
 void PrefsDlg::setup_network_web_browser()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Web browser"), GTK_STOCK_EXECUTE);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
-	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *label = gtk_label_new(_("Command for opening URLs:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
 	GtkWidget *entry = gtk_entry_new();
@@ -1221,7 +1221,7 @@ void PrefsDlg::setup_mainwin_input_page()
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Input"),
 				       GTK_STOCK_EDIT);
 
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,FALSE,FALSE, 0);
 
 	GtkWidget *check_button =
@@ -1231,7 +1231,7 @@ void PrefsDlg::setup_mainwin_input_page()
 				     conf->get_bool_at("main_window/search_while_typing"));
 	g_signal_connect(G_OBJECT(check_button), "toggled",
 			 G_CALLBACK(on_setup_mainwin_searchWhileTyping_ckbutton_toggled), this);
-	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("Word change _timeout:"));
@@ -1378,7 +1378,7 @@ void PrefsDlg::find_skins()
 void PrefsDlg::setup_mainwin_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_EXECUTE);
-	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,FALSE,FALSE, 0);
 
 	GtkWidget *check_button;
@@ -1423,11 +1423,11 @@ void PrefsDlg::setup_mainwin_options_page()
 	g_signal_connect(G_OBJECT(check_button), "toggled",
 		G_CALLBACK(on_setup_mainwin_autorun_ckbutton_toggled), this);
 #endif
-	hbox = gtk_hbox_new(false, 12);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
 	GtkWidget *lbl = gtk_label_new(_("Skin:"));
 	gtk_box_pack_start(GTK_BOX(hbox),GTK_WIDGET(lbl),FALSE,FALSE,0);
-	GtkWidget *cb = gtk_combo_box_new_text();
+	GtkWidget *cb = gtk_combo_box_text_new();
 #ifdef _WIN32
 	std::string current_skin_path = abs_path_to_data_dir(conf->get_string_at("main_window/skin"));
 #else
@@ -1435,7 +1435,7 @@ void PrefsDlg::setup_mainwin_options_page()
 #endif
 	find_skins();
 	for (int i = 0; i < int(skins.size()); i++) {
-		gtk_combo_box_append_text(GTK_COMBO_BOX(cb), skins[i].name.c_str());
+		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), skins[i].name.c_str());
 		if (skins[i].path == current_skin_path)
 			gtk_combo_box_set_active(GTK_COMBO_BOX(cb), i);
 	}
@@ -1453,7 +1453,7 @@ void PrefsDlg::setup_mainwin_options_page()
 
 #ifndef CONFIG_DARWIN
 
-	hbox = gtk_hbox_new(false, 12);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox,false,false,0);
 	check_button = gtk_check_button_new_with_mnemonic(_("_Use open main window hotkey: Ctrl+Alt+Z."));
 	gtk_box_pack_start(GTK_BOX(hbox),check_button,false,false,0);
@@ -1470,13 +1470,13 @@ void PrefsDlg::setup_mainwin_options_page()
 									 G_CALLBACK(on_setup_mainwin_use_mainwindow_hotkey_ckbutton_toggled), this);
 #endif
 
-	hbox = gtk_hbox_new(false, 5);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
 	GtkWidget *label=gtk_label_new(NULL);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("_Transparency:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
 	GtkWidget *hscale;
-	hscale = gtk_hscale_new_with_range(0,80,1);
+	hscale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0, 80, 1);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), hscale);
 	int transparent=conf->get_int_at("main_window/transparent");
 	gtk_range_set_value(GTK_RANGE(hscale), transparent);
@@ -1562,7 +1562,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 																 GTK_RESPONSE_OK,
 																 NULL);
 	GtkWidget *table = gtk_table_new(3, 2, FALSE);
-	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(searchwebsite_add_dialog)->vbox), table);
+	gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(searchwebsite_add_dialog))), table);
 #ifndef CONFIG_GPE
 	gtk_container_set_border_width(GTK_CONTAINER(table), 6);
 #endif
@@ -1720,7 +1720,7 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Search website"), GTK_STOCK_JUMP_TO);
 	GtkWidget *vbox2;
-	vbox2 = gtk_vbox_new(false, 6);
+	vbox2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox), vbox2, true, true,0);
 
 	GtkListStore *model;
@@ -1793,7 +1793,7 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 	gtk_box_pack_start (GTK_BOX (vbox2), sw, TRUE, TRUE, 0);
 
 	GtkWidget *hbox1;
-	hbox1 = gtk_hbox_new(false,6);
+	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 	GtkWidget *button;
 	button = gtk_button_new();
 	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
@@ -1845,15 +1845,15 @@ void PrefsDlg::setup_NotificationAreaIcon_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_DND);
 
-	GtkWidget *hbox = gtk_hbox_new(FALSE, 12);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 	GtkWidget *label = gtk_label_new(_("When middle mouse button is clicked:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	GtkWidget *cb = gtk_combo_box_new_text();
+	GtkWidget *cb = gtk_combo_box_text_new();
 	/* order of items must match the TNotifAreaMiddleClickAction enum */
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Query selection in floating window"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Query selection in main window"));
-	gtk_combo_box_append_text(GTK_COMBO_BOX(cb), _("Do nothing"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("Query selection in floating window"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("Query selection in main window"));
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("Do nothing"));
 	gtk_box_pack_start(GTK_BOX(hbox), cb, TRUE, TRUE, 0);
 	int action = conf->get_int_at("notification_area_icon/middle_click_action");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(cb), action);
@@ -1876,7 +1876,7 @@ void PrefsDlg::on_setup_show_float_if_not_found(GtkToggleButton *button, PrefsDl
 void PrefsDlg::setup_floatwin_options_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Options"), GTK_STOCK_DND);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Pronounce the word when it pops up."));
 	bool pronounce_when_popup=
@@ -1897,13 +1897,13 @@ void PrefsDlg::setup_floatwin_options_page()
 void PrefsDlg::on_setup_floatwin_size_max_width_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg)
 {
 	gint width = gtk_spin_button_get_value_as_int(button);
-  conf->set_int_at("floating_window/max_window_width", width);
+	conf->set_int_at("floating_window/max_window_width", width);
 }
 
 void PrefsDlg::on_setup_floatwin_size_max_height_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg)
 {
 	gint height = gtk_spin_button_get_value_as_int(button);
-  conf->set_int_at("floating_window/max_window_height", height);
+	conf->set_int_at("floating_window/max_window_height", height);
 }
 
 void PrefsDlg::on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -1914,11 +1914,12 @@ void PrefsDlg::on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, 
 
 void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPrefsDlg)
 {
-	GdkColor color;
-	gtk_color_button_get_color(widget, &color);
-	conf->set_int_at("floating_window/bg_red", color.red);
-	conf->set_int_at("floating_window/bg_green", color.green);
-	conf->set_int_at("floating_window/bg_blue", color.blue);
+	GdkRGBA color;
+	gtk_color_button_get_rgba(widget, &color);
+	conf->set_double_at("floating_window/bg_red", color.red);
+	conf->set_double_at("floating_window/bg_green", color.green);
+	conf->set_double_at("floating_window/bg_blue", color.blue);
+	gpAppFrame->oFloatWin.set_bg();
 }
 
 void PrefsDlg::on_setup_floatwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg)
@@ -1930,7 +1931,7 @@ void PrefsDlg::on_setup_floatwin_transparent_scale_changed(GtkRange *range, Pref
 void PrefsDlg::setup_floatwin_size_page()
 {
 	GtkWidget *vbox = prepare_page(GTK_NOTEBOOK(notebook), _("Settings"), GTK_STOCK_ZOOM_FIT);
-	GtkWidget *vbox1 = gtk_vbox_new(false, 6);
+	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 	GtkWidget *table;
 	table = gtk_table_new(3, 2, FALSE);
@@ -1956,7 +1957,7 @@ void PrefsDlg::setup_floatwin_size_page()
 	gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin_button), GTK_UPDATE_IF_VALID);
 	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button), max_width);
 	g_signal_connect(G_OBJECT(spin_button), "value-changed",
-									 G_CALLBACK(on_setup_floatwin_size_max_width_spinbutton_changed), this);
+				 G_CALLBACK(on_setup_floatwin_size_max_width_spinbutton_changed), this);
 	gtk_table_attach(GTK_TABLE(table), spin_button, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	label=gtk_label_new(_("(default:320)"));
 	gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -1973,27 +1974,28 @@ void PrefsDlg::setup_floatwin_size_page()
 	label=gtk_label_new(_("(default:240)"));
 	gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
 
-	GtkWidget*hbox1 = gtk_hbox_new(false, 5);
+	GtkWidget*hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom background color:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), conf->get_bool_at("floating_window/use_custom_bg"));
 	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_setup_floatwin_use_custom_bg_toggled), this);
 	gtk_box_pack_start(GTK_BOX(hbox1),check_button,false,false,0);
-	GdkColor color;
-	color.red = conf->get_int_at("floating_window/bg_red");
-	color.green = conf->get_int_at("floating_window/bg_green");
-	color.blue = conf->get_int_at("floating_window/bg_blue");
-	GtkWidget *colorbutton = gtk_color_button_new_with_color(&color);
+	GdkRGBA color;
+	color.red = conf->get_double_at("floating_window/bg_red");
+	color.green = conf->get_double_at("floating_window/bg_green");
+	color.blue = conf->get_double_at("floating_window/bg_blue");
+	color.alpha = 1;
+	GtkWidget *colorbutton = gtk_color_button_new_with_rgba(&color);
 	g_signal_connect(G_OBJECT(colorbutton), "color-set", G_CALLBACK(on_setup_floatwin_color_set), this);
 	gtk_box_pack_start(GTK_BOX(hbox1),colorbutton,false,false,0);
 
-	GtkWidget *hbox = gtk_hbox_new(false, 5);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 	gtk_box_pack_start(GTK_BOX(vbox1),hbox,FALSE,FALSE, 0);
 	label=gtk_label_new(NULL);
 	gtk_label_set_markup_with_mnemonic(GTK_LABEL(label), _("_Transparency:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE, 0);
 	GtkWidget *hscale;
-	hscale = gtk_hscale_new_with_range(0,80,1);
+	hscale = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 0, 80, 1);
 	gtk_label_set_mnemonic_widget(GTK_LABEL(label), hscale);
 	int transparent=conf->get_int_at("floating_window/transparent");
 	gtk_range_set_value(GTK_RANGE(hscale), transparent);
@@ -2054,6 +2056,7 @@ bool PrefsDlg::ShowModal()
 {
   window = gtk_dialog_new();
   gtk_window_set_transient_for(GTK_WINDOW(window), parent_window);
+  gtk_window_set_default_size(GTK_WINDOW(window), -1, 390);
 
   gtk_dialog_add_button(GTK_DIALOG(window),
 			GTK_STOCK_HELP,
@@ -2068,10 +2071,10 @@ bool PrefsDlg::ShowModal()
 		   G_CALLBACK(response_handler), this);
 #ifndef CONFIG_GPE
   GtkWidget *hbox;
-  hbox = gtk_hbox_new (FALSE, 18);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 18);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
   GtkWidget *r;
-  r = gtk_vbox_new (FALSE, 6);
+  r = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 
   GtkWidget *label;
   label = gtk_label_new_with_mnemonic (_("Cat_egories:"));
@@ -2091,11 +2094,11 @@ bool PrefsDlg::ShowModal()
 #else
 	gtk_box_pack_start (GTK_BOX (hbox), r, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, true, true, 0);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), hbox, true, true, 0);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), categories_tree);
 #endif
 
-  gtk_widget_show_all (GTK_DIALOG (window)->vbox);
+  gtk_widget_show_all (gtk_dialog_get_content_area(GTK_DIALOG (window)));
   gtk_window_set_title (GTK_WINDOW (window), _("Preferences"));
 
 #ifndef CONFIG_GPE
@@ -2203,8 +2206,8 @@ void PrefsDlg::resize_categories_tree(void)
   //this is hack for prevet horizontaly scrolling
   //if you know how it make better, just write
   GtkRequisition rtv, rsw;
-  gtk_widget_size_request(categories_tree, &rtv);
-  gtk_widget_size_request(GTK_SCROLLED_WINDOW(categories_window)->vscrollbar, &rsw);
+  gtk_widget_get_preferred_size(categories_tree, NULL, &rtv);
+  gtk_widget_get_preferred_size(gtk_scrolled_window_get_vscrollbar(GTK_SCROLLED_WINDOW(categories_window)), NULL, &rsw);
   gtk_widget_set_size_request(categories_window, rtv.width+rsw.width+25, -1);
 }
 #endif

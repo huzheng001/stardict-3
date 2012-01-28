@@ -33,11 +33,13 @@ public:
 	~gconf_file();
 	bool read_bool(const gchar *sect, const gchar *key, bool& val);
 	bool read_int(const gchar *sect, const gchar *key, int& val);
+	bool read_double(const gchar *sect, const gchar *key, double& val);
 	bool read_string(const gchar *, const gchar *, std::string&);
 	bool read_strlist(const gchar *, const gchar *, std::list<std::string>&);
 
 	void write_bool(const gchar *sect, const gchar *key, bool val);
 	void write_int(const gchar *sect, const gchar *key, int val);
+	void write_double(const gchar *sect, const gchar *key, double val);
 	void write_string(const gchar *sect, const gchar *key, const std::string& val);
 	void write_strlist(const gchar *sect, const gchar *key, const std::list<std::string>& slist);
 	void notify_add(const gchar *, const gchar *,

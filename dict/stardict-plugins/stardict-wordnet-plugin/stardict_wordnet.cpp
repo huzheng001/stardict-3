@@ -81,7 +81,7 @@ static void save_conf_file()
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("WordNet configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-	GtkWidget *vbox = gtk_vbox_new(false, 5);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	GtkWidget *graphic_button = gtk_radio_button_new_with_label(NULL, _("Graphic mode."));
 	gtk_box_pack_start(GTK_BOX(vbox), graphic_button, false, false, 0);
 	GtkWidget *text_button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(graphic_button), _("Text mode."));
@@ -92,7 +92,7 @@ static void configure()
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(graphic_button), true);
 	}
 	gtk_widget_show_all(vbox);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG(window)->vbox), vbox);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	gtk_dialog_run(GTK_DIALOG(window));
 	gboolean new_text_or_graphic_mode = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(text_button));
 	if (new_text_or_graphic_mode != text_or_graphic_mode) {

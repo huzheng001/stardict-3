@@ -26,7 +26,7 @@
 #include <windows.h>
 #endif
 
-static const int my_version_num = 30002000; // As 3,00,00,000, so the version is 3.0.0.0
+static const int my_version_num = 30004000; // As 3,00,00,000, so the version is 3.0.0.0
 static int latest_version_num;
 static int last_prompt_num;
 static std::string version_msg_title;
@@ -171,7 +171,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 	}
 	p += 4;
 	if(g_str_has_prefix(p, UTF8_BOM))
-		p += strlen(UTF8_BOM);
+		p += (sizeof(UTF8_BOM)-1); // better than strlen(UTF8_BOM);
 	updateinfo_ParseUserData Data;
 	Data.latest_version_num = 0;
 	const gchar* const *languages = g_get_language_names();
@@ -209,7 +209,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->mainwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_YES_NO, "%s", content.c_str());
 		GtkWidget *prompt = gtk_check_button_new_with_mnemonic(_("_Don't show this until the next update."));
 		gtk_widget_show(prompt);
-		gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox), prompt);
+		gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(dialog))), prompt);
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
 		gtk_window_set_title (GTK_WINDOW (dialog), version_msg_title.c_str());
 		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES) {
@@ -240,10 +240,10 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 	plugin_service->set_news(latest_news.c_str(), Data.links.c_str());
 }
 
-static gboolean get_update_info(gpointer data)
+// Don't use g_idle_add to call send_http_request(), as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
+DLLIMPORT void stardict_misc_plugin_on_mainwin_finish(void)
 {
 	plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, NULL);
-	return FALSE;
 }
 
 DLLIMPORT bool stardict_misc_plugin_init(void)
@@ -284,9 +284,6 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 		g_free(str);
 	}
 	g_key_file_free(keyfile);
-	gtk_init_add(get_update_info, NULL);
-	// Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
-	//g_idle_add(get_update_info, NULL);
 	g_print(_("Update info plug-in loaded.\n"));
 	return false;
 }

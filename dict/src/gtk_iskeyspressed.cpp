@@ -76,7 +76,9 @@ bool gtk_hotkeys::is_pressed(void)
   GdkScreen *screen = gtk_window_get_screen(win);
   GdkDisplay *display = gdk_screen_get_display(screen);
   GdkModifierType mask;
-  gdk_display_get_pointer(display, NULL, NULL, NULL, &mask);
+  GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
+  GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
+  gdk_device_get_state(pointer, gtk_widget_get_window(GTK_WIDGET(win)), NULL, &mask);
   bool pressed=false;
   /*
     typedef enum

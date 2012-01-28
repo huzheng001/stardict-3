@@ -63,7 +63,7 @@ public:
 	void end_update() { pango_view_->end_update(); }
 	void goto_begin() { pango_view_->goto_begin(); }
 	void goto_end() { pango_view_->goto_end(); }
-	void modify_bg(GtkStateType state, const GdkColor *color) { pango_view_->modify_bg(state, color); } 
+	void modify_bg(GtkStateFlags state, const GdkRGBA *color) { pango_view_->modify_bg(state, color); } 
 	GtkWidget *vscroll_bar() { return pango_view_->vscroll_bar(); }
 	void set_size(gint w, gint h) { pango_view_->set_size(w, h); }
 	gint scroll_space() { return pango_view_->scroll_space(); }
@@ -94,11 +94,11 @@ private:
 		bool& loaded);
 	void append_data_res_attachment(const std::string& key, const std::string& mark,
 		bool& loaded);
-	static void on_resource_button_destroy(GtkObject *object, gpointer user_data);
-	static void on_sound_button_clicked(GtkObject *object, gpointer user_data);
-	static void on_video_button_clicked(GtkObject *object, gpointer user_data);
-	static void on_attachment_button_clicked(GtkObject *object, gpointer user_data);
-	static void on_resource_button_realize(GtkObject *object, gpointer user_data);
+	static void on_resource_button_destroy(GtkWidget *object, gpointer user_data);
+	static void on_sound_button_clicked(GtkWidget *object, gpointer user_data);
+	static void on_video_button_clicked(GtkWidget *object, gpointer user_data);
+	static void on_attachment_button_clicked(GtkWidget *object, gpointer user_data);
+	static void on_resource_button_realize(GtkWidget *object, gpointer user_data);
 };
 
 

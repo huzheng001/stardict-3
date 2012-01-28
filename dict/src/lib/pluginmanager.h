@@ -189,6 +189,7 @@ class StarDictMiscPlugin : public StarDictPluginBase {
 public:
 	StarDictMiscPlugin(StarDictPluginBaseObject *baseobj);
 	~StarDictMiscPlugin();
+	void on_mainwin_finish();
 };
 
 class StarDictMiscPlugins {
@@ -198,6 +199,7 @@ public:
 	void add(StarDictPluginBaseObject *baseobj);
 	void unload_plugin(const char *filename);
 	void configure_plugin(const char *filename);
+	void on_mainwin_finish();
 	void reorder(const std::list<std::string>& order_list);
 private:
 	std::vector<StarDictMiscPlugin *> oPlugins;
@@ -227,8 +229,8 @@ public:
 	StarDictSpecialDictPlugins SpecialDictPlugins;
 	StarDictTtsPlugins TtsPlugins;
 	StarDictParseDataPlugins ParseDataPlugins;
-private:
 	StarDictMiscPlugins MiscPlugins;
+private:
 	std::string plugindirpath;
 	/* Plugins that we've tried to load irrespective of the fact were they loaded
 	 * successfully or not. */

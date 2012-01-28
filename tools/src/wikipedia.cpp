@@ -229,7 +229,7 @@ int main(int argc,char * argv [])
                 return FALSE;
         }
 
-        gtk_set_locale ();
+        //gtk_set_locale ();
         g_type_init ();
         convert (argv[1], argv[2], argv[3]);
 	return FALSE;

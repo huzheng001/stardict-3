@@ -33,7 +33,6 @@
 
 #ifdef CONFIG_GNOME
 #  include <libgnome/libgnome.h>
-#  include <libgnomeui/libgnomeui.h>
 #elif defined(_WIN32)
 #  include <gdk/gdkwin32.h>
 #  include <Shlwapi.h>

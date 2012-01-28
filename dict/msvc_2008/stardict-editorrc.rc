@@ -15,14 +15,14 @@ FILETYPE VFT_APP
 		 BLOCK "040904E4"
 		 {
 			 VALUE "CompanyName", "http://www.stardict.org"
-			 VALUE "FileVersion", "3.0.3"
+			 VALUE "FileVersion", "3.0.4"
 			 VALUE "FileDescription", "StarDict Editor"
 			 VALUE "InternalName", ""
 			 VALUE "LegalCopyright", "Hu Zheng <huzheng001@gmail.com>"
 			 VALUE "LegalTrademarks", ""
 			 VALUE "OriginalFilename", "stardict-editor.exe"
 			 VALUE "ProductName", "StarDict Editor"
-			 VALUE "ProductVersion", "3.0.3"
+			 VALUE "ProductVersion", "3.0.4"
 		 }
 	 }
   BLOCK "VarFileInfo"

@@ -131,7 +131,7 @@ static void log_handler(const gchar * log_domain,
 
 int main(int argc,char * argv [])
 {
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	g_type_init ();
 
 	if(gmain.main(argc, argv))

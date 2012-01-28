@@ -22,7 +22,7 @@
 #define __STARDICT_APPLICATION_SERVER_H
 
 #include "GNOME_Stardict.h"
-#include <bonobo/bonobo-control.h>
+#include <gtk/gtkx.h>
 #include <bonobo/bonobo-object.h>
 
 G_BEGIN_DECLS

@@ -33,10 +33,9 @@
 splash_screen stardict_splash;
 
 // this is the callback which will destroy the splash screen window.
-static void
-splash_screen_cb(gpointer data)
+void splash_screen::on_mainwin_finish()
 {
-	gtk_widget_destroy(GTK_WIDGET(data));
+	gtk_widget_destroy(window);
 }
 
 splash_screen::splash_screen()
@@ -68,7 +67,7 @@ void splash_screen::show()
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 	gtk_box_pack_start(GTK_BOX(vbox),image,false,false,0);
 	text = GTK_LABEL(gtk_label_new(_("Loading")));
 	int w = gdk_pixbuf_get_width(gtk_image_get_pixbuf(GTK_IMAGE(image)));
@@ -77,7 +76,7 @@ void splash_screen::show()
 	gtk_label_set_justify(text, GTK_JUSTIFY_CENTER);
 	gtk_box_pack_start(GTK_BOX(vbox),GTK_WIDGET(text),false,false,0);
 	progress = GTK_PROGRESS_BAR(gtk_progress_bar_new());
-	gtk_widget_set_size_request(GTK_WIDGET(progress), w, 10);
+	gtk_widget_set_size_request(GTK_WIDGET(progress), w, 12);
 	gtk_box_pack_start(GTK_BOX(vbox),GTK_WIDGET(progress),false,false,0);
 
 	gtk_widget_show_all(vbox);
@@ -96,9 +95,6 @@ void splash_screen::show()
 	// go into main loop, processing events.
 	while(gtk_events_pending())
 		gtk_main_iteration();
-
-	// it will be called after gtk_main() is called.
-	gtk_init_add ((GtkFunction)splash_screen_cb, (gpointer)window);
 
 	gtk_window_set_auto_startup_notification(TRUE);
 }

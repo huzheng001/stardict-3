@@ -202,7 +202,7 @@ main(int argc,char * argv [])
 		return FALSE;
 	}
 
-	gtk_set_locale ();
+	//gtk_set_locale ();
 	g_type_init ();
 	convert_ifo (argv[1]);
 	return FALSE;	

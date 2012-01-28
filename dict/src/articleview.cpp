@@ -914,12 +914,12 @@ void ArticleView::append_data_res_attachment(
 	}
 }
 
-void ArticleView::on_resource_button_destroy(GtkObject *object, gpointer user_data)
+void ArticleView::on_resource_button_destroy(GtkWidget *object, gpointer user_data)
 {
 	delete (ResData*)user_data;
 }
 
-void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
+void ArticleView::on_sound_button_clicked(GtkWidget *object, gpointer user_data)
 {
 	ResData *pResData = (ResData*)user_data;
 	if(const char *filename = pResData->get_url())
@@ -928,7 +928,7 @@ void ArticleView::on_sound_button_clicked(GtkObject *object, gpointer user_data)
 		g_warning("Unable to load resource: %s", pResData->get_key().c_str());
 }
 
-void ArticleView::on_video_button_clicked(GtkObject *object, gpointer user_data)
+void ArticleView::on_video_button_clicked(GtkWidget *object, gpointer user_data)
 {
 	ResData *pResData = (ResData*)user_data;
 	if(const char *filename = pResData->get_url())
@@ -937,7 +937,7 @@ void ArticleView::on_video_button_clicked(GtkObject *object, gpointer user_data)
 		g_warning("Unable to load resource: %s", pResData->get_key().c_str());
 }
 
-void ArticleView::on_attachment_button_clicked(GtkObject *object, gpointer user_data)
+void ArticleView::on_attachment_button_clicked(GtkWidget *object, gpointer user_data)
 {
 	ResData *pResData = (ResData*)user_data;
 	const std::string& key = pResData->get_key();
@@ -971,7 +971,7 @@ void ArticleView::on_attachment_button_clicked(GtkObject *object, gpointer user_
 	gtk_widget_destroy(dialog);
 }
 
-void ArticleView::on_resource_button_realize(GtkObject *object, gpointer user_data)
+void ArticleView::on_resource_button_realize(GtkWidget *object, gpointer user_data)
 {
 	/* Event boxes are not automatically realized by GTK+, they must be realized
 	 * explicitly. You need to make sure that an event box is already added as 
@@ -979,5 +979,7 @@ void ArticleView::on_resource_button_realize(GtkObject *object, gpointer user_da
 	 * handler is a good place for that (imho). */
 	GtkWidget *eventbox = GTK_WIDGET(user_data);
 	gtk_widget_realize(eventbox);
-	gdk_window_set_cursor(eventbox->window, gdk_cursor_new(GDK_HAND2));
+	GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
+	gdk_window_set_cursor(gtk_widget_get_window(eventbox), cursor);
+	g_object_unref(cursor);
 }

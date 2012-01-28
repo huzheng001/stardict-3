@@ -66,7 +66,7 @@ public:
 	void end_update();
 	void goto_begin();
 	void goto_end();
-	void modify_bg(GtkStateType state, const GdkColor *color);
+	void modify_bg(GtkStateFlags state, const GdkRGBA *color);
 	void indent_region(const char *mark_begin, int char_offset_begin = 0, 
 		const char *mark_end = NULL, int char_offset_end = 0);
 	void reindent(void);
@@ -252,7 +252,7 @@ private:
 
 	static gboolean on_mouse_move(GtkWidget *, GdkEventMotion *, gpointer);
 	static gboolean on_button_release(GtkWidget *, GdkEventButton *, gpointer);
-	static void on_destroy(GtkObject *, gpointer);
+	static void on_destroy(GtkWidget *widget, gpointer);
 
 	bool goto_mark(const char *where_mark_name, int char_offset = 0);
 	TextBufLinks::const_iterator find_link(gint x, gint y);
@@ -296,7 +296,7 @@ public:
 		int char_offset = 0);
 	void begin_update();
 	void end_update();
-	void modify_bg(GtkStateType state, const GdkColor *color);
+	void modify_bg(GtkStateFlags state, const GdkRGBA *color);
 protected:
 	void do_set_text(const char *str);
 	void do_append_text(const char *str);
@@ -704,14 +704,14 @@ TextPangoWidget::TextPangoWidget()
 	buffer_user_action_cnt = 0;
 }
 
-void LabelPangoWidget::modify_bg(GtkStateType state, const GdkColor *color)
+void LabelPangoWidget::modify_bg(GtkStateFlags state, const GdkRGBA *color)
 {
-	gtk_widget_modify_bg(viewport_, state, color);
+	gtk_widget_override_background_color(viewport_, state, color);
 }
 
-void TextPangoWidget::modify_bg(GtkStateType state, const GdkColor *color)
+void TextPangoWidget::modify_bg(GtkStateFlags state, const GdkRGBA *color)
 {
-	gtk_widget_modify_base(widget(), state, color);
+	gtk_widget_override_background_color(widget(), state, color);
 }
 
 LabelPangoWidget::LabelPangoWidget()
@@ -1483,7 +1483,7 @@ gboolean TextPangoWidget::on_mouse_move(GtkWidget *widget, GdkEventMotion *event
 			get_impl(tpw->regular_cursor_));
 	}
 
-	gdk_window_get_pointer(widget->window, NULL, NULL, NULL);
+	//gdk_window_get_pointer(widget->window, NULL, NULL, NULL);
 
 	return FALSE;
 }
@@ -1513,7 +1513,7 @@ gboolean TextPangoWidget::on_button_release(GtkWidget *, GdkEventButton *event,
 	return FALSE;
 }
 
-void TextPangoWidget::on_destroy(GtkObject *object, gpointer userdata)
+void TextPangoWidget::on_destroy(GtkWidget *object, gpointer userdata)
 {
 	TextPangoWidget *tpw = static_cast<TextPangoWidget *>(userdata);
 	/* The reason I need to clear indented regions here is the fact that
