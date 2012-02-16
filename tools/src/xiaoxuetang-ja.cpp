@@ -18,6 +18,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <locale.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -213,7 +214,7 @@ int main(int argc, char *argv[])
 		printf("please type this:\n./xiaoxuetang-ja Sheetcj.xml\n");
 		return false;
 	}
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	convert_excelxmlfile(argv[argc-1]);
 	return false;

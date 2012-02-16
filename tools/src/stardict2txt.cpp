@@ -15,13 +15,14 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <locale.h>
 #include <gtk/gtk.h>
 
 #include "libstardict2txt.h"
 
 int main(int argc,char * argv [])
 {
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 
 	if (argc!=3) {

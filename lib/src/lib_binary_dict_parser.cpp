@@ -326,7 +326,7 @@ VerifResult binary_dict_parser_t::load_idx_file(void)
 		}
 		if (wordlen==0) {
 			g_warning(empty_word_err);
-			result = combine_result(result, VERIF_RESULT_CRITICAL);
+			result = combine_result(result, VERIF_RESULT_WARNING);
 			if(fix_errors)
 				g_message(fixed_ignore_word_msg);
 		}
@@ -334,7 +334,7 @@ VerifResult binary_dict_parser_t::load_idx_file(void)
 			cmpvalue=stardict_strcmp(preworditem.word.c_str(), worditem.word.c_str());
 			if (cmpvalue>0) {
 				g_warning(wrong_word_order_err, preworditem.word.c_str(), worditem.word.c_str());
-				result = combine_result(result, VERIF_RESULT_CRITICAL);
+				result = combine_result(result, VERIF_RESULT_WARNING);
 				if(fix_errors)
 					g_message(fixed_words_reordered_msg);
 			}
@@ -551,7 +551,7 @@ VerifResult binary_dict_parser_t::load_syn_file(void)
 		}
 		if (wordlen==0) {
 			g_warning(empty_word_err);
-			result = combine_result(result, VERIF_RESULT_CRITICAL);
+			result = combine_result(result, VERIF_RESULT_WARNING);
 			if(fix_errors)
 				g_message(fixed_ignore_word_msg);
 		}
@@ -559,7 +559,7 @@ VerifResult binary_dict_parser_t::load_syn_file(void)
 			cmpvalue=stardict_strcmp(presynitem.word.c_str(), synitem.word.c_str());
 			if (cmpvalue>0) {
 				g_warning(wrong_word_order_err, presynitem.word.c_str(), synitem.word.c_str());
-				result = combine_result(result, VERIF_RESULT_CRITICAL);
+				result = combine_result(result, VERIF_RESULT_WARNING);
 				if(fix_errors)
 					g_message(fixed_words_reordered_msg);
 			}

@@ -17,6 +17,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <ctype.h>
@@ -123,7 +124,7 @@ int main(int argc,char * argv [])
                 printf("please type this:\n./gmx2utf lazyworm-E2C.pdb.tab.utf\n");
                 return FALSE;
         }
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
         g_type_init ();
 	for (int i=1; i< argc; i++)
                 convert (argv[i]);

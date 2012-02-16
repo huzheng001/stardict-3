@@ -106,15 +106,16 @@ static bool check_duplicate_words(GArray *array)
 	gulong i;
 	struct _worditem *pworditem1, *pworditem2;
 	pworditem1 = &g_array_index(array, struct _worditem, 0);
+	bool return_var = true;
 	for (i=1; i < array->len; i++) {
 		pworditem2 = &g_array_index(array, struct _worditem, i);
-		if(stardict_strcmp(pworditem1->word, pworditem2->word) == 0) {
-			g_warning("Error, duplicate word %s.", pworditem1->word);
-			return false;
+		if ((stardict_strcmp(pworditem1->word, pworditem2->word) == 0) && (strcmp(pworditem1->definition, pworditem2->definition) ==0)) {
+			g_warning("Error, duplicate word: %s", pworditem2->word);
+			return_var = false;
 		}
 		pworditem1 = pworditem2;
 	}
-	return true;
+	return return_var;
 }
 
 static bool read_tab_file(gchar *buffer, GArray *array)

@@ -305,7 +305,7 @@ void VerifCache::save()
 	glib::Error error;
 	glib::CharStr verif_cache_dir(g_path_get_dirname(verif_cache_file_path.c_str()));
 	if(!g_file_test(get_impl(verif_cache_dir), G_FILE_TEST_EXISTS)) {
-		if(g_mkdir_with_parents(get_impl(verif_cache_dir), S_IRWXU)) {
+		if(-1 == g_mkdir_with_parents(get_impl(verif_cache_dir), S_IRWXU)) {
 			std::string error(g_strerror(errno));
 			g_warning(_("Unable to create directory: '%s'. "
 					"Verification cache file will not be saved. Error: '%s'"),

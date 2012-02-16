@@ -404,7 +404,7 @@ bool cache_file::build_primary_cache_filename_in_user_cache(const std::string& u
 	const std::string cache_dir(app_dirs->get_user_cache_dir());
 	if (create) {
 		if (!g_file_test(cache_dir.c_str(), G_FILE_TEST_EXISTS)) {
-			if (g_mkdir_with_parents(cache_dir.c_str(), 0700)==-1)
+			if (-1 == g_mkdir_with_parents(cache_dir.c_str(), S_IRWXU))
 				return false;
 		}
 	}

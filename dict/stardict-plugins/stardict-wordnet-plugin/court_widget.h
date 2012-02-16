@@ -149,7 +149,7 @@ private:
 	bool panning;
 	wnobj * dragball;
 	wnobj * overball;
-	static gboolean expose_event_callback (GtkWidget *widget, GdkEventExpose *event, WnCourt *wncourt);
+	static gboolean on_draw_callback (GtkWidget *widget, cairo_t *cr, WnCourt *wncourt);
 	static void on_destroy_callback (GtkWidget *object, WnCourt *wncourt);
 	static void on_realize_callback(GtkWidget *widget, WnCourt *wncourt);
 	static gboolean on_button_press_event_callback(GtkWidget * widget, GdkEventButton *event, WnCourt *wncourt);

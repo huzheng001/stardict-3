@@ -237,9 +237,8 @@ void wncourt_t::updte_alpha(char d)
 	_alpha = _alpha - d < 0 ? 0 : _alpha - d;
 }
 
-gboolean WnCourt::expose_event_callback (GtkWidget *widget, GdkEventExpose *event, WnCourt *wncourt)
+gboolean WnCourt::on_draw_callback (GtkWidget *widget, cairo_t *cr, WnCourt *wncourt)
 {
-	cairo_t *cr = gdk_cairo_create(gtk_widget_get_window(widget));
 	if (wncourt->_secourt && wncourt->_secourt->get_alpha() != 0) {
 		wncourt->_secourt->updte_alpha(16);
 		if (wncourt->_secourt->get_alpha() != 0) {
@@ -248,7 +247,6 @@ gboolean WnCourt::expose_event_callback (GtkWidget *widget, GdkEventExpose *even
 	}
 	wncourt->draw_wnobjs(cr, wncourt->_court);
 	wncourt->draw_dragbar(cr);
-	cairo_destroy(cr);
 	return TRUE;
 }
 
@@ -438,7 +436,7 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 	color.blue = 1;
 	color.alpha = 1;
 	gtk_widget_override_background_color(drawing_area, GTK_STATE_FLAG_NORMAL, &color);
-	g_signal_connect (G_OBJECT (drawing_area), "expose_event", G_CALLBACK (expose_event_callback), this);
+	g_signal_connect (G_OBJECT (drawing_area), "draw", G_CALLBACK (on_draw_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "destroy", G_CALLBACK (on_destroy_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "realize", G_CALLBACK (on_realize_callback), this);
 	g_signal_connect (G_OBJECT (drawing_area), "button_press_event", G_CALLBACK (on_button_press_event_callback), this);

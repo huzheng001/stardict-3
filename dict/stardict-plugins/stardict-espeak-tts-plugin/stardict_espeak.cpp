@@ -51,10 +51,39 @@ static void saytext(const char *text)
 	espeak_Synth(text, strlen(text)+1, 0, POS_CHARACTER, 0, espeakCHARS_UTF8, NULL, NULL);
 }
 
+static void on_test_tts_button_clicked(GtkWidget *widget, GtkEntry *entry)
+{
+	const char *word = gtk_entry_get_text(entry);
+	saytext(word);
+}
+
+static void on_tts_combobox_changed(GtkComboBox *widget, gpointer data)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	if (index == 0) {
+		voice_engine.clear();
+	} else {
+		const espeak_VOICE **voices = espeak_ListVoices(NULL);
+		voice_engine = voices[index -1]->name;
+	}
+	if (voice_engine.empty()) {
+		espeak_SetVoiceByName("english");
+	} else {
+		espeak_SetVoiceByName(voice_engine.c_str());
+	}
+	gchar *data1 = g_strdup_printf("[espeak]\nvoice=%s\n", voice_engine.c_str());
+	std::string res = get_cfg_filename();
+	g_file_set_contents(res.c_str(), data1, -1, NULL);
+	g_free(data1);
+}
+
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Espeak TTS configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
 	GtkWidget *combobox = gtk_combo_box_text_new();
@@ -70,27 +99,18 @@ static void configure()
 		i++;
 	}
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), old_index);
+	g_signal_connect (G_OBJECT (combobox), "changed", G_CALLBACK (on_tts_combobox_changed), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), combobox, false, false, 0);
-	gtk_widget_show_all(hbox);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), hbox);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(entry), "This is the test text");
+	gtk_box_pack_start(GTK_BOX(hbox), entry, true, true, 0);
+	GtkWidget *button = gtk_button_new_with_label(_("Test"));
+	gtk_box_pack_start(GTK_BOX(hbox), button, false, false, 0);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_test_tts_button_clicked), GTK_ENTRY(entry));
+	gtk_widget_show_all(vbox);
 	gtk_dialog_run(GTK_DIALOG(window));
-	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-	if (index != old_index) {
-		if (index == 0) {
-			voice_engine.clear();
-		} else {
-			voice_engine = voices[index -1]->name;
-		}
-		if (voice_engine.empty()) {
-			espeak_SetVoiceByName("english");
-		} else {
-			espeak_SetVoiceByName(voice_engine.c_str());
-		}
-		gchar *data = g_strdup_printf("[espeak]\nvoice=%s\n", voice_engine.c_str());
-		std::string res = get_cfg_filename();
-		g_file_set_contents(res.c_str(), data, -1, NULL);
-		g_free(data);
-	}
 	gtk_widget_destroy (window);
 }
 

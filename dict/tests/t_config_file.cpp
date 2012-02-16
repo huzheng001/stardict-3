@@ -166,13 +166,18 @@ static bool test_inifile()
 
 int main(int argc, char *argv[])
 {
+#ifdef CONFIG_GNOME
+	gtk_init(&argc, &argv);
+#else
+	setlocale(LC_ALL, "");
+#endif
+
 	if (!test_inifile()) {
 		std::cerr<<"ini file test failed"<<std::endl;
 		return EXIT_FAILURE;
 	}
 		
 #ifdef CONFIG_GNOME
-	gtk_init(&argc, &argv);
 	if (!test_gconf()) {
 		std::cerr<<"Gconf test failed"<<std::endl;
 		return EXIT_FAILURE;

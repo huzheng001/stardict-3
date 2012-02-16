@@ -1313,7 +1313,7 @@ void AppCore::LookupWithRuleToMainWin(const gchar *word)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 
-	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB*2) * query_dictmask.size());
+	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB*2) * query_dictmask.size()); //Need to be MAX_MATCH_ITEM_PER_LIB*2 as oLibs.LookupWithRule will call LookupWithRule() and LookupWithRuleSynonym().
 	gint iMatchCount=oLibs.LookupWithRule(word, ppMatchWord, query_dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
@@ -1342,7 +1342,7 @@ void AppCore::LookupWithRegexToMainWin(const gchar *word)
 			   get_impl(oAppSkin.watch_cursor),
 			   get_impl(oAppSkin.normal_cursor));
 
-	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB*2) * query_dictmask.size());
+	gchar **ppMatchWord = (gchar **)g_malloc(sizeof(gchar *) * (MAX_MATCH_ITEM_PER_LIB*2) * query_dictmask.size()); //Need to be MAX_MATCH_ITEM_PER_LIB*2 as oLibs.LookupWithRegex will call LookupWithRegex() and LookupWithRegexSynonym().
 	gint iMatchCount=oLibs.LookupWithRegex(word, ppMatchWord, query_dictmask);
 	oMidWin.oIndexWin.oListWin.Clear();
 	oMidWin.oIndexWin.oListWin.SetModel(true);
@@ -1604,10 +1604,12 @@ void AppCore::TopWinWordChange(const gchar* sWord)
 		stop_word_change_timer();
 		delayed_word_ = res;
 		int word_change_timeout = conf->get_int_at("main_window/word_change_timeout");
-		if(word_change_timeout > 0)
+		if(word_change_timeout > 0) {
 			word_change_timeout_id = g_timeout_add(word_change_timeout, on_word_change_timeout, this);
-		else
+		} else {
+			//Allow word_change_timeout to be 0, so do an immediate search.
 			on_word_change_timeout(this);
+		}
 	}
 }
 

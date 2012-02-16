@@ -29,6 +29,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -251,7 +252,7 @@ main(int argc,char * argv [])
 		return FALSE;
 	}
 
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	convert (argv[1]);
 	return FALSE;	

@@ -50,10 +50,48 @@ static void saytext(const char *text)
 	festival_say_text(text);
 }
 
+static void on_test_tts_button_clicked(GtkWidget *widget, GtkEntry *entry)
+{
+	const char *word = gtk_entry_get_text(entry);
+	saytext(word);
+}
+
+static void on_tts_combobox_changed(GtkComboBox *widget, gpointer data)
+{
+	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	if (index == 1)
+		voice_engine = "voice_kal_diphone";
+	else if (index == 2)
+		voice_engine = "voice_ked_diphone";
+	else if (index == 3)
+		voice_engine = "voice_cmu_us_jmk_arctic_hts";
+	else if (index == 4)
+		voice_engine = "voice_cmu_us_bdl_arctic_hts";
+	else if (index == 5)
+		voice_engine = "voice_cmu_us_awb_arctic_hts";
+	else if (index == 6)
+		voice_engine = "voice_cmu_us_slt_arctic_hts";
+	else
+		voice_engine.clear();
+	if (!voice_engine.empty()) {
+		std::string command = "(";
+		command += voice_engine;
+		command += ")";
+		festival_eval_command(command.c_str());
+	}
+	gchar *data1 = g_strdup_printf("[festival]\nvoice=%s\n", voice_engine.c_str());
+	std::string res = get_cfg_filename();
+	g_file_set_contents(res.c_str(), data1, -1, NULL);
+	g_free(data1);
+}
+
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Festival TTS configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
 	GtkWidget *combobox = gtk_combo_box_text_new();
@@ -80,37 +118,18 @@ static void configure()
 	else
 		old_index = 0;
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), old_index);
+	g_signal_connect (G_OBJECT (combobox), "changed", G_CALLBACK (on_tts_combobox_changed), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), combobox, false, false, 0);
-	gtk_widget_show_all(hbox);
-	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), hbox);
+	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
+	GtkWidget *entry = gtk_entry_new();
+	gtk_entry_set_text(GTK_ENTRY(entry), "This is the test text");
+	gtk_box_pack_start(GTK_BOX(hbox), entry, true, true, 0);
+	GtkWidget *button = gtk_button_new_with_label(_("Test"));
+	gtk_box_pack_start(GTK_BOX(hbox), button, false, false, 0);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_test_tts_button_clicked), GTK_ENTRY(entry));
+	gtk_widget_show_all(vbox);
 	gtk_dialog_run(GTK_DIALOG(window));
-	gint index = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
-	if (index != old_index) {
-		if (index == 1)
-			voice_engine = "voice_kal_diphone";
-		else if (index == 2)
-			voice_engine = "voice_ked_diphone";
-		else if (index == 3)
-			voice_engine = "voice_cmu_us_jmk_arctic_hts";
-		else if (index == 4)
-			voice_engine = "voice_cmu_us_bdl_arctic_hts";
-		else if (index == 5)
-			voice_engine = "voice_cmu_us_awb_arctic_hts";
-		else if (index == 6)
-			voice_engine = "voice_cmu_us_slt_arctic_hts";
-		else
-			voice_engine.clear();
-		if (!voice_engine.empty()) {
-			std::string command = "(";
-			command += voice_engine;
-			command += ")";
-			festival_eval_command(command.c_str());
-		}
-		gchar *data = g_strdup_printf("[festival]\nvoice=%s\n", voice_engine.c_str());
-		std::string res = get_cfg_filename();
-		g_file_set_contents(res.c_str(), data, -1, NULL);
-		g_free(data);
-	}
 	gtk_widget_destroy (window);
 }
 
