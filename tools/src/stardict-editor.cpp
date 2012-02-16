@@ -488,7 +488,6 @@ DLLIMPORT int stardict_editor_main(HINSTANCE /*hInstance*/, int argc, char **arg
 int main(int argc,char **argv)
 #endif
 {
-	//gtk_set_locale();
 	gtk_init(&argc, &argv);
 	create_window();
 	gtk_main();

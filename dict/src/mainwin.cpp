@@ -95,17 +95,22 @@ void TopWin::Create(GtkWidget *vbox)
 	LoadHistory(list_store);
 	WordCombo = gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(list_store));
 	g_object_unref (G_OBJECT(list_store));
+	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(WordCombo), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT(WordCombo), renderer, "text", 0, NULL);
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
 	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
-	gtk_entry_set_max_length(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(WordCombo))), MAX_INDEX_KEY_SIZE-1);
-	g_signal_connect (G_OBJECT (gtk_bin_get_child(GTK_BIN(WordCombo))), "changed",
-			  G_CALLBACK (on_entry_changed), this);
-	g_signal_connect (G_OBJECT (gtk_bin_get_child(GTK_BIN(WordCombo))), "activate",
-			  G_CALLBACK (on_entry_activate), this);
-	g_signal_connect (G_OBJECT (gtk_bin_get_child(GTK_BIN(WordCombo))), "populate-popup",
-			  G_CALLBACK (on_entry_populate_popup), this);
+	GtkWidget *entry = gtk_bin_get_child(GTK_BIN(WordCombo));
+	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_INDEX_KEY_SIZE-1);
+	gtk_entry_set_icon_from_stock (GTK_ENTRY(entry), GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
+	gtk_entry_set_icon_from_stock (GTK_ENTRY (entry), GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
+	g_signal_connect (G_OBJECT (entry), "icon-press", G_CALLBACK (on_entry_icon_press), this);
+	g_signal_connect (G_OBJECT (entry), "changed", G_CALLBACK (on_entry_changed), this);
+	g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (on_entry_activate), this);
+	g_signal_connect (G_OBJECT (entry), "populate-popup", G_CALLBACK (on_entry_populate_popup), this);
 	gtk_box_pack_start(GTK_BOX(hbox),WordCombo,true,true,3);
 
 #ifndef CONFIG_GPE
@@ -117,7 +122,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(GoCallback),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_widget_set_tooltip_text(button,_("Fuzzy Query"));
+	gtk_widget_set_tooltip_text(button,_("Fuzzy query"));
 #endif
 
 	button=gtk_button_new();
@@ -129,7 +134,7 @@ void TopWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_back_button_press),this);
 	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_widget_set_tooltip_text(button,_("Go Back - Right button: history (Alt+Left)"));
+	gtk_widget_set_tooltip_text(button,_("Go back - Right button: history (Alt+Left)"));
 
 	GtkWidget *label;
 	label = gtk_label_new("\t");
@@ -172,6 +177,21 @@ void TopWin::on_entry_changed(GtkEntry *entry, TopWin *oTopWin)
 		gpAppFrame->oMidWin.oTextWin.queryWord.clear();
 		gpAppFrame->oMidWin.oIndexWin.oResultWin.Clear();
 		gpAppFrame->oMidWin.oTextWin.ShowTips();
+	}
+}
+
+void TopWin::on_entry_icon_press(GtkEntry *entry, gint position, GdkEventButton *event, TopWin *oTopWin)
+{
+	if (position == GTK_ENTRY_ICON_PRIMARY) {
+		GtkWidget *menu = gtk_menu_new ();
+		
+		gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, event->button, event->time);
+	} else {
+		play_sound_on_event("buttonactive");
+		oTopWin->InsertHisList(oTopWin->get_text());
+		oTopWin->InsertBackList();
+		oTopWin->SetText("");
+		oTopWin->grab_focus();
 	}
 }
 
@@ -468,6 +488,11 @@ void TopWin::on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *o
 	gpAppFrame->PopupPluginManageDlg();
 }
 
+void TopWin::on_main_menu_downloaddict_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
+{
+  show_url("http://stardict.huzheng.org");
+}
+
 void TopWin::on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
   show_url("http://www.stardict.org");
@@ -538,13 +563,13 @@ void TopWin::do_menu()
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_preferences_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _Dict"));
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _dictionaries"));
 		image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_dictmanage_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _Plugins"));
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _plugins"));
 		image = gtk_image_new_from_stock(GTK_STOCK_DISCONNECT, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_pluginmanage_activate), NULL);
@@ -553,7 +578,13 @@ void TopWin::do_menu()
 		menuitem = gtk_separator_menu_item_new();
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_New Version"));
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Download dict_ionaries"));
+		image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_MENU);
+		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_downloaddict_activate), NULL);
+		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
+
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_New version"));
 		image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_newversion_activate), NULL);

@@ -15,6 +15,7 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <locale.h>
 #include <gtk/gtk.h>
 
 #include "libtabfile.h"
@@ -26,7 +27,7 @@ int main(int argc,char * argv [])
 		return FALSE;
 	}
 
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	for (int i=1; i< argc; i++)
 		convert_tabfile (argv[i]);

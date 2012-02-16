@@ -285,8 +285,9 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \
-	dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip dictd2dic.sh ooo.sh myspell.sh \
+	dictgen.php DeKDic.exe KSDrip.exe Po2Tab.zip ooo.sh myspell.sh \
 	exc.sh i2e.sh dictbuilder.readme dictbuilder.example KangXiZiDian-djvu2tiff.py \
 	extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
 	lingea-trd-decoder.py \
+	dicts-dump.pl \
 	stardict_images.sh stardict_images.py

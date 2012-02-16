@@ -189,7 +189,7 @@ static void configure()
 	GtkWidget *hbox = gtk_hbox_new(false, 5);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox, false, false, 0);
 	GtkWidget *entry = gtk_entry_new();
-	gtk_entry_set_text(GTK_ENTRY(entry), "This is test text");
+	gtk_entry_set_text(GTK_ENTRY(entry), "This is the test text");
 	gtk_box_pack_start(GTK_BOX(hbox), entry, true, true, 0);
 	GtkWidget *button = gtk_button_new_with_label(_("Test"));
 	gtk_box_pack_start(GTK_BOX(hbox), button, false, false, 0);

@@ -78,6 +78,7 @@ private:
 	static gboolean on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin);
 	static void on_back_menu_item_activate(GtkMenuItem *menuitem, gint index);
 
+	static void on_entry_icon_press(GtkEntry *entry, gint position, GdkEventButton *event, TopWin *oTopWin);
 	static void on_entry_changed(GtkEntry *entry, TopWin *oTopWin);
 	static void on_entry_activate(GtkEntry *entry, TopWin *oTopWin);
 	static void on_entry_populate_popup(GtkEntry *entry, GtkMenu  *menu, TopWin *oTopWin);
@@ -87,6 +88,7 @@ private:
 	static void on_main_menu_preferences_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_dictmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
+	static void on_main_menu_downloaddict_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin);

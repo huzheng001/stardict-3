@@ -1986,13 +1986,13 @@ msgstr "注册成功！"
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
-msgstr "你还没有设置帐号。请打开首选项对话框里的“网络词典”页，并注册一个帐号。"
+msgstr "您还没有设置帐号。请打开首选项对话框里的“网络词典”页，并注册一个帐号。"
 
 #: ../src/lib/stardict_client.cpp:1079
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
-msgstr "你未选择任何词典，请点击“词典管理”->“网络词典”->“添加”来选择一些词典。"
+msgstr "您未选择任何词典，请点击“词典管理”->“网络词典”->“添加”来选择一些词典。"
 
 #: ../src/lib/stddict.cpp:710
 msgid "Sorting, please wait..."
@@ -2554,11 +2554,11 @@ msgstr "拼写检查插件加载成功。\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
 msgid "You are using an old version of StarDict!"
-msgstr "你在使用旧版本的星际译王！"
+msgstr "您在使用旧版本的星际译王！"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "You are using the newest version of StarDict!"
-msgstr "你在使用最新版的星际译王！"
+msgstr "您在使用最新版的星际译王！"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:70
 msgid "Latest version information:"

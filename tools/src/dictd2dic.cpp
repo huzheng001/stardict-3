@@ -15,8 +15,13 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -148,7 +153,7 @@ void convert(char *basefilename)
 	
 	GArray *array = g_array_sized_new(FALSE,FALSE, sizeof(struct _worditem),20000);
 		
-	gchar *p, *p1, *p2, *p3;
+	gchar *p, *p1, *p2, *p3, *p4;
 	p = buffer;
 	struct _worditem worditem;
 	glong linenum=1;
@@ -164,7 +169,7 @@ void convert(char *basefilename)
 			*p1 = '\0';
 		}
 		else {
-			g_print("error! not tab char 1 found! %ld\n", linenum);
+			g_print("Error! No tab char 1 found! %ld\n", linenum);
 			return;
 		}
 		p2 = strchr(p1+1,'\t');
@@ -172,15 +177,20 @@ void convert(char *basefilename)
 			*p2 = '\0';
 		}
 		else {
-			g_print("error! not tab char 2 found! %ld\n", linenum);
+			g_print("Error! No tab char 2 found! %ld\n", linenum);
 			return;
 		}
 		p3 = strchr(p2+1,'\n');
 		if (p3) {
 			*p3 = '\0';
+			p4 = strchr(p2+1,'\t');
+			if (p4) {
+				//Maybe need to export it to .syn file!
+				*p4 = '\0';
+			}
 		}
 		else {
-			g_print("error! not end up new line found %ld\n", linenum);
+			g_print("Error! No end up new line found %ld\n", linenum);
 			return;
 		}
 		worditem.word = p;
@@ -226,11 +236,17 @@ void convert(char *basefilename)
 	}	
 	g_array_sort(array,comparefunc);
 	
+	gchar ifofilename[256];
+	sprintf(ifofilename, "dictd_" DICTD_WEBSITE "_%s.ifo", basefilename);
+	g_print("File: %s\n", ifofilename);
+	FILE *ifofile = fopen(ifofilename,"w");
 	gchar idxfilename[256];
 	sprintf(idxfilename, "dictd_" DICTD_WEBSITE "_%s.idx", basefilename);
+	g_print("File: %s\n", idxfilename);
 	FILE *idxfile = fopen(idxfilename,"w");
 	gchar dicfilename[256];
 	sprintf(dicfilename, "dictd_" DICTD_WEBSITE "_%s.dict", basefilename);
+	g_print("File: %s\n", dicfilename);
 	FILE *dicfile = fopen(dicfilename,"w");
 
 	glong tmpglong = 0;
@@ -293,11 +309,15 @@ void convert(char *basefilename)
 
 	g_free(buffer);
 	g_free(buffer1);
-    g_array_free(array,TRUE);
+	g_array_free(array,TRUE);
 	
 	fclose(idxfile);
 	fclose(dicfile);	
 	
+	stat(idxfilename, &stats);
+	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%ld\nidxfilesize=%ld\nbookname=%s\nsametypesequence=m\n", wordcount, stats.st_size, basefilename);
+	fclose(ifofile);
+
 	gchar command[256];
 	sprintf(command, "dictzip dictd_" DICTD_WEBSITE "_%s.dict", basefilename);
 	system(command);	
@@ -311,7 +331,7 @@ main(int argc,char * argv [])
 		return FALSE;
 	}
 
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	convert (argv[1]);
 	return FALSE;

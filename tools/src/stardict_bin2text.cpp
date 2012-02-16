@@ -22,6 +22,7 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <locale.h>
 #include <gtk/gtk.h>
 #include <glib.h>
 #include "lib_stardict_bin2text.h"
@@ -82,7 +83,7 @@ struct Main
 
 int main(int argc,char * argv [])
 {
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	Main oMain;
 	if(oMain.main(argc, argv))
 		return EXIT_FAILURE;

@@ -87,6 +87,7 @@ void splash_screen::show()
 	gtk_window_set_position(GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 	//gtk_widget_set_size_request(window, w, h);
 	gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
+	gtk_window_set_type_hint (GTK_WINDOW(window), GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_widget_add_events(window, GDK_BUTTON_PRESS_MASK | GDK_BUTTON1_MOTION_MASK);
 	g_signal_connect (G_OBJECT (window), "button_press_event", G_CALLBACK (vButtonPressCallback), this);

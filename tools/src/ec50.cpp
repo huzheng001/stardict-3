@@ -21,6 +21,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include <string.h>
 #include <gtk/gtk.h>
 #include <glib.h>
@@ -1138,7 +1139,7 @@ utf8_converter = g_iconv_open("UTF-8","BIG5");
 int
 main(int argc,char * argv [])
 {
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	
 	convert();	

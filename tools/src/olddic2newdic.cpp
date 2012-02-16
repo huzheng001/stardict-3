@@ -23,6 +23,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <locale.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -468,7 +469,7 @@ main(int argc,char * argv [])
 		return FALSE;
 	}
 	
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	gtk_init (&argc, &argv);
 	convert(argv[1],argv[2]);
 	return FALSE;

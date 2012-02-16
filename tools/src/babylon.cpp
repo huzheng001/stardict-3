@@ -15,6 +15,7 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <locale.h>
 #include <string.h>
 #include <gtk/gtk.h>
 #include <glib.h>
@@ -35,7 +36,7 @@ int main(int argc,char * argv [])
 		}
 	}
 
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	convert_babylonfile (argv[argc-1], strip_html);
 	return FALSE;

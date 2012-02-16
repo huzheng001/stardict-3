@@ -17,6 +17,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include "zlib.h"
 #include <unistd.h>
 #include <string.h>
@@ -153,7 +154,7 @@ void convert_dir(const gchar *dirname)
 int
 main(int argc,char * argv [])
 {
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 	g_print("converting stadict-2.1.0 dictionary files to 2.4.2 file format...\n");
 	convert_dir ("/usr/share/stardict/dic");

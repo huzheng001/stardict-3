@@ -64,3 +64,14 @@ dict/src/win32/nsis/StarDictEditorPortable.nsi
 dict/src/win32/PortableApps.com/appinfo.ini
 dict/msvc_2008/stardict-editorrc.rc
 dict/msvc_2008/stardictrc.rc
+
+*****
+Run this to create the "configure" file:
+./autogen.sh
+
+Run this to create the source tarball:
+make dist-bzip2
+
+Run this to update the po files:
+cd dict/po
+make update-po

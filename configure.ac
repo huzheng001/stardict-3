@@ -4,7 +4,7 @@
 AC_PREREQ(2.59)
 AC_INIT([StarDict], 3.0.4, [http://www.stardict.org])
 AC_CONFIG_AUX_DIR([.])
-AM_INIT_AUTOMAKE([1.9 tar-pax dist-bzip2])
+AM_INIT_AUTOMAKE([1.9 tar-ustar dist-bzip2])
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -36,3 +36,10 @@ if test "x$enable_tools" = "xyes" ; then
   AC_CONFIG_SUBDIRS([tools])
 fi
 AC_OUTPUT
+
+
+echo "
+
+Type \"make\" to compile stardict.
+
+"

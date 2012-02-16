@@ -20,6 +20,7 @@
 #endif
 
 #include <stdlib.h>
+#include <locale.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <iostream>
@@ -124,7 +125,7 @@ static void log_handler(const gchar * log_domain,
 
 int main(int argc,char * argv [])
 {
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
 	g_type_init ();
 
 	if(gmain.main(argc, argv))

@@ -17,6 +17,7 @@
 
 #include "stdio.h"
 #include "stdlib.h"
+#include <locale.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -636,7 +637,7 @@ int main(int argc,char * argv [])
                 printf("please type this:\n./kingsoft /mnt/e/Program Files/kingsoft/PowerWord\\ 2006/dicts\n");
                 return FALSE;
         }
-	//gtk_set_locale ();
+	setlocale(LC_ALL, "");
         g_type_init ();
         convert (argv[1]);
 	return FALSE;
