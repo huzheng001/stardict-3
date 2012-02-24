@@ -1021,16 +1021,19 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 	GtkWidget *image;
 	image = gtk_image_new_from_stock(GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_copy_activate), this);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Save"));
 	image = gtk_image_new_from_stock(GTK_STOCK_SAVE, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_save_activate), this);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Query"));
 	image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_query_activate), this);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 
@@ -1038,6 +1041,7 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Play"));
 		image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_play_activate), this);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	}
@@ -1045,6 +1049,7 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Fuzzy Query"));
 	image = gtk_image_new_from_stock(GTK_STOCK_FIND_AND_REPLACE, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_menu_fuzzyquery_activate), this);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	

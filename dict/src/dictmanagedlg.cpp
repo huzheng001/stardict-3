@@ -2633,6 +2633,7 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
 		image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_show_info_activate), this);
 		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
 		menuitem = gtk_separator_menu_item_new();
@@ -2640,11 +2641,13 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Select _All"));
 		image = gtk_image_new_from_stock(GTK_STOCK_SELECT_ALL, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_select_all_activate), this);
 		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Unselect all"));
 		image = gtk_image_new_from_stock(GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_unselect_all_activate), this);
 		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
 		gtk_widget_show_all(popup_menu);

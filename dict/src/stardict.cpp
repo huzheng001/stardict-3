@@ -542,6 +542,10 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		if (event->type==GDK_KEY_PRESS)
 			oAppCore->oTopWin.do_back();
 	}
+	else if ((event->keyval==GDK_KEY_Right) && only_mod1_pressed) {
+		if (event->type==GDK_KEY_PRESS)
+			oAppCore->oTopWin.do_forward();
+	}
 	else if ((event->keyval==GDK_KEY_Up) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS)
 			oAppCore->oTopWin.do_prev();

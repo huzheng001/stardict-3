@@ -27,7 +27,7 @@
 #include "readword.h"
 
 const guint MAX_HISTORY_WORD_ITEM_NUM=20;
-const guint MAX_BACK_WORD_ITEM_NUM=20;
+const guint MAX_BACK_WORD_ITEM_NUM=10;
 
 const int MIN_WINDOW_WIDTH=200;
 const int MIN_WINDOW_HEIGHT=100;
@@ -63,21 +63,22 @@ struct BackListData {
 class TopWin {
 private:
 	gboolean enable_change_cb;
-	GSList *BackList;
-	GtkWidget *HistoryMenu;
-	GtkWidget *BackMenu;
+	GList *BackList;
+	guint BackList_index;
+	GtkWidget *SearchMenu;
 	GtkWidget* WordCombo;
+	GtkWidget *back_button;
+	GtkWidget *forward_button;
 
-	static gint HisCompareFunc(gconstpointer a,gconstpointer b);
-	static gint BackListDataCompareFunc(gconstpointer a,gconstpointer b);
-
-	static void ClearCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void GoCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void BackCallback(GtkWidget *widget, TopWin *oTopWin);
+	static void ForwardCallback(GtkWidget *widget, TopWin *oTopWin);
 	static void MenuCallback(GtkWidget *widget, TopWin *oTopWin);
-	static gboolean on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin);
-	static void on_back_menu_item_activate(GtkMenuItem *menuitem, gint index);
 
+	static void do_search_by_fuzzyquery (GtkWidget *item, TopWin *oTopWin);
+	static void do_search_by_patternmatch (GtkWidget *item, TopWin *oTopWin);
+	static void do_search_by_regularmatch (GtkWidget *item, TopWin *oTopWin);
+	static void do_search_by_fulltextsearch (GtkWidget *item, TopWin *oTopWin);
 	static void on_entry_icon_press(GtkEntry *entry, gint position, GdkEventButton *event, TopWin *oTopWin);
 	static void on_entry_changed(GtkEntry *entry, TopWin *oTopWin);
 	static void on_entry_activate(GtkEntry *entry, TopWin *oTopWin);
@@ -110,6 +111,7 @@ public:
 	void InsertHisList(const gchar *word);
 	void InsertBackList(const gchar *word = NULL);
 	void do_back();
+	void do_forward();
 	void do_prev();
 	void do_next();
 	void do_menu();
