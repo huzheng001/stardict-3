@@ -45,21 +45,21 @@ TopWin::TopWin()
 {
 	WordCombo = NULL; //need by save_yourself_cb().
 	BackList = NULL;
+	BackList_index = 0;
 	enable_change_cb = true;
 	MainMenu = NULL;
-	HistoryMenu = NULL;
-	BackMenu = NULL;
+	SearchMenu = NULL;
 }
 
 TopWin::~TopWin()
 {
-	GSList *list = BackList;
+	GList *list = BackList;
 	while (list) {
 		g_free(((BackListData *)(list->data))->word);
 		g_free(list->data);
 		list = list->next;
 	}
-	g_slist_free(BackList);
+	g_list_free(BackList);
 }
 
 static void unfocus_combo_arrow(GtkWidget *widget, gpointer data)
@@ -79,17 +79,27 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(vbox),hbox,false,false,3);
 #endif
 
-	GtkWidget *button;
-#ifndef CONFIG_GPE
-	button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
-	gtk_widget_show(button);
-	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	gtk_widget_set_can_focus (button, FALSE);
-	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(ClearCallback),this);
-	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,3);
-	gtk_widget_set_tooltip_text(button,_("Clear the search box"));
-#endif
+	back_button = gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(back_button),gtk_image_new_from_stock(GTK_STOCK_GO_BACK, GTK_ICON_SIZE_BUTTON));
+	gtk_widget_show_all(back_button);
+	gtk_button_set_relief (GTK_BUTTON (back_button), GTK_RELIEF_NONE);
+	gtk_widget_set_can_focus (back_button, FALSE);
+	gtk_widget_set_sensitive(back_button, FALSE);
+	g_signal_connect(G_OBJECT(back_button),"clicked", G_CALLBACK(BackCallback),this);
+	g_signal_connect(G_OBJECT(back_button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
+	gtk_box_pack_start(GTK_BOX(hbox), back_button,false,false,0);
+	gtk_widget_set_tooltip_text(back_button,_("Go back (Alt+Left)"));
+
+	forward_button = gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(forward_button),gtk_image_new_from_stock(GTK_STOCK_GO_FORWARD,GTK_ICON_SIZE_BUTTON));
+	gtk_widget_show_all(forward_button);
+	gtk_button_set_relief (GTK_BUTTON (forward_button), GTK_RELIEF_NONE);
+	gtk_widget_set_can_focus (forward_button, FALSE);
+	gtk_widget_set_sensitive(forward_button, FALSE);
+	g_signal_connect(G_OBJECT(forward_button),"clicked", G_CALLBACK(ForwardCallback),this);
+	g_signal_connect(G_OBJECT(forward_button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
+	gtk_box_pack_start(GTK_BOX(hbox), forward_button,false,false,0);
+	gtk_widget_set_tooltip_text(forward_button,_("Go forward (Alt+Right)"));
 
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 	LoadHistory(list_store);
@@ -107,6 +117,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_entry_set_max_length(GTK_ENTRY(entry), MAX_INDEX_KEY_SIZE-1);
 	gtk_entry_set_icon_from_stock (GTK_ENTRY(entry), GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
 	gtk_entry_set_icon_from_stock (GTK_ENTRY (entry), GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
+	gtk_entry_set_icon_tooltip_text(GTK_ENTRY (entry), GTK_ENTRY_ICON_SECONDARY, _("Clear the search box"));
 	g_signal_connect (G_OBJECT (entry), "icon-press", G_CALLBACK (on_entry_icon_press), this);
 	g_signal_connect (G_OBJECT (entry), "changed", G_CALLBACK (on_entry_changed), this);
 	g_signal_connect (G_OBJECT (entry), "activate", G_CALLBACK (on_entry_activate), this);
@@ -114,6 +125,7 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),WordCombo,true,true,3);
 
 #ifndef CONFIG_GPE
+	GtkWidget *button;
 	button=gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_FIND,GTK_ICON_SIZE_BUTTON));
 	gtk_widget_show_all(button);
@@ -124,17 +136,6 @@ void TopWin::Create(GtkWidget *vbox)
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
 	gtk_widget_set_tooltip_text(button,_("Fuzzy query"));
 #endif
-
-	button=gtk_button_new();
-	gtk_container_add(GTK_CONTAINER(button),gtk_image_new_from_stock(GTK_STOCK_UNDO,GTK_ICON_SIZE_BUTTON));
-	gtk_widget_show_all(button);
-	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-	gtk_widget_set_can_focus (button, FALSE);
-	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(BackCallback),this);
-	g_signal_connect(G_OBJECT(button),"button_press_event", G_CALLBACK(on_back_button_press),this);
-	g_signal_connect(G_OBJECT(button),"enter_notify_event", G_CALLBACK(stardict_on_enter_notify), NULL);
-	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,0);
-	gtk_widget_set_tooltip_text(button,_("Go back - Right button: history (Alt+Left)"));
 
 	GtkWidget *label;
 	label = gtk_label_new("\t");
@@ -158,10 +159,8 @@ void TopWin::Destroy(void)
 	SaveHistory();
 	if (MainMenu)
 		gtk_widget_destroy(MainMenu);
-	if (HistoryMenu)
-		gtk_widget_destroy(HistoryMenu);
-	if (BackMenu)
-		gtk_widget_destroy(BackMenu);
+	if (SearchMenu)
+		gtk_widget_destroy(SearchMenu);
 }
 
 void TopWin::on_entry_changed(GtkEntry *entry, TopWin *oTopWin)
@@ -180,12 +179,123 @@ void TopWin::on_entry_changed(GtkEntry *entry, TopWin *oTopWin)
 	}
 }
 
+void TopWin::do_search_by_fuzzyquery (GtkWidget *item, TopWin *oTopWin)
+{
+	const gchar *text = oTopWin->get_text();
+	if (text[0]=='\0')
+		return;
+	gpAppFrame->LookupWithFuzzyToMainWin(text);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		std::string word;
+		word = "/";
+		word += text;
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
+		if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+			gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+			gpAppFrame->oStarDictClient.send_commands(1, c);
+		}
+	}
+	oTopWin->TextSelectAll();
+	oTopWin->grab_focus();
+	oTopWin->InsertHisList(text);
+	oTopWin->InsertBackList(text);
+}
+
+void TopWin::do_search_by_patternmatch (GtkWidget *item, TopWin *oTopWin)
+{
+	const gchar *text = oTopWin->get_text();
+	if (text[0]=='\0')
+		return;
+	gpAppFrame->LookupWithRuleToMainWin(text);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, text);
+		if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+			gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+			gpAppFrame->oStarDictClient.send_commands(1, c);
+		}
+	}
+	oTopWin->TextSelectAll();
+	oTopWin->grab_focus();
+	oTopWin->InsertHisList(text);
+	oTopWin->InsertBackList(text);
+}
+
+void TopWin::do_search_by_regularmatch (GtkWidget *item, TopWin *oTopWin)
+{
+	const gchar *text = oTopWin->get_text();
+	if (text[0]=='\0')
+		return;
+	gpAppFrame->LookupWithRegexToMainWin(text);
+	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
+	if (enable_netdict) {
+		std::string word;
+		word = ":";
+		word += text;
+		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_LOOKUP, word.c_str());
+		if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+			gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+			gpAppFrame->oStarDictClient.send_commands(1, c);
+		}
+	}
+	oTopWin->TextSelectAll();
+	oTopWin->grab_focus();
+	oTopWin->InsertHisList(text);
+	oTopWin->InsertBackList(text);
+}
+
+void TopWin::do_search_by_fulltextsearch (GtkWidget *item, TopWin *oTopWin)
+{
+	const gchar *text = oTopWin->get_text();
+	if (text[0]=='\0')
+		return;
+	gpAppFrame->LookupDataToMainWin(text);
+	oTopWin->TextSelectAll();
+	oTopWin->grab_focus();
+	oTopWin->InsertHisList(text);
+	oTopWin->InsertBackList(text);
+}
+
 void TopWin::on_entry_icon_press(GtkEntry *entry, gint position, GdkEventButton *event, TopWin *oTopWin)
 {
 	if (position == GTK_ENTRY_ICON_PRIMARY) {
-		GtkWidget *menu = gtk_menu_new ();
-		
-		gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, event->button, event->time);
+		if (oTopWin->SearchMenu == NULL) {
+			oTopWin->SearchMenu = gtk_menu_new ();
+			GtkWidget *menuitem;
+			GtkWidget *image;
+
+			menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Fuzzy query"));
+			image = gtk_image_new_from_stock (GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+			g_signal_connect (menuitem, "activate", G_CALLBACK (do_search_by_fuzzyquery), oTopWin);
+			gtk_menu_shell_append (GTK_MENU_SHELL (oTopWin->SearchMenu), menuitem);
+
+			menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Glob-style pattern matching"));
+			image = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+			g_signal_connect (menuitem, "activate", G_CALLBACK (do_search_by_patternmatch), oTopWin);
+			gtk_menu_shell_append (GTK_MENU_SHELL (oTopWin->SearchMenu), menuitem);
+
+			menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Regular expressions matching"));
+			image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+			g_signal_connect (menuitem, "activate", G_CALLBACK (do_search_by_regularmatch), oTopWin);
+			gtk_menu_shell_append (GTK_MENU_SHELL (oTopWin->SearchMenu), menuitem);
+
+			menuitem = gtk_image_menu_item_new_with_mnemonic (_("Full-_text search"));
+			image = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_MENU);
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+			g_signal_connect (menuitem, "activate", G_CALLBACK (do_search_by_fulltextsearch), oTopWin);
+			gtk_menu_shell_append (GTK_MENU_SHELL (oTopWin->SearchMenu), menuitem);
+
+			gtk_widget_show_all (oTopWin->SearchMenu);
+		}
+		gtk_menu_popup (GTK_MENU (oTopWin->SearchMenu), NULL, NULL, NULL, NULL, event->button, event->time);
 	} else {
 		play_sound_on_event("buttonactive");
 		oTopWin->InsertHisList(oTopWin->get_text());
@@ -216,73 +326,12 @@ void TopWin::on_entry_populate_popup(GtkEntry *entry, GtkMenu  *menu, TopWin *oT
 	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_clear_history_menu_item_activate), oTopWin);
 	GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 }
 
-gboolean TopWin::on_back_button_press(GtkWidget * widget, GdkEventButton * event , TopWin *oTopWin)
-{
-	if (event->button == 3) {
-		if (!(oTopWin->BackList))
-			return true;
-		gint index=0;
-		GSList *list;
-		list = oTopWin->BackList;
-		if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(oTopWin->WordCombo)))))) {
-			list = g_slist_next(list);
-			index++;
-			if (!list)
-				return true;
-		}
-		if (oTopWin->BackMenu)
-			gtk_widget_destroy(oTopWin->BackMenu);
-
-		oTopWin->BackMenu = gtk_menu_new();
-
-		GtkWidget *menuitem;
-		while (list) {
-			menuitem = gtk_image_menu_item_new_with_label(((BackListData *)(list->data))->word);
-			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_back_menu_item_activate), GINT_TO_POINTER(index));
-			gtk_menu_shell_append(GTK_MENU_SHELL(oTopWin->BackMenu), menuitem);
-			list = g_slist_next(list);
-			index++;
-		}
-		gtk_widget_show_all(oTopWin->BackMenu);
-		gtk_menu_popup(GTK_MENU(oTopWin->BackMenu), NULL, NULL, NULL, NULL, event->button, event->time);
-		return true;
-	}
-	return false;
-}
-
-void TopWin::on_back_menu_item_activate(GtkMenuItem *menuitem, gint index)
-{
-  for (int i=0; i<index; i++) {
-    g_free(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
-    g_free((gpAppFrame->oTopWin.BackList)->data);
-    gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);
-  }
-  gpAppFrame->oTopWin.InsertHisList(gpAppFrame->oTopWin.get_text());
-  gpAppFrame->oTopWin.SetText(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
-  if (((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value != -1) {
-    ProcessGtkEvent();
-    gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(gpAppFrame->oTopWin.BackList->data))->adjustment_value);
-  }
-  g_free(((BackListData *)((gpAppFrame->oTopWin.BackList)->data))->word);
-  g_free((gpAppFrame->oTopWin.BackList)->data);
-  gpAppFrame->oTopWin.BackList = g_slist_delete_link(gpAppFrame->oTopWin.BackList, gpAppFrame->oTopWin.BackList);
-}
-
 #ifndef CONFIG_GPE
-void TopWin::ClearCallback(GtkWidget *widget, TopWin *oTopWin)
-{
-	play_sound_on_event("buttonactive");
-
-	oTopWin->InsertHisList(oTopWin->get_text());
-	oTopWin->InsertBackList();
-	oTopWin->SetText("");
-	oTopWin->grab_focus();
-}
-
 void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 {
 	play_sound_on_event("buttonactive");
@@ -335,25 +384,54 @@ void TopWin::GoCallback(GtkWidget *widget, TopWin *oTopWin)
 
 void TopWin::do_back()
 {
-  if (!BackList)
-    return;
-  GSList *list = BackList;
-  if (!strcmp(((BackListData *)(list->data))->word, gtk_entry_get_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(WordCombo)))))) {
-    list = g_slist_next(list);
-    if (!list)
-      return;
-  }
-  InsertHisList(get_text());
-  SetText(((BackListData *)(list->data))->word);
-  if (gtk_widget_has_focus(GTK_WIDGET(gtk_bin_get_child(GTK_BIN(WordCombo)))))
-    gtk_editable_select_region(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))), 0, -1);
-  if (((BackListData *)(list->data))->adjustment_value != -1) {
-    ProcessGtkEvent(); // so all the definition text have been inserted.
-    gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(list->data))->adjustment_value);
-  }
-  g_free(((BackListData *)(list->data))->word);
-  g_free(list->data);
-  BackList = g_slist_delete_link(BackList,list);
+	if (!BackList)
+		return;
+	GList *list = g_list_nth(BackList, BackList_index);
+	if (!list)
+		return;
+	list = g_list_next(list);
+	if (!list) {
+		gtk_widget_set_sensitive(back_button, FALSE);
+		return;
+	}
+	if (list->next == NULL)
+		gtk_widget_set_sensitive(back_button, FALSE);
+	BackList_index++;
+	gtk_widget_set_sensitive(forward_button, TRUE);
+	InsertHisList(get_text());
+	SetText(((BackListData *)(list->data))->word);
+	if (gtk_widget_has_focus(gtk_bin_get_child(GTK_BIN(WordCombo))))
+		gtk_editable_select_region(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))), 0, -1);
+	if (((BackListData *)(list->data))->adjustment_value != -1) {
+		ProcessGtkEvent(); // so all the definition text have been inserted.
+		gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(list->data))->adjustment_value);
+	}
+}
+
+void TopWin::do_forward()
+{
+	if (!BackList)
+		return;
+	GList *list = g_list_nth(BackList, BackList_index);
+	if (!list)
+		return;
+	list = g_list_previous(list);
+	if (!list) {
+		gtk_widget_set_sensitive(forward_button, FALSE);
+		return;
+	}
+	if (list->prev == NULL)
+		gtk_widget_set_sensitive(forward_button, FALSE);
+	BackList_index--;
+	gtk_widget_set_sensitive(back_button, TRUE);
+	InsertHisList(get_text());
+	SetText(((BackListData *)(list->data))->word);
+	if (gtk_widget_has_focus(GTK_WIDGET(gtk_bin_get_child(GTK_BIN(WordCombo)))))
+		gtk_editable_select_region(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))), 0, -1);
+	if (((BackListData *)(list->data))->adjustment_value != -1) {
+		ProcessGtkEvent(); // so all the definition text have been inserted.
+		gpAppFrame->oMidWin.oTextWin.view->scroll_to(((BackListData *)(list->data))->adjustment_value);
+	}
 }
 
 void TopWin::BackCallback(GtkWidget *widget, TopWin *oTopWin)
@@ -361,6 +439,13 @@ void TopWin::BackCallback(GtkWidget *widget, TopWin *oTopWin)
 	play_sound_on_event("buttonactive");
 
 	oTopWin->do_back();
+}
+
+void TopWin::ForwardCallback(GtkWidget *widget, TopWin *oTopWin)
+{
+	play_sound_on_event("buttonactive");
+
+	oTopWin->do_forward();
 }
 
 void TopWin::do_prev()
@@ -560,18 +645,21 @@ void TopWin::do_menu()
 		GtkWidget *image;
 		image = gtk_image_new_from_stock(GTK_STOCK_PREFERENCES, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_preferences_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _dictionaries"));
 		image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_dictmanage_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Manage _plugins"));
 		image = gtk_image_new_from_stock(GTK_STOCK_DISCONNECT, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_pluginmanage_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
@@ -581,12 +669,14 @@ void TopWin::do_menu()
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Download dict_ionaries"));
 		image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_downloaddict_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_New version"));
 		image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_newversion_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 		menuitem = gtk_separator_menu_item_new();
@@ -595,12 +685,14 @@ void TopWin::do_menu()
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Help"));
 		image = gtk_image_new_from_stock(GTK_STOCK_HELP, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_help_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_About"));
 		image = gtk_image_new_from_stock (GTK_STOCK_ABOUT, GTK_ICON_SIZE_BUTTON);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_about_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 		menuitem = gtk_separator_menu_item_new();
@@ -609,6 +701,7 @@ void TopWin::do_menu()
 		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Quit"));
 		image = gtk_image_new_from_stock(GTK_STOCK_QUIT, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_quit_activate), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
@@ -660,15 +753,12 @@ gboolean TopWin::TextSelected()
     return (gtk_editable_get_selection_bounds(GTK_EDITABLE(gtk_bin_get_child(GTK_BIN(WordCombo))),NULL,NULL));
 }
 
-gint TopWin::HisCompareFunc(gconstpointer a,gconstpointer b)
-{
-	return strcmp((const gchar *)a, (const gchar *)b);
-}
-
+/*
 gint TopWin::BackListDataCompareFunc(gconstpointer a,gconstpointer b)
 {
 	return strcmp(((const BackListData *)a)->word, ((const BackListData *)b)->word);
 }
+*/
 
 void TopWin::InsertHisList(const gchar *word)
 {
@@ -756,38 +846,41 @@ void TopWin::LoadHistory(GtkListStore* list_store)
 
 void TopWin::InsertBackList(const gchar *word)
 {
-  BackListData *backlistdata;
-  if (word) {
-    if (word[0] == '\0')
-      return;
-    backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
-    backlistdata->word = g_strdup(word);
-    backlistdata->adjustment_value = -1;
-  } else {
-    word = gtk_entry_get_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(WordCombo))));
-    if (word[0] == '\0')
-      return;
-    backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
-    backlistdata->word = g_strdup(word);
-    backlistdata->adjustment_value = gpAppFrame->oMidWin.oTextWin.view->scroll_pos();
-  }
-
-  GSList* list =
-    g_slist_find_custom(BackList, backlistdata, BackListDataCompareFunc);
-  if (list) {
-    g_free(((BackListData *)(list->data))->word);
-    g_free(list->data);
-    BackList = g_slist_delete_link(BackList,list);
-    BackList = g_slist_prepend(BackList,backlistdata);
-  } else {
-    BackList = g_slist_prepend(BackList,backlistdata);
-  }
-  if (g_slist_length(BackList)> MAX_BACK_WORD_ITEM_NUM)	{
-    list = g_slist_last(BackList);
-    g_free(((BackListData *)(list->data))->word);
-    g_free(list->data);
-    BackList = g_slist_delete_link(BackList,list);
-  }
+	BackListData *backlistdata;
+	if (word) {
+		if (word[0] == '\0')
+			return;
+		if (BackList && (strcmp(((BackListData *)(BackList->data))->word, word) == 0))
+			return;
+		backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
+		backlistdata->word = g_strdup(word);
+		backlistdata->adjustment_value = -1;
+	} else {
+		word = gtk_entry_get_text(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(WordCombo))));
+		if (word[0] == '\0')
+			return;
+		if (BackList && (strcmp(((BackListData *)(BackList->data))->word, word) == 0))
+			return;
+		backlistdata = (BackListData *)g_malloc(sizeof(BackListData));
+		backlistdata->word = g_strdup(word);
+		backlistdata->adjustment_value = gpAppFrame->oMidWin.oTextWin.view->scroll_pos();
+	}
+	for (guint i=0; i< BackList_index; i++) {
+		g_free(((BackListData *)((BackList)->data))->word);
+		g_free(BackList->data);
+		BackList = g_list_delete_link(BackList, BackList);
+	}
+	if (BackList != NULL)
+		gtk_widget_set_sensitive(back_button, TRUE);
+	gtk_widget_set_sensitive(forward_button, FALSE);
+	BackList = g_list_prepend(BackList, backlistdata);
+	BackList_index = 0;
+	if (g_list_length(BackList)> MAX_BACK_WORD_ITEM_NUM)	{
+		GList *list = g_list_last(BackList);
+		g_free(((BackListData *)(list->data))->word);
+		g_free(list->data);
+		BackList = g_list_delete_link(BackList,list);
+	}
 }
 
 /**************************************************/
@@ -2248,6 +2341,7 @@ void TextWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *o
 			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_pronounce_menu_item_activate), oTextWin);
 			GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
 			gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 			gtk_widget_show(menuitem);
 			gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
 		}
@@ -2256,6 +2350,7 @@ void TextWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TextWin *o
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_query_menu_item_activate), oTextWin);
 		GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		gtk_widget_show(menuitem);
 		gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
 	}
@@ -2365,6 +2460,7 @@ void TransWin::on_populate_popup(GtkTextView *textview, GtkMenu *menu, TransWin 
 			g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_pronounce_menu_item_activate), oTransWin);
 			GtkWidget *image = gtk_image_new_from_stock(GTK_STOCK_EXECUTE, GTK_ICON_SIZE_MENU);
 			gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+			gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 			gtk_widget_show(menuitem);
 			gtk_menu_shell_prepend(GTK_MENU_SHELL(menu), menuitem);
 		}
@@ -2602,7 +2698,7 @@ void MidWin::Create(GtkWidget *vbox)
 {
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 	gtk_widget_show(hbox);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE,0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 2);
 
 	notebook = gtk_notebook_new();
 	gtk_widget_show(notebook);

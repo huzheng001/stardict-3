@@ -84,7 +84,6 @@ void DockLet::minimize_to_tray()
 void DockLet::create_docklet(void)
 {
 	docklet_ = gtk_status_icon_new();
-	g_object_ref(G_OBJECT(docklet_));
 	gtk_status_icon_set_title(docklet_, _("StarDict"));
 	if (is_hide_state()) {
 		show_normal_icon();
@@ -150,6 +149,7 @@ void DockLet::create_popup_menu(void)
 		GtkWidget *image;
 		image = gtk_image_new_from_stock(GTK_STOCK_QUIT, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate",
 			G_CALLBACK(on_menu_quit), this);
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu_),
