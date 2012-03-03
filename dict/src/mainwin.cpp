@@ -298,11 +298,19 @@ void TopWin::on_entry_icon_press(GtkEntry *entry, gint position, GdkEventButton 
 		gtk_menu_popup (GTK_MENU (oTopWin->SearchMenu), NULL, NULL, NULL, NULL, event->button, event->time);
 	} else {
 		play_sound_on_event("buttonactive");
-		oTopWin->InsertHisList(oTopWin->get_text());
-		oTopWin->InsertBackList();
-		oTopWin->SetText("");
-		oTopWin->grab_focus();
+		oTopWin->clear_entry();
 	}
+}
+
+/* Clear the Search field and focus it. Be ready for new query. */
+void TopWin::clear_entry()
+{
+	if (get_text()[0]) {
+		InsertHisList(get_text());
+		InsertBackList();
+		SetText("");
+	}
+	grab_focus();
 }
 
 void TopWin::on_entry_activate(GtkEntry *entry, TopWin *oTopWin)

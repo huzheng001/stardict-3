@@ -107,6 +107,7 @@ public:
 	void Destroy(void);
 	void SetText(const gchar *word, bool notify=true);
 	//void SetText_without_notify(const gchar *word);
+	void clear_entry();
 	void TextSelectAll();	
 	void InsertHisList(const gchar *word);
 	void InsertBackList(const gchar *word = NULL);
