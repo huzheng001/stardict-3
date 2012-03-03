@@ -554,13 +554,17 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		if (event->type==GDK_KEY_PRESS)
 			oAppCore->oTopWin.do_next();
 	}
+	else if ((event->keyval==GDK_KEY_c || event->keyval==GDK_KEY_C) && only_mod1_pressed) {
+		if (event->type==GDK_KEY_PRESS)
+			oAppCore->oTopWin.clear_entry();
+	}
 	else if ((event->keyval==GDK_KEY_m || event->keyval==GDK_KEY_M) && only_mod1_pressed) {
 		if (event->type==GDK_KEY_PRESS)
 			oAppCore->oTopWin.do_menu();
 	}
 	else if ((event->keyval==GDK_KEY_u || event->keyval==GDK_KEY_U) && only_ctrl_pressed) {
 		if (event->type==GDK_KEY_PRESS)
-			oAppCore->new_query_action();
+			oAppCore->oTopWin.clear_entry();
 	}
 	else if ((event->keyval==GDK_KEY_v || event->keyval==GDK_KEY_V) && only_ctrl_pressed &&
 			!oAppCore->oTopWin.has_focus() &&
@@ -587,7 +591,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		!oAppCore->oTopWin.has_focus() &&
 		!oAppCore->oMidWin.oTransWin.IsInputViewHasFocus() &&
 		!oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
-		oAppCore->new_query_action();
+		oAppCore->oTopWin.clear_entry();
 	} else if (event->type == GDK_KEY_PRESS &&
 		   event->keyval == GDK_KEY_Return &&
 		   !oAppCore->oTopWin.has_focus() &&
@@ -636,21 +640,11 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 		if(oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus())
 			oAppCore->oMidWin.oTextWin.HideSearchPanel();
 		else
-			oAppCore->new_query_action();
+			oAppCore->oTopWin.clear_entry();
 	} else {
 		return_val=false;
 	}
 	return return_val;
-}
-
-/* Clear the Search field and focus it. Be ready for new query. */
-void AppCore::new_query_action(void) {
-	if (oTopWin.get_text()[0]) {
-		oTopWin.InsertHisList(oTopWin.get_text());
-		oTopWin.InsertBackList();
-		oTopWin.SetText("");
-	}
-	oTopWin.grab_focus();
 }
 
 void AppCore::SimpleLookupToFloat(const char* sWord, bool IgnoreScanModifierKey)

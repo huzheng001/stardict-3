@@ -646,7 +646,7 @@ const char *StarDictNetDictPlugins::dict_cacheid(size_t iPlugin)
 bool StarDictNetDictPlugins::find_dict_by_id(const DictItemId& id, size_t &iPlugin) const
 {
 	for (std::vector<StarDictNetDictPlugin *>::size_type i = 0; i < oPlugins.size(); i++) {
-		if (is_equal_paths(oPlugins[i]->get_filename(), id.str())==0) {
+		if (is_equal_paths(oPlugins[i]->get_filename(), id.str())) {
 			iPlugin = i;
 			return true;
 		}

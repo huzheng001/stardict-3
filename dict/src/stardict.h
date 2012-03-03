@@ -85,7 +85,6 @@ private:
 	static gboolean on_delete_event(GtkWidget * window, GdkEvent *event , AppCore *oAppCore);
 	static gboolean on_window_state_event(GtkWidget * window, GdkEventWindowState *event , AppCore *oAppCore);
 	static gboolean vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *event , AppCore *oAppCore);
-	void new_query_action(void);
 	void reload_dicts();
 	void on_main_win_hide_list_changed(const baseconfval*);
 	void on_dict_scan_select_changed(const baseconfval*);
