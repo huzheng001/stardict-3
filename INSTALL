@@ -15,6 +15,16 @@ You can use:
 =============
 to build the "gtk library only" version of StarDict.
 
+You can use:
+=============
+./configure --disable-tools
+=============
+to disable tools building, only compile StarDict program. And:
+=============
+./configure --disable-dict
+=============
+to disable StarDict program building, only compile tools.
+
 You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
 You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
 

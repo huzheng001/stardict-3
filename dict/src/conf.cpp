@@ -39,9 +39,9 @@ const int DEFAULT_WINDOW_WIDTH=238;
 const int DEFAULT_WINDOW_HEIGHT=279;
 const int DEFAULT_HPANED_POS=79;
 #else
-const int DEFAULT_WINDOW_WIDTH=463;
-const int DEFAULT_WINDOW_HEIGHT=321;
-const int DEFAULT_HPANED_POS=127;
+const int DEFAULT_WINDOW_WIDTH=600;
+const int DEFAULT_WINDOW_HEIGHT=390;
+const int DEFAULT_HPANED_POS=120;
 #endif
 
 std::auto_ptr<AppConf> conf;

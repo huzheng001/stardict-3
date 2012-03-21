@@ -141,7 +141,7 @@
       <applyto>/apps/stardict/preferences/main_window/window_width</applyto>
       <owner>stardict</owner>
       <type>int</type>
-      <default>555</default>
+      <default>600</default>
       <locale name="C">
 	<short>Window-width</short>
 	<long>The width of the main stardict window.</long>
@@ -153,7 +153,7 @@
       <applyto>/apps/stardict/preferences/main_window/window_height</applyto>
       <owner>stardict</owner>
       <type>int</type>
-      <default>361</default>
+      <default>390</default>
       <locale name="C">
 	<short>Window-height</short>
 	<long>The height of the main stardict window.</long>
@@ -177,7 +177,7 @@
       <applyto>/apps/stardict/preferences/main_window/hpaned_pos</applyto>
       <owner>stardict</owner>
       <type>int</type>
-      <default>115</default>
+      <default>120</default>
       <locale name="C">
 	<short>Hpaned 's position</short>
 	<long>The hpaned's position, between the listview and the textview.</long>
