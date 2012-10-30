@@ -621,7 +621,7 @@ void captureAllChn(int chnum)
 	unsigned long offset;
 	char *cptr, *ptr;	//cptr
 	bool end = false;
-	const char const_ff[5]={0x0ff,0x0ff,0x0ff,0x0ff,0x0ff};
+	const char const_ff[5]={(char)(0x0ff),(char)(0x0ff),(char)(0x0ff),(char)(0x0ff),(char)(0x0ff)};
 
 	langMask = 'c';
 	unsigned short int si=0;
@@ -800,7 +800,7 @@ void captureAllWord(int chnum)
 	unsigned long offset;
 	char *cptr, *ptr;
 	bool end = false;
-	const char const_ff[5]={0x0ff,0x0ff,0x0ff,0x0ff,0x0ff};
+	const char const_ff[5]={(char)(0x0ff),(char)(0x0ff),(char)(0x0ff),(char)(0x0ff),(char)(0x0ff)};
 
 	langMask = 'e';
 	

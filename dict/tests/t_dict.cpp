@@ -61,7 +61,7 @@ static inline glong random(glong from, glong to)
 static bool test_dict_lookup_success(Dict *d)
 {
 	const char too_small[]={0x1, 0x1, 0x1, 0x0};
-	const char too_big[]={0xCF, 0xCF, 0xCF, 0x0};
+	const char too_big[]={(char)(0xCF), (char)(0xCF), (char)(0xCF), 0x0};
 	glong i, s;
 	if (d->Lookup(too_small, i, s, CollationLevel_NONE, 0)) {
 		std::cerr<<"too_small test failed for: "<<d->dict_name()<<std::endl;

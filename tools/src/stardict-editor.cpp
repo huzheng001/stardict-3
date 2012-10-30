@@ -163,10 +163,18 @@ static void on_compile_page_combo_box_changed(GtkComboBox *widget, gpointer user
 
 static void create_compile_page(GtkWidget *notebook)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 6);
+#endif
 	GtkWidget *label = gtk_label_new("Compile");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new("File name:");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -235,7 +243,11 @@ static void create_compile_page(GtkWidget *notebook)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	hbox = gtk_hbox_new(FALSE, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	
 	compile_page_combo_box = gtk_combo_box_text_new();
@@ -250,7 +262,11 @@ static void create_compile_page(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_compile_page_compile_button_clicked), entry);
 
 	// parameter panel
+#if GTK_MAJOR_VERSION >= 3
 	compile_page_textual_stardict_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	compile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), compile_page_textual_stardict_hbox, false, false, 3);
 	
 	compile_page_show_xinclude_check_box = gtk_check_button_new_with_label("show xincludes");
@@ -321,10 +337,18 @@ static void on_decompile_page_combo_box_changed(GtkComboBox *widget, gpointer us
 
 static void create_decompile_page(GtkWidget *notebook)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 6);
+#endif
 	GtkWidget *label = gtk_label_new("DeCompile/Verify");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	GtkWidget *hbox = gtk_hbox_new(false, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new("File name:");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -344,7 +368,11 @@ static void create_decompile_page(GtkWidget *notebook)
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	hbox = gtk_hbox_new(false, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 
 	decompile_page_combo_box = gtk_combo_box_text_new();
@@ -361,7 +389,11 @@ static void create_decompile_page(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(on_decompile_page_verify_button_clicked), entry);
 
 	// parameter panel
+#if GTK_MAJOR_VERSION >= 3
 	decompile_page_textual_stardict_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	decompile_page_textual_stardict_hbox = gtk_hbox_new(false, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), decompile_page_textual_stardict_hbox, false, false, 3);
 	label = gtk_label_new("Chunk size (in bytes, 0 - do not split):");
 	gtk_box_pack_start(GTK_BOX(decompile_page_textual_stardict_hbox), label, false, false, 0);
@@ -423,10 +455,18 @@ static void on_edit_page_saveas_button_clicked(GtkButton *button, gpointer data)
 
 static void create_edit_page(GtkWidget *notebook)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 6);
+#endif
 	GtkWidget *label = gtk_label_new("Edit");
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	GtkWidget *hbox = gtk_hbox_new(false, 6);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *button = gtk_button_new_with_mnemonic("_Open");
 	gtk_box_pack_start(GTK_BOX(hbox), button, true, false, 0);

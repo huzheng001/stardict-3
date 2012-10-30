@@ -463,7 +463,11 @@ bool PluginManageDlg::ShowModal(GtkWindow *parent_win, bool &dict_changed, bool 
 	gtk_dialog_set_default_response(GTK_DIALOG(window), GTK_RESPONSE_CLOSE);
 	g_signal_connect(G_OBJECT(window), "response", G_CALLBACK(response_handler), this);
 	GtkWidget *vbox;
+#if GTK_MAJOR_VERSION >= 3
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
+#else
+	vbox = gtk_vbox_new (FALSE, 5);
+#endif
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 	GtkWidget *pluginlist = create_plugin_list();
 	gtk_box_pack_start (GTK_BOX (vbox), pluginlist, true, true, 0);

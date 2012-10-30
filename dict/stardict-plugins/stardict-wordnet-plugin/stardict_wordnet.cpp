@@ -81,7 +81,11 @@ static void save_conf_file()
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("WordNet configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+#endif
 	GtkWidget *graphic_button = gtk_radio_button_new_with_label(NULL, _("Graphic mode."));
 	gtk_box_pack_start(GTK_BOX(vbox), graphic_button, false, false, 0);
 	GtkWidget *text_button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(graphic_button), _("Text mode."));

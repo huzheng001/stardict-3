@@ -42,7 +42,11 @@ progress_win::progress_win(GtkWindow *parent_win)
 		gtk_window_set_transient_for(GTK_WINDOW(win), parent_win);
 	gtk_window_set_title(GTK_WINDOW(win), _("Loading"));
 	gtk_window_set_position(GTK_WINDOW(win), parent_win ? GTK_WIN_POS_CENTER_ON_PARENT : GTK_WIN_POS_CENTER);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+#endif
 	gtk_container_add(GTK_CONTAINER(win), vbox);
 	text = GTK_LABEL(gtk_label_new(_("Loading")));
 	gtk_box_pack_start(GTK_BOX(vbox),GTK_WIDGET(text),false,false,0);

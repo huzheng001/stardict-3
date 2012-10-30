@@ -4,9 +4,9 @@ COMMONLIB_LIB = $(top_builddir)/$(COMMONLIB_LIBRARY)
 
 SUBDIRS= 
 
-bin_PROGRAMS = stardict-editor
+bin_PROGRAMS =
 
-noinst_PROGRAMS = pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
+noinst_PROGRAMS = stardict-editor pydict2dic olddic2newdic oxford2dic directory2dic dictd2dic \
 	wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout \
 	soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile \
 	cedict edict duden stardict-dict-update degb2utf frgb2utf jpgb2utf gmx2utf \

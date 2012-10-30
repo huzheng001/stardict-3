@@ -67,7 +67,11 @@ void splash_screen::show()
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox),image,false,false,0);
 	text = GTK_LABEL(gtk_label_new(_("Loading")));
 	int w = gdk_pixbuf_get_width(gtk_image_get_pixbuf(GTK_IMAGE(image)));

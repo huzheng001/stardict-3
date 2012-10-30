@@ -66,7 +66,11 @@ void FloatWin::Create()
 	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_ETCHED_OUT);
 	gtk_container_add(GTK_CONTAINER(FloatWindow),frame);
 	GtkWidget *vbox;
+#if GTK_MAJOR_VERSION >= 3
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+#else
+	vbox = gtk_vbox_new(false,0);
+#endif
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), FLOATWIN_BORDER_WIDTH);
 	gtk_container_add(GTK_CONTAINER(frame),vbox);
 
@@ -550,10 +554,14 @@ gint FloatWin::vHideWindowTimeOutCallback(gpointer data)
 		&& !oFloatWin->IgnoreScanModifierKey) {
 		GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(oFloatWin->FloatWindow));
 		GdkDisplay *display = gdk_screen_get_display(screen);
+		gint iCurrentX,iCurrentY;
+#if GTK_MAJOR_VERSION >= 3
 		GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
 		GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
-		gint iCurrentX,iCurrentY;
 		gdk_device_get_position(pointer, NULL, &iCurrentX, &iCurrentY);
+#else
+		gdk_display_get_pointer(display, NULL, &iCurrentX, &iCurrentY, NULL);
+#endif
 		if (iCurrentX == oFloatWin->popup_pointer_x && iCurrentY==oFloatWin->popup_pointer_y) {
 			bool released = !gpAppFrame->unlock_keys->is_pressed();
 
@@ -748,7 +756,11 @@ gint FloatWin::get_vscrollbar_width(void)
 	if (!vscrollbar_width) {
 		if (view->vscroll_bar()) {
 			GtkRequisition vscrollbar_requisition;
+#if GTK_MAJOR_VERSION >= 3
 			gtk_widget_get_preferred_size(view->vscroll_bar(), NULL, &vscrollbar_requisition);
+#else
+			gtk_widget_size_request(view->vscroll_bar(), &vscrollbar_requisition);
+#endif
 			vscrollbar_width = vscrollbar_requisition.width;
 			vscrollbar_width += view->scroll_space();
 		}
@@ -764,13 +776,21 @@ gint FloatWin::get_window_border_width(void)
 void FloatWin::float_window_size(gint& window_width, gint& window_height)
 {
 	GtkRequisition requisition;
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_get_preferred_size(view->widget(), NULL, &requisition);
+#else
+	gtk_widget_size_request(view->widget(), &requisition);
+#endif
 	int max_window_width=conf->get_int_at("floating_window/max_window_width");
 	if (requisition.width > max_window_width) {
 		// it is not really max window width setting.
 		gtk_widget_set_size_request(view->widget(), max_window_width, -1);
 		gtk_label_set_line_wrap(GTK_LABEL(view->widget()), true);
+#if GTK_MAJOR_VERSION >= 3
 		gtk_widget_get_preferred_size(view->widget(), NULL, &requisition); //update requisition
+#else
+		gtk_widget_size_request(view->widget(), &requisition); //update requisition
+#endif
 	}
 	window_width = get_window_border_width() + requisition.width;
 	int max_window_height=
@@ -801,9 +821,13 @@ void FloatWin::float_window_position(gboolean usePointerPosition,
 	GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(FloatWindow));
 	if (usePointerPosition) {
 		GdkDisplay *display = gdk_screen_get_display(screen);
+#if GTK_MAJOR_VERSION >= 3
 		GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
 		GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
 		gdk_device_get_position (pointer, NULL, &x, &y);
+#else
+		gdk_display_get_pointer(display, NULL, &x, &y, NULL);
+#endif
 		x += FLOATWIN_OFFSET_X;
 		y += FLOATWIN_OFFSET_Y;
 	} else {
@@ -825,9 +849,13 @@ void FloatWin::remember_pointer_position(void)
 	if (pressed) {
 		GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(FloatWindow));
 		GdkDisplay *display = gdk_screen_get_display(screen);
+#if GTK_MAJOR_VERSION >= 3
 		GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
 		GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
 		gdk_device_get_position(pointer, NULL, &popup_pointer_x, &popup_pointer_y);
+#else
+		gdk_display_get_pointer(display, NULL, &popup_pointer_x, &popup_pointer_y, NULL);
+#endif
 	} else {
 		// popup by middle click on the notification area icon, 
 		// so never hiden the floating window even mouse didn't moved as in FloatWin::vHideWindowTimeOutCallback().
@@ -868,7 +896,11 @@ void FloatWin::Popup(gboolean updatePosition)
 
 void FloatWin::create_button_hbox(void)
 {
+#if GTK_MAJOR_VERSION >= 3
 	button_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+	button_hbox = gtk_hbox_new(false,0);
+#endif
 	
 	GtkWidget *button;
 	button= gtk_button_new();
@@ -942,10 +974,14 @@ int FloatWin::get_distance_pointer_to_window(void)
 {
 	GdkScreen *screen = gtk_window_get_screen(GTK_WINDOW(FloatWindow));
 	GdkDisplay *display = gdk_screen_get_display(screen);
+	gint iCurrentX,iCurrentY;
+#if GTK_MAJOR_VERSION >= 3
 	GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
 	GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
-	gint iCurrentX,iCurrentY;
 	gdk_device_get_position(pointer, NULL, &iCurrentX, &iCurrentY);
+#else
+	gdk_display_get_pointer(display, NULL, &iCurrentX, &iCurrentY, NULL);
+#endif
 	gint window_x,window_y,window_width,window_height;
 	gtk_window_get_position(GTK_WINDOW(FloatWindow),&window_x,&window_y);
 	//notice: gtk_window_get_size() is not really uptodate,don't use it! see "gtk reference".
@@ -985,7 +1021,11 @@ void FloatWin::button_box_show_first_time(void)
 	gint screen_width = gdk_screen_get_width(screen);
 	gint screen_height = gdk_screen_get_height(screen);
 	GtkRequisition requisition;
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_get_preferred_size(button_hbox, NULL, &requisition);
+#else
+	gtk_widget_size_request(button_hbox,&requisition);
+#endif
 	now_window_height += requisition.height;
 	requisition.width += get_window_border_width();
 	if (requisition.width > now_window_width)
@@ -1066,6 +1106,7 @@ void FloatWin::set_transparent(int transparent)
 
 void FloatWin::set_bg(void)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GdkRGBA color;
 	const GdkRGBA *pcolor = NULL;
 	if (conf->get_bool_at("floating_window/use_custom_bg")) {
@@ -1077,6 +1118,18 @@ void FloatWin::set_bg(void)
 	}
 	gtk_widget_override_background_color(FloatWindow, GTK_STATE_FLAG_NORMAL, pcolor);
 	view->modify_bg(GTK_STATE_FLAG_NORMAL, pcolor);
+#else
+	GdkColor color;
+	const GdkColor *pcolor = NULL;
+	if (conf->get_bool_at("floating_window/use_custom_bg")) {
+		color.red = conf->get_int_at("floating_window/bg_red");
+		color.green = conf->get_int_at("floating_window/bg_green");
+		color.blue = conf->get_int_at("floating_window/bg_blue");
+		pcolor = &color;
+	}
+	gtk_widget_modify_bg(FloatWindow, GTK_STATE_NORMAL, pcolor);
+	view->modify_bg(GTK_STATE_NORMAL, pcolor);
+#endif
 }
 
 const gchar* FloatWin::get_lock_image_stock_id(void)

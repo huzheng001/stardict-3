@@ -88,9 +88,17 @@ static void on_tts_combobox_changed(GtkComboBox *widget, gpointer data)
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Festival TTS configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 10);
+#endif
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+#else
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 5);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *label = gtk_label_new(_("Voice type:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -120,7 +128,11 @@ static void configure()
 	gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), old_index);
 	g_signal_connect (G_OBJECT (combobox), "changed", G_CALLBACK (on_tts_combobox_changed), NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), combobox, false, false, 0);
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+#else
+	hbox = gtk_hbox_new(FALSE, 5);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	GtkWidget *entry = gtk_entry_new();
 	gtk_entry_set_text(GTK_ENTRY(entry), "This is the test text");

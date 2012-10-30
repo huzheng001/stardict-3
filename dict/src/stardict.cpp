@@ -257,8 +257,12 @@ void AppCore::Create(const gchar *queryword)
 				g_strdup_printf("style \"custom-font\" { font_name= \"%s\" }\n"
 						"class \"GtkWidget\" style \"custom-font\"\n",
 						custom_font.c_str());
+#if GTK_MAJOR_VERSION >= 3
 			GtkCssProvider *css_provider = gtk_css_provider_get_default();
 			gtk_css_provider_load_from_data(css_provider, aa, -1, NULL);
+#else
+			gtk_rc_parse_string(aa);
+#endif
 			g_free(aa);
 		}
 	}
@@ -367,7 +371,11 @@ void AppCore::Create(const gchar *queryword)
 	g_signal_connect (G_OBJECT (window), "key_press_event", G_CALLBACK (vKeyPressReleaseCallback), this);
 	g_signal_connect (G_OBJECT (window), "key_release_event", G_CALLBACK (vKeyPressReleaseCallback), this);
 
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
+#endif
 	gtk_widget_show(vbox);
 	gtk_container_add(GTK_CONTAINER(window),vbox);
 	oTopWin.Create(vbox);
@@ -583,7 +591,7 @@ gboolean AppCore::vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *even
 						 !oAppCore->oMidWin.oTextWin.IsSearchPanelHasFocus()) {
 		oAppCore->oTopWin.InsertHisList(oAppCore->oTopWin.get_text());
 		oAppCore->oTopWin.InsertBackList();
-		gchar str[2] = { event->keyval, '\0' };
+		gchar str[2] = { (gchar)(event->keyval), '\0' };
 		oAppCore->oTopWin.grab_focus();
 		oAppCore->oTopWin.SetText(str, conf->get_bool_at("main_window/search_while_typing"));
 		oAppCore->oTopWin.set_position_in_text(1);
@@ -1073,7 +1081,11 @@ void LookupDataDialog::show()
 	gtk_dialog_add_button(GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 	gtk_widget_grab_focus(button);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+#endif
 	gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),vbox,true,true,0);
 	GtkWidget *sw = gtk_scrolled_window_new (NULL, NULL);
 	gtk_box_pack_start(GTK_BOX(vbox),sw,true,true,0);
@@ -1183,7 +1195,11 @@ void AppCore::LookupDataWithDictMask(const gchar *sWord, std::vector<InstantDict
 	gtk_window_set_title (GTK_WINDOW(search_window), _("Full-text search..."));
 	gtk_window_set_transient_for(GTK_WINDOW(search_window), GTK_WINDOW(window));
 	gtk_window_set_position(GTK_WINDOW(search_window), GTK_WIN_POS_CENTER_ON_PARENT);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 6);
+#endif
 	gtk_container_add(GTK_CONTAINER(search_window),vbox);
 	Dialog.progress_bar = gtk_progress_bar_new();
 	gtk_box_pack_start(GTK_BOX(vbox),Dialog.progress_bar,false,false,0);

@@ -137,11 +137,14 @@ void SkinStorage::load_gtk_engine() const
 	 * reloading the whole thing? Consider using gtk_rc_parse, 
 	 * gtk_rc_add_default_file routines. */
 
-	/*gchar *gtkrc_files[2] = {NULL, NULL};
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gchar *gtkrc_files[2] = {NULL, NULL};
 	std::string gtkrc_path = build_path(m_path, "gtkrc");
 	gtkrc_files[0] = (gchar *)gtkrc_path.c_str();
 	gtk_rc_set_default_files(gtkrc_files);
-	gtk_rc_reparse_all_for_settings(gtk_settings_get_default(), TRUE);*/
+	gtk_rc_reparse_all_for_settings(gtk_settings_get_default(), TRUE);
+#endif
 }
 
 void AppSkin::load()

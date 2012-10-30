@@ -178,7 +178,11 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+#endif
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), need_prefix);
 	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);

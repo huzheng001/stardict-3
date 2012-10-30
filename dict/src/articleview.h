@@ -63,7 +63,11 @@ public:
 	void end_update() { pango_view_->end_update(); }
 	void goto_begin() { pango_view_->goto_begin(); }
 	void goto_end() { pango_view_->goto_end(); }
+#if GTK_MAJOR_VERSION >= 3
 	void modify_bg(GtkStateFlags state, const GdkRGBA *color) { pango_view_->modify_bg(state, color); } 
+#else
+	void modify_bg(GtkStateType state, const GdkColor *color) { pango_view_->modify_bg(state, color); }
+#endif
 	GtkWidget *vscroll_bar() { return pango_view_->vscroll_bar(); }
 	void set_size(gint w, gint h) { pango_view_->set_size(w, h); }
 	gint scroll_space() { return pango_view_->scroll_space(); }

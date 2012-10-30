@@ -91,7 +91,11 @@ public:
 	virtual void end_update();
 	virtual void goto_begin() {}
 	virtual void goto_end() {}
+#if GTK_MAJOR_VERSION >= 3
 	virtual void modify_bg(GtkStateFlags state, const GdkRGBA *color) {}
+#else
+	virtual void modify_bg(GtkStateType state, const GdkColor *color) {}
+#endif
 	/* Indent a region specified by two marks. If the mark_end is invalid,
 	 * for instance NULL, assume the end mark is at the end of the buffer. */
 	virtual void indent_region(const char *mark_begin, int char_offset_begin = 0, 

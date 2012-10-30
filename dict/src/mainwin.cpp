@@ -71,7 +71,11 @@ static void unfocus_combo_arrow(GtkWidget *widget, gpointer data)
 
 void TopWin::Create(GtkWidget *vbox)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
+#else
+	GtkWidget *hbox = gtk_hbox_new(false,0);
+#endif
 	gtk_widget_show(hbox);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(vbox),hbox,false,false,0);
@@ -1420,7 +1424,11 @@ LeftWin::~LeftWin()
 
 void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 {
+#if GTK_MAJOR_VERSION >= 3
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
+#else
+	vbox = gtk_vbox_new(FALSE, 3);
+#endif
 	if (!conf->get_bool_at("main_window/hide_list"))
 		gtk_widget_show(vbox);
 	gtk_box_pack_start(GTK_BOX(hbox),vbox, false, false, 0);
@@ -1669,7 +1677,11 @@ static void unfocus_menu_button(GtkWidget *widget, gpointer data)
 void ToolWin::Create(GtkWidget *vbox)
 {
 	GtkWidget *hbox;
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+	hbox = gtk_hbox_new(false,0);
+#endif
 	gtk_widget_show(hbox);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(vbox),hbox,false,false,0);
@@ -1941,7 +1953,11 @@ void TextWin::Create(GtkWidget *vbox)
 	g_signal_connect(G_OBJECT(view->widget()), "populate-popup",
 		G_CALLBACK(on_populate_popup), this);
 
+#if GTK_MAJOR_VERSION >= 3
 	hbSearchPanel = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+	hbSearchPanel = gtk_hbox_new(FALSE, 0);
+#endif
 	btClose = GTK_BUTTON(gtk_button_new());
 	gtk_widget_show(GTK_WIDGET(btClose));
 	GtkWidget *image =
@@ -2482,7 +2498,11 @@ void TransWin::Create(GtkWidget *notebook)
 	frame = gtk_frame_new(NULL);
 
 	GtkWidget *vbox;
+#if GTK_MAJOR_VERSION >= 3
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
+#else
+	vbox = gtk_vbox_new(false, 3);
+#endif
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),8);
 	gtk_container_add(GTK_CONTAINER(frame), vbox);
 
@@ -2492,7 +2512,11 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
 
 	GtkWidget *hbox;
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+#else
+	hbox = gtk_hbox_new(false, 5);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
@@ -2546,10 +2570,18 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_add(GTK_CONTAINER(scrolled_window), input_textview);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+#else
+	hbox = gtk_hbox_new(false, 5);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	trans_button = gtk_button_new();
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+#else
+	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
+#endif
 	gtk_container_add (GTK_CONTAINER (trans_button), hbox1);
 	GtkWidget *image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_translate));
 	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
@@ -2571,7 +2603,11 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_container_add(GTK_CONTAINER(scrolled_window), result_textview);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolled_window, true, true, 0);
 
+#if GTK_MAJOR_VERSION >= 3
 	hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+#else
+	hbox = gtk_hbox_new(false, 8);
+#endif
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new(NULL);
 	gtk_box_pack_start(GTK_BOX(hbox), label, true, true, 0);
@@ -2593,7 +2629,11 @@ void TransWin::Create(GtkWidget *notebook)
 	gtk_widget_realize(link_eventbox);
 	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
 	gdk_window_set_cursor(gtk_widget_get_window(link_eventbox), cursor);
+#if GTK_MAJOR_VERSION >= 3
 	g_object_unref(cursor);
+#else
+	gdk_cursor_unref(cursor);
+#endif
 
 	gpAppFrame->oFullTextTrans.on_error_.connect(sigc::mem_fun(this, &TransWin::on_translate_error));
 	gpAppFrame->oFullTextTrans.on_response_.connect(sigc::mem_fun(this, &TransWin::on_translate_response));
@@ -2704,7 +2744,11 @@ void TransWin::on_translate_response(const char * text)
 /*********************************************/
 void MidWin::Create(GtkWidget *vbox)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+#else
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 2);
+#endif
 	gtk_widget_show(hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 2);
 
@@ -2713,7 +2757,11 @@ void MidWin::Create(GtkWidget *vbox)
 	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),FALSE);
 
+#if GTK_MAJOR_VERSION >= 3
 	hpaned = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
+#else
+	hpaned = gtk_hpaned_new();
+#endif
 	gtk_widget_show(hpaned);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hpaned, NULL);
 
@@ -2721,7 +2769,11 @@ void MidWin::Create(GtkWidget *vbox)
 	oLeftWin.Create(hbox, has_treedict);
 	gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
 
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+#else
+	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 0);
+#endif
 	gtk_widget_show(vbox1);
 	oToolWin.Create(vbox1);
 	oTextWin.Create(vbox1);
@@ -2755,7 +2807,11 @@ void BottomWin::Destroy()
 
 void BottomWin::Create(GtkWidget *vbox)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
+#endif
 	gtk_widget_show(hbox);
 #ifdef CONFIG_GPE
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -2808,7 +2864,11 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_misc_set_alignment (GTK_MISC (news_label), 0.0, 0.5);
 	gtk_widget_show(news_label);
 
+#if GTK_MAJOR_VERSION >= 3
 	link_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+#else
+	link_hbox = gtk_hbox_new(false, 0);
+#endif
 	gtk_box_pack_start(GTK_BOX(hbox),link_hbox,true,true,0);
 	GtkWidget *label = gtk_label_new(NULL);
 	gtk_widget_show(label);
@@ -2820,7 +2880,11 @@ void BottomWin::Create(GtkWidget *vbox)
 	gtk_widget_realize(event_box);
 	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
 	gdk_window_set_cursor(gtk_widget_get_window(event_box), cursor);
+#if GTK_MAJOR_VERSION >= 3
 	g_object_unref(cursor);
+#else
+	gdk_cursor_unref(cursor);
+#endif
 	link_label = gtk_label_new(NULL);
 	gtk_container_add(GTK_CONTAINER(event_box), link_label);
 	gtk_widget_show(link_label);
