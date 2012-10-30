@@ -66,7 +66,11 @@ public:
 	void end_update();
 	void goto_begin();
 	void goto_end();
+#if GTK_MAJOR_VERSION >= 3
 	void modify_bg(GtkStateFlags state, const GdkRGBA *color);
+#else
+	void modify_bg(GtkStateType state, const GdkColor *color);
+#endif
 	void indent_region(const char *mark_begin, int char_offset_begin = 0, 
 		const char *mark_end = NULL, int char_offset_end = 0);
 	void reindent(void);
@@ -296,7 +300,11 @@ public:
 		int char_offset = 0);
 	void begin_update();
 	void end_update();
+#if GTK_MAJOR_VERSION >= 3
 	void modify_bg(GtkStateFlags state, const GdkRGBA *color);
+#else
+	void modify_bg(GtkStateType state, const GdkColor *color);
+#endif
 protected:
 	void do_set_text(const char *str);
 	void do_append_text(const char *str);
@@ -704,15 +712,29 @@ TextPangoWidget::TextPangoWidget()
 	buffer_user_action_cnt = 0;
 }
 
+#if GTK_MAJOR_VERSION >= 3
 void LabelPangoWidget::modify_bg(GtkStateFlags state, const GdkRGBA *color)
 {
 	gtk_widget_override_background_color(viewport_, state, color);
 }
+#else
+void LabelPangoWidget::modify_bg(GtkStateType state, const GdkColor *color)
+{
+	gtk_widget_modify_bg(viewport_, state, color);
+}
+#endif
 
+#if GTK_MAJOR_VERSION >= 3
 void TextPangoWidget::modify_bg(GtkStateFlags state, const GdkRGBA *color)
 {
 	gtk_widget_override_background_color(widget(), state, color);
 }
+#else
+void TextPangoWidget::modify_bg(GtkStateType state, const GdkColor *color)
+{
+	gtk_widget_modify_base(widget(), state, color);
+}
+#endif
 
 LabelPangoWidget::LabelPangoWidget()
 {

@@ -981,5 +981,9 @@ void ArticleView::on_resource_button_realize(GtkWidget *object, gpointer user_da
 	gtk_widget_realize(eventbox);
 	GdkCursor *cursor = gdk_cursor_new(GDK_HAND2);
 	gdk_window_set_cursor(gtk_widget_get_window(eventbox), cursor);
+#if GTK_MAJOR_VERSION >= 3
 	g_object_unref(cursor);
+#else
+	gdk_cursor_unref(cursor);
+#endif
 }

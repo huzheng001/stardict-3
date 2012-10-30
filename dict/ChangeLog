@@ -1,7 +1,7 @@
 2012.
-StarDict-3.0.4 (Biqibi) released.
+StarDict-3.0.4 (Pratyekabuddhas) released.
 This version is mainly developed by Hu Zheng!
-Port to gtk3.
+Port to gtk3 but still use gtk2 as gtk3 have no Windows port presently.
 
 Jul 2011
 StarDict 3.0.3 released.

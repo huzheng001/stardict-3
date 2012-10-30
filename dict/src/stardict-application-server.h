@@ -22,8 +22,13 @@
 #define __STARDICT_APPLICATION_SERVER_H
 
 #include "GNOME_Stardict.h"
-#include <gtk/gtkx.h>
 #include <bonobo/bonobo-object.h>
+
+#if GTK_MAJOR_VERSION >= 3
+#include <gtk/gtkx.h>
+#else
+#include <gdk/gdk.h>
+#endif
 
 G_BEGIN_DECLS
 

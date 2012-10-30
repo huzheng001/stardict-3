@@ -142,9 +142,15 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/floating_window/lock", false);
 	add_entry("/apps/stardict/preferences/floating_window/show_if_not_found", true);
 	add_entry("/apps/stardict/preferences/floating_window/use_custom_bg", false);
+#if GTK_MAJOR_VERSION >= 3
 	add_entry("/apps/stardict/preferences/floating_window/bg_red", 1.0);
 	add_entry("/apps/stardict/preferences/floating_window/bg_green", 1.0);
 	add_entry("/apps/stardict/preferences/floating_window/bg_blue", (51200/(double)65535));
+#else
+	add_entry("/apps/stardict/preferences/floating_window/bg_red", 65535);
+	add_entry("/apps/stardict/preferences/floating_window/bg_green", 65535);
+	add_entry("/apps/stardict/preferences/floating_window/bg_blue", 51200);
+#endif
 	add_entry("/apps/stardict/preferences/floating_window/transparent", 0);
 
 	add_entry("/apps/stardict/preferences/floating_window/lock_x", 0);

@@ -247,7 +247,11 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("QQWry configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(FALSE, 5);
+#endif
 	std::string msg;
 	std::string datafilename = build_path(plugin_info->datadir,
 		"data" G_DIR_SEPARATOR_S "QQWry.Dat");

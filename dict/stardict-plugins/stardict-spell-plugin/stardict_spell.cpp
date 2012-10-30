@@ -343,13 +343,21 @@ static void on_use_custom__ckbutton_toggled(GtkToggleButton *button, GtkWidget *
 static void configure()
 {
 	GtkWidget *window = gtk_dialog_new_with_buttons(_("Spell check configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+#endif
 	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Use custom languages."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), use_custom);
 	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
 	GtkWidget *label = gtk_label_new(_("For example: \"en_US de\""));
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+#if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+#else
+	GtkWidget *hbox = gtk_hbox_new(FALSE, 5);
+#endif
 	gtk_widget_set_sensitive(hbox, use_custom);
 	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_use_custom__ckbutton_toggled), hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);

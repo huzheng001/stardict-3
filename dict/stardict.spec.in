@@ -11,14 +11,14 @@ URL: 		http://www.stardict.org
 Source0:	http://stardict-3.googlecode.com/files/%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires: gtk3, enchant, espeak, gucharmap, libbonobo, libgnome, libsigc++20 >= 2.0.17
-#Requires: festival, speech-tools
+Requires: gtk2, enchant, espeak, libbonobo, libgnome, libsigc++20 >= 2.0.17
+#Requires: gucharmap, festival, speech-tools
 Requires(preun): GConf2
 Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
 BuildRequires: desktop-file-utils, gettext, intltool, perl-XML-Parser, scrollkeeper
-BuildRequires: enchant-devel, espeak-devel, gtk3-devel, libbonobo-devel, libgnome-devel, gucharmap-devel, libsigc++20-devel
+BuildRequires: enchant-devel, espeak-devel, gtk2-devel, libbonobo-devel, libgnome-devel, gucharmap-devel, libsigc++20-devel
 #BuildRequires: festival-devel, speech-tools-devel
 
 
@@ -31,7 +31,7 @@ It has powerful features such as "Glob-style pattern matching,"
 %setup -q
 
 %build
-%configure --disable-schemas-install --disable-festival --disable-tools
+%configure --disable-schemas-install --disable-gucharmap --disable-festival --disable-tools
 make -k %{_smp_mflags}
 
 %install

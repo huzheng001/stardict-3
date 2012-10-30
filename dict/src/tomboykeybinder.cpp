@@ -75,10 +75,10 @@ grab_ungrab_with_ignorable_modifiers (GdkWindow *rootwin,
 		num_lock_mask,
 		caps_lock_mask,
 		scroll_lock_mask,
-		num_lock_mask  | caps_lock_mask,
-		num_lock_mask  | scroll_lock_mask,
-		caps_lock_mask | scroll_lock_mask,
-		num_lock_mask  | caps_lock_mask | scroll_lock_mask,
+		(guint)(num_lock_mask  | caps_lock_mask),
+		(guint)(num_lock_mask  | scroll_lock_mask),
+		(guint)(caps_lock_mask | scroll_lock_mask),
+		(guint)(num_lock_mask  | caps_lock_mask | scroll_lock_mask),
 	};
 	size_t i;
 
