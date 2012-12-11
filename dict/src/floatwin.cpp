@@ -76,7 +76,7 @@ void FloatWin::Create()
 
 	create_button_hbox();
 	gtk_box_pack_start(GTK_BOX(vbox),button_hbox,false,false,0);
-	view.reset(new ArticleView(GTK_BOX(vbox), true));
+	view.reset(new ArticleView(GTK_BOX(vbox), (BookNameStyle)conf->get_int_at("dictionary/bookname_style"), true));
 	
 	gtk_widget_show_all(frame);
 	gtk_widget_hide(button_hbox); //show all will show hbox's children,now hide hbox only.
@@ -98,6 +98,7 @@ void FloatWin::Create()
 
 	conf->notify_add("/apps/stardict/preferences/floating_window/use_custom_bg",
 			 sigc::mem_fun(this, &FloatWin::on_use_custom_bg_changed));
+	gtk_widget_realize(FloatWindow);
 }
 
 void FloatWin::End()
@@ -1130,6 +1131,13 @@ void FloatWin::set_bg(void)
 	gtk_widget_modify_bg(FloatWindow, GTK_STATE_NORMAL, pcolor);
 	view->modify_bg(GTK_STATE_NORMAL, pcolor);
 #endif
+}
+
+void FloatWin::set_bookname_style(BookNameStyle style)
+{
+	if (view.get()) {
+		view->set_bookname_style(style);
+	}
 }
 
 const gchar* FloatWin::get_lock_image_stock_id(void)

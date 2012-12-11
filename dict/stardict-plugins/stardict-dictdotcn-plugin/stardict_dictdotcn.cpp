@@ -17,6 +17,8 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Notice: this dict.cn plugin is outdated and don't work fine now, as dict.cn website closed the xml querying interface, and the html querying interface changed to use java-script to load content. So this plugin is disabled by default.
+
 #include "stardict_dictdotcn.h"
 #include <glib/gi18n.h>
 #include <cstring>
@@ -296,7 +298,7 @@ static void process_xml_response(const char *data, size_t data_len, NetDictRespo
 	if (!Data.sentences.empty()) {
 		if(!definition.empty())
 			definition += "\n\n";
-		definition += "例句与用法:";
+		definition += "例句与用法：";
 		int index = 1;
 		char *tmp_str;
 		for (std::list<std::pair<std::string, std::string> >::iterator i = Data.sentences.begin(); i != Data.sentences.end(); ++i) {
@@ -309,7 +311,7 @@ static void process_xml_response(const char *data, size_t data_len, NetDictRespo
 	if (!Data.suggestions.empty()) {
 		if(!definition.empty())
 			definition += "\n\n";
-		definition += "Suggested words:";
+		definition += "建议单词：";
 		for(std::list<std::string>::const_iterator it=Data.suggestions.begin(); it != Data.suggestions.end(); ++it) {
 			definition += "\n";
 			definition += *it;

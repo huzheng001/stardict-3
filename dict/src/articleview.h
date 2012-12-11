@@ -26,14 +26,22 @@
 #include "pangoview.h" 
 #include "lib/dictbase.h"
 
+enum BookNameStyle
+{
+	BookNameStyle_Default,
+	BookNameStyle_OneBlankLine,
+	BookNameStyle_TwoBlankLines,
+};
+
 //class which show dictionary's articles
 class ArticleView {
 public:
-	ArticleView(GtkContainer *owner, bool floatw=false)
-		: bookindex(0), pango_view_(PangoWidgetBase::create(owner, floatw)),
+	ArticleView(GtkContainer *owner, BookNameStyle booknamestyle, bool floatw=false)
+		: bookindex(0), bookname_style(booknamestyle), pango_view_(PangoWidgetBase::create(owner, floatw)),
 		for_float_win(floatw), headerindex(-1) {}
-	ArticleView(GtkBox *owner, bool floatw=false)
-		: pango_view_(PangoWidgetBase::create(owner, floatw)),
+	ArticleView(GtkBox *owner, BookNameStyle booknamestyle, bool floatw=false)
+		:  bookname_style(booknamestyle),
+		pango_view_(PangoWidgetBase::create(owner, floatw)),
 		for_float_win(floatw), headerindex(-1) {}
 
 	void SetDictIndex(InstantDictIndex index);
@@ -74,10 +82,12 @@ public:
 	gdouble scroll_pos() { return pango_view_->scroll_pos(); }
 	void connect_on_link(const sigc::slot<void, const std::string &>& s);
 	unsigned int get_bookindex(void) { return bookindex; }
+	void set_bookname_style(BookNameStyle style) { bookname_style = style; }
 private:
 	struct ParseResultItemWithMark;
 
 	unsigned int bookindex;
+	BookNameStyle bookname_style;
 	std::auto_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 	InstantDictIndex dict_index;

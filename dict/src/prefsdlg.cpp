@@ -796,6 +796,14 @@ void PrefsDlg::setup_dictionary_export_page()
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox1, FALSE, FALSE, 0);
 }
 
+void PrefsDlg::on_setup_bookname_style_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
+{
+        int style = gtk_combo_box_get_active(combobox);
+        conf->set_int_at("dictionary/bookname_style", style);
+	gpAppFrame->oFloatWin.set_bookname_style((BookNameStyle)style);
+	gpAppFrame->oMidWin.oTextWin.set_bookname_style((BookNameStyle)style);
+}
+
 void PrefsDlg::on_markup_search_word(GtkToggleButton *button, PrefsDlg *)
 {
 	conf->set_bool_at("dictionary/markup_search_word",
@@ -812,6 +820,23 @@ void PrefsDlg::setup_dictionary_article_rendering()
 	GtkWidget *vbox1 = gtk_vbox_new(FALSE, 6);
 #endif
 	gtk_box_pack_start(GTK_BOX(vbox), vbox1, FALSE, FALSE, 0);
+
+#if GTK_MAJOR_VERSION >= 3
+        GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
+#else
+        GtkWidget *hbox = gtk_hbox_new(FALSE, 12);
+#endif
+        gtk_box_pack_start(GTK_BOX(vbox1), hbox, FALSE, FALSE, 0);
+        GtkWidget *label = gtk_label_new(_("Dictionary name showing style:"));
+        gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+        GtkWidget *cb = gtk_combo_box_text_new();
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("Default"));
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("One blank line"));
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(cb), _("Two blank lines"));
+        gtk_box_pack_start(GTK_BOX(hbox), cb, TRUE, TRUE, 0);
+        int style = conf->get_int_at("dictionary/bookname_style");
+        gtk_combo_box_set_active(GTK_COMBO_BOX(cb), style);
+        g_signal_connect(G_OBJECT(cb), "changed", G_CALLBACK(on_setup_bookname_style_changed), this);
 
 	GtkWidget *ck_btn =
 		gtk_check_button_new_with_mnemonic(_("_Highlight search term"));
