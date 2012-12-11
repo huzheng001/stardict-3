@@ -58,6 +58,7 @@ tools/configure.ac
 dict/src/mainwin.cpp
 dict/src/lib/plugin.h
 dict/stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
+dict/help/C/stardict.xml
 dict/stardict-installer.nsi
 dict/src/win32/nsis/StarDictPortable.nsi
 dict/src/win32/nsis/StarDictEditorPortable.nsi

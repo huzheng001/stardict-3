@@ -659,7 +659,27 @@ void AppCore::SimpleLookupToFloat(const char* sWord, bool IgnoreScanModifierKey)
 {
 	oFloatWin.StartLookup(sWord, IgnoreScanModifierKey);
 	composite_lookup_float_win.new_lookup();
-	SimpleLookupToFloatLocal(sWord);
+	if (IsASCII(sWord)) {
+		if (SimpleLookupToFloatLocal(sWord)) {
+			//found
+		} else {
+			gchar *sWord2 = g_strdup(sWord);
+			gchar *a = GetPureEnglishAlpha(sWord2);
+			if (*a) {
+				if (strcmp(sWord, a) == 0) {
+					// Not found.
+					oTopWin.InsertHisList(a); //really need?
+				} else {
+					SimpleLookupToFloatLocal(a);
+				}
+			} else {
+				// The string is too strange, don't show any thing.
+			}
+			g_free(sWord2);
+		}
+	} else {
+		SimpleLookupToFloatLocal(sWord);
+	}
 	bool enable_netdict = conf->get_bool_at("network/enable_netdict");
 	if (enable_netdict) {
 		STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_SELECT_QUERY, sWord);

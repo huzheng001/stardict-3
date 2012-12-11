@@ -333,13 +333,15 @@ bool DictInfo::load_from_ifo_file(const std::string& ifofilename,
 		return false;
 	}
 	if(!is_index_file_size() || index_file_size == 0) {
-		const char* kkey = NULL;
+		const char* kkey;
 		if(infotype == DictInfoType_NormDict)
 			kkey = "idxfilesize";
 		else if(infotype == DictInfoType_TreeDict)
 			kkey = "tdxfilesize";
 		else if(infotype == DictInfoType_ResDb)
 			kkey = "ridxfilesize";
+		else
+			kkey = "";
 		g_critical("Load %s failed: %s not specified or 0.",
 			ifo_file_name.c_str(), kkey);
 		return false;

@@ -108,11 +108,8 @@ void TopWin::Create(GtkWidget *vbox)
 	GtkListStore* list_store = gtk_list_store_new(1, G_TYPE_STRING);
 	LoadHistory(list_store);
 	WordCombo = gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(list_store));
+	gtk_combo_box_set_entry_text_column(GTK_COMBO_BOX(WordCombo), 0);
 	g_object_unref (G_OBJECT(list_store));
-	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
-	g_object_set (G_OBJECT (renderer), "xalign", 0.0, NULL);
-	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(WordCombo), renderer, TRUE);
-	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT(WordCombo), renderer, "text", 0, NULL);
 	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
 	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
@@ -1941,9 +1938,16 @@ void TextWin::HideSearchPanel()
 	gtk_widget_hide(hbSearchPanel);
 }
 
+void TextWin::set_bookname_style(BookNameStyle style)
+{
+	if (view.get()) {
+		view->set_bookname_style(style);
+	}
+}
+
 void TextWin::Create(GtkWidget *vbox)
 {
-	view.reset(new ArticleView(GTK_BOX(vbox)));
+	view.reset(new ArticleView(GTK_BOX(vbox), (BookNameStyle)conf->get_int_at("dictionary/bookname_style")));
 
 	view->connect_on_link(sigc::mem_fun(gpAppFrame, &AppCore::on_link_click));
 	g_signal_connect(G_OBJECT(view->widget()), "button_press_event",

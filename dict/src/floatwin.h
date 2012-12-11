@@ -49,6 +49,7 @@ public:
 	void Show();
 	void Hide();
 	void set_bg(void);
+	void set_bookname_style(BookNameStyle style);
 	const std::string& getQueryingWord(void) const { return QueryingWord; }
 private:
 	enum ContentState {

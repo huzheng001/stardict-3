@@ -18,8 +18,8 @@ Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
 BuildRequires: desktop-file-utils, gettext, intltool, perl-XML-Parser, scrollkeeper
-BuildRequires: enchant-devel, espeak-devel, gtk2-devel, libbonobo-devel, libgnome-devel, gucharmap-devel, libsigc++20-devel
-#BuildRequires: festival-devel, speech-tools-devel
+BuildRequires: gtk3-devel, enchant-devel, espeak-devel, libbonobo-devel, libgnome-devel, libsigc++20-devel
+#BuildRequires: gucharmap-devel, festival-devel, speech-tools-devel
 
 
 %description
@@ -31,7 +31,7 @@ It has powerful features such as "Glob-style pattern matching,"
 %setup -q
 
 %build
-%configure --disable-schemas-install --disable-gucharmap --disable-festival --disable-tools
+%configure --disable-schemas-install --disable-gucharmap --disable-dictdotcn --disable-festival --disable-tools
 make -k %{_smp_mflags}
 
 %install

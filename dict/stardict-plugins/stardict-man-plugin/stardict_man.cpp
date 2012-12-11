@@ -183,7 +183,7 @@ static void configure()
 #else
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 #endif
-	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix."));
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix. For example: \"man printf\"."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), need_prefix);
 	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
 	gtk_widget_show_all(vbox);

@@ -256,9 +256,9 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	/* character category */
 	definition += get_vanilla_detail(_("Unicode category:"), gucharmap_get_unicode_category_name (uc));
 	/* canonical decomposition */
-	gunichar *decomposition;
+	gunichar decomposition[G_UNICHAR_MAX_DECOMPOSITION_LENGTH];
 	gsize result_len;
-	decomposition = g_unicode_canonical_decomposition (uc, &result_len);
+	result_len = g_unichar_fully_decompose(uc, FALSE, decomposition, G_UNICHAR_MAX_DECOMPOSITION_LENGTH);
 	if (result_len != 1) {
 		definition += _("Canonical decomposition:");
 		definition += " ";
@@ -269,7 +269,6 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 		}
 		definition += "\n";
 	}
-	g_free (decomposition);
 	/* representations */
 	if (g_unichar_break_type(uc) != G_UNICODE_BREAK_SURROGATE) {
 		definition += "\n<b>";

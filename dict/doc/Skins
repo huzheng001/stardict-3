@@ -6,7 +6,7 @@ Current implemention of skin support allows to
 - load custom engine to add special effects
 
 Stardict search skins in the "skins" directory in the following locations:
-- system-wide stardict data directory (normally /usr/local/share/stardict/skins under *nix)
+- system-wide stardict data directory (normally /usr/share/stardict/skins under *nix)
 - user home stardict data directory (normally ~/.stardict/skins under *nix)
 Each skin resides in a separate directory under the skins directory.
 
@@ -44,5 +44,7 @@ skins/sample/index_dictlist.png
 skins/sample/index_appendix.png
 skins/sample/index_translate.png
 skins/sample/pronounce.png
+skins/sample/video.png
+skins/sample/attachment.png
 
 To change stardict skin go to Preferences->"Main window" category->"Option" subcategory. Select a skin in the drop-down list on the right. Restart stardict to apply the selected skin.

@@ -163,6 +163,7 @@ private:
   static void on_setup_floatwin_use_custom_bg_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_floatwin_transparent_scale_changed(GtkRange *range, PrefsDlg *oPrefsDlg);
+  static void on_setup_bookname_style_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg);
   static void on_markup_search_word(GtkToggleButton *, PrefsDlg *);
 
   void resize_categories_tree(void);
