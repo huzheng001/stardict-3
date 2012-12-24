@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 11:07+0400\n"
+"POT-Creation-Date: 2012-12-24 19:19+0800\n"
 "PO-Revision-Date: 2006-07-02 09:14+0100\n"
 "Last-Translator: Miroslav Rajčić <miroslav.rajcic@inet.hr>\n"
 "Language-Team: \n"
@@ -18,290 +18,29 @@ msgstr ""
 "X-Poedit-Language: Croatian\n"
 
 #: ../data/GNOME_Stardict.server.in.h:1
-msgid "stardict application"
-msgstr "stardict program"
-
-#: ../data/GNOME_Stardict.server.in.h:2
 msgid "stardict automation factory"
 msgstr "stardict automacijski mehanizam"
 
-#: ../data/stardict.desktop.in.h:1
-msgid "Lookup words"
-msgstr "Pogledaj  riječi"
+#: ../data/GNOME_Stardict.server.in.h:2
+msgid "stardict application"
+msgstr "stardict program"
 
-#: ../data/stardict.desktop.in.h:2 ../src/docklet.cpp:88
-#: ../src/docklet.cpp:301 ../src/mainwin.cpp:499 ../src/stardict.cpp:268
-#: ../src/stardict.cpp:358 ../src/stardict.cpp:2327
+#: ../data/stardict.desktop.in.h:1 ../src/docklet.cpp:87
+#: ../src/docklet.cpp:301 ../src/mainwin.cpp:619 ../src/stardict.cpp:273
+#: ../src/stardict.cpp:364 ../src/stardict.cpp:2369
 msgid "StarDict"
 msgstr "StarDict"
 
+#: ../data/stardict.desktop.in.h:2
+msgid "Lookup words"
+msgstr "Pogledaj  riječi"
+
 #: ../data/stardict.schemas.in.h:1
-msgid ""
-"A custom font that will be used in StarDict. This will only take effect if "
-"the \"Use Custom Font\" option is turned on."
-msgstr ""
-"Font po izboru koji će biti korišten u StarDict. Ovo će imati utjecaja samo "
-"ako je opcija \"Koristi Font po izboru\" uključena."
-
-#: ../data/stardict.schemas.in.h:2
-msgid "Custom Font"
-msgstr "Font po izboru"
-
-#: ../data/stardict.schemas.in.h:3
-#, fuzzy
-msgid "Dictionary configuration XML"
-msgstr "Poredak rječnika"
-
-#: ../data/stardict.schemas.in.h:4
-msgid "Dictionary order"
-msgstr "Poredak rječnika"
-
-#: ../data/stardict.schemas.in.h:5
-#, fuzzy
-msgid "Disabled plugins list"
-msgstr "Lista rječnika onemogućena"
-
-#: ../data/stardict.schemas.in.h:6
-#, fuzzy
-msgid "Disabled tree dictionaries list"
-msgstr "Stablo rječnika onemogućeno"
-
-#: ../data/stardict.schemas.in.h:7
-msgid "Enable sound event"
-msgstr "Omogući zvučne događaje"
-
-#: ../data/stardict.schemas.in.h:8
-#, fuzzy
-msgid "Enable the use of TTS program"
-msgstr "Ime programa"
-
-#: ../data/stardict.schemas.in.h:9
-msgid "Engine index"
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:10
-msgid "Hide floating window when modifier key is released"
-msgstr "Sakrij plutajući prozor kod otpuštanja pripadnih tipki"
-
-#: ../data/stardict.schemas.in.h:11
-msgid ""
-"Hide floating window when modifier key is released. It only take effect when "
-"only_scan_while_modifier_key is turned on."
-msgstr ""
-"Sakrij plutajući prozor kad se otupusti posebna tipka. Ovo će imati utjecaja "
-"samo kad se uključi opcija only_scan_while_modifier_key."
-
-#: ../data/stardict.schemas.in.h:12
-msgid "Hide the list"
-msgstr "Sakrij listu"
-
-#: ../data/stardict.schemas.in.h:13
-msgid "Hide the window on startup"
-msgstr "Sakrij prozor kod pokretanja"
-
-#: ../data/stardict.schemas.in.h:14
-msgid "Hpaned 's position"
-msgstr "Položaj panela"
-
-#: ../data/stardict.schemas.in.h:15
-msgid "List the dictionaries in order."
-msgstr "Listaj rječnike po redu."
-
-#: ../data/stardict.schemas.in.h:16
-#, fuzzy
-msgid "List the plugins in order."
-msgstr "Listaj rječnike po redu."
-
-#: ../data/stardict.schemas.in.h:17
-#, fuzzy
-msgid "List the plugins which are disabled."
-msgstr "Listaj rječnike koji su onemogućeni."
-
-#: ../data/stardict.schemas.in.h:18
-msgid "List the search websites."
-msgstr "Listaj sajtove za pretraživanje."
-
-#: ../data/stardict.schemas.in.h:19
-msgid "List the tree dictionaries in order."
-msgstr "Listaj hijerarhijske rječnike po redu."
-
-#: ../data/stardict.schemas.in.h:20
-msgid "List the tree dictionaries which are disabled."
-msgstr "Listaj hijerarhijske rječnike koji su onemogućeni."
-
-#: ../data/stardict.schemas.in.h:21
-msgid "Maximum window-height"
-msgstr "Maks. visina prozora"
-
-#: ../data/stardict.schemas.in.h:22
-msgid "Maximum window-width"
-msgstr "Maks. širina prozora"
-
-#: ../data/stardict.schemas.in.h:23
-msgid "Only scan while modifier key is being pressed"
-msgstr "Pretraži selekciju samo ako je pripadna tipka pritisnuta"
-
-#: ../data/stardict.schemas.in.h:24
-msgid ""
-"Only scan while the modifier key is being pressed. The modifier key is set "
-"by \"scan_modifier_key\"."
-msgstr ""
-"Pretraži selekciju samo ako je pripadna tipka pritisnuta. Pripadna tipka se "
-"postavlja sa \"scan_modifier_key\"."
-
-#: ../data/stardict.schemas.in.h:25
-msgid ""
-"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
-"(1), Alt(2) or Ctrl(3)."
-msgstr ""
-"Pretraži selekciju samo ako je pripadna tipka pritisnuta. To može biti Win"
-"(0), Shift(1), Alt(2) or Ctrl(3)."
-
-#: ../data/stardict.schemas.in.h:26
-msgid "Plug-in order"
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:27
-msgid "Pronounce the word when it pops up."
-msgstr "Izgovori riječ kod iskakanja."
-
-#: ../data/stardict.schemas.in.h:28
-msgid "Pronounce the word when the floating window pops up."
-msgstr "Izgovori riječ kad plutajući prozor iskoči."
-
-#: ../data/stardict.schemas.in.h:29
-msgid "Query in the floating window when middle mouse button is clicked"
-msgstr "Izvrši upit u plutajućem prozoru kad se srednji botun miša pritisne."
-
-#: ../data/stardict.schemas.in.h:30
-#, fuzzy
-msgid "Save the dictionary management configuration."
-msgstr "Listaj rječnike po redu."
-
-#: ../data/stardict.schemas.in.h:31
 #, fuzzy
 msgid "Scan selection"
 msgstr "Pretraži selekciju"
 
-#: ../data/stardict.schemas.in.h:32
-#, fuzzy
-msgid "Scan-modifier key"
-msgstr "_Tipka za uključenje pretraživanja:"
-
-#: ../data/stardict.schemas.in.h:33
-msgid "Search website list"
-msgstr "Pretraži listu sajtova"
-
-#: ../data/stardict.schemas.in.h:34
-msgid "Source language index"
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:35
-msgid "TTS program command-line"
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:36
-msgid "Target language index"
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:37
-msgid ""
-"The command-line to use in order to enable pronunciation of words via an "
-"external TTS program."
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:38
-msgid "The height of the main stardict window."
-msgstr "Visina glavnog stardict prozora."
-
-#: ../data/stardict.schemas.in.h:39
-msgid "The hpaned's position, between the listview and the textview."
-msgstr "Položaj panela, između liste i tekstualnog pogleda"
-
-#: ../data/stardict.schemas.in.h:40
-#, fuzzy
-msgid "The index of the source language for translating."
-msgstr "Širina glavnog stardict prozora."
-
-#: ../data/stardict.schemas.in.h:41
-#, fuzzy
-msgid "The index of the target language for translating."
-msgstr "Širina glavnog stardict prozora."
-
-#: ../data/stardict.schemas.in.h:42
-#, fuzzy
-msgid "The index of the translation engine."
-msgstr "Širina glavnog stardict prozora."
-
-#: ../data/stardict.schemas.in.h:43
-msgid "The maximum height of the floating stardict window."
-msgstr "Maksimalna visina plutajućeg stardict prozora."
-
-#: ../data/stardict.schemas.in.h:44
-msgid "The maximum width of the floating stardict window."
-msgstr "Maksimalna širina plutajućeg stardict prozora."
-
-#: ../data/stardict.schemas.in.h:45
-msgid "The width of the main stardict window."
-msgstr "Širina glavnog stardict prozora."
-
-#: ../data/stardict.schemas.in.h:46
-msgid "Tree Dictionary order"
-msgstr "Poredak Hijerarhijskih rječnika"
-
-#: ../data/stardict.schemas.in.h:47
-msgid "Use Custom Font"
-msgstr "Koristi font po izboru."
-
-#: ../data/stardict.schemas.in.h:48
-msgid "Whether the main window is maximized or not."
-msgstr "Da li je glavni prozor maksimiziran ili ne."
-
-#: ../data/stardict.schemas.in.h:49
-msgid "Whether the window is maximized or not"
-msgstr "Da li je prozor maksimiziran ili ne."
-
-#: ../data/stardict.schemas.in.h:50
-msgid ""
-"Whether to enable StartDict to use an external TTS program for "
-"pronounciation, or not."
-msgstr ""
-
-#: ../data/stardict.schemas.in.h:51
-msgid ""
-"Whether to enable sound events or not. StarDict will play a sound event when "
-"a button is active or released, and when a menu pops up."
-msgstr ""
-"Da li omogućiti zvučne događaje ili ne. StarDict će svirati zvučni događaj "
-"kad je botun aktivan ili oslobođen, te kod iskakanja izbornika."
-
-#: ../data/stardict.schemas.in.h:52
-msgid "Whether to hide the main window on startup, or not."
-msgstr "Da li sakriti glavni prozor kod pokretanja, ili ne."
-
-#: ../data/stardict.schemas.in.h:53
-msgid "Whether to hide the word-list view or not."
-msgstr "Da li sakriti pogled sa listu riječi  ili ne."
-
-#: ../data/stardict.schemas.in.h:54
-msgid ""
-"Whether to lock the floating window or not. While locked, the window will "
-"not disappear."
-msgstr ""
-"Da li zaključati plutajući prozor ili ne. Dok je zaključan, prozor neće "
-"nestati."
-
-#: ../data/stardict.schemas.in.h:55
-msgid ""
-"Whether to query in the floating window, or in the main window. Query is "
-"activated by the user clicking the middle mouse button on the notification "
-"area icon."
-msgstr ""
-"Da li upit vršiti u plutajućem prozoru ili u glavnom prozoru. Upit se "
-"aktivira tako da korisnik klikne srednji botun miša na ikonu u "
-"notifikacijskom području."
-
-#: ../data/stardict.schemas.in.h:56
+#: ../data/stardict.schemas.in.h:2
 #, fuzzy
 msgid ""
 "Whether to scan the selection or not. When the user selects text, StarDict "
@@ -310,7 +49,48 @@ msgstr ""
 "Da li pretražiti selekciju ili ne. Kad korisnik selektira tekst, stardict će "
 "izbaciti prozor koji prikazuje značenje teksta."
 
-#: ../data/stardict.schemas.in.h:57
+#: ../data/stardict.schemas.in.h:3
+msgid "Only scan while modifier key is being pressed"
+msgstr "Pretraži selekciju samo ako je pripadna tipka pritisnuta"
+
+#: ../data/stardict.schemas.in.h:4
+msgid ""
+"Only scan while the modifier key is being pressed. The modifier key is set "
+"by \"scan_modifier_key\"."
+msgstr ""
+"Pretraži selekciju samo ako je pripadna tipka pritisnuta. Pripadna tipka se "
+"postavlja sa \"scan_modifier_key\"."
+
+#: ../data/stardict.schemas.in.h:5
+msgid "Hide floating window when modifier key is released"
+msgstr "Sakrij plutajući prozor kod otpuštanja pripadnih tipki"
+
+#: ../data/stardict.schemas.in.h:6
+msgid ""
+"Hide floating window when modifier key is released. It only take effect when "
+"only_scan_while_modifier_key is turned on."
+msgstr ""
+"Sakrij plutajući prozor kad se otupusti posebna tipka. Ovo će imati utjecaja "
+"samo kad se uključi opcija only_scan_while_modifier_key."
+
+#: ../data/stardict.schemas.in.h:7
+#, fuzzy
+msgid "Scan-modifier key"
+msgstr "_Tipka za uključenje pretraživanja:"
+
+#: ../data/stardict.schemas.in.h:8
+msgid ""
+"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
+"(1), Alt(2) or Ctrl(3)."
+msgstr ""
+"Pretraži selekciju samo ako je pripadna tipka pritisnuta. To može biti Win"
+"(0), Shift(1), Alt(2) or Ctrl(3)."
+
+#: ../data/stardict.schemas.in.h:9
+msgid "Use Custom Font"
+msgstr "Koristi font po izboru."
+
+#: ../data/stardict.schemas.in.h:10
 msgid ""
 "Whether to use a user-defined font in StarDict, instead of the default "
 "system font. If this option is turned on, then the font named in the "
@@ -320,33 +100,253 @@ msgstr ""
 "Ako je ova opcija uključenam tada će font koji je podešen u opciji \"Font po "
 "izboru\" biti korišten umjesto sistemskog."
 
-#: ../data/stardict.schemas.in.h:58
-msgid "Window-height"
-msgstr "Visina prozora"
+#: ../data/stardict.schemas.in.h:11
+msgid "Custom Font"
+msgstr "Font po izboru"
 
-#: ../data/stardict.schemas.in.h:59
+#: ../data/stardict.schemas.in.h:12
+msgid ""
+"A custom font that will be used in StarDict. This will only take effect if "
+"the \"Use Custom Font\" option is turned on."
+msgstr ""
+"Font po izboru koji će biti korišten u StarDict. Ovo će imati utjecaja samo "
+"ako je opcija \"Koristi Font po izboru\" uključena."
+
+#: ../data/stardict.schemas.in.h:13
+msgid "Enable sound event"
+msgstr "Omogući zvučne događaje"
+
+#: ../data/stardict.schemas.in.h:14
+msgid ""
+"Whether to enable sound events or not. StarDict will play a sound event when "
+"a button is active or released, and when a menu pops up."
+msgstr ""
+"Da li omogućiti zvučne događaje ili ne. StarDict će svirati zvučni događaj "
+"kad je botun aktivan ili oslobođen, te kod iskakanja izbornika."
+
+#: ../data/stardict.schemas.in.h:15
+#, fuzzy
+msgid "Enable the use of TTS program"
+msgstr "Ime programa"
+
+#: ../data/stardict.schemas.in.h:16
+msgid ""
+"Whether to enable StartDict to use an external TTS program for "
+"pronounciation, or not."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:17
+msgid "TTS program command-line"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:18
+msgid ""
+"The command-line to use in order to enable pronunciation of words via an "
+"external TTS program."
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:19
+msgid "Hide the window on startup"
+msgstr "Sakrij prozor kod pokretanja"
+
+#: ../data/stardict.schemas.in.h:20
+msgid "Whether to hide the main window on startup, or not."
+msgstr "Da li sakriti glavni prozor kod pokretanja, ili ne."
+
+#: ../data/stardict.schemas.in.h:21
+msgid "Search website list"
+msgstr "Pretraži listu sajtova"
+
+#: ../data/stardict.schemas.in.h:22
+msgid "List the search websites."
+msgstr "Listaj sajtove za pretraživanje."
+
+#: ../data/stardict.schemas.in.h:23
 msgid "Window-width"
 msgstr "Širina prozora"
 
-#: ../data/stardict.schemas.in.h:60
+#: ../data/stardict.schemas.in.h:24
+msgid "The width of the main stardict window."
+msgstr "Širina glavnog stardict prozora."
+
+#: ../data/stardict.schemas.in.h:25
+msgid "Window-height"
+msgstr "Visina prozora"
+
+#: ../data/stardict.schemas.in.h:26
+msgid "The height of the main stardict window."
+msgstr "Visina glavnog stardict prozora."
+
+#: ../data/stardict.schemas.in.h:27
+msgid "Whether the window is maximized or not"
+msgstr "Da li je prozor maksimiziran ili ne."
+
+#: ../data/stardict.schemas.in.h:28
+msgid "Whether the main window is maximized or not."
+msgstr "Da li je glavni prozor maksimiziran ili ne."
+
+#: ../data/stardict.schemas.in.h:29
+msgid "Hpaned 's position"
+msgstr "Položaj panela"
+
+#: ../data/stardict.schemas.in.h:30
+msgid "The hpaned's position, between the listview and the textview."
+msgstr "Položaj panela, između liste i tekstualnog pogleda"
+
+#: ../data/stardict.schemas.in.h:31
+msgid "Hide the list"
+msgstr "Sakrij listu"
+
+#: ../data/stardict.schemas.in.h:32
+msgid "Whether to hide the word-list view or not."
+msgstr "Da li sakriti pogled sa listu riječi  ili ne."
+
+#: ../data/stardict.schemas.in.h:33
+msgid "Engine index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:34
+#, fuzzy
+msgid "The index of the translation engine."
+msgstr "Širina glavnog stardict prozora."
+
+#: ../data/stardict.schemas.in.h:35
+msgid "Source language index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:36
+#, fuzzy
+msgid "The index of the source language for translating."
+msgstr "Širina glavnog stardict prozora."
+
+#: ../data/stardict.schemas.in.h:37
+msgid "Target language index"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:38
+#, fuzzy
+msgid "The index of the target language for translating."
+msgstr "Širina glavnog stardict prozora."
+
+#: ../data/stardict.schemas.in.h:39
+msgid "Query in the floating window when middle mouse button is clicked"
+msgstr "Izvrši upit u plutajućem prozoru kad se srednji botun miša pritisne."
+
+#: ../data/stardict.schemas.in.h:40
+msgid ""
+"Whether to query in the floating window, or in the main window. Query is "
+"activated by the user clicking the middle mouse button on the notification "
+"area icon."
+msgstr ""
+"Da li upit vršiti u plutajućem prozoru ili u glavnom prozoru. Upit se "
+"aktivira tako da korisnik klikne srednji botun miša na ikonu u "
+"notifikacijskom području."
+
+#: ../data/stardict.schemas.in.h:41
+msgid "Pronounce the word when it pops up."
+msgstr "Izgovori riječ kod iskakanja."
+
+#: ../data/stardict.schemas.in.h:42
+msgid "Pronounce the word when the floating window pops up."
+msgstr "Izgovori riječ kad plutajući prozor iskoči."
+
+#: ../data/stardict.schemas.in.h:43
+msgid "Maximum window-width"
+msgstr "Maks. širina prozora"
+
+#: ../data/stardict.schemas.in.h:44
+msgid "The maximum width of the floating stardict window."
+msgstr "Maksimalna širina plutajućeg stardict prozora."
+
+#: ../data/stardict.schemas.in.h:45
+msgid "Maximum window-height"
+msgstr "Maks. visina prozora"
+
+#: ../data/stardict.schemas.in.h:46
+msgid "The maximum height of the floating stardict window."
+msgstr "Maksimalna visina plutajućeg stardict prozora."
+
+#: ../data/stardict.schemas.in.h:47
+msgid "whether to lock the window or not"
+msgstr "Da li zaključati prozor ili ne"
+
+#: ../data/stardict.schemas.in.h:48
+msgid ""
+"Whether to lock the floating window or not. While locked, the window will "
+"not disappear."
+msgstr ""
+"Da li zaključati plutajući prozor ili ne. Dok je zaključan, prozor neće "
+"nestati."
+
+#: ../data/stardict.schemas.in.h:49
 msgid "lock position (x)"
 msgstr "položaj zaključavanja (x)"
 
-#: ../data/stardict.schemas.in.h:61
-msgid "lock position (y)"
-msgstr "položaj zaključavanja (y)"
-
-#: ../data/stardict.schemas.in.h:62
+#: ../data/stardict.schemas.in.h:50
 msgid "the window's x position while locked."
 msgstr "x pozicija zaključanog prozora."
 
-#: ../data/stardict.schemas.in.h:63
+#: ../data/stardict.schemas.in.h:51
+msgid "lock position (y)"
+msgstr "položaj zaključavanja (y)"
+
+#: ../data/stardict.schemas.in.h:52
 msgid "the window's y position while locked."
 msgstr "y pozicija zaključanog prozora."
 
+#: ../data/stardict.schemas.in.h:53
+msgid "Dictionary order"
+msgstr "Poredak rječnika"
+
+#: ../data/stardict.schemas.in.h:54
+msgid "List the dictionaries in order."
+msgstr "Listaj rječnike po redu."
+
+#: ../data/stardict.schemas.in.h:55
+#, fuzzy
+msgid "Dictionary configuration XML"
+msgstr "Poredak rječnika"
+
+#: ../data/stardict.schemas.in.h:56
+#, fuzzy
+msgid "Save the dictionary management configuration."
+msgstr "Listaj rječnike po redu."
+
+#: ../data/stardict.schemas.in.h:57
+msgid "Tree Dictionary order"
+msgstr "Poredak Hijerarhijskih rječnika"
+
+#: ../data/stardict.schemas.in.h:58
+msgid "List the tree dictionaries in order."
+msgstr "Listaj hijerarhijske rječnike po redu."
+
+#: ../data/stardict.schemas.in.h:59
+#, fuzzy
+msgid "Disabled tree dictionaries list"
+msgstr "Stablo rječnika onemogućeno"
+
+#: ../data/stardict.schemas.in.h:60
+msgid "List the tree dictionaries which are disabled."
+msgstr "Listaj hijerarhijske rječnike koji su onemogućeni."
+
+#: ../data/stardict.schemas.in.h:61
+msgid "Plug-in order"
+msgstr ""
+
+#: ../data/stardict.schemas.in.h:62
+#, fuzzy
+msgid "List the plugins in order."
+msgstr "Listaj rječnike po redu."
+
+#: ../data/stardict.schemas.in.h:63
+#, fuzzy
+msgid "Disabled plugins list"
+msgstr "Lista rječnika onemogućena"
+
 #: ../data/stardict.schemas.in.h:64
-msgid "whether to lock the window or not"
-msgstr "Da li zaključati prozor ili ne"
+#, fuzzy
+msgid "List the plugins which are disabled."
+msgstr "Listaj rječnike koji su onemogućeni."
 
 #: ../src/articleview.cpp:306
 msgid "XDXF data parsing plug-in is not found!"
@@ -372,12 +372,12 @@ msgstr ""
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr ""
 
-#: ../src/articleview.cpp:460 ../src/articleview.cpp:485
+#: ../src/articleview.cpp:494 ../src/articleview.cpp:519
 #, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
 msgstr "<span weight=\"bold\" size=\"x-large\">Pretraži Selekciju</span>"
 
-#: ../src/articleview.cpp:948
+#: ../src/articleview.cpp:982
 #, fuzzy
 msgid "Save File"
 msgstr "Snimi u datoteku"
@@ -409,20 +409,16 @@ msgstr "Zatvori postojeću instancu strardict-a"
 msgid "StarDict directories configuration file"
 msgstr "Poredak rječnika"
 
-#: ../src/cmdlineopts.cpp:64
-msgid "config-file"
-msgstr ""
-
 #: ../src/cmdlineopts.cpp:67
 msgid "Activate portable mode"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2129
+#: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2366
 msgid "dict.stardict.org"
 msgstr ""
 
-#: ../src/conf.cpp:335
+#: ../src/conf.cpp:344
 #, fuzzy, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q="
@@ -462,88 +458,88 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:362
+#: ../src/conf.cpp:371
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:374
+#: ../src/conf.cpp:383
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:387
+#: ../src/conf.cpp:396
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:399
+#: ../src/conf.cpp:408
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
-#: ../src/conf.cpp:457
+#: ../src/conf.cpp:466
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr ""
 
-#: ../src/conf.cpp:471
+#: ../src/conf.cpp:480
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:478
+#: ../src/conf.cpp:487
 #, fuzzy, c-format
 msgid "Cannot create user config directory %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:486
+#: ../src/conf.cpp:495
 #, fuzzy, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:496
+#: ../src/conf.cpp:505
 #, fuzzy, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:506
+#: ../src/conf.cpp:515
 #, fuzzy, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:513
+#: ../src/conf.cpp:522
 #, fuzzy, c-format
 msgid "Cannot create log directory %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:519
+#: ../src/conf.cpp:528
 #, fuzzy, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:528
+#: ../src/conf.cpp:537
 #, fuzzy, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/conf.cpp:540
+#: ../src/conf.cpp:549
 #, fuzzy, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr "Ne mogu kreirati %s."
 
-#: ../src/desktop.cpp:185
+#: ../src/desktop.cpp:184
 #, c-format
 msgid "Show help action failed with the following error message: \"%s\""
 msgstr ""
 
-#: ../src/desktop.cpp:194 ../src/desktop.cpp:202
+#: ../src/desktop.cpp:193 ../src/desktop.cpp:201
 #, c-format
 msgid "Unable to find help file %s."
 msgstr ""
 
-#: ../src/desktop.cpp:250
+#: ../src/desktop.cpp:249
 msgid ""
 "You are about to enable network dictionaries. Be aware that enabling network "
 "dictionaries poses a security risk. Your text will be sent to remote "
@@ -570,245 +566,245 @@ msgstr ""
 msgid "Only level %d user can choose this dictionary!"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:573
-#: ../src/dictmanagedlg.cpp:2946
+#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:581
+#: ../src/dictmanagedlg.cpp:3042
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:307 ../src/dictmanagedlg.cpp:1194
-#: ../src/dictmanagedlg.cpp:1310 ../src/dictmanagedlg.cpp:1413
-#: ../src/dictmanagedlg.cpp:1999 ../src/dictmanagedlg.cpp:2867
-#: ../src/stardict.cpp:1103
+#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1202
+#: ../src/dictmanagedlg.cpp:1318 ../src/dictmanagedlg.cpp:1421
+#: ../src/dictmanagedlg.cpp:2015 ../src/dictmanagedlg.cpp:2959
+#: ../src/stardict.cpp:1135
 msgid "Dictionary Name"
 msgstr "Naziv Rječnika"
 
-#: ../src/dictmanagedlg.cpp:312 ../src/dictmanagedlg.cpp:1195
-#: ../src/dictmanagedlg.cpp:1330 ../src/dictmanagedlg.cpp:1427
-#: ../src/dictmanagedlg.cpp:2007 ../src/dictmanagedlg.cpp:2868
+#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1203
+#: ../src/dictmanagedlg.cpp:1338 ../src/dictmanagedlg.cpp:1435
+#: ../src/dictmanagedlg.cpp:2023 ../src/dictmanagedlg.cpp:2960
 msgid "Word count"
 msgstr "Broj riječi"
 
-#: ../src/dictmanagedlg.cpp:340
+#: ../src/dictmanagedlg.cpp:348
 #, fuzzy
 msgid "Browse Dictionaries"
 msgstr "Hijerarhijski rječnici"
 
-#: ../src/dictmanagedlg.cpp:555
+#: ../src/dictmanagedlg.cpp:563
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Ove postavke će se primijeniti kad idući put pokrenete StarDict."
 
-#: ../src/dictmanagedlg.cpp:568 ../src/lib/stddict.cpp:1277
+#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1277
 msgid "Loading..."
 msgstr "Učitavanje..."
 
-#: ../src/dictmanagedlg.cpp:590 ../src/dictmanagedlg.cpp:1855
+#: ../src/dictmanagedlg.cpp:598 ../src/dictmanagedlg.cpp:1867
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:600 ../src/dictmanagedlg.cpp:1865
+#: ../src/dictmanagedlg.cpp:608 ../src/dictmanagedlg.cpp:1877
 #, fuzzy
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span weight=\"bold\" size=\"x-large\">Pretraži Selekciju</span>"
 
-#: ../src/dictmanagedlg.cpp:648 ../src/dictmanagedlg.cpp:850
+#: ../src/dictmanagedlg.cpp:656 ../src/dictmanagedlg.cpp:858
 #, fuzzy
 msgid "Virtual Dictionary"
 msgstr "Rječnik"
 
-#: ../src/dictmanagedlg.cpp:671 ../src/dictmanagedlg.cpp:870
+#: ../src/dictmanagedlg.cpp:679 ../src/dictmanagedlg.cpp:878
 #, fuzzy
 msgid "Network Dictionary"
 msgstr "Hijerarhijski rječnici"
 
-#: ../src/dictmanagedlg.cpp:751
+#: ../src/dictmanagedlg.cpp:759
 msgid "Local"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:853
+#: ../src/dictmanagedlg.cpp:861
 msgid "Virtual"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:873 ../src/prefsdlg.cpp:129
+#: ../src/dictmanagedlg.cpp:881 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1121
+#: ../src/dictmanagedlg.cpp:1129
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1132
+#: ../src/dictmanagedlg.cpp:1140
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1181 ../src/dictmanagedlg.cpp:2856
+#: ../src/dictmanagedlg.cpp:1189 ../src/dictmanagedlg.cpp:2948
 #, fuzzy
 msgid "Dictionary Information"
 msgstr "Font rječnika"
 
-#: ../src/dictmanagedlg.cpp:1196 ../src/dictmanagedlg.cpp:2870
+#: ../src/dictmanagedlg.cpp:1204 ../src/dictmanagedlg.cpp:2962
 msgid "Author"
 msgstr "Autor"
 
-#: ../src/dictmanagedlg.cpp:1197 ../src/dictmanagedlg.cpp:2871
+#: ../src/dictmanagedlg.cpp:1205 ../src/dictmanagedlg.cpp:2963
 msgid "Email"
 msgstr "Email"
 
-#: ../src/dictmanagedlg.cpp:1198 ../src/dictmanagedlg.cpp:2872
+#: ../src/dictmanagedlg.cpp:1206 ../src/dictmanagedlg.cpp:2964
 msgid "Website"
 msgstr "Website"
 
-#: ../src/dictmanagedlg.cpp:1199 ../src/dictmanagedlg.cpp:2873
+#: ../src/dictmanagedlg.cpp:1207 ../src/dictmanagedlg.cpp:2965
 msgid "Description"
 msgstr "Opis"
 
-#: ../src/dictmanagedlg.cpp:1200 ../src/dictmanagedlg.cpp:2874
+#: ../src/dictmanagedlg.cpp:1208 ../src/dictmanagedlg.cpp:2966
 msgid "Date"
 msgstr "Datum"
 
-#: ../src/dictmanagedlg.cpp:1201
+#: ../src/dictmanagedlg.cpp:1209
 msgid "File name"
 msgstr "Ime datoteke"
 
-#: ../src/dictmanagedlg.cpp:1296 ../src/dictmanagedlg.cpp:1402
+#: ../src/dictmanagedlg.cpp:1304 ../src/dictmanagedlg.cpp:1410
 #: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "Omogući"
 
-#: ../src/dictmanagedlg.cpp:1338 ../src/dictmanagedlg.cpp:2013
+#: ../src/dictmanagedlg.cpp:1346 ../src/dictmanagedlg.cpp:2029
 msgid "Type"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1788
+#: ../src/dictmanagedlg.cpp:1796
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1805
+#: ../src/dictmanagedlg.cpp:1813
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1825
+#: ../src/dictmanagedlg.cpp:1833
 msgid "New dict group"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1828
+#: ../src/dictmanagedlg.cpp:1840
 #, fuzzy
 msgid "Group name:"
 msgstr "Ime programa"
 
-#: ../src/dictmanagedlg.cpp:1890
+#: ../src/dictmanagedlg.cpp:1902
 #, fuzzy
 msgid "Add dictionary"
 msgstr "Rječnik"
 
-#: ../src/dictmanagedlg.cpp:2019
+#: ../src/dictmanagedlg.cpp:2035
 msgid "Path"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2425 ../src/prefsdlg.cpp:1556
+#: ../src/dictmanagedlg.cpp:2454 ../src/prefsdlg.cpp:1734
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../src/dictmanagedlg.cpp:2432
+#: ../src/dictmanagedlg.cpp:2461
 #, fuzzy
 msgid "Delete"
 msgstr "Datum"
 
-#: ../src/dictmanagedlg.cpp:2439
+#: ../src/dictmanagedlg.cpp:2468
 msgid "Information"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2448
+#: ../src/dictmanagedlg.cpp:2481
 msgid "Move to top"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2455
+#: ../src/dictmanagedlg.cpp:2488
 msgid "Move up"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2462
+#: ../src/dictmanagedlg.cpp:2495
 msgid "Move down"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2469
+#: ../src/dictmanagedlg.cpp:2502
 msgid "Move to bottom"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2566
+#: ../src/dictmanagedlg.cpp:2623
 #, fuzzy
 msgid "D_ict List"
 msgstr "_Lista"
 
-#: ../src/dictmanagedlg.cpp:2581 ../src/mainwin.cpp:540
+#: ../src/dictmanagedlg.cpp:2642
 msgid "Manage _Dict"
 msgstr "Upravljanje Rječnicima"
 
-#: ../src/dictmanagedlg.cpp:2595
+#: ../src/dictmanagedlg.cpp:2660
 msgid "T_ree dictionaries"
 msgstr "Hijerarhijski rječnici"
 
-#: ../src/dictmanagedlg.cpp:2609
+#: ../src/dictmanagedlg.cpp:2678
 #, fuzzy
 msgid "_Network dictionaries"
 msgstr "Hijerarhijski rječnici"
 
-#: ../src/dictmanagedlg.cpp:2633
+#: ../src/dictmanagedlg.cpp:2710
 #, fuzzy
 msgid "_Show information"
 msgstr "Prikaži informaciju"
 
-#: ../src/dictmanagedlg.cpp:2640
+#: ../src/dictmanagedlg.cpp:2718
 msgid "Select _All"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2645
+#: ../src/dictmanagedlg.cpp:2724
 msgid "_Unselect all"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2664
+#: ../src/dictmanagedlg.cpp:2752
 #, fuzzy
 msgid "Visit "
 msgstr "_Lista"
 
-#: ../src/dictmanagedlg.cpp:2672
+#: ../src/dictmanagedlg.cpp:2760
 #, fuzzy
 msgid " to download dictionaries!"
 msgstr "Hijerarhijski rječnici"
 
-#: ../src/dictmanagedlg.cpp:2681
+#: ../src/dictmanagedlg.cpp:2769
 msgid "Upgrade Now!"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2702
+#: ../src/dictmanagedlg.cpp:2794
 msgid "Manage Dictionaries"
 msgstr "Upravljanje Rječnicima"
 
-#: ../src/dictmanagedlg.cpp:2869
+#: ../src/dictmanagedlg.cpp:2961
 #, fuzzy
 msgid "Synonym word count"
 msgstr "Broj riječi"
 
-#: ../src/dictmanagedlg.cpp:2884
+#: ../src/dictmanagedlg.cpp:2980
 msgid "Download Now!"
 msgstr ""
 
-#: ../src/docklet.cpp:118
+#: ../src/docklet.cpp:117
 msgid "Scan"
 msgstr "Istraži"
 
-#: ../src/docklet.cpp:123 ../src/floatwin.cpp:938 ../src/mainwin.cpp:2660
+#: ../src/docklet.cpp:122 ../src/floatwin.cpp:960 ../src/mainwin.cpp:2859
 msgid "Quit"
 msgstr "Završi"
 
-#: ../src/docklet.cpp:139 ../src/mainwin.cpp:2627
+#: ../src/docklet.cpp:138 ../src/mainwin.cpp:2826
 msgid "_Scan"
 msgstr "_Pretraži"
 
-#: ../src/docklet.cpp:149 ../src/mainwin.cpp:577
+#: ../src/docklet.cpp:148 ../src/mainwin.cpp:710
 msgid "_Quit"
 msgstr "_Završi"
 
@@ -816,13 +812,13 @@ msgstr "_Završi"
 msgid "StarDict - Scanning"
 msgstr "StarDict - Traženje"
 
-#: ../src/floatwin.cpp:145 ../src/mainwin.cpp:2024 ../src/mainwin.cpp:2054
-#: ../src/stardict.cpp:982 ../src/stardict.cpp:996 ../src/stardict.cpp:1001
-#: ../src/stardict.cpp:1006 ../src/stardict.cpp:1495 ../src/stardict.cpp:1626
+#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2180 ../src/mainwin.cpp:2210
+#: ../src/stardict.cpp:1010 ../src/stardict.cpp:1024 ../src/stardict.cpp:1029
+#: ../src/stardict.cpp:1034 ../src/stardict.cpp:1531 ../src/stardict.cpp:1664
 msgid "<Not Found!>"
 msgstr "<Nije pronađeno!>"
 
-#: ../src/floatwin.cpp:347
+#: ../src/floatwin.cpp:347 ../src/mainwin.cpp:138
 msgid "Fuzzy query"
 msgstr "Neizravan (fuzzy) upit"
 
@@ -840,51 +836,52 @@ msgstr "1 riječ:\n"
 msgid "Found %d words:\n"
 msgstr " riječi:\n"
 
-#: ../src/floatwin.cpp:891
+#: ../src/floatwin.cpp:913
 msgid "Query in the main window"
 msgstr "Upit u glavnom prozoru"
 
-#: ../src/floatwin.cpp:900
+#: ../src/floatwin.cpp:922
 msgid "Save to file"
 msgstr "Snimi u datoteku"
 
-#: ../src/floatwin.cpp:908
+#: ../src/floatwin.cpp:930
 msgid "Pronounce the word"
 msgstr "Izgovori riječ"
 
-#: ../src/floatwin.cpp:918
+#: ../src/floatwin.cpp:940
 msgid "Stop selection-scanning"
 msgstr "Zaustavi pretraživanje selekcije"
 
-#: ../src/floatwin.cpp:930
+#: ../src/floatwin.cpp:952
 msgid "Help"
 msgstr "Pomoć"
 
-#: ../src/floatwin.cpp:949
+#: ../src/floatwin.cpp:971
 msgid "Lock floating window"
 msgstr "Zaključaj plutajući prozor"
 
-#: ../src/floatwin.cpp:1029
+#: ../src/floatwin.cpp:1061
 msgid "_Copy"
 msgstr "_Kopiraj"
 
-#: ../src/floatwin.cpp:1035
+#: ../src/floatwin.cpp:1068
 msgid "_Save"
 msgstr "_Sačuvaj"
 
-#: ../src/floatwin.cpp:1040 ../src/mainwin.cpp:2220
+#: ../src/floatwin.cpp:1074 ../src/mainwin.cpp:2377
 msgid "_Query"
 msgstr "_Upit"
 
-#: ../src/floatwin.cpp:1047
+#: ../src/floatwin.cpp:1082
 msgid "_Play"
 msgstr "_Sviraj"
 
-#: ../src/floatwin.cpp:1054
-msgid "_Fuzzy Query"
-msgstr "_Neizravan (Fuzzy) Upit"
+#: ../src/floatwin.cpp:1090 ../src/mainwin.cpp:269
+#, fuzzy
+msgid "_Fuzzy query"
+msgstr "Neizravan (fuzzy) upit"
 
-#: ../src/floatwin.cpp:1142
+#: ../src/floatwin.cpp:1200
 #, fuzzy
 msgid "Looking up..."
 msgstr "Učitavanje..."
@@ -898,124 +895,148 @@ msgstr ""
 msgid "Log window"
 msgstr "Plutajući prozor"
 
-#: ../src/mainwin.cpp:91
+#: ../src/mainwin.cpp:95
+msgid "Go back (Alt+Left)"
+msgstr ""
+
+#: ../src/mainwin.cpp:106
+msgid "Go forward (Alt+Right)"
+msgstr ""
+
+#: ../src/mainwin.cpp:121
 msgid "Clear the search box"
 msgstr "Obriši polje za traženje"
 
-#: ../src/mainwin.cpp:120
-msgid "Fuzzy Query"
-msgstr "Neizravan (fuzzy) Upit"
-
-#: ../src/mainwin.cpp:132
-msgid "Go Back - Right button: history (Alt+Left)"
-msgstr "Idi unatrag - Desno dugme: povijest (Alt+Lijevo)"
-
-#: ../src/mainwin.cpp:147
+#: ../src/mainwin.cpp:154
 msgid "Show the main menu (Alt+M)"
 msgstr "Prikaži glavni izbornik (Alt+M)"
 
-#: ../src/mainwin.cpp:195
+#: ../src/mainwin.cpp:276
+msgid "_Glob-style pattern matching"
+msgstr ""
+
+#: ../src/mainwin.cpp:283
+msgid "_Regular expressions matching"
+msgstr ""
+
+#: ../src/mainwin.cpp:290
+#, fuzzy
+msgid "Full-_text search"
+msgstr "Pretraživanje po čitavom tekstu..."
+
+#: ../src/mainwin.cpp:334
 msgid "Clear _history"
 msgstr ""
 
-#: ../src/mainwin.cpp:496
+#: ../src/mainwin.cpp:616
 msgid "translator_credits"
 msgstr "zaslužni prevoditelji"
 
-#: ../src/mainwin.cpp:502
+#: ../src/mainwin.cpp:622
 msgid "StarDict is an international dictionary for GNOME."
 msgstr "StarDict je međunarodni rječnik za GNOME."
 
-#: ../src/mainwin.cpp:533
+#: ../src/mainwin.cpp:653
 msgid "Pr_eferences"
 msgstr "Postavke"
 
-#: ../src/mainwin.cpp:546
+#: ../src/mainwin.cpp:661
 #, fuzzy
-msgid "Manage _Plugins"
+msgid "Manage _dictionaries"
+msgstr "Upravljanje rječnicima"
+
+#: ../src/mainwin.cpp:668
+#, fuzzy
+msgid "Manage _plugins"
 msgstr "Upravljanje Rječnicima"
 
-#: ../src/mainwin.cpp:555
-msgid "_New Version"
+#: ../src/mainwin.cpp:678
+#, fuzzy
+msgid "Download dict_ionaries"
+msgstr "Hijerarhijski rječnici"
+
+#: ../src/mainwin.cpp:685
+#, fuzzy
+msgid "_New version"
 msgstr "_Nova Verzija"
 
-#: ../src/mainwin.cpp:563
+#: ../src/mainwin.cpp:694
 msgid "_Help"
 msgstr "_Pomoć"
 
-#: ../src/mainwin.cpp:569
+#: ../src/mainwin.cpp:701
 msgid "_About"
 msgstr "_O programu"
 
-#: ../src/mainwin.cpp:1302
+#: ../src/mainwin.cpp:1440
 #, fuzzy
 msgid "List"
 msgstr "_Lista"
 
-#: ../src/mainwin.cpp:1313
+#: ../src/mainwin.cpp:1451
 #, fuzzy
 msgid "Result"
 msgstr "_Rezultat"
 
-#: ../src/mainwin.cpp:1323
+#: ../src/mainwin.cpp:1461
 msgid "Full-Text Translation"
 msgstr ""
 
-#: ../src/mainwin.cpp:1334
+#: ../src/mainwin.cpp:1472
 #, fuzzy
 msgid "Tree"
 msgstr "_Stablo"
 
-#: ../src/mainwin.cpp:1345
+#: ../src/mainwin.cpp:1483
 #, fuzzy
 msgid "Choose dict group"
 msgstr "Odaberi font rječnika"
 
-#: ../src/mainwin.cpp:1356
+#: ../src/mainwin.cpp:1494
 msgid "Next word (Alt+Down)"
 msgstr "Iduća riječ (Alt+Dolje)"
 
-#: ../src/mainwin.cpp:1366
+#: ../src/mainwin.cpp:1504
 msgid "Previous word (Alt+Up)"
 msgstr "Prthodna riječ (Alt+Gore)"
 
-#: ../src/mainwin.cpp:1418
+#: ../src/mainwin.cpp:1556
 #, fuzzy
 msgid "Enable Net Dict"
 msgstr "StarDict"
 
-#: ../src/mainwin.cpp:1561
+#: ../src/mainwin.cpp:1703
 msgid "Show the word list"
 msgstr "Prikaži listu s riječima"
 
-#: ../src/mainwin.cpp:1576
+#: ../src/mainwin.cpp:1718
 msgid "Hide the word list"
 msgstr "Sakrij listu s riječima"
 
-#: ../src/mainwin.cpp:1594
+#: ../src/mainwin.cpp:1736
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: ../src/mainwin.cpp:1608
+#: ../src/mainwin.cpp:1750
 #, fuzzy
 msgid "Pronounce the word (Enter)"
 msgstr "Izgovori riječ"
 
-#: ../src/mainwin.cpp:1622
+#: ../src/mainwin.cpp:1764
 #, fuzzy
 msgid "Save to file (Alt+E)"
 msgstr "Snimi u datoteku (Alt+E)"
 
-#: ../src/mainwin.cpp:1632
+#: ../src/mainwin.cpp:1774
 msgid "Print"
 msgstr "Ispiši"
 
-#: ../src/mainwin.cpp:1647
+#: ../src/mainwin.cpp:1789
 #, fuzzy
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "Traži unutar definicije (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1843
+#: ../src/mainwin.cpp:1999
 #, fuzzy, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -1026,7 +1047,7 @@ msgstr ""
 "Molimo otiđite na StarDict website i skinite neke rječnike:\n"
 "http://stardict.sourceforge.net"
 
-#: ../src/mainwin.cpp:1881
+#: ../src/mainwin.cpp:2037
 #, fuzzy
 msgid ""
 "        Welcome to StarDict!\n"
@@ -1063,12 +1084,11 @@ msgstr ""
 "   Kada plutajući prozor izvijesti da riječ nije pronađena, dvostruki klik "
 "će pokrenuti neizravan upit.\n"
 
-#: ../src/mainwin.cpp:1898
-#, fuzzy
+#: ../src/mainwin.cpp:2054
 msgid ""
 "       Welcome to StarDict\n"
-"StarDict is a Cross-Platform and international dictionary written in Gtk2. "
-"It has powerful features, such as \"Glob-style pattern matching,\" \"Scan "
+"StarDict is a Cross-Platform and international dictionary written in Gtk. It "
+"has powerful features, such as \"Glob-style pattern matching,\" \"Scan "
 "selected word,\" \"Fuzzy query\" and \"Full-text search\".\n"
 "\n"
 "       Here is an introduction to using StarDict:\n"
@@ -1117,7 +1137,7 @@ msgid ""
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
 "       Dobrodošli u StarDict\n"
-"StarDict je višeplatformski i međunarodni rječnik napisan za Gtk2. Posjeduje "
+"StarDict je višeplatformski i međunarodni rječnik napisan za Gtk. Posjeduje "
 "moćna svojstva kao \"Glob-style prepoznavanje uzorka,\" \"Traženje označene "
 "riječi,\" \"Neizravan (fuzzy) upit,\" itd.\n"
 "\n"
@@ -1161,82 +1181,82 @@ msgstr ""
 "BEZ IKAKVIH GARANCIJA; bez garancije da su pravopis riječi, definicija i "
 "fonetske informacije ispravni.\n"
 
-#: ../src/mainwin.cpp:2046 ../src/stardict.cpp:1332
+#: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1368
 msgid "Found no words matching this pattern!"
 msgstr "Nije pronađena nijedna riječ koja odgovara ovom uzorku!"
 
-#: ../src/mainwin.cpp:2048 ../src/stardict.cpp:1357
+#: ../src/mainwin.cpp:2204 ../src/stardict.cpp:1393
 #, fuzzy
 msgid "Found no words matching this regular expression!"
 msgstr "Nije pronađena nijedna riječ koja odgovara ovom uzorku!"
 
-#: ../src/mainwin.cpp:2050 ../src/stardict.cpp:1244
+#: ../src/mainwin.cpp:2206 ../src/stardict.cpp:1280
 msgid "There are too many spelling errors :-("
 msgstr "Postoji previše pravopisnih grešaka :-("
 
-#: ../src/mainwin.cpp:2052 ../src/stardict.cpp:1163 ../src/stardict.cpp:1208
+#: ../src/mainwin.cpp:2208 ../src/stardict.cpp:1195 ../src/stardict.cpp:1244
 #, fuzzy
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Nema unosa u rječniku za zadanu riječ :-("
 
-#: ../src/mainwin.cpp:2140
+#: ../src/mainwin.cpp:2296
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Tekst \"%s\" nije pronađen."
 
-#: ../src/mainwin.cpp:2212 ../src/mainwin.cpp:2329
+#: ../src/mainwin.cpp:2368 ../src/mainwin.cpp:2487
 #, fuzzy
 msgid "_Pronounce"
 msgstr "Izgovori riječ"
 
-#: ../src/mainwin.cpp:2351
+#: ../src/mainwin.cpp:2514
 msgid "<b>Full-Text Translation</b>"
 msgstr ""
 
-#: ../src/mainwin.cpp:2384
+#: ../src/mainwin.cpp:2551
 msgid "To"
 msgstr ""
 
-#: ../src/mainwin.cpp:2417
+#: ../src/mainwin.cpp:2592
 #, fuzzy
 msgid "_Translate"
 msgstr "Preveo"
 
-#: ../src/mainwin.cpp:2439
+#: ../src/mainwin.cpp:2618
 msgid "Powered by -"
 msgstr ""
 
-#: ../src/mainwin.cpp:2514
+#: ../src/mainwin.cpp:2697
 #, fuzzy
 msgid "Please input some words to translate."
 msgstr "Molimo unesite ime website-a."
 
-#: ../src/mainwin.cpp:2522
+#: ../src/mainwin.cpp:2705
 #, fuzzy
 msgid "Connecting..."
 msgstr "Učitavanje..."
 
-#: ../src/mainwin.cpp:2636
+#: ../src/mainwin.cpp:2835
 msgid "Scan the selection"
 msgstr "Pretraži selekciju"
 
-#: ../src/mainwin.cpp:2650
+#: ../src/mainwin.cpp:2849
 msgid "Show info"
 msgstr "Prikaži informaciju"
 
-#: ../src/mainwin.cpp:2702 ../src/prefsdlg.cpp:2099
+#: ../src/mainwin.cpp:2909 ../src/prefsdlg.cpp:2336
 msgid "Preferences"
 msgstr "Postavke"
 
-#: ../src/mainwin.cpp:2712
+#: ../src/mainwin.cpp:2919
 msgid "Manage dictionaries"
 msgstr "Upravljanje rječnicima"
 
-#: ../src/mainwin.cpp:2722
+#: ../src/mainwin.cpp:2929
 msgid "Go to the StarDict website"
 msgstr "Otiđi na StarDict website"
 
-#: ../src/mainwin.cpp:2734
+#: ../src/mainwin.cpp:2941
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Pretraži Internet rječnik - Desno dugme: popis website-ova"
 
@@ -1284,40 +1304,40 @@ msgstr ""
 msgid "Configure Pl_ug-in"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:470
+#: ../src/pluginmanagedlg.cpp:474
 msgid "<b>Plug-in Details</b>"
 msgstr ""
 
-#: ../src/pluginmanagedlg.cpp:479
+#: ../src/pluginmanagedlg.cpp:483
 #, fuzzy
 msgid "Manage Plugins"
 msgstr "Upravljanje Rječnicima"
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:406
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:422
 msgid "Scan Selection"
 msgstr "Pretraži selekciju"
 
-#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:537
+#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:590
 msgid "Font"
 msgstr "Font"
 
-#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:595
+#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:656
 msgid "Cache"
 msgstr "Cache"
 
-#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:686
+#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:759
 msgid "Export"
 msgstr "Izvezi"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:802
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:916
 msgid "Sound"
 msgstr "Zvuk"
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:889
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1015
 msgid "Video"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:726
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:815
 msgid "Article rendering"
 msgstr ""
 
@@ -1326,33 +1346,33 @@ msgstr ""
 msgid "Dict management"
 msgstr "Upravljanje rječnikom"
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1109
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1243
 #, fuzzy
 msgid "Net Dict"
 msgstr "StarDict"
 
-#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1173
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1315
 msgid "Web browser"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1221
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1371
 msgid "Input"
 msgstr "Ulaz"
 
 #: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
-#: ../src/prefsdlg.cpp:1380 ../src/prefsdlg.cpp:1846 ../src/prefsdlg.cpp:1878
+#: ../src/prefsdlg.cpp:1538 ../src/prefsdlg.cpp:2032 ../src/prefsdlg.cpp:2068
 msgid "Options"
 msgstr "Opcije"
 
-#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1721
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1899
 msgid "Search website"
 msgstr "Pretraži website"
 
-#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:1932
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2135
 msgid "Settings"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2312
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2353
 msgid "Dictionary"
 msgstr "Rječnik"
 
@@ -1372,62 +1392,62 @@ msgstr "Plutajući prozor"
 msgid "Categories"
 msgstr "Kategorije"
 
-#: ../src/prefsdlg.cpp:409
+#: ../src/prefsdlg.cpp:429
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "_Pretraži selekciju samo ako je pripadna tipka pritisnuta"
 
-#: ../src/prefsdlg.cpp:425
+#: ../src/prefsdlg.cpp:449
 msgid "H_ide floating window when modifier key released."
 msgstr "Sakrij plutajući prozor kod otpuštanja pripadnih tipki"
 
-#: ../src/prefsdlg.cpp:435
+#: ../src/prefsdlg.cpp:463
 msgid "Scan modifier _key:"
 msgstr "_Tipka za uključenje pretraživanja:"
 
-#: ../src/prefsdlg.cpp:456
+#: ../src/prefsdlg.cpp:484
 msgid "_Scan clipboard."
 msgstr "Skaniraj pomoćnu memoriju."
 
-#: ../src/prefsdlg.cpp:466
+#: ../src/prefsdlg.cpp:498
 #, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "Koristi kraticu za skaniranje: Ctrl+Alt+F1"
 
-#: ../src/prefsdlg.cpp:514
+#: ../src/prefsdlg.cpp:552 ../src/prefsdlg.cpp:554
 msgid "Choose dictionary font"
 msgstr "Odaberi font rječnika"
 
-#: ../src/prefsdlg.cpp:517 ../src/prefsdlg.cpp:562
+#: ../src/prefsdlg.cpp:558 ../src/prefsdlg.cpp:623
 msgid "Choose"
 msgstr "Odaberi"
 
-#: ../src/prefsdlg.cpp:519
+#: ../src/prefsdlg.cpp:566 ../src/prefsdlg.cpp:568
 msgid "Dictionary font"
 msgstr "Font rječnika"
 
-#: ../src/prefsdlg.cpp:540
+#: ../src/prefsdlg.cpp:597
 msgid "_Use custom font."
 msgstr "_Koristi font po izboru."
 
-#: ../src/prefsdlg.cpp:552
+#: ../src/prefsdlg.cpp:613
 msgid "Dictionary _font:"
 msgstr "Font rječnika:"
 
-#: ../src/prefsdlg.cpp:599
+#: ../src/prefsdlg.cpp:664
 msgid "Create c_ache files to speed up loading."
 msgstr "Kreiraj cache datoteke za ubrzanje kod ucitavanja."
 
-#: ../src/prefsdlg.cpp:604
+#: ../src/prefsdlg.cpp:669
 #, fuzzy
 msgid "_Sort word list by collation function."
 msgstr "Sortiraj listu riječi po odabranoj funkciji."
 
-#: ../src/prefsdlg.cpp:613
+#: ../src/prefsdlg.cpp:682
 #, fuzzy
 msgid "\tCollation _function:"
 msgstr "\tFunkcija za sortiranje:"
 
-#: ../src/prefsdlg.cpp:645
+#: ../src/prefsdlg.cpp:714
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
@@ -1435,225 +1455,238 @@ msgstr ""
 "Akon sto se uključi sortiranje, kada se rječnici učitaju po prvi puta, bit "
 "će potrebno neko vrijeme za sortiranje, molimo pričekajte trenutak."
 
-#: ../src/prefsdlg.cpp:651
+#: ../src/prefsdlg.cpp:724
 msgid "C_lean all cache files"
 msgstr "Očisti sve cache datoteke"
 
-#: ../src/prefsdlg.cpp:668
+#: ../src/prefsdlg.cpp:741
 msgid "Open file..."
 msgstr "Otvori datoteku..."
 
-#: ../src/prefsdlg.cpp:691
+#: ../src/prefsdlg.cpp:768
 #, fuzzy
 msgid "_Only export words."
 msgstr "Izvezi samo riječ."
 
-#: ../src/prefsdlg.cpp:698
+#: ../src/prefsdlg.cpp:779
 msgid "File name:"
 msgstr "Ime datoteke:"
 
-#: ../src/prefsdlg.cpp:711
+#: ../src/prefsdlg.cpp:792
 msgid "_Browse..."
 msgstr "_Pregledaj..."
 
-#: ../src/prefsdlg.cpp:732
-msgid "_Highlight search term"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:742
+#: ../src/prefsdlg.cpp:830
 #, fuzzy
-msgid "Dictionary management"
+msgid "Dictionary name showing style:"
 msgstr "Naziv Rječnika"
 
-#: ../src/prefsdlg.cpp:748
-msgid "Add new dictionaries to active dictionary group"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:755
-msgid "Add new plug-ins to active dictionary group"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:807
-msgid "_Enable sound event."
-msgstr "_Omogući zvučne događaje."
-
-#: ../src/prefsdlg.cpp:816
-#, fuzzy
-msgid "Command for playing sound files:"
-msgstr "Komanda za sviranje vaw datoteke:"
-
-#: ../src/prefsdlg.cpp:828
-msgid "Always use sound play command."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:835
-msgid "RealPeopleTTS search path:"
-msgstr "Staza za trazenje RealPeopleTTS:"
-
-#: ../src/prefsdlg.cpp:865
-#, fuzzy
-msgid "Enable _TTS program."
-msgstr "Ime programa"
-
-#: ../src/prefsdlg.cpp:873
-#, fuzzy
-msgid "Command line:"
-msgstr "Komanda za sviranje vaw datoteke:"
-
-#: ../src/prefsdlg.cpp:894
-#, fuzzy
-msgid "Command for playing video files:"
-msgstr "Komanda za sviranje vaw datoteke:"
-
-#: ../src/prefsdlg.cpp:928
-#, fuzzy
-msgid "Account"
-msgstr "_O programu"
-
-#: ../src/prefsdlg.cpp:939 ../src/prefsdlg.cpp:1036
-#, fuzzy
-msgid "_User Name:"
-msgstr "Ime website-a"
-
-#: ../src/prefsdlg.cpp:945 ../src/prefsdlg.cpp:1042
-msgid "_Password:"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:968 ../src/prefsdlg.cpp:1067
-#, fuzzy
-msgid "Please input the password."
-msgstr "Molimo unesite ime website-a."
-
-#: ../src/prefsdlg.cpp:1025
-msgid "Register"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1049
-#, fuzzy
-msgid "_Email:"
-msgstr "Email"
-
-#: ../src/prefsdlg.cpp:1065
-#, fuzzy
-msgid "Please input the user name."
-msgstr "Molimo unesite ime website-a."
-
-#: ../src/prefsdlg.cpp:1069
-#, fuzzy
-msgid "Please input the email."
-msgstr "Molimo unesite adresu website-a."
-
-#: ../src/prefsdlg.cpp:1071
-#, fuzzy
-msgid "Please input a valid email."
-msgstr "Molimo unesite ime website-a."
-
-#: ../src/prefsdlg.cpp:1115
-#, fuzzy
-msgid "Enable _network dictionaries."
-msgstr "Upravljanje rječnicima"
-
-#: ../src/prefsdlg.cpp:1127
-#, fuzzy
-msgid "StarDict server:"
-msgstr "StarDict"
-
-#: ../src/prefsdlg.cpp:1136
-#, fuzzy
-msgid "Port:"
-msgstr "Ispiši"
-
-#: ../src/prefsdlg.cpp:1145
-msgid "Account:"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1156
-msgid "_Register an account"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1178
-#, fuzzy
-msgid "Command for opening URLs:"
-msgstr "Komanda za sviranje vaw datoteke:"
-
-#: ../src/prefsdlg.cpp:1191
-msgid "Always use this command for opening URLs."
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1228
-msgid "_Search while typing."
-msgstr "_Traži dok tipkam."
-
-#: ../src/prefsdlg.cpp:1237
-msgid "Word change _timeout:"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1246
-#, fuzzy
-msgid "(default:300 ms)"
-msgstr "(predefinirano:320)"
-
-#: ../src/prefsdlg.cpp:1248
-msgid "Show the _first word when not found."
-msgstr "Prikaži prvu riječ kad nema rezultata-"
-
-#: ../src/prefsdlg.cpp:1327
-msgid "Skin change will take effect after application restart"
-msgstr ""
-
-#: ../src/prefsdlg.cpp:1370
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:61
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:60
+#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1528
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
 #, fuzzy
 msgid "Default"
 msgstr "(predefinirano:320)"
 
-#: ../src/prefsdlg.cpp:1387
+#: ../src/prefsdlg.cpp:834
+msgid "One blank line"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:835
+msgid "Two blank lines"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:842
+msgid "_Highlight search term"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:852
+#, fuzzy
+msgid "Dictionary management"
+msgstr "Naziv Rječnika"
+
+#: ../src/prefsdlg.cpp:862
+msgid "Add new dictionaries to active dictionary group"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:869
+msgid "Add new plug-ins to active dictionary group"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:925
+msgid "_Enable sound event."
+msgstr "_Omogući zvučne događaje."
+
+#: ../src/prefsdlg.cpp:938
+#, fuzzy
+msgid "Command for playing sound files:"
+msgstr "Komanda za sviranje vaw datoteke:"
+
+#: ../src/prefsdlg.cpp:950
+msgid "Always use sound play command."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:957
+msgid "RealPeopleTTS search path:"
+msgstr "Staza za trazenje RealPeopleTTS:"
+
+#: ../src/prefsdlg.cpp:987
+#, fuzzy
+msgid "Enable _TTS program."
+msgstr "Ime programa"
+
+#: ../src/prefsdlg.cpp:999
+#, fuzzy
+msgid "Command line:"
+msgstr "Komanda za sviranje vaw datoteke:"
+
+#: ../src/prefsdlg.cpp:1028
+#, fuzzy
+msgid "Command for playing video files:"
+msgstr "Komanda za sviranje vaw datoteke:"
+
+#: ../src/prefsdlg.cpp:1062
+#, fuzzy
+msgid "Account"
+msgstr "_O programu"
+
+#: ../src/prefsdlg.cpp:1073 ../src/prefsdlg.cpp:1170
+#, fuzzy
+msgid "_User Name:"
+msgstr "Ime website-a"
+
+#: ../src/prefsdlg.cpp:1079 ../src/prefsdlg.cpp:1176
+msgid "_Password:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1102 ../src/prefsdlg.cpp:1201
+#, fuzzy
+msgid "Please input the password."
+msgstr "Molimo unesite ime website-a."
+
+#: ../src/prefsdlg.cpp:1159
+msgid "Register"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1183
+#, fuzzy
+msgid "_Email:"
+msgstr "Email"
+
+#: ../src/prefsdlg.cpp:1199
+#, fuzzy
+msgid "Please input the user name."
+msgstr "Molimo unesite ime website-a."
+
+#: ../src/prefsdlg.cpp:1203
+#, fuzzy
+msgid "Please input the email."
+msgstr "Molimo unesite adresu website-a."
+
+#: ../src/prefsdlg.cpp:1205
+#, fuzzy
+msgid "Please input a valid email."
+msgstr "Molimo unesite ime website-a."
+
+#: ../src/prefsdlg.cpp:1253
+#, fuzzy
+msgid "Enable _network dictionaries."
+msgstr "Upravljanje rječnicima"
+
+#: ../src/prefsdlg.cpp:1265
+#, fuzzy
+msgid "StarDict server:"
+msgstr "StarDict"
+
+#: ../src/prefsdlg.cpp:1274
+#, fuzzy
+msgid "Port:"
+msgstr "Ispiši"
+
+#: ../src/prefsdlg.cpp:1283
+msgid "Account:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1294
+msgid "_Register an account"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1328
+#, fuzzy
+msgid "Command for opening URLs:"
+msgstr "Komanda za sviranje vaw datoteke:"
+
+#: ../src/prefsdlg.cpp:1341
+msgid "Always use this command for opening URLs."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1382
+msgid "_Search while typing."
+msgstr "_Traži dok tipkam."
+
+#: ../src/prefsdlg.cpp:1395
+msgid "Word change _timeout:"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1404
+#, fuzzy
+msgid "(default:300 ms)"
+msgstr "(predefinirano:320)"
+
+#: ../src/prefsdlg.cpp:1406
+msgid "Show the _first word when not found."
+msgstr "Prikaži prvu riječ kad nema rezultata-"
+
+#: ../src/prefsdlg.cpp:1485
+msgid "Skin change will take effect after application restart"
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1549
 msgid "_Auto run StarDict after boot."
 msgstr "_Automatski pokreni StarDict nakon podizanja sustava."
 
-#: ../src/prefsdlg.cpp:1428
+#: ../src/prefsdlg.cpp:1594
 msgid "Skin:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1445
+#: ../src/prefsdlg.cpp:1611
 msgid "Hide main window when _starting StarDict."
 msgstr "Sakrije glavni prozor kod pokretanja StarDict-a"
 
-#: ../src/prefsdlg.cpp:1458
+#: ../src/prefsdlg.cpp:1628
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "Koristi kraticu Ctrl+Alt+Z za otvaranje glavnog prozora"
 
-#: ../src/prefsdlg.cpp:1476 ../src/prefsdlg.cpp:1993
+#: ../src/prefsdlg.cpp:1650 ../src/prefsdlg.cpp:2217
 #, fuzzy
 msgid "_Transparency:"
 msgstr "Preveo"
 
-#: ../src/prefsdlg.cpp:1569 ../src/prefsdlg.cpp:1772
+#: ../src/prefsdlg.cpp:1747 ../src/prefsdlg.cpp:1954
 msgid "Website Name"
 msgstr "Ime website-a"
 
-#: ../src/prefsdlg.cpp:1581 ../src/prefsdlg.cpp:1780
+#: ../src/prefsdlg.cpp:1759 ../src/prefsdlg.cpp:1962
 msgid "Website link"
 msgstr "Adresa website-a"
 
-#: ../src/prefsdlg.cpp:1592 ../src/prefsdlg.cpp:1788
+#: ../src/prefsdlg.cpp:1770 ../src/prefsdlg.cpp:1970
 msgid "Website search link"
 msgstr "Adresa za pretraživanje website-a"
 
-#: ../src/prefsdlg.cpp:1613
+#: ../src/prefsdlg.cpp:1791
 msgid "Please input the website name."
 msgstr "Molimo unesite ime website-a."
 
-#: ../src/prefsdlg.cpp:1615
+#: ../src/prefsdlg.cpp:1793
 msgid "Please input the website link."
 msgstr "Molimo unesite adresu website-a."
 
-#: ../src/prefsdlg.cpp:1617
+#: ../src/prefsdlg.cpp:1795
 msgid "Please input the website search link."
 msgstr "Molimo unesite adresu za pretraživanje website-a."
 
-#: ../src/prefsdlg.cpp:1619 ../src/prefsdlg.cpp:1698
+#: ../src/prefsdlg.cpp:1797 ../src/prefsdlg.cpp:1876
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
@@ -1661,61 +1694,61 @@ msgstr ""
 "Link za pretraživnaje website-a treba sadržavati  \"%%s\" niz za riječ koja "
 "se traži."
 
-#: ../src/prefsdlg.cpp:1850
+#: ../src/prefsdlg.cpp:2040
 #, fuzzy
 msgid "When middle mouse button is clicked:"
 msgstr "Izvrši upit u plutajućem prozoru kad se srednji botun miša pritisne."
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:1854
+#: ../src/prefsdlg.cpp:2044
 #, fuzzy
 msgid "Query selection in floating window"
 msgstr "Upit u glavnom prozoru"
 
-#: ../src/prefsdlg.cpp:1855
+#: ../src/prefsdlg.cpp:2045
 #, fuzzy
 msgid "Query selection in main window"
 msgstr "Upit u glavnom prozoru"
 
-#: ../src/prefsdlg.cpp:1856
+#: ../src/prefsdlg.cpp:2046
 msgid "Do nothing"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1881
+#: ../src/prefsdlg.cpp:2075
 #, fuzzy
 msgid "_Pronounce the word when it pops up."
 msgstr "Izgovori riječ kod iskakanja."
 
-#: ../src/prefsdlg.cpp:1890
+#: ../src/prefsdlg.cpp:2084
 msgid "_Show floating window if word not found."
 msgstr "Prikaži lebdeći prozor ako riječ nije pronađena"
 
-#: ../src/prefsdlg.cpp:1951
+#: ../src/prefsdlg.cpp:2158
 msgid "Max window _width:"
 msgstr "Maks. širina prozora:"
 
-#: ../src/prefsdlg.cpp:1961
+#: ../src/prefsdlg.cpp:2168
 msgid "(default:320)"
 msgstr "(predefinirano:320)"
 
-#: ../src/prefsdlg.cpp:1965
+#: ../src/prefsdlg.cpp:2172
 msgid "Max window hei_ght:"
 msgstr "Maks. visina prozora:"
 
-#: ../src/prefsdlg.cpp:1973
+#: ../src/prefsdlg.cpp:2180
 msgid "(default:240)"
 msgstr "(predefinirano:240)"
 
-#: ../src/prefsdlg.cpp:1978
+#: ../src/prefsdlg.cpp:2189
 #, fuzzy
 msgid "_Use custom background color:"
 msgstr "_Koristi font po izboru."
 
-#: ../src/prefsdlg.cpp:2077
+#: ../src/prefsdlg.cpp:2314
 msgid "Cat_egories:"
 msgstr "Kategorije:"
 
-#: ../src/progresswin.cpp:43 ../src/progresswin.cpp:47 ../src/splash.cpp:73
+#: ../src/progresswin.cpp:43 ../src/progresswin.cpp:51 ../src/splash.cpp:76
 msgid "Loading"
 msgstr "Učitavanje"
 
@@ -1729,67 +1762,67 @@ msgid "Command TTS"
 msgstr ""
 
 #. gtk_widget_set_app_paintable(window, TRUE);
-#: ../src/splash.cpp:87
+#: ../src/splash.cpp:90
 #, fuzzy
 msgid "StarDict starting..."
 msgstr "StarDict - Traženje"
 
-#: ../src/stardict.cpp:1071
+#: ../src/stardict.cpp:1099
 #, fuzzy
 msgid "Full-text Search"
 msgstr "Pretraživanje po čitavom tekstu..."
 
-#: ../src/stardict.cpp:1098
+#: ../src/stardict.cpp:1130
 #, fuzzy
 msgid "Search"
 msgstr "Traži:"
 
-#: ../src/stardict.cpp:1183 ../src/stardict.cpp:1599
+#: ../src/stardict.cpp:1215 ../src/stardict.cpp:1635
 msgid "Full-text search..."
 msgstr "Pretraživanje po čitavom tekstu..."
 
-#: ../src/stardict.cpp:1588
+#: ../src/stardict.cpp:1624
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Pritisnite Enter za izlistati riječi koje odgovaraju uzorku."
 
-#: ../src/stardict.cpp:1591
+#: ../src/stardict.cpp:1627
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr "Pritisnite Enter za izlistati riječi koje odgovaraju uzorku."
 
-#: ../src/stardict.cpp:1595
+#: ../src/stardict.cpp:1631
 msgid "Fuzzy query..."
 msgstr "Neizravan (fuzzy) upit..."
 
-#: ../src/stardict.cpp:2014
+#: ../src/stardict.cpp:2052
 #, fuzzy
 msgid "Loading skin..."
 msgstr "Učitavanje..."
 
-#: ../src/stardict.cpp:2020
+#: ../src/stardict.cpp:2058
 msgid "Skin loaded."
 msgstr ""
 
-#: ../src/stardict.cpp:2177
+#: ../src/stardict.cpp:2217
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict je već pokrenut. Koristi se postojeći proces."
 
-#: ../src/stardict.cpp:2296
+#: ../src/stardict.cpp:2337
 #, fuzzy
 msgid "- Lookup words"
 msgstr "Pogledaj  riječi"
 
-#: ../src/stardict.cpp:2301
+#: ../src/stardict.cpp:2342
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2364
+#: ../src/stardict.cpp:2408
 #, fuzzy
 msgid "Loading StarDict configuration..."
 msgstr "Font rječnika"
 
-#: ../src/stardict.cpp:2366
+#: ../src/stardict.cpp:2410
 #, fuzzy
 msgid "StarDict configuration loaded."
 msgstr "Poredak rječnika"
@@ -2120,22 +2153,22 @@ msgstr "Sortiranje u tijeku, molimo pričekajte..."
 msgid "Invalid collate function. Disable collation."
 msgstr ""
 
-#: ../src/lib/utils.cpp:117
+#: ../src/lib/utils.cpp:116
 #, c-format
 msgid "Can not load image. %s"
 msgstr "Ne mogu učitati sliku. %s."
 
-#: ../src/lib/utils.cpp:329
+#: ../src/lib/utils.cpp:328
 #, c-format
 msgid "Template '%s' invalid, should not contain a '%s'"
 msgstr ""
 
-#: ../src/lib/utils.cpp:342
+#: ../src/lib/utils.cpp:341
 #, c-format
 msgid "Template '%s' doesn't contain XXXXXX"
 msgstr ""
 
-#: ../src/lib/utils.cpp:367
+#: ../src/lib/utils.cpp:366
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr ""
@@ -2210,108 +2243,115 @@ msgstr ""
 msgid "Verification status of '%s': dictionary is broken"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:260
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:267
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:262
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:269
 #, c-format
 msgid "Dict.cn plugin: context parse failed: %s"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:334
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:469
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:336
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:475
 msgid "Dict.cn"
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:397
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:399
 #, fuzzy
 msgid "Dict.cn configuration"
 msgstr "Font rječnika"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:399
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:405
 msgid "Query by XML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:401
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:407
 msgid "Query by HTML API."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:430
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
 msgid "Loading Dict.cn plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
 #, fuzzy
 msgid "Dict.cn network dictionary."
 msgstr "Upravljanje rječnicima"
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
 msgid "Query result from Dict.cn website."
 msgstr ""
 
-#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:472
+#: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:478
 #, c-format
 msgid "Dict.cn plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:56
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
 msgid "Espeak TTS configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:58
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:57
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:95
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:103
 msgid "Voice type:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:99
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:121
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:140
+#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:194
+#, fuzzy
+msgid "Test"
+msgstr "_Rezultat"
+
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:131
 msgid "Loading Espeak plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:137
 msgid "Espeak"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:137
 msgid "Espeak TTS."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:105
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:137
 msgid "Pronounce words by Espeak TTS engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:138
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:170
 msgid "Espeak TTS"
 msgstr ""
 
-#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:139
+#: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
 #, c-format
 msgid "Espeak plug-in loaded.\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:55
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:90
 msgid "Festival TTS configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:119
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:150
 msgid "Loading Festival plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:156
 msgid "Festival"
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:156
 msgid "Festival TTS."
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:125
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:156
 msgid "Pronounce words by Festival TTS engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:159
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:190
 msgid "Festival TTS"
 msgstr ""
 
-#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:160
+#: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:191
 #, c-format
 msgid "Festival plug-in loaded.\n"
 msgstr ""
@@ -2333,106 +2373,106 @@ msgstr ""
 msgid "Canonical decomposition:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:276
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:275
 msgid "Various Useful Representations"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:289
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:288
 msgid "UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:296
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:295
 msgid "UTF-16:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:304
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:303
 msgid "C octal escaped UTF-8:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:312
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:311
 msgid "XML decimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:315
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:314
 msgid "XML hexadecimal entity:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:326
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
 #, fuzzy
 msgid "Alias names:"
 msgstr "Ime datoteke:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:332
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
 msgid "Notes:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:339
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:338
 msgid "See also:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:345
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
 msgid "Approximate equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:351
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
 msgid "Equivalents:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:356
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
 msgid "Annotations and Cross References"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:363
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
 msgid "Definition in English:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:366
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:365
 msgid "Mandarin Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:369
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:368
 #, fuzzy
 msgid "Cantonese Pronunciation:"
 msgstr "\tFunkcija za sortiranje:"
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:372
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:371
 msgid "Japanese On Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:375
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:374
 msgid "Japanese Kun Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:378
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:377
 msgid "Tang Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:381
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:380
 msgid "Korean Pronunciation:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:384
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:383
 msgid "CJK Ideograph Information"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:411
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
 msgid "Loading Gucharmap plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:430
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:429
 msgid "Gucharmap"
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
 msgid "Gucharmap virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:417
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
 msgid "Show information about Unicode characters."
 msgstr ""
 
-#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:431
+#: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:430
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
 msgstr ""
@@ -2462,31 +2502,32 @@ msgstr ""
 msgid "Man configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:182
-msgid "_Input string requires the \"man \" prefix."
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
+msgid ""
+"_Input string requires the \"man \" prefix. For example: \"man printf\"."
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:206
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:210
 #, fuzzy
 msgid "Loading Man plug-in..."
 msgstr "Učitavanje..."
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:228
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:232
 msgid "Man"
 msgstr ""
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
 #, fuzzy
 msgid "Man virtual dictionary."
 msgstr "Upravljanje rječnicima"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:212
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
 #, fuzzy
 msgid "Show the man pages."
 msgstr "Prikaži glavni izbornik (Alt+M)"
 
-#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:243
+#: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
 #, c-format
 msgid "Man plug-in loaded.\n"
 msgstr ""
@@ -2521,13 +2562,13 @@ msgstr ""
 msgid "QQWry configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:255
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:259
 msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:257
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:261
 #, c-format
 msgid ""
 "Error: File %s not found!\n"
@@ -2535,26 +2576,26 @@ msgid ""
 "http://www.cz88.net"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:273
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:277
 msgid "Loading QQWry plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:293
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:283
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:297
 msgid "QQWry"
 msgstr ""
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:283
 #, fuzzy
 msgid "Show QQWry IP information."
 msgstr "Prikaži informaciju"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:279
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:283
 #, fuzzy
 msgid "Show address information by IP."
 msgstr "Prikaži informaciju"
 
-#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:294
+#: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:298
 #, c-format
 msgid "QQWry plug-in loaded.\n"
 msgstr ""
@@ -2583,11 +2624,6 @@ msgstr "Datum"
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:186
 msgid "Input the test text:"
 msgstr ""
-
-#: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:194
-#, fuzzy
-msgid "Test"
-msgstr "_Rezultat"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:237
 msgid "Loading SAPI tts plug-in..."
@@ -2628,40 +2664,40 @@ msgstr ""
 msgid "Spell check configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:347
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:351
 #, fuzzy
 msgid "_Use custom languages."
 msgstr "_Koristi font po izboru."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:350
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:354
 msgid "For example: \"en_US de\""
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:356
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:364
 msgid "Custom languages:"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:401
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:409
 msgid "Loading Spelling plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:415
 msgid "Spell Check"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:415
 msgid "Spell check virtual dictionary."
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:407
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:415
 msgid "Spell check the input words and show the correct suggestion."
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:432
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:440
 msgid "Spelling Suggestion"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:462
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:470
 #, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr ""
@@ -2711,9 +2747,7 @@ msgstr "Otiđi na StarDict website"
 msgid "_Don't show this until the next update."
 msgstr ""
 
-#. Don't use g_idle_add, as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
-#. g_idle_add(get_update_info, NULL);
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:290
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:287
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr ""
@@ -2743,27 +2777,27 @@ msgstr ""
 msgid "WordNet configuration"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:85
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:89
 msgid "Graphic mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:87
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:91
 msgid "Text mode."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:107
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:111
 msgid "Loading WordNet dict rendering plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid "WordNet dict rendering"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid "WordNet dict rendering engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:113
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid ""
 "Render the WordNet dictionary.\n"
 "Statement: The engine of this plugin comes from dedict (http://sevenpie."
@@ -2771,7 +2805,7 @@ msgid ""
 "thanks for his open source sharing!"
 msgstr ""
 
-#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:157
+#: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
 #, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
 msgstr ""
@@ -2802,47 +2836,56 @@ msgstr ""
 msgid "XDXF parser configuration"
 msgstr "Font rječnika"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:551
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
 msgid "Abbreviation"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:573
 msgid "Example"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:568
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:585
 msgid "Extra key phrase"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:576
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:597
 msgid "Emphasize"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:584
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:609
 #, fuzzy
 msgid "Reference"
 msgstr "Postavke"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:615
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:640
 msgid "Loading XDXF data parsing plug-in..."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "XDXF data parsing"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "XDXF data parsing engine."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:621
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "Parse the XDXF data."
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:645
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:670
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr ""
+
+#~ msgid "_Fuzzy Query"
+#~ msgstr "_Neizravan (Fuzzy) Upit"
+
+#~ msgid "Fuzzy Query"
+#~ msgstr "Neizravan (fuzzy) Upit"
+
+#~ msgid "Go Back - Right button: history (Alt+Left)"
+#~ msgstr "Idi unatrag - Desno dugme: povijest (Alt+Lijevo)"
 
 #~ msgid "StarDict - Stopped"
 #~ msgstr "StarDict - Zaustavljen"

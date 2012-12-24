@@ -675,7 +675,7 @@ void TopWin::do_menu()
 		menuitem = gtk_separator_menu_item_new();
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Download dict_ionaries"));
+		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Download dict_ionaries"));
 		image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_MENU);
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
