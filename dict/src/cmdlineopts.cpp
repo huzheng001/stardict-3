@@ -61,7 +61,7 @@ static const GOptionEntry options [] =
 	  N_("Quit an existing instance of stardict"), NULL },
 #endif
 	{ "dirs-config", 0, 0, G_OPTION_ARG_FILENAME, &dirs_config_option,
-	  N_("StarDict directories configuration file"), N_("config-file") },
+	  N_("StarDict directories configuration file"), "config-file" },
 #if defined(_WIN32)
 	{ "portable-mode", 0, 0, G_OPTION_ARG_NONE, &portable_mode_option,
 	  N_("Activate portable mode"), NULL },

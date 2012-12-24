@@ -1087,7 +1087,7 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 		gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
 	}
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Fuzzy Query"));
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Fuzzy query"));
 	image = gtk_image_new_from_stock(GTK_STOCK_FIND_AND_REPLACE, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
