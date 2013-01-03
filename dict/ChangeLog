@@ -1,8 +1,10 @@
-2012.
+2013.1.3
 StarDict-3.0.4 (Pratyekabuddhas) released.
 This version is mainly developed by Hu Zheng!
 Port to gtk3 but still use gtk2 as gtk3 have no Windows port presently.
 Examine the source code of version 3.0.2 and 3.0.3, write small fixes.
+Configure.ac mysql-config fix.
+Other fixes.
 
 Jul 2011
 StarDict 3.0.3 released.
