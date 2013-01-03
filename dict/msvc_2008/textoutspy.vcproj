@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="textoutspy"
 	ProjectGUID="{499E55F2-F913-4779-9910-630D76657A8B}"
 	RootNamespace="textoutspy"
@@ -133,6 +133,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="shlwapi.lib"
+				OutputFile="$(OutDir)\TextOutSpy.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"

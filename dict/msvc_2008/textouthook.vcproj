@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="textouthook"
 	ProjectGUID="{A446E90E-B0A0-428E-A20F-B9BB16AA1081}"
 	RootNamespace="texthook"
@@ -133,6 +133,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="shlwapi.lib"
+				OutputFile="$(OutDir)\TextOutHook.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"

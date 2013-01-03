@@ -31,7 +31,7 @@ It has powerful features such as "Glob-style pattern matching,"
 %setup -q
 
 %build
-%configure --disable-schemas-install --disable-gucharmap --disable-dictdotcn --disable-festival --disable-tools
+%configure --disable-schemas-install --disable-gucharmap --disable-dictdotcn --disable-festival --disable-tools CFLAGS="-g -O2" CXXFLAGS="-g -O2"
 make -k %{_smp_mflags}
 
 %install

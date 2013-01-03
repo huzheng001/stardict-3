@@ -257,7 +257,7 @@ bool inifile::read_int(const gchar *sect, const gchar *key, int& val)
 bool inifile::read_double(const gchar *sect, const gchar *key, gdouble& val)
 {
 	GError *err = NULL;
-	gint newval = g_key_file_get_double(gkeyfile_, sect, key, &err);
+	gdouble newval = g_key_file_get_double(gkeyfile_, sect, key, &err);
 	if (err)
 		return report_error(err, sect, key);
 

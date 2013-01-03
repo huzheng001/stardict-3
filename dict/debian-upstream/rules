@@ -60,10 +60,10 @@ clean:
 	-$(MAKE) distclean
 
 	# Clean up
-	rm -f po/.intltool-merge-cache
-	rm -f intltool-extract
-	rm -f intltool-merge
-	rm -f intltool-update
+	rm -f dict/po/.intltool-merge-cache
+	rm -f dict/intltool-extract
+	rm -f dict/intltool-merge
+	rm -f dict/intltool-update
 # I am not sure why we need these
 #ifneq "$(wildcard /usr/share/misc/config.sub)" ""
 #	cp -f /usr/share/misc/config.sub config.sub
@@ -98,7 +98,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs -pstardict ChangeLog
+	dh_installchangelogs -pstardict dict/ChangeLog
 	dh_installdocs -pstardict
 #	dh_installexamples
 #	dh_install
