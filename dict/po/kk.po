@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-24 19:19+0800\n"
-"PO-Revision-Date: 2010-08-03 15:57+0600\n"
+"PO-Revision-Date: 2013-01-30 21:44+0600\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -16,12 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural= (n != 1);\n"
-"X-Poedit-Language: Kazakh\n"
-"X-Poedit-Country: KAZAKHSTAN\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../data/GNOME_Stardict.server.in.h:1
 msgid "stardict automation factory"
-msgstr ""
+msgstr "stardict automation factory"
 
 #: ../data/GNOME_Stardict.server.in.h:2
 msgid "stardict application"
@@ -46,6 +45,9 @@ msgid ""
 "Whether to scan the selection or not. When the user selects text, StarDict "
 "will popup a flat window showing the meaning of that text."
 msgstr ""
+"Таңдалғанды бақылау керек пе, соны көрсетеді. Пайдаланушы мәтінді "
+"ерекшелейтін болса, StarDict ол сөздің мағынасын көрсететін қалқымалы "
+"терезені көрсетеді."
 
 #: ../data/stardict.schemas.in.h:3
 msgid "Only scan while modifier key is being pressed"
@@ -56,6 +58,8 @@ msgid ""
 "Only scan while the modifier key is being pressed. The modifier key is set "
 "by \"scan_modifier_key\"."
 msgstr ""
+"Түрлендіргіш перне басулы кезінде ғана бақылау. Ол перне \"scan_modifier_key"
+"\" арқылы орнатылады."
 
 #: ../data/stardict.schemas.in.h:5
 msgid "Hide floating window when modifier key is released"
@@ -78,6 +82,8 @@ msgid ""
 "Only scan while this modifier key is being pressed. It can be Win(0), Shift"
 "(1), Alt(2) or Ctrl(3)."
 msgstr ""
+"Бұл түрлендіргіш перне басулы кезінде ғана бақылау. Ол перне Win(0), Shift"
+"(1), Alt(2) не Ctrl(3) болуы мүмкін."
 
 #: ../data/stardict.schemas.in.h:9
 msgid "Use Custom Font"
@@ -89,6 +95,9 @@ msgid ""
 "system font. If this option is turned on, then the font named in the "
 "\"Custom Font\" option will be used instead of the system font."
 msgstr ""
+"StarDict ішінде пайдаланушы көрсеткен, не жүйелік қаріпті қолдану керек пе, "
+"соны көрсетеді. Бұл опция қосулы тұрса, \"Таңдауыңызша қаріп\" опциясында "
+"көрсетілген қаріп қолданылады."
 
 #: ../data/stardict.schemas.in.h:11
 msgid "Custom Font"
@@ -111,6 +120,8 @@ msgid ""
 "Whether to enable sound events or not. StarDict will play a sound event when "
 "a button is active or released, and when a menu pops up."
 msgstr ""
+"Дыбыс эффектілерін қосу керек пе, соны анықтайды. Батырма басылған не "
+"жіберілген кезде, не мәзір көрсетілген кезде StarDict дыбысты ойнатады."
 
 #: ../data/stardict.schemas.in.h:15
 msgid "Enable the use of TTS program"
@@ -121,16 +132,20 @@ msgid ""
 "Whether to enable StartDict to use an external TTS program for "
 "pronounciation, or not."
 msgstr ""
+"StartDict сыртқы TTS бағдарламасын сөздерді айту үшін қолдану керек пе, жоқ "
+"па, соны анықтайды."
 
 #: ../data/stardict.schemas.in.h:17
 msgid "TTS program command-line"
-msgstr ""
+msgstr "TTS бағдарламасының командалық жолы"
 
 #: ../data/stardict.schemas.in.h:18
 msgid ""
 "The command-line to use in order to enable pronunciation of words via an "
 "external TTS program."
 msgstr ""
+"Сыртқы TTS бағдарламасы көмегімен сөзді айту үшін қолданылатын командалық "
+"жол."
 
 #: ../data/stardict.schemas.in.h:19
 msgid "Hide the window on startup"
@@ -138,47 +153,47 @@ msgstr "Қосылғанда, терезені жасыру"
 
 #: ../data/stardict.schemas.in.h:20
 msgid "Whether to hide the main window on startup, or not."
-msgstr ""
+msgstr "Қосылғанда, басты терезені жасыру керек пе, соны анықтайды."
 
 #: ../data/stardict.schemas.in.h:21
 msgid "Search website list"
-msgstr ""
+msgstr "Іздеу веб сайттар тізімі"
 
 #: ../data/stardict.schemas.in.h:22
 msgid "List the search websites."
-msgstr ""
+msgstr "Іздеу веб сайттарын тізіп шығу."
 
 #: ../data/stardict.schemas.in.h:23
 msgid "Window-width"
-msgstr ""
+msgstr "Терезе ені"
 
 #: ../data/stardict.schemas.in.h:24
 msgid "The width of the main stardict window."
-msgstr ""
+msgstr "Басты stardict терезесінің ені."
 
 #: ../data/stardict.schemas.in.h:25
 msgid "Window-height"
-msgstr ""
+msgstr "Терезе биіктігі"
 
 #: ../data/stardict.schemas.in.h:26
 msgid "The height of the main stardict window."
-msgstr ""
+msgstr "Басты stardict терезесінің биіктігі."
 
 #: ../data/stardict.schemas.in.h:27
 msgid "Whether the window is maximized or not"
-msgstr ""
+msgstr "Терезе жазық па, жоқ па, соны анықтайды"
 
 #: ../data/stardict.schemas.in.h:28
 msgid "Whether the main window is maximized or not."
-msgstr ""
+msgstr "Басты терезе жазық па, жоқ па, соны анықтайды."
 
 #: ../data/stardict.schemas.in.h:29
 msgid "Hpaned 's position"
-msgstr ""
+msgstr "Hpaned орналасуы"
 
 #: ../data/stardict.schemas.in.h:30
 msgid "The hpaned's position, between the listview and the textview."
-msgstr ""
+msgstr "hpaned орны, тізім мен мақала өрісі арасында."
 
 #: ../data/stardict.schemas.in.h:31
 msgid "Hide the list"
@@ -186,35 +201,36 @@ msgstr "Тізімді жасыру"
 
 #: ../data/stardict.schemas.in.h:32
 msgid "Whether to hide the word-list view or not."
-msgstr ""
+msgstr "Сөздер тізім көрінісін жасыру керек пе, соны көрсетеді."
 
 #: ../data/stardict.schemas.in.h:33
 msgid "Engine index"
-msgstr ""
+msgstr "Қозғаушы мазмұны"
 
 #: ../data/stardict.schemas.in.h:34
 msgid "The index of the translation engine."
-msgstr ""
+msgstr "Аударма қозғаушының мазмұны."
 
 #: ../data/stardict.schemas.in.h:35
 msgid "Source language index"
-msgstr ""
+msgstr "Түпнұсқа тілінің мазмұны"
 
 #: ../data/stardict.schemas.in.h:36
 msgid "The index of the source language for translating."
-msgstr ""
+msgstr "Аудару үшін түпнұсқа тілінің мазмұны."
 
 #: ../data/stardict.schemas.in.h:37
 msgid "Target language index"
-msgstr ""
+msgstr "Мақсат тілінің мазмұны"
 
 #: ../data/stardict.schemas.in.h:38
 msgid "The index of the target language for translating."
-msgstr ""
+msgstr "Аудару үшін мақсат тілінің мазмұны."
 
 #: ../data/stardict.schemas.in.h:39
 msgid "Query in the floating window when middle mouse button is clicked"
 msgstr ""
+"Тышқанның орта батырмасы басылған кезде қалқымалы терезеде сұраным жасау"
 
 #: ../data/stardict.schemas.in.h:40
 msgid ""
@@ -222,56 +238,60 @@ msgid ""
 "activated by the user clicking the middle mouse button on the notification "
 "area icon."
 msgstr ""
+"Сұранымды қалқымалы не басты терезеде орындалатынын көрсетеді. Сұраным "
+"трейдегі таңбашаға орта шерту арқылы іске асырылады."
 
 #: ../data/stardict.schemas.in.h:41
 msgid "Pronounce the word when it pops up."
-msgstr ""
+msgstr "Сөз қалқымалы түрде шыққан кезде оны айту."
 
 #: ../data/stardict.schemas.in.h:42
 msgid "Pronounce the word when the floating window pops up."
-msgstr ""
+msgstr "Қалқымалы терезе шыққан кезде сөзді айту."
 
 #: ../data/stardict.schemas.in.h:43
 msgid "Maximum window-width"
-msgstr ""
+msgstr "Максималды терезе ені"
 
 #: ../data/stardict.schemas.in.h:44
 msgid "The maximum width of the floating stardict window."
-msgstr ""
+msgstr "Қалқымалы stardict терезесінің максималды ені."
 
 #: ../data/stardict.schemas.in.h:45
 msgid "Maximum window-height"
-msgstr ""
+msgstr "Максималды терезе биіктігі"
 
 #: ../data/stardict.schemas.in.h:46
 msgid "The maximum height of the floating stardict window."
-msgstr ""
+msgstr "Қалқымалы stardict терезесінің максималды биіктігі."
 
 #: ../data/stardict.schemas.in.h:47
 msgid "whether to lock the window or not"
-msgstr ""
+msgstr "терезені блоктау керек пе, жоқ па"
 
 #: ../data/stardict.schemas.in.h:48
 msgid ""
 "Whether to lock the floating window or not. While locked, the window will "
 "not disappear."
 msgstr ""
+"Қалқымалы терезені блоктау керек пе, соны көрсетеді. Блокталса, терезе жоқ "
+"болмайды."
 
 #: ../data/stardict.schemas.in.h:49
 msgid "lock position (x)"
-msgstr ""
+msgstr "блоктау орны (x)"
 
 #: ../data/stardict.schemas.in.h:50
 msgid "the window's x position while locked."
-msgstr ""
+msgstr "блокталған терезенің x орны."
 
 #: ../data/stardict.schemas.in.h:51
 msgid "lock position (y)"
-msgstr ""
+msgstr "блоктау орны (y)"
 
 #: ../data/stardict.schemas.in.h:52
 msgid "the window's y position while locked."
-msgstr ""
+msgstr "блокталған терезенің y орны."
 
 #: ../data/stardict.schemas.in.h:53
 msgid "Dictionary order"
@@ -287,15 +307,15 @@ msgstr "Сөздіктің баптау XML файлы"
 
 #: ../data/stardict.schemas.in.h:56
 msgid "Save the dictionary management configuration."
-msgstr ""
+msgstr "Сөздіктерді басқару баптауларын сақтау."
 
 #: ../data/stardict.schemas.in.h:57
 msgid "Tree Dictionary order"
-msgstr ""
+msgstr "Ағаш тектес сөздіктер реті"
 
 #: ../data/stardict.schemas.in.h:58
 msgid "List the tree dictionaries in order."
-msgstr ""
+msgstr "Ағаш тектес сөздіктерді ретімен тізіп шығару."
 
 #: ../data/stardict.schemas.in.h:59
 msgid "Disabled tree dictionaries list"
@@ -303,7 +323,7 @@ msgstr "Сөндірілген ағаш тектес сөздіктер тізі
 
 #: ../data/stardict.schemas.in.h:60
 msgid "List the tree dictionaries which are disabled."
-msgstr ""
+msgstr "Сөндірулі тұрған ағаш тектес сөздіктерді тізіп шығару."
 
 #: ../data/stardict.schemas.in.h:61
 msgid "Plug-in order"
@@ -323,66 +343,63 @@ msgstr "Сөндірілген плагиндерді ретпен тізіп ш
 
 #: ../src/articleview.cpp:306
 msgid "XDXF data parsing plug-in is not found!"
-msgstr ""
+msgstr "XDXF деректерді өңдеу плагині табылмады!"
 
 #: ../src/articleview.cpp:311
 msgid "PowerWord data parsing plug-in is not found!"
-msgstr ""
+msgstr "PowerWord деректерді өңдеу плагині табылмады!"
 
 #: ../src/articleview.cpp:316
 msgid "Wiki data parsing plug-in is not found!"
-msgstr ""
+msgstr "Wiki деректерді өңдеу плагині табылмады!"
 
 #: ../src/articleview.cpp:321
 msgid "HTML data parsing plug-in is not found!"
-msgstr ""
+msgstr "HTML деректерді өңдеу плагині табылмады!"
 
 #: ../src/articleview.cpp:326
 msgid "WordNet data parsing plug-in is not found!"
-msgstr ""
+msgstr "WordNet деректерді өңдеу плагині табылмады!"
 
 #: ../src/articleview.cpp:371
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Мәлімет түрі белгісіз, StarDict бағдарламасын жаңартыңыз!"
 
 #: ../src/articleview.cpp:494 ../src/articleview.cpp:519
-#, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
-msgstr "<span foreground=\"red\">[Суретті жүктеу қатесі!]</span>"
+msgstr "<span foreground=\"red\">[Ресурс файлдар тізімі: пішімі қате!]</span>"
 
 #: ../src/articleview.cpp:982
-#, fuzzy
 msgid "Save File"
-msgstr "Файлға сақтау"
+msgstr "Файлды сақтау"
 
 #: ../src/cmdlineopts.cpp:50
 msgid "How many messages print to console (0-6)"
-msgstr ""
+msgstr "Консольге қанша хабарламаны шығару керек (0-6)"
 
 #: ../src/cmdlineopts.cpp:52
 msgid "How many messages print to log (0-6)"
-msgstr ""
+msgstr "Логқа қанша хабарламаны шығару керек (0-6)"
 
 #: ../src/cmdlineopts.cpp:54
 msgid "Hide the main window, do not show splash screen"
-msgstr ""
+msgstr "Басты терезені жасыру, сплэш терезесін көрсетпеу"
 
 #: ../src/cmdlineopts.cpp:57
 msgid "Start a new instance of stardict"
-msgstr ""
+msgstr "Жаңа stardict көшірмесін жөнелту"
 
 #: ../src/cmdlineopts.cpp:61
 msgid "Quit an existing instance of stardict"
-msgstr ""
+msgstr "Іске қосулы тұрған stardict көшірмесін сөндіру"
 
 #: ../src/cmdlineopts.cpp:64
-#, fuzzy
 msgid "StarDict directories configuration file"
-msgstr "Сөздіктің баптау XML файлы"
+msgstr "StarDict бумалар баптау файлы"
 
 #: ../src/cmdlineopts.cpp:67
 msgid "Activate portable mode"
-msgstr ""
+msgstr "Тасымалы режимдге өту"
 
 #. Default stardictd server.
 #: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2366
@@ -453,62 +470,62 @@ msgstr "darwin_custom_font="
 #: ../src/conf.cpp:466
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
-msgstr ""
+msgstr "StarDict бумалар баптаулар файлын табу мүмкін емес: %s."
 
 #: ../src/conf.cpp:480
 #, c-format
 msgid "Unable to resolve user config directory: %s."
-msgstr ""
+msgstr "%s пайдаланушы баптаулар бумасын табу мүмкін емес."
 
 #: ../src/conf.cpp:487
 #, c-format
 msgid "Cannot create user config directory %s."
-msgstr ""
+msgstr "%s пайдаланушы баптаулар бумасын жасау мүмкін емес."
 
 #: ../src/conf.cpp:495
 #, c-format
 msgid "Unable to resolve user cache directory: %s."
-msgstr ""
+msgstr "Пайдаланушы кэш бумасын табу мүмкін емес: %s."
 
 #: ../src/conf.cpp:505
 #, c-format
 msgid "Unable to resolve data directory: %s."
-msgstr ""
+msgstr "Мәліметтер бумасын табу мүмкін емес: %s."
 
 #: ../src/conf.cpp:515
 #, c-format
 msgid "Unable to resolve log directory: %s."
-msgstr ""
+msgstr "Лог бумасын табу мүмкін емес: %s."
 
 #: ../src/conf.cpp:522
 #, c-format
 msgid "Cannot create log directory %s."
-msgstr ""
+msgstr "%s лог бумасын жасау мүмкін емес."
 
 #: ../src/conf.cpp:528
 #, c-format
 msgid "Unable to resolve DLL directory: %s."
-msgstr ""
+msgstr "DLL бумасын табу мүмкін емес: %s"
 
 #: ../src/conf.cpp:537
 #, c-format
 msgid "Unable to resolve plugin directory: %s."
-msgstr ""
+msgstr "Плагиндер бумасын табу мүмкін емес: %s."
 
 #: ../src/conf.cpp:549
 #, c-format
 msgid "Unable to resolve locale directory: %s."
-msgstr ""
+msgstr "Аудармалар бумасын табу мүмкін емес: %s."
 
 #: ../src/desktop.cpp:184
 #, c-format
 msgid "Show help action failed with the following error message: \"%s\""
-msgstr ""
+msgstr "Көмекті көрсету әрекеті сәтсіз аяқталды, қате туралы хабарлама: \"%s\""
 
 #: ../src/desktop.cpp:193 ../src/desktop.cpp:201
 #, c-format
 msgid "Unable to find help file %s."
-msgstr ""
+msgstr "%s көмек файлын табу мүмкін емес."
 
 #: ../src/desktop.cpp:249
 msgid ""
@@ -522,6 +539,16 @@ msgid ""
 "\n"
 "Do you want to enable network dictionaries anyway?"
 msgstr ""
+"Сіз желідегі сөздіктері қолдануды іске қосуды таңдадыңыз. Желілік "
+"сөздіктерді қолдану қауіпсіздікді төмендетеді. Сіз енгізген мәтін қашықтағы "
+"серверлерге жіберілетін болады. Одан әрі, желілік сөздіктер шифрлеуді "
+"қолданбағандықтан, әркім де ол мәтінді көре алатын мүмкіндікке ие болады. "
+"Мәтін сіз оны басты терезесінің Іздеу өрісіне терген кезде, және, Бақылау "
+"функциясы іске қосулы тұрып, сіз кез-келген мәтінді таңдаған кезінде "
+"қашықтағы серверге жіберілетін болады. Және басқа да жағдайларды желілік "
+"сұранымдар болуы мүмкін.\n"
+"\n"
+"Сонда да желілік сөздіктерді қолдануды іске қосуды қалайсыз ба?"
 
 #: ../src/dictmanage.cpp:139 ../src/dictmanage.cpp:168
 msgid "Default Group"
@@ -530,7 +557,7 @@ msgstr "Бастапқы топ"
 #: ../src/dictmanage.cpp:753
 #, c-format
 msgid "Unable to remove file: %s"
-msgstr ""
+msgstr "Файлды өшіру мүмкін емес: %s"
 
 #: ../src/dictmanagedlg.cpp:165
 #, c-format
@@ -570,11 +597,11 @@ msgstr "Жүктелуде..."
 
 #: ../src/dictmanagedlg.cpp:598 ../src/dictmanagedlg.cpp:1867
 msgid "<span foreground=\"red\">Query Dict</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">Сөздіктен сұрау</span>"
 
 #: ../src/dictmanagedlg.cpp:608 ../src/dictmanagedlg.cpp:1877
 msgid "<span foreground=\"red\">Scan Dict</span>"
-msgstr ""
+msgstr "<span foreground=\"red\">Сөздіктен бақылау</span>"
 
 #: ../src/dictmanagedlg.cpp:656 ../src/dictmanagedlg.cpp:858
 msgid "Virtual Dictionary"
@@ -586,11 +613,11 @@ msgstr "Желілік сөздік"
 
 #: ../src/dictmanagedlg.cpp:759
 msgid "Local"
-msgstr ""
+msgstr "Жергілікті"
 
 #: ../src/dictmanagedlg.cpp:861
 msgid "Virtual"
-msgstr ""
+msgstr "Виртуалды"
 
 #: ../src/dictmanagedlg.cpp:881 ../src/prefsdlg.cpp:129
 msgid "Network"
@@ -601,12 +628,16 @@ msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
+"Сізде сөздіктердің бірнеше тобы болуы мүмкін, мысалы, \"Ағылшынды үйрену\", "
+"\"Неміс тілін үйрену\", және сіз олар арасында жылдам ауыса аласыз."
 
 #: ../src/dictmanagedlg.cpp:1140
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr ""
+"Сөздіктен сұраным оны бас терезеде көрсетеді, ал сөздіктен бақылау - "
+"қалқымалы терезеде."
 
 #: ../src/dictmanagedlg.cpp:1189 ../src/dictmanagedlg.cpp:2948
 msgid "Dictionary Information"
@@ -643,15 +674,15 @@ msgstr "Іске қосу"
 
 #: ../src/dictmanagedlg.cpp:1346 ../src/dictmanagedlg.cpp:2029
 msgid "Type"
-msgstr ""
+msgstr "Түрі"
 
 #: ../src/dictmanagedlg.cpp:1796
 msgid "Are you sure you want to delete this group of dictionaries?"
-msgstr ""
+msgstr "Сөздіктердің осы тобын өшіруді шынымен қалайсыз ба?"
 
 #: ../src/dictmanagedlg.cpp:1813
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
-msgstr ""
+msgstr "Сөздіктердің осы ішкі тобын өшіруді шынымен қалайсыз ба?"
 
 #: ../src/dictmanagedlg.cpp:1833
 msgid "New dict group"
@@ -667,7 +698,7 @@ msgstr "Сөздікті қосу"
 
 #: ../src/dictmanagedlg.cpp:2035
 msgid "Path"
-msgstr ""
+msgstr "Жолы"
 
 #: ../src/dictmanagedlg.cpp:2454 ../src/prefsdlg.cpp:1734
 msgid "Add"
@@ -777,11 +808,11 @@ msgstr "<Табылмады!>"
 
 #: ../src/floatwin.cpp:347 ../src/mainwin.cpp:138
 msgid "Fuzzy query"
-msgstr ""
+msgstr "Дәлсіз сұраным"
 
 #: ../src/floatwin.cpp:351
 msgid "has succeeded.\n"
-msgstr ""
+msgstr "сәтті аяқталды.\n"
 
 #: ../src/floatwin.cpp:353
 msgid "Found 1 word:\n"
@@ -834,29 +865,27 @@ msgstr "Ой_нату"
 
 #: ../src/floatwin.cpp:1090 ../src/mainwin.cpp:269
 msgid "_Fuzzy query"
-msgstr ""
+msgstr "Дәл_сіз сұраным"
 
 #: ../src/floatwin.cpp:1200
-#, fuzzy
 msgid "Looking up..."
-msgstr "Жүктелуде..."
+msgstr "Ізделуде..."
 
 #: ../src/log.cpp:228
 msgid "Error"
-msgstr ""
+msgstr "Қате"
 
 #: ../src/log.cpp:248
-#, fuzzy
 msgid "Log window"
-msgstr "Қалқымалы терезе"
+msgstr "Лог тарихы терезесі"
 
 #: ../src/mainwin.cpp:95
 msgid "Go back (Alt+Left)"
-msgstr ""
+msgstr "Артқа (Alt+Left)"
 
 #: ../src/mainwin.cpp:106
 msgid "Go forward (Alt+Right)"
-msgstr ""
+msgstr "Алға (Alt+Right)"
 
 #: ../src/mainwin.cpp:121
 msgid "Clear the search box"
@@ -868,24 +897,23 @@ msgstr "Бас мәзірді көрсету (Alt+M)"
 
 #: ../src/mainwin.cpp:276
 msgid "_Glob-style pattern matching"
-msgstr ""
+msgstr "Үл_гі бойынша іздеу"
 
 #: ../src/mainwin.cpp:283
 msgid "_Regular expressions matching"
-msgstr ""
+msgstr "Тұрақты өр_нектер сәйкестіктері"
 
 #: ../src/mainwin.cpp:290
-#, fuzzy
 msgid "Full-_text search"
-msgstr "Толық мәтінді іздеу"
+msgstr "Толық мәті_нді іздеу"
 
 #: ../src/mainwin.cpp:334
 msgid "Clear _history"
-msgstr ""
+msgstr "Тар_ихты тазарту"
 
 #: ../src/mainwin.cpp:616
 msgid "translator_credits"
-msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010-2013"
 
 #: ../src/mainwin.cpp:622
 msgid "StarDict is an international dictionary for GNOME."
@@ -896,22 +924,18 @@ msgid "Pr_eferences"
 msgstr "Ба_птаулар"
 
 #: ../src/mainwin.cpp:661
-#, fuzzy
 msgid "Manage _dictionaries"
-msgstr "Сөздіктерді басқару"
+msgstr "Сөзді_ктерді басқару"
 
 #: ../src/mainwin.cpp:668
-#, fuzzy
 msgid "Manage _plugins"
 msgstr "П_лагиндерді басқару"
 
 #: ../src/mainwin.cpp:678
-#, fuzzy
 msgid "Download dict_ionaries"
-msgstr "сайтына өтіңіз!"
+msgstr "Сөздікт_ерді жүктеп алу"
 
 #: ../src/mainwin.cpp:685
-#, fuzzy
 msgid "_New version"
 msgstr "Жаңа _нұсқасы"
 
@@ -968,9 +992,8 @@ msgid "Copy"
 msgstr "Көшіру"
 
 #: ../src/mainwin.cpp:1750
-#, fuzzy
 msgid "Pronounce the word (Enter)"
-msgstr "Сөзді айту"
+msgstr "Сөзді айту (Enter)"
 
 #: ../src/mainwin.cpp:1764
 msgid "Save to file (Alt+E)"
@@ -1014,6 +1037,21 @@ msgid ""
 "   When the floating window reports that a word was not found, double "
 "clicking will perform a fuzzy query.\n"
 msgstr ""
+"        StarDict қолданбасына қош келдіңіз!\n"
+"\n"
+"   Шығу үшін Ctrl+Q басыңыз. Терезені трейге жинау үшін Alt+Z, ал қайыру "
+"үшін Alt+X басыңыз.\n"
+"   Енгізу өрісінің мәтінін тазарту үшін Alt+C не ESC басыңыз.\n"
+"   Енгізу фокусын іздеу өрісіне апару үшін Space пернесін басыңыз.\n"
+"   Ізделген сөз табылмаса, сөздер тізіміндегі бірінші сөзге ауысу үшін Tab "
+"пернесін басыңыз.\n"
+"   Бір мәтінді ерекшелеп, одан кейін тышқанның орта батырмасын анықтама "
+"өрісінде не трейдегі таңбашаға шерту ол сөзді іздейді.\n"
+"   StarDict сөздерді '*' (wildcard) мен '?' (joker) бар үлгілер арқылы да "
+"іздей алады.\n"
+"   Анық емес сұранымды жасау үшін сөздің басына '/' таңбасын қойыңыз.\n"
+"   Қалқымалы терезе ізделген сөздің табылмағаны туралы айтқан кезде, оған "
+"қос шерту арқылы анық емес сұраным жасалынады.\n"
 
 #: ../src/mainwin.cpp:2054
 msgid ""
@@ -1067,6 +1105,54 @@ msgid ""
 "useful, but WITHOUT ANY WARRANTY; without the warranty that the word "
 "spelling, definition, and phonetic information are correct.\n"
 msgstr ""
+"       StarDict қолданбасына қош келдіңіз\n"
+"StarDict - бұл Gtk қолданып жазылған платформа- және халықаралық сөздік. "
+"Оның мүмкіндіктері көп, олар \"Үлгі бойынша іздеу,\" \"Ерекшеленген сөзді "
+"бақылау,\" \"Анық емес сұраным\" және \"Толық мәтінді іздеу\".\n"
+"\n"
+"       Міне, StarDict қолданудың бірнеше мысалы:\n"
+"\n"
+"       1. Үлгі бойынша іздеу\n"
+"       Сіз құрамында '*' (wildcard) пен '?' (joker) бар мәтіндерді үлгі "
+"ретінде енгізе аласыз. '*' кездейсоқ, бос болуы де мүмкін, жолға сәйкес, ал "
+"'?' кездейсоқ таңбаға сәйкес келеді. Enter басылғаннан кейін, үлгіге сәйкес "
+"сөздер тізімде көрсетіледі.\n"
+"       2. Тұрақты өрнектер сәйкестіктері\n"
+"       Сіз жолдарды Perl-үйлесімді тұрақты өрнектер ретінде де енгізе "
+"аласыз, олардың анықтауышы ретінде, басында \":\" таңбасымен басталуы тиіс. "
+"Enter басылғаннан кейін, үлгіге сәйкес сөздер тізімде көрсетіледі.\n"
+"       3. Анық емес сұраным\n"
+"       Егер сіз сөздің дәл жазылуын еске түсіре алмасаңыз, StarDict ұсынатын "
+"Анық емес сұранымын жасай аласыз. Ол екі сөздің өзара ұқсастығын есептеу "
+"үшін \"Levenshtein Edit Distance\" қолданады, және сіз енгізген сөзге ең "
+"ұқсас болып келетін нәтижелерді береді. Анық емес сұранымын жасау үшін, "
+"сөздің басында \"/\" таңбасын қолданып жазыңыз, одан кейін Enter басыңыз.\n"
+"       4. Толық мәтінді іздеу\n"
+"       Толық мәтінді іздеу кезінде мәліметтердегі сөз ізделінеді. Оны іске "
+"асыру үшін, сөзді басындағы \"|\", қосып енгізіңіз, одан кейін Enter "
+"басыңыз. Мысалы үшін, \"|ab cd\" енгізсеңіз, құрамында \"ab\" мен \"cd\" "
+"екеуі де бар мәлімет ізделінеді. Егер сөздерде Бос аралық болса, сіз \"\\ \" "
+"қолдана аласыз, мысалы \"|тоқсан\\ тоғыз\", басқа жабу таңбалары '\\' үшін "
+"\"\\\\\", Tab үшін \"\\t\" және жаңа жол үшін \"\\n\" болады.\n"
+"       5. Арнайы таңбаларды іздеу\n"
+"       Егер сіздің сөзіңізде арнайы таңбалар бар болса, сіз оларды '\\'  "
+"көмегімен жаба аласыз, мысалы, \"a\\*b\\?\" енгізсеңіз, \"a*b?\" ізделінеді, "
+"\"\\/abc\" енгізсеңіз \"/abc\" ізделінеді.\n"
+"       6. Ерекшеленген сөзді бақылау\n"
+"       Бұл мүмкіндікті іске қосу үшін, StarDict терезесінің төменгі сол "
+"жағындағы белгіше батырмасын белгілеңіз. Ол қосулы кезінде, StarDict басқа "
+"қолданбалардың терезелерінде сөздер, жолдар және Қытай таңбаларын бақылап "
+"отырады. Сөз не жолды тышқанмен ерекшелеңіз, көрсетілген сөздің анықтамасын "
+"көрсететін қалқымалы терезе шыға келеді.\n"
+"       7. Сөздіктерді басқару\n"
+"       Сөздіктерді басқару сұхбат терезесін ашу үшін басты терезенің төменгі "
+"оң жағындағы \"Сөздіктерді басқару\" батырмасын басыңыз. Осыдан, сіз керек "
+"емес сөздіктерді сөндіріп, және сөздіктердің сұраным ретін орната аласыз.\n"
+"\n"
+"\n"
+"       Ескерту: Бұл бағдарлама пайдалы болады деген сеніммен таратылады, "
+"бірақ ЕШҚАНДАЙ КЕПІЛДЕМЕСІЗ; сөздердің айтылуы, анықтамасы не фонетикалық "
+"ақпараттың дұрыстығы үшін де кепілдеме берілмейді.\n"
 
 #: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1368
 msgid "Found no words matching this pattern!"
@@ -1098,9 +1184,8 @@ msgid "<b>Full-Text Translation</b>"
 msgstr "<b>Мәтінді аудару</b>"
 
 #: ../src/mainwin.cpp:2551
-#, fuzzy
 msgid "To"
-msgstr "Шегі"
+msgstr "Қайда"
 
 #: ../src/mainwin.cpp:2592
 msgid "_Translate"
@@ -1171,15 +1256,15 @@ msgstr "<b>Арнайы сөздік</b>"
 
 #: ../src/pluginmanagedlg.cpp:245
 msgid "<b>TTS Engine</b>"
-msgstr ""
+msgstr "<b>TTS қолданбасы</b>"
 
 #: ../src/pluginmanagedlg.cpp:250
 msgid "<b>Data Parsing Engine</b>"
-msgstr ""
+msgstr "<b>Мәліметті талдау қолданбасы</b>"
 
 #: ../src/pluginmanagedlg.cpp:255
 msgid "<b>Misc</b>"
-msgstr ""
+msgstr "<b>Түрлі</b>"
 
 #: ../src/pluginmanagedlg.cpp:437
 msgid "Plug-in Name"
@@ -1219,15 +1304,15 @@ msgstr "Дыбыс"
 
 #: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1015
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:815
 msgid "Article rendering"
-msgstr ""
+msgstr "Мақаланы өңдеу"
 
 #: ../src/prefsdlg.cpp:92
 msgid "Dict management"
-msgstr ""
+msgstr "Сөздіктерді басқару"
 
 #: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1243
 msgid "Net Dict"
@@ -1235,7 +1320,7 @@ msgstr "Желілік сөздік"
 
 #: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1315
 msgid "Web browser"
-msgstr ""
+msgstr "Веб браузері"
 
 #: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1371
 msgid "Input"
@@ -1291,9 +1376,8 @@ msgid "_Scan clipboard."
 msgstr "Ал_масу буферін бақылау."
 
 #: ../src/prefsdlg.cpp:498
-#, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
-msgstr "Б_ақылау ыстық пернесін қолдану: Ctrl+Alt+F1."
+msgstr "Б_ақылау ыстық пернелерін қолдану: Ctrl+Alt+X."
 
 #: ../src/prefsdlg.cpp:552 ../src/prefsdlg.cpp:554
 msgid "Choose dictionary font"
@@ -1320,24 +1404,24 @@ msgid "Create c_ache files to speed up loading."
 msgstr "Жүкте_луді тездету үшін кэш файлдарын жасау."
 
 #: ../src/prefsdlg.cpp:669
-#, fuzzy
 msgid "_Sort word list by collation function."
 msgstr "_Сөздер тізімін collation функциясы көмегімен сұрыптау."
 
 #: ../src/prefsdlg.cpp:682
-#, fuzzy
 msgid "\tCollation _function:"
-msgstr "\tCollation _function:"
+msgstr "\tCollation _функциясы:"
 
 #: ../src/prefsdlg.cpp:714
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
 msgstr ""
+"collation іске қосылған соң, сөздіктерді алғашқы рет жүктеген кезде, "
+"сұрыптауға бірталай уақыт кетеді, күте тұрыңыз."
 
 #: ../src/prefsdlg.cpp:724
 msgid "C_lean all cache files"
-msgstr ""
+msgstr "Б_арлық кэш файлдарын өшіру"
 
 #: ../src/prefsdlg.cpp:741
 msgid "Open file..."
@@ -1345,7 +1429,7 @@ msgstr "Файлды ашу..."
 
 #: ../src/prefsdlg.cpp:768
 msgid "_Only export words."
-msgstr ""
+msgstr "_Тек сөздерді экспорттау."
 
 #: ../src/prefsdlg.cpp:779
 msgid "File name:"
@@ -1356,9 +1440,8 @@ msgid "_Browse..."
 msgstr "Қара_п шығу..."
 
 #: ../src/prefsdlg.cpp:830
-#, fuzzy
 msgid "Dictionary name showing style:"
-msgstr "Сөздік аты"
+msgstr "Сөздік аттарын көрсету стилі:"
 
 #: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1528
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
@@ -1368,28 +1451,27 @@ msgstr "Бастапқы"
 
 #: ../src/prefsdlg.cpp:834
 msgid "One blank line"
-msgstr ""
+msgstr "Бір бос жол"
 
 #: ../src/prefsdlg.cpp:835
 msgid "Two blank lines"
-msgstr ""
+msgstr "Екі бос жол"
 
 #: ../src/prefsdlg.cpp:842
 msgid "_Highlight search term"
-msgstr ""
+msgstr "І_зделгенді түспен ерекшелеу"
 
 #: ../src/prefsdlg.cpp:852
-#, fuzzy
 msgid "Dictionary management"
-msgstr "Сөздік аты"
+msgstr "Сөздіктерді басқару"
 
 #: ../src/prefsdlg.cpp:862
 msgid "Add new dictionaries to active dictionary group"
-msgstr ""
+msgstr "Белсенді сөздіктер тобына жаңа сөздіктерді қосу"
 
 #: ../src/prefsdlg.cpp:869
 msgid "Add new plug-ins to active dictionary group"
-msgstr ""
+msgstr "Белсенді сөздіктер тобына жаңа плагиндерді қосу"
 
 #: ../src/prefsdlg.cpp:925
 msgid "_Enable sound event."
@@ -1397,15 +1479,15 @@ msgstr "Дыбыс_пен ескертуді іске қосу"
 
 #: ../src/prefsdlg.cpp:938
 msgid "Command for playing sound files:"
-msgstr ""
+msgstr "Дыбыс файлдарын ойнату командасы:"
 
 #: ../src/prefsdlg.cpp:950
 msgid "Always use sound play command."
-msgstr ""
+msgstr "Дыбысты ойнату командасын әрқашан қолдану."
 
 #: ../src/prefsdlg.cpp:957
 msgid "RealPeopleTTS search path:"
-msgstr ""
+msgstr "RealPeopleTTS іздеу орны:"
 
 #: ../src/prefsdlg.cpp:987
 msgid "Enable _TTS program."
@@ -1413,11 +1495,11 @@ msgstr "TTS бағд_арламасын қолдануды іске қосу"
 
 #: ../src/prefsdlg.cpp:999
 msgid "Command line:"
-msgstr ""
+msgstr "Командалық жолы:"
 
 #: ../src/prefsdlg.cpp:1028
 msgid "Command for playing video files:"
-msgstr ""
+msgstr "Видео файлдарын ойнату командасы:"
 
 #: ../src/prefsdlg.cpp:1062
 msgid "Account"
@@ -1477,11 +1559,11 @@ msgstr "Тіркел_гіні жасау"
 
 #: ../src/prefsdlg.cpp:1328
 msgid "Command for opening URLs:"
-msgstr ""
+msgstr "Сілтемелерді ашу командасы:"
 
 #: ../src/prefsdlg.cpp:1341
 msgid "Always use this command for opening URLs."
-msgstr ""
+msgstr "Сілтемелерді ашу үшін әрқашан осы команданы қолдану."
 
 #: ../src/prefsdlg.cpp:1382
 msgid "_Search while typing."
@@ -1492,9 +1574,8 @@ msgid "Word change _timeout:"
 msgstr "Сөз өзг_ерудің уақыты:"
 
 #: ../src/prefsdlg.cpp:1404
-#, fuzzy
 msgid "(default:300 ms)"
-msgstr "(бастапқы:300)"
+msgstr "(бастапқы:300 мс)"
 
 #: ../src/prefsdlg.cpp:1406
 msgid "Show the _first word when not found."
@@ -1502,7 +1583,7 @@ msgstr "Табыл_маған кезде бірінші сөзді көрсет�
 
 #: ../src/prefsdlg.cpp:1485
 msgid "Skin change will take effect after application restart"
-msgstr ""
+msgstr "Скинді ауыстыру тек қайта қосылғаннан кейін ғана іске асады"
 
 #: ../src/prefsdlg.cpp:1549
 msgid "_Auto run StarDict after boot."
@@ -1510,7 +1591,7 @@ msgstr "Жүк_телген кезде StarDict-ті авто іске қосу.
 
 #: ../src/prefsdlg.cpp:1594
 msgid "Skin:"
-msgstr ""
+msgstr "Скин:"
 
 #: ../src/prefsdlg.cpp:1611
 msgid "Hide main window when _starting StarDict."
@@ -1552,26 +1633,24 @@ msgstr "Веб сайт іздеу сілтемесін көрсетіңіз."
 #, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
-msgstr ""
+msgstr "Веб сайттан іздеу сілтемесінің  құрамында \"%%s\" жолы болу керек."
 
 #: ../src/prefsdlg.cpp:2040
 msgid "When middle mouse button is clicked:"
-msgstr ""
+msgstr "Тышқанның орта батырмасы басылғанда:"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
 #: ../src/prefsdlg.cpp:2044
-#, fuzzy
 msgid "Query selection in floating window"
-msgstr "Басты терезеде сұрау"
+msgstr "Таңдалғанды қалқымалы терезеде сұрау"
 
 #: ../src/prefsdlg.cpp:2045
-#, fuzzy
 msgid "Query selection in main window"
-msgstr "Басты терезеде сұрау"
+msgstr "Таңдалғанды басты терезеде сұрау"
 
 #: ../src/prefsdlg.cpp:2046
 msgid "Do nothing"
-msgstr ""
+msgstr "Ешнәрсе жасамау"
 
 #: ../src/prefsdlg.cpp:2075
 msgid "_Pronounce the word when it pops up."
@@ -1579,27 +1658,27 @@ msgstr "Сөз қалқ_ымалы түрде шыққан кезде оны а�
 
 #: ../src/prefsdlg.cpp:2084
 msgid "_Show floating window if word not found."
-msgstr "Сөз т_абылмаса да қылқымалы терезені көрсету."
+msgstr "Сөз т_абылмаса да қалқымалы терезені көрсету."
 
 #: ../src/prefsdlg.cpp:2158
 msgid "Max window _width:"
-msgstr ""
+msgstr "Макс. терезе е_ні:"
 
 #: ../src/prefsdlg.cpp:2168
 msgid "(default:320)"
-msgstr ""
+msgstr "(бастапқы:320)"
 
 #: ../src/prefsdlg.cpp:2172
 msgid "Max window hei_ght:"
-msgstr ""
+msgstr "Макс. терезе б_иіктігі:"
 
 #: ../src/prefsdlg.cpp:2180
 msgid "(default:240)"
-msgstr ""
+msgstr "(бастапқы:240)"
 
 #: ../src/prefsdlg.cpp:2189
 msgid "_Use custom background color:"
-msgstr ""
+msgstr "_Таңдауыңызша фон түсін қолдану:"
 
 #: ../src/prefsdlg.cpp:2314
 msgid "Cat_egories:"
@@ -1611,17 +1690,16 @@ msgstr "Жүктелуде"
 
 #: ../src/readword.cpp:149
 msgid "Real People TTS"
-msgstr ""
+msgstr "Real People TTS"
 
 #: ../src/readword.cpp:156
 msgid "Command TTS"
-msgstr ""
+msgstr "TTS командасы"
 
 #. gtk_widget_set_app_paintable(window, TRUE);
 #: ../src/splash.cpp:90
-#, fuzzy
 msgid "StarDict starting..."
-msgstr "StarDict - Бақылау"
+msgstr "StarDict іске қосылуда..."
 
 #: ../src/stardict.cpp:1099
 msgid "Full-text Search"
@@ -1637,29 +1715,28 @@ msgstr "Толық мәтінді іздеу..."
 
 #: ../src/stardict.cpp:1624
 msgid "Press Enter to list the words that match the pattern."
-msgstr ""
+msgstr "Үлгіге сәйкес келетін сөздер тізімін шығару үшін Enter басыңыз."
 
 #: ../src/stardict.cpp:1627
 msgid "Press Enter to list the words that match this regular expression."
 msgstr ""
+"Бұл тұрақты өрнекке сәйкес келетін сөздер тізімін шығару үшін Enter басыңыз."
 
 #: ../src/stardict.cpp:1631
 msgid "Fuzzy query..."
-msgstr ""
+msgstr "Дәлсіз сұраным..."
 
 #: ../src/stardict.cpp:2052
-#, fuzzy
 msgid "Loading skin..."
-msgstr "Жүктелуде..."
+msgstr "Скин жүктелуде..."
 
 #: ../src/stardict.cpp:2058
-#, fuzzy
 msgid "Skin loaded."
-msgstr "Espeak плагині жүктелді.\n"
+msgstr "Скин жүктелді."
 
 #: ../src/stardict.cpp:2217
 msgid "StarDict is already running. Using the running process."
-msgstr ""
+msgstr "StarDict іске қосулы тұр. Бар үрдісті қолдану."
 
 #: ../src/stardict.cpp:2337
 msgid "- Lookup words"
@@ -1668,69 +1745,62 @@ msgstr "- Сөздерді іздеу"
 #: ../src/stardict.cpp:2342
 #, c-format
 msgid "Options parsing failed: %s\n"
-msgstr ""
+msgstr "Опцияларды талдау қатесі: %s\n"
 
 #: ../src/stardict.cpp:2408
-#, fuzzy
 msgid "Loading StarDict configuration..."
-msgstr "Dict.cn баптаулары"
+msgstr "StarDict баптауларын жүктеу..."
 
 #: ../src/stardict.cpp:2410
-#, fuzzy
 msgid "StarDict configuration loaded."
-msgstr "Сөздіктің баптау XML файлы"
+msgstr "StarDict баптаулары жүктелді"
 
 #: ../src/lib/full_text_trans.cpp:48 ../src/lib/full_text_trans.cpp:104
 msgid "Afrikaans"
-msgstr ""
+msgstr "Африкаанс"
 
 #: ../src/lib/full_text_trans.cpp:49 ../src/lib/full_text_trans.cpp:105
 msgid "Albanian"
-msgstr ""
+msgstr "Албания"
 
 #: ../src/lib/full_text_trans.cpp:50 ../src/lib/full_text_trans.cpp:106
 msgid "Arabic"
-msgstr ""
+msgstr "Арабша"
 
 #: ../src/lib/full_text_trans.cpp:51 ../src/lib/full_text_trans.cpp:107
 msgid "Belarusian"
-msgstr ""
+msgstr "Беларус"
 
 #: ../src/lib/full_text_trans.cpp:52 ../src/lib/full_text_trans.cpp:108
 msgid "Bulgarian"
-msgstr ""
+msgstr "Болгар"
 
 #: ../src/lib/full_text_trans.cpp:53 ../src/lib/full_text_trans.cpp:109
-#, fuzzy
 msgid "Catalan"
-msgstr "Италияндық"
+msgstr "Каталон"
 
 #: ../src/lib/full_text_trans.cpp:54 ../src/lib/full_text_trans.cpp:331
 #: ../src/lib/full_text_trans.cpp:353
-#, fuzzy
 msgid "Chinese"
-msgstr "Қытай (Ch)"
+msgstr "Қытай"
 
 #: ../src/lib/full_text_trans.cpp:55 ../src/lib/full_text_trans.cpp:112
 msgid "Croatian"
-msgstr ""
+msgstr "Хорватиялық"
 
 #: ../src/lib/full_text_trans.cpp:56 ../src/lib/full_text_trans.cpp:113
-#, fuzzy
 msgid "Czech"
-msgstr "Кэш"
+msgstr "Чех"
 
 #: ../src/lib/full_text_trans.cpp:57 ../src/lib/full_text_trans.cpp:114
-#, fuzzy
 msgid "Danish"
-msgstr "Испаниялық"
+msgstr "Даниялық"
 
 #: ../src/lib/full_text_trans.cpp:58 ../src/lib/full_text_trans.cpp:115
 #: ../src/lib/full_text_trans.cpp:164 ../src/lib/full_text_trans.cpp:190
 #: ../src/lib/full_text_trans.cpp:208
-#, fuzzy
 msgid "Dutch"
-msgstr "Дат"
+msgstr "Голландия"
 
 #: ../src/lib/full_text_trans.cpp:59 ../src/lib/full_text_trans.cpp:116
 #: ../src/lib/full_text_trans.cpp:163 ../src/lib/full_text_trans.cpp:178
@@ -1743,21 +1813,20 @@ msgstr "Дат"
 #: ../src/lib/full_text_trans.cpp:351 ../src/lib/full_text_trans.cpp:367
 #: ../src/lib/full_text_trans.cpp:372 ../src/lib/full_text_trans.cpp:377
 #: ../src/lib/full_text_trans.cpp:382 ../src/lib/full_text_trans.cpp:387
-#, fuzzy
 msgid "English"
 msgstr "Ағылшын"
 
 #: ../src/lib/full_text_trans.cpp:60 ../src/lib/full_text_trans.cpp:117
 msgid "Estonian"
-msgstr ""
+msgstr "Эстон"
 
 #: ../src/lib/full_text_trans.cpp:61 ../src/lib/full_text_trans.cpp:118
 msgid "Filipino"
-msgstr ""
+msgstr "Филиппин"
 
 #: ../src/lib/full_text_trans.cpp:62 ../src/lib/full_text_trans.cpp:119
 msgid "Finnish"
-msgstr ""
+msgstr "Финн"
 
 #: ../src/lib/full_text_trans.cpp:63 ../src/lib/full_text_trans.cpp:120
 #: ../src/lib/full_text_trans.cpp:165 ../src/lib/full_text_trans.cpp:191
@@ -1765,63 +1834,58 @@ msgstr ""
 #: ../src/lib/full_text_trans.cpp:224 ../src/lib/full_text_trans.cpp:229
 #: ../src/lib/full_text_trans.cpp:242 ../src/lib/full_text_trans.cpp:251
 #: ../src/lib/full_text_trans.cpp:335 ../src/lib/full_text_trans.cpp:354
-#, fuzzy
 msgid "French"
 msgstr "Француз"
 
 #: ../src/lib/full_text_trans.cpp:64 ../src/lib/full_text_trans.cpp:121
-#, fuzzy
 msgid "Galician"
-msgstr "Италияндық"
+msgstr "Галиция"
 
 #: ../src/lib/full_text_trans.cpp:65 ../src/lib/full_text_trans.cpp:122
 #: ../src/lib/full_text_trans.cpp:166 ../src/lib/full_text_trans.cpp:192
 #: ../src/lib/full_text_trans.cpp:210 ../src/lib/full_text_trans.cpp:336
 #: ../src/lib/full_text_trans.cpp:355
-#, fuzzy
 msgid "German"
 msgstr "Неміс"
 
 #: ../src/lib/full_text_trans.cpp:66 ../src/lib/full_text_trans.cpp:123
 #: ../src/lib/full_text_trans.cpp:167 ../src/lib/full_text_trans.cpp:193
 #: ../src/lib/full_text_trans.cpp:211
-#, fuzzy
 msgid "Greek"
 msgstr "Грек"
 
 #: ../src/lib/full_text_trans.cpp:67 ../src/lib/full_text_trans.cpp:124
 msgid "Haitian Creole"
-msgstr ""
+msgstr "Гаити креолдық"
 
 #: ../src/lib/full_text_trans.cpp:68 ../src/lib/full_text_trans.cpp:125
 msgid "Hebrew"
-msgstr ""
+msgstr "Иврит"
 
 #: ../src/lib/full_text_trans.cpp:69 ../src/lib/full_text_trans.cpp:126
 msgid "Hindi"
-msgstr ""
+msgstr "Хинди"
 
 #: ../src/lib/full_text_trans.cpp:70 ../src/lib/full_text_trans.cpp:127
 msgid "Hungarian"
-msgstr ""
+msgstr "Венгр"
 
 #: ../src/lib/full_text_trans.cpp:71 ../src/lib/full_text_trans.cpp:128
 msgid "Icelandic"
-msgstr ""
+msgstr "Исландиялық"
 
 #: ../src/lib/full_text_trans.cpp:72 ../src/lib/full_text_trans.cpp:129
 msgid "Indonesian"
-msgstr ""
+msgstr "Индонезиялық"
 
 #: ../src/lib/full_text_trans.cpp:73 ../src/lib/full_text_trans.cpp:130
 msgid "Irish"
-msgstr ""
+msgstr "Ирландиялық"
 
 #: ../src/lib/full_text_trans.cpp:74 ../src/lib/full_text_trans.cpp:131
 #: ../src/lib/full_text_trans.cpp:168 ../src/lib/full_text_trans.cpp:194
 #: ../src/lib/full_text_trans.cpp:212 ../src/lib/full_text_trans.cpp:337
 #: ../src/lib/full_text_trans.cpp:356
-#, fuzzy
 msgid "Italian"
 msgstr "Италияндық"
 
@@ -1833,131 +1897,122 @@ msgstr "Италияндық"
 #: ../src/lib/full_text_trans.cpp:376 ../src/lib/full_text_trans.cpp:381
 #: ../src/lib/full_text_trans.cpp:386
 msgid "Japanese"
-msgstr ""
+msgstr "Жапон"
 
 #: ../src/lib/full_text_trans.cpp:76 ../src/lib/full_text_trans.cpp:133
 #: ../src/lib/full_text_trans.cpp:170 ../src/lib/full_text_trans.cpp:196
 #: ../src/lib/full_text_trans.cpp:334 ../src/lib/full_text_trans.cpp:352
 msgid "Korean"
-msgstr ""
+msgstr "Кореялық"
 
 #: ../src/lib/full_text_trans.cpp:77 ../src/lib/full_text_trans.cpp:134
 msgid "Latvian"
-msgstr ""
+msgstr "Латвиялық"
 
 #: ../src/lib/full_text_trans.cpp:78 ../src/lib/full_text_trans.cpp:135
 msgid "Lithuanian"
-msgstr ""
+msgstr "Литвалық"
 
 #: ../src/lib/full_text_trans.cpp:79 ../src/lib/full_text_trans.cpp:136
 msgid "Macedonian"
-msgstr ""
+msgstr "Македониялық"
 
 #: ../src/lib/full_text_trans.cpp:80 ../src/lib/full_text_trans.cpp:137
-#, fuzzy
 msgid "Malay"
-msgstr "Ой_нату"
+msgstr "Малай"
 
 #: ../src/lib/full_text_trans.cpp:81 ../src/lib/full_text_trans.cpp:138
 msgid "Maltese"
-msgstr ""
+msgstr "Мальта"
 
 #: ../src/lib/full_text_trans.cpp:82 ../src/lib/full_text_trans.cpp:139
 msgid "Norwegian"
-msgstr ""
+msgstr "Норвегиялық"
 
 #: ../src/lib/full_text_trans.cpp:83 ../src/lib/full_text_trans.cpp:140
-#, fuzzy
 msgid "Persian"
-msgstr "Баспаға шығару"
+msgstr "Парсы"
 
 #: ../src/lib/full_text_trans.cpp:84 ../src/lib/full_text_trans.cpp:141
-#, fuzzy
 msgid "Polish"
-msgstr "Ағылшын"
+msgstr "Поляк"
 
 #: ../src/lib/full_text_trans.cpp:85 ../src/lib/full_text_trans.cpp:142
 #: ../src/lib/full_text_trans.cpp:171 ../src/lib/full_text_trans.cpp:197
 #: ../src/lib/full_text_trans.cpp:213 ../src/lib/full_text_trans.cpp:339
 #: ../src/lib/full_text_trans.cpp:358
-#, fuzzy
 msgid "Portuguese"
 msgstr "Португалдық"
 
 #: ../src/lib/full_text_trans.cpp:86 ../src/lib/full_text_trans.cpp:143
 msgid "Romanian"
-msgstr ""
+msgstr "Румын"
 
 #: ../src/lib/full_text_trans.cpp:87 ../src/lib/full_text_trans.cpp:144
 #: ../src/lib/full_text_trans.cpp:172 ../src/lib/full_text_trans.cpp:198
-#, fuzzy
 msgid "Russian"
 msgstr "Орыс"
 
 #: ../src/lib/full_text_trans.cpp:88 ../src/lib/full_text_trans.cpp:145
-#, fuzzy
 msgid "Serbian"
-msgstr "Неміс"
+msgstr "Сербиялық"
 
 #: ../src/lib/full_text_trans.cpp:89 ../src/lib/full_text_trans.cpp:146
 msgid "Slovak"
-msgstr ""
+msgstr "Словак"
 
 #: ../src/lib/full_text_trans.cpp:90 ../src/lib/full_text_trans.cpp:147
 msgid "Slovenian"
-msgstr ""
+msgstr "Словения"
 
 #: ../src/lib/full_text_trans.cpp:91 ../src/lib/full_text_trans.cpp:148
 #: ../src/lib/full_text_trans.cpp:173 ../src/lib/full_text_trans.cpp:199
 #: ../src/lib/full_text_trans.cpp:214 ../src/lib/full_text_trans.cpp:338
 #: ../src/lib/full_text_trans.cpp:357
-#, fuzzy
 msgid "Spanish"
 msgstr "Испаниялық"
 
 #: ../src/lib/full_text_trans.cpp:92 ../src/lib/full_text_trans.cpp:149
 msgid "Swahili"
-msgstr ""
+msgstr "Суахили"
 
 #: ../src/lib/full_text_trans.cpp:93 ../src/lib/full_text_trans.cpp:150
-#, fuzzy
 msgid "Swedish"
 msgstr "Швециялық"
 
 #: ../src/lib/full_text_trans.cpp:94 ../src/lib/full_text_trans.cpp:151
 msgid "Thai"
-msgstr ""
+msgstr "Тай"
 
 #: ../src/lib/full_text_trans.cpp:95 ../src/lib/full_text_trans.cpp:152
 msgid "Turkish"
-msgstr ""
+msgstr "Түрік"
 
 #: ../src/lib/full_text_trans.cpp:96 ../src/lib/full_text_trans.cpp:153
 msgid "Ukrainian"
-msgstr ""
+msgstr "Украин"
 
 #: ../src/lib/full_text_trans.cpp:97 ../src/lib/full_text_trans.cpp:154
-#, fuzzy
 msgid "Vietnamese"
-msgstr "Файл аты"
+msgstr "Вьетнамдық"
 
 #: ../src/lib/full_text_trans.cpp:98 ../src/lib/full_text_trans.cpp:155
 msgid "Welsh"
-msgstr ""
+msgstr "Валлиялық"
 
 #: ../src/lib/full_text_trans.cpp:99 ../src/lib/full_text_trans.cpp:156
 msgid "Yiddish"
-msgstr ""
+msgstr "Идиш"
 
 #: ../src/lib/full_text_trans.cpp:110 ../src/lib/full_text_trans.cpp:161
 #: ../src/lib/full_text_trans.cpp:184 ../src/lib/full_text_trans.cpp:188
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Қытай (Қарапайым)"
 
 #: ../src/lib/full_text_trans.cpp:111 ../src/lib/full_text_trans.cpp:162
 #: ../src/lib/full_text_trans.cpp:179 ../src/lib/full_text_trans.cpp:189
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Қытай (Дәстүрлі)"
 
 #. name,                         srclangs,            tgtlangs,            tgtlangs2,        website_name,   website_url
 #: ../src/lib/full_text_trans.cpp:416
@@ -1975,37 +2030,41 @@ msgstr "Excite Japan Translate"
 #: ../src/lib/full_text_trans.cpp:634 ../src/lib/full_text_trans.cpp:772
 #: ../src/lib/full_text_trans.cpp:779
 msgid "Unable to interpret translation engine response!"
-msgstr ""
+msgstr "Аударма қозғаушының жауабын талдау мүмкін емес!"
 
 #: ../src/lib/full_text_trans.cpp:774
 msgid "Conversion error."
-msgstr ""
+msgstr "Айналдыру қатесі."
 
 #: ../src/lib/stardict_client.cpp:906
 #, c-format
 msgid "Authentication denied: %s"
-msgstr ""
+msgstr "Аутентификация сәтсіз: %s"
 
 #: ../src/lib/stardict_client.cpp:919
 #, c-format
 msgid "Register failed: %s"
-msgstr ""
+msgstr "Тіркелу сәтсіз: %s"
 
 #: ../src/lib/stardict_client.cpp:924
 msgid "Register success!"
-msgstr ""
+msgstr "Тіркелу сәтті!"
 
 #: ../src/lib/stardict_client.cpp:959
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
 msgstr ""
+"Сіз тіркелгіні орнатқан жоқсыз. Алдымен баптаулардағы \"Желілік сөздіктер\" "
+"бетін ашып, тіркелгіні орнатыңыз."
 
 #: ../src/lib/stardict_client.cpp:1079
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
 msgstr ""
+"Сіз сөздіктерді көрсеткен жоқсыз, \"Сөздіктерді басқару\"->\"Желілік "
+"сөздіктер\"->\"Қосу\" арқылы көрсетіңіз."
 
 #: ../src/lib/stddict.cpp:710
 msgid "Sorting, please wait..."
@@ -2014,27 +2073,27 @@ msgstr "Сұрыптау, күте тұрыңыз..."
 #: ../src/lib/stddict.cpp:3367
 #, c-format
 msgid "Invalid collate function. Disable collation."
-msgstr ""
+msgstr "Collate функциясы қате. Оны сөндіру."
 
 #: ../src/lib/utils.cpp:116
 #, c-format
 msgid "Can not load image. %s"
-msgstr ""
+msgstr "Суретті жүктеу мүмкін емес. %s"
 
 #: ../src/lib/utils.cpp:328
 #, c-format
 msgid "Template '%s' invalid, should not contain a '%s'"
-msgstr ""
+msgstr "'%s' үлгісі қате, оның құрамында '%s' болмауы тиіс"
 
 #: ../src/lib/utils.cpp:341
 #, c-format
 msgid "Template '%s' doesn't contain XXXXXX"
-msgstr ""
+msgstr "'%s' үлгісінің ішінде XXXXXX жоқ болып тұр"
 
 #: ../src/lib/utils.cpp:366
 #, c-format
 msgid "Failed to create file '%s': %s"
-msgstr ""
+msgstr "'%s' файлын жасау сәтсіз: %s"
 
 #: ../src/lib/verify_dict.cpp:310
 #, c-format
@@ -2042,31 +2101,32 @@ msgid ""
 "Unable to create directory: '%s'. Verification cache file will not be saved. "
 "Error: '%s'"
 msgstr ""
+"Буманы жасау сәтсіз: '%s'. Тексерудің кэш файлы сақталмайды. Қате: '%s'"
 
 #: ../src/lib/verify_dict.cpp:318
 #, c-format
 msgid "Unable to save the verification cache file '%s'. Error: '%s'"
-msgstr ""
+msgstr "'%s' тексерудің кэш файлының сақтау сәтсіз. Қате: '%s'"
 
 #: ../src/lib/verify_dict.cpp:326
 msgid "Verifying..."
-msgstr ""
+msgstr "Тексеру..."
 
 #: ../src/lib/verify_dict.cpp:329
 #, c-format
 msgid "Unable to load information for dictionary '%s'"
-msgstr ""
+msgstr "'%s' сөздігі үшін ақпаратты жүктеу мүмкін емес"
 
 #: ../src/lib/verify_dict.cpp:357
 #, c-format
 msgid "Unable to open the verification cache file '%s'. Error: '%s'"
-msgstr ""
+msgstr "'%s' тексерудің кэш файлын ашу сәтсіз. Қате: '%s'"
 
 #: ../src/lib/verify_dict.cpp:369 ../src/lib/verify_dict.cpp:376
 #, c-format
 msgid ""
 "Unable to parse contents of the verification cache file '%s'. Error: '%s'"
-msgstr ""
+msgstr "'%s' тексерудің кэш файлының құрамасын талдау сәтсіз. Қате: '%s'"
 
 #: ../src/lib/verify_dict.cpp:611
 #, c-format
@@ -2074,6 +2134,8 @@ msgid ""
 "Error in parsing verification cache file: invalid value of the '%s' "
 "attribute. Line: %d, character: %d."
 msgstr ""
+"Тексерудің кэш файлын талдау сәтсіз: '%s' атрибутының мәні қате. Жол: %d, "
+"таңба: %d."
 
 #: ../src/lib/verify_dict.cpp:621
 #, c-format
@@ -2081,6 +2143,8 @@ msgid ""
 "Error in parsing verification cache file: missing mandatory attribute '%s'. "
 "Line: %d, character: %d."
 msgstr ""
+"Тексерудің кэш файлын талдау сәтсіз: міндетті '%s' атрибуты жоқ. Жол: %d, "
+"таңба: %d."
 
 #: ../src/lib/verify_dict.cpp:631
 #, c-format
@@ -2088,6 +2152,8 @@ msgid ""
 "Error in parsing verification cache file: unknown attribute '%s'. Line: %d, "
 "character: %d."
 msgstr ""
+"Тексерудің кэш файлын талдау сәтсіз: белгісіз атрибут '%s'. Жол: %d, таңба: "
+"%d."
 
 #: ../src/lib/verify_dict.cpp:641
 #, c-format
@@ -2095,22 +2161,24 @@ msgid ""
 "Error in parsing verification cache file: unknown element '%s'. Line: %d, "
 "character: %d."
 msgstr ""
+"Тексерудің кэш файлын талдау сәтсіз: белгісіз элемент '%s'. Жол: %d, таңба: "
+"%d."
 
 #: ../src/lib/verify_dict.cpp:655
 #, c-format
 msgid "Verification status of '%s': dictionary is OK"
-msgstr ""
+msgstr "'%s' тексеру нәтижесі: сөздік ОК "
 
 #: ../src/lib/verify_dict.cpp:657
 #, c-format
 msgid "Verification status of '%s': dictionary is broken"
-msgstr ""
+msgstr "'%s' тексеру нәтижесі: сөздік зақымдалған "
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:262
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:269
 #, c-format
 msgid "Dict.cn plugin: context parse failed: %s"
-msgstr ""
+msgstr "Dict.cn плагині: контекстті талдау сәтсіз: %s"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:336
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
@@ -2131,9 +2199,8 @@ msgid "Query by HTML API."
 msgstr "HTML API көмегімен сұрау."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:436
-#, fuzzy
 msgid "Loading Dict.cn plug-in..."
-msgstr "Dict.cn плагині жүктелді.\n"
+msgstr "Dict.cn плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
 msgid "Dict.cn network dictionary."
@@ -2141,7 +2208,7 @@ msgstr "Dict.cn желілік сөздігі."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:442
 msgid "Query result from Dict.cn website."
-msgstr ""
+msgstr "Нәтижесін Dict.cn веб сайтынан сұрау."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:478
 #, c-format
@@ -2164,9 +2231,8 @@ msgid "Test"
 msgstr "Сынау"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:131
-#, fuzzy
 msgid "Loading Espeak plug-in..."
-msgstr "Espeak плагині жүктелді.\n"
+msgstr "Espeak плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:137
 msgid "Espeak"
@@ -2194,9 +2260,8 @@ msgid "Festival TTS configuration"
 msgstr "Festival TTS баптаулары"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:150
-#, fuzzy
 msgid "Loading Festival plug-in..."
-msgstr "Festival плагині жүктелді.\n"
+msgstr "Festival плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:156
 msgid "Festival"
@@ -2221,11 +2286,11 @@ msgstr "Festival плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:237
 msgid "[not a printable character]"
-msgstr ""
+msgstr "[басылып көрсетілетін таңба емес]"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:254
 msgid "General Character Properties"
-msgstr ""
+msgstr "Жалпы таңба қасиеттері"
 
 #. character category
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:257
@@ -2234,11 +2299,11 @@ msgstr "Юникод санаты:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:263
 msgid "Canonical decomposition:"
-msgstr ""
+msgstr "Қалыпты таралымы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:275
 msgid "Various Useful Representations"
-msgstr ""
+msgstr "Түрлі пайдалы көріністер"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:288
 msgid "UTF-8:"
@@ -2250,24 +2315,23 @@ msgstr "UTF-16:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:303
 msgid "C octal escaped UTF-8:"
-msgstr ""
+msgstr "Сегіздік жабылған C UTF-8:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:311
 msgid "XML decimal entity:"
-msgstr ""
+msgstr "XML ондық түрі:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:314
 msgid "XML hexadecimal entity:"
-msgstr ""
+msgstr "XML оналтылық түрі:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:325
 msgid "Alias names:"
-msgstr ""
+msgstr "Алиас аттары:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:331
-#, fuzzy
 msgid "Notes:"
-msgstr "Белгілер"
+msgstr "Жазбалар:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:338
 msgid "See also:"
@@ -2275,148 +2339,149 @@ msgstr "Тағы қараңыз:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:344
 msgid "Approximate equivalents:"
-msgstr ""
+msgstr "Сәйкес сияқты:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:350
 msgid "Equivalents:"
-msgstr ""
+msgstr "Сәйкес:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:355
 msgid "Annotations and Cross References"
-msgstr ""
+msgstr "Аңдатпалар мен өзара сілтеулер"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:362
 msgid "Definition in English:"
-msgstr ""
+msgstr "Ағылшында анықтамасы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:365
 msgid "Mandarin Pronunciation:"
-msgstr ""
+msgstr "Мандарин айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:368
 msgid "Cantonese Pronunciation:"
-msgstr ""
+msgstr "Кантон айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:371
 msgid "Japanese On Pronunciation:"
-msgstr ""
+msgstr "Жапон Он айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:374
 msgid "Japanese Kun Pronunciation:"
-msgstr ""
+msgstr "Жапон Кун айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:377
 msgid "Tang Pronunciation:"
-msgstr ""
+msgstr "Танг айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:380
 msgid "Korean Pronunciation:"
-msgstr ""
+msgstr "Кореялық айтылуы:"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:383
 msgid "CJK Ideograph Information"
-msgstr ""
+msgstr "CJK Ideograph ақпараты"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:410
 msgid "Loading Gucharmap plug-in..."
-msgstr ""
+msgstr "Gucharmap плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:429
 msgid "Gucharmap"
-msgstr ""
+msgstr "Gucharmap"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
 msgid "Gucharmap virtual dictionary."
-msgstr ""
+msgstr "Gucharmap виртуалды сөздігі."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:416
 msgid "Show information about Unicode characters."
-msgstr ""
+msgstr "Unicode таңбалары жөнінде ақпаратты көрсету."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:430
 #, c-format
 msgid "Gucharmap plug-in loaded.\n"
-msgstr ""
+msgstr "Gucharmap плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
 msgid "Loading HTML data parsing plug-in..."
-msgstr ""
+msgstr "HTML мәліметін талдау плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 msgid "HTML data parsing"
-msgstr ""
+msgstr "HTML мәліметін талдау"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 msgid "HTML data parsing engine."
-msgstr ""
+msgstr "HTML мәліметін талдау қолданбасы."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:594
 msgid "Parse the HTML data."
-msgstr ""
+msgstr "HTML мәліметін талдау."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
 #, c-format
 msgid "HTML data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "HTML мәліметін талдау плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:180
 msgid "Man configuration"
-msgstr ""
+msgstr "Man баптаулары"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:186
 msgid ""
 "_Input string requires the \"man \" prefix. For example: \"man printf\"."
 msgstr ""
+"Е_нгізілетін мәтін жолы \"man \" префиксінен басталуы тиіс. Мысалы: \"man "
+"printf\"."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:210
-#, fuzzy
 msgid "Loading Man plug-in..."
-msgstr "Жүктелуде..."
+msgstr "Man плагині жүктелуде..."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:232
 msgid "Man"
-msgstr ""
+msgstr "Man"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
 msgid "Man virtual dictionary."
-msgstr ""
+msgstr "Man виртуал сөздігі."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:216
 msgid "Show the man pages."
-msgstr ""
+msgstr "Man парақтарын көрсету."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
 #, c-format
 msgid "Man plug-in loaded.\n"
-msgstr ""
+msgstr "Man плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 msgid "Loading PowerWord data parsing plug-in..."
-msgstr ""
+msgstr "PowerWord мәліметін талдау плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 msgid "PowerWord data parsing"
-msgstr ""
+msgstr "PowerWord мәліметін талдау"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 msgid "PowerWord data parsing engine."
-msgstr ""
+msgstr "PowerWord мәліметін талдау қолданбасы."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:695
 msgid "Parse the PowerWord data."
-msgstr ""
+msgstr "PowerWord мәліметтерін талдау."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
 #, c-format
 msgid "PowerWord data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "PowerWord мәліметін талдау плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:205
 #, c-format
 msgid "Error: Open file %s failed!"
-msgstr ""
+msgstr "Қате: %s файлын ашу сәтсіз!"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:249
 msgid "QQWry configuration"
@@ -2427,6 +2492,8 @@ msgid ""
 "You can update the QQWry.Dat file from this website:\n"
 "http://www.cz88.net"
 msgstr ""
+"Сіз QQWry.Dat файлын келесі веб сайтынан жүктей  аласыз:\n"
+"http://www.cz88.net"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:261
 #, c-format
@@ -2435,10 +2502,13 @@ msgid ""
 "You can download it from this website:\n"
 "http://www.cz88.net"
 msgstr ""
+"Қате: %s файлы табылмады!\n"
+"Сіз оны келесі веб сайттан жүктей аласыз:\n"
+"http://www.cz88.net"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:277
 msgid "Loading QQWry plug-in..."
-msgstr ""
+msgstr "QQWry плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:283
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:297
@@ -2451,43 +2521,40 @@ msgstr "QQWry IP ақпаратын көрсету"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:283
 msgid "Show address information by IP."
-msgstr ""
+msgstr "IP бойынша адрес ақпаратын көрсету."
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:298
 #, c-format
 msgid "QQWry plug-in loaded.\n"
-msgstr ""
+msgstr "QQWry плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
 msgid "SAPI TTS configuration"
-msgstr ""
+msgstr "SAPI TTS баптаулары"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:111
 msgid "TTS voice engine"
-msgstr ""
+msgstr "TTS дыбыс қозғаушысы"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:116
-#, fuzzy
 msgid "Voice :"
-msgstr "_Даусы бар"
+msgstr "Дыбыс :"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:165
-#, fuzzy
 msgid "Volume :"
-msgstr "Даусы"
+msgstr "Деңгейі :"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:174
-#, fuzzy
 msgid "Rate :"
-msgstr "Жаңарту ж_иілігі:"
+msgstr "Жиілігі :"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:186
 msgid "Input the test text:"
-msgstr ""
+msgstr "Сынау мәтінін енгізіңіз:"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:237
 msgid "Loading SAPI tts plug-in..."
-msgstr ""
+msgstr "SAPI tts плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:243
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:305
@@ -2500,12 +2567,12 @@ msgstr "SAPI TTS."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:243
 msgid "Pronounce words by SAPI TTS engine."
-msgstr ""
+msgstr "Сөздерді SAPI TTS қозғаушысы көмегімен айту."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
 #, c-format
 msgid "SAPI tts plug-in loaded.\n"
-msgstr ""
+msgstr "SAPI tts плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:281
 #, c-format
@@ -2513,6 +2580,7 @@ msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
 "language.\n"
 msgstr ""
+"Ескерту: %s тілі үшін емлені тексеру сөздігін сұрау кезінде қате кетті.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:287
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:330
@@ -2537,9 +2605,8 @@ msgid "Custom languages:"
 msgstr "Таңдауыңызша тілдер:"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:409
-#, fuzzy
 msgid "Loading Spelling plug-in..."
-msgstr "Емле тексеру плагині жүктелген.\n"
+msgstr "Емле тексеру плагині жүктелуде..."
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:415
 msgid "Spell Check"
@@ -2583,9 +2650,8 @@ msgid "Update information"
 msgstr "Ақпаратты жаңарту"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:88
-#, fuzzy
 msgid "Loading Update info plug-in..."
-msgstr "Жаңарту ақпараты плагині іске қосылған.\n"
+msgstr "Жаңарту ақпараты плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
 msgid "Update Info"
@@ -2614,48 +2680,48 @@ msgstr "Жаңарту ақпараты плагині іске қосылған
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
 msgid "Loading Wiki data parsing plug-in..."
-msgstr ""
+msgstr "Wiki мәліметін талдау плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 msgid "Wiki data parsing"
-msgstr ""
+msgstr "Wiki мәліметін талдау"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 msgid "Wiki data parsing engine."
-msgstr ""
+msgstr "Wiki мәліметін талдау қолданбасы."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:56
 msgid "Parse the wiki data."
-msgstr ""
+msgstr "Wiki мәліметтерін талдау."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
 #, c-format
 msgid "Wiki data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "Wiki мәліметін талдау плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
 msgid "WordNet configuration"
-msgstr ""
+msgstr "WordNet баптаулары"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:89
 msgid "Graphic mode."
-msgstr ""
+msgstr "Бейнелік режим."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:91
 msgid "Text mode."
-msgstr ""
+msgstr "Мәтіндік режим."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:111
 msgid "Loading WordNet dict rendering plug-in..."
-msgstr ""
+msgstr "WordNet сөздікті өңдеу плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid "WordNet dict rendering"
-msgstr ""
+msgstr "WordNet сөздігін өңдеу"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid "WordNet dict rendering engine."
-msgstr ""
+msgstr "WordNet сөздігін өңдеу қолданбасы."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:117
 msgid ""
@@ -2664,79 +2730,81 @@ msgid ""
 "net), which is developed by Bian Peng &lt;tianpmoon@gmail.com&gt;, many "
 "thanks for his open source sharing!"
 msgstr ""
+"WordNet сөздігін өңдеу.\n"
+"Ескерту: Бұл плагиннің қозғауышы dedict негізінде (http://sevenpie.net) "
+"жасалынған, оны болса, Bian Peng &lt;tianpmoon@gmail.com&gt; жазған, оның "
+"осындай бөлісуі үшін көп рахмет!"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
 #, c-format
 msgid "WordNet dict rendering plug-in loaded.\n"
-msgstr ""
+msgstr "WordNet сөздігін өңдеу плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
 msgid "Loading WordNet data parsing plug-in..."
-msgstr ""
+msgstr "WordNet мәліметін талдау плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 msgid "WordNet data parsing"
-msgstr ""
+msgstr "WordNet мәліметін талдау"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 msgid "WordNet data parsing engine."
-msgstr ""
+msgstr "WordNet мәліметін талдау қолданбасы."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:150
 msgid "Parse the WordNet data."
-msgstr ""
+msgstr "WordNet мәліметтерін талдау."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
 #, c-format
 msgid "WordNet data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "WordNet мәліметін талдау плагині жүктелді.\n"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:543
-#, fuzzy
 msgid "XDXF parser configuration"
-msgstr "QQWry баптаулары"
+msgstr "XDXF талдауыш баптаулары"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
 msgid "Abbreviation"
-msgstr ""
+msgstr "Қысқартылуы"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:573
 msgid "Example"
-msgstr ""
+msgstr "Мысалы"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:585
 msgid "Extra key phrase"
-msgstr ""
+msgstr "Қосымша кілт фразасы"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:597
 msgid "Emphasize"
-msgstr ""
+msgstr "Ерекшелеу"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:609
-#, fuzzy
 msgid "Reference"
-msgstr "Баптаулар"
+msgstr "Сілтеу"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:640
 msgid "Loading XDXF data parsing plug-in..."
-msgstr ""
+msgstr "XDXF мәліметін талдау плагинін жүктеу..."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "XDXF data parsing"
-msgstr ""
+msgstr "XDXF мәліметін талдау"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "XDXF data parsing engine."
-msgstr ""
+msgstr "XDXF мәліметін талдау қозғаушысы."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
 msgid "Parse the XDXF data."
-msgstr ""
+msgstr "XDXF мәліметтерін талдау."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:670
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
-msgstr ""
+msgstr "XDXF мәліметін талдау плагині жүктелді.\n"
 
 #~ msgid "Go Back - Right button: history (Alt+Left)"
 #~ msgstr "Артқа - Оң жақпен шерту: тарих (Alt+Left)"
