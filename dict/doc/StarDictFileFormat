@@ -30,12 +30,14 @@ when using.
 You can use dictzip to compress the .dict file.
 "dictzip" uses the same compression algorithm and file format as does gzip, 
 but provides a table that can be used to randomly access compressed blocks 
-in the file.  The use of 50-64kB blocks for compression typically degrades 
+in the file. The use of 50-64kB blocks for compression typically degrades 
 compression by less than 10%, while maintaining acceptable random access 
-capabilities for all data in the file.  As an added benefit, files 
+capabilities for all data in the file. As an added benefit, files 
 compressed with dictzip can be decompressed with gunzip.
 For more information about dictzip, refer to DICT project, please see:
 http://www.dict.org
+Download dictd package, uncompress and compile it, then you will get the
+dictzip tool.
 
 When you create a dictionary, you should use .idx and .dict.dz in normal 
 case.
