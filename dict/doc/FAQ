@@ -2,7 +2,10 @@ StarDict frequently asked questions!
 -----------------------------------
 
 Q) In Windows, I have installed the somedict.tar.bz2 file at dic/, but StarDict didn't load it.
-A) You need to use WinRAR to uncompress this file.
+A) You need to use WinRAR or 7-Zip to uncompress this file.
+
+Q) StarDict Windows version is not stable.
+A) Try StarDict-3.0.1, this is a stable and classical version!
 
 Q) StarDict is freezed when I am using it.
 A) This seems to be esound's bug, try this command:"killall esd". Another case is pango's bug, try to drag the hpaned to resize the textview.
