@@ -58,6 +58,7 @@ endif
 if !DARWIN_SUPPORT
 KEYPRESS_FILE_MODULE = x11_iskeyspressed.cpp x11_iskeyspressed.h
 DOCKLET_FILE_MODULE = docklet.cpp docklet.h
+HOTKEY_FILE_MODULE = eggaccelerators.cpp eggaccelerators.h tomboykeybinder.cpp tomboykeybinder.h
 endif
 
 stardict_SOURCES = 			                \
@@ -84,14 +85,13 @@ stardict_SOURCES = 			                \
 	$(CONFIG_FILE_MODULE)                   \
 	$(KEYPRESS_FILE_MODULE) \
 	$(DOCKLET_FILE_MODULE) \
+	$(HOTKEY_FILE_MODULE) \
 	gtk_iskeyspressed.cpp gtk_iskeyspressed.h \
 	progresswin.cpp progresswin.h \
 	tray.cpp tray.h \
 	dictmanage.cpp dictmanage.h	\
-	eggaccelerators.cpp eggaccelerators.h	\
 	globalhotkeys.cpp globalhotkeys.h	\
 	hotkeyeditor.c hotkeyeditor.h	\
-	tomboykeybinder.cpp tomboykeybinder.h	\
 	desktop.cpp desktop.h	\
 	log.cpp log.h \
 	cmdlineopts.cpp cmdlineopts.h

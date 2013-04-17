@@ -105,7 +105,11 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/use_custom_font", false);
 #endif
 #endif
+#if defined(_WIN32) || defined(CONFIG_DARWIN)
+	add_entry("/apps/stardict/preferences/network/enable_netdict", true);
+#else
 	add_entry("/apps/stardict/preferences/network/enable_netdict", false);
+#endif
 	// Default stardictd server.
 	add_entry("/apps/stardict/preferences/network/server", std::string(_("dict.stardict.org")));
 	add_entry("/apps/stardict/preferences/network/port", 2628);
@@ -553,6 +557,22 @@ AppDirs::AppDirs(const std::string& dirs_config_file)
 #endif
 }
 
+#ifndef _WIN32
+std::string AppDirs::get_system_icon_dir(void) const
+{
+#ifdef CONFIG_DARWIN
+	const gchar* dir = g_getenv("STARDICT_ICON_DIR");
+	if (dir) {
+		return dir;
+	} else {
+		return SYSTEM_ICON_DIR; 
+	}
+#else
+	return SYSTEM_ICON_DIR; 
+#endif
+}
+#endif
+
 std::string AppDirs::get_dirs_config_file(const std::string& dirs_config_file) const
 {
 	if(!dirs_config_file.empty())
@@ -595,6 +615,13 @@ std::string AppDirs::get_default_data_dir(void) const
 {
 #ifdef _WIN32
 	return get_application_dir();
+#elif defined(CONFIG_DARWIN)
+	const gchar* dir = g_getenv("STARDICT_DATA_DIR");
+	if (dir) {
+		return dir;
+	} else {
+		return STARDICT_DATA_DIR;
+	}
 #else
 	return STARDICT_DATA_DIR;
 #endif
@@ -615,6 +642,13 @@ std::string AppDirs::get_default_plugin_dir(void) const
 {
 #ifdef _WIN32
 	return build_path(data_dir, "plugins");
+#elif defined(CONFIG_DARWIN)
+	const gchar* dir = g_getenv("STARDICT_LIB_DIR");
+	if (dir) {
+		return build_path(dir, "plugins");
+	} else {
+		return build_path(STARDICT_LIB_DIR, "plugins");
+	}
 #else
 	return build_path(STARDICT_LIB_DIR, "plugins");
 #endif
@@ -631,6 +665,13 @@ std::string AppDirs::get_default_locale_dir(void) const
 {
 #ifdef _WIN32
 	return build_path(data_dir, "locale");
+#elif defined(CONFIG_DARWIN)
+	const gchar* dir = g_getenv("STARDICT_LOCALE_DIR");
+	if (dir) {
+		return dir;
+	} else {
+		return STARDICT_LOCALE_DIR;
+	}
 #else
 	return STARDICT_LOCALE_DIR;
 #endif

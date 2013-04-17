@@ -188,7 +188,11 @@ namespace clib {
 }
 
 namespace zip {
+#if ZLIB_VERNUM > 0x1250
+typedef ResourceWrapper<gzFile_s, gzFile, int, gzclose> gzFile;
+#else
 typedef ResourceWrapper<void, void*, int, gzclose> gzFile;
+#endif
 }
 
 /* Create a new temporary file. Return file name in file name encoding.

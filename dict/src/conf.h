@@ -252,7 +252,7 @@ public:
 #endif
 	std::string get_locale_dir(void) const { return locale_dir; }
 #ifndef _WIN32
-	std::string get_system_icon_dir(void) const { return SYSTEM_ICON_DIR; }
+	std::string get_system_icon_dir(void) const;
 #endif
 #ifdef CONFIG_GNOME
 	std::string get_system_data_dir(void) const { return SYSTEM_DATA_DIR; }
