@@ -1,34 +1,26 @@
 #!/bin/sh
 
-if test "x$IGE_DEBUG_LAUNCHER" != x; then
+if test "x$GTK_DEBUG_LAUNCHER" != x; then
     set -x
 fi
 
-if test "x$IGE_DEBUG_GDB" != x; then
+if test "x$GTK_DEBUG_GDB" != x; then
     EXEC="gdb --args"
 else
     EXEC=exec
 fi
 
-CWD="`(cd \"\`dirname \\\"$0\\\"\`\"; echo $PWD)`"
-name="`basename $0`"
-tmp=$CWD
+name=`basename "$0"`
+tmp="$0"
 tmp=`dirname "$tmp"`
-#tmp=`dirname "$tmp"`
+tmp=`dirname "$tmp"`
 bundle=`dirname "$tmp"`
-#echo $bundle
 bundle_contents="$bundle"/Contents
 bundle_res="$bundle_contents"/Resources
 bundle_lib="$bundle_res"/lib
 bundle_bin="$bundle_res"/bin
 bundle_data="$bundle_res"/share
 bundle_etc="$bundle_res"/etc
-
-if test ! -d /tmp/skl; then
-	mkdir /tmp/skl
-fi
-
-ln -s "$bundle_res" /tmp/skl/StarDict.app
 
 export DYLD_LIBRARY_PATH="$bundle_lib"
 export XDG_CONFIG_DIRS="$bundle_etc"/xdg
@@ -37,11 +29,15 @@ export GTK_DATA_PREFIX="$bundle_res"
 export GTK_EXE_PREFIX="$bundle_res"
 export GTK_PATH="$bundle_res"
 
+export STARDICT_ICON_DIR="$bundle_data"/pixmaps
+export STARDICT_DATA_DIR="$bundle_data"/stardict
+export STARDICT_LOCALE_DIR="$bundle_data"/locale
+export STARDICT_LIB_DIR="$bundle_lib"/stardict
+
 export GTK2_RC_FILES="$bundle_etc/gtk-2.0/gtkrc"
 export GTK_IM_MODULE_FILE="$bundle_etc/gtk-2.0/gtk.immodules"
 export GDK_PIXBUF_MODULE_FILE="$bundle_etc/gtk-2.0/gdk-pixbuf.loaders"
 export PANGO_RC_FILE="$bundle_etc/pango/pangorc"
-export FONTCONFIG_PATH=/tmp/skl/StarDict.app/etc/fonts
 
 APP=name
 I18NDIR="$bundle_data/locale"
@@ -170,8 +166,8 @@ if test -f "$bundle_res/environment.sh"; then
 fi
 
 # Strip out the argument added by the OS.
-if [ x`echo "x$1" | sed -e "s/^x-psn_.*//"` == x ]; then
+if /bin/expr "x$1" : '^x-psn_' > /dev/null; then
     shift 1
 fi
 
-$EXEC "$bundle_contents/MacOS/$name-bin" $* $EXTRA_ARGS
+$EXEC "$bundle_contents/MacOS/$name-bin" "$@" $EXTRA_ARGS

@@ -262,6 +262,7 @@ bool confirm_enable_network_dicts(GtkWidget *parent_window)
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_YES_NO,
+			"%s",
 			msg);
 	bool confirmed = false;
 	gint response = gtk_dialog_run (GTK_DIALOG (dialog));

@@ -1,31 +1,39 @@
-StarDict have been ported to Mac OS X now.
+StarDict has been ported to Mac OS X now.
 
-Here is a abstract introduction of compiling stardict and building the package.
+Here is an abstract introduction of compiling stardict and building the package.
 
 1. Install Xcode.
 
-2. Install fink.
-http://www.finkproject.org
-This should be optional.
+2. Read document.
+http://www.gtk.org/download/macos.php
 
-3. Install jhbuild.
-http://developer.imendio.com/projects/gtk-macosx
-http://developer.imendio.com/projects/gtk-macosx/build-instructions
+3. Building.
+Read https://live.gnome.org/GTK+/OSX/Building
 And build gtk by following the instructions.
+This is needed if zlib is not found later:
+jhbuild build zlib
 
 4. Compile stardict.
-Edit configure.in, remove the "AM_GCONF_SOURCE_2" lines.
+Edit dict/configure.ac, remove the "AM_GCONF_SOURCE_2" lines.
+jhbuild shell
 ./autogen.sh
-export PKG_CONFIG=/opt/gtk/bin/pkg-config
-./configure --prefix=/opt/gtk --disable-festival --disable-espeak --disable-gucharmap --disable-spell --enable-darwin-support --mandir=/opt/gtk/share/man
+Replace "huzheng" in the next command line to your own username:
+./configure --prefix=/Users/huzheng/gtk/inst --sysconfdir=/Users/huzheng/gtk/inst/etc --mandir=/Users/huzheng/gtk/inst/share/man --disable-espeak --disable-spell --disable-gucharmap --disable-dictdotcn --disable-festival --enable-darwin-support --disable-scrollkeeper --disable-tools
 make
 make install
 
-5. Create the install package.
-Read documents in http://gimp-app.sourceforge.net/
-You can take the existing StarDict.pkg for the example.
-To get the gtk library files, you can do: "cd ~/Source/gnome/gtk+/;make DESTDIR=~/stardict-root install" and so on.
-After Created the package directory, you can use PackageMaker to build it.
+5. Bundling.
+Read https://live.gnome.org/GTK+/OSX/Bundling
+And build StarDict.app by following the instructions.
+cd dict/mac_dist
+gtk-mac-bundler stardict.bundle
+After created the package as ~/Desktop/StarDict.app, you can use this:
+tar -cjvf stardict-3.0.5-beta1-macosx.tar.bz2 StarDict.app
 
-Any question, just mail to Hu Zheng :)
-2007.12.6
+6. Install.
+To install, unpack the archive, then drag and drop to the /Applications folder.
+To run in place, unpack and click.
+
+
+Any question, just mail to Hu Zheng <huzheng001@gmail.com> :)
+2013.4.17

@@ -19,7 +19,11 @@
 
 #include "globalhotkeys.h"
 #include "stardict.h"
+
+#ifdef CONFIG_DARWIN
+#else
 #include "tomboykeybinder.h"
+#endif
 
 void ToggleScan()
 {

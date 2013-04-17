@@ -239,7 +239,7 @@ void Socket::resolve(std::string& host, gpointer data, on_resolved_func func)
 	query_data->host = host;
 	query_data->data = data;
 	query_data->func = func;
-	g_thread_create(dns_thread, query_data, FALSE, NULL);
+	g_thread_unref(g_thread_new("dns_thread", dns_thread, query_data));
 }
 
 void Socket::connect(int socket, in_addr_t sa, int port, gpointer data, on_connected_func func)
@@ -250,7 +250,7 @@ void Socket::connect(int socket, in_addr_t sa, int port, gpointer data, on_conne
 	connect_data->port = port;
 	connect_data->data = data;
 	connect_data->func = func;
-	g_thread_create(connect_thread, connect_data, FALSE, NULL);
+	g_thread_unref(g_thread_new("connect_thread", connect_thread, connect_data));
 }
 
 gpointer Socket::connect_thread(gpointer data)

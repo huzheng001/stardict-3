@@ -280,15 +280,15 @@ AM_CONDITIONAL(MAEMO_SUPPORT, test "x${enable_maemo_support}" = "xyes")
 AM_CONDITIONAL(DARWIN_SUPPORT, test "x${enable_darwin_support}" = "xyes")
 
 if test "x${enable_gpe_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.16 gthread-2.0 libgpewidget >= 0.109"
+  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libgpewidget >= 0.109"
 elif test "x${enable_maemo_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.16 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
+  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
 elif test "x${enable_darwin_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.16 gthread-2.0"
+  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0"
 elif test "x${enable_gnome_support}" = "xno" ; then
-  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.16 gthread-2.0"
+  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0"
 else
-  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.16 gthread-2.0 libgnome-2.0 libbonobo-2.0 gconf-2.0"
+  DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libgnome-2.0 libbonobo-2.0 gconf-2.0"
 fi
 
 dnl
@@ -447,6 +447,7 @@ data/Makefile
 doc/Makefile
 debian-upstream/Makefile
 mac_dist/Makefile
+mac_dist/zh_CN.lproj/Makefile
 msvc_2008/Makefile
 po/Makefile.in
 m4/Makefile

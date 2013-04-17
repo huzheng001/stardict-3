@@ -27,6 +27,9 @@ to disable tools building, only compile StarDict program. And:
 =============
 to disable StarDict program building, only compile tools.
 
+If you are a developer, you can try:
+./configure --disable-deprecations
+
 You can use "./configure --enable-gpe-support --prefix=/usr" to build the GPE version of StarDict. For GPE, see http://gpe.handhelds.org
 You can use "./configure --enable-maemo-support --prefix=/usr" to build the Maemo version of StarDict. For Maemo, see http://www.maemo.org
 

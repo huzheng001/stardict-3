@@ -2311,7 +2311,6 @@ int main(int argc,char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	g_thread_init (NULL);
 #if defined(_WIN32) && defined(_MSC_VER)
 	synchronize_crt_enviroment();
 #endif
