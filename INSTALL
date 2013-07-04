@@ -3,13 +3,14 @@ The following text describes options specific to StarDict dictionary project. Pa
 To Install StarDict:
 type:
 =============
-./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-festival
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-festival --disable-gnome-support
 make
 make install
 =============
 Gucharmap use gtk3 while stardict still use gtk2, so this plugin need to be disabled presently.
 Dictdotcn plugin is outdated and have no use now.
 Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently.
+It is gnome3 now and stardict have not updated to gnome3 as still use gtk2, so need to disable gnome support presently.
 
 You can use:
 =============

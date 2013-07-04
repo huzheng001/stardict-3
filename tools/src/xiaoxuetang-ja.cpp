@@ -215,7 +215,6 @@ int main(int argc, char *argv[])
 		return false;
 	}
 	setlocale(LC_ALL, "");
-	g_type_init ();
 	convert_excelxmlfile(argv[argc-1]);
 	return false;
 }

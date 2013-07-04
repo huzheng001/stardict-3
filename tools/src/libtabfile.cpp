@@ -97,7 +97,8 @@ static void my_strstrip(char *str, glong linenum)
 }
 
 /* return: true - OK, false - error 
-Dictionary index is not allowed to contain duplicates. */
+Dictionary index is allowed to contain duplicates in fact. */
+/*
 static bool check_duplicate_words(GArray *array)
 {
 	if(array->len < 2)
@@ -117,6 +118,7 @@ static bool check_duplicate_words(GArray *array)
 	}
 	return return_var;
 }
+*/
 
 static bool read_tab_file(gchar *buffer, GArray *array)
 {
@@ -272,8 +274,8 @@ bool convert_tabfile(const char *filename)
 		return false;
 	}
 	g_array_sort(array, comparefunc);
-	if(!check_duplicate_words(array))
-		return false;
+	//if(!check_duplicate_words(array))
+	//	return false;
 	
 	if(!write_dictionary(filename, array))
 		return false;

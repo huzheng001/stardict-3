@@ -133,7 +133,6 @@ static void log_handler(const gchar * log_domain,
 int main(int argc,char * argv [])
 {
 	setlocale(LC_ALL, "");
-	g_type_init ();
 
 	if(gmain.main(argc, argv))
 		return EXIT_FAILURE;

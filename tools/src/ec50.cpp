@@ -1140,7 +1140,6 @@ int
 main(int argc,char * argv [])
 {
 	setlocale(LC_ALL, "");
-	g_type_init ();
 	
 	convert();	
 	

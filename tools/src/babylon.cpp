@@ -37,7 +37,6 @@ int main(int argc,char * argv [])
 	}
 
 	setlocale(LC_ALL, "");
-	g_type_init ();
 	convert_babylonfile (argv[argc-1], strip_html);
 	return FALSE;
 }

@@ -231,7 +231,6 @@ int main(int argc,char * argv [])
         }
 
 	setlocale(LC_ALL, "");
-        g_type_init ();
         convert (argv[1], argv[2], argv[3]);
 	return FALSE;
 }

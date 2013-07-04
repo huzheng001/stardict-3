@@ -23,7 +23,6 @@
 int main(int argc,char * argv [])
 {
 	setlocale(LC_ALL, "");
-	g_type_init ();
 
 	if (argc!=3) {
 		g_print("Usage:\n./stardict2txt somedict.ifo output.txt\n");

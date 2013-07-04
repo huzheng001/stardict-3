@@ -357,7 +357,7 @@ bool DictInfo::save_ifo_file(void) const
 		return false;
 	}
 	std::stringstream str;
-	str << UTF8_BOM;
+	//str << UTF8_BOM;
 	if(!is_infotype()) {
 		g_critical("Fail to save ifo file. Dict info type is not specified.");
 		return false;
