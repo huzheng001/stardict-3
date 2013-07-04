@@ -3,16 +3,16 @@ Section: utils
 Priority: optional
 Maintainer: Roy Hiu-yeung Chan <hychan@glink.net.hk>
 Uploaders: Anthony Fok <foka@debian.org>, Andrew Lee <andrew@linux.org.tw>
-Build-Depends: debhelper (>= 5.0.0), python-dev, python-support (>= 0.4), libgtk2.0-dev, libgnome2-dev, scrollkeeper, libbonobo2-dev, libgconf2-dev, liborbit2-dev, zlib1g-dev, sharutils, libxml-parser-perl, libx11-dev, libsigc++-2.0-dev, libespeak-dev, libenchant-dev
-Standards-Version: 3.7.2.0
+Build-Depends: debhelper (>= 8), python-dev, python-support (>= 0.4), libgtk2.0-dev, libgnome2-dev, scrollkeeper, libbonobo2-dev, libgconf2-dev, liborbit2-dev, zlib1g-dev, sharutils, libxml-parser-perl, libx11-dev, libsigc++-2.0-dev, libespeak-dev, libenchant-dev
+Standards-Version: 3.9.2
 
 Package: stardict
-Architecture: any
+Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, scrollkeeper (>= 0.3.14-5), sgml-data (>= 2.0.2)
 Suggests: ttf-freefont | ttf-thryomanes
 Replaces: stardict-gtk
 Conflicts: stardict-gtk
-Description: International dictionary for GNOME 2
+Description: International dictionary for GNOME
  StarDict is a cross-platform and international dictionary written in
  GTK. It has powerful features such as "Glob-style pattern
  matching", "Scan selection word", "Fuzzy search", etc.

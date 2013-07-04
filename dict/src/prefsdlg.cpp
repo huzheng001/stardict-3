@@ -1300,6 +1300,10 @@ void PrefsDlg::setup_network_netdict()
 #endif
     gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
     gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
+
+    label = gtk_label_new(_("Warning: Requests to remote StarDict server are sent over the network in an unencrypted form. Do not enable this if you are translating sensitive documents."));
+    gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
+    gtk_box_pack_start(GTK_BOX(vbox1),label,false,false,6);
 }
 
 #if defined(_WIN32) || defined(CONFIG_GNOME)

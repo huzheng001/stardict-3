@@ -378,6 +378,12 @@ the following data's size (NOT the whole size which is 4 bytes bigger).
 Word's pure text meaning.
 The data should be a utf-8 string ending with '\0'.
 
+'l'
+Word's pure text meaning.
+The data is NOT a utf-8 string, but is instead a string in locale
+encoding, ending with '\0'. Sometimes using this type will save disk
+space, but its use is discouraged. This is only a idea.
+
 'g'
 A utf-8 string which is marked up with the Pango text markup language.
 For more information about this markup language, See the "Pango
@@ -435,6 +441,20 @@ You can "save as" the attachment file and so on.
 The file list must be a utf-8 string ending with '\0'.
 Use '\n' for separating new lines.
 Use '/' character as directory separator.
+
+'W'
+wav file.
+The data begins with a network byte-ordered guint32 to identify the wav
+file's size, immediately followed by the file's content.
+This is only a idea, it is better to use 'r' Resource file list in most
+case.
+
+'P'
+Picture file.
+The data begins with a network byte-ordered guint32 to identify the picture
+file's size, immediately followed by the file's content.
+This is only a idea, it is better to use 'r' Resource file list in most
+case.
 
 'X'
 this type identifier is reserved for experimental extensions.

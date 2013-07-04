@@ -14,6 +14,7 @@ noinst_PROGRAMS = stardict-editor pydict2dic olddic2newdic oxford2dic directory2
 	fest2dict i2e2dict downloadwiki ooo2dict myspell2dic exc2i2e \
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi ydp2dict \
 	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
+	sd2foldoc	\
 	stardict-text2bin stardict-bin2text stardict-repair
 
 AM_CPPFLAGS = $(STARDICT_CFLAGS) -I$(top_builddir) -I$(top_srcdir)
@@ -229,6 +230,10 @@ ydp2dict_SOURCES = ydp2dict.c
 wordnet_LDFLAGS =
 wordnet_LDADD = $(STARDICT_LIBS)
 wordnet_SOURCES = wordnet.cpp
+
+sd2foldoc_LDFLAGS =
+sd2foldoc_LDADD = $(STARDICT_LIBS)
+sd2foldoc_SOURCES = sd2foldoc.cpp libsd2foldoc.cpp libsd2foldoc.h
 
 stardict_index_CPPFLAGS = $(AM_CPPFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict_index_LDFLAGS =
