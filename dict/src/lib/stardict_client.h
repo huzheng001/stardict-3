@@ -59,6 +59,7 @@ namespace STARDICT {
 		CMD_DICT_INFO,
 		//CMD_USER_LEVEL,
 		//CMD_GET_USER_LEVEL,
+		CMD_GET_ADINFO,
 		CMD_QUIT,
 	};
 	struct LookupResponse {
@@ -160,6 +161,7 @@ public:
 	static sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> on_floatwin_lookup_end_;
 	static sigc::signal<void, const char *> on_register_end_;
 	static sigc::signal<void, const char *> on_getdictmask_end_;
+	static sigc::signal<void, const char *> on_getadinfo_end_;
 	static sigc::signal<void, const char *> on_dirinfo_end_;
 	static sigc::signal<void, const char *> on_dictinfo_end_;
 	static sigc::signal<void, int> on_maxdictcount_end_;
@@ -216,6 +218,7 @@ private:
 	int parse_command_register(gchar *line);
 	int parse_command_setdictmask(gchar *line);
 	int parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *line);
+	int parse_command_getadinfo(STARDICT::Cmd* cmd, gchar *line);
 	int parse_command_dirinfo(STARDICT::Cmd* cmd, gchar *line);
 	int parse_command_dictinfo(STARDICT::Cmd* cmd, gchar *line);
 	int parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *line);
