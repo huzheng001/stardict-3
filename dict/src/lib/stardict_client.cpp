@@ -53,6 +53,7 @@ sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDi
 sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDictClient::on_floatwin_lookup_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
+sigc::signal<void, const char *> StarDictClient::on_getadinfo_end_;
 sigc::signal<void, const char *> StarDictClient::on_dirinfo_end_;
 sigc::signal<void, const char *> StarDictClient::on_dictinfo_end_;
 sigc::signal<void, int> StarDictClient::on_maxdictcount_end_;
@@ -249,6 +250,9 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		this->data = g_strdup_printf("userlevel %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}*/
+	case CMD_GET_ADINFO:
+		this->data = g_strdup("getadinfo\n");
+		break;
 	case CMD_QUIT:
 		this->data = g_strdup("quit\n");
 		break;
@@ -506,6 +510,9 @@ bool StarDictClient::try_cache(STARDICT::Cmd *c)
                 break;
             case STARDICT::CMD_MAX_DICT_COUNT:
                 on_maxdictcount_end_.emit(atoi(data));
+                break;
+            case STARDICT::CMD_GET_ADINFO:
+                on_getadinfo_end_.emit(data);
                 break;
         }
         delete c;
@@ -1016,6 +1023,29 @@ int StarDictClient::parse_command_dictinfo(STARDICT::Cmd* cmd, gchar *buf)
     return 2;
 }
 
+int StarDictClient::parse_command_getadinfo(STARDICT::Cmd* cmd, gchar *buf)
+{
+    if (cmd->reading_status == 0) {
+        int status;
+        status = atoi(buf);
+        if (status != CODE_OK) {
+            gchar *str = g_strdup_printf("Get ad info failed: %s", buf);
+            g_free(buf);
+            on_error_.emit(str);
+            g_free(str);
+            return 0;
+        }
+        g_free(buf);
+        cmd->reading_status = 1;
+        reading_type_ = READ_STRING;
+    } else if (cmd->reading_status == 1) {
+        on_getadinfo_end_.emit(buf);
+        save_cache_str(cmd->data, buf);
+        return 1;
+    }
+    return 2;
+}
+
 int StarDictClient::parse_command_maxdictcount(STARDICT::Cmd* cmd, gchar *buf)
 {
     if (cmd->reading_status == 0) {
@@ -1244,6 +1274,9 @@ bool StarDictClient::parse(gchar *line)
         case STARDICT::CMD_PREVIOUS:
         case STARDICT::CMD_NEXT:
             result = parse_wordlist(cmd, line);
+            break;
+        case STARDICT::CMD_GET_ADINFO:
+            result =  parse_command_getadinfo(cmd, line);
             break;
         case STARDICT::CMD_QUIT:
             result = parse_command_quit(line);

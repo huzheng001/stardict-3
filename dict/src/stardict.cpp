@@ -337,6 +337,7 @@ void AppCore::Create(const gchar *queryword)
 	oStarDictClient.on_floatwin_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_floatwin_lookup_end));
 	oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
 	oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
+	oStarDictClient.on_getadinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getadinfo_end));
 	oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
 	oStarDictClient.on_dictinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dictinfo_end));
 	oStarDictClient.on_maxdictcount_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_maxdictcount_end));
@@ -1801,6 +1802,12 @@ void AppCore::on_stardict_client_getdictmask_end(const char *msg)
 {
 	if (dict_manage_dlg)
 		dict_manage_dlg->network_getdictmask(msg);
+}
+
+void AppCore::on_stardict_client_getadinfo_end(const char *msg)
+{
+	if (dict_manage_dlg)
+		dict_manage_dlg->network_getadinfo(msg);
 }
 
 void AppCore::on_stardict_client_dirinfo_end(const char *msg)

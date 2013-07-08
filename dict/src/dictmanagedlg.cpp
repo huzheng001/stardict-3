@@ -584,6 +584,8 @@ void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManag
 		}
 		gtk_widget_show(oDictManageDlg->info_label);
 		gtk_widget_hide(oDictManageDlg->download_hbox);
+		STARDICT::Cmd *c3 = new STARDICT::Cmd(STARDICT::CMD_GET_ADINFO);
+		gpAppFrame->oStarDictClient.try_cache_or_send_commands(1, c3);
 		gtk_widget_show(oDictManageDlg->upgrade_eventbox);
 	}
 }
@@ -2549,7 +2551,11 @@ void DictManageDlg::on_download_eventbox_clicked(GtkWidget *widget, GdkEventButt
 
 void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
-	show_url("http://www.stardict.org/finance.php");
+	if (oDictManageDlg->upgrade_url.empty()) {
+		show_url("http://www.stardict.org/finance.php");
+	} else {
+		show_url(oDictManageDlg->upgrade_url.c_str());
+	}
 }
 
 void DictManageDlg::on_dict_list_dict_name_column_clicked(GtkTreeViewColumn *treeviewcolumn, DictManageDlg *oDictManageDlg)
@@ -2765,13 +2771,13 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
 		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
 
-		label = gtk_label_new(NULL);
+		upgrade_label = gtk_label_new(NULL);
 		gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", _("Upgrade Now!"));
-		gtk_label_set_markup(GTK_LABEL(label), markup);
+		gtk_label_set_markup(GTK_LABEL(upgrade_label), markup);
 		g_free(markup);
 		upgrade_eventbox = gtk_event_box_new();
 		g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
-		gtk_container_add(GTK_CONTAINER(upgrade_eventbox), label);
+		gtk_container_add(GTK_CONTAINER(upgrade_eventbox), upgrade_label);
 		gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
 		
 		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), vbox, true, true, 0);
@@ -2797,7 +2803,8 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 3) {
 		STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
 		STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
-		gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
+		STARDICT::Cmd *c3 = new STARDICT::Cmd(STARDICT::CMD_GET_ADINFO);
+		gpAppFrame->oStarDictClient.try_cache_or_send_commands(3, c1, c2, c3);
 	}
 	network_dictmask_changed = false;
 	dictmanage_list_changed = false;
@@ -2898,6 +2905,46 @@ void DictManageDlg::network_getdictmask(const char *xml)
 	g_markup_parse_context_parse(context, xml, -1, NULL);
 	g_markup_parse_context_end_parse(context, NULL);
 	g_markup_parse_context_free(context);
+}
+
+struct adinfo_ParseUserData {
+	std::string title;
+	std::string url;
+};
+
+static void adinfo_parse_text(GMarkupParseContext *context, const gchar *text, gsize text_len, gpointer user_data, GError **error)
+{
+	const gchar *element = g_markup_parse_context_get_element(context);
+	if (!element)
+		return;
+	adinfo_ParseUserData *Data = (adinfo_ParseUserData *)user_data;
+	if (strcmp(element, "title")==0) {
+		Data->title.assign(text, text_len);
+	} else if (strcmp(element, "url")==0) {
+		Data->url.assign(text, text_len);
+	}
+}
+
+void DictManageDlg::network_getadinfo(const char *xml)
+{
+	if (!window)
+		return;
+	adinfo_ParseUserData Data;
+	GMarkupParser parser;
+	parser.start_element = NULL;
+	parser.end_element = NULL;
+	parser.text = adinfo_parse_text;
+	parser.passthrough = NULL;
+	parser.error = NULL;
+	GMarkupParseContext* context = g_markup_parse_context_new(&parser, (GMarkupParseFlags)0, &Data, NULL);
+	g_markup_parse_context_parse(context, xml, -1, NULL);
+	g_markup_parse_context_end_parse(context, NULL);
+	g_markup_parse_context_free(context);
+
+	gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", Data.title.c_str());
+	gtk_label_set_markup(GTK_LABEL(upgrade_label), markup);
+	g_free(markup);
+	upgrade_url = Data.url;
 }
 
 void DictManageDlg::network_dirinfo(const char *xml)

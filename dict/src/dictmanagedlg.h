@@ -49,6 +49,7 @@ private:
 	GtkWidget *button_notebook;
 	GtkWidget *download_hbox;
 	GtkWidget *info_label;
+	GtkWidget *upgrade_label;
 	GtkWidget *upgrade_eventbox;
 	GtkWidget *popup_menu;
 	GtkWidget *dict_list_treeview;
@@ -64,6 +65,7 @@ private:
 	NetworkAddDlg *network_add_dlg;
 	int max_dict_count;
 	int user_level;
+	std::string upgrade_url;
 	bool network_dictmask_changed;
 	bool dictmanage_list_changed;
 	bool dictmanage_config_changed;
@@ -135,6 +137,7 @@ public:
 	bool Show(bool &dictmanage_config_changed_);
 	void Close();
 	void network_getdictmask(const char *xml);
+	void network_getadinfo(const char *xml);
 	void network_dirinfo(const char *xml);
 	void network_dictinfo(const char *xml);
 	void network_maxdictcount(int count);
