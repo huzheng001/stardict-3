@@ -61,9 +61,9 @@ return stardict_strcmp(a->words, b->words);
 
 int main (int argc, char *argv[])
 {
-arr=(PAIR *)malloc(sizeof(PAIR)*40000);
+   arr=(PAIR *)malloc(sizeof(PAIR)*40000);
 
-setbuf(stdout, 0);
+   setbuf(stdout, 0);
 
 if (argc>1)
    {
@@ -94,7 +94,11 @@ for (cyc=0; cyc<=1; cyc++)
    F4=fopen(path, "wb");
    
    fseek(F2, 16, SEEK_SET);
-   fread(&siz, 4, 1, F2);
+   size_t fread_size;
+   fread_size = fread(&siz, 4, 1, F2);
+   if (fread_size != 1) {
+       printf("fread error!\n");
+   }
    fseek(F2, siz, SEEK_SET);
    
    n=off=0;
@@ -114,7 +118,10 @@ for (cyc=0; cyc<=1; cyc++)
          exit(1); 
          }
       
-      fread(words, siz, 1, F);
+      fread_size = fread(words, siz, 1, F);
+      if (fread_size != 1) {
+          printf("fread error!\n");
+}
       words[siz]=0;
       
       while ((p=strchr(words, '\\'))!=0)

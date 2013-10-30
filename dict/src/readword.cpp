@@ -111,7 +111,11 @@ void ReadWord::Command_read(const gchar *word)
 	gchar *eword = g_shell_quote(word);
 	gchar *command = g_strdup_printf(tts_program_cmdline.c_str(), eword);
 	g_free(eword);
-	system(command);
+	int result;
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	g_free(command);
 }
 

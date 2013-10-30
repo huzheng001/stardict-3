@@ -150,7 +150,11 @@ void convert(char *filename,char *idxheadfilename)
 	idxheadfile = fopen(idxheadfilename,"r");
 	gchar *buffer;
 	buffer = (gchar *)g_malloc (stats.st_size + 1);
-	fread (buffer, 1, stats.st_size, idxheadfile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, idxheadfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (idxheadfile);
 	buffer[stats.st_size] = '\0';
 	//gboolean sametypesequence = FALSE;
@@ -194,11 +198,18 @@ void convert(char *filename,char *idxheadfilename)
     }
     int iFileSize=stStat.st_size;
     
-    // get item count
-    lseek(fd,0-sizeof(int)*2,SEEK_END);
-    unsigned int iCapacity,iStyle;
-    read(fd,&iCapacity,sizeof(int));
-    read(fd,&iStyle,sizeof(int));
+	// get item count
+	lseek(fd,0-sizeof(int)*2,SEEK_END);
+	unsigned int iCapacity,iStyle;
+	ssize_t read_size;
+	read_size = read(fd,&iCapacity,sizeof(int));
+	if (read_size == -1) {
+		g_print("read() error!\n");
+	}
+	read_size = read(fd,&iStyle,sizeof(int));
+	if (read_size == -1) {
+		g_print("read() error!\n");
+	}
 	//disable the next two line when the convert file is from the same arch machine.
 #ifndef DISABLE_CONVERT_ENDIAN
 	vConvertEndian(&iCapacity);

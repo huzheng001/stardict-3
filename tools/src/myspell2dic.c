@@ -119,6 +119,7 @@ char fname[100];
 time_t t0;
 struct tm *t;
 long nr, len, flen, common;
+char *ch;
 
 arr=(PAIR *)malloc(sizeof(PAIR)*10000000);
 rules=(RULE *)malloc(sizeof(RULE)*10000);
@@ -134,7 +135,10 @@ if (argc<3)
 
 fprintf(stderr, "Enter grammar language [Spanish]: ");
 fflush(stderr);
-fgets(lang, sizeof(lang), stdin);
+ch = fgets(lang, sizeof(lang), stdin);
+if (ch == NULL) {
+    printf("fgets error!\n");
+}
 if ((p=strchr(lang, '\n'))!=NULL) *p=0;
 if (*lang==0) strcpy(lang, "Spanish");
 
@@ -203,7 +207,10 @@ if (!F)
 fprintf(stderr, "\nConversion can take several minutes, please wait...\n");
 fflush(stderr);
 
-fgets(current, 200, F);
+ch = fgets(current, 200, F);
+if (ch == NULL) {
+    printf("fgets error!\n");
+}
 n=0;
 while (fgets(current, 200, F))
    {

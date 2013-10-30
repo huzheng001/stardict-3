@@ -58,7 +58,11 @@ F=fopen((argc>1)? argv[1]: "/usr/share/festival/dicts/cmu/cmudict-0.4.out", "rt"
 F2=fopen("cmudict.idx", "wb");
 F3=fopen("cmudict.dict", "wb");
 
-fgets(current2, 200, F);
+	char *ch;
+	ch = fgets(current2, 200, F);
+	if (ch == NULL) {
+		printf("fgets error!\n");
+	}
 
 nn=n=off=siz=0;
 

@@ -39,7 +39,11 @@ void convert(char *filename)
         gmxfile = fopen(filename,"r");
 
         gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-        fread (buffer, 1, stats.st_size, gmxfile);
+	size_t fread_size;
+        fread_size = fread (buffer, 1, stats.st_size, gmxfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
         fclose (gmxfile);
         buffer[stats.st_size] = '\0';
 

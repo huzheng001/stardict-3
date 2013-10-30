@@ -229,7 +229,11 @@ static bool write_dictionary(const char *filename, GArray *array)
 
 #ifndef _WIN32
 	std::string command(std::string("dictzip ") + dicfilename);
-	system(command.c_str());
+	int result;
+	result = system(command.c_str());
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 #endif
 
 	stardict_stat_t stats;

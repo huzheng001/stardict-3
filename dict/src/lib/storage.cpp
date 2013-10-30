@@ -409,7 +409,12 @@ gulong offset_rindex::load_page(glong page_idx)
 	if (page_idx!=page.page_idx) {
 		page_data.resize(oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx));
 		fseek(idxfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
-		fread(&page_data[0], 1, page_data.size(), idxfile);
+		size_t fread_size;
+		size_t page_data_size = page_data.size();
+		fread_size = fread(&page_data[0], 1, page_data_size, idxfile);
+		if (fread_size != page_data_size) {
+			g_print("fread error!\n");
+		}
 		page.fill(&page_data[0], nentr, page_idx);
 	}
 
@@ -571,9 +576,14 @@ gchar *ResDict::GetData(guint32 offset, guint32 size)
 	memcpy(data, &size, sizeof(guint32));
 	if(dictfile) {
 		fseek(dictfile, offset, SEEK_SET);
-		fread(data+sizeof(guint32), size, 1, dictfile);
-	} else
+		size_t fread_size;
+		fread_size = fread(data+sizeof(guint32), size, 1, dictfile);
+		if (fread_size != 1) {
+			g_print("fread error!\n");
+		}
+	} else {
 		dictdzfile->read(data+sizeof(guint32), offset, size);
+	}
 	g_free(cache[cache_cur].data);
 	cache[cache_cur].data = data;
 	cache[cache_cur].offset = offset;
@@ -795,11 +805,18 @@ FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 	FileHolder file(open_temp_file(name_pattern, fd));
 	if(file.empty())
 		return file;
+	ssize_t write_size;
 #ifdef _WIN32
-	_write(fd, data+sizeof(guint32), entry_size);
+	write_size = _write(fd, data+sizeof(guint32), entry_size);
+	if (write_size == -1) {
+		g_print("write error!\n");
+	}
 	_close(fd);
 #else
-	write(fd, data+sizeof(guint32), entry_size);
+	write_size = write(fd, data+sizeof(guint32), entry_size);
+	if (write_size == -1) {
+		g_print("write error!\n");
+	}
 	close(fd);
 #endif
 	ind = put_in_cache(key, file);

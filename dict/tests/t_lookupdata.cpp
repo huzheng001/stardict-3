@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
 	List dict_list;
 	libs.load(dict_list);
 	std::vector<InstantDictIndex> dictmask;
-	std::vector<gchar *> reslist[dictmask.size()];
+	size_t dictmask_size = dictmask.size();
+	std::vector<gchar *> reslist[dictmask_size];
 	if (libs.LookupData("letter", reslist, NULL, NULL, NULL, dictmask)) 
 		return EXIT_SUCCESS;
 	else

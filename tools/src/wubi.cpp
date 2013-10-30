@@ -34,7 +34,11 @@ void convert(const char *filename)
 	FILE *mbfile;
 	mbfile = fopen(filename, "r");
 	char *buffer = (char *)malloc (stats.st_size + 1);
-	fread (buffer, 1, stats.st_size, mbfile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, mbfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (mbfile);
 	buffer[stats.st_size] = '\0';
 	std::string newfilename = filename;

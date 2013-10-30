@@ -69,7 +69,11 @@ void convert(char *filename)
 	tabfile = fopen(filename,"r");
 
 	gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-	fread (buffer, 1, stats.st_size, tabfile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, tabfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (tabfile);
 	buffer[stats.st_size] = '\0';	
 	
@@ -219,7 +223,11 @@ void convert(char *filename)
 
 	gchar command[256];
         sprintf(command, "dictzip %s.dict", basefilename);
-        system(command);
+	int result;
+        result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 
 	g_free(basefilename);
 }

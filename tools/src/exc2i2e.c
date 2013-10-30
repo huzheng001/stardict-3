@@ -31,15 +31,20 @@ int i;
 char *p;
 char word[200], word2[200];
 
+FILE *file;
+
 for (i=0; i<4; i++)
    {
    switch (i)
       {
-      case 0: freopen("/usr/share/wordnet/noun.exc", "rt", stdin); break;
-      case 1: freopen("/usr/share/wordnet/verb.exc", "rt", stdin); break;
-      case 2: freopen("/usr/share/wordnet/adj.exc", "rt", stdin); break;
-      case 3: freopen("/usr/share/wordnet/adv.exc", "rt", stdin); break;
+      case 0: file = freopen("/usr/share/wordnet/noun.exc", "rt", stdin); break;
+      case 1: file = freopen("/usr/share/wordnet/verb.exc", "rt", stdin); break;
+      case 2: file = freopen("/usr/share/wordnet/adj.exc", "rt", stdin); break;
+      case 3: file = freopen("/usr/share/wordnet/adv.exc", "rt", stdin); break;
       }
+   if (file == NULL) {
+       printf("freopen error!\n");
+   }
    while (fgets(word, 200, stdin))
       {
       p=strchr(word, '\n');

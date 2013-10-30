@@ -211,7 +211,11 @@ int resource_database::load_ridx_file(void)
 	gchar * const buffer_end = buffer_beg+stats.st_size;
 	{
 		FILE *idxfile = g_fopen(ridxfilename.c_str(),"rb");
-		fread(buffer_beg, 1, stats.st_size, idxfile);
+		size_t fread_size;
+		fread_size = fread(buffer_beg, 1, stats.st_size, idxfile);
+		if (fread_size != (size_t)stats.st_size) {
+			g_print("fread error!\n");
+		}
 		fclose(idxfile);
 	}
 

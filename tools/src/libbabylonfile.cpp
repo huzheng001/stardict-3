@@ -583,7 +583,11 @@ void convert_babylonfile(const char *filename, bool strip_html)
 
 #ifndef _WIN32
 	std::string command(std::string("dictzip ") + dicfilename);
-	system(command.c_str());
+	int result;
+	result = system(command.c_str());
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 #endif
 
 	g_free(basefilename);

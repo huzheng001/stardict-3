@@ -209,18 +209,34 @@ void convert(char *filename, char *wikiname, char *wikidate)
 
 	gchar command[256];
         sprintf(command, "dictzip %s", dicfilename);
-        system(command);
+	int result;
+        result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 
 	char dirname[256];
 	sprintf(dirname, "stardict-wikipedia-%s-2.4.2", wikiname);
 	sprintf(command, "mkdir %s", dirname);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "mv %s %s", idxfilename, dirname);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "mv %s.dz %s", dicfilename, dirname);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "mv %s %s", ifofilename, dirname);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 }
 
 int main(int argc,char * argv [])
