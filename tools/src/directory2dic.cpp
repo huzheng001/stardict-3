@@ -125,7 +125,11 @@ void convert(char *dirname, char *extendname)
 		fwrite(&(tmpglong),sizeof(glong),1,idxfile);
 		
 		wavfile = fopen(pworditem->filename,"rb");
-		fread (buffer, 1, last_filesize, wavfile);
+		size_t fread_size;
+		fread_size = fread (buffer, 1, last_filesize, wavfile);
+		if (fread_size != (size_t)last_filesize) {
+			g_print("fread error!\n");
+		}
 		fclose(wavfile);
 		fwrite(buffer, 1, last_filesize, dicfile);
 		g_free(pworditem->filename);

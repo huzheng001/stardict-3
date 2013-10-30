@@ -582,7 +582,11 @@ long readData(char *ptr, long len, long pos)
 	i1 = pos & 0x000003ff;  //获取 pos 的最后10位
 	i2 = i1 + (pos>>10);			//去掉 pos 的最后10位，再与 i1 相加
 
-	fread(ptr, 1, len, f);
+	size_t fread_size;
+	fread_size = fread(ptr, 1, len, f);
+	if (fread_size != (size_t)len) {
+		g_print("fread error!\n");
+	}
 
 	//以下部分为解密过程
 	count = 0;

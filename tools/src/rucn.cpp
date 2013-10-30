@@ -193,7 +193,11 @@ void convert(const char *filename, print_info_t print_info)
 #ifndef _WIN32
 	gchar command[256];
         sprintf(command, "dictzip %s", dicfilename);
-        system(command);
+	int result;
+        result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 #endif
 
 	g_stat(idxfilename, &stats);

@@ -57,7 +57,11 @@ MyDir *my_dir_open(const gchar *path)
 		FILE *orderfile;
 		orderfile = fopen(orderfilename.c_str(),"r");
 		mydir->orderfile_buffer = (gchar *)g_malloc (stats.st_size + 1);
-		fread (mydir->orderfile_buffer, 1, stats.st_size, orderfile);
+		size_t fread_size;
+		fread_size = fread (mydir->orderfile_buffer, 1, stats.st_size, orderfile);
+		if (fread_size != (size_t)stats.st_size) {
+			g_print("fread error!\n");
+		}
 		fclose (orderfile);
 		mydir->orderfile_buffer[stats.st_size] = '\0';
 		mydir->p = mydir->orderfile_buffer;
@@ -152,7 +156,11 @@ void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
 					last_buffersize = stats.st_size;
 				}
 				file = fopen(fullfilename,"r");
-				fread (buffer, 1, stats.st_size, file);
+				size_t fread_size;
+				fread_size = fread (buffer, 1, stats.st_size, file);
+				if (fread_size != (size_t)stats.st_size) {
+					g_print("fread error!\n");
+				}
 				fclose (file);
 				fwrite(buffer, 1, stats.st_size, dicfile);				
 								
@@ -206,7 +214,11 @@ void convert(char *dirname)
 	gchar *buffer;
 	gint buffer_len = stats.st_size;
 	buffer = (gchar *)g_malloc (stats.st_size);
-	fread (buffer, 1, stats.st_size, ifofile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, ifofile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (ifofile);
 
 	FILE *tdxfile,*dicfile;
@@ -239,9 +251,16 @@ void convert(char *dirname)
 
 	gchar command[256];
 	sprintf(command, "gzip -9 %s.tdx -f", dirname);
-	system(command);	
+	int result;
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "dictzip %s.dict -f", dirname);
-	system(command);	
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 }
 
 int

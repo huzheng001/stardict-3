@@ -52,13 +52,20 @@ static void convert2tabfile(const gchar *ifofilename, const gchar* txtfilename)
 	gchar *idxbuffer_end = idxbuffer+idx_stats.st_size;
 	FILE *idxfile;
 	idxfile = g_fopen(idxfilename.c_str(),"rb");
-	fread (idxbuffer, 1, idx_stats.st_size, idxfile);
+	size_t fread_size;
+	fread_size = fread (idxbuffer, 1, idx_stats.st_size, idxfile);
+	if (fread_size != (size_t)idx_stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (idxfile);
 
 	gchar *dictbuffer = (gchar *)g_malloc (dict_stats.st_size);
 	FILE *dictfile;
 	dictfile = g_fopen(dictfilename.c_str(),"rb");
-	fread (dictbuffer, 1, dict_stats.st_size, dictfile);
+	fread_size = fread (dictbuffer, 1, dict_stats.st_size, dictfile);
+	if (fread_size != (size_t)dict_stats.st_size) {
+		g_print("fread error 2!\n");
+	}
 	fclose (dictfile);
 
 	g_message("Writing to file: %s.", txtfilename);

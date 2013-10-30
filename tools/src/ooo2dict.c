@@ -61,6 +61,7 @@ char lang[50];
 char fname[100];
 char *current;
 char *current2;
+char *ch;
 
 time_t t0;
 struct tm *t;
@@ -72,7 +73,10 @@ current2=malloc(10000);
 
 fprintf(stderr, "Enter thesaurus language [WordNet_English]: ");
 fflush(stderr);
-fgets(lang, sizeof(lang), stdin);
+ch = fgets(lang, sizeof(lang), stdin);
+if (ch == NULL) {
+	printf("fgets error!\n");
+}
 if ((p=strchr(lang, '\n'))!=NULL) *p=0;
 if (*lang==0) strcpy(lang, "WordNet_English");
 F=fopen((argc>1)? argv[1]: "/usr/share/myspell/dicts/th_en_US_v2.dat", "rt");
@@ -82,7 +86,10 @@ if (!F)
    exit(1);
    }
 
-fgets(current2, 200, F);
+ch = fgets(current2, 200, F);
+if (ch == NULL) {
+	printf("fgets error!\n");
+}
 
 nn=n=j=off=siz=0;
 
@@ -92,6 +99,7 @@ while (fgets(current, 10000, F))
    
    *p=0;
    j=atol(p+1);
+   char *ch;
    for (i=*current2=0; i<j; i++)
       {
       p2=strchr(current2, 0);
@@ -100,7 +108,10 @@ while (fgets(current, 10000, F))
          sprintf(p2, "%li. ", i+1);
          p2=strchr(p2, 0); 
          }
-      fgets(p2, 10000, F);
+      ch = fgets(p2, 10000, F);
+      if (ch == NULL) {
+          printf("fgets error!\n");
+      }
       p=strchr(p2, '|');
       *(p++)=' ';
       if (strncmp(p2, "(noun)", 6)==0 || strncmp(p2, "(verb)", 6)==0) memmove(p2+2, p2+5, strlen(p2+5)+1);

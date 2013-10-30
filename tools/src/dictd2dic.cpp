@@ -133,7 +133,11 @@ void convert(char *basefilename)
 	FILE *indexfile;
 	indexfile = fopen(indexfilename,"r");
 	gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-	fread (buffer, 1, stats.st_size, indexfile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, indexfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (indexfile);
 	buffer[stats.st_size] = '\0';
 
@@ -146,7 +150,10 @@ void convert(char *basefilename)
 	FILE *dictfile;
 	dictfile = fopen(dictfilename,"r");
 	gchar *buffer1 = (gchar *)g_malloc (stats.st_size + 1);
-	fread (buffer1, 1, stats.st_size, dictfile);
+	fread_size = fread (buffer1, 1, stats.st_size, dictfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (dictfile);
 	buffer1[stats.st_size] = '\0';
 
@@ -320,7 +327,11 @@ void convert(char *basefilename)
 
 	gchar command[256];
 	sprintf(command, "dictzip dictd_" DICTD_WEBSITE "_%s.dict", basefilename);
-	system(command);	
+	int result;
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 }
 
 int

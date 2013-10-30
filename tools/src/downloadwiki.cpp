@@ -43,7 +43,11 @@ void download(char *wiki, char *date)
         url += filename;
         command = "wget -c ";
         command += url;
-        system(command.c_str());
+	int result;
+        result = system(command.c_str());
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	if (!g_file_test(filename.c_str(), G_FILE_TEST_EXISTS)) {
 	    printf("Download %s failed!\n", filename.c_str());
 	    return;
@@ -66,26 +70,42 @@ void download(char *wiki, char *date)
         command += filename;
 	command += " > ";
 	command += xmlfilename;
-        system(command.c_str());
+	int result;
+        result = system(command.c_str());
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	command = "./wikipedia ";
 	command += xmlfilename;
 	command += ' ';
 	command += wiki;
 	command += ' ';
 	command += date;
-	system(command.c_str());
+	result = system(command.c_str());
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	if (g_file_test(dictdirname.c_str(), G_FILE_TEST_EXISTS)) {
 	    command = "tar -cjvf ";
 	    command += dictfilename;
 	    command += ' ';
 	    command += dictdirname;
-	    system(command.c_str());
+	    result = system(command.c_str());
+	    if (result == -1) {
+		g_print("system() error!\n");
+	    }
 	    command = "rm -rf ";
 	    command += dictdirname;
-	    system(command.c_str());
+	    result = system(command.c_str());
+	    if (result == -1) {
+		g_print("system() error!\n");
+	    }
             command = "rm -f ";
             command += xmlfilename;
-	    system(command.c_str());
+	    result = system(command.c_str());
+	    if (result == -1) {
+		g_print("system() error!\n");
+	    }
         } else {
 		printf("Creat %s failed!\n", dictfilename.c_str());
 	}

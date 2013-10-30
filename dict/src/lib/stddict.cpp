@@ -251,9 +251,14 @@ inline const gchar *offset_index::read_first_on_page_key(glong page_idx)
 	fseek(idxfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
 	guint32 page_size=oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx);
 	gulong minsize = sizeof(wordentry_buf);
-	if (page_size < minsize)
+	if (page_size < minsize) {
 		minsize = page_size;
-	fread(wordentry_buf, minsize, 1, idxfile);
+	}
+	size_t fread_size;
+	fread_size = fread(wordentry_buf, minsize, 1, idxfile);
+	if (fread_size != 1) {
+		g_print("fread error!\n");
+	}
 	if(!check_key_str_len(wordentry_buf, minsize)) {
 		wordentry_buf[minsize-1] = '\0';
 		g_critical("Index key length exceeds allowed limit. Key: %s, "
@@ -784,7 +789,12 @@ inline gulong offset_index::load_page(glong page_idx)
 	if (page_idx!=page.idx) {
 		page_data.resize(oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx));
 		fseek(idxfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
-		fread(&page_data[0], 1, page_data.size(), idxfile);
+		size_t fread_size;
+		size_t page_data_size = page_data.size();
+		fread_size = fread(&page_data[0], 1, page_data_size, idxfile);
+		if (fread_size != page_data_size) {
+			g_print("fread error!\n");
+		}
 		page.fill(&page_data[0], nentr, page_idx);
 	}
 
@@ -1074,9 +1084,14 @@ inline const gchar *synonym_file::read_first_on_page_key(glong page_idx)
 	fseek(synfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
 	guint32 page_size=oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx);
 	gulong minsize = sizeof(wordentry_buf);
-        if (page_size < minsize)
+        if (page_size < minsize) {
                 minsize = page_size;
-	fread(wordentry_buf, minsize, 1, synfile); //TODO: check returned values, deal with word entry that strlen>255.
+	}
+	size_t fread_size;
+	fread_size = fread(wordentry_buf, minsize, 1, synfile); //TODO: check returned values, deal with word entry that strlen>255.
+	if (fread_size != 1) {
+		g_print("fread error!\n");
+	}
 	return wordentry_buf;
 }
 
@@ -1159,7 +1174,12 @@ inline gulong synonym_file::load_page(glong page_idx)
 	if (page_idx!=page.idx) {
 		page_data.resize(oft_file.get_wordoffset(page_idx+1)-oft_file.get_wordoffset(page_idx));
 		fseek(synfile, oft_file.get_wordoffset(page_idx), SEEK_SET);
-		fread(&page_data[0], 1, page_data.size(), synfile);
+		size_t fread_size;
+		size_t page_data_size = page_data.size();
+		fread_size = fread(&page_data[0], 1, page_data_size, synfile);
+		if (fread_size != page_data_size) {
+			g_print("fread error!\n");
+		}
 		page.fill(&page_data[0], nentr, page_idx);
 	}
 

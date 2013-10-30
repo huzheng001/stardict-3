@@ -587,7 +587,16 @@ Blank lines are ignored.
 Encoding. File contents must be in UTF-8 encoding.
 End of line. Any end of line conversion is OK: LF, CR+LF, CR.
 
-{11}. More information.
+{11}. About StarDict file format design.
+
+The current StarDict file format design is base on binary search algorithm, someone may think b+ tree algorithm should be faster, but in fact, b+ tree is faster in CPU, but use more disk search time(which is not good as shorten the life of the disk). So binary search is better than b+ tree in fact(As CPU is faster and faster now and disk search is slow).
+But...It said Babylon's BGL file format is perfect! Maybe that is StarDict-4!
+
+About .idx file format, someone may think just use only one total length digit should be OK and enough, while it is offset and size currently, which is two digits. But, some redundancy is needed and better in design, so the current design is still best!
+
+So, to sum up, the current StarDict file format design is more or less perfect!
+
+{12}. More information.
 You can read "src/lib.cpp", "src/dictmanagedlg.cpp" and
 "src/tools/*.cpp" for more information.
 

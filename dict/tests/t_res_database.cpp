@@ -50,7 +50,11 @@ bool load_index(const std::string& ridx_url, index_vect_t &index_vect,
 		FILE *f = fopen(ridx_url.c_str(), "rb");
 		if(!f)
 			return false;
-		fread(&buffer[0], 1, filesize, f);
+		size_t the_size;
+		the_size = fread(&buffer[0], 1, filesize, f);
+		if (the_size != filesize) {
+			g_print("fread error!\n");
+		}
 		fclose(f);
 	} else if(index_type == itRidxGz) {
 		gzFile f = gzopen(ridx_url.c_str(), "rb");

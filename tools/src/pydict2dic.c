@@ -65,7 +65,11 @@ void convert(char *filename)
 	pyfile = fopen(filename,"r");
 
 	buffer = (gchar *)g_malloc (stats.st_size + 2);
-	fread (buffer, 1, stats.st_size, pyfile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, pyfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (pyfile);
 	buffer[stats.st_size] = '\n';	
 	buffer[stats.st_size+1] = '\0';	

@@ -66,7 +66,11 @@ int binary_dict_gen_t::generate(const std::string& ifofilename, common_dict_t *n
 #ifndef _WIN32
 	if(compress_dict) {
 		std::string command(std::string("dictzip ") + dictfilename);
-		system(command.c_str());
+		int result;
+		result = system(command.c_str());
+		if (result == -1) {
+			g_print("system() error!\n");
+		}
 	}
 #endif
 	if(generate_syn())

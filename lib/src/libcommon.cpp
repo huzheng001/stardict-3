@@ -688,7 +688,11 @@ std::string create_temp_file(void)
 			return "";
 		tmp_url = buf;
 		g_free(buf);
-		write(fd, " ", 1);
+		ssize_t write_size;
+		write_size = write(fd, " ", 1);
+		if (write_size == -1) {
+			g_print("write error!\n");
+		}
 		close(fd);
 		return tmp_url;
 	}

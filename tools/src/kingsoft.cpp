@@ -234,7 +234,11 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 	FILE *datafile;
 	datafile = fopen(datafilename,"r");
 	gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-	fread (buffer, 1, stats.st_size, datafile);
+	size_t fread_size;
+	fread_size = fread (buffer, 1, stats.st_size, datafile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
 	fclose (datafile);
 	buffer[stats.st_size] = '\0';
 
@@ -414,7 +418,11 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 
 	gchar command[256];
 	sprintf(command, "dictzip %s", dicfilename);
-	system(command);
+	int result;
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 }
 
 void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synwordcount)
@@ -427,7 +435,11 @@ void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synw
         FILE *xmlfile;
         xmlfile = fopen(xmlfilename,"r");
         gchar *buffer = (gchar *)g_malloc (stats.st_size + 1);
-        fread (buffer, 1, stats.st_size, xmlfile);
+	size_t fread_size;
+        fread_size = fread (buffer, 1, stats.st_size, xmlfile);
+	if (fread_size != (size_t)stats.st_size) {
+		g_print("fread error!\n");
+	}
         fclose (xmlfile);
         buffer[stats.st_size] = '\0';
 
@@ -474,25 +486,53 @@ void buildifo(gchar *xmlfilename, glong wordcount, glong idxfilesize, glong synw
 
 	gchar command[256];
         sprintf(command, "mkdir stardict-powerword2007_%s-2.4.2", basefilename);
-        system(command);
+	int result;
+        result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "mv powerword2007_%s.idx stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	if (synwordcount) {
 		sprintf(command, "mv powerword2007_%s.syn stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
-        	system(command);
+		result = system(command);
+		if (result == -1) {
+			g_print("system() error!\n");
+		}
 	}
 	sprintf(command, "mv powerword2007_%s.dict.dz stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
-        system(command);
+        result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "mv powerword2007_%s.ifo stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "chmod 644 stardict-powerword2007_%s-2.4.2/*", basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "chown root.root -R stardict-powerword2007_%s-2.4.2", basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "tar -cjvf stardict-powerword2007_%s-2.4.2.tar.bz2 stardict-powerword2007_%s-2.4.2", basefilename, basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "rm -rf stardict-powerword2007_%s-2.4.2", basefilename);
-	system(command);
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 
         g_free(basefilename);
 }
@@ -521,15 +561,25 @@ bool convert_utf(gchar *filename, gchar *utffilename)
 	GIConv unicode2utf = g_iconv_open("UTF-8", "UNICODE");
 	guint32 len1, len2, len;
 	gchar *unicode, *str;
+	size_t fread_size;
 	while (!feof(datafile)) {
-		fread(&len1, sizeof(guint32), 1, datafile);
-		fread(&len2, sizeof(guint32), 1, datafile);
+		fread_size = fread(&len1, sizeof(guint32), 1, datafile);
+		if (fread_size != 1) {
+			g_print("fread error!\n");
+		}
+		fread_size = fread(&len2, sizeof(guint32), 1, datafile);
+		if (fread_size != 1) {
+			g_print("fread error 2!\n");
+		}
 		len = len1*len2;
 		if (len==0) {
 			continue;
 		}
 		unicode = (gchar *)g_malloc(len);
-		fread(unicode, 1, len, datafile);
+		fread_size = fread(unicode, 1, len, datafile);
+		if (fread_size != len) {
+			g_print("fread error!\n");
+		}
 		str = g_convert_with_iconv(unicode, len, unicode2utf, NULL, NULL, NULL);
                 if (!str) {
                         g_print("UNICODE to UTF-8 error!\n");
@@ -546,11 +596,21 @@ bool convert_utf(gchar *filename, gchar *utffilename)
 		g_print("Doing sed process.\n");
 		gchar command[256];
 		sprintf(command, "mv %s %s.bad", utffilename, utffilename);
-		system(command);
+		int result;
+		result = system(command);
+		if (result == -1) {
+			g_print("system() error!\n");
+		}
 		sprintf(command, "sed -e s//\\ / -e s//\\ / -e s//\\ / -e s/]/]]/ -e s/絔]/]]/ -e s/]/]]/ -e s/╙]/]]/ -e s/輂]/]]/ -e s/]/]]/ -e s/謁]/]]/ %s.bad > %s", utffilename, utffilename);
-		system(command);
+		result = system(command);
+		if (result == -1) {
+			g_print("system() error!\n");
+		}
 		sprintf(command, "rm %s.bad", utffilename);
-		system(command);
+		result = system(command);
+		if (result == -1) {
+			g_print("system() error!\n");
+		}
 	}
 	g_print("Convert over!\n");
 	return false;
@@ -590,7 +650,11 @@ void convert_dir(gchar *dictdirname, std::list<std::string> *TagList, std::list<
 	buildifo(utfxmlfilename, wordcount, idxfilesize, synwordcount);
 
 	sprintf(command, "rm %s", utfxmlfilename);
-	system(command);
+	int result;
+	result = system(command);
+	if (result == -1) {
+		g_print("system() error!\n");
+	}
 	sprintf(command, "rm %s", utfdatafilename);
 	//system(command);
 
