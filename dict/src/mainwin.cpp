@@ -3033,16 +3033,18 @@ void BottomWin::set_news(const char *news, const char *links)
 {
 	if (news) {
 		news_text = news;
-		if (IsASCII(news))
+		if (IsASCII(news)) {
 			news_move_len = 30;
-		else
+		} else {
 			news_move_len = 20;
+		}
+		news_move_index = 0;
 		if (news_timeout_id == 0) {
-			news_move_index = 0;
 			news_timeout_id = g_timeout_add(300, move_news, this);
 		}
 	} else {
 		news_text.clear();
+		news_move_index = 0;
 		if (news_timeout_id != 0) {
 			g_source_remove(news_timeout_id);
 			news_timeout_id = 0;
@@ -3069,6 +3071,8 @@ void BottomWin::set_news(const char *news, const char *links)
 				linklist.push_back(std::pair<std::string, std::string>(std::string(p, p1-p), std::string(p1+1)));
 			}
 		}
+	} else {
+		linklist.clear();
 	}
 }
 

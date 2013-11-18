@@ -32,6 +32,7 @@ static int last_prompt_num;
 static std::string version_msg_title;
 static std::string version_msg_content;
 static std::string latest_news;
+static bool show_ads;
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static const StarDictPluginSystemService *plugin_service;
@@ -58,8 +59,18 @@ static std::string get_cfg_filename()
 	return build_path(gpAppDirs->get_user_config_dir(), "update_info.cfg");
 }
 
+
+static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata);
+
 static void configure()
 {
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Update information"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#if GTK_MAJOR_VERSION >= 3
+	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+#else
+	GtkWidget *vbox = gtk_vbox_new(false, 5);
+#endif
+
 	std::string content;
 	if (latest_version_num > my_version_num) {
 		content += _("You are using an old version of StarDict!");
@@ -76,11 +87,43 @@ static void configure()
 	content += _("Latest news:");
 	content += "\n";
 	content += latest_news;
-	
-	GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "%s", content.c_str());
-	gtk_window_set_title (GTK_WINDOW (dialog), _("Update information"));
-	gtk_dialog_run(GTK_DIALOG(dialog));
-	gtk_widget_destroy (dialog);
+	GtkWidget *label = gtk_label_new(content.c_str());
+	gtk_label_set_line_wrap(GTK_LABEL(label), true);
+	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 5);
+
+
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Show advertisements."));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), show_ads);
+	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
+
+	gtk_widget_show_all(vbox);
+	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
+	gtk_dialog_run(GTK_DIALOG(window));
+
+	gboolean new_show_ads = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check_button));
+	if (new_show_ads != show_ads) {
+		show_ads = new_show_ads;
+
+		GKeyFile *keyfile = g_key_file_new();
+		g_key_file_set_string(keyfile, "update", "version_msg_title", version_msg_title.c_str());
+		g_key_file_set_string(keyfile, "update", "version_msg_content", version_msg_content.c_str());
+		g_key_file_set_string(keyfile, "update", "latest_news", latest_news.c_str());
+		g_key_file_set_integer(keyfile, "update", "latest_version_num", latest_version_num);
+		g_key_file_set_integer(keyfile, "update", "last_prompt_num", last_prompt_num);
+		g_key_file_set_boolean(keyfile, "misc", "show_ads", show_ads);
+		gsize length;
+		gchar *content = g_key_file_to_data(keyfile, &length, NULL);
+		std::string res = get_cfg_filename();
+		g_file_set_contents(res.c_str(), content, length, NULL);
+		g_free(content);
+
+		if (new_show_ads) {
+			plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, NULL);
+		} else {
+			plugin_service->set_news(NULL, NULL);
+		}
+	}
+	gtk_widget_destroy (window);
 }
 
 DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
@@ -232,12 +275,16 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 		g_key_file_set_string(keyfile, "update", "latest_news", latest_news.c_str());
 		g_key_file_set_integer(keyfile, "update", "latest_version_num", latest_version_num);
 		g_key_file_set_integer(keyfile, "update", "last_prompt_num", last_prompt_num);
+		g_key_file_set_boolean(keyfile, "misc", "show_ads", show_ads);
 		gsize length;
 		gchar *content = g_key_file_to_data(keyfile, &length, NULL);
 		std::string res = get_cfg_filename();
 		g_file_set_contents(res.c_str(), content, length, NULL);
+		g_free(content);
 	}
-	plugin_service->set_news(latest_news.c_str(), Data.links.c_str());
+	if (show_ads) {
+		plugin_service->set_news(latest_news.c_str(), Data.links.c_str());
+	}
 }
 
 // Don't use g_idle_add to call send_http_request(), as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
@@ -250,7 +297,7 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 {
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
-		g_file_set_contents(res.c_str(), "[update]\nlatest_version_num=0\nlast_prompt_num=0\nversion_msg_title=\nversion_msg_content=\nlatest_news=\n", -1, NULL);
+		g_file_set_contents(res.c_str(), "[update]\nlatest_version_num=0\nlast_prompt_num=0\nversion_msg_title=\nversion_msg_content=\nlatest_news=\n[misc]\nshow_ads=true\n", -1, NULL);
 	}
 	GKeyFile *keyfile = g_key_file_new();
 	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
@@ -282,6 +329,12 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 	if (str) {
 		latest_news = str;
 		g_free(str);
+	}
+	err = NULL;
+	show_ads = g_key_file_get_boolean(keyfile, "misc", "show_ads", &err);
+	if (err) {
+		g_error_free (err);
+		show_ads = true;
 	}
 	g_key_file_free(keyfile);
 	g_print(_("Update info plug-in loaded.\n"));
