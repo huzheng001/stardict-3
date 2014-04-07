@@ -59,7 +59,7 @@ class show_progress_t;
 extern void LoadDictInfo();
 extern void GetUsedDictList(std::list<DictItemId> &dict_list);
 extern void UpdateDictMask();
-extern void UpdateDictList(std::list<DictItemId> &dict_new_install_list, show_progress_t *sp);
+extern void UpdateDictList(std::list<DictItemId> &dict_new_install_list, show_progress_t *sp, bool verify_dict);
 extern void UpdatePluginList(std::list<DictItemId> &plugin_new_install_list);
 extern void UpdateConfigXML(
 	const std::list<DictItemId> &dict_new_install_list,

@@ -314,7 +314,8 @@ void AppCore::Create(const gchar *queryword)
 
 	oLibs.set_show_progress(&load_show_progress);
 	std::list<DictItemId> dict_new_install_list;
-	UpdateDictList(dict_new_install_list, &load_show_progress);
+	bool verify_dict = conf->get_bool_at("dictionary/do_not_load_bad_dict");
+	UpdateDictList(dict_new_install_list, &load_show_progress, verify_dict);
 	UpdateConfigXML(dict_new_install_list, plugin_new_install_list, oStarDictPlugins);
 	LoadDictInfo();
 	{

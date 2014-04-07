@@ -5,10 +5,11 @@ StarDict homepage: http:///www.stardict.org
 
 {0}. Number and Byte-order Conventions
 When you record the numbers that identify sizes, offsets, etc., you
-should use 32-bits numbers, such as you might represent with a glong.
+should use 32-bits numbers, such as you might represent with a
+guint32, glong.
 
 In order to make StarDict work on different platforms, these numbers
-must be in network byte order.  You can ensure the correct byte order
+must be in network byte order. You can ensure the correct byte order
 by using the g_htonl() function when creating dictionary files.
 Conversely, you should use g_ntohl() when reading dictionary files.
 
