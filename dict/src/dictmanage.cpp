@@ -580,13 +580,13 @@ void LoadDictInfo()
  * - add new dictionaries
  * - remove dictionaries that are no longer available
  * */
-void UpdateDictList(std::list<DictItemId> &dict_new_install_list, show_progress_t *sp)
+void UpdateDictList(std::list<DictItemId> &dict_new_install_list, show_progress_t *sp, bool verify_dict)
 {
 	dict_new_install_list.clear();
 	std::list<DictItemId> dict_all_list;
 	get_all_dict_list(dict_all_list);
 	// verify dictionaries, remove invalid dictionaries from dict_all_list
-	{
+	if (verify_dict) {
 		std::list<std::string> s_dict_valid_list;
 		std::list<std::string> s_dict_all_list;
 		DictItemId::convert(s_dict_all_list, dict_all_list);

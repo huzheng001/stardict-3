@@ -21,7 +21,9 @@
 /*
  * Original code I got from gtk bugzilla:
  * http://bugzilla.gnome.org/show_bug.cgi?id=59390
- * hope that this code will be in official version of gtk soon
+ * hope that this code will be in official version of gtk soon!
+ *
+ * kubtek fixed a memory leak bug of this file!
  */
 
 
@@ -153,7 +155,7 @@ gtk_text_buffer_real_insert_markup (GtkTextBuffer *buffer,
         {
           gtk_text_buffer_insert_with_tags(buffer, textiter, text+start, end - start, tag, NULL);
         }
-      g_object_unref(G_OBJECT(tag));
+      g_object_unref(G_OBJECT(tag)); //Memory leak bug fix by kubtek!
 
       /* mark had right gravity, so it should be
        *  at the end of the inserted text now */
