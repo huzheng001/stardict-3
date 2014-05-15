@@ -1,5 +1,6 @@
 EXTRA_DIST = config.h glib_wrapper.c stardict.sln stardictrc.rc	\
 		stardict-editorrc.rc \
+		stardict-advertisement-plugin.vcproj \
 		stardict-dictdotcn-plugin.vcproj \
 		stardict-editor.vcproj \
 		stardict-editor-loader.vcproj \

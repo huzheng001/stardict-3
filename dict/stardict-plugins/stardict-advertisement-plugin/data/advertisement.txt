@@ -1,0 +1,22 @@
+StarDict	星际译王
+P
+../../pixmaps/splash.png
+g
+The <span foreground="red" weight="bold">best</span> dictionary software in the <span foreground="blue">Linux</span> world! :)
+
+huzheng	Hu Zheng	胡正	Hunzen
+x
+The author of <iref href="http://www.stardict.org">StarDict</iref>.\nEmail: huzheng001@gmail.com\nHome website: <iref>http://www.huzheng.org</iref>
+
+MiniGUI	迷你龟
+x
+<c c="yellow">Feynman</c> comany: <iref>http://www.minigui.com</iref>
+
+china
+m
+瓷器
+
+China
+m
+中国
+

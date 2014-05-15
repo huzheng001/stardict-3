@@ -1,9 +1,12 @@
-2013.
+2014.
 StarDict-3.0.5 (Nirvana) released.
 This version is mainly developed by Hu Zheng!
 Update Kazakh translation, thanks Baurzhan Muftakhidinov <baurthefirst@gmail.com>.
 Update Russian translation, thanks Alexandr Boltris <alex@altlinux.org>.
 Update MacOSX port.
+Stardict-advertisement-plugin comes back!
+Add don't load bad dict option.
+Add show_ads checkbox for update-info-plugin.
 Many small changes!
 
 2013.1.3
