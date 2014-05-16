@@ -37,7 +37,7 @@
 
 #include "ifo_file.h"
 #include "edit-distance.h"
-#include "kmp.h"
+//#include "kmp.h"
 #include "mapfile.h"
 #include "iappdirs.h"
 
@@ -3330,7 +3330,7 @@ bool Libs::LookupData(const gchar *sWord, std::vector<gchar *> *reslist, updateS
 	}
 search_out:
 	g_free(origin_data);
-	KMP_end();
+	//KMP_end();
 
 	std::vector<InstantDictIndex>::size_type i;
 	for (i=0; i<dictmask.size(); ++i)

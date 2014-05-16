@@ -9,7 +9,6 @@ libstardict_la_SOURCES = \
 	dictziplib.cpp dictziplib.h	\
 	edit-distance.cpp edit-distance.h	\
 	mapfile.h file-utils.h	\
-	kmp.cpp kmp.h	\
 	m_ctype.h	\
 	ctype-mb.cpp ctype-utf8.cpp ctype-uca.cpp	\
 	collation.cpp collation.h \
