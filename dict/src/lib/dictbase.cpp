@@ -42,9 +42,7 @@ inline bool is_dict_data_type_lower_case(gchar c)
 /* return true if c is one of the upper-case character type identifies */
 inline bool is_dict_data_type_upper_case(gchar c)
 {
-	//	no upper-case character types presently
-	return false;
-	//return strchr("", c);
+	return strchr("P", c);
 }
 
 /* return true if c is one of the character type identifies which data may be
@@ -239,7 +237,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 				for (j=0; j<nWord; j++)
 					// KMP() is slower than strstr() if have no prepare data.
 					//if (!WordFind[j] && KMP(p, sec_size, SearchWords[j].c_str())!=-1) {
-					if (!WordFind[j] && strstr(p, SearchWords[j].c_str())!=NULL) {
+					if (!WordFind[j] && g_strstr_len(p, sec_size, SearchWords[j].c_str())!=NULL) {
 						WordFind[j] = true;
 						++nfound;
 					}
@@ -262,7 +260,7 @@ bool DictBase::SearchData(std::vector<std::string> &SearchWords, guint32 idxitem
 			sec_size = idxitem_size - (p-origin_data);
 			for (j=0; j<nWord; j++)
 				//if (!WordFind[j] && KMP(p, sec_size, SearchWords[j].c_str())!=-1) {
-				if (!WordFind[j] && strstr(p, SearchWords[j].c_str())!=NULL) {
+				if (!WordFind[j] && g_strstr_len(p, sec_size, SearchWords[j].c_str())!=NULL) {
 					WordFind[j] = true;
 					++nfound;
 				}

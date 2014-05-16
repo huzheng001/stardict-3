@@ -454,8 +454,8 @@ case.
 Picture file.
 The data begins with a network byte-ordered guint32 to identify the picture
 file's size, immediately followed by the file's content.
-This is only a idea, it is better to use 'r' Resource file list in most
-case.
+This feature is implemented, as stardict-advertisement-plugin needs it.
+Anyway, it is better to use 'r' Resource file list in most case.
 
 'X'
 this type identifier is reserved for experimental extensions.
