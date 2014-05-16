@@ -283,6 +283,7 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 		}
 		switch (*p) {
 			case 'm':
+			//case 'l': //TODO: convert from local encoding to utf-8
 				p++;
 				sec_size = strlen(p);
 				if (sec_size) {
@@ -358,6 +359,43 @@ void ArticleView::AppendData(gchar *data, const gchar *oword,
 					append_resource_file_list(p);
 				}
 				sec_size++;
+				break;
+			/*case 'W':
+				{
+				p++;
+				sec_size=g_ntohl(get_uint32(p));
+				//TODO: sound button.
+				sec_size += sizeof(guint32);
+				}
+				break;*/
+			case 'P':
+				{
+				p++;
+				sec_size=g_ntohl(get_uint32(p));
+				if (sec_size) {
+					if (for_float_win) {
+						append_and_mark_orig_word(mark, real_oword, LinksPosList());
+						mark.clear();
+						append_pixbuf(NULL);
+					} else {
+						GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+						gdk_pixbuf_loader_write(loader, (const guchar *)(p+sizeof(guint32)), sec_size, NULL);
+						gdk_pixbuf_loader_close(loader, NULL);
+						GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+						if (pixbuf) {
+							append_and_mark_orig_word(mark, real_oword, LinksPosList());
+							mark.clear();
+							append_pixbuf(pixbuf);
+						} else {
+							mark += _("<span foreground=\"red\">[Load image error!]</span>");
+						}
+						g_object_unref(loader);
+					}
+				} else {
+					mark += _("<span foreground=\"red\">[Missing Image]</span>");
+				}
+				sec_size += sizeof(guint32);
+				}
 				break;
 			default:
 				if (g_ascii_isupper(*p)) {
