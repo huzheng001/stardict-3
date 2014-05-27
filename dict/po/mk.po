@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-24 19:19+0800\n"
+"POT-Creation-Date: 2014-05-27 13:47+0800\n"
 "PO-Revision-Date: 2007-11-19 18:04+0100\n"
 "Last-Translator: Kiril Dimeski <dkire@taratur.com>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
@@ -31,7 +31,7 @@ msgstr "stardict апликација"
 
 #: ../data/stardict.desktop.in.h:1 ../src/docklet.cpp:87
 #: ../src/docklet.cpp:301 ../src/mainwin.cpp:619 ../src/stardict.cpp:273
-#: ../src/stardict.cpp:364 ../src/stardict.cpp:2369
+#: ../src/stardict.cpp:366 ../src/stardict.cpp:2376
 msgid "StarDict"
 msgstr "StarDict"
 
@@ -83,11 +83,11 @@ msgstr "Копче за модифицирање"
 
 #: ../data/stardict.schemas.in.h:8
 msgid ""
-"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
-"(1), Alt(2) or Ctrl(3)."
+"Only scan while this modifier key is being pressed. It can be Win(0), "
+"Shift(1), Alt(2) or Ctrl(3)."
 msgstr ""
-"Скенирај само кога е стиснато копчето за модифицирање. Тоа може да биде Win"
-"(0), Shift(1), Alt(2) или Ctrl(3)."
+"Скенирај само кога е стиснато копчето за модифицирање. Тоа може да биде "
+"Win(0), Shift(1), Alt(2) или Ctrl(3)."
 
 #: ../data/stardict.schemas.in.h:9
 msgid "Use Custom Font"
@@ -344,36 +344,45 @@ msgstr "Оневозможена листа на додатоци"
 msgid "List the plugins which are disabled."
 msgstr "Листај ги додатоците кои се оневозможени."
 
-#: ../src/articleview.cpp:306
+#: ../src/articleview.cpp:307
 msgid "XDXF data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:311
+#: ../src/articleview.cpp:312
 msgid "PowerWord data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:316
+#: ../src/articleview.cpp:317
 msgid "Wiki data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:321
+#: ../src/articleview.cpp:322
 msgid "HTML data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:326
+#: ../src/articleview.cpp:327
 msgid "WordNet data parsing plug-in is not found!"
 msgstr ""
 
-#: ../src/articleview.cpp:371
+#: ../src/articleview.cpp:390
+#, fuzzy
+msgid "<span foreground=\"red\">[Load image error!]</span>"
+msgstr "<span foreground=\"red\">[Недостасува слика]</span>"
+
+#: ../src/articleview.cpp:395
+msgid "<span foreground=\"red\">[Missing Image]</span>"
+msgstr "<span foreground=\"red\">[Недостасува слика]</span>"
+
+#: ../src/articleview.cpp:409
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Непознат тип на податоцк, Ве молиме надградете го StarDict!"
 
-#: ../src/articleview.cpp:494 ../src/articleview.cpp:519
+#: ../src/articleview.cpp:532 ../src/articleview.cpp:557
 #, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
 msgstr "<span foreground=\"red\">[Грешка во вчитувањето на сликата!]</span>"
 
-#: ../src/articleview.cpp:982
+#: ../src/articleview.cpp:1020
 #, fuzzy
 msgid "Save File"
 msgstr "Сними во датотека"
@@ -408,11 +417,11 @@ msgid "Activate portable mode"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2366
+#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2384
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:344
+#: ../src/conf.cpp:349
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q="
@@ -454,73 +463,73 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:371
+#: ../src/conf.cpp:376
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:383
+#: ../src/conf.cpp:388
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:396
+#: ../src/conf.cpp:401
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:408
+#: ../src/conf.cpp:413
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
-#: ../src/conf.cpp:466
+#: ../src/conf.cpp:471
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr ""
 
-#: ../src/conf.cpp:480
+#: ../src/conf.cpp:485
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:487
+#: ../src/conf.cpp:492
 #, c-format
 msgid "Cannot create user config directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:495
+#: ../src/conf.cpp:500
 #, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:505
+#: ../src/conf.cpp:510
 #, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:515
+#: ../src/conf.cpp:520
 #, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:522
+#: ../src/conf.cpp:527
 #, c-format
 msgid "Cannot create log directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:528
+#: ../src/conf.cpp:533
 #, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:537
+#: ../src/conf.cpp:542
 #, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:549
+#: ../src/conf.cpp:554
 #, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr ""
@@ -563,21 +572,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr ""
 
 #: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:581
-#: ../src/dictmanagedlg.cpp:3042
+#: ../src/dictmanagedlg.cpp:3089
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Можете да одберете само %d речници."
 
-#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1202
-#: ../src/dictmanagedlg.cpp:1318 ../src/dictmanagedlg.cpp:1421
-#: ../src/dictmanagedlg.cpp:2015 ../src/dictmanagedlg.cpp:2959
-#: ../src/stardict.cpp:1135
+#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1204
+#: ../src/dictmanagedlg.cpp:1320 ../src/dictmanagedlg.cpp:1423
+#: ../src/dictmanagedlg.cpp:2017 ../src/dictmanagedlg.cpp:3006
+#: ../src/stardict.cpp:1137
 msgid "Dictionary Name"
 msgstr "Име на речник"
 
-#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1203
-#: ../src/dictmanagedlg.cpp:1338 ../src/dictmanagedlg.cpp:1435
-#: ../src/dictmanagedlg.cpp:2023 ../src/dictmanagedlg.cpp:2960
+#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1205
+#: ../src/dictmanagedlg.cpp:1340 ../src/dictmanagedlg.cpp:1437
+#: ../src/dictmanagedlg.cpp:2025 ../src/dictmanagedlg.cpp:3007
 msgid "Word count"
 msgstr "Број на зборови"
 
@@ -589,188 +598,188 @@ msgstr "Барај речници"
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Овие подесувања ќе се применат при следното стартување StarDict."
 
-#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1277
+#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1297
 msgid "Loading..."
 msgstr "Вчитува..."
 
-#: ../src/dictmanagedlg.cpp:598 ../src/dictmanagedlg.cpp:1867
+#: ../src/dictmanagedlg.cpp:600 ../src/dictmanagedlg.cpp:1869
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Пребарај речник</span>"
 
-#: ../src/dictmanagedlg.cpp:608 ../src/dictmanagedlg.cpp:1877
+#: ../src/dictmanagedlg.cpp:610 ../src/dictmanagedlg.cpp:1879
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">Скенирај Речник</span>"
 
-#: ../src/dictmanagedlg.cpp:656 ../src/dictmanagedlg.cpp:858
+#: ../src/dictmanagedlg.cpp:658 ../src/dictmanagedlg.cpp:860
 msgid "Virtual Dictionary"
 msgstr "Виртуелен речник"
 
-#: ../src/dictmanagedlg.cpp:679 ../src/dictmanagedlg.cpp:878
+#: ../src/dictmanagedlg.cpp:681 ../src/dictmanagedlg.cpp:880
 msgid "Network Dictionary"
 msgstr "Мрежно д_рво речници"
 
-#: ../src/dictmanagedlg.cpp:759
+#: ../src/dictmanagedlg.cpp:761
 msgid "Local"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:861
+#: ../src/dictmanagedlg.cpp:863
 msgid "Virtual"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:881 ../src/prefsdlg.cpp:129
+#: ../src/dictmanagedlg.cpp:883 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr "Мрежа"
 
-#: ../src/dictmanagedlg.cpp:1129
+#: ../src/dictmanagedlg.cpp:1131
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1140
+#: ../src/dictmanagedlg.cpp:1142
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1189 ../src/dictmanagedlg.cpp:2948
+#: ../src/dictmanagedlg.cpp:1191 ../src/dictmanagedlg.cpp:2995
 msgid "Dictionary Information"
 msgstr "Информација за речник"
 
-#: ../src/dictmanagedlg.cpp:1204 ../src/dictmanagedlg.cpp:2962
+#: ../src/dictmanagedlg.cpp:1206 ../src/dictmanagedlg.cpp:3009
 msgid "Author"
 msgstr "Автор"
 
-#: ../src/dictmanagedlg.cpp:1205 ../src/dictmanagedlg.cpp:2963
+#: ../src/dictmanagedlg.cpp:1207 ../src/dictmanagedlg.cpp:3010
 msgid "Email"
 msgstr "Email"
 
-#: ../src/dictmanagedlg.cpp:1206 ../src/dictmanagedlg.cpp:2964
+#: ../src/dictmanagedlg.cpp:1208 ../src/dictmanagedlg.cpp:3011
 msgid "Website"
 msgstr "Веб страна"
 
-#: ../src/dictmanagedlg.cpp:1207 ../src/dictmanagedlg.cpp:2965
+#: ../src/dictmanagedlg.cpp:1209 ../src/dictmanagedlg.cpp:3012
 msgid "Description"
 msgstr "Опис"
 
-#: ../src/dictmanagedlg.cpp:1208 ../src/dictmanagedlg.cpp:2966
+#: ../src/dictmanagedlg.cpp:1210 ../src/dictmanagedlg.cpp:3013
 msgid "Date"
 msgstr "Дате"
 
-#: ../src/dictmanagedlg.cpp:1209
+#: ../src/dictmanagedlg.cpp:1211
 msgid "File name"
 msgstr "Име на датотека"
 
-#: ../src/dictmanagedlg.cpp:1304 ../src/dictmanagedlg.cpp:1410
+#: ../src/dictmanagedlg.cpp:1306 ../src/dictmanagedlg.cpp:1412
 #: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "Овозможи"
 
-#: ../src/dictmanagedlg.cpp:1346 ../src/dictmanagedlg.cpp:2029
+#: ../src/dictmanagedlg.cpp:1348 ../src/dictmanagedlg.cpp:2031
 msgid "Type"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1796
+#: ../src/dictmanagedlg.cpp:1798
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr "Дали сте сигурни дека сакате да ја избришите групата на речници?"
 
-#: ../src/dictmanagedlg.cpp:1813
+#: ../src/dictmanagedlg.cpp:1815
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr "Дали сте сигурни дека сакате да ја избришите подгрупата на речници?"
 
-#: ../src/dictmanagedlg.cpp:1833
+#: ../src/dictmanagedlg.cpp:1835
 msgid "New dict group"
 msgstr "Нова група речници"
 
-#: ../src/dictmanagedlg.cpp:1840
+#: ../src/dictmanagedlg.cpp:1842
 msgid "Group name:"
 msgstr "Име на групата:"
 
-#: ../src/dictmanagedlg.cpp:1902
+#: ../src/dictmanagedlg.cpp:1904
 msgid "Add dictionary"
 msgstr "Додај речник"
 
-#: ../src/dictmanagedlg.cpp:2035
+#: ../src/dictmanagedlg.cpp:2037
 msgid "Path"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2454 ../src/prefsdlg.cpp:1734
+#: ../src/dictmanagedlg.cpp:2456 ../src/prefsdlg.cpp:1752
 msgid "Add"
 msgstr "Додај"
 
-#: ../src/dictmanagedlg.cpp:2461
+#: ../src/dictmanagedlg.cpp:2463
 msgid "Delete"
 msgstr "Избриши"
 
-#: ../src/dictmanagedlg.cpp:2468
+#: ../src/dictmanagedlg.cpp:2470
 msgid "Information"
 msgstr "Информација"
 
-#: ../src/dictmanagedlg.cpp:2481
+#: ../src/dictmanagedlg.cpp:2483
 msgid "Move to top"
 msgstr "Помести на врв"
 
-#: ../src/dictmanagedlg.cpp:2488
+#: ../src/dictmanagedlg.cpp:2490
 msgid "Move up"
 msgstr "Помести горе"
 
-#: ../src/dictmanagedlg.cpp:2495
+#: ../src/dictmanagedlg.cpp:2497
 msgid "Move down"
 msgstr "Помести долу"
 
-#: ../src/dictmanagedlg.cpp:2502
+#: ../src/dictmanagedlg.cpp:2504
 msgid "Move to bottom"
 msgstr "Помести во средина"
 
-#: ../src/dictmanagedlg.cpp:2623
+#: ../src/dictmanagedlg.cpp:2629
 msgid "D_ict List"
 msgstr "_Листа на речници"
 
-#: ../src/dictmanagedlg.cpp:2642
+#: ../src/dictmanagedlg.cpp:2648
 msgid "Manage _Dict"
 msgstr "Менаџирај ги речниците"
 
-#: ../src/dictmanagedlg.cpp:2660
+#: ../src/dictmanagedlg.cpp:2666
 msgid "T_ree dictionaries"
 msgstr "Д_рво речници"
 
-#: ../src/dictmanagedlg.cpp:2678
+#: ../src/dictmanagedlg.cpp:2684
 msgid "_Network dictionaries"
 msgstr "Мрежни речници"
 
-#: ../src/dictmanagedlg.cpp:2710
+#: ../src/dictmanagedlg.cpp:2716
 msgid "_Show information"
 msgstr "Покажи информации"
 
-#: ../src/dictmanagedlg.cpp:2718
+#: ../src/dictmanagedlg.cpp:2724
 msgid "Select _All"
 msgstr "Обележи ги сите"
 
-#: ../src/dictmanagedlg.cpp:2724
+#: ../src/dictmanagedlg.cpp:2730
 msgid "_Unselect all"
 msgstr "Одбележи ги сите"
 
-#: ../src/dictmanagedlg.cpp:2752
+#: ../src/dictmanagedlg.cpp:2758
 msgid "Visit "
 msgstr "Посети "
 
-#: ../src/dictmanagedlg.cpp:2760
+#: ../src/dictmanagedlg.cpp:2766
 msgid " to download dictionaries!"
 msgstr "да се превземат речници!"
 
-#: ../src/dictmanagedlg.cpp:2769
+#: ../src/dictmanagedlg.cpp:2775
 msgid "Upgrade Now!"
 msgstr "Надгради сега!"
 
-#: ../src/dictmanagedlg.cpp:2794
+#: ../src/dictmanagedlg.cpp:2800
 msgid "Manage Dictionaries"
 msgstr "Менаџирај ги речниците"
 
-#: ../src/dictmanagedlg.cpp:2961
+#: ../src/dictmanagedlg.cpp:3008
 msgid "Synonym word count"
 msgstr "Бројач на зборови"
 
-#: ../src/dictmanagedlg.cpp:2980
+#: ../src/dictmanagedlg.cpp:3027
 msgid "Download Now!"
 msgstr "Превземи сега!"
 
@@ -795,8 +804,8 @@ msgid "StarDict - Scanning"
 msgstr "StarDict - Скенирање"
 
 #: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2180 ../src/mainwin.cpp:2210
-#: ../src/stardict.cpp:1010 ../src/stardict.cpp:1024 ../src/stardict.cpp:1029
-#: ../src/stardict.cpp:1034 ../src/stardict.cpp:1531 ../src/stardict.cpp:1664
+#: ../src/stardict.cpp:1012 ../src/stardict.cpp:1026 ../src/stardict.cpp:1031
+#: ../src/stardict.cpp:1036 ../src/stardict.cpp:1533 ../src/stardict.cpp:1666
 msgid "<Not Found!>"
 msgstr "<Не е пронајдено!>"
 
@@ -1161,19 +1170,19 @@ msgstr ""
 "но БЕЗ ГАНАЦИЈА ; без гаранција за правописот, дефинирањето и фонетичките "
 "информацииза зборовите.\n"
 
-#: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1368
+#: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1370
 msgid "Found no words matching this pattern!"
 msgstr "Не се пронајдени зборови кои се совпаѓаат со барањето!"
 
-#: ../src/mainwin.cpp:2204 ../src/stardict.cpp:1393
+#: ../src/mainwin.cpp:2204 ../src/stardict.cpp:1395
 msgid "Found no words matching this regular expression!"
 msgstr "Не се пронајдени зборови кои се совпаѓаат со барањето!"
 
-#: ../src/mainwin.cpp:2206 ../src/stardict.cpp:1280
+#: ../src/mainwin.cpp:2206 ../src/stardict.cpp:1282
 msgid "There are too many spelling errors :-("
 msgstr "Има премногу правописни грешки :-("
 
-#: ../src/mainwin.cpp:2208 ../src/stardict.cpp:1195 ../src/stardict.cpp:1244
+#: ../src/mainwin.cpp:2208 ../src/stardict.cpp:1197 ../src/stardict.cpp:1246
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Нема внесови во речникот кои се совпаѓаат :-("
 
@@ -1218,7 +1227,7 @@ msgstr "Скенирај за изборот"
 msgid "Show info"
 msgstr "Покажи информации"
 
-#: ../src/mainwin.cpp:2909 ../src/prefsdlg.cpp:2336
+#: ../src/mainwin.cpp:2909 ../src/prefsdlg.cpp:2354
 msgid "Preferences"
 msgstr "Преференции"
 
@@ -1305,11 +1314,11 @@ msgstr "Кеш"
 msgid "Export"
 msgstr "Извези"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:916
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:930
 msgid "Sound"
 msgstr "Звук"
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1015
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1029
 msgid "Video"
 msgstr ""
 
@@ -1321,32 +1330,32 @@ msgstr "Рендерирање на внесови"
 msgid "Dict management"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1243
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1257
 msgid "Net Dict"
 msgstr "Net Dict"
 
-#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1315
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1333
 msgid "Web browser"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1371
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1389
 msgid "Input"
 msgstr "Влез"
 
 #: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
-#: ../src/prefsdlg.cpp:1538 ../src/prefsdlg.cpp:2032 ../src/prefsdlg.cpp:2068
+#: ../src/prefsdlg.cpp:1556 ../src/prefsdlg.cpp:2050 ../src/prefsdlg.cpp:2086
 msgid "Options"
 msgstr "Опции"
 
-#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1899
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1917
 msgid "Search website"
 msgstr "Веб страни за пребарување"
 
-#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2135
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2153
 msgid "Settings"
 msgstr "Подесувања"
 
-#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2353
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2360
 msgid "Dictionary"
 msgstr "Речник"
 
@@ -1453,7 +1462,7 @@ msgstr "_Барај..."
 msgid "Dictionary name showing style:"
 msgstr "Име на речник"
 
-#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1528
+#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1546
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
 msgid "Default"
@@ -1477,177 +1486,189 @@ msgid "Dictionary management"
 msgstr "Име на речник"
 
 #: ../src/prefsdlg.cpp:862
-msgid "Add new dictionaries to active dictionary group"
+#, fuzzy
+msgid "Don't load _bad dictionaries."
+msgstr "да се превземат речници!"
+
+#: ../src/prefsdlg.cpp:870
+msgid "Add new _dictionaries to active dictionary group."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:869
-msgid "Add new plug-ins to active dictionary group"
+#: ../src/prefsdlg.cpp:877
+msgid "Add new _plug-ins to active dictionary group."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:925
+#: ../src/prefsdlg.cpp:939
 msgid "_Enable sound event."
 msgstr "_Овозможи звучни настани."
 
-#: ../src/prefsdlg.cpp:938
+#: ../src/prefsdlg.cpp:952
 #, fuzzy
 msgid "Command for playing sound files:"
 msgstr "Команда за пуштање на wav датотеки:"
 
-#: ../src/prefsdlg.cpp:950
+#: ../src/prefsdlg.cpp:964
 msgid "Always use sound play command."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:957
+#: ../src/prefsdlg.cpp:971
 msgid "RealPeopleTTS search path:"
 msgstr "RealPeople TTS пребарување:"
 
-#: ../src/prefsdlg.cpp:987
+#: ../src/prefsdlg.cpp:1001
 #, fuzzy
 msgid "Enable _TTS program."
 msgstr "Ко_ристи TTS програм"
 
-#: ../src/prefsdlg.cpp:999
+#: ../src/prefsdlg.cpp:1013
 #, fuzzy
 msgid "Command line:"
 msgstr "Командна линија:"
 
-#: ../src/prefsdlg.cpp:1028
+#: ../src/prefsdlg.cpp:1042
 #, fuzzy
 msgid "Command for playing video files:"
 msgstr "Команда за пуштање на wav датотеки:"
 
-#: ../src/prefsdlg.cpp:1062
+#: ../src/prefsdlg.cpp:1076
 msgid "Account"
 msgstr "Сметка"
 
-#: ../src/prefsdlg.cpp:1073 ../src/prefsdlg.cpp:1170
+#: ../src/prefsdlg.cpp:1087 ../src/prefsdlg.cpp:1184
 msgid "_User Name:"
 msgstr "Корисничко име"
 
-#: ../src/prefsdlg.cpp:1079 ../src/prefsdlg.cpp:1176
+#: ../src/prefsdlg.cpp:1093 ../src/prefsdlg.cpp:1190
 msgid "_Password:"
 msgstr "Лозинка"
 
-#: ../src/prefsdlg.cpp:1102 ../src/prefsdlg.cpp:1201
+#: ../src/prefsdlg.cpp:1116 ../src/prefsdlg.cpp:1215
 msgid "Please input the password."
 msgstr "Ве молам внесете лозинка."
 
-#: ../src/prefsdlg.cpp:1159
+#: ../src/prefsdlg.cpp:1173
 msgid "Register"
 msgstr "Регистрација"
 
-#: ../src/prefsdlg.cpp:1183
+#: ../src/prefsdlg.cpp:1197
 msgid "_Email:"
 msgstr "е-пошта"
 
-#: ../src/prefsdlg.cpp:1199
+#: ../src/prefsdlg.cpp:1213
 msgid "Please input the user name."
 msgstr "Ве молам внесете го корисничкото име"
 
-#: ../src/prefsdlg.cpp:1203
+#: ../src/prefsdlg.cpp:1217
 msgid "Please input the email."
 msgstr "Ве молам внесете ја е-поштата"
 
-#: ../src/prefsdlg.cpp:1205
+#: ../src/prefsdlg.cpp:1219
 msgid "Please input a valid email."
 msgstr "Ве молам внесете валидна е-пошта"
 
-#: ../src/prefsdlg.cpp:1253
+#: ../src/prefsdlg.cpp:1267
 msgid "Enable _network dictionaries."
 msgstr "Овозможи мрежни речници."
 
-#: ../src/prefsdlg.cpp:1265
+#: ../src/prefsdlg.cpp:1279
 msgid "StarDict server:"
 msgstr "StarDict сервер:"
 
-#: ../src/prefsdlg.cpp:1274
+#: ../src/prefsdlg.cpp:1288
 msgid "Port:"
 msgstr "Порт:"
 
-#: ../src/prefsdlg.cpp:1283
+#: ../src/prefsdlg.cpp:1297
 msgid "Account:"
 msgstr "Сметка:"
 
-#: ../src/prefsdlg.cpp:1294
+#: ../src/prefsdlg.cpp:1308
 msgid "_Register an account"
 msgstr "Регистрирај нова сметка:"
 
-#: ../src/prefsdlg.cpp:1328
+#: ../src/prefsdlg.cpp:1318
+msgid ""
+"Warning: Requests to remote StarDict server are sent over the network in an "
+"unencrypted form. Do not enable this if you are translating sensitive "
+"documents."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1346
 #, fuzzy
 msgid "Command for opening URLs:"
 msgstr "Команда за пуштање на wav датотеки:"
 
-#: ../src/prefsdlg.cpp:1341
+#: ../src/prefsdlg.cpp:1359
 msgid "Always use this command for opening URLs."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1382
+#: ../src/prefsdlg.cpp:1400
 msgid "_Search while typing."
 msgstr "Пребарувај дури пишувам."
 
-#: ../src/prefsdlg.cpp:1395
+#: ../src/prefsdlg.cpp:1413
 msgid "Word change _timeout:"
 msgstr "Тајмаут за сменување на зборот"
 
-#: ../src/prefsdlg.cpp:1404
+#: ../src/prefsdlg.cpp:1422
 #, fuzzy
 msgid "(default:300 ms)"
 msgstr "(default:300)"
 
-#: ../src/prefsdlg.cpp:1406
+#: ../src/prefsdlg.cpp:1424
 msgid "Show the _first word when not found."
 msgstr "Покажи го првиот збор кога не е најден"
 
-#: ../src/prefsdlg.cpp:1485
+#: ../src/prefsdlg.cpp:1503
 msgid "Skin change will take effect after application restart"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1549
+#: ../src/prefsdlg.cpp:1567
 msgid "_Auto run StarDict after boot."
 msgstr "Автоматско стартување на StarDict после бутирање."
 
-#: ../src/prefsdlg.cpp:1594
+#: ../src/prefsdlg.cpp:1612
 msgid "Skin:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1611
+#: ../src/prefsdlg.cpp:1629
 msgid "Hide main window when _starting StarDict."
 msgstr "При _стартување на StarDict скриј го главниот прозорец."
 
-#: ../src/prefsdlg.cpp:1628
+#: ../src/prefsdlg.cpp:1646
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "Користи ги копчињата Ctrl+Alt+Z за отворање на главниот прозорец"
 
-#: ../src/prefsdlg.cpp:1650 ../src/prefsdlg.cpp:2217
+#: ../src/prefsdlg.cpp:1668 ../src/prefsdlg.cpp:2235
 msgid "_Transparency:"
 msgstr "Транспарентност:"
 
-#: ../src/prefsdlg.cpp:1747 ../src/prefsdlg.cpp:1954
+#: ../src/prefsdlg.cpp:1765 ../src/prefsdlg.cpp:1972
 msgid "Website Name"
 msgstr "Име на веб страна"
 
-#: ../src/prefsdlg.cpp:1759 ../src/prefsdlg.cpp:1962
+#: ../src/prefsdlg.cpp:1777 ../src/prefsdlg.cpp:1980
 msgid "Website link"
 msgstr "Линк за веб страна"
 
-#: ../src/prefsdlg.cpp:1770 ../src/prefsdlg.cpp:1970
+#: ../src/prefsdlg.cpp:1788 ../src/prefsdlg.cpp:1988
 msgid "Website search link"
 msgstr "Линк за пребарување на веб страна"
 
-#: ../src/prefsdlg.cpp:1791
+#: ../src/prefsdlg.cpp:1809
 msgid "Please input the website name."
 msgstr "Внеси го името на веб страната"
 
-#: ../src/prefsdlg.cpp:1793
+#: ../src/prefsdlg.cpp:1811
 msgid "Please input the website link."
 msgstr "Внеси го линкот за веб страната"
 
-#: ../src/prefsdlg.cpp:1795
+#: ../src/prefsdlg.cpp:1813
 msgid "Please input the website search link."
 msgstr "Внеси го линкот за пребарување на веб страната"
 
 # c-format
-#: ../src/prefsdlg.cpp:1797 ../src/prefsdlg.cpp:1876
+#: ../src/prefsdlg.cpp:1815 ../src/prefsdlg.cpp:1894
 #, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
@@ -1655,55 +1676,55 @@ msgstr ""
 "Линкот за пребарување на веб страна треба да содржи \"%%s\" стринг за "
 "пребарување на зборови."
 
-#: ../src/prefsdlg.cpp:2040
+#: ../src/prefsdlg.cpp:2058
 #, fuzzy
 msgid "When middle mouse button is clicked:"
 msgstr "Барај во прозорецот при кликање на средното копче на глушецот"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:2044
+#: ../src/prefsdlg.cpp:2062
 #, fuzzy
 msgid "Query selection in floating window"
 msgstr "Пребарај во главниот прозорец"
 
-#: ../src/prefsdlg.cpp:2045
+#: ../src/prefsdlg.cpp:2063
 #, fuzzy
 msgid "Query selection in main window"
 msgstr "Пребарај во главниот прозорец"
 
-#: ../src/prefsdlg.cpp:2046
+#: ../src/prefsdlg.cpp:2064
 msgid "Do nothing"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:2075
+#: ../src/prefsdlg.cpp:2093
 msgid "_Pronounce the word when it pops up."
 msgstr "Изговори го зборот при прикажување."
 
-#: ../src/prefsdlg.cpp:2084
+#: ../src/prefsdlg.cpp:2102
 msgid "_Show floating window if word not found."
 msgstr "Прикажи го летечкиот прозорец ако нема резултати"
 
-#: ../src/prefsdlg.cpp:2158
+#: ../src/prefsdlg.cpp:2176
 msgid "Max window _width:"
 msgstr "Максмимална ширина на п_розорецот:"
 
-#: ../src/prefsdlg.cpp:2168
+#: ../src/prefsdlg.cpp:2186
 msgid "(default:320)"
 msgstr "(default:320)"
 
-#: ../src/prefsdlg.cpp:2172
+#: ../src/prefsdlg.cpp:2190
 msgid "Max window hei_ght:"
 msgstr "Максмимална висина на про_зорецот:"
 
-#: ../src/prefsdlg.cpp:2180
+#: ../src/prefsdlg.cpp:2198
 msgid "(default:240)"
 msgstr "(default:240)"
 
-#: ../src/prefsdlg.cpp:2189
+#: ../src/prefsdlg.cpp:2207
 msgid "_Use custom background color:"
 msgstr "К_ористи сопствена боја за позадина:"
 
-#: ../src/prefsdlg.cpp:2314
+#: ../src/prefsdlg.cpp:2332
 msgid "Cat_egories:"
 msgstr "Кат_егории:"
 
@@ -1711,11 +1732,11 @@ msgstr "Кат_егории:"
 msgid "Loading"
 msgstr "Вчитува"
 
-#: ../src/readword.cpp:149
+#: ../src/readword.cpp:153
 msgid "Real People TTS"
 msgstr "Real People TTS"
 
-#: ../src/readword.cpp:156
+#: ../src/readword.cpp:160
 msgid "Command TTS"
 msgstr "Command TTS"
 
@@ -1725,61 +1746,61 @@ msgstr "Command TTS"
 msgid "StarDict starting..."
 msgstr "StarDict - Скенирање"
 
-#: ../src/stardict.cpp:1099
+#: ../src/stardict.cpp:1101
 msgid "Full-text Search"
 msgstr "Пребарување низ цел текст"
 
-#: ../src/stardict.cpp:1130
+#: ../src/stardict.cpp:1132
 msgid "Search"
 msgstr "Пребарај за:"
 
-#: ../src/stardict.cpp:1215 ../src/stardict.cpp:1635
+#: ../src/stardict.cpp:1217 ../src/stardict.cpp:1637
 msgid "Full-text search..."
 msgstr "Пребарување низ цел текст..."
 
-#: ../src/stardict.cpp:1624
+#: ../src/stardict.cpp:1626
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Стисни Enter за да ги излисташ зборовите кои се совпаѓаат со барањето."
 
-#: ../src/stardict.cpp:1627
+#: ../src/stardict.cpp:1629
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr ""
 "Стисни Enter за да ги излисташ зборовите кои се sовпаѓаат со експресиите"
 
-#: ../src/stardict.cpp:1631
+#: ../src/stardict.cpp:1633
 msgid "Fuzzy query..."
 msgstr "Слободно пребарување..."
 
-#: ../src/stardict.cpp:2052
+#: ../src/stardict.cpp:2060
 #, fuzzy
 msgid "Loading skin..."
 msgstr "Вчитува..."
 
-#: ../src/stardict.cpp:2058
+#: ../src/stardict.cpp:2066
 #, fuzzy
 msgid "Skin loaded."
 msgstr "Espeak додатокот е вчитан\n"
 
-#: ../src/stardict.cpp:2217
+#: ../src/stardict.cpp:2225
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict е веќе вклучен.  Се користи постоечкиот процес."
 
-#: ../src/stardict.cpp:2337
+#: ../src/stardict.cpp:2344
 msgid "- Lookup words"
 msgstr "- Барај зборови"
 
-#: ../src/stardict.cpp:2342
+#: ../src/stardict.cpp:2349
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr ""
 
-#: ../src/stardict.cpp:2408
+#: ../src/stardict.cpp:2415
 #, fuzzy
 msgid "Loading StarDict configuration..."
 msgstr "Конфигурација на речник"
 
-#: ../src/stardict.cpp:2410
+#: ../src/stardict.cpp:2417
 #, fuzzy
 msgid "StarDict configuration loaded."
 msgstr "Конфигурација на речник"
@@ -2072,21 +2093,21 @@ msgstr "Индекс на енџинот за пребарување."
 msgid "Conversion error."
 msgstr "Грешка во разговорот!\n"
 
-#: ../src/lib/stardict_client.cpp:906
+#: ../src/lib/stardict_client.cpp:913
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "Автентацијата е забранета %s"
 
-#: ../src/lib/stardict_client.cpp:919
+#: ../src/lib/stardict_client.cpp:926
 #, c-format
 msgid "Register failed: %s"
 msgstr "Регистрацијата е неуспешна: %s"
 
-#: ../src/lib/stardict_client.cpp:924
+#: ../src/lib/stardict_client.cpp:931
 msgid "Register success!"
 msgstr "Успешна регистрација!"
 
-#: ../src/lib/stardict_client.cpp:959
+#: ../src/lib/stardict_client.cpp:966
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
@@ -2094,7 +2115,7 @@ msgstr ""
 "Сеуште не сте поставиле сметка. Отворете ја \"Net Dict\" страната во "
 "дијалогот Преференци и регистрирајте сметка"
 
-#: ../src/lib/stardict_client.cpp:1079
+#: ../src/lib/stardict_client.cpp:1109
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
@@ -2102,11 +2123,11 @@ msgstr ""
 "Немате одбрано речник, одберете речник со кликање \"Менаџирај речник\"->"
 "\"Мрежни речници\"->\"Додај\"."
 
-#: ../src/lib/stddict.cpp:710
+#: ../src/lib/stddict.cpp:715
 msgid "Sorting, please wait..."
 msgstr "Сортирање, почекајте..."
 
-#: ../src/lib/stddict.cpp:3367
+#: ../src/lib/stddict.cpp:3387
 #, c-format
 msgid "Invalid collate function. Disable collation."
 msgstr ""
@@ -2200,6 +2221,24 @@ msgstr ""
 #, c-format
 msgid "Verification status of '%s': dictionary is broken"
 msgstr ""
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+msgid "User Dict"
+msgstr "Кориснички Dict"
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+msgid "User virtual dictionary."
+msgstr "Виртуелен речник на корисникот"
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+msgid "Show the user dictionary."
+msgstr "Покажи го речникот на корисникот."
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:262
+#, c-format
+msgid "User dict plug-in loaded.\n"
+msgstr "User dict додатокот е вчитан\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:262
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:269
@@ -2665,52 +2704,56 @@ msgstr "Сугестии за правопис"
 msgid "Spelling plugin loaded.\n"
 msgstr "Додатокот за правопис е вчитан\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
-msgid "You are using an old version of StarDict!"
-msgstr "Вие користите стара верзија на StarDict!"
-
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
-msgid "You are using the newest version of StarDict!"
-msgstr "Вие ја користите најновата верзија на StarDict"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:70
-msgid "Latest version information:"
-msgstr "Информации за последна верзија"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:76
-msgid "Latest news:"
-msgstr "Последни вести:"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:81
 msgid "Update information"
 msgstr "Информации за надградба"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:88
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:76
+msgid "You are using an old version of StarDict!"
+msgstr "Вие користите стара верзија на StarDict!"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:78
+msgid "You are using the newest version of StarDict!"
+msgstr "Вие ја користите најновата верзија на StarDict"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:81
+msgid "Latest version information:"
+msgstr "Информации за последна верзија"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:87
+msgid "Latest news:"
+msgstr "Последни вести:"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:95
+msgid "_Show advertisements."
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:131
 #, fuzzy
 msgid "Loading Update info plug-in..."
 msgstr "Додатокот за надградба е вчитан. \n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Update Info"
 msgstr "Информации за надградба"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Update information."
 msgstr "Информации за надградба"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Get the update information from the Internet."
 msgstr "Земи информации за надградба од Интернет"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:208
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:251
 msgid "Visit StarDict website now?"
 msgstr "Оди на веб страната на StarDict"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:210
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:253
 msgid "_Don't show this until the next update."
 msgstr "Не го прикажувај ова до следната надградба"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:287
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:340
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr "Додатокот за надградба е вчитан. \n"
@@ -2859,21 +2902,6 @@ msgstr "XDXF додатокот за податоци е вчитан\n"
 
 #~ msgid "Not found!\n"
 #~ msgstr "Не е пронајдено!\n"
-
-#~ msgid "User Dict"
-#~ msgstr "Кориснички Dict"
-
-#~ msgid "User virtual dictionary."
-#~ msgstr "Виртуелен речник на корисникот"
-
-#~ msgid "Show the user dictionary."
-#~ msgstr "Покажи го речникот на корисникот."
-
-#~ msgid "User dict plug-in loaded.\n"
-#~ msgstr "User dict додатокот е вчитан\n"
-
-#~ msgid "<span foreground=\"red\">[Missing Image]</span>"
-#~ msgstr "<span foreground=\"red\">[Недостасува слика]</span>"
 
 #~ msgid "%s\\help\\stardict.chm"
 #~ msgstr "%s\\help\\stardict-mk.chm"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-24 19:19+0800\n"
+"POT-Creation-Date: 2014-05-27 13:47+0800\n"
 "PO-Revision-Date: 2008-01-10 23:13+0200\n"
 "Last-Translator: Volodymyr M. Lisivka <vlisivka@gmail.com>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -27,7 +27,7 @@ msgstr "програма 'Зоряний словник'"
 
 #: ../data/stardict.desktop.in.h:1 ../src/docklet.cpp:87
 #: ../src/docklet.cpp:301 ../src/mainwin.cpp:619 ../src/stardict.cpp:273
-#: ../src/stardict.cpp:364 ../src/stardict.cpp:2369
+#: ../src/stardict.cpp:366 ../src/stardict.cpp:2376
 msgid "StarDict"
 msgstr "Зоряний словник :: StarDict"
 
@@ -77,8 +77,8 @@ msgstr "Спеціальна клавіша для слідкування"
 
 #: ../data/stardict.schemas.in.h:8
 msgid ""
-"Only scan while this modifier key is being pressed. It can be Win(0), Shift"
-"(1), Alt(2) or Ctrl(3)."
+"Only scan while this modifier key is being pressed. It can be Win(0), "
+"Shift(1), Alt(2) or Ctrl(3)."
 msgstr ""
 "Слідкувати за відміченим лише при натисненій спеціальній клавіші. Це може "
 "бути Win(0), Shift(1), Alt(2) або Ctrl(3)."
@@ -335,36 +335,45 @@ msgstr "Список вимкнених додатків"
 msgid "List the plugins which are disabled."
 msgstr "Показати вимкнені додатки."
 
-#: ../src/articleview.cpp:306
+#: ../src/articleview.cpp:307
 msgid "XDXF data parsing plug-in is not found!"
 msgstr "Додаток для розбору даних XDXF·не знайдене!"
 
-#: ../src/articleview.cpp:311
+#: ../src/articleview.cpp:312
 msgid "PowerWord data parsing plug-in is not found!"
 msgstr "Додаток·для·розбору·даних·PowerWord не·знайдене!"
 
-#: ../src/articleview.cpp:316
+#: ../src/articleview.cpp:317
 msgid "Wiki data parsing plug-in is not found!"
 msgstr "Додаток для розбору даних Wiki·не знайдене!"
 
-#: ../src/articleview.cpp:321
+#: ../src/articleview.cpp:322
 msgid "HTML data parsing plug-in is not found!"
 msgstr "Додаток для розбору даних у HTML·не знайдене!"
 
-#: ../src/articleview.cpp:326
+#: ../src/articleview.cpp:327
 msgid "WordNet data parsing plug-in is not found!"
 msgstr "Додаток для розбору даних WordNet·не знайдене!"
 
-#: ../src/articleview.cpp:371
+#: ../src/articleview.cpp:390
+#, fuzzy
+msgid "<span foreground=\"red\">[Load image error!]</span>"
+msgstr "<span foreground=\"red\">[Зображення відсутнє]</span>"
+
+#: ../src/articleview.cpp:395
+msgid "<span foreground=\"red\">[Missing Image]</span>"
+msgstr "<span foreground=\"red\">[Зображення відсутнє]</span>"
+
+#: ../src/articleview.cpp:409
 msgid "Unknown data type, please upgrade StarDict!"
 msgstr "Невідомий тип даних, оновіть Зоряний Словник, будь ласка!"
 
-#: ../src/articleview.cpp:494 ../src/articleview.cpp:519
+#: ../src/articleview.cpp:532 ../src/articleview.cpp:557
 #, fuzzy
 msgid "<span foreground=\"red\">[Resource file list: incorrect format!]</span>"
 msgstr "<span foreground=\"red\">[Помилка читання зображення!]</span>"
 
-#: ../src/articleview.cpp:982
+#: ../src/articleview.cpp:1020
 #, fuzzy
 msgid "Save File"
 msgstr "Зберегти у файлі"
@@ -399,11 +408,11 @@ msgid "Activate portable mode"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:110 ../src/prefsdlg.cpp:2366
+#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2384
 msgid "dict.stardict.org"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:344
+#: ../src/conf.cpp:349
 #, no-c-format
 msgid ""
 "StarDict.org\thttp://www.stardict.org\thttp://www.stardict.org/query.php?q="
@@ -448,73 +457,73 @@ msgstr ""
 "table_adv.php?word_str=%s&A=on&P=on&O=on\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:371
+#: ../src/conf.cpp:376
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:383
+#: ../src/conf.cpp:388
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:396
+#: ../src/conf.cpp:401
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:408
+#: ../src/conf.cpp:413
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
-#: ../src/conf.cpp:466
+#: ../src/conf.cpp:471
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr ""
 
-#: ../src/conf.cpp:480
+#: ../src/conf.cpp:485
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:487
+#: ../src/conf.cpp:492
 #, c-format
 msgid "Cannot create user config directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:495
+#: ../src/conf.cpp:500
 #, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:505
+#: ../src/conf.cpp:510
 #, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:515
+#: ../src/conf.cpp:520
 #, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:522
+#: ../src/conf.cpp:527
 #, c-format
 msgid "Cannot create log directory %s."
 msgstr ""
 
-#: ../src/conf.cpp:528
+#: ../src/conf.cpp:533
 #, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:537
+#: ../src/conf.cpp:542
 #, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:549
+#: ../src/conf.cpp:554
 #, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr ""
@@ -557,21 +566,21 @@ msgid "Only level %d user can choose this dictionary!"
 msgstr "Лише користувач рівня %d може вибрати цей словник!"
 
 #: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:581
-#: ../src/dictmanagedlg.cpp:3042
+#: ../src/dictmanagedlg.cpp:3089
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Ви можете вибрати лише %d словник(и)."
 
-#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1202
-#: ../src/dictmanagedlg.cpp:1318 ../src/dictmanagedlg.cpp:1421
-#: ../src/dictmanagedlg.cpp:2015 ../src/dictmanagedlg.cpp:2959
-#: ../src/stardict.cpp:1135
+#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1204
+#: ../src/dictmanagedlg.cpp:1320 ../src/dictmanagedlg.cpp:1423
+#: ../src/dictmanagedlg.cpp:2017 ../src/dictmanagedlg.cpp:3006
+#: ../src/stardict.cpp:1137
 msgid "Dictionary Name"
 msgstr "Назва словника"
 
-#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1203
-#: ../src/dictmanagedlg.cpp:1338 ../src/dictmanagedlg.cpp:1435
-#: ../src/dictmanagedlg.cpp:2023 ../src/dictmanagedlg.cpp:2960
+#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1205
+#: ../src/dictmanagedlg.cpp:1340 ../src/dictmanagedlg.cpp:1437
+#: ../src/dictmanagedlg.cpp:2025 ../src/dictmanagedlg.cpp:3007
 msgid "Word count"
 msgstr "Кількість слів"
 
@@ -584,39 +593,39 @@ msgid "These settings will take effect the next time you run StarDict."
 msgstr ""
 "Ці налаштування вступлять у силу тільки після перезапуску Зоряного словника."
 
-#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1277
+#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1297
 msgid "Loading..."
 msgstr "Завантаження..."
 
-#: ../src/dictmanagedlg.cpp:598 ../src/dictmanagedlg.cpp:1867
+#: ../src/dictmanagedlg.cpp:600 ../src/dictmanagedlg.cpp:1869
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Зробити запит по словнику</span>"
 
-#: ../src/dictmanagedlg.cpp:608 ../src/dictmanagedlg.cpp:1877
+#: ../src/dictmanagedlg.cpp:610 ../src/dictmanagedlg.cpp:1879
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">Словники для сканування</span>"
 
-#: ../src/dictmanagedlg.cpp:656 ../src/dictmanagedlg.cpp:858
+#: ../src/dictmanagedlg.cpp:658 ../src/dictmanagedlg.cpp:860
 msgid "Virtual Dictionary"
 msgstr "Віртуальний словник"
 
-#: ../src/dictmanagedlg.cpp:679 ../src/dictmanagedlg.cpp:878
+#: ../src/dictmanagedlg.cpp:681 ../src/dictmanagedlg.cpp:880
 msgid "Network Dictionary"
 msgstr "Мережний словник"
 
-#: ../src/dictmanagedlg.cpp:759
+#: ../src/dictmanagedlg.cpp:761
 msgid "Local"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:861
+#: ../src/dictmanagedlg.cpp:863
 msgid "Virtual"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:881 ../src/prefsdlg.cpp:129
+#: ../src/dictmanagedlg.cpp:883 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr "Мережа"
 
-#: ../src/dictmanagedlg.cpp:1129
+#: ../src/dictmanagedlg.cpp:1131
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
@@ -624,7 +633,7 @@ msgstr ""
 "Ви можете мати декілька груп словників, такі як \"Вивчення англійської\", "
 "\"Вивчення німецької\", та перемикатися між ними миттєво."
 
-#: ../src/dictmanagedlg.cpp:1140
+#: ../src/dictmanagedlg.cpp:1142
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
@@ -632,144 +641,144 @@ msgstr ""
 "Словники для запитів показуються у головному вікні, словники для сканування "
 "- у плаваючому."
 
-#: ../src/dictmanagedlg.cpp:1189 ../src/dictmanagedlg.cpp:2948
+#: ../src/dictmanagedlg.cpp:1191 ../src/dictmanagedlg.cpp:2995
 msgid "Dictionary Information"
 msgstr "Інформація про словник"
 
-#: ../src/dictmanagedlg.cpp:1204 ../src/dictmanagedlg.cpp:2962
+#: ../src/dictmanagedlg.cpp:1206 ../src/dictmanagedlg.cpp:3009
 msgid "Author"
 msgstr "Автор"
 
-#: ../src/dictmanagedlg.cpp:1205 ../src/dictmanagedlg.cpp:2963
+#: ../src/dictmanagedlg.cpp:1207 ../src/dictmanagedlg.cpp:3010
 msgid "Email"
 msgstr "Адреса"
 
-#: ../src/dictmanagedlg.cpp:1206 ../src/dictmanagedlg.cpp:2964
+#: ../src/dictmanagedlg.cpp:1208 ../src/dictmanagedlg.cpp:3011
 msgid "Website"
 msgstr "Сайт"
 
-#: ../src/dictmanagedlg.cpp:1207 ../src/dictmanagedlg.cpp:2965
+#: ../src/dictmanagedlg.cpp:1209 ../src/dictmanagedlg.cpp:3012
 msgid "Description"
 msgstr "Опис"
 
-#: ../src/dictmanagedlg.cpp:1208 ../src/dictmanagedlg.cpp:2966
+#: ../src/dictmanagedlg.cpp:1210 ../src/dictmanagedlg.cpp:3013
 msgid "Date"
 msgstr "Дата"
 
-#: ../src/dictmanagedlg.cpp:1209
+#: ../src/dictmanagedlg.cpp:1211
 msgid "File name"
 msgstr "Ім'я файлу"
 
-#: ../src/dictmanagedlg.cpp:1304 ../src/dictmanagedlg.cpp:1410
+#: ../src/dictmanagedlg.cpp:1306 ../src/dictmanagedlg.cpp:1412
 #: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "Ввімкнути"
 
-#: ../src/dictmanagedlg.cpp:1346 ../src/dictmanagedlg.cpp:2029
+#: ../src/dictmanagedlg.cpp:1348 ../src/dictmanagedlg.cpp:2031
 msgid "Type"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1796
+#: ../src/dictmanagedlg.cpp:1798
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr "Ви дійсно бажаєте видалити цю групу словників?"
 
-#: ../src/dictmanagedlg.cpp:1813
+#: ../src/dictmanagedlg.cpp:1815
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr "Ви дійсно бажаєте видалити цю підгрупу словників?"
 
-#: ../src/dictmanagedlg.cpp:1833
+#: ../src/dictmanagedlg.cpp:1835
 msgid "New dict group"
 msgstr "Нова група словників"
 
-#: ../src/dictmanagedlg.cpp:1840
+#: ../src/dictmanagedlg.cpp:1842
 msgid "Group name:"
 msgstr "Назва групи:"
 
-#: ../src/dictmanagedlg.cpp:1902
+#: ../src/dictmanagedlg.cpp:1904
 msgid "Add dictionary"
 msgstr "Додати словник"
 
-#: ../src/dictmanagedlg.cpp:2035
+#: ../src/dictmanagedlg.cpp:2037
 msgid "Path"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2454 ../src/prefsdlg.cpp:1734
+#: ../src/dictmanagedlg.cpp:2456 ../src/prefsdlg.cpp:1752
 msgid "Add"
 msgstr "Додати"
 
-#: ../src/dictmanagedlg.cpp:2461
+#: ../src/dictmanagedlg.cpp:2463
 msgid "Delete"
 msgstr "Видалити"
 
-#: ../src/dictmanagedlg.cpp:2468
+#: ../src/dictmanagedlg.cpp:2470
 msgid "Information"
 msgstr "Інформація"
 
-#: ../src/dictmanagedlg.cpp:2481
+#: ../src/dictmanagedlg.cpp:2483
 msgid "Move to top"
 msgstr "Перенести догори"
 
-#: ../src/dictmanagedlg.cpp:2488
+#: ../src/dictmanagedlg.cpp:2490
 msgid "Move up"
 msgstr "Посунути вгору"
 
-#: ../src/dictmanagedlg.cpp:2495
+#: ../src/dictmanagedlg.cpp:2497
 msgid "Move down"
 msgstr "Посунути вниз"
 
-#: ../src/dictmanagedlg.cpp:2502
+#: ../src/dictmanagedlg.cpp:2504
 msgid "Move to bottom"
 msgstr "Перенести додолу"
 
-#: ../src/dictmanagedlg.cpp:2623
+#: ../src/dictmanagedlg.cpp:2629
 msgid "D_ict List"
 msgstr "_Список словників"
 
-#: ../src/dictmanagedlg.cpp:2642
+#: ../src/dictmanagedlg.cpp:2648
 msgid "Manage _Dict"
 msgstr "Керування словниками"
 
-#: ../src/dictmanagedlg.cpp:2660
+#: ../src/dictmanagedlg.cpp:2666
 msgid "T_ree dictionaries"
 msgstr "_Ієрархічні словники"
 
-#: ../src/dictmanagedlg.cpp:2678
+#: ../src/dictmanagedlg.cpp:2684
 msgid "_Network dictionaries"
 msgstr "_Мережні словники"
 
-#: ../src/dictmanagedlg.cpp:2710
+#: ../src/dictmanagedlg.cpp:2716
 msgid "_Show information"
 msgstr "_Показати інформацію"
 
-#: ../src/dictmanagedlg.cpp:2718
+#: ../src/dictmanagedlg.cpp:2724
 msgid "Select _All"
 msgstr "Вибрати _всі"
 
-#: ../src/dictmanagedlg.cpp:2724
+#: ../src/dictmanagedlg.cpp:2730
 msgid "_Unselect all"
 msgstr "_Зняти вибір з усіх"
 
-#: ../src/dictmanagedlg.cpp:2752
+#: ../src/dictmanagedlg.cpp:2758
 msgid "Visit "
 msgstr "Відвідайте "
 
-#: ../src/dictmanagedlg.cpp:2760
+#: ../src/dictmanagedlg.cpp:2766
 msgid " to download dictionaries!"
 msgstr " для завантаження словників!"
 
-#: ../src/dictmanagedlg.cpp:2769
+#: ../src/dictmanagedlg.cpp:2775
 msgid "Upgrade Now!"
 msgstr "Оновити зараз!"
 
-#: ../src/dictmanagedlg.cpp:2794
+#: ../src/dictmanagedlg.cpp:2800
 msgid "Manage Dictionaries"
 msgstr "Керування словниками"
 
-#: ../src/dictmanagedlg.cpp:2961
+#: ../src/dictmanagedlg.cpp:3008
 msgid "Synonym word count"
 msgstr "Кількість синонімів"
 
-#: ../src/dictmanagedlg.cpp:2980
+#: ../src/dictmanagedlg.cpp:3027
 msgid "Download Now!"
 msgstr "Завантажити зараз!"
 
@@ -794,8 +803,8 @@ msgid "StarDict - Scanning"
 msgstr "Зоряний словник - слідкування за виділеним"
 
 #: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2180 ../src/mainwin.cpp:2210
-#: ../src/stardict.cpp:1010 ../src/stardict.cpp:1024 ../src/stardict.cpp:1029
-#: ../src/stardict.cpp:1034 ../src/stardict.cpp:1531 ../src/stardict.cpp:1664
+#: ../src/stardict.cpp:1012 ../src/stardict.cpp:1026 ../src/stardict.cpp:1031
+#: ../src/stardict.cpp:1036 ../src/stardict.cpp:1533 ../src/stardict.cpp:1666
 msgid "<Not Found!>"
 msgstr "<Не знайдено!>"
 
@@ -1162,19 +1171,19 @@ msgstr ""
 "але БЕЗ ЖОДНИХ ГАРАНТІЙ, без зобов'язань відносного того, що написання, "
 "визначення та фонетика слів вірна.\n"
 
-#: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1368
+#: ../src/mainwin.cpp:2202 ../src/stardict.cpp:1370
 msgid "Found no words matching this pattern!"
 msgstr "Не знайдено слів, які б відповідали шаблону!"
 
-#: ../src/mainwin.cpp:2204 ../src/stardict.cpp:1393
+#: ../src/mainwin.cpp:2204 ../src/stardict.cpp:1395
 msgid "Found no words matching this regular expression!"
 msgstr "Не знайдено слів, які б відповідали цьому регулярному виразу!"
 
-#: ../src/mainwin.cpp:2206 ../src/stardict.cpp:1280
+#: ../src/mainwin.cpp:2206 ../src/stardict.cpp:1282
 msgid "There are too many spelling errors :-("
 msgstr "Занадто багато помилок правопису :-("
 
-#: ../src/mainwin.cpp:2208 ../src/stardict.cpp:1195 ../src/stardict.cpp:1244
+#: ../src/mainwin.cpp:2208 ../src/stardict.cpp:1197 ../src/stardict.cpp:1246
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Немає жодної словникової статті з цим словом. :-("
 
@@ -1219,7 +1228,7 @@ msgstr "Слідкувати за виділеним"
 msgid "Show info"
 msgstr "Показати підказку"
 
-#: ../src/mainwin.cpp:2909 ../src/prefsdlg.cpp:2336
+#: ../src/mainwin.cpp:2909 ../src/prefsdlg.cpp:2354
 msgid "Preferences"
 msgstr "Налаштування"
 
@@ -1306,11 +1315,11 @@ msgstr "Кеш"
 msgid "Export"
 msgstr "Експорт"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:916
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:930
 msgid "Sound"
 msgstr "Звук"
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1015
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1029
 msgid "Video"
 msgstr ""
 
@@ -1322,32 +1331,32 @@ msgstr "Відображення статті"
 msgid "Dict management"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1243
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1257
 msgid "Net Dict"
 msgstr "Мережний словник"
 
-#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1315
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1333
 msgid "Web browser"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1371
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1389
 msgid "Input"
 msgstr "Ввід"
 
 #: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
-#: ../src/prefsdlg.cpp:1538 ../src/prefsdlg.cpp:2032 ../src/prefsdlg.cpp:2068
+#: ../src/prefsdlg.cpp:1556 ../src/prefsdlg.cpp:2050 ../src/prefsdlg.cpp:2086
 msgid "Options"
 msgstr "Параметри"
 
-#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1899
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:1917
 msgid "Search website"
 msgstr "Пошук в Інтернеті"
 
-#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2135
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2153
 msgid "Settings"
 msgstr "Налаштування"
 
-#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2353
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2360
 msgid "Dictionary"
 msgstr "Словник"
 
@@ -1453,7 +1462,7 @@ msgstr "_Переглянути..."
 msgid "Dictionary name showing style:"
 msgstr "Назва словника"
 
-#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1528
+#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1546
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
 msgid "Default"
@@ -1477,176 +1486,188 @@ msgid "Dictionary management"
 msgstr "Назва словника"
 
 #: ../src/prefsdlg.cpp:862
-msgid "Add new dictionaries to active dictionary group"
+#, fuzzy
+msgid "Don't load _bad dictionaries."
+msgstr " для завантаження словників!"
+
+#: ../src/prefsdlg.cpp:870
+msgid "Add new _dictionaries to active dictionary group."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:869
-msgid "Add new plug-ins to active dictionary group"
+#: ../src/prefsdlg.cpp:877
+msgid "Add new _plug-ins to active dictionary group."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:925
+#: ../src/prefsdlg.cpp:939
 msgid "_Enable sound event."
 msgstr "_Використовувати звуки для подій."
 
-#: ../src/prefsdlg.cpp:938
+#: ../src/prefsdlg.cpp:952
 #, fuzzy
 msgid "Command for playing sound files:"
 msgstr "Команда для програвання файлів wav:"
 
-#: ../src/prefsdlg.cpp:950
+#: ../src/prefsdlg.cpp:964
 msgid "Always use sound play command."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:957
+#: ../src/prefsdlg.cpp:971
 msgid "RealPeopleTTS search path:"
 msgstr "Шлях до RealPeopleTTS:"
 
-#: ../src/prefsdlg.cpp:987
+#: ../src/prefsdlg.cpp:1001
 #, fuzzy
 msgid "Enable _TTS program."
 msgstr "_Використовувати програму Текст-У-Мову"
 
-#: ../src/prefsdlg.cpp:999
+#: ../src/prefsdlg.cpp:1013
 #, fuzzy
 msgid "Command line:"
 msgstr "Командний рядок:"
 
-#: ../src/prefsdlg.cpp:1028
+#: ../src/prefsdlg.cpp:1042
 #, fuzzy
 msgid "Command for playing video files:"
 msgstr "Команда для програвання файлів wav:"
 
-#: ../src/prefsdlg.cpp:1062
+#: ../src/prefsdlg.cpp:1076
 msgid "Account"
 msgstr "Рахунок"
 
-#: ../src/prefsdlg.cpp:1073 ../src/prefsdlg.cpp:1170
+#: ../src/prefsdlg.cpp:1087 ../src/prefsdlg.cpp:1184
 msgid "_User Name:"
 msgstr "Ім’я користувача:"
 
-#: ../src/prefsdlg.cpp:1079 ../src/prefsdlg.cpp:1176
+#: ../src/prefsdlg.cpp:1093 ../src/prefsdlg.cpp:1190
 msgid "_Password:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1102 ../src/prefsdlg.cpp:1201
+#: ../src/prefsdlg.cpp:1116 ../src/prefsdlg.cpp:1215
 msgid "Please input the password."
 msgstr "Введіть пароль."
 
-#: ../src/prefsdlg.cpp:1159
+#: ../src/prefsdlg.cpp:1173
 msgid "Register"
 msgstr "Регістр"
 
-#: ../src/prefsdlg.cpp:1183
+#: ../src/prefsdlg.cpp:1197
 msgid "_Email:"
 msgstr "Ел. пошта:"
 
-#: ../src/prefsdlg.cpp:1199
+#: ../src/prefsdlg.cpp:1213
 msgid "Please input the user name."
 msgstr "Введіть ім’я користувача."
 
-#: ../src/prefsdlg.cpp:1203
+#: ../src/prefsdlg.cpp:1217
 msgid "Please input the email."
 msgstr "Введіть адресу ел. пошти."
 
-#: ../src/prefsdlg.cpp:1205
+#: ../src/prefsdlg.cpp:1219
 msgid "Please input a valid email."
 msgstr "Введіть дійсну адресу ел. пошти."
 
-#: ../src/prefsdlg.cpp:1253
+#: ../src/prefsdlg.cpp:1267
 msgid "Enable _network dictionaries."
 msgstr "Дозволити мережні словники."
 
-#: ../src/prefsdlg.cpp:1265
+#: ../src/prefsdlg.cpp:1279
 msgid "StarDict server:"
 msgstr "Сервер Зоряного словника:"
 
-#: ../src/prefsdlg.cpp:1274
+#: ../src/prefsdlg.cpp:1288
 msgid "Port:"
 msgstr "Порт:"
 
-#: ../src/prefsdlg.cpp:1283
+#: ../src/prefsdlg.cpp:1297
 msgid "Account:"
 msgstr "Рахунок:"
 
-#: ../src/prefsdlg.cpp:1294
+#: ../src/prefsdlg.cpp:1308
 msgid "_Register an account"
 msgstr "_Зареєструвати рахунок"
 
-#: ../src/prefsdlg.cpp:1328
+#: ../src/prefsdlg.cpp:1318
+msgid ""
+"Warning: Requests to remote StarDict server are sent over the network in an "
+"unencrypted form. Do not enable this if you are translating sensitive "
+"documents."
+msgstr ""
+
+#: ../src/prefsdlg.cpp:1346
 #, fuzzy
 msgid "Command for opening URLs:"
 msgstr "Команда для програвання файлів wav:"
 
-#: ../src/prefsdlg.cpp:1341
+#: ../src/prefsdlg.cpp:1359
 msgid "Always use this command for opening URLs."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1382
+#: ../src/prefsdlg.cpp:1400
 msgid "_Search while typing."
 msgstr "Шукати при наборі."
 
-#: ../src/prefsdlg.cpp:1395
+#: ../src/prefsdlg.cpp:1413
 msgid "Word change _timeout:"
 msgstr "_Затримка зміни слова:"
 
-#: ../src/prefsdlg.cpp:1404
+#: ../src/prefsdlg.cpp:1422
 #, fuzzy
 msgid "(default:300 ms)"
 msgstr "(типово:300)"
 
-#: ../src/prefsdlg.cpp:1406
+#: ../src/prefsdlg.cpp:1424
 msgid "Show the _first word when not found."
 msgstr "Показувати перше слово якщо нічого не знайдено."
 
-#: ../src/prefsdlg.cpp:1485
+#: ../src/prefsdlg.cpp:1503
 msgid "Skin change will take effect after application restart"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1549
+#: ../src/prefsdlg.cpp:1567
 msgid "_Auto run StarDict after boot."
 msgstr "Автозапускати StarDict після завантаження."
 
-#: ../src/prefsdlg.cpp:1594
+#: ../src/prefsdlg.cpp:1612
 msgid "Skin:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1611
+#: ../src/prefsdlg.cpp:1629
 msgid "Hide main window when _starting StarDict."
 msgstr "Ховати головне вікно при _старті Зоряного словника."
 
-#: ../src/prefsdlg.cpp:1628
+#: ../src/prefsdlg.cpp:1646
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "_Відкрити головне вікно при комбінації: Ctrl+Alt+Z."
 
-#: ../src/prefsdlg.cpp:1650 ../src/prefsdlg.cpp:2217
+#: ../src/prefsdlg.cpp:1668 ../src/prefsdlg.cpp:2235
 msgid "_Transparency:"
 msgstr "Прозорість"
 
-#: ../src/prefsdlg.cpp:1747 ../src/prefsdlg.cpp:1954
+#: ../src/prefsdlg.cpp:1765 ../src/prefsdlg.cpp:1972
 msgid "Website Name"
 msgstr "Назва сайту"
 
-#: ../src/prefsdlg.cpp:1759 ../src/prefsdlg.cpp:1962
+#: ../src/prefsdlg.cpp:1777 ../src/prefsdlg.cpp:1980
 msgid "Website link"
 msgstr "Адреса сайту"
 
-#: ../src/prefsdlg.cpp:1770 ../src/prefsdlg.cpp:1970
+#: ../src/prefsdlg.cpp:1788 ../src/prefsdlg.cpp:1988
 msgid "Website search link"
 msgstr "Пошукове посилання на сайт"
 
-#: ../src/prefsdlg.cpp:1791
+#: ../src/prefsdlg.cpp:1809
 msgid "Please input the website name."
 msgstr "Введіть назву сайту."
 
-#: ../src/prefsdlg.cpp:1793
+#: ../src/prefsdlg.cpp:1811
 msgid "Please input the website link."
 msgstr "Введіть адресу сайту."
 
-#: ../src/prefsdlg.cpp:1795
+#: ../src/prefsdlg.cpp:1813
 msgid "Please input the website search link."
 msgstr "Введіть посилання на пошук на сайті."
 
-#: ../src/prefsdlg.cpp:1797 ../src/prefsdlg.cpp:1876
+#: ../src/prefsdlg.cpp:1815 ../src/prefsdlg.cpp:1894
 #, c-format
 msgid ""
 "The website search link should contain a \"%%s\" string for querying a word."
@@ -1654,56 +1675,56 @@ msgstr ""
 "Пошукове посилання повинне містити послідовність \"%%s\", яка заміняється на "
 "шукане слово."
 
-#: ../src/prefsdlg.cpp:2040
+#: ../src/prefsdlg.cpp:2058
 #, fuzzy
 msgid "When middle mouse button is clicked:"
 msgstr ""
 "Здійснювати пошук у спливаючому вікні при клацанні середньою кнопкою мишки "
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:2044
+#: ../src/prefsdlg.cpp:2062
 #, fuzzy
 msgid "Query selection in floating window"
 msgstr "Шукати у головному вікні"
 
-#: ../src/prefsdlg.cpp:2045
+#: ../src/prefsdlg.cpp:2063
 #, fuzzy
 msgid "Query selection in main window"
 msgstr "Шукати у головному вікні"
 
-#: ../src/prefsdlg.cpp:2046
+#: ../src/prefsdlg.cpp:2064
 msgid "Do nothing"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:2075
+#: ../src/prefsdlg.cpp:2093
 msgid "_Pronounce the word when it pops up."
 msgstr "_Промовляти слово при появі спливаючого вікна."
 
-#: ../src/prefsdlg.cpp:2084
+#: ../src/prefsdlg.cpp:2102
 msgid "_Show floating window if word not found."
 msgstr "_Показувати плаваюче віконечко якщо слово не знайдено."
 
-#: ../src/prefsdlg.cpp:2158
+#: ../src/prefsdlg.cpp:2176
 msgid "Max window _width:"
 msgstr "Максимальна _ширина вікна:"
 
-#: ../src/prefsdlg.cpp:2168
+#: ../src/prefsdlg.cpp:2186
 msgid "(default:320)"
 msgstr "(типово:320)"
 
-#: ../src/prefsdlg.cpp:2172
+#: ../src/prefsdlg.cpp:2190
 msgid "Max window hei_ght:"
 msgstr "Максимальна _висота вікна:"
 
-#: ../src/prefsdlg.cpp:2180
+#: ../src/prefsdlg.cpp:2198
 msgid "(default:240)"
 msgstr "(типово:240)"
 
-#: ../src/prefsdlg.cpp:2189
+#: ../src/prefsdlg.cpp:2207
 msgid "_Use custom background color:"
 msgstr "_Задіяти колір тла вибраний користувачем:"
 
-#: ../src/prefsdlg.cpp:2314
+#: ../src/prefsdlg.cpp:2332
 msgid "Cat_egories:"
 msgstr "_Категорії:"
 
@@ -1711,11 +1732,11 @@ msgstr "_Категорії:"
 msgid "Loading"
 msgstr "Завантаження"
 
-#: ../src/readword.cpp:149
+#: ../src/readword.cpp:153
 msgid "Real People TTS"
 msgstr "Real People ТуМ"
 
-#: ../src/readword.cpp:156
+#: ../src/readword.cpp:160
 msgid "Command TTS"
 msgstr "Команда ТуМ"
 
@@ -1725,62 +1746,62 @@ msgstr "Команда ТуМ"
 msgid "StarDict starting..."
 msgstr "Зоряний словник - слідкування за виділеним"
 
-#: ../src/stardict.cpp:1099
+#: ../src/stardict.cpp:1101
 msgid "Full-text Search"
 msgstr "Повнотекстовий пошук"
 
-#: ../src/stardict.cpp:1130
+#: ../src/stardict.cpp:1132
 msgid "Search"
 msgstr "Пошук"
 
-#: ../src/stardict.cpp:1215 ../src/stardict.cpp:1635
+#: ../src/stardict.cpp:1217 ../src/stardict.cpp:1637
 msgid "Full-text search..."
 msgstr "Повнотекстовий пошук..."
 
-#: ../src/stardict.cpp:1624
+#: ../src/stardict.cpp:1626
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Натисніть Enter, щоб побачити список слів які відповідають шаблону."
 
-#: ../src/stardict.cpp:1627
+#: ../src/stardict.cpp:1629
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr ""
 "Натисніть Enter, щоб побачити список слів які відповідають регулярному "
 "виразу."
 
-#: ../src/stardict.cpp:1631
+#: ../src/stardict.cpp:1633
 msgid "Fuzzy query..."
 msgstr "Нечіткий пошук..."
 
-#: ../src/stardict.cpp:2052
+#: ../src/stardict.cpp:2060
 #, fuzzy
 msgid "Loading skin..."
 msgstr "Завантаження..."
 
-#: ../src/stardict.cpp:2058
+#: ../src/stardict.cpp:2066
 #, fuzzy
 msgid "Skin loaded."
 msgstr "Додаток Espeak завантажене.\n"
 
-#: ../src/stardict.cpp:2217
+#: ../src/stardict.cpp:2225
 msgid "StarDict is already running. Using the running process."
 msgstr "Зоряний словник вже запущено. Використовується існуючий процес."
 
-#: ../src/stardict.cpp:2337
+#: ../src/stardict.cpp:2344
 msgid "- Lookup words"
 msgstr "- Слідкувати за словами"
 
-#: ../src/stardict.cpp:2342
+#: ../src/stardict.cpp:2349
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "Не вдалося розібрати параметри: %s\n"
 
-#: ../src/stardict.cpp:2408
+#: ../src/stardict.cpp:2415
 #, fuzzy
 msgid "Loading StarDict configuration..."
 msgstr "Конфігурація словника Dict.cn"
 
-#: ../src/stardict.cpp:2410
+#: ../src/stardict.cpp:2417
 #, fuzzy
 msgid "StarDict configuration loaded."
 msgstr "XML з конфігурацією словника"
@@ -2079,21 +2100,21 @@ msgstr "Індекс двигуна перекладу."
 msgid "Conversion error."
 msgstr "Помилка перетворення!\n"
 
-#: ../src/lib/stardict_client.cpp:906
+#: ../src/lib/stardict_client.cpp:913
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "Відмовлено у автентифікації: %s"
 
-#: ../src/lib/stardict_client.cpp:919
+#: ../src/lib/stardict_client.cpp:926
 #, c-format
 msgid "Register failed: %s"
 msgstr "Не вдалося зареєструватися: %s"
 
-#: ../src/lib/stardict_client.cpp:924
+#: ../src/lib/stardict_client.cpp:931
 msgid "Register success!"
 msgstr "Реєстрація вдалася!"
 
-#: ../src/lib/stardict_client.cpp:959
+#: ../src/lib/stardict_client.cpp:966
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
@@ -2101,7 +2122,7 @@ msgstr ""
 "Ви не зареєстрували рахунок. Будь ласка, відкрийте сторінку \"Мережний "
 "словник\" у налаштуваннях і зареєструйте рахунок спочатку."
 
-#: ../src/lib/stardict_client.cpp:1079
+#: ../src/lib/stardict_client.cpp:1109
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
@@ -2109,11 +2130,11 @@ msgstr ""
 "Ви не вибрали жодного словника. Будь ласка, виберіть якісь клацнувши на "
 "\"Керування словниками\"->\"Мережні словники\"->\"Додати\"."
 
-#: ../src/lib/stddict.cpp:710
+#: ../src/lib/stddict.cpp:715
 msgid "Sorting, please wait..."
 msgstr "Сортування, зачекайте, будь ласка..."
 
-#: ../src/lib/stddict.cpp:3367
+#: ../src/lib/stddict.cpp:3387
 #, c-format
 msgid "Invalid collate function. Disable collation."
 msgstr ""
@@ -2207,6 +2228,24 @@ msgstr ""
 #, c-format
 msgid "Verification status of '%s': dictionary is broken"
 msgstr ""
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+msgid "User Dict"
+msgstr "Словник користувача"
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+msgid "User virtual dictionary."
+msgstr "Віртуальні словники користувача."
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+msgid "Show the user dictionary."
+msgstr "Показати словник користувача."
+
+#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:262
+#, c-format
+msgid "User dict plug-in loaded.\n"
+msgstr "Додаток для словника користувача завантажено.\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:262
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:269
@@ -2673,52 +2712,56 @@ msgstr "Підказки з правопису"
 msgid "Spelling plugin loaded.\n"
 msgstr "Додаток для перевірки правопису завантаженно.\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:65
-msgid "You are using an old version of StarDict!"
-msgstr "Ви використовуєте стару версію Зоряного словника!"
-
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
-msgid "You are using the newest version of StarDict!"
-msgstr "Ви використовуєте найновішу версію Зоряного словника!"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:70
-msgid "Latest version information:"
-msgstr "Інформація про останню версію:"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:76
-msgid "Latest news:"
-msgstr "Останні новини:"
-
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:81
 msgid "Update information"
 msgstr "Інформація про оновлення"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:88
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:76
+msgid "You are using an old version of StarDict!"
+msgstr "Ви використовуєте стару версію Зоряного словника!"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:78
+msgid "You are using the newest version of StarDict!"
+msgstr "Ви використовуєте найновішу версію Зоряного словника!"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:81
+msgid "Latest version information:"
+msgstr "Інформація про останню версію:"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:87
+msgid "Latest news:"
+msgstr "Останні новини:"
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:95
+msgid "_Show advertisements."
+msgstr ""
+
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:131
 #, fuzzy
 msgid "Loading Update info plug-in..."
 msgstr "Додаток для інформації про оновлення завантажено.\n"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Update Info"
 msgstr "Інформація про оновлення"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Update information."
 msgstr "Інформація про оновлення."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:94
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:137
 msgid "Get the update information from the Internet."
 msgstr "Отримати інформацію про оновлення з Інтернету."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:208
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:251
 msgid "Visit StarDict website now?"
 msgstr "Відвідати сайт Зоряного словника зараз?"
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:210
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:253
 msgid "_Don't show this until the next update."
 msgstr "_Не показувати цього до наступного оновлення."
 
-#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:287
+#: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:340
 #, c-format
 msgid "Update info plug-in loaded.\n"
 msgstr "Додаток для інформації про оновлення завантажено.\n"
@@ -2872,21 +2915,6 @@ msgstr "Додаток для розбору даних XDXF завантаже�
 
 #~ msgid "Not found!\n"
 #~ msgstr "Не знайдено!\n"
-
-#~ msgid "User Dict"
-#~ msgstr "Словник користувача"
-
-#~ msgid "User virtual dictionary."
-#~ msgstr "Віртуальні словники користувача."
-
-#~ msgid "Show the user dictionary."
-#~ msgstr "Показати словник користувача."
-
-#~ msgid "User dict plug-in loaded.\n"
-#~ msgstr "Додаток для словника користувача завантажено.\n"
-
-#~ msgid "<span foreground=\"red\">[Missing Image]</span>"
-#~ msgstr "<span foreground=\"red\">[Зображення відсутнє]</span>"
 
 #  gchar *filename = g_strdup_printf(_("file:///%s/help/C/stardict.html#stardict-dictmanage"), stardict_data_dir);
 #~ msgid "%s\\help\\stardict.chm"
