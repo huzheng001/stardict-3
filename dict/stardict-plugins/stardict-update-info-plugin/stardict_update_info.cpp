@@ -89,6 +89,7 @@ static void configure()
 	content += latest_news;
 	GtkWidget *label = gtk_label_new(content.c_str());
 	gtk_label_set_line_wrap(GTK_LABEL(label), true);
+	gtk_label_set_selectable(GTK_LABEL(label), true);
 	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 5);
 
 

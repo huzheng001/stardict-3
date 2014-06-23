@@ -1,0 +1,20 @@
+=====
+Build stardict-*.tar.bz2
+
+./autogen.sh
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-festival
+make dist-bzip2
+
+=====
+Build stardict-*.rpm
+
+cp dict/stardict.spec /root/rpmbuild/SPECS/
+cp stardict-*.tar.bz2 /root/rpmbuild/SOURCES/
+cd /root/rpmbuild/SPECS/
+rpmbuild -bb stardict.spec
+
+=====
+Build stardict-*.deb
+
+cp -r dict/debian-upstream debian
+dpkg-buildpackage

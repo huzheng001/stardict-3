@@ -2,7 +2,7 @@ This package (stardict) was debianized by Anthony Fok <foka@debian.org>
 on Wed,  9 Apr 2003 23:29:25 +0800.
 
 It was downloaded from
-http://stardict-3.googlecode.com/files/stardict-3.0.4.tar.bz2
+http://sourceforge.net/projects/stardict-4/files/3.0.5/stardict-3.0.5.tar.bz2/download
 
 Upstream Authors:
     Hu Zheng (胡正) <huzheng001@gmail.com>
@@ -15,6 +15,7 @@ Contributors:
     Alex Murygin <murygin@aitoc.com>
 
 Home Pages:
+    http://stardict-4.sourceforge.net/
     http://www.stardict.org/
     http://code.google.com/p/stardict-3/
     http://www.huzheng.org/
