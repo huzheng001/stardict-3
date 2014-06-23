@@ -55,6 +55,7 @@ configure.ac
 dict/configure.ac
 lib/configure.ac
 tools/configure.ac
+dict/README
 dict/src/mainwin.cpp
 dict/src/lib/plugin.h
 dict/stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
@@ -65,6 +66,7 @@ dict/src/win32/nsis/StarDictEditorPortable.nsi
 dict/src/win32/PortableApps.com/appinfo.ini
 dict/msvc_2008/stardict-editorrc.rc
 dict/msvc_2008/stardictrc.rc
+dict/debian-upstream/copyright
 
 *****
 Run this to create the "configure" file:

@@ -1,3 +1,7 @@
+2014.
+StarDict-4.0.0 (Nice) released.
+Port to gtk3!
+
 2014.6.23
 StarDict-3.0.5 (Nirvana) released.
 This version is mainly developed by Hu Zheng!
@@ -8,6 +12,7 @@ Stardict-advertisement-plugin comes back!
 'P' dictionary content type identifier comes back!
 Add don't load bad dict option.
 Add show_ads checkbox for update-info-plugin.
+http://stardict-4.sourceforge.net is on-line now!
 Other small changes!
 
 2013.1.3
