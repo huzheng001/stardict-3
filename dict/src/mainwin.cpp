@@ -25,7 +25,7 @@
 #include <algorithm>
 
 #ifdef _WIN32
-#define VERSION "3.0.5"
+#define VERSION "4.0.0"
 #  include <gdk/gdkwin32.h>
 #endif
 

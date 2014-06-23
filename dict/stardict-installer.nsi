@@ -9,7 +9,7 @@ Var ISSILENT
 
 ;General
 
-!define STARDICT_VERSION		"3.0.5"
+!define STARDICT_VERSION		"4.0.0"
 
 Name "StarDict ${STARDICT_VERSION}"
 
