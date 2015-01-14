@@ -54,4 +54,3 @@ dict/src/lib/ctype-utf8.cpp - GNU Library General Public License
 dict/src/lib/ctype-uca.cpp - GNU Library General Public License
 dict/src/eggaccelerators.h - GNU Library General Public License
 dict/src/eggaccelerators.cpp - GNU Library General Public License
-dict/stardict-plugins/stardict-wordnet-plugin/tenis.h - Common Public License
