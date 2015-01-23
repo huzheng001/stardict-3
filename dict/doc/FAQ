@@ -16,7 +16,7 @@ A) We have developed a plug-in for Adobe Reader, but only Acrobat Professional e
 Q) I get some problem when install StarDict from the source code tarball.
 A) Read INSTALL.
 
-Q) How the show the correct phonetics in some babylon dictionaries?
+Q) How to show the correct phonetics in some babylon dictionaries?
 A) Download http://www.stardict.org/files/ksphonet.ttf and install it. In linux, you can put it into ~/.fonts/ directory.
 
 Q) How to compile StarDict on Windows?
