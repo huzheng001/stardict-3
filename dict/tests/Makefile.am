@@ -1,3 +1,6 @@
+AUTOMAKE_OPTIONS = subdir-objects
+
+
 COMMONLIB_CPPFLAGS = -I$(top_srcdir)/$(COMMONLIB_INCLUDE_DIR)
 COMMONLIB_LIB = $(top_builddir)/$(COMMONLIB_LIBRARY)
 

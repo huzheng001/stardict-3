@@ -1,6 +1,22 @@
-2014.
+2015.
 StarDict-4.0.0 (Nice) released.
+Add some babylon dictionaries.
+Add some BigDict dictionaries.
+Add some PowerWord dictionaries.
 Port to gtk3!
+
+2015.1.27
+StarDict-3.0.6 (Cool) released.
+Update stardict_powerword_parsedata.cpp
+Small text changes.
+
+2015.1.26
+StarDict-3.0.1.2 (Good) released.
+Update stardict_powerword_parsedata.cpp
+Fix one bug in md5.h
+Fix one bug in gtktextviewpango.cpp
+Fix one bug in sockets.cpp
+Fix one bug in stardict.cpp as (MAX_MATCH_ITEM_PER_LIB*2).
 
 2014.6.23
 StarDict-3.0.5 (Nirvana) released.
