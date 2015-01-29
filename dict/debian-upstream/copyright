@@ -2,7 +2,7 @@ This package (stardict) was debianized by Anthony Fok <foka@debian.org>
 on Wed,  9 Apr 2003 23:29:25 +0800.
 
 It was downloaded from
-http://sourceforge.net/projects/stardict-4/files/3.0.5/stardict-3.0.5.tar.bz2/download
+http://sourceforge.net/projects/stardict-4/files/4.0.0/stardict-4.0.0.tar.bz2/download
 
 Upstream Authors:
     Hu Zheng (胡正) <huzheng001@gmail.com>
@@ -18,12 +18,12 @@ Home Pages:
     http://stardict-4.sourceforge.net/
     http://www.stardict.org/
     http://code.google.com/p/stardict-3/
-    http://www.huzheng.org/
+    http://www.huzheng.org/stardict/
 
 Copyright:
 
     StarDict 4.0.0, an international dictionary written in GTK.
-    Copyright (C) 2003 - 2013  Hu Zheng
+    Copyright (C) 2003 - 2015  Hu Zheng
    
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License

@@ -10,7 +10,7 @@ noinst_PROGRAMS = stardict-editor pydict2dic olddic2newdic oxford2dic directory2
 	wquick2dic ec50 directory2treedic treedict2dir jdictionary mova xmlinout \
 	soothill kanjidic2 powerword kdic 21tech 21shiji buddhist tabfile \
 	cedict edict duden stardict-dict-update degb2utf frgb2utf jpgb2utf gmx2utf \
-	rucn kingsoft wikipedia wikipediaImage babylon stardict2txt stardict-verify \
+	rucn kingsoft kingsoft2 wikipedia wikipediaImage babylon stardict2txt stardict-verify \
 	fest2dict i2e2dict downloadwiki ooo2dict myspell2dic exc2i2e \
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi ydp2dict \
 	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
@@ -149,6 +149,10 @@ rucn_SOURCES = rucn.cpp
 kingsoft_LDFLAGS =
 kingsoft_LDADD = $(STARDICT_LIBS)
 kingsoft_SOURCES = kingsoft.cpp
+
+kingsoft2_LDFLAGS =
+kingsoft2_LDADD = $(STARDICT_LIBS)
+kingsoft2_SOURCES = kingsoft2.cpp
 
 wikipedia_CPPFLAGS = $(AM_CPPFLAGS) $(LFS_CFLAGS)
 wikipedia_LDFLAGS = $(LFS_LDFLAGS)

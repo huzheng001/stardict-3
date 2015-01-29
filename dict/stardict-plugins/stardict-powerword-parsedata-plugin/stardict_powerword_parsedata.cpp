@@ -20,7 +20,6 @@
 #include "stardict_powerword_parsedata.h"
 #include <cstring>
 #include <glib/gi18n.h>
-#include <string.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -503,7 +502,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 		return;
 	std::string *pango = ((PwUserData*)user_data)->pango;
 	std::string::size_type &cur_pos = ((PwUserData*)user_data)->cur_pos;
-	if (strcmp(element, "词典音标")==0) {
+	if (strcmp(element, "词典音标")==0 || strcmp(element, "CB")==0) {
 		if (!pango->empty()) {
 			*pango+='\n';
 			cur_pos++;
@@ -516,7 +515,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 		g_free(str);
 		*pango+="</span>]";
 		cur_pos++;
-	} else if (strcmp(element, "单词原型")==0) {
+	} else if (strcmp(element, "单词原型")==0 || strcmp(element, "YX")==0) {
 		const gchar *oword = ((PwUserData*)user_data)->oword;
 		if (strncmp(oword, text, len)) {
 			if (!pango->empty()) {
@@ -530,7 +529,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 			g_free(str);
 			*pango+="</b>";
 		}
-	} else if (strcmp(element, "单词词性")==0) {
+	} else if (strcmp(element, "单词词性")==0 || strcmp(element, "DX")==0) {
 		if (!pango->empty()) {
 			*pango+='\n';
 			cur_pos++;
@@ -538,7 +537,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 		*pango+="<i>";
 		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
 		*pango+="</i>";
-	} else if (strcmp(element, "汉语拼音")==0) {
+	} else if (strcmp(element, "汉语拼音")==0 || strcmp(element, "PY")==0) {
 		if (!pango->empty()) {
 			*pango+='\n';
 			cur_pos++;
@@ -546,7 +545,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 		*pango+="<span foreground=\"blue\" underline=\"single\">";
 		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
 		*pango+="</span>";
-	} else if (strcmp(element, "例句原型")==0) {
+	} else if (strcmp(element, "例句原型")==0 || strcmp(element, "LY")==0) {
 		if (!pango->empty()) {
 			*pango+='\n';
 			cur_pos++;
@@ -554,7 +553,7 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 		*pango+="<span foreground=\"#008080\">";
 		powerword_markup_add_text(text, len, pango, cur_pos, ((PwUserData*)user_data)->links_list);
 		*pango+="</span>";
-	} else if (strcmp(element, "例句解释")==0) {
+	} else if (strcmp(element, "例句解释")==0 || strcmp(element, "LS")==0) {
 		if (!pango->empty()) {
 			*pango+='\n';
 			cur_pos++;
@@ -609,12 +608,13 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 static void func_parse_start_element(GMarkupParseContext *context, const gchar *element_name, const gchar **attribute_names, const gchar **attribute_values, gpointer user_data, GError **error)
 {
 	std::string res;
-	if (strcmp(element_name, "基本词义")==0) {
+	if (strcmp(element_name, "基本词义")==0 || strcmp(element_name, "CY")==0) {
 		if (((PwUserData*)user_data)->first_jbcy) {
 			((PwUserData*)user_data)->first_jbcy = false;
 		} else {
 			res="\n<span foreground=\"blue\">&lt;基本词义&gt;</span>";
 		}
+	// ToDo: These need to fix!
 	} else if (strcmp(element_name, "继承用法")==0) {
 		res="\n<span foreground=\"blue\">&lt;继承用法&gt;</span>";
 	} else if (strcmp(element_name, "习惯用语")==0) {
@@ -692,7 +692,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 		return true;
 	}
 	obj->type = StarDictPlugInType_PARSEDATA;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("PowerWord data parsing"), _("PowerWord data parsing engine."), _("Parse the PowerWord data."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>2.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("PowerWord data parsing"), _("PowerWord data parsing engine."), _("Parse the PowerWord data."));
 	obj->configure_func = NULL;
 	return false;
 }

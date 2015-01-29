@@ -15,4 +15,7 @@ with
 		wsprintf(err, TEXT("failed on %s version %s%x\n"),table,(requiredVer & kHFT_IN_BETA_FLAG) ?"(beta)":"",requiredVer & ~kHFT_IN_BETA_FLAG);
 >>>
 
+You can try sdk91_v2_win.zip too.
+Exctract "Adobe/Acrobat 9 SDK/Version 1/PluginSupport/Headers" to "Acrobat_Headers" in this directory.
+
 This plug-in only work on Abode Acrobat Professional currently. For Adobe Reader, a License is needed, which will cost $2,500, this has not be done yet.
