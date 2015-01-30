@@ -27,7 +27,7 @@ AC_CHECK_HEADERS([stdlib.h])
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.
-DEP_MODULES="gtk+-2.0 glib-2.0 >= 2.8 zlib gio-2.0"
+DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.8 zlib gio-2.0"
 PKG_CHECK_MODULES(STARDICT, $DEP_MODULES)
 
 # mysqlclient
