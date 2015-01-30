@@ -456,6 +456,7 @@ stardict.spec
 stardict-withoutgnome.spec
 data/Makefile
 doc/Makefile
+doc/wiki/Makefile
 debian-upstream/Makefile
 mac_dist/Makefile
 mac_dist/zh_CN.lproj/Makefile
