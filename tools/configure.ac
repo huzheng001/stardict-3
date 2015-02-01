@@ -98,8 +98,32 @@ if test "x$am_cv_func_iconv" != xyes; then
 AC_ERROR([iconv not found])
 fi
 
+
 dnl for src/stardict_text2bin
-PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= 2.5])
+PKG_CHECK_MODULES([LIBXML], [libxml-2.0 >= 2.5], have_libxml=yes, have_libxml=no)
+if test "x$have_libxml" = "xyes" ; then
+	LIBXML_CFLAGS="${LIBXML_CFLAGS}"
+	LIBXML_LIBS="${LIBXML_LIBS}"
+else
+	AC_MSG_ERROR([LIBXML-2.0 library not found or too old.])
+fi
+
+AC_SUBST(LIBXML_CFLAGS)
+AC_SUBST(LIBXML_LIBS)
+
+
+dnl for src/stardict-editor
+PKG_CHECK_MODULES([EXPAT], [expat], have_expat=yes, have_expat=no)
+if test "x$have_expat" = "xyes" ; then
+	EXPAT_CFLAGS="${EXPAT_CFLAGS}"
+	EXPAT_LIBS="${EXPAT_LIBS}"
+else
+	AC_MSG_ERROR([EXPAT library not found or too old.])
+fi
+
+AC_SUBST(EXPAT_CFLAGS)
+AC_SUBST(EXPAT_LIBS)
+
 
 dnl common lib
 dnl path relative to $(top_srcdir)

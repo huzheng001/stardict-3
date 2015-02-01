@@ -33,6 +33,10 @@
 #include "lib_stardict_bin2text.h"
 #include "lib_stardict_text2bin.h"
 #include "libcommon.h"
+#include "libbgl2txt.h"
+#include "connector.h"
+#include "generator.h"
+#include "parser.h"
 
 static GtkWidget *main_window;
 static GtkTextBuffer *compile_page_text_view_buffer;
@@ -121,6 +125,31 @@ static void on_browse_button_clicked(GtkButton *button, gpointer data)
 	gtk_widget_destroy (dialog);
 }
 
+static void convert_dslfile(const std::string &infile)
+{
+	std::string basename(infile);
+	std::string::size_type pos = basename.rfind(G_DIR_SEPARATOR);
+	std::string cur_workdir;
+	if (pos != std::string::npos) {
+		cur_workdir.assign(basename, 0, pos);
+	}
+	else
+		cur_workdir = ".";
+
+	std::auto_ptr<ParserBase> parser(ParsersRepo::get_instance().create_codec("dsl"));
+	g_assert(parser.get());
+	std::auto_ptr<GeneratorBase> generator(GeneratorsRepo::get_instance().create_codec("stardict"));
+	g_assert(generator.get());
+	Connector connector(*generator, cur_workdir);
+	
+	parser->reset_ops(&connector);
+	generator->reset_ops(&connector);
+	
+	StringList parser_options;
+
+	parser->run(parser_options, infile);
+}
+
 static void on_compile_page_compile_button_clicked(GtkButton *button, gpointer data)
 {
 	GtkEntry *entry = GTK_ENTRY(data);
@@ -129,11 +158,15 @@ static void on_compile_page_compile_button_clicked(GtkButton *button, gpointer d
 	HookMessages hookOutput(compile_page_text_view_buffer);
 	gint output_format_ind = gtk_combo_box_get_active(GTK_COMBO_BOX(compile_page_combo_box));
 	bool res = true;
-	if (output_format_ind == 0)
+	if (output_format_ind == 0) {
 		res = convert_tabfile(srcfilename.c_str());
-	else if (output_format_ind == 1)
+	} else if (output_format_ind == 1) {
 		convert_babylonfile(srcfilename.c_str(), true);
-	else if (output_format_ind == 2) {
+	} else if (output_format_ind == 2) {
+		convert_bglfile(srcfilename, get_file_path_without_extension(srcfilename) + ".babylon", "", "");
+	} else if (output_format_ind == 3) {
+		convert_dslfile(srcfilename);
+	} else {
 		std::string ifofilename = get_file_path_without_extension(srcfilename) + ".ifo";
 		bool show_xincludes = gtk_toggle_button_get_active(
 			GTK_TOGGLE_BUTTON(compile_page_show_xinclude_check_box));
@@ -234,8 +267,8 @@ static void create_compile_page(GtkWidget *notebook)
 		"----------------------------\n"
 		"See doc\\TextualDictionaryFileFormat in source tarball for information about Textual StarDict dictionary.\n"
 		"\n"
-		"\nFor converting Babylon (.bgl) files to StarDict format use PyGlossary. "
-		"See http://code.google.com/p/stardict-3/wiki/ConvertBabylon\n"
+		"\nFor converting Babylon (.bgl) files to StarDict format use PyGlossary. See http://code.google.com/p/stardict-3/wiki/ConvertBabylon\n"
+		"\nFor converting Lingvo (.dsl) files to StarDict format use makedict. See http://code.google.com/p/stardict-3/wiki/ConvertLingvo\n"
 		, -1);
 	GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_set_size_request(scrolled_window, -1, 250);
@@ -253,6 +286,8 @@ static void create_compile_page(GtkWidget *notebook)
 	compile_page_combo_box = gtk_combo_box_text_new();
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Tab file");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Babylon file");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "BGL file");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "DSL file");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(compile_page_combo_box), "Textual StarDict dictionary");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(compile_page_combo_box), 0);
 	gtk_box_pack_start(GTK_BOX(hbox), compile_page_combo_box, true, false, 0);

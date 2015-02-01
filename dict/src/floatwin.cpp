@@ -1102,7 +1102,7 @@ void FloatWin::show_popup_menu(GdkEventButton * event)
 void FloatWin::set_transparent(int transparent)
 {
 	g_assert(0 <= transparent && transparent <= 100);
-	gtk_window_set_opacity(GTK_WINDOW(FloatWindow), (100-transparent)/100.0);
+	gtk_widget_set_opacity(GTK_WIDGET(FloatWindow), (100-transparent)/100.0);
 }
 
 void FloatWin::set_bg(void)

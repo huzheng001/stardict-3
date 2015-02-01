@@ -6,6 +6,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
 	TODO 			\
+	INSTALL			\
 	autogen.sh		\
 	stardict.spec.in stardict-withoutgnome.spec.in \
 	dictionary.spec	\
