@@ -81,7 +81,7 @@ AC_ARG_ENABLE([gucharmap],
 	[enable_gucharmap=yes])
 
 if test "x$enable_gucharmap" = "xyes" ; then
-	PKG_CHECK_MODULES(GUCHARMAP, [gucharmap-2], have_gucharmap=yes, have_gucharmap=no)
+	PKG_CHECK_MODULES(GUCHARMAP, [gucharmap-2.90], have_gucharmap=yes, have_gucharmap=no)
 	if test "x$have_gucharmap" = "xyes"; then
 		GUCHARMAP_CFLAGS="${GUCHARMAP_CFLAGS}"
 		GUCHARMAP_LIBS="${GUCHARMAP_LIBS}"
