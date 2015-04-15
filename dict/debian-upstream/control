@@ -3,7 +3,7 @@ Section: utils
 Priority: optional
 Maintainer: Roy Hiu-yeung Chan <hychan@glink.net.hk>
 Uploaders: Anthony Fok <foka@debian.org>, Andrew Lee <andrew@linux.org.tw>
-Build-Depends: debhelper (>= 8), python-dev, python-support (>= 0.4), libgtk2.0-dev, libgnome2-dev, scrollkeeper, libbonobo2-dev, libgconf2-dev, liborbit2-dev, zlib1g-dev, sharutils, libxml-parser-perl, libx11-dev, libsigc++-2.0-dev, libespeak-dev, libenchant-dev
+Build-Depends: debhelper (>= 8), python-dev, python-support (>= 0.4), libgtk3.0-dev, libgnome2-dev, scrollkeeper, libbonobo2-dev, libgconf2-dev, liborbit2-dev, zlib1g-dev, sharutils, libxml-parser-perl, libx11-dev, libsigc++-2.0-dev, libespeak-dev, libenchant-dev libgucharmap-2-90-dev
 Standards-Version: 3.9.2
 
 Package: stardict

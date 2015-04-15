@@ -1,9 +1,10 @@
 2015.
-StarDict-4.0.0 (Nice) released.
+StarDict-4.0.0 (MasterWork) released.
 Add some babylon dictionaries.
 Add some BigDict dictionaries.
 Add some PowerWord dictionaries.
 Port to gtk3!
+Thanks Anatoly Sova <anatoliysova@gmail.com> for the bgl and dsl convert patch!
 
 2015.1.27
 StarDict-3.0.6 (Cool) released.
