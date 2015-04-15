@@ -362,7 +362,7 @@ void AppCore::Create(const gchar *queryword)
 		gtk_window_maximize(GTK_WINDOW(window));
 	int transparent=conf->get_int_at("main_window/transparent");
 	if (transparent != 0)
-		gtk_window_set_opacity(GTK_WINDOW(window), (100-transparent)/100.0);
+		gtk_widget_set_opacity(window, (100-transparent)/100.0);
 	gtk_window_set_title (GTK_WINDOW (window), _("StarDict"));
 	gtk_window_set_icon(GTK_WINDOW(window),
 			    get_impl(oAppSkin.icon));

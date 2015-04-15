@@ -40,7 +40,6 @@ build-stamp:
 		--sysconfdir=/etc \
 		--localstatedir=/var \
 		--disable-schemas-install \
-		--disable-gucharmap \
 		--disable-dictdotcn \
 		--disable-festival \
 		--disable-tools

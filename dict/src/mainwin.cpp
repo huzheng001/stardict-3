@@ -1971,6 +1971,7 @@ void TextWin::Create(GtkWidget *vbox)
 	gtk_container_add(GTK_CONTAINER(btClose), image);
 	gtk_button_set_relief(btClose, GTK_RELIEF_NONE);
 	gtk_widget_set_can_focus(GTK_WIDGET(btClose), FALSE);
+	gtk_widget_set_tooltip_text(GTK_WIDGET(btClose), _("Close"));
 	g_signal_connect(G_OBJECT(btClose), "clicked",
 		G_CALLBACK(OnCloseSearchPanel), this);
 	gtk_box_pack_start(GTK_BOX(hbSearchPanel), GTK_WIDGET(btClose), FALSE, FALSE, 3);
@@ -1985,6 +1986,7 @@ void TextWin::Create(GtkWidget *vbox)
 	gtk_widget_show(GTK_WIDGET(btFind));
 	gtk_button_set_relief(btFind, GTK_RELIEF_NONE);
 	gtk_widget_set_can_focus(GTK_WIDGET(btFind), FALSE);
+	gtk_widget_set_tooltip_text(GTK_WIDGET(btFind), _("Find"));
 	g_signal_connect(G_OBJECT(btFind), "clicked",
 		G_CALLBACK(OnFindSearchPanel), this);
 
