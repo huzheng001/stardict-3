@@ -185,7 +185,7 @@ gpointer Socket::dns_thread(gpointer data)
     ret2 = gethostbyname_r(query_data->host.c_str(), &hostinfo, buf,
         sizeof(buf), &phost, &ret);
 
-    if (ret2 == 0 && ret == 0 && phost != NULL) {
+    if (ret2 == 0 && ret == 0 && phost != NULL) {   // classical code!
         query_data->sa = ((in_addr*)(hostinfo.h_addr))->s_addr;
         query_data->resolved = true;
     } else {
