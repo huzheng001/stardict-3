@@ -124,8 +124,8 @@ private:
   static void on_setup_dictionary_export_browse_button_clicked(GtkButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_do_not_add_bad_dict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
-  static void on_setup_dictionary_add_new_dict_in_active_group_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
-  static void on_setup_dictionary_add_new_plugin_in_active_group_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  //static void on_setup_dictionary_add_new_dict_in_active_group_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
+  //static void on_setup_dictionary_add_new_plugin_in_active_group_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #if defined(_WIN32)
 	static void on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif

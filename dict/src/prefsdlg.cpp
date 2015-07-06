@@ -866,6 +866,7 @@ void PrefsDlg::setup_dictionary_dict_management()
 	g_signal_connect(G_OBJECT(ck_btn), "toggled",
 			 G_CALLBACK(on_setup_dictionary_do_not_add_bad_dict_ckbutton_toggled), this);
 
+/*
 	ck_btn =
 		gtk_check_button_new_with_mnemonic(_("Add new _dictionaries to active dictionary group."));
 	gtk_box_pack_start(GTK_BOX(vbox1), ck_btn, FALSE, FALSE, 0);
@@ -880,6 +881,7 @@ void PrefsDlg::setup_dictionary_dict_management()
 	conf->get_bool_at("dictionary/add_new_plugin_in_active_group"));
 	g_signal_connect(G_OBJECT(ck_btn), "toggled",
 		 G_CALLBACK(on_setup_dictionary_add_new_plugin_in_active_group_ckbutton_toggled), this);
+*/
 }
 
 void PrefsDlg::on_setup_dictionary_do_not_add_bad_dict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
@@ -888,6 +890,7 @@ void PrefsDlg::on_setup_dictionary_do_not_add_bad_dict_ckbutton_toggled(GtkToggl
 	conf->set_bool_at("dictionary/do_not_load_bad_dict", enable);
 }
 
+/*
 void PrefsDlg::on_setup_dictionary_add_new_dict_in_active_group_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
 	gboolean enable = gtk_toggle_button_get_active(button);
@@ -899,6 +902,7 @@ void PrefsDlg::on_setup_dictionary_add_new_plugin_in_active_group_ckbutton_toggl
 	gboolean enable = gtk_toggle_button_get_active(button);
 	conf->set_bool_at("dictionary/add_new_plugin_in_active_group", enable);
 }
+*/
 
 void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
