@@ -182,8 +182,8 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/dictionary/enable_collation", false);
 	add_entry("/apps/stardict/preferences/dictionary/collate_function", 0);
 	add_entry("/apps/stardict/preferences/dictionary/do_not_load_bad_dict", true);
-	add_entry("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group", true);
-	add_entry("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group", true);
+	//add_entry("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group", true);
+	//add_entry("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group", true);
 
 #if defined(_WIN32)
 	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command

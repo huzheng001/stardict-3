@@ -3,6 +3,12 @@ desktop_in_files = stardict.desktop.in
 desktop_DATA 	 = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
+@INTLTOOL_XML_RULE@
+appdatadir = $(datarootdir)/appdata
+appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+appdata_in_files = stardict.appdata.xml.in
+
+
 if GNOME_SUPPORT
 schemasdir	 = @GCONF_SCHEMA_FILE_DIR@
 schemas_in_files = stardict.schemas.in
@@ -30,7 +36,8 @@ endif
 CLEANFILES = \
 	$(server_DATA) \
 	$(desktop_DATA)	\
-	$(schemas_DATA)
+	$(schemas_DATA) \
+	$(appdata_DATA)
 
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
