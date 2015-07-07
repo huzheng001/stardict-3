@@ -3,6 +3,7 @@
 data/GNOME_Stardict.server.in
 data/stardict.desktop.in
 data/stardict.schemas.in
+data/stardict.appdata.xml.in
 src/articleview.cpp
 src/cmdlineopts.cpp
 src/conf.cpp

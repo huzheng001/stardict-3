@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Hu Zheng <huzheng001@gmail.com> -->
+<component type="desktop">
+  <id>stardict.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+  <_name>StarDict</_name>
+  <_summary>Lookup words in dictionaries</_summary>
+ <description>
+  <_p>
+  StarDict is a Cross-Platform and international dictionary written in Gtk.
+  </_p>
+  <_p>
+  It has powerful features such as "Glob-style pattern matching", "Scan
+  selection word", "Fuzzy query", etc.
+  </_p>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>http://stardict-4.sourceforge.net/images/main.png</image>
+   <caption>The main window showing the application in action</caption>
+  </screenshot>
+ </screenshots>
+  <url type="homepage">http://stardict-4.sourceforge.net/</url>
+  <developer_name>Hu Zheng</developer_name>
+  <url type="bugtracker">https://code.google.com/p/stardict-3/issues/list</url>
+  <url type="donation">http://www.huzheng.org/donate.php</url>
+  <updatecontact>huzheng001@gmail.com</updatecontact>
+  <project_group>GNOME</project_group>
+</component>
