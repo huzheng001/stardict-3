@@ -462,7 +462,7 @@ void UpdateConfigXML(
 		= dictinfo.set_active_group(
 			conf->get_string("/apps/stardict/manage_dictionaries/dict_default_group"));
 	
-	if(conf->get_bool("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group")) {
+	//if(conf->get_bool("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group")) {
 		// add new dictionaries to the active group
 		for (std::list<DictItemId>::const_iterator j = dict_new_install_list.begin(); j != dict_new_install_list.end(); ++j) {
 			DictManageItem item;
@@ -472,8 +472,8 @@ void UpdateConfigXML(
 			iactivegroup->querydict.push_back(item);
 			iactivegroup->scandict.push_back(item);
 		}
-	}
-	if(conf->get_bool("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group")) {
+	//}
+	//if(conf->get_bool("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group")) {
 		// add new plugins to the active group
 		for(std::list<DictItemId>::const_iterator j=plugin_new_install_list.begin(); j != plugin_new_install_list.end(); ++j) {
 			size_t iPlugin;
@@ -493,7 +493,7 @@ void UpdateConfigXML(
 				iactivegroup->scandict.push_back(item);
 			}
 		}
-	}
+	//}
 	std::string newxml;
 	InfoToConfigXml(newxml, dictinfo);
 	conf->set_string("/apps/stardict/manage_dictionaries/dict_config_xml", newxml);
