@@ -435,7 +435,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 {
 	g_debug(_("Loading Dict.cn plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Dict.cn plugin version doesn't match!\n");
+		g_print(_("Error: Dict.cn plugin version doesn't match!\n"));
 		return true;
 	}
 	obj->type = StarDictPlugInType_NETDICT;

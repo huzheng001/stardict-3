@@ -409,7 +409,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	g_debug(_("Loading Gucharmap plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Gucharmap plugin version doesn't match!\n");
+		g_print(_("Error: Gucharmap plugin version doesn't match!\n"));
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;

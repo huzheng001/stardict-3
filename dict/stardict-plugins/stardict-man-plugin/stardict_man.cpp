@@ -209,7 +209,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
 	g_debug(_("Loading Man plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print("Error: Man plugin version doesn't match!\n");
+		g_print(_("Error: Man plugin version doesn't match!\n"));
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
