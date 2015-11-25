@@ -134,7 +134,7 @@ public:
 	GtkWidget *window;
 
 	DictManageDlg(GtkWindow *parent_win, GdkPixbuf *dicts_icon, GdkPixbuf *tree_dicts_icon);
-	bool Show(bool &dictmanage_config_changed_);
+	bool ShowModal(bool &dictmanage_config_changed_);
 	void Close();
 	void network_getdictmask(const char *xml);
 	void network_getadinfo(const char *xml);

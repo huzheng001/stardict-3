@@ -1961,18 +1961,22 @@ void AppCore::reload_dicts()
 void AppCore::PopupDictManageDlg()
 {
 
-	if (!dict_manage_dlg)
+	if (!dict_manage_dlg) {
 		dict_manage_dlg = new DictManageDlg(GTK_WINDOW(window), get_impl(oAppSkin.index_wazard), get_impl(oAppSkin.index_appendix));
-	bool dictmanage_config_changed;
-	if (dict_manage_dlg->Show(dictmanage_config_changed))
-		return;
-	if (dictmanage_config_changed) {
-		progress_win pw(GTK_WINDOW(gpAppFrame->window));
-		reload_show_progress_t rsp(pw);
-		show_progress_t *old_progress = oLibs.get_show_progress();
-		oLibs.set_show_progress(&rsp);
-		reload_dicts();
-		oLibs.set_show_progress(old_progress);
+		bool dictmanage_config_changed;
+		bool exiting = dict_manage_dlg->ShowModal(dictmanage_config_changed);
+		delete dict_manage_dlg;
+		dict_manage_dlg = NULL;
+		if (exiting)
+			return;
+		if (dictmanage_config_changed) {
+			progress_win pw(GTK_WINDOW(gpAppFrame->window));
+			reload_show_progress_t rsp(pw);
+			show_progress_t *old_progress = oLibs.get_show_progress();
+			oLibs.set_show_progress(&rsp);
+			reload_dicts();
+			oLibs.set_show_progress(old_progress);
+		}
 	}
 }
 

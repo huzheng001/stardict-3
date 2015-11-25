@@ -2573,232 +2573,231 @@ void DictManageDlg::on_network_dict_name_column_clicked(GtkTreeViewColumn *treev
 	oDictManageDlg->network_dictmask_changed = true;
 }
 
-bool DictManageDlg::Show(bool &dictmanage_config_changed_)
+bool DictManageDlg::ShowModal(bool &dictmanage_config_changed_)
 {
-	if (!window) {
-		window = gtk_dialog_new();
-		gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
+	window = gtk_dialog_new();
+	gtk_window_set_transient_for(GTK_WINDOW(window), parent_win);
 
-		gtk_dialog_add_button(GTK_DIALOG(window),
+	gtk_dialog_add_button(GTK_DIALOG(window),
 			GTK_STOCK_HELP,
 			GTK_RESPONSE_HELP);
 	
-		gtk_dialog_add_button (GTK_DIALOG (window),
+	gtk_dialog_add_button (GTK_DIALOG (window),
 			GTK_STOCK_CLOSE,
 			GTK_RESPONSE_CLOSE);
-		gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_CLOSE);
-		g_signal_connect(G_OBJECT(window), "response",
+	gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_CLOSE);
+	g_signal_connect(G_OBJECT(window), "response",
 			G_CALLBACK(response_handler), this);
 		
-		GtkWidget *vbox;
+	GtkWidget *vbox;
 #ifdef CONFIG_GPE
 #if GTK_MAJOR_VERSION >= 3
-		vbox = gtk_vbox_new (FALSE, 2);
+	vbox = gtk_vbox_new (FALSE, 2);
 #else
-		vbox = gtk_vbox_new(false,2);
+	vbox = gtk_vbox_new(false,2);
 #endif
-		gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 #else
 #if GTK_MAJOR_VERSION >= 3
-		vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 #else
-		vbox = gtk_vbox_new(false,6);
+	vbox = gtk_vbox_new(false,6);
 #endif
-		gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 10);
 #endif
 		
 #if GTK_MAJOR_VERSION >= 3
-		GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
+	GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 3);
 #else
-		GtkWidget *hbox = gtk_hbox_new(false, 3);
+	GtkWidget *hbox = gtk_hbox_new(false, 3);
 #endif
-		gtk_box_pack_start(GTK_BOX(vbox),hbox, false, false, 0);
+	gtk_box_pack_start(GTK_BOX(vbox),hbox, false, false, 0);
 		
-		dict_list_button = gtk_radio_button_new(NULL);
-		gtk_widget_set_can_focus (dict_list_button, FALSE);
-		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(dict_list_button), false);
-		gtk_box_pack_start (GTK_BOX (hbox), dict_list_button, false, false, 0);
+	dict_list_button = gtk_radio_button_new(NULL);
+	gtk_widget_set_can_focus (dict_list_button, FALSE);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(dict_list_button), false);
+	gtk_box_pack_start (GTK_BOX (hbox), dict_list_button, false, false, 0);
 #if GTK_MAJOR_VERSION >= 3
-		GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		GtkWidget *hbox1 = gtk_hbox_new(false, 2);
+	GtkWidget *hbox1 = gtk_hbox_new(false, 2);
 #endif
-		gtk_container_add (GTK_CONTAINER (dict_list_button), hbox1);
-		GtkWidget *image = gtk_image_new_from_pixbuf(dicts_icon);
-		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-		GtkWidget *label = gtk_label_new_with_mnemonic(_("D_ict List"));
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), dict_list_button);
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dict_list_button), true);
-		g_signal_connect(G_OBJECT(dict_list_button),"toggled", G_CALLBACK(on_dict_list_button_toggled), this);
+	gtk_container_add (GTK_CONTAINER (dict_list_button), hbox1);
+	GtkWidget *image = gtk_image_new_from_pixbuf(dicts_icon);
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	GtkWidget *label = gtk_label_new_with_mnemonic(_("D_ict List"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), dict_list_button);
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dict_list_button), true);
+	g_signal_connect(G_OBJECT(dict_list_button),"toggled", G_CALLBACK(on_dict_list_button_toggled), this);
 		
-		manage_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(dict_list_button));
-		gtk_widget_set_can_focus (manage_button, FALSE);
-		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(manage_button), false);
-		gtk_box_pack_start (GTK_BOX (hbox), manage_button, false, false, 0);
+	manage_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(dict_list_button));
+	gtk_widget_set_can_focus (manage_button, FALSE);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(manage_button), false);
+	gtk_box_pack_start (GTK_BOX (hbox), manage_button, false, false, 0);
 #if GTK_MAJOR_VERSION >= 3
-		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		hbox1 = gtk_hbox_new(false, 2);
+	hbox1 = gtk_hbox_new(false, 2);
 #endif
-		gtk_container_add (GTK_CONTAINER (manage_button), hbox1);
-		image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_SMALL_TOOLBAR);
-		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-		label = gtk_label_new_with_mnemonic(_("Manage _Dict"));
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), manage_button);
-		g_signal_connect(G_OBJECT(manage_button),"toggled", G_CALLBACK(on_manage_button_toggled), this);
+	gtk_container_add (GTK_CONTAINER (manage_button), hbox1);
+	image = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	label = gtk_label_new_with_mnemonic(_("Manage _Dict"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), manage_button);
+	g_signal_connect(G_OBJECT(manage_button),"toggled", G_CALLBACK(on_manage_button_toggled), this);
 
-		tree_dict_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(manage_button));
-		gtk_widget_set_can_focus (tree_dict_button, FALSE);
-		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(tree_dict_button), false);
-		gtk_box_pack_start (GTK_BOX (hbox), tree_dict_button, false, false, 0);
+	tree_dict_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(manage_button));
+	gtk_widget_set_can_focus (tree_dict_button, FALSE);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(tree_dict_button), false);
+	gtk_box_pack_start (GTK_BOX (hbox), tree_dict_button, false, false, 0);
 #if GTK_MAJOR_VERSION >= 3
-		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		hbox1 = gtk_hbox_new(false, 2);
+	hbox1 = gtk_hbox_new(false, 2);
 #endif
-		gtk_container_add (GTK_CONTAINER (tree_dict_button), hbox1);
-		image = gtk_image_new_from_pixbuf(tree_dicts_icon);
-		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-		label = gtk_label_new_with_mnemonic(_("T_ree dictionaries"));
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), tree_dict_button);
-		g_signal_connect(G_OBJECT(tree_dict_button),"toggled", G_CALLBACK(on_tree_dict_button_toggled), this);
+	gtk_container_add (GTK_CONTAINER (tree_dict_button), hbox1);
+	image = gtk_image_new_from_pixbuf(tree_dicts_icon);
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	label = gtk_label_new_with_mnemonic(_("T_ree dictionaries"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), tree_dict_button);
+	g_signal_connect(G_OBJECT(tree_dict_button),"toggled", G_CALLBACK(on_tree_dict_button_toggled), this);
 		
-		GtkWidget *network_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(tree_dict_button));
-		gtk_widget_set_can_focus (network_button, FALSE);
-		gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(network_button), false);
-		gtk_box_pack_start (GTK_BOX (hbox), network_button, false, false, 0);
+	GtkWidget *network_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(tree_dict_button));
+	gtk_widget_set_can_focus (network_button, FALSE);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(network_button), false);
+	gtk_box_pack_start (GTK_BOX (hbox), network_button, false, false, 0);
 #if GTK_MAJOR_VERSION >= 3
-		hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
+	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		hbox1 = gtk_hbox_new(false, 2);
+	hbox1 = gtk_hbox_new(false, 2);
 #endif
-		gtk_container_add (GTK_CONTAINER (network_button), hbox1);
-		image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_SMALL_TOOLBAR);
-		gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
-		label = gtk_label_new_with_mnemonic(_("_Network dictionaries"));
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
-		gtk_label_set_mnemonic_widget(GTK_LABEL(label), network_button);
-		g_signal_connect(G_OBJECT(network_button),"toggled", G_CALLBACK(on_network_button_toggled), this);
+	gtk_container_add (GTK_CONTAINER (network_button), hbox1);
+	image = gtk_image_new_from_stock(GTK_STOCK_NETWORK, GTK_ICON_SIZE_SMALL_TOOLBAR);
+	gtk_box_pack_start (GTK_BOX (hbox1), image, FALSE, FALSE, 0);
+	label = gtk_label_new_with_mnemonic(_("_Network dictionaries"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+	gtk_label_set_mnemonic_widget(GTK_LABEL(label), network_button);
+	g_signal_connect(G_OBJECT(network_button),"toggled", G_CALLBACK(on_network_button_toggled), this);
 #ifdef CONFIG_GPE
 #if GTK_MAJOR_VERSION >= 3
-		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 #else
-		hbox = gtk_hbox_new (FALSE, 2);
+	hbox = gtk_hbox_new (FALSE, 2);
 #endif
 #else
 #if GTK_MAJOR_VERSION >= 3
-		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 18);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 18);
 #else
-		hbox = gtk_hbox_new (FALSE, 18);
+	hbox = gtk_hbox_new (FALSE, 18);
 #endif
 #endif
-		gtk_box_pack_start (GTK_BOX (vbox), hbox, true, true, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, true, true, 0);
 		
-		notebook = gtk_notebook_new();
-		gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
-		gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), false);
+	notebook = gtk_notebook_new();
+	gtk_box_pack_start(GTK_BOX(hbox),notebook, true, true, 0);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), false);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook), false);
 		
-		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_DictList), NULL);
-		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dictmanage_tree(), NULL);
-		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_TreeDict), NULL);
-		gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_NetworkDict), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_DictList), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dictmanage_tree(), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_TreeDict), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_NetworkDict), NULL);
 		
-		popup_menu = gtk_menu_new();
-		GtkWidget *menuitem;
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
-		image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
-		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_show_info_activate), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
-		menuitem = gtk_separator_menu_item_new();
-		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("Select _All"));
-		image = gtk_image_new_from_stock(GTK_STOCK_SELECT_ALL, GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
-		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_select_all_activate), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
-		menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Unselect all"));
-		image = gtk_image_new_from_stock(GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
-		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_unselect_all_activate), this);
-		gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
-		gtk_widget_show_all(popup_menu);
+	popup_menu = gtk_menu_new();
+	GtkWidget *menuitem;
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
+	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_show_info_activate), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+	menuitem = gtk_separator_menu_item_new();
+	gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("Select _All"));
+	image = gtk_image_new_from_stock(GTK_STOCK_SELECT_ALL, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_select_all_activate), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Unselect all"));
+	image = gtk_image_new_from_stock(GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_unselect_all_activate), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu), menuitem);
+	gtk_widget_show_all(popup_menu);
 
-		button_notebook = gtk_notebook_new();
-		gtk_box_pack_start (GTK_BOX (hbox), button_notebook, false, false, 0);
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(button_notebook), false);
-		gtk_notebook_set_show_border(GTK_NOTEBOOK(button_notebook), false);
-		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
-		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_dictmanage_buttons(), NULL);
-		gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
+	button_notebook = gtk_notebook_new();
+	gtk_box_pack_start (GTK_BOX (hbox), button_notebook, false, false, 0);
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(button_notebook), false);
+	gtk_notebook_set_show_border(GTK_NOTEBOOK(button_notebook), false);
+	gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_buttons(), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_dictmanage_buttons(), NULL);
+	gtk_notebook_append_page(GTK_NOTEBOOK(button_notebook), create_network_buttons(), NULL);
 		
 #if GTK_MAJOR_VERSION >= 3
-		hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 #else
-		hbox = gtk_hbox_new (FALSE, 6);
+	hbox = gtk_hbox_new (FALSE, 6);
 #endif
-		gtk_box_pack_start (GTK_BOX (vbox), hbox, false, false, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, false, false, 0);
 #if GTK_MAJOR_VERSION >= 3
-		download_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+	download_hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 #else
-		download_hbox = gtk_hbox_new(FALSE, 0);
+	download_hbox = gtk_hbox_new(FALSE, 0);
 #endif
-		gtk_box_pack_start (GTK_BOX (hbox), download_hbox, FALSE, FALSE, 0);
-		label = gtk_label_new(_("Visit "));
-		gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
-		label = gtk_label_new(NULL);
-		gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">http://www.stardict.org</span>");
-		GtkWidget *download_eventbox = gtk_event_box_new();
-		g_signal_connect(G_OBJECT(download_eventbox),"button-release-event", G_CALLBACK(on_download_eventbox_clicked), this);
-		gtk_container_add(GTK_CONTAINER(download_eventbox), label);
-		gtk_box_pack_start (GTK_BOX (download_hbox), download_eventbox, FALSE, FALSE, 0);
-		label = gtk_label_new(_(" to download dictionaries!"));
-		gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), download_hbox, FALSE, FALSE, 0);
+	label = gtk_label_new(_("Visit "));
+	gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
+	label = gtk_label_new(NULL);
+	gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">http://www.stardict.org</span>");
+	GtkWidget *download_eventbox = gtk_event_box_new();
+	g_signal_connect(G_OBJECT(download_eventbox),"button-release-event", G_CALLBACK(on_download_eventbox_clicked), this);
+	gtk_container_add(GTK_CONTAINER(download_eventbox), label);
+	gtk_box_pack_start (GTK_BOX (download_hbox), download_eventbox, FALSE, FALSE, 0);
+	label = gtk_label_new(_(" to download dictionaries!"));
+	gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
 
-		info_label = gtk_label_new (NULL);
-		gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
-		g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
-		gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
+	info_label = gtk_label_new (NULL);
+	gtk_label_set_justify (GTK_LABEL (info_label), GTK_JUSTIFY_LEFT);
+	g_object_set (G_OBJECT (info_label), "xalign", 0.0, NULL);
+	gtk_box_pack_start (GTK_BOX (hbox), info_label, FALSE, FALSE, 0);
 
-		upgrade_label = gtk_label_new(NULL);
-		gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", _("Upgrade Now!"));
-		gtk_label_set_markup(GTK_LABEL(upgrade_label), markup);
-		g_free(markup);
-		upgrade_eventbox = gtk_event_box_new();
-		g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
-		gtk_container_add(GTK_CONTAINER(upgrade_eventbox), upgrade_label);
-		gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
+	upgrade_label = gtk_label_new(NULL);
+	gchar *markup = g_markup_printf_escaped("<span foreground=\"blue\" underline=\"single\">%s</span>", _("Upgrade Now!"));
+	gtk_label_set_markup(GTK_LABEL(upgrade_label), markup);
+	g_free(markup);
+	upgrade_eventbox = gtk_event_box_new();
+	g_signal_connect(G_OBJECT(upgrade_eventbox),"button-release-event", G_CALLBACK(on_upgrade_eventbox_clicked), this);
+	gtk_container_add(GTK_CONTAINER(upgrade_eventbox), upgrade_label);
+	gtk_box_pack_start (GTK_BOX (hbox), upgrade_eventbox, FALSE, FALSE, 0);
 		
-		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), vbox, true, true, 0);
-		gtk_widget_show_all(gtk_dialog_get_content_area(GTK_DIALOG (window)));
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(GTK_DIALOG (window))), vbox, true, true, 0);
+	gtk_widget_show_all(gtk_dialog_get_content_area(GTK_DIALOG (window)));
 
-		GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
-		gtk_widget_realize(download_eventbox);
-		gdk_window_set_cursor(gtk_widget_get_window(download_eventbox), cursor);
-		gtk_widget_realize(upgrade_eventbox);
-		gdk_window_set_cursor(gtk_widget_get_window(upgrade_eventbox), cursor);
+	GdkCursor* cursor = gdk_cursor_new(GDK_HAND2);
+	gtk_widget_realize(download_eventbox);
+	gdk_window_set_cursor(gtk_widget_get_window(download_eventbox), cursor);
+	gtk_widget_realize(upgrade_eventbox);
+	gdk_window_set_cursor(gtk_widget_get_window(upgrade_eventbox), cursor);
 #if GTK_MAJOR_VERSION >= 3
-		g_object_unref(cursor);
+	g_object_unref(cursor);
 #else
-		gdk_cursor_unref(cursor);
+	gdk_cursor_unref(cursor);
 #endif
 
-		gtk_widget_hide(info_label);
-		gtk_widget_hide(upgrade_eventbox);
+	gtk_widget_hide(info_label);
+	gtk_widget_hide(upgrade_eventbox);
 	
-		gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));
-	}
+	gtk_window_set_title(GTK_WINDOW (window), _("Manage Dictionaries"));
+
 	max_dict_count = -1;
 	if (gtk_notebook_get_current_page(GTK_NOTEBOOK(this->notebook)) == 3) {
 		STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
@@ -2826,7 +2825,8 @@ bool DictManageDlg::Show(bool &dictmanage_config_changed_)
 		// Caused by gtk_widget_destroy(), quitting.
 		return true;
 	} else {
-		gtk_widget_hide(GTK_WIDGET(window));
+		gtk_widget_destroy(GTK_WIDGET(window));
+		window = NULL;
 		return false;
 	}
 }
