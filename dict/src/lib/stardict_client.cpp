@@ -36,6 +36,14 @@
 
 #include "stardict_client.h"
 
+
+// StarDict dictionary server document:
+// http://stardict-4.sourceforge.net/StarDict-Protocol
+
+// http://stardictd.sourceforge.net
+
+
+
 #define PROTOCOL_VERSION "0.3"
 
 #define CODE_HELLO                   220 /* text msg-id */

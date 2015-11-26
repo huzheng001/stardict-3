@@ -1088,9 +1088,15 @@ inline const gchar *synonym_file::read_first_on_page_key(glong page_idx)
                 minsize = page_size;
 	}
 	size_t fread_size;
-	fread_size = fread(wordentry_buf, minsize, 1, synfile); //TODO: check returned values, deal with word entry that strlen>255.
+	fread_size = fread(wordentry_buf, minsize, 1, synfile);
 	if (fread_size != 1) {
 		g_print("fread error!\n");
+	}
+	if(!check_key_str_len(wordentry_buf, minsize)) {
+		wordentry_buf[minsize-1] = '\0';
+		g_critical("Synonym index key length exceeds allowed limit. Synonym key: %s, "
+			"max length = %i", wordentry_buf, MAX_INDEX_KEY_SIZE - 1);
+		return NULL;
 	}
 	return wordentry_buf;
 }
