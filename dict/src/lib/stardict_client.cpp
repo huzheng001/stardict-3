@@ -972,7 +972,7 @@ int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
         if (status != CODE_OK) {
 	    g_free(buf);
             on_error_.emit(_("You haven't setup the account. Please open the \"Net Dict\" page in the Preferences dialog and register an account first."));
-            return 0;
+            return 1; // cool.
         }
 	g_free(buf);
 	cmd->reading_status = 1;
