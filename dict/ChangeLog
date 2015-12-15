@@ -4,6 +4,7 @@ Add some babylon dictionaries.
 Add some BigDict dictionaries.
 Add some PowerWord dictionaries.
 Port to gtk3!
+Stardict_client add md5 salt feature! As StarDict-Protocol_v04.
 Thanks Anatoly Sova <anatoliysova@gmail.com> for the bgl and dsl convert patch!
 
 2015.1.27

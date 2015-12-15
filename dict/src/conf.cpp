@@ -114,7 +114,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/server", std::string(_("dict.stardict.org")));
 	add_entry("/apps/stardict/preferences/network/port", 2628);
 	add_entry("/apps/stardict/preferences/network/user", std::string());
-	add_entry("/apps/stardict/preferences/network/md5passwd", std::string());
+	add_entry("/apps/stardict/preferences/network/md5saltpasswd", std::string());
 	// may store relative path
 	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);

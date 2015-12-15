@@ -106,7 +106,7 @@ namespace STARDICT {
 		int command;
 		struct AuthInfo {
 			std::string user;
-			std::string passwd;
+			std::string md5saltpasswd;
 		};
 		union {
 			char *data;
@@ -172,7 +172,7 @@ public:
 	~StarDictClient();
 
 	void set_server(const char *host, int port = 2628);
-	void set_auth(const char *user, const char *md5passwd);
+	void set_auth(const char *user, const char *md5saltpasswd);
 	bool try_cache(STARDICT::Cmd *c);
 	void send_commands(int num, ...);
 	void try_cache_or_send_commands(int num, ...);
@@ -186,7 +186,7 @@ private:
 	bool host_resolved;
 	in_addr_t sa;
 	std::string user_;
-	std::string md5passwd_;
+	std::string md5saltpasswd_;
 	bool is_connected_;
 	bool waiting_banner_;
 	std::list<STARDICT::Cmd *> cmdlist;

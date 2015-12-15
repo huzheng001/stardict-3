@@ -329,9 +329,9 @@ void AppCore::Create(const gchar *queryword)
 
 	oStarDictClient.set_server(conf->get_string_at("network/server").c_str(), conf->get_int_at("network/port"));
 	const std::string &user = conf->get_string_at("network/user");
-	const std::string &md5passwd = conf->get_string_at("network/md5passwd");
-	if (!user.empty() && !md5passwd.empty()) {
-		oStarDictClient.set_auth(user.c_str(), md5passwd.c_str());
+	const std::string &md5saltpasswd = conf->get_string_at("network/md5saltpasswd");
+	if (!user.empty() && !md5saltpasswd.empty()) {
+		oStarDictClient.set_auth(user.c_str(), md5saltpasswd.c_str());
 	}
 	oStarDictClient.on_error_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_error));
 	oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));

@@ -120,7 +120,7 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	if (found) {
 		terminal2pango(definition.c_str(), pango);
 	} else {
-		pango = _("<b><span foreground=\"red\">fortune</span> program is not found!</b>");
+		pango = _("<b><span foreground=\"red\">fortune</span> program is not found! Please install it!</b>");
 	}
 	*pppWord = (gchar **)g_malloc(sizeof(gchar *)*2);
 	(*pppWord)[0] = g_strdup(text);
