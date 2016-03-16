@@ -143,21 +143,21 @@ static std::string print_pango_color(guint32 c)
 		return buf;
 }
 
-static GdkColor guint32_2_gdkcolor(guint32 c)
+static GdkRGBA guint32_2_gdkrgba(guint32 c)
 {
-	GdkColor gdkcolor;
-	gdkcolor.pixel = 0;
-	gdkcolor.red = ((c & 0xff0000) >> 16) * 0x100;
-	gdkcolor.green = ((c & 0x00ff00) >> 8) * 0x100;
-	gdkcolor.blue = ((c & 0x0000ff) >> 0) * 0x100;
-	return gdkcolor;
+	GdkRGBA gdkrgba;
+	gdkrgba.red = ((c & 0xff0000) >> 16) / (gdouble)0xff;
+	gdkrgba.green = ((c & 0x00ff00) >> 8) / (gdouble)0xff;
+	gdkrgba.blue = ((c & 0x0000ff) >> 0) / (gdouble)0xff;
+	gdkrgba.alpha = 1;
+	return gdkrgba;
 }
 
-static guint32 gdkcolor_2_guint32(GdkColor c)
+static guint32 gdkrgba_2_guint32(GdkRGBA c)
 {
-	return ((c.red / 0x100) << 16)
-		| ((c.green / 0x100) << 8)
-		| (c.blue / 0x100);
+	return (guint32((c.red * 0xff)) << 16)
+		| (guint32((c.green * 0xff)) << 8)
+		| (guint32(c.blue * 0xff));
 }
 
 static std::string generate_config_content(const ColorScheme& cs)
@@ -559,9 +559,9 @@ static void configure()
 #endif
 	GtkWidget *label = gtk_label_new(_("Abbreviation"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	GdkColor color;
-	color = guint32_2_gdkcolor(color_scheme.abr);
-	GtkWidget *colorbutton_abr = gtk_color_button_new_with_color(&color);
+	GdkRGBA color;
+	color = guint32_2_gdkrgba(color_scheme.abr);
+	GtkWidget *colorbutton_abr = gtk_color_button_new_with_rgba(&color);
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_abr, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -572,8 +572,8 @@ static void configure()
 #endif
 	label = gtk_label_new(_("Example"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	color = guint32_2_gdkcolor(color_scheme.ex);
-	GtkWidget *colorbutton_ex = gtk_color_button_new_with_color(&color);
+	color = guint32_2_gdkrgba(color_scheme.ex);
+	GtkWidget *colorbutton_ex = gtk_color_button_new_with_rgba(&color);
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_ex, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -584,8 +584,8 @@ static void configure()
 #endif
 	label = gtk_label_new(_("Extra key phrase"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	color = guint32_2_gdkcolor(color_scheme.k);
-	GtkWidget *colorbutton_k = gtk_color_button_new_with_color(&color);
+	color = guint32_2_gdkrgba(color_scheme.k);
+	GtkWidget *colorbutton_k = gtk_color_button_new_with_rgba(&color);
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_k, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -596,8 +596,8 @@ static void configure()
 #endif
 	label = gtk_label_new(_("Emphasize"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	color = guint32_2_gdkcolor(color_scheme.c);
-	GtkWidget *colorbutton_c = gtk_color_button_new_with_color(&color);
+	color = guint32_2_gdkrgba(color_scheme.c);
+	GtkWidget *colorbutton_c = gtk_color_button_new_with_rgba(&color);
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_c, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -608,8 +608,8 @@ static void configure()
 #endif
 	label = gtk_label_new(_("Reference"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-	color = guint32_2_gdkcolor(color_scheme.ref);
-	GtkWidget *colorbutton_ref = gtk_color_button_new_with_color(&color);
+	color = guint32_2_gdkrgba(color_scheme.ref);
+	GtkWidget *colorbutton_ref = gtk_color_button_new_with_rgba(&color);
 	gtk_box_pack_end(GTK_BOX(hbox), colorbutton_ref, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
@@ -617,16 +617,16 @@ static void configure()
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	gint result = gtk_dialog_run(GTK_DIALOG(window));
 	if(result == GTK_RESPONSE_OK) {
-		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_abr), &color);
-		color_scheme.abr = gdkcolor_2_guint32(color);
-		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_ex), &color);
-		color_scheme.ex = gdkcolor_2_guint32(color);
-		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_k), &color);
-		color_scheme.k = gdkcolor_2_guint32(color);
-		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_c), &color);
-		color_scheme.c = gdkcolor_2_guint32(color);
-		gtk_color_button_get_color(GTK_COLOR_BUTTON(colorbutton_ref), &color);
-		color_scheme.ref = gdkcolor_2_guint32(color);
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorbutton_abr), &color);
+		color_scheme.abr = gdkrgba_2_guint32(color);
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorbutton_ex), &color);
+		color_scheme.ex = gdkrgba_2_guint32(color);
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorbutton_k), &color);
+		color_scheme.k = gdkrgba_2_guint32(color);
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorbutton_c), &color);
+		color_scheme.c = gdkrgba_2_guint32(color);
+		gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(colorbutton_ref), &color);
+		color_scheme.ref = gdkrgba_2_guint32(color);
 		XDXFParser::fill_replace_arr();
 		const std::string confPath = get_cfg_filename();
 		const std::string contents(generate_config_content(color_scheme));

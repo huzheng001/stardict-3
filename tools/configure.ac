@@ -45,7 +45,7 @@ fi
 
 AC_SUBST(MYSQLCONFIG)
 if test "x$MYSQLCONFIG" = "xmysql_config-was-not-found-by-configure"; then
-  AC_MSG_ERROR([mysql_config wasn't found please install http://www.mysql.com ])
+  AC_MSG_ERROR([mysql_config wasn't found please install libmysqlclient-dev http://www.mysql.com ])
 else
   MYSQL_CFLAGS=`$MYSQLCONFIG --cflags`
   MYSQL_INCLUDES=`$MYSQLCONFIG --include`

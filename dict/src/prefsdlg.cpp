@@ -2133,7 +2133,7 @@ void PrefsDlg::on_setup_floatwin_color_set(GtkColorButton *widget, PrefsDlg *oPr
 {
 #if GTK_MAJOR_VERSION >= 3
 	GdkRGBA color;
-	gtk_color_button_get_rgba(widget, &color);
+	gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(widget), &color);
 	conf->set_double_at("floating_window/bg_red", color.red);
 	conf->set_double_at("floating_window/bg_green", color.green);
 	conf->set_double_at("floating_window/bg_blue", color.blue);

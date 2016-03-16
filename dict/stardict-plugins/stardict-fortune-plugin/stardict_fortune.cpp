@@ -70,6 +70,8 @@ static void terminal2pango(const char *t, std::string &pango)
 					color = "#00FFFF";
 				} else if (color_num == "37") {
 					color = "#FFFFFF";
+				} else {
+					color = "#EEEEEE"; // No reason.
 				}
 				t = p1 +1 ;
 				pango += "<span foreground=\"";
@@ -80,8 +82,14 @@ static void terminal2pango(const char *t, std::string &pango)
 					tmp_str.assign(t, p1-t);
 					pango += tmp_str;
 					t = p1 +3;
+					pango += "</span>";
+				} else {
+					pango += t;
+					pango += "</span>";
+					break;
 				}
-				pango += "</span>";
+			} else {
+				break;
 			}
 		} else {
 			pango += *t;
