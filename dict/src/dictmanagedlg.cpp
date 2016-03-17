@@ -2546,7 +2546,7 @@ GtkWidget *DictManageDlg::create_network_buttons()
 
 void DictManageDlg::on_download_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
-	show_url("http://www.stardict.org");
+	show_url("http://stardict-4.sourceforge.net");
 }
 
 void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
@@ -2757,7 +2757,7 @@ bool DictManageDlg::ShowModal(bool &dictmanage_config_changed_)
 	label = gtk_label_new(_("Visit "));
 	gtk_box_pack_start (GTK_BOX (download_hbox), label, FALSE, FALSE, 0);
 	label = gtk_label_new(NULL);
-	gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">http://www.stardict.org</span>");
+	gtk_label_set_markup(GTK_LABEL(label), "<span foreground=\"blue\" underline=\"single\">http://stardict-4.sourceforge.net</span>");
 	GtkWidget *download_eventbox = gtk_event_box_new();
 	g_signal_connect(G_OBJECT(download_eventbox),"button-release-event", G_CALLBACK(on_download_eventbox_clicked), this);
 	gtk_container_add(GTK_CONTAINER(download_eventbox), label);

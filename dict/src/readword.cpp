@@ -108,13 +108,35 @@ bool ReadWord::RealTts_canRead(const gchar *word)
 
 void ReadWord::Command_read(const gchar *word)
 {
+	const gchar *str, *p;
+	str = tts_program_cmdline.c_str();
+	p = strrchr(str, '&');
+	if (p) {
+	} else {
+		g_print(_("Wrong tts_program_cmdline string! No \'&\' at the end!\n"));
+		return;
+	}
+	p = strstr(str, "%s");
+	if (p) {
+		const gchar *p1;
+		p1 = p +2;
+		p = strchr(p1, '%');
+		if (p) {
+			g_print(_("Wrong tts_program_cmdline string! More than 1 \'%%\' in the string!\n"));
+			return;
+		}
+	} else {
+		g_print(_("Wrong tts_program_cmdline string! No \'%%s\' in the string!\n"));
+		return;
+	}
+
 	gchar *eword = g_shell_quote(word);
-	gchar *command = g_strdup_printf(tts_program_cmdline.c_str(), eword);
+	gchar *command = g_strdup_printf(str, eword);
 	g_free(eword);
 	int result;
 	result = system(command);
 	if (result == -1) {
-		g_print("system() error!\n");
+		g_print(_("system() error!\n"));
 	}
 	g_free(command);
 }

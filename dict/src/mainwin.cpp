@@ -3167,14 +3167,28 @@ void BottomWin::InternetSearch(const std::string& website)
 	if (weblist.size()!=3)
 		return;
 
-	if (weblist[2].find("%s")==std::string::npos)
-		return;
-
 	const gchar *text = gpAppFrame->oTopWin.get_text();
 	if (text[0]) {
+		const gchar *str, *p;
+		str = weblist[2].c_str();
+		p = strstr(str, "%s");
+		if (p) {
+			const gchar *p1;
+			p1 = p +2;
+			p = strchr(p1, '%');
+			if (p) {
+				g_print(_("Wrong InternetSearch URL! More than 1 \'%%\' in the string!\n"));
+				return;
+			}
+		} else {
+			g_print(_("Wrong InternetSearch URL! No \'%%s\' in the string!\n"));
+			return;
+		}
+
 		glib::CharStr esc_text(g_uri_escape_string(text, NULL, FALSE));
-		glib::CharStr url(g_strdup_printf(weblist[2].c_str(), get_impl(esc_text)));
+		glib::CharStr url(g_strdup_printf(str, get_impl(esc_text)));
 		show_url(get_impl(url));
-	} else
+	} else {
 		show_url(weblist[1].c_str());
+	}
 }
