@@ -1813,14 +1813,22 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_add_button_clicked(GtkWidget *widg
 		const gchar *website_name = gtk_entry_get_text(GTK_ENTRY(searchwebsite_add_dialog_name_entry));
 		const gchar *website_link = gtk_entry_get_text(GTK_ENTRY(searchwebsite_add_dialog_link_entry));
 		const gchar *website_searchlink = gtk_entry_get_text(GTK_ENTRY(searchwebsite_add_dialog_searchlink_entry));
-		if (!website_name[0])
+		if (!website_name[0]) {
 			error_msg = _("Please input the website name.");
-		else if (!website_link[0])
+		} else if (!website_link[0]) {
 			error_msg = _("Please input the website link.");
-		else if (!website_searchlink[0])
+		} else if (!website_searchlink[0]) {
 			error_msg = _("Please input the website search link.");
-		else if (!strstr(website_searchlink, "%s")) {
-			error_msg = _("The website search link should contain a \"%%s\" string for querying a word.");
+		} else {
+			const gchar *p;
+			p = strstr(website_searchlink, "%s");
+			if (p) {
+				if (strchr(p+2, '%')) {
+					error_msg = _("The website search link contain more than 1 \"%\" characters!");
+				}
+			} else {
+				error_msg = _("The website search link should contain a \"%s\" string for querying a word.");
+			}
 		}
 
 		if (error_msg) {
@@ -1891,7 +1899,19 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 		break;
 	case 2:
 		if (new_text[0]) {
-			if (!strstr(new_text, "%s")) {
+			const gchar *p;
+			const gchar *error_msg = NULL;
+			p = strstr(new_text, "%s");
+			if (p) {
+				if (strchr(p+2, '%')) {
+					error_msg = _("The website search link contain more than 1 \"%\" characters!");
+				}
+			} else {
+				error_msg = _("The website search link should contain a \"%%s\" string for querying a word.");
+			}
+
+
+			if (error_msg) {
 				GtkWidget *message_dlg;
 
 				message_dlg = gtk_message_dialog_new (
@@ -1899,7 +1919,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 					(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 					GTK_MESSAGE_INFO,
 					GTK_BUTTONS_OK,
-					_("The website search link should contain a \"%%s\" string for querying a word."));
+					error_msg);
 
 				gtk_dialog_set_default_response (GTK_DIALOG (message_dlg), GTK_RESPONSE_OK);
 
@@ -1907,8 +1927,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 
 				gtk_dialog_run (GTK_DIALOG (message_dlg));
 				gtk_widget_destroy (message_dlg);
-			}
-			else {
+			} else {
 				gtk_list_store_set (GTK_LIST_STORE (model), &iter, 2, new_text, -1);
 				oPrefsDlg->write_mainwin_searchwebsite_list();
 			}
