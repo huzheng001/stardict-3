@@ -5,7 +5,7 @@ StarDict version
 
 See AC_INIT macro in the configure.ac file. It looks like this:
 
-AC_INIT(stardict, 4.0.0, http://www.stardict.org)
+AC_INIT([StarDict tools], 4.0.0, [http://stardict-4.sourceforge.net])
 
 4.0.0 - is the version.
 

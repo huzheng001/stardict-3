@@ -911,6 +911,7 @@ void PrefsDlg::on_setup_dictionary_sound_ckbutton_toggled(GtkToggleButton *butto
 }
 
 #if defined(_WIN32)
+#else
 void PrefsDlg::on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
   gboolean enable = gtk_toggle_button_get_active(button);
@@ -965,6 +966,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 
 #if defined(_WIN32)
+#else
 	check_button = gtk_check_button_new_with_mnemonic(_("Always use sound play command."));
 	enable = conf->get_bool_at("dictionary/always_use_sound_play_command");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);

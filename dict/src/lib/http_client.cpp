@@ -232,7 +232,7 @@ gboolean HttpClient::on_io_in_event(GIOChannel *ch, GIOCondition cond, gpointer 
 	gsize length;
 	GError *err = NULL;
 
-	res = g_io_channel_read_to_end(http_client->channel_, &str_return, &length, &err);
+	res = g_io_channel_read_to_end(http_client->channel_, &str_return, &length, &err); // May be security bug as no max length, but gtk should fixed it!
 	if (err) {
 		gchar *str = g_strdup_printf("Error while reading reply from server: %s", err->message);
 		http_client->on_error_.emit(http_client, str);

@@ -37,6 +37,15 @@
 
 #include "desktop.h"
 
+
+#ifndef _WIN32
+#  include "canberra.h"
+#  include "canberra-gtk.h"
+#endif
+
+
+
+
 #ifndef CONFIG_GNOME
 /* Guess value of the current locale from values of environment variables
 	and system-dependent defaults.
@@ -125,48 +134,56 @@ static void spawn_command(const gchar *exe, const gchar *arg)
 void play_sound_file(const std::string& filename)
 {
 #ifdef _WIN32
-	if(!conf->get_bool_at("dictionary/always_use_sound_play_command")) {
-		std::string filename_utf8;
-		std_win_string filename_win;
-		if(file_name_to_utf8(filename, filename_utf8) 
-			&& utf8_to_windows(filename_utf8, filename_win)) {
-			/* for playing wav files only:
-			PlaySound(filename_win.c_str(), 0, SND_ASYNC | SND_FILENAME);
-	
-			mciSendString does not play ogg files.
-			The function returns 0, but no sound produced.
-			DirectShow based decoder from http://www.vorbis.com/ installed.
-			Test environment: Windows XP sp3. */
-			g_debug("play sound %s", filename_utf8.c_str());
+	std::string filename_utf8;
+	std_win_string filename_win;
+	if(file_name_to_utf8(filename, filename_utf8) 
+		&& utf8_to_windows(filename_utf8, filename_win)) {
+		/* for playing wav files only:
+		PlaySound(filename_win.c_str(), 0, SND_ASYNC | SND_FILENAME);
 
-			bool done=false;
-			MCIERROR mcierr;
-			std_win_string cmd;
-			if((mcierr = mciSendString(TEXT("close all"), NULL, 0, NULL)))
-				goto mci_error;
-			cmd = TEXT("open \"");
-			cmd += filename_win;
-			cmd += TEXT("\" alias stardict_sound");
-			if((mcierr = mciSendString(cmd.c_str(), NULL, 0, NULL)))
-				goto mci_error;
-			if((mcierr = mciSendString(TEXT("play stardict_sound"), NULL, 0, NULL)))
-				goto mci_error;
-			done = true;
-			goto mci_end;
+		mciSendString does not play ogg files.
+		The function returns 0, but no sound produced.
+		DirectShow based decoder from http://www.vorbis.com/ installed.
+		Test environment: Windows XP sp3. */
+		g_debug("play sound %s", filename_utf8.c_str());
+
+		bool done=false;
+		MCIERROR mcierr;
+		std_win_string cmd;
+		if((mcierr = mciSendString(TEXT("close all"), NULL, 0, NULL)))
+			goto mci_error;
+		cmd = TEXT("open \"");
+		cmd += filename_win;
+		cmd += TEXT("\" alias stardict_sound");
+		if((mcierr = mciSendString(cmd.c_str(), NULL, 0, NULL)))
+			goto mci_error;
+		if((mcierr = mciSendString(TEXT("play stardict_sound"), NULL, 0, NULL)))
+			goto mci_error;
+		done = true;
+		goto mci_end;
 mci_error:
-			g_warning("Play sound command failed.");
+		g_warning("Play sound command failed.");
 mci_end:
-			;
-			if(done)
-				return;
-			// else mci service failed, give the custom command a try
-		} else
-			return; // error
+		;
+		if(done) {
+			return;
+		} else { // else mci service failed.
+			PlaySound(filename_win.c_str(), 0, SND_ASYNC | SND_FILENAME);
+			return;
+		}
+
+	} else {
+		return; // error
+	}
+#else
+	if (conf->get_bool_at("dictionary/always_use_sound_play_command")) {
+		const std::string &playcmd=
+			conf->get_string_at("dictionary/sound_play_command");
+		spawn_command(playcmd.c_str(), filename.c_str());
+	} else {
+		ca_context_play(ca_gtk_context_get(), 0, CA_PROP_MEDIA_FILENAME, filename.c_str(), NULL);
 	}
 #endif
-	const std::string &playcmd=
-		conf->get_string_at("dictionary/sound_play_command");
-	spawn_command(playcmd.c_str(), filename.c_str());
 }
 
 void play_video_file(const std::string& filename)

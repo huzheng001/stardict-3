@@ -589,7 +589,7 @@ void TopWin::on_main_menu_downloaddict_activate(GtkMenuItem *menuitem, TopWin *o
 
 void TopWin::on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
-  show_url("http://www.stardict.org");
+  show_url("http://stardict-4.sourceforge.net");
 }
 
 void TopWin::on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin)

@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.52)
 
-AC_INIT([StarDict], 4.0.0, [http://www.stardict.org])
+AC_INIT([StarDict], 4.0.0, [http://stardict-4.sourceforge.net])
 AC_CONFIG_SRCDIR(src/stardict.cpp)
 AC_CONFIG_AUX_DIR([.])
 AM_INIT_AUTOMAKE([1.9 tar-ustar dist-bzip2])
@@ -302,15 +302,15 @@ AM_CONDITIONAL(MAEMO_SUPPORT, test "x${enable_maemo_support}" = "xyes")
 AM_CONDITIONAL(DARWIN_SUPPORT, test "x${enable_darwin_support}" = "xyes")
 
 if test "x${enable_gpe_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libgpewidget >= 0.109"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libcanberra libcanberra-gtk3 libgpewidget >= 0.109"
 elif test "x${enable_maemo_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libcanberra libcanberra-gtk3 gconf-2.0 >= 2.6 hildon-libs >= 0.12"
 elif test "x${enable_darwin_support}" = "xyes" ; then
-  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libcanberra libcanberra-gtk3"
 elif test "x${enable_gnome_support}" = "xno" ; then
-  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libcanberra libcanberra-gtk3"
 else
-  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libgnome-2.0 libbonobo-2.0 gconf-2.0"
+  DEP_MODULES="gtk+-3.0 glib-2.0 >= 2.32 gmodule-2.0 gthread-2.0 libcanberra libcanberra-gtk3 libgnome-2.0 libbonobo-2.0 gconf-2.0"
 fi
 
 dnl
