@@ -151,7 +151,7 @@
   <sect1 id="stardict-introduction"> 
     <title>Introduction</title> 
     <para>
-	  &app_t; is a Cross-Platform and international dictionary written in Gtk2.
+	  &app_t; is a Cross-Platform and international dictionary written in Gtk.
       It has powerful features such as "Glob-style pattern matching," "Scan selected word," "Fuzzy query," etc.
 	</para> 
   </sect1>
@@ -2688,7 +2688,7 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
       </varlistentry>
       
       <varlistentry>
-      <term><replaceable>dictname</replaceable>.ind.oft
+      <term><replaceable>dictname</replaceable>.idx.oft
       </term>
       <listitem>
       <para>Cache for the index file. This file is created by &app_t; to speedup dictionaries loading. You should not redistribute this file.</para>
@@ -2704,7 +2704,7 @@ plugin_dir=C:\\StarDict\\msvc_2008\\Debug
       </varlistentry>
       
       <varlistentry>
-      <term><replaceable>dictname</replaceable>.ind.clt
+      <term><replaceable>dictname</replaceable>.idx.clt
       </term>
       <listitem>
       <para>Collation file for the index file. This file is created by &app_t; when you use collations to modify sorting order of words. You should not redistribute this file.</para>
@@ -3232,7 +3232,7 @@ bookname: StarDict dictionary, wordcount 9
    <para>
      To find more information about
      &app_t;, please visit the <ulink
-     url="http://www.stardict.org/" type="http">StarDict Web
+     url="http://stardict-4.sourceforge.net" type="http">StarDict Web
      site</ulink>.  
    </para>
    <para>

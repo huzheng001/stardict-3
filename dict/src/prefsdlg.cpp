@@ -949,6 +949,9 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
 	GtkWidget *label;
 
+#if defined(_WIN32)
+#else
+
 #if GTK_MAJOR_VERSION >= 3
 	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 #else
@@ -965,8 +968,6 @@ void PrefsDlg::setup_dictionary_sound_page()
 	eSoundPlayCommand=GTK_ENTRY(e);
 	gtk_box_pack_start(GTK_BOX(vbox1), hbox2, FALSE, FALSE, 0);
 
-#if defined(_WIN32)
-#else
 	check_button = gtk_check_button_new_with_mnemonic(_("Always use sound play command."));
 	enable = conf->get_bool_at("dictionary/always_use_sound_play_command");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
@@ -2420,9 +2421,14 @@ bool PrefsDlg::ShowModal()
 			port = 2628;
 		conf->set_int_at("network/port", port);
 		gpAppFrame->oStarDictClient.set_server(server, port);
+
+#ifdef _WIN32
+#else
 		ch = gtk_entry_get_text(eSoundPlayCommand);
 		if (ch)
 			conf->set_string_at("dictionary/sound_play_command", ch);
+#endif
+
 		ch = gtk_entry_get_text(eVideoPlayCommand);
 		if (ch)
 			conf->set_string_at("dictionary/video_play_command", ch);

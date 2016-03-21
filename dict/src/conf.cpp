@@ -111,7 +111,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/enable_netdict", false);
 #endif
 	// Default stardictd server.
-	add_entry("/apps/stardict/preferences/network/server", std::string(_("dict.stardict.org")));
+	add_entry("/apps/stardict/preferences/network/server", std::string(_("dict.stardict.net")));
 	add_entry("/apps/stardict/preferences/network/port", 2628);
 	add_entry("/apps/stardict/preferences/network/user", std::string());
 	add_entry("/apps/stardict/preferences/network/md5saltpasswd", std::string());

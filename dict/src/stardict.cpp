@@ -22,7 +22,7 @@
  * Modified by the StarDict Team and others 2003-2006.  See the AUTHORS
  * file for a list of people on the StarDict Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * StarDict at http://www.stardict.org.
+ * StarDict at <http://stardict-4.sourceforge.net>.
  */
 
 

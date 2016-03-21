@@ -618,7 +618,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 	gtk_show_about_dialog(GTK_WINDOW (gpAppFrame->window),
 			      "name", _("StarDict"),
 			      "version", VERSION,
-			      "website", "http://www.stardict.org",
+			      "website", "http://stardict-4.sourceforge.net",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
 			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy\n" "Copyright \xc2\xa9 2007-2011 by Hu Zheng, Sergey\n" "Copyright \xc2\xa9 2012-2016 by Hu Zheng",
 			      "authors", (const char **)authors,
@@ -2004,7 +2004,7 @@ void TextWin::ShowInitFailed()
 	const char *link_pos = strstr(fmt, "%s%s%s");
 	LinksPosList links;
 	links.push_back(LinkDesc(g_utf8_strlen(fmt, link_pos - fmt),
-				 sizeof("http://www.stardict.org") - 1, "http://www.stardict.org"));
+				 sizeof("http://stardict-4.sourceforge.net") - 1, "http://stardict-4.sourceforge.net"));
 	glib::CharStr esc_fmt(g_markup_escape_text(fmt, -1));
 	std::string dirs_str;
 #ifdef _WIN32
@@ -2024,7 +2024,7 @@ void TextWin::ShowInitFailed()
 	glib::CharStr mes(
 		g_strdup_printf(get_impl(esc_fmt),
 				"<span foreground=\"blue\" underline=\"single\">",
-				"http://www.stardict.org",
+				"http://stardict-4.sourceforge.net",
 				"</span>",
 				dirs_str.c_str()));
 	view->clear();
@@ -3146,7 +3146,7 @@ void BottomWin::InternetSearchCallback(GtkButton *button, BottomWin *oBottomWin)
 #ifndef CONFIG_GPE
 void BottomWin::NewVersionCallback(GtkButton *button, BottomWin *oBottomWin)
 {
-  show_url("http://www.stardict.org");
+  show_url("http://stardict-4.sourceforge.net");
 }
 
 void BottomWin::DictManageCallback(GtkButton *button, BottomWin *oBottomWin)

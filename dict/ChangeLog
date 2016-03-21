@@ -6,6 +6,7 @@ Add some PowerWord dictionaries.
 Port to gtk3!
 Stardict_client add md5 salt feature! As StarDict-Protocol_v04.
 Thanks Anatoly Sova <anatoliysova@gmail.com> for the bgl and dsl convert patch!
+Many small changes.
 
 2015.1.27
 StarDict-3.0.6 (Cool) released.
@@ -190,6 +191,7 @@ StarDict-2.4.7 (complete) released.
 Port to GPE (http://gpe.handhelds.org).
 Full-text search.
 Acrobat plug-in in Win32, thanks Dewolf Xue <dewolf_matri_x@msn.com>.
+Fix one addition line bug.
 Evgeniy's patches for special character search and other changes.
 Export word or text to file, thanks Mao-Yuan Kao <daniel.kao@gmail.com> for this patch.
 Add four Uyghur dictionaries, thanks Abdisalam Anatilim <anatilim@gmail.com>.
