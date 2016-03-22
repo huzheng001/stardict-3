@@ -51,6 +51,7 @@ private:
 	GtkWidget *info_label;
 	GtkWidget *upgrade_label;
 	GtkWidget *upgrade_eventbox;
+	GtkWidget *popup_menu1;
 	GtkWidget *popup_menu;
 	GtkWidget *dict_list_treeview;
 	GtkTreeModel *dict_list_tree_model;

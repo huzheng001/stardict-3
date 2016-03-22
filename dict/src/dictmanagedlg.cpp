@@ -1239,6 +1239,9 @@ gboolean DictManageDlg::on_dictlist_treeview_button_press(GtkWidget * widget, Gd
 	if (event->type==GDK_2BUTTON_PRESS && event->button == 1) {
 		oDictManageDlg->show_dict_info();
 		return true;
+	}else if (event->button == 3) {
+		gtk_menu_popup(GTK_MENU(oDictManageDlg->popup_menu1), NULL, NULL, NULL, NULL, event->button, event->time);
+		return false; //So it can be selected.
 	} else {
 		return false;
 	}
@@ -2437,6 +2440,10 @@ GtkWidget *DictManageDlg::create_buttons()
 	gtk_widget_set_can_focus (button, FALSE);
 	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_move_bottom_button_clicked), this);
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	button = gtk_button_new_from_stock(GTK_STOCK_DIALOG_INFO);
+	gtk_widget_set_can_focus (button, FALSE);
+	g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_dictmanage_info_button_clicked), this);
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	return vbox;
 }
 
@@ -2714,8 +2721,18 @@ bool DictManageDlg::ShowModal(bool &dictmanage_config_changed_)
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_TreeDict), NULL);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), create_dict_tree(DictTree_NetworkDict), NULL);
 		
-	popup_menu = gtk_menu_new();
 	GtkWidget *menuitem;
+
+	popup_menu1 = gtk_menu_new();
+	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
+	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
+	g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_popup_menu_show_info_activate), this);
+	gtk_menu_shell_append(GTK_MENU_SHELL(popup_menu1), menuitem);
+	gtk_widget_show_all(popup_menu1);
+
+	popup_menu = gtk_menu_new();
 	menuitem = gtk_image_menu_item_new_with_mnemonic(_("_Show information"));
 	image = gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
@@ -2839,6 +2856,7 @@ void DictManageDlg::Close()
 {
 	if (window) {
 		gtk_widget_destroy (window);
+		gtk_widget_destroy(popup_menu1);
 		gtk_widget_destroy(popup_menu);
 		window = NULL;
 	}

@@ -850,7 +850,7 @@ gboolean StarDictClient::on_io_in_event(GIOChannel *ch, GIOCondition cond,
             else if (stardict_client->reading_type_ == READ_STRING)
                 g_io_channel_set_line_term(stardict_client->channel_, "", 1);
 
-            res = g_io_channel_read_line(stardict_client->channel_, &line, &len, &term, &err); // May be security bug as no max length, but gtk should fixed it!
+            res = g_io_channel_read_line(stardict_client->channel_, &line, &len, &term, &err); // May be security bug as no max length, but gtk should has fixed it!
             if (res == G_IO_STATUS_ERROR || res == G_IO_STATUS_EOF) {
                 if (err) {
                     gchar *str = g_strdup_printf(_("Error while reading reply from server: %s"), err->message);

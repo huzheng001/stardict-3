@@ -839,7 +839,7 @@ void PrefsDlg::setup_dictionary_article_rendering()
         g_signal_connect(G_OBJECT(cb), "changed", G_CALLBACK(on_setup_bookname_style_changed), this);
 
 	GtkWidget *ck_btn =
-		gtk_check_button_new_with_mnemonic(_("_Highlight search term"));
+		gtk_check_button_new_with_mnemonic(_("Highlight _search term"));
 	gtk_box_pack_start(GTK_BOX(vbox1), ck_btn, FALSE, FALSE, 0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ck_btn),
 				     conf->get_bool_at("dictionary/markup_search_word"));
@@ -919,6 +919,16 @@ void PrefsDlg::on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleBu
 }
 #endif
 
+void PrefsDlg::on_setup_dictionary_tts_defaultbutton_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+{
+	GtkTextBuffer *text_view_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oPrefsDlg->tts_textview));
+#ifdef _WIN32
+	gtk_text_buffer_set_text(text_view_buffer, "C:\\Program Files\\WyabdcRealPeopleTTS\nC:\\Program Files\\OtdRealPeopleTTS\nWyabdcRealPeopleTTS\nOtdRealPeopleTTS", -1);
+#else
+	gtk_text_buffer_set_text(text_view_buffer, "/usr/share/WyabdcRealPeopleTTS\n/usr/share/OtdRealPeopleTTS", -1);
+#endif
+}
+
 #ifndef _WIN32
 void PrefsDlg::on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg)
 {
@@ -941,21 +951,21 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_box_pack_start(GTK_BOX(vbox),vbox1,false,false, 0);
 
 	GtkWidget *check_button;
-	check_button = gtk_check_button_new_with_mnemonic(_("_Enable sound event."));
+	check_button = gtk_check_button_new_with_mnemonic(_("Enable _sound event."));
 	bool enable=
 		conf->get_bool_at("dictionary/enable_sound_event");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);
 	g_signal_connect (G_OBJECT (check_button), "toggled", G_CALLBACK (on_setup_dictionary_sound_ckbutton_toggled), (gpointer)this);
 	gtk_box_pack_start(GTK_BOX(vbox1),check_button,false,false,0);
-	GtkWidget *label;
+	GtkWidget *label, *hbox2;
 
 #if defined(_WIN32)
 #else
 
 #if GTK_MAJOR_VERSION >= 3
-	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+	hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 #else
-	GtkWidget *hbox2 = gtk_hbox_new(FALSE, 6);
+	hbox2 = gtk_hbox_new(FALSE, 6);
 #endif
 	label=gtk_label_new(_("Command for playing sound files:"));
 	gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
@@ -1002,7 +1012,19 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	gtk_container_add(GTK_CONTAINER(scrolled_window), tts_textview);
-	gtk_box_pack_start(GTK_BOX(vbox1),scrolled_window,false,false,0);
+
+#if GTK_MAJOR_VERSION >= 3
+	hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	hbox2 = gtk_hbox_new(FALSE, 6);
+#endif
+	gtk_box_pack_start(GTK_BOX(hbox2), scrolled_window, TRUE, TRUE, 0);
+
+	GtkWidget *button = gtk_button_new_with_mnemonic(_("_Default"));
+	g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (on_setup_dictionary_tts_defaultbutton_clicked), this);
+	gtk_box_pack_start(GTK_BOX(hbox2), button, FALSE, FALSE, 0);
+
+	gtk_box_pack_start(GTK_BOX(vbox1),hbox2,false,false,0);
 
 #ifndef _WIN32
 	check_button = gtk_check_button_new_with_mnemonic(_("Enable _TTS program."));
@@ -1367,7 +1389,7 @@ void PrefsDlg::setup_network_web_browser()
 
 #if defined(_WIN32) || defined(CONFIG_GNOME)
 	GtkWidget *check_button 
-		= gtk_check_button_new_with_mnemonic(_("Always use this command for opening URLs."));
+		= gtk_check_button_new_with_mnemonic(_("_Always use this command for opening URLs."));
 	gboolean enable
 		= conf->get_bool_at("dictionary/always_use_open_url_command");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), enable);

@@ -130,6 +130,7 @@ private:
   static void on_setup_dictionary_always_sound_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_dictionary_use_tts_program_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
+  static void on_setup_dictionary_tts_defaultbutton_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_network_netdict_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_network_account_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
 #if defined(_WIN32) || defined(CONFIG_GNOME)

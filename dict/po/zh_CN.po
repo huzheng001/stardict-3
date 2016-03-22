@@ -1509,7 +1509,7 @@ msgstr "请输入合法邮箱地址。"
 
 #: ../src/prefsdlg.cpp:1267
 msgid "Enable _network dictionaries."
-msgstr "启用网络词典。"
+msgstr "启用网络词典(_N)。"
 
 #: ../src/prefsdlg.cpp:1279
 msgid "StarDict server:"
