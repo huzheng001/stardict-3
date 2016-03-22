@@ -211,6 +211,17 @@ else
 fi
 AC_SUBST(FORTUNE_PLUGIN_DIR)
 
+AC_ARG_ENABLE([cal],
+	AS_HELP_STRING([--disable-cal],[Disable cal virtual dict plugin (default: enabled)]),
+	[enable_cal=$enableval],
+	[enable_cal=yes])
+if test "x$enable_cal" = "xyes" ; then
+	CAL_PLUGIN_DIR="stardict-cal-plugin"
+else
+	CAL_PLUGIN_DIR=
+fi
+AC_SUBST(CAL_PLUGIN_DIR)
+
 AC_ARG_ENABLE([qqwry],
 	AS_HELP_STRING([--disable-qqwry],[Disable qqwry virtual dict plugin (default: enabled)]),
 	[enable_qqwry=$enableval],
@@ -496,6 +507,7 @@ stardict-plugins/stardict-advertisement-plugin/Makefile
 stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
 stardict-plugins/stardict-fortune-plugin/Makefile
+stardict-plugins/stardict-cal-plugin/Makefile
 stardict-plugins/stardict-qqwry-plugin/Makefile
 stardict-plugins/stardict-dictdotcn-plugin/Makefile
 stardict-plugins/stardict-update-info-plugin/Makefile

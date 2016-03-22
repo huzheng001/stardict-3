@@ -50,6 +50,21 @@ static void terminal2pango(const char *t, std::string &pango)
 	std::string color;
 	std::string tmp_str;
 	while (*t) {
+		if ((*t == '_') && (t[1] == '')) {
+			color = "#FFFA00"; // should be #FFFFFF in fact.
+			pango += "<span foreground=\"";
+			pango += color;
+			pango += "\">";
+			t+=2;
+			pango += *t;
+			pango += "</span>";
+			if (*t) {
+				t++;
+				continue;
+			} else {
+				break;
+			}
+		}
 		if ((*t == '') && (t[1] == '[')) {
 			p1 = strchr(t+2, 'm');
 			if (p1) {
@@ -118,9 +133,14 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 		if (definition.empty()) {
 			found = false;
 		} else {
-			size_t length = definition.length();
-			if (definition[length-1] == '\n') {
-				definition.resize(length-1, '\0');
+			size_t length1;
+			while (true) {
+				length1 = definition.length() -1;
+				if ((definition[length1] == '\n') || (definition[length1] == ' ')) {
+					definition.resize(length1, '\0');
+				} else {
+					break;
+				}
 			}
 		}
 	}

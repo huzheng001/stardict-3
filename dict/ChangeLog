@@ -6,6 +6,7 @@ Add some PowerWord dictionaries.
 Port to gtk3!
 Stardict_client add md5 salt feature! As StarDict-Protocol_v04.
 Thanks Anatoly Sova <anatoliysova@gmail.com> for the bgl and dsl convert patch!
+Add fortune and cal plugins.
 Many small changes.
 
 2015.1.27

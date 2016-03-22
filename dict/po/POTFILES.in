@@ -35,6 +35,7 @@ stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp
 stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp
 stardict-plugins/stardict-man-plugin/stardict_man.cpp
 stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp
+stardict-plugins/stardict-cal-plugin/stardict_cal.cpp
 stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp
 stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp
 stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp
