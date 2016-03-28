@@ -118,8 +118,9 @@ static void terminal2pango(const char *t, std::string &pango)
 static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 {
 	std::string command;
-	if (need_prefix || g_str_has_prefix(text, "man ")) {
-		if (!g_str_has_prefix(text, "man ") || text[4] == '\0' || (g_ascii_isdigit(text[4]) && (text[5] == '\0' || (text[5] == ' ' && text[6] == '\0')))) {
+	if (need_prefix) {
+		bool have_prefix = g_str_has_prefix(text, "man ");
+		if (!have_prefix || (have_prefix && text[4] == '\0') || (have_prefix && g_ascii_isdigit(text[4]) && (text[5] == '\0')) || (have_prefix && g_ascii_isdigit(text[4]) && ((text[5] == ' ') && (text[6] == '\0')))) {
 			*pppWord = NULL;
 			return;
 		}
@@ -163,6 +164,16 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	if (definition.empty()) {
 		*pppWord = NULL;
 		return;
+	} else {
+		size_t length1;
+		while (true) {
+			length1 = definition.length() -1;
+			if ((definition[length1] == '\n') || (definition[length1] == ' ')) {
+				definition.resize(length1, '\0');
+			} else {
+				break;
+			}
+		}
 	}
 	std::string pango;
 	terminal2pango(definition.c_str(), pango);

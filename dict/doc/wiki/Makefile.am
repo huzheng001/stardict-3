@@ -1,1 +1,1 @@
-EXTRA_DIST = RepairStarDictDicts ConvertLingvo DslSound InspectStarDictIndex ConvertBabylon WyabdcRealPeopleTTS DownloadDictionaries index MacOSX
+EXTRA_DIST = RepairStarDictDicts ConvertLingvo DslSound ProjectHome InspectStarDictIndex ConvertBabylon WyabdcRealPeopleTTS DownloadDictionaries index MacOSX
