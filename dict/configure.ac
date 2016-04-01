@@ -340,6 +340,7 @@ elif test "x${enable_maemo_support}" = "xyes" ; then
 	if test x"$GCONFTOOL" = xno; then
         	AC_MSG_ERROR([gconftool-2 executable not found in your path - should be installed with GConf])
 	fi
+	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_maemo_support}" != "xno")
 	AM_GCONF_SOURCE_2
 elif test "x${enable_darwin_support}" = "xyes" ; then
         echo "Enable darwin suppport";
@@ -352,6 +353,7 @@ elif test "x${enable_gnome_support}" = "xno" ; then
 else
 	echo "Enable gnome suppport";
 	AC_DEFINE([CONFIG_GNOME],[], [Compile with gnome support])
+	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, test "x${enable_gnome_support}" != "xno")
 
 dnl *********************************************
 dnl for anything which calls gconftool-2 correctly

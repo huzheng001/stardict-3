@@ -45,7 +45,7 @@ namespace STARDICT {
 		CMD_SMART_QUERY,
 		CMD_DEFINE,
 		CMD_REGISTER,
-		//CMD_CHANGE_PASSWD,
+		CMD_CHANGE_PASSWD,
 		CMD_SET_DICT_MASK,
 		CMD_GET_DICT_MASK,
 		//CMD_SET_COLLATE_FUNC,
@@ -54,6 +54,9 @@ namespace STARDICT {
 		//CMD_GET_LANGUAGE,
 		//CMD_SET_EMAIL,
 		//CMD_GET_EMAIL,
+		//CMD_FROMTO,
+		//CMD_TMP_DICTMASK,
+		//CMD_DICTS_LIST,
 		CMD_MAX_DICT_COUNT,
 		CMD_DIR_INFO,
 		CMD_DICT_INFO,
@@ -160,6 +163,7 @@ public:
 	static sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> on_lookup_end_;
 	static sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> on_floatwin_lookup_end_;
 	static sigc::signal<void, const char *> on_register_end_;
+	static sigc::signal<void, const char *> on_changepassword_end_;
 	static sigc::signal<void, const char *> on_getdictmask_end_;
 	static sigc::signal<void, const char *> on_getadinfo_end_;
 	static sigc::signal<void, const char *> on_dirinfo_end_;
@@ -216,6 +220,7 @@ private:
 	int parse_command_client(gchar *line);
 	int parse_command_auth(gchar *line);
 	int parse_command_register(gchar *line);
+	int parse_command_changepassword(gchar *line);
 	int parse_command_setdictmask(gchar *line);
 	int parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *line);
 	int parse_command_getadinfo(STARDICT::Cmd* cmd, gchar *line);

@@ -62,6 +62,7 @@ sigc::signal<void, const char *> StarDictClient::on_error_;
 sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDictClient::on_lookup_end_;
 sigc::signal<void, const struct STARDICT::LookupResponse *, unsigned int> StarDictClient::on_floatwin_lookup_end_;
 sigc::signal<void, const char *> StarDictClient::on_register_end_;
+sigc::signal<void, const char *> StarDictClient::on_changepassword_end_;
 sigc::signal<void, const char *> StarDictClient::on_getdictmask_end_;
 sigc::signal<void, const char *> StarDictClient::on_getadinfo_end_;
 sigc::signal<void, const char *> StarDictClient::on_dirinfo_end_;
@@ -114,10 +115,10 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg1, user);
 		arg_escape(earg2, passwd);
 		arg_escape(earg3, email);
-		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
+		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, passwd is not encrypted here!
 		break;
 	}
-	/*case CMD_CHANGE_PASSWD:
+	case CMD_CHANGE_PASSWD:
 	{
 		const char *user = va_arg( ap, const char * );
 		const char *old_passwd = va_arg( ap, const char * );
@@ -126,11 +127,11 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg1, user);
 		arg_escape(earg2, old_passwd);
 		arg_escape(earg3, new_passwd);
-		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
+		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, new_passwd is not encrypted here! old_passwd have no use even it is stolen if change password succeed!
 		break;
-	}*/
+	}
 	case CMD_AUTH:
-        this->auth = new AuthInfo();
+        	this->auth = new AuthInfo();
 		this->auth->user = va_arg( ap, const char * );
 		this->auth->md5saltpasswd = va_arg( ap, const char * );
 		break;
@@ -231,6 +232,23 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 	case CMD_GET_EMAIL:
 		this->data = g_strdup("getemail\n");
 		break;
+	case CMD_FROMTO:
+		this->data = g_strdup("fromto\n");
+		break;
+	case CMD_TMP_DICTMASK:
+	{
+		std::string earg;
+		arg_escape(earg, va_arg( ap, const char * ));
+		this->data = g_strdup_printf("tmpdictmask %s\n", earg.c_str());
+		break;
+	}
+	case CMD_DICTS_LIST:
+	{
+		std::string earg;
+		arg_escape(earg, va_arg( ap, const char * ));
+		this->data = g_strdup_printf("dictslist %s\n", earg.c_str());
+		break;
+	}
 	case CMD_GET_USER_LEVEL:
 		this->data = g_strdup("getuserlevel\n");
 		break;*/
@@ -940,6 +958,20 @@ int StarDictClient::parse_command_register(gchar *line)
     return 1;
 }
 
+int StarDictClient::parse_command_changepassword(gchar *line)
+{
+    int status;
+    status = atoi(line);
+    if (status != CODE_OK) {
+        gchar *str = g_strdup_printf(_("Change password failed: %s"), line);
+        on_error_.emit(str);
+        g_free(str);
+        return 0;
+    }
+    on_changepassword_end_.emit(_("Change password success!"));
+    return 1;
+}
+
 int StarDictClient::parse_command_quit(gchar *line)
 {
     int status;
@@ -1276,6 +1308,10 @@ bool StarDictClient::parse(gchar *line)
             break;
         case STARDICT::CMD_REGISTER:
             result = parse_command_register(line);
+            g_free(line);
+            break;
+        case STARDICT::CMD_CHANGE_PASSWD:
+            result = parse_command_changepassword(line);
             g_free(line);
             break;
         case STARDICT::CMD_GET_DICT_MASK:

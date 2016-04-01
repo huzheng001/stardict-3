@@ -56,7 +56,9 @@ private:
   GtkEntry *eStarDictServerPort;
   GtkButton *bAccount;
   std::string register_user;
-  std::string register_hex;
+  std::string register_hex_md5saltpassword;
+  std::string changepassword_user;
+  std::string new_password;
   GtkEntry *eSoundPlayCommand;
   GtkEntry *eVideoPlayCommand;
   GtkEntry *eURLOpenCommand;
@@ -136,6 +138,7 @@ private:
 #if defined(_WIN32) || defined(CONFIG_GNOME)
   static void on_setup_dictionary_always_url_cmd_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
 #endif
+  static void on_setup_network_changepassword_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_network_register_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_searchWhileTyping_ckbutton_toggled(GtkToggleButton *button, PrefsDlg *oPrefsDlg);
   static void on_setup_mainwin_input_timeout_spinbutton_changed(GtkSpinButton *button, PrefsDlg *oPrefsDlg);
@@ -177,6 +180,7 @@ public:
   bool ShowModal();
   void Close();
   void on_register_end(const char *msg);
+  void on_changepassword_end(const char *msg);
 };
 
 #endif

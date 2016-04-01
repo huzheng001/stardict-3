@@ -178,6 +178,7 @@ public:
 	void on_stardict_client_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
 	void on_stardict_client_floatwin_lookup_end(const struct STARDICT::LookupResponse *lookup_response, unsigned int seq);
 	void on_stardict_client_register_end(const char *);
+	void on_stardict_client_changepassword_end(const char *);
 	void on_stardict_client_getdictmask_end(const char *);
 	void on_stardict_client_getadinfo_end(const char *);
 	void on_stardict_client_dirinfo_end(const char *);

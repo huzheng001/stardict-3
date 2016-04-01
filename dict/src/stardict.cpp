@@ -337,6 +337,7 @@ void AppCore::Create(const gchar *queryword)
 	oStarDictClient.on_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_lookup_end));
 	oStarDictClient.on_floatwin_lookup_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_floatwin_lookup_end));
 	oStarDictClient.on_register_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_register_end));
+	oStarDictClient.on_changepassword_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_changepassword_end));
 	oStarDictClient.on_getdictmask_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getdictmask_end));
 	oStarDictClient.on_getadinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_getadinfo_end));
 	oStarDictClient.on_dirinfo_end_.connect(sigc::mem_fun(this, &AppCore::on_stardict_client_dirinfo_end));
@@ -1796,6 +1797,13 @@ void AppCore::on_stardict_client_register_end(const char *msg)
 {
 	if (prefs_dlg) {
 		prefs_dlg->on_register_end(msg);
+	}
+}
+
+void AppCore::on_stardict_client_changepassword_end(const char *msg)
+{
+	if (prefs_dlg) {
+		prefs_dlg->on_changepassword_end(msg);
 	}
 }
 

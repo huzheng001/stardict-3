@@ -1179,8 +1179,8 @@ void PrefsDlg::on_register_end(const char *msg)
 {
 	gtk_button_set_label(bAccount, register_user.c_str());
 	conf->set_string_at("network/user", register_user);
-	conf->set_string_at("network/md5saltpasswd", register_hex);
-	gpAppFrame->oStarDictClient.set_auth(register_user.c_str(), register_hex.c_str());
+	conf->set_string_at("network/md5saltpasswd", register_hex_md5saltpassword);
+	gpAppFrame->oStarDictClient.set_auth(register_user.c_str(), register_hex_md5saltpassword.c_str());
 
 	GtkWidget *message_dlg = gtk_message_dialog_new(GTK_WINDOW(window),
 			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
@@ -1191,7 +1191,148 @@ void PrefsDlg::on_register_end(const char *msg)
 	gtk_widget_show(message_dlg);
 }
 
-static void on_register_email_button_activated(GtkEntry *entry, GtkDialog *dialog)
+void PrefsDlg::on_changepassword_end(const char *msg)
+{
+	conf->set_string_at("network/md5saltpasswd", new_password);
+	gpAppFrame->oStarDictClient.set_auth(changepassword_user.c_str(), new_password.c_str());
+
+	GtkWidget *message_dlg = gtk_message_dialog_new(GTK_WINDOW(window),
+			(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+			GTK_MESSAGE_INFO, GTK_BUTTONS_OK, "%s", msg);
+	gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+	gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+	g_signal_connect_swapped (message_dlg, "response", G_CALLBACK (gtk_widget_destroy), message_dlg);
+	gtk_widget_show(message_dlg);
+}
+
+static void on_changepassword_confirmnewpassword_entry_activated(GtkEntry *entry, GtkDialog *dialog)
+{
+	gtk_dialog_response(dialog, GTK_RESPONSE_OK);
+}
+
+void PrefsDlg::on_setup_network_changepassword_button_clicked(GtkWidget *widget, PrefsDlg *oPrefsDlg)
+{
+	const std::string &user= conf->get_string_at("network/user");
+	const std::string &old_md5saltpasswd= conf->get_string_at("network/md5saltpasswd");
+	if (user.empty() || old_md5saltpasswd.empty()) {
+		GtkWidget *message_dlg =
+                gtk_message_dialog_new(
+                        GTK_WINDOW(oPrefsDlg->window),
+                        (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                        GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                        "%s", _("Please setup the user name and password first!"));
+		gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+		gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+		gtk_dialog_run(GTK_DIALOG(message_dlg));
+		gtk_widget_destroy(message_dlg);
+		return;
+       }
+
+    GtkWidget *changepassword_dialog;
+    changepassword_dialog =
+        gtk_dialog_new_with_buttons (_("Change password"),
+                GTK_WINDOW (oPrefsDlg->window),
+                GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_STOCK_CANCEL,
+                GTK_RESPONSE_CANCEL,
+                GTK_STOCK_OK,
+                GTK_RESPONSE_OK,
+                NULL);
+    GtkWidget *table = gtk_table_new(3, 2, FALSE);
+    gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(changepassword_dialog))), table);
+    gtk_container_set_border_width(GTK_CONTAINER(table), 6);
+    GtkWidget *label = gtk_label_new_with_mnemonic(_("Current _password:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+    GtkWidget *current_password_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(current_password_entry), FALSE);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label), current_password_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), current_password_entry, 1, 2, 0, 1, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("_New password:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+    GtkWidget *new_password_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(new_password_entry), FALSE);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), new_password_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), new_password_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("Con_firm new password:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
+    GtkWidget *confirm_new_password_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(confirm_new_password_entry), FALSE);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label), confirm_new_password_entry);
+    g_signal_connect(G_OBJECT(confirm_new_password_entry),"activate", G_CALLBACK(on_changepassword_confirmnewpassword_entry_activated), changepassword_dialog);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), confirm_new_password_entry, 1, 2, 2, 3, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_dialog_set_default_response(GTK_DIALOG(changepassword_dialog), GTK_RESPONSE_OK);
+    gtk_window_set_resizable(GTK_WINDOW(changepassword_dialog), FALSE);
+    gtk_widget_show_all(GTK_WIDGET(changepassword_dialog));
+    char hex[33];
+    while (gtk_dialog_run(GTK_DIALOG(changepassword_dialog))==GTK_RESPONSE_OK) {
+        const gchar *error_msg = NULL;
+        const gchar *corrent_password = gtk_entry_get_text(GTK_ENTRY(current_password_entry));
+        const gchar *new_password = gtk_entry_get_text(GTK_ENTRY(new_password_entry));
+        const gchar *confirm_new_password = gtk_entry_get_text(GTK_ENTRY(confirm_new_password_entry));
+        if (!corrent_password[0]) {
+            error_msg = _("Please input the corrent password!");
+        } else if (!new_password[0]) {
+            error_msg = _("Please input the new password!");
+        } else if (!confirm_new_password[0]) {
+            error_msg = _("Please input the password again!");
+        } else if (strcmp(new_password, confirm_new_password)!=0) {
+            error_msg = _("Two passwords are not the same!");
+        } else if (strcmp(corrent_password, new_password)==0) {
+            error_msg = _("Password didn't change!");
+	} else {
+        	struct MD5Context ctx;
+        	unsigned char digest[16];
+        	MD5Init(&ctx);
+        	MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        	MD5Update(&ctx, (const unsigned char*)corrent_password, strlen(corrent_password));
+        	MD5Final(digest, &ctx );
+        	for (int i = 0; i < 16; i++)
+			sprintf( hex+2*i, "%02x", digest[i] );
+	        hex[32] = '\0';
+		if (old_md5saltpasswd != hex) {
+			error_msg = _("Corrent password is wrong!");
+		}
+	}
+        if (error_msg) {
+            GtkWidget *message_dlg =
+                gtk_message_dialog_new(
+                        GTK_WINDOW(changepassword_dialog),
+                        (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+                        GTK_MESSAGE_INFO,  GTK_BUTTONS_OK,
+                        "%s", error_msg);
+            gtk_dialog_set_default_response(GTK_DIALOG(message_dlg), GTK_RESPONSE_OK);
+            gtk_window_set_resizable(GTK_WINDOW(message_dlg), FALSE);
+            gtk_dialog_run(GTK_DIALOG(message_dlg));
+            gtk_widget_destroy(message_dlg);
+            continue;
+        }
+        struct MD5Context ctx;
+        unsigned char digest[16];
+        MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        MD5Update(&ctx, (const unsigned char*)new_password, strlen(new_password));
+        MD5Final(digest, &ctx );
+        char hex2[33];
+        for (int i = 0; i < 16; i++)
+            sprintf( hex2+2*i, "%02x", digest[i] );
+        hex2[32] = '\0';
+	const gchar *server = gtk_entry_get_text(oPrefsDlg->eStarDictServer);
+	int port = atoi(gtk_entry_get_text(oPrefsDlg->eStarDictServerPort));
+	gpAppFrame->oStarDictClient.set_server(server, port);
+	gpAppFrame->oStarDictClient.set_auth("", "");
+	oPrefsDlg->changepassword_user = user;
+	oPrefsDlg->new_password = hex2;
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_CHANGE_PASSWD, user.c_str(), hex, hex2);
+        gpAppFrame->oStarDictClient.send_commands(1, c);
+        break;
+    }
+    gtk_widget_destroy(changepassword_dialog);
+}
+
+static void on_register_email_entry_activated(GtkEntry *entry, GtkDialog *dialog)
 {
 	gtk_dialog_response(dialog, GTK_RESPONSE_OK);
 }
@@ -1208,7 +1349,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
                 GTK_STOCK_OK,
                 GTK_RESPONSE_OK,
                 NULL);
-    GtkWidget *table = gtk_table_new(3, 2, FALSE);
+    GtkWidget *table = gtk_table_new(4, 2, FALSE);
     gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(register_dialog))), table);
     gtk_container_set_border_width(GTK_CONTAINER(table), 6);
     GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
@@ -1224,13 +1365,20 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_entry);
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
     gtk_table_attach(GTK_TABLE(table), passwd_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    label = gtk_label_new_with_mnemonic(_("Password _again:"));
+    gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
+    GtkWidget *passwd_again_entry = gtk_entry_new ();
+    gtk_entry_set_visibility(GTK_ENTRY(passwd_again_entry), FALSE);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_again_entry);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), passwd_again_entry, 1, 2, 2, 3, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
     label = gtk_label_new_with_mnemonic(_("_Email:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
     GtkWidget *email_entry = gtk_entry_new ();
-    g_signal_connect(G_OBJECT(email_entry),"activate", G_CALLBACK(on_register_email_button_activated), register_dialog);
+    g_signal_connect(G_OBJECT(email_entry),"activate", G_CALLBACK(on_register_email_entry_activated), register_dialog);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label), email_entry);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, (GtkAttachOptions)0, 6, 4);
-    gtk_table_attach(GTK_TABLE(table), email_entry, 1, 2, 2, 3, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4, GTK_FILL, (GtkAttachOptions)0, 6, 4);
+    gtk_table_attach(GTK_TABLE(table), email_entry, 1, 2, 3, 4, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
     gtk_dialog_set_default_response(GTK_DIALOG(register_dialog), GTK_RESPONSE_OK);
     gtk_window_set_resizable(GTK_WINDOW(register_dialog), FALSE);
     gtk_widget_show_all(GTK_WIDGET(register_dialog));
@@ -1238,11 +1386,16 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
         gchar *error_msg = NULL;
         const gchar *user = gtk_entry_get_text(GTK_ENTRY(user_entry));
         const gchar *passwd = gtk_entry_get_text(GTK_ENTRY(passwd_entry));
+        const gchar *passwd_again = gtk_entry_get_text(GTK_ENTRY(passwd_again_entry));
         const gchar *email = gtk_entry_get_text(GTK_ENTRY(email_entry));
         if (!user[0])
             error_msg = _("Please input the user name.");
         else if (!passwd[0])
             error_msg = _("Please input the password.");
+        else if (!passwd_again[0])
+            error_msg = _("Please input the password again.");
+	else if (strcmp(passwd, passwd_again)!=0)
+           error_msg = _("Two passwords are not the same!");
         else if (!email[0])
             error_msg = _("Please input the email.");
         else if (strchr(email, '@')==NULL)
@@ -1275,7 +1428,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
 	gpAppFrame->oStarDictClient.set_server(server, port);
 	gpAppFrame->oStarDictClient.set_auth("", "");
 	oPrefsDlg->register_user = user;
-	oPrefsDlg->register_hex = hex;
+	oPrefsDlg->register_hex_md5saltpassword = hex;
         STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email);
         gpAppFrame->oStarDictClient.send_commands(1, c);
         break;
@@ -1338,10 +1491,21 @@ void PrefsDlg::setup_network_netdict()
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_account_button_clicked), this);
     gtk_table_attach(GTK_TABLE(table), button, 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
     bAccount = GTK_BUTTON(button);
+
+    button = gtk_button_new_with_mnemonic(_("Change _password"));
+    g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_changepassword_button_clicked), this);
+#if GTK_MAJOR_VERSION >= 3
+	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+#else
+	GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
+#endif
+    gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
+    gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
+
     button = gtk_button_new_with_mnemonic(_("_Register an account"));
     g_signal_connect(G_OBJECT(button),"clicked", G_CALLBACK(on_setup_network_register_button_clicked), this);
 #if GTK_MAJOR_VERSION >= 3
-	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 #else
 	GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
 #endif
@@ -1932,7 +2096,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 					error_msg = _("The website search link contain more than 1 \"%\" characters!");
 				}
 			} else {
-				error_msg = _("The website search link should contain a \"%%s\" string for querying a word.");
+				error_msg = _("The website search link should contain a \"%s\" string for querying a word.");
 			}
 
 
@@ -1943,7 +2107,7 @@ void PrefsDlg::on_setup_mainwin_searchwebsite_cell_edited(GtkCellRendererText *c
 					GTK_WINDOW (oPrefsDlg->window),
 					(GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
 					GTK_MESSAGE_INFO,
-					GTK_BUTTONS_OK,
+					GTK_BUTTONS_OK, "%s",
 					error_msg);
 
 				gtk_dialog_set_default_response (GTK_DIALOG (message_dlg), GTK_RESPONSE_OK);
