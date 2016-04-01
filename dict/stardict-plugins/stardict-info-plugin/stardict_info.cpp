@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 kubtek <kubtek@mail.com>
+ * Copyright 2016 Hu Zheng <huzheng001@mail.com>
  *
  * This file is part of StarDict.
  *
@@ -17,7 +17,7 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "stardict_man.h"
+#include "stardict_info.h"
 #include <glib/gi18n.h>
 #include <cstring>
 #include <string>
@@ -43,7 +43,7 @@ static std::string build_path(const std::string& path1, const std::string& path2
 
 static std::string get_cfg_filename()
 {
-	return build_path(gpAppDirs->get_user_config_dir(), "man.cfg");
+	return build_path(gpAppDirs->get_user_config_dir(), "info.cfg");
 }
 
 static char *build_dictdata(char type, const char *definition)
@@ -119,28 +119,15 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 {
 	std::string command;
 	if (need_prefix) {
-		bool have_prefix = g_str_has_prefix(text, "man ");
-		if (!have_prefix || (have_prefix && text[4] == '\0') || (have_prefix && g_ascii_isdigit(text[4]) && (text[5] == '\0')) || (have_prefix && g_ascii_isdigit(text[4]) && ((text[5] == ' ') && (text[6] == '\0')))) {
+		bool have_prefix = g_str_has_prefix(text, "info ");
+		if (!have_prefix || (have_prefix && text[5] == '\0')) {
 			*pppWord = NULL;
 			return;
 		}
-		if (g_ascii_isdigit(text[4]) && text[5] ==' ') {
-			command.append(text, 6);
-			text += 6;
-		} else {
-			command.append(text, 4);
-			text += 4;
-		}
+		command.append(text, 5);
+		text += 5;
 	} else {
-		if (g_ascii_isdigit(text[0]) && (text[1] == '\0' || (text[1] == ' ' && text[2] == '\0'))) {
-			*pppWord = NULL;
-			return;
-		}
-		command = "man ";
-		if (g_ascii_isdigit(text[0]) && text[1] ==' ') {
-			command.append(text, 2);
-			text += 2;
-		}
+		command = "info ";
 	}
 	gchar *quote = g_shell_quote(text); // Must quote, or a security hole!
 	command += quote;
@@ -188,13 +175,13 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 
 static void configure()
 {
-	GtkWidget *window = gtk_dialog_new_with_buttons(_("Man configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+	GtkWidget *window = gtk_dialog_new_with_buttons(_("Info configuration"), GTK_WINDOW(plugin_info->pluginwin), GTK_DIALOG_MODAL, GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 #if GTK_MAJOR_VERSION >= 3
 	GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 #else
 	GtkWidget *vbox = gtk_vbox_new(false, 5);
 #endif
-	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"man \" prefix. For example: \"man printf\"."));
+	GtkWidget *check_button = gtk_check_button_new_with_mnemonic(_("_Input string requires the \"info \" prefix. For example: \"info printf\"."));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_button), need_prefix);
 	gtk_box_pack_start(GTK_BOX(vbox), check_button, false, false, 0);
 	gtk_widget_show_all(vbox);
@@ -208,7 +195,7 @@ static void configure()
 			tmp = "true";
 		else
 			tmp = "false";
-		gchar *data = g_strdup_printf("[man]\nneed_prefix=%s\n", tmp);
+		gchar *data = g_strdup_printf("[info]\nneed_prefix=%s\n", tmp);
 		std::string res = get_cfg_filename();
 		g_file_set_contents(res.c_str(), data, -1, NULL);
 		g_free(data);
@@ -218,13 +205,13 @@ static void configure()
 
 bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 {
-	g_debug(_("Loading Man plug-in..."));
+	g_debug(_("Loading Info plug-in..."));
 	if (strcmp(obj->version_str, PLUGIN_SYSTEM_VERSION)!=0) {
-		g_print(_("Error: Man plugin version doesn't match!\n"));
+		g_print(_("Error: Info plugin version doesn't match!\n"));
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Man"), _("Man virtual dictionary."), _("Show the man pages."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Info"), _("Info virtual dictionary."), _("Show the info documents."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 	gpAppDirs = appDirs;
@@ -240,21 +227,20 @@ void stardict_plugin_exit(void)
 bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
-	obj->dict_name = _("Man");
+	obj->dict_name = _("Info");
 	std::string res = get_cfg_filename();
 	if (!g_file_test(res.c_str(), G_FILE_TEST_EXISTS)) {
-		g_file_set_contents(res.c_str(), "[man]\nneed_prefix=true\n", -1, NULL);
+		g_file_set_contents(res.c_str(), "[info]\nneed_prefix=true\n", -1, NULL);
 	}
 	GKeyFile *keyfile = g_key_file_new();
 	g_key_file_load_from_file(keyfile, res.c_str(), G_KEY_FILE_NONE, NULL);
 	GError *err = NULL;
-	need_prefix = g_key_file_get_boolean(keyfile, "man", "need_prefix", &err);
+	need_prefix = g_key_file_get_boolean(keyfile, "info", "need_prefix", &err);
 	if (err) {
 		g_error_free (err);
 		need_prefix = true;
 	}
 	g_key_file_free(keyfile);
-	g_unsetenv("MANPAGER");
-	g_print(_("Man plug-in loaded.\n"));
+	g_print(_("Info plug-in loaded.\n"));
 	return false;
 }

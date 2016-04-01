@@ -1005,7 +1005,7 @@ int StarDictClient::parse_command_getdictmask(STARDICT::Cmd* cmd, gchar *buf)
 		if (status == CODE_USER_NOT_REGISTER) {
 			g_free(buf);
 			on_error_.emit(_("You haven't setup the account. Please open the \"Net Dict\" page in the Preferences dialog and register an account first."));
-			return 1; 
+			return 1; // Cool.
 		} else {
 			gchar *str = g_strdup_printf(_("Get Dict Mask failed: %s"), buf);
 			g_free(buf);

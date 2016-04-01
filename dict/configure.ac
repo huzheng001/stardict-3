@@ -200,6 +200,17 @@ else
 fi
 AC_SUBST(MAN_PLUGIN_DIR)
 
+AC_ARG_ENABLE([info],
+	AS_HELP_STRING([--disable-info],[Disable info virtual dict plugin (default: enabled)]),
+	[enable_info=$enableval],
+	[enable_info=yes])
+if test "x$enable_info" = "xyes" ; then
+	INFO_PLUGIN_DIR="stardict-info-plugin"
+else
+	INFO_PLUGIN_DIR=
+fi
+AC_SUBST(INFO_PLUGIN_DIR)
+
 AC_ARG_ENABLE([fortune],
 	AS_HELP_STRING([--disable-fortune],[Disable fortune virtual dict plugin (default: enabled)]),
 	[enable_fortune=$enableval],
@@ -508,6 +519,7 @@ stardict-plugins/Makefile
 stardict-plugins/stardict-advertisement-plugin/Makefile
 stardict-plugins/stardict-advertisement-plugin/data/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
+stardict-plugins/stardict-info-plugin/Makefile
 stardict-plugins/stardict-fortune-plugin/Makefile
 stardict-plugins/stardict-cal-plugin/Makefile
 stardict-plugins/stardict-qqwry-plugin/Makefile

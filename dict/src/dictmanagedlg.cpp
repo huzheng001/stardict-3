@@ -576,17 +576,23 @@ void DictManageDlg::on_network_button_toggled(GtkToggleButton *button, DictManag
 			gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), _("Loading..."));
 			STARDICT::Cmd *c1 = new STARDICT::Cmd(STARDICT::CMD_GET_DICT_MASK);
 			STARDICT::Cmd *c2 = new STARDICT::Cmd(STARDICT::CMD_MAX_DICT_COUNT);
-			gpAppFrame->oStarDictClient.try_cache_or_send_commands(2, c1, c2);
+
+			gtk_widget_show(oDictManageDlg->info_label);
+			gtk_widget_hide(oDictManageDlg->download_hbox);
+			STARDICT::Cmd *c3 = new STARDICT::Cmd(STARDICT::CMD_GET_ADINFO);
+			gpAppFrame->oStarDictClient.try_cache_or_send_commands(3, c1, c2, c3);
+			gtk_widget_show(oDictManageDlg->upgrade_eventbox);
 		} else {
 			gchar *str = g_strdup_printf(_("You can only choose %d dictionaries."), oDictManageDlg->max_dict_count);
 			gtk_label_set_text(GTK_LABEL(oDictManageDlg->info_label), str);
 			g_free(str);
+
+			gtk_widget_show(oDictManageDlg->info_label);
+			gtk_widget_hide(oDictManageDlg->download_hbox);
+			STARDICT::Cmd *c3 = new STARDICT::Cmd(STARDICT::CMD_GET_ADINFO);
+			gpAppFrame->oStarDictClient.try_cache_or_send_commands(1, c3);
+			gtk_widget_show(oDictManageDlg->upgrade_eventbox);
 		}
-		gtk_widget_show(oDictManageDlg->info_label);
-		gtk_widget_hide(oDictManageDlg->download_hbox);
-		STARDICT::Cmd *c3 = new STARDICT::Cmd(STARDICT::CMD_GET_ADINFO);
-		gpAppFrame->oStarDictClient.try_cache_or_send_commands(1, c3);
-		gtk_widget_show(oDictManageDlg->upgrade_eventbox);
 	}
 }
 
