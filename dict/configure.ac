@@ -133,6 +133,38 @@ AC_SUBST(FESTIVAL_LIBS)
 AC_SUBST(FESTIVAL_PLUGIN_DIR)
 
 dnl ================================================================
+dnl Flite tts plugin checks.
+dnl ================================================================
+
+AC_ARG_ENABLE([flite],
+	AS_HELP_STRING([--disable-flite],[Disable flite tts plugin (default: enabled)]),
+	[enable_flite=$enableval],
+	[enable_flite=yes])
+
+if test "x$enable_flite" = "xyes" ; then
+	dnl flite.h, it must be in include path
+	AC_CHECK_HEADERS([flite/flite.h],
+		[
+			FLITE_LIBS="-lflite_cmu_us_kal -lflite_cmu_us_kal16 -lflite_cmu_us_rms -lflite_cmu_time_awb -lflite_cmu_us_slt -lflite_cmu_us_awb -lflite_usenglish -lflite_cmulex -lflite -lm"
+			FLITE_CFLAGS=""
+			FLITE_PLUGIN_DIR="stardict-flite-tts-plugin"
+		],
+		[
+			AC_MSG_ERROR([Flite library not found. Use --disable-flite to build without flite plugin.])
+		],
+		[]
+	)
+else
+	FLITE_CFLAGS=
+	FLITE_LIBS=
+	FLITE_PLUGIN_DIR=
+fi
+
+AC_SUBST(FLITE_CFLAGS)
+AC_SUBST(FLITE_LIBS)
+AC_SUBST(FLITE_PLUGIN_DIR)
+
+dnl ================================================================
 dnl espeak tts plugin checks.
 dnl ================================================================
 
@@ -528,6 +560,7 @@ stardict-plugins/stardict-update-info-plugin/Makefile
 stardict-plugins/stardict-spell-plugin/Makefile
 stardict-plugins/stardict-gucharmap-plugin/Makefile
 stardict-plugins/stardict-festival-tts-plugin/Makefile
+stardict-plugins/stardict-flite-tts-plugin/Makefile
 stardict-plugins/stardict-espeak-tts-plugin/Makefile
 stardict-plugins/stardict-wiki-parsedata-plugin/Makefile
 stardict-plugins/stardict-powerword-parsedata-plugin/Makefile

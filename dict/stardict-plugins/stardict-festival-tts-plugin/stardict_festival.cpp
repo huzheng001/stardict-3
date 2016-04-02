@@ -22,8 +22,11 @@
 #include <glib/gi18n.h>
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
-static std::string voice_engine;
 static IAppDirs* gpAppDirs = NULL;
+
+
+static std::string voice_engine;
+
 
 /* concatenate path1 and path2 inserting a path separator in between if needed. */
 static std::string build_path(const std::string& path1, const std::string& path2)

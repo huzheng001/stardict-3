@@ -31,6 +31,7 @@ stardict-plugins/stardict-advertisement-plugin/advertisement.cpp
 stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp
 stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp
 stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp
+stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp
 stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp
 stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp
 stardict-plugins/stardict-man-plugin/stardict_man.cpp

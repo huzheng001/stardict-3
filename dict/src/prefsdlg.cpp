@@ -1046,6 +1046,7 @@ void PrefsDlg::setup_dictionary_sound_page()
 	gtk_widget_set_size_request(comboboxentry, 30, -1);
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "echo %s | festival --tts &");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "espeak %s &");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "flite -t %s &");
 	eTTSCommandline = GTK_ENTRY(gtk_bin_get_child(GTK_BIN(comboboxentry)));
 	const std::string &tts_program_cmdline = conf->get_string("/apps/stardict/preferences/dictionary/tts_program_cmdline");
 	gtk_entry_set_text(eTTSCommandline, tts_program_cmdline.c_str());
