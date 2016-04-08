@@ -41,7 +41,6 @@ static std::list<QueryInfo *> keyword_list;
 
 
 struct dict_ParseUserData {
-	std::string return_phrase;
 	std::string phonetic_symbol;
 	std::list<std::string> custom_translation;
 	std::list< std::pair <std::string, std::list <std::string> > > web_translation;
@@ -82,9 +81,7 @@ static void dict_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 	}
 
 	dict_ParseUserData *Data = (dict_ParseUserData *)user_data;
-	if (strcmp(element, "return-phrase")==0) {
-		Data->return_phrase.assign(p);
-	} else if (strcmp(element, "content")==0) {
+	if (strcmp(element, "content")==0) {
 		Data->custom_translation.push_back(std::string(p));
 	} else if (strcmp(element, "key")==0) {
 		Data->tmp_key.assign(p);
@@ -196,6 +193,7 @@ static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer
 		return;
 	}
 	p += 4;
+
 	QueryInfo *qi = (QueryInfo *)userdata;
 	NetDictResponse *resp = new NetDictResponse;
 	resp->bookname = _("www.YouDao.com");
