@@ -110,11 +110,13 @@ static void func_parse_passthrough(GMarkupParseContext *context, const gchar *pa
 	gchar *text = g_strndup(passthrough_text, text_len);
 	if (!(g_str_has_prefix(text, "<![CDATA[") && (g_str_has_suffix(text, "]]>")))) {
 		g_print("Wrong, not CDATA: %s\n", text);
+		g_free(text);
                 return;
 	}
 	const gchar *element = g_markup_parse_context_get_element(context);
         if (!element) {
 		g_print("Wrong, no element: %s\n", text);
+		g_free(text);
                 return;
 	}
 	ParseUserData *Data = (ParseUserData *)user_data;

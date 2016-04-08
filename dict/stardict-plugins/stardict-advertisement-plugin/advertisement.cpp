@@ -63,7 +63,7 @@ static void my_strstrip(gchar *str)
 	*p2 = '\0';
 }
 
-static char *build_dictdata(char type, const char *definition)
+static char *my_build_dictdata(char type, const char *definition)
 {
 	size_t fread_size;
 	guint32 size;
@@ -166,7 +166,7 @@ static bool load_dict(const char *filename)
 			step = 2;
 		} else if (step == 2) { // Definition
 			my_strstrip(p);
-			char *data = build_dictdata(dict_type, p);
+			char *data = my_build_dictdata(dict_type, p);
 			dictentry.datalist.push_back(data);
 			dictdata_list.push_back(data);
 			step = 3;

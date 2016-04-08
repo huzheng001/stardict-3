@@ -24,23 +24,9 @@
 #include <string>
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
+static const StarDictPluginSystemService *plugin_service;
 static IAppDirs* gpAppDirs = NULL;
 
-
-static char *build_dictdata(char type, const char *definition)
-{
-	size_t len = strlen(definition);
-	guint32 size;
-	size = sizeof(char) + len + 1;
-	char *data = (char *)g_malloc(sizeof(guint32) + size);
-	char *p = data;
-	*((guint32 *)p)= size;
-	p += sizeof(guint32);
-	*p = type;
-	p++;
-	memcpy(p, definition, len+1);
-	return data;
-}
 
 static void terminal2pango(const char *t, std::string &pango)
 {
@@ -155,7 +141,7 @@ static void lookup(const char *text, char ***pppWord, char ****ppppWordData)
 	(*pppWord)[1] = NULL;
 	*ppppWordData = (gchar ***)g_malloc(sizeof(gchar **)*(1));
 	(*ppppWordData)[0] = (gchar **)g_malloc(sizeof(gchar *)*2);
-	(*ppppWordData)[0][0] =  build_dictdata('g', pango.c_str());
+	(*ppppWordData)[0][0] =  plugin_service->build_dictdata('g', pango.c_str());
 	(*ppppWordData)[0][1] = NULL;
 }
 
@@ -194,6 +180,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Cal"), _("Cal virtual dictionary."), _("Show the calendar."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
+	plugin_service = obj->plugin_service;
 	gpAppDirs = appDirs;
 
 	return false;

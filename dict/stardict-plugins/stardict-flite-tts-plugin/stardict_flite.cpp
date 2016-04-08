@@ -24,8 +24,9 @@ static const StarDictPluginSystemInfo *plugin_info = NULL;
 static IAppDirs* gpAppDirs = NULL;
 
 
+#include <flite/flite.h>
+
 extern "C" {
-	#include <flite/flite.h>
 	cst_voice *register_cmu_us_kal(const char *voxdir);
 	cst_voice *register_cmu_time_awb(const char *voxdir);
 	cst_voice *register_cmu_us_kal16(const char *voxdir);

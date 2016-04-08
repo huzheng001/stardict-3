@@ -310,7 +310,7 @@ MapFile* cache_file::find_and_load_cache_file(const gchar *filename,
 	stardict_stat_t cachestat;
 	if (g_stat(filename, &cachestat)!=0)
 		return NULL;
-	std::auto_ptr<MapFile> mf(new MapFile);
+	std::unique_ptr<MapFile> mf(new MapFile);
 	if (!mf->open(filename, cachestat.st_size))
 		return NULL;
 	guint32  word_off_size = (get_uint32(mf->begin()) + 1) * sizeof(guint32);

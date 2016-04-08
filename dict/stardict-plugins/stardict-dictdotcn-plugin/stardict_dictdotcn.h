@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 kubtek <kubtek@mail.com>
+ * Copyright 2016 Hu Zheng <huzheng001@gmail.com>
  *
  * This file is part of StarDict.
  *

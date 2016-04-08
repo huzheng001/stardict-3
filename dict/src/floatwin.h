@@ -81,7 +81,7 @@ private:
 	when responses from different sources arrive. */
 	bool window_positioned;
 	bool IgnoreScanModifierKey;
-	std::auto_ptr<ArticleView> view;
+	std::unique_ptr<ArticleView> view;
 	
 	static void on_query_click(GtkWidget *widget, FloatWin *oFloatWin);
 	static void on_save_click(GtkWidget *widget, FloatWin *oFloatWin);

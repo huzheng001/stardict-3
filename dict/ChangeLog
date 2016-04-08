@@ -1,5 +1,5 @@
 2016.
-StarDict-4.0.0 (MasterWork) released.
+StarDict-4.0.0 (MasterWork 传世之作) released.
 Add some babylon dictionaries.
 Add some BigDict dictionaries.
 Add some PowerWord dictionaries.
@@ -9,6 +9,7 @@ Thanks Anatoly Sova <anatoliysova@gmail.com> for the bgl and dsl convert patch!
 Add fortune and cal plugins.
 Add info plugin.
 Add flite TTS plugin.
+Add YouDao.com netdict plugin.
 Many small changes.
 
 2015.1.27

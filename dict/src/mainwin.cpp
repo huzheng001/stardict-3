@@ -582,6 +582,12 @@ void TopWin::on_main_menu_pluginmanage_activate(GtkMenuItem *menuitem, TopWin *o
 	gpAppFrame->PopupPluginManageDlg();
 }
 
+void TopWin::on_main_menu_keepabove_toggled(GtkCheckMenuItem *menuitem, TopWin *oTopWin)
+{
+	bool keepabove = gtk_check_menu_item_get_active(menuitem);
+	conf->set_bool_at("main_window/keep_above", keepabove);
+}
+
 void TopWin::on_main_menu_downloaddict_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 {
   show_url("http://stardict.huzheng.org");
@@ -670,6 +676,15 @@ void TopWin::do_menu()
 		gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), image);
 		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem), TRUE);
 		g_signal_connect(G_OBJECT(menuitem), "activate", G_CALLBACK(on_main_menu_pluginmanage_activate), NULL);
+		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
+
+		menuitem = gtk_separator_menu_item_new();
+		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
+
+		menuitem = gtk_check_menu_item_new_with_mnemonic(_("_Keep window above"));
+		bool keepabove = conf->get_bool_at("main_window/keep_above");
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), keepabove);
+		g_signal_connect(G_OBJECT(menuitem), "toggled", G_CALLBACK(on_main_menu_keepabove_toggled), NULL);
 		gtk_menu_shell_append(GTK_MENU_SHELL(MainMenu), menuitem);
 
 		menuitem = gtk_separator_menu_item_new();
@@ -902,7 +917,7 @@ void ListWin::Create(GtkWidget *notebook)
 	treeview_ = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_model)));
 	nowIsList = true;
 	gtk_widget_show(GTK_WIDGET(treeview_));
-	gtk_tree_view_set_rules_hint(treeview_, TRUE);
+	//gtk_tree_view_set_rules_hint(treeview_, TRUE);
 	gtk_tree_view_set_headers_visible(treeview_, FALSE);
 
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
@@ -1259,7 +1274,7 @@ bool TreeWin::Create(GtkWidget *notebook)
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	gtk_widget_show(treeview);
 	g_object_unref (model);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
@@ -1353,7 +1368,7 @@ void ResultWin::Create(GtkWidget *notebook)
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	gtk_widget_show(treeview);
 	g_object_unref (model);
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
@@ -2597,6 +2612,10 @@ void TransWin::Create(GtkWidget *notebook)
 	g_signal_connect(G_OBJECT(trans_button),"clicked", G_CALLBACK(on_translate_button_clicked), this);
 	gtk_box_pack_start(GTK_BOX(hbox), trans_button, false, false, 0);
 
+	GtkWidget *clear_button = gtk_button_new_from_stock(GTK_STOCK_CLEAR);
+	g_signal_connect(G_OBJECT(clear_button),"clicked", G_CALLBACK(on_clear_button_clicked), this);
+	gtk_box_pack_start(GTK_BOX(hbox), clear_button, false, false, 5);
+
 	result_textview = gtk_text_view_new();
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(result_textview), FALSE);
 	gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(result_textview), GTK_WRAP_WORD_CHAR);
@@ -2714,6 +2733,16 @@ void TransWin::on_translate_button_clicked(GtkWidget *widget, TransWin *oTransWi
 	g_free(text);
 }
 
+void TransWin::on_clear_button_clicked(GtkWidget *widget, TransWin *oTransWin)
+{
+	GtkTextBuffer* buffer;
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->input_textview));
+	gtk_text_buffer_set_text(buffer, "", -1);
+	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(oTransWin->result_textview));
+	gtk_text_buffer_set_text(buffer, "", -1);
+	gtk_widget_grab_focus(oTransWin->input_textview);
+}
+
 void TransWin::on_destroy(GtkWidget *object, TransWin* oTransWin)
 {
 	const gint engine_index = gtk_combo_box_get_active(GTK_COMBO_BOX(oTransWin->engine_combobox));
@@ -2828,7 +2857,7 @@ void BottomWin::Create(GtkWidget *vbox)
 	ScanSelectionCheckButton = gtk_check_button_new_with_mnemonic(_("_Scan"));
 	gtk_widget_show(ScanSelectionCheckButton);
 	gtk_widget_set_can_focus (ScanSelectionCheckButton, FALSE);
-  bool scan=conf->get_bool_at("dictionary/scan_selection");
+	bool scan=conf->get_bool_at("dictionary/scan_selection");
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ScanSelectionCheckButton), scan);
 	g_signal_connect(G_OBJECT(ScanSelectionCheckButton), "toggled",
@@ -3081,8 +3110,7 @@ void BottomWin::set_news(const char *news, const char *links)
 void BottomWin::ScanCallback(GtkToggleButton *button, gpointer data)
 {
 	bool scan_selection=gtk_toggle_button_get_active(button);
-  conf->set_bool_at("dictionary/scan_selection",
-									scan_selection);
+	conf->set_bool_at("dictionary/scan_selection", scan_selection);
 }
 
 void BottomWin::AboutCallback(GtkButton *button, gpointer data)

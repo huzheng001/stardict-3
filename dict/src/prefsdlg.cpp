@@ -254,7 +254,7 @@ void PrefsDlg::create_categories_tree(void)
 
   treeview = gtk_tree_view_new_with_model (model);
   g_object_unref (G_OBJECT (model));
-  gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+  //gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
 
   categories_tree = treeview;
   categories_tree_model = model;
@@ -2172,7 +2172,7 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 
 	searchwebsite_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	g_object_unref (G_OBJECT (model));
-	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (searchwebsite_treeview), TRUE);
+	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (searchwebsite_treeview), TRUE);
 
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (searchwebsite_treeview));

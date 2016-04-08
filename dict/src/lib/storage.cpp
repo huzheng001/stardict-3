@@ -187,7 +187,7 @@ public:
 private:
 	static const size_t RES_DICT_CACHE_SIZE = 10;
 	FILE *dictfile;
-	std::auto_ptr<dictData> dictdzfile;
+	std::unique_ptr<dictData> dictdzfile;
 	ResCacheItem cache[RES_DICT_CACHE_SIZE];
 	gint cache_cur;
 };
@@ -793,7 +793,7 @@ FileHolder Database_ResourceStorage::get_file_path(const std::string& key)
 	std::string name_pattern; // in file name encoding
 	if(!utf8_to_file_name(key, name_pattern))
 		return FileHolder();
-	std::string::size_type pos = name_pattern.find_last_of("."DB_DIR_SEPARATOR_S);
+	std::string::size_type pos = name_pattern.find_last_of("." DB_DIR_SEPARATOR_S);
 	if(pos != std::string::npos) {
 		if(name_pattern[pos] == '.')
 			name_pattern = name_pattern.substr(pos);

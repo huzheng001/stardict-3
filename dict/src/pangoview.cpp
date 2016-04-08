@@ -489,7 +489,7 @@ LabelPangoWidget::Mark* LabelPangoWidget::Marks::add_mark(size_t index,
 #ifdef DDEBUG
 	std::cout << "add_mark anonymous" << std::endl;
 #endif
-	std::auto_ptr<Mark> pMark(new Mark(index, left_gravity));
+	std::unique_ptr<Mark> pMark(new Mark(index, left_gravity));
 	pMark->iter_ = marks_list_.insert(marks_list_.end(), pMark.get());
 	return pMark.release();
 }
@@ -502,7 +502,7 @@ LabelPangoWidget::Mark* LabelPangoWidget::Marks::add_mark(size_t index,
 #endif
 	if(name.empty())
 		return add_mark(index, left_gravity);
-	std::auto_ptr<Mark> pMark(new Mark(index, left_gravity, name));
+	std::unique_ptr<Mark> pMark(new Mark(index, left_gravity, name));
 	std::pair<MarksNamesMap::iterator, bool> res 
 		= marks_names_map_.insert(MarksNamesMap::value_type(name, pMark.get()));
 	if(!res.second) {

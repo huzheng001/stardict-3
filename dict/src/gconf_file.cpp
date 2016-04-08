@@ -186,7 +186,7 @@ static void gconf_client_notify_func(GConfClient *client, guint cnxn_id,
 {
 	sigc::signal<void, const baseconfval*> *ch =
                 static_cast< sigc::signal<void, const baseconfval*> *>(user_data);
-	std::auto_ptr<baseconfval> cv;
+	std::unique_ptr<baseconfval> cv;
 	switch (entry->value->type) {
 	case GCONF_VALUE_BOOL:
 		cv.reset(new confval<bool>);

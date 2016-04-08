@@ -71,7 +71,7 @@ protected:
 	std::string sametypesequence;
 private:
 	FILE *dictfile;
-	std::auto_ptr<dictData> dictdzfile;
+	std::unique_ptr<dictData> dictdzfile;
 	cacheItem cache[WORDDATA_CACHE_NUM];
 	gint cache_cur;
 };

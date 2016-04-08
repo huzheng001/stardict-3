@@ -165,7 +165,7 @@ public:
 	}
 	void notify_add(const char * name, const sigc::slot<void, const baseconfval*>&);
 private:
-	std::auto_ptr<config_file> cf;
+	std::unique_ptr<config_file> cf;
 	cache_t cache;
 
 	template <typename T>
@@ -289,7 +289,7 @@ private:
 };
 
 
-extern std::auto_ptr<AppConf> conf;//global exemplar of AppConf class
-extern std::auto_ptr<AppDirs> conf_dirs;
+extern std::unique_ptr<AppConf> conf;//global exemplar of AppConf class
+extern std::unique_ptr<AppDirs> conf_dirs;
 
 #endif

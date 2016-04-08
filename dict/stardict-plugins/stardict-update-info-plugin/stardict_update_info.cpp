@@ -60,7 +60,7 @@ static std::string get_cfg_filename()
 }
 
 
-static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata);
+static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer userdata);
 
 static void configure()
 {
@@ -205,7 +205,7 @@ static void updateinfo_parse_text(GMarkupParseContext *context, const gchar *tex
 	}
 }
 
-static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
+static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer userdata)
 {
 	if (!buffer)
 		return;

@@ -63,7 +63,7 @@ private:
   bool pressed;
   Keys_t grab_key;
   std::list<std::string> possb_combs;
-  std::auto_ptr<hotkeys> def_hot_keys;/*I don't want to duplicate work, 
+  std::unique_ptr<hotkeys> def_hot_keys;/*I don't want to duplicate work, 
 																				so hold here pointer to default 
 																				object of this class*/
   Display *display;

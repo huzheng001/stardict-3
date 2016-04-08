@@ -87,6 +87,7 @@ private:
 	static gboolean vKeyPressReleaseCallback(GtkWidget * window, GdkEventKey *event , AppCore *oAppCore);
 	void reload_dicts();
 	void on_main_win_hide_list_changed(const baseconfval*);
+	void on_main_win_keep_above_changed(const baseconfval*);
 	void on_dict_scan_select_changed(const baseconfval*);
 	void on_scan_modifier_key_changed(const baseconfval*);
 	static gboolean on_word_change_timeout(gpointer data);
@@ -116,14 +117,14 @@ public:
 #endif
 	GlobalHotkeys oHotkey;
 	FloatWin oFloatWin;
-	std::auto_ptr<TrayBase> oDockLet;
+	std::unique_ptr<TrayBase> oDockLet;
 
 	Libs oLibs;
 	TreeDicts oTreeDicts;
 	StarDictClient oStarDictClient;
 	StarDictPlugins *oStarDictPlugins;
 	HttpManager oHttpManager;
-	std::auto_ptr<hotkeys> unlock_keys;
+	std::unique_ptr<hotkeys> unlock_keys;
 	AppSkin oAppSkin;
 	ReadWord oReadWord;
 	FullTextTrans oFullTextTrans;

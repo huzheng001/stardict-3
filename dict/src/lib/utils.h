@@ -47,6 +47,7 @@ extern std::string combnum2str(gint comb_code);
 extern std::vector<std::string> split(const std::string& str, char sep);
 extern GdkPixbuf *load_image_from_file(const std::string& filename);
 extern char *common_encode_uri_string(const char *string);
+extern char *common_build_dictdata(char type, const char *definition);
 
 /* Create a new temporary file. Return file name in file name encoding.
 Return an empty string if file cannot be created. */

@@ -8,7 +8,7 @@ make
 make install
 =============
 Dictdotcn plugin is outdated and have no use now.
-Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently.
+Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently. In Debian linux, you can use it!
 
 You can use:
 =============

@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 	gulong filecount = dict_info.get_filecount();
 	gulong indexfilesize = dict_info.get_index_file_size();
 
-	std::auto_ptr<rindex_file> pindex;
+	std::unique_ptr<rindex_file> pindex;
 	std::string base_url = rifo_url.substr(0, rifo_url.length() + 1 - sizeof(".rifo"));
 	std::string ridx_url = base_url + ".ridx";
 	index_type_t index_type;

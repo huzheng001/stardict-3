@@ -115,7 +115,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg1, user);
 		arg_escape(earg2, passwd);
 		arg_escape(earg3, email);
-		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, passwd is not encrypted here!
+		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, passwd is not fully encrypted here!
 		break;
 	}
 	case CMD_CHANGE_PASSWD:
@@ -127,7 +127,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		arg_escape(earg1, user);
 		arg_escape(earg2, old_passwd);
 		arg_escape(earg3, new_passwd);
-		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, new_passwd is not encrypted here! old_passwd have no use even it is stolen if change password succeed!
+		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, new_passwd is not fully encrypted here! old_passwd have no use even it is stolen if change password succeed!
 		break;
 	}
 	case CMD_AUTH:

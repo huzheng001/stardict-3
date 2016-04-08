@@ -83,7 +83,7 @@ private:
 	static const int FLUSH_LOG_TIMEOUT = 5000; // 5 seconds
 };
 
-extern std::auto_ptr<Logger> logger;
+extern std::unique_ptr<Logger> logger;
 
 #ifdef ENABLE_LOG_WINDOW
 /* Log window that show output from g_print, g_message, g_debug and the like 

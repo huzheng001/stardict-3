@@ -43,7 +43,7 @@
 #include "lib/utils.h"
 #include "libcommon.h"
 
-std::auto_ptr<Logger> logger;
+std::unique_ptr<Logger> logger;
 
 Logger::Logger(MessageLevel console_level, MessageLevel log_level)
 :

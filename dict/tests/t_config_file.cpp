@@ -105,7 +105,7 @@ static bool test_gconf()
 	string tmp2=tmp1 + string("/%gconf.xml");
 	remove(tmp2.c_str());
 	remove(tmp1.c_str());
-	std::auto_ptr<config_file> cf;
+	std::unique_ptr<config_file> cf;
 	cf.reset(new gconf_file("/apps/stardict"));
 	tmp_file tf=tmp1;
 	tmp_file tf1=tmp2;
@@ -117,7 +117,7 @@ static bool test_gconf()
 
 static bool test_inifile()
 {
-	std::auto_ptr<inifile> cf;
+	std::unique_ptr<inifile> cf;
 	glib::CharStr c_fname(g_strdup_printf("/tmp/stardict-%d.cfg", getpid()));
 	string fname(get_impl(c_fname));
 	tmp_file tf(fname);

@@ -1425,7 +1425,7 @@ msgstr "两个空行"
 
 #: ../src/prefsdlg.cpp:842
 msgid "_Highlight search term"
-msgstr "高亮显示搜索单词(_H)"
+msgstr "高亮显示检索单词(_H)"
 
 #: ../src/prefsdlg.cpp:852
 msgid "Dictionary management"

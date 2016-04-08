@@ -88,7 +88,7 @@ private:
 
 	unsigned int bookindex;
 	BookNameStyle bookname_style;
-	std::auto_ptr<PangoWidgetBase> pango_view_;
+	std::unique_ptr<PangoWidgetBase> pango_view_;
 	bool for_float_win;
 	InstantDictIndex dict_index;
 	/* Count headers. Add extra space before headers with index > 0. */

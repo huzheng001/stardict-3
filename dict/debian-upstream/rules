@@ -41,7 +41,6 @@ build-stamp:
 		--localstatedir=/var \
 		--disable-schemas-install \
 		--disable-dictdotcn \
-		--disable-festival \
 		--disable-tools
 	$(MAKE)
 

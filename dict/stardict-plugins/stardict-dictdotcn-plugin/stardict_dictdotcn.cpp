@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 kubtek <kubtek@mail.com>
+ * Copyright 2016 Hu Zheng <huzheng001@gmail.com>
  *
  * This file is part of StarDict.
  *
@@ -142,21 +142,6 @@ static std::string get_cfg_filename()
 	return build_path(gpAppDirs->get_user_config_dir(), "dictdotcn.cfg");
 }
 
-static char *build_dictdata(char type, const char *definition)
-{
-	size_t len = strlen(definition);
-	guint32 size;
-	size = sizeof(char) + len + 1;
-	char *data = (char *)g_malloc(sizeof(guint32) + size);
-	char *p = data;
-	*((guint32 *)p)= size;
-	p += sizeof(guint32);
-	*p = type;
-	p++;
-	memcpy(p, definition, len+1);
-	return data;
-}
-
 struct dict_ParseUserData {
 	std::string pron;
 	std::string def;
@@ -273,7 +258,6 @@ static void process_xml_response(const char *data, size_t data_len, NetDictRespo
 		return;
 	}
 	g_markup_parse_context_free(context);
-	context = NULL;
 	if ((Data.def.empty() || Data.def == "Not Found") && Data.suggestions.empty()) {
 		g_free(content);
 		return;
@@ -317,11 +301,11 @@ static void process_xml_response(const char *data, size_t data_len, NetDictRespo
 			definition += *it;
 		}
 	}
-	resp->data = build_dictdata('m', definition.c_str());
+	resp->data = plugin_service->build_dictdata('m', definition.c_str());
 	g_free(content);
 }
 
-static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userdata)
+static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer userdata)
 {
 	if (!buffer) {
 		return;
@@ -361,7 +345,7 @@ static void on_get_http_response(char *buffer, size_t buffer_len, gpointer userd
 				if (body_end) {
 					body_end += sizeof("</body>") -1;
 					std::string html(body, body_end - body);
-					resp->data = build_dictdata('h', html.c_str());
+					resp->data = plugin_service->build_dictdata('h', html.c_str());
 				}
 			}
 		}

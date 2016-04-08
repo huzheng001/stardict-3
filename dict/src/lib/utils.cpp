@@ -127,6 +127,21 @@ static gchar * byte_to_hex(unsigned char nr) {
 	return result;
 }
 
+char *common_build_dictdata(char type, const char *definition)
+{
+	size_t len = strlen(definition);
+	guint32 size;
+	size = sizeof(char) + len + 1;
+	char *data = (char *)g_malloc(sizeof(guint32) + size);
+	char *p = data;
+	*((guint32 *)p)= size;
+	p += sizeof(guint32);
+	*p = type;
+	p++;
+	memcpy(p, definition, len+1);
+	return data;
+}
+
 char *common_encode_uri_string(const char *string)
 {
 	gchar		*newURIString;

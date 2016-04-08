@@ -34,7 +34,7 @@ typedef unsigned long in_addr_t;
 #include "stardict-sigc++.h"
 
 
-typedef void (*get_http_response_func_t)(char *buffer, size_t buffer_len, gpointer userdata);
+typedef void (*get_http_response_func_t)(const char *buffer, size_t buffer_len, gpointer userdata);
 enum HttpMethod {HTTP_METHOD_GET, HTTP_METHOD_POST};
 
 class HttpClient {
