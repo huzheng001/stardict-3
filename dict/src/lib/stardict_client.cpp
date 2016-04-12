@@ -32,6 +32,7 @@
 #include <stdio.h>
 #include "sockets.h"
 #include "md5.h"
+#include "base64.h"
 #include "utils.h"
 
 #include "stardict_client.h"
@@ -111,11 +112,22 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		const char *user = va_arg( ap, const char * );
 		const char *passwd = va_arg( ap, const char * );
 		const char *email = va_arg( ap, const char * );
+		int *RSA_Public_Key_e = va_arg( ap, int * );
+		int *RSA_Public_Key_n = va_arg( ap, int * );
+
+		std::string passwd1 = passwd;
+		std::vector<unsigned char> v;
+		string_to_vector(passwd1, v);
+		std::vector<unsigned char> v2;
+		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
+		std::string base64_rsa_passwd;
+		base64_encode(v2, base64_rsa_passwd);
+
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
-		arg_escape(earg2, passwd);
+		arg_escape(earg2, base64_rsa_passwd.c_str());
 		arg_escape(earg3, email);
-		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, passwd is not fully encrypted here!
+		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
 	case CMD_CHANGE_PASSWD:
@@ -123,11 +135,28 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		const char *user = va_arg( ap, const char * );
 		const char *old_passwd = va_arg( ap, const char * );
 		const char *new_passwd = va_arg( ap, const char * );
+		int *RSA_Public_Key_e = va_arg( ap, int * );
+		int *RSA_Public_Key_n = va_arg( ap, int * );
+
+		std::string old_passwd1 = old_passwd;
+		std::vector<unsigned char> v;
+		string_to_vector(old_passwd1, v);
+		std::vector<unsigned char> v2;
+		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
+		std::string base64_rsa_old_passwd;
+		base64_encode(v2, base64_rsa_old_passwd);
+
+		std::string new_passwd1 = new_passwd;
+		string_to_vector(new_passwd1, v);
+		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
+		std::string base64_rsa_new_passwd;
+		base64_encode(v2, base64_rsa_new_passwd);
+
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
-		arg_escape(earg2, old_passwd);
-		arg_escape(earg3, new_passwd);
-		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str()); // Not perfect, new_passwd is not fully encrypted here! old_passwd have no use even it is stolen if change password succeed!
+		arg_escape(earg2, base64_rsa_old_passwd.c_str());
+		arg_escape(earg3, base64_rsa_new_passwd.c_str());
+		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
 	case CMD_AUTH:
@@ -899,23 +928,43 @@ gboolean StarDictClient::on_io_in_event(GIOChannel *ch, GIOCondition cond,
 
 int StarDictClient::parse_banner(gchar *line)
 {
-    int status;
-    status = atoi(line);
-    if (status != CODE_HELLO) {
-        if (status == CODE_TEMPORARILY_UNAVAILABLE) {
-            g_print(_("Server temporarily unavailable!\n"));
-        } else {
-            g_print(_("Unexpected status code %d\n"), status);
-        }
-        return 0;
-    }
-    char *p;
-    p = strrchr(line, ' ');
-    if (p) {
-        p++;
-        cmd_reply.daemonStamp = p;
-    }
-    return 1;
+	int status;
+	status = atoi(line);
+	if (status != CODE_HELLO) {
+		if (status == CODE_TEMPORARILY_UNAVAILABLE) {
+ 			g_print(_("Server temporarily unavailable!\n"));
+		} else {
+			g_print(_("Unexpected status code %d\n"), status);
+		}
+		return 0;
+	}
+	char *p, *p1, *p2;
+	p = strstr(line, "<auth>");
+	if (p) {
+		p += 6;
+		p1 = strchr(p, '<');
+		if (p1) {
+			p2 = strchr(p1, '>');
+			if (p2) {
+				cmd_reply.daemonStamp.assign(p1, p2+1-p1);
+			}
+		}
+	}
+	std::string RSA_Public_Key;
+	p = strstr(line, "<rsa_public_key>");
+	if (p) {
+		p += 16;
+		p1 = strchr(p, '<');
+		if (p1) {
+			p1++;
+			p2 = strchr(p1, '>');
+			if (p2) {
+				RSA_Public_Key.assign(p1, p2-p1);
+				rsa_public_key_str_to_bin(RSA_Public_Key, RSA_Public_Key_e, RSA_Public_Key_n);
+			}
+		}
+	}
+	return 1;
 }
 
 int StarDictClient::parse_command_client(gchar *line)

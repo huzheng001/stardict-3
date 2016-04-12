@@ -30,6 +30,7 @@
 typedef unsigned long in_addr_t;
 #endif
 
+#include "rsa.h"
 #include "stardict-sigc++.h"
 
 
@@ -171,6 +172,9 @@ public:
 	static sigc::signal<void, int> on_maxdictcount_end_;
 	static sigc::signal<void, std::list<char *> *> on_previous_end_;
 	static sigc::signal<void, std::list<char *> *> on_next_end_;
+
+	int RSA_Public_Key_e[RSA_MAX];
+	int RSA_Public_Key_n[RSA_MAX];
 
 	StarDictClient();
 	~StarDictClient();

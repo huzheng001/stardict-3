@@ -1326,7 +1326,7 @@ void PrefsDlg::on_setup_network_changepassword_button_clicked(GtkWidget *widget,
 	gpAppFrame->oStarDictClient.set_auth("", "");
 	oPrefsDlg->changepassword_user = user;
 	oPrefsDlg->new_password = hex2;
-        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_CHANGE_PASSWD, user.c_str(), hex, hex2);
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_CHANGE_PASSWD, user.c_str(), hex, hex2, gpAppFrame->oStarDictClient.RSA_Public_Key_e, gpAppFrame->oStarDictClient.RSA_Public_Key_n);
         gpAppFrame->oStarDictClient.send_commands(1, c);
         break;
     }
@@ -1430,7 +1430,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
 	gpAppFrame->oStarDictClient.set_auth("", "");
 	oPrefsDlg->register_user = user;
 	oPrefsDlg->register_hex_md5saltpassword = hex;
-        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email);
+        STARDICT::Cmd *c = new STARDICT::Cmd(STARDICT::CMD_REGISTER, user, hex, email, gpAppFrame->oStarDictClient.RSA_Public_Key_e, gpAppFrame->oStarDictClient.RSA_Public_Key_n);
         gpAppFrame->oStarDictClient.send_commands(1, c);
         break;
     }
