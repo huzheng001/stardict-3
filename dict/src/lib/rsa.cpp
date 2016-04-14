@@ -23,14 +23,22 @@ struct slink
 
 void do_free_slink(struct slink *head)
 {
-	std::list<struct slink *> p;
+	struct slink *p, *p_old;
+	p = head;
+	while (p != NULL) {
+		p_old = p;
+		p = p->next;
+		free(p_old);
+	};
+
+	/*std::list<struct slink *> p;
 	while (head) {
 		p.push_back(head);
 		head = head->next;
 	}
 	for (std::list<struct slink *>::iterator i = p.begin(); i != p.end(); ++i) {
 		free(*i);
-	}
+	}*/
 }
 
 /*/--------------------------------------自己建立的大数运算库-------------------------------------*/
