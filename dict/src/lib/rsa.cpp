@@ -17,7 +17,7 @@ void sub(int a[RSA_MAX],int b[RSA_MAX] ,int c[RSA_MAX] );
 struct slink
 { 
 	int  bignum[RSA_MAX];
-	/*bignum[98]ÓÃÀ´±ê¼ÇÕı¸ººÅ£¬1Õı£¬0¸º¡£bignum[99]À´±ê¼ÇÊµ¼Ê³¤¶È*/
+	/*bignum[98]ç”¨æ¥æ ‡è®°æ­£è´Ÿå·ï¼Œ1æ­£ï¼Œ0è´Ÿã€‚bignum[99]æ¥æ ‡è®°å®é™…é•¿åº¦*/
 	struct slink *next;
 };
 
@@ -41,7 +41,7 @@ void do_free_slink(struct slink *head)
 	}*/
 }
 
-/*/--------------------------------------×Ô¼º½¨Á¢µÄ´óÊıÔËËã¿â-------------------------------------*/
+/*/--------------------------------------è‡ªå·±å»ºç«‹çš„å¤§æ•°è¿ç®—åº“-------------------------------------*/
 
 
 /*
@@ -250,11 +250,11 @@ else if (a1[RSA_MAX-2]=='-')
 	     k=0;
 	 } 
   }
-  if(c[l1-1]==0)/*Ê¹µÃÊı×éCÖĞµÄÇ°ÃæËùÒÔ0×Ö·û²»ÏÔÊ¾ÁË£¬Èç1000-20=0980--->ÏÔÊ¾Îª980ÁË*/
+  if(c[l1-1]==0)/*ä½¿å¾—æ•°ç»„Cä¸­çš„å‰é¢æ‰€ä»¥0å­—ç¬¦ä¸æ˜¾ç¤ºäº†ï¼Œå¦‚1000-20=0980--->æ˜¾ç¤ºä¸º980äº†*/
   {
 	     len=l1-1;
 		 i=2;
-	  while (c[l1-i]==0)/*111456-111450=00006£¬Ïû³ı0ºó±ä³ÉÁË6£»*/
+	  while (c[l1-i]==0)/*111456-111450=00006ï¼Œæ¶ˆé™¤0åå˜æˆäº†6ï¼›*/
 	  {
 	    len=l1-i;
 			 i++;
@@ -323,22 +323,22 @@ else if(cmp(a1,a2)==0)
 return;
 }
 
-void  mod(int a[RSA_MAX],int b[RSA_MAX],int  *c)/*/c=a mod b//×¢Òâ£º¾­¼ìÑéÖªµÀ´Ë´¦AºÍCµÄÊı×é¶¼¸Ä±äÁË¡£*/
+void  mod(int a[RSA_MAX],int b[RSA_MAX],int  *c)/*/c=a mod b//æ³¨æ„ï¼šç»æ£€éªŒçŸ¥é“æ­¤å¤„Aå’ŒCçš„æ•°ç»„éƒ½æ”¹å˜äº†ã€‚*/
 {	int d[RSA_MAX];
 	mov (a,d);
 	while (cmp(d,b)!=(-1))/*/c=a-b-b-b-b-b.......until(c<b)*/
 	{
 		sub(d,b,c);
-		mov(c,d);/*/c¸´ÖÆ¸øa*/
+		mov(c,d);/*/cå¤åˆ¶ç»™a*/
 	}	
 	return ;
 }
 
 
-void  divt(int t[RSA_MAX],int b[RSA_MAX],int  *c ,int *w)/*//ÊÔÉÌ·¨//µ÷ÓÃÒÔºówÎªa mod b, CÎªa  div b;*/
+void  divt(int t[RSA_MAX],int b[RSA_MAX],int  *c ,int *w)/*//è¯•å•†æ³•//è°ƒç”¨ä»¥åwä¸ºa mod b, Cä¸ºa  div b;*/
 {
 
-	int a1,b1,i,j,m;/*wÓÃÓÚÔİÊ±±£´æÊı¾İ*/
+	int a1,b1,i,j,m;/*wç”¨äºæš‚æ—¶ä¿å­˜æ•°æ®*/
 	int d[RSA_MAX],e[RSA_MAX],f[RSA_MAX],g[RSA_MAX],a[RSA_MAX];
 	
 	mov(t,a);
@@ -379,10 +379,10 @@ void  divt(int t[RSA_MAX],int b[RSA_MAX],int  *c ,int *w)/*//ÊÔÉÌ·¨//µ÷ÓÃÒÔºówÎª
 		{
 			c[i]++;
 			sub(a,e,f);
-		    mov(f,a);/*f¸´ÖÆ¸øg*/
+		    mov(f,a);/*få¤åˆ¶ç»™g*/
 		}
 
-     for(j=i;j<RSA_MAX;j++)/*¸ßÎ»ÇåÁã*/
+     for(j=i;j<RSA_MAX;j++)/*é«˜ä½æ¸…é›¶*/
         e[j]=0;
 	
 	}
@@ -393,7 +393,7 @@ void  divt(int t[RSA_MAX],int b[RSA_MAX],int  *c ,int *w)/*//ÊÔÉÌ·¨//µ÷ÓÃÒÔºówÎª
 	return;
 }
 
-void mulmod(int a[RSA_MAX] ,int b[RSA_MAX] ,int n[RSA_MAX],int *m)/*½â¾ö ÁË m=a*b mod n;*/
+void mulmod(int a[RSA_MAX] ,int b[RSA_MAX] ,int n[RSA_MAX],int *m)/*è§£å†³ äº† m=a*b mod n;*/
 {
 	int c[RSA_MAX],d[RSA_MAX];
 	int i;
@@ -406,11 +406,11 @@ void mulmod(int a[RSA_MAX] ,int b[RSA_MAX] ,int n[RSA_MAX],int *m)/*½â¾ö ÁË m=a*
      //printf("\nm  length is :  %d \n",m[RSA_MAX-1]);
 }
 
-/*½ÓÏÂÀ´µÄÖØµãÈÎÎñÊÇÒª×ÅÊÖ½â¾ö m=a^p  mod nµÄº¯ÊıÎÊÌâ¡£*/
+/*æ¥ä¸‹æ¥çš„é‡ç‚¹ä»»åŠ¡æ˜¯è¦ç€æ‰‹è§£å†³ m=a^p  mod nçš„å‡½æ•°é—®é¢˜ã€‚*/
 
 void expmod(int a[RSA_MAX] ,int p[RSA_MAX] ,int n[RSA_MAX],int *m)
 {
-	int t[RSA_MAX],l[RSA_MAX],temp[RSA_MAX]; /*/t·ÅÈë2£¬l·ÅÈë1£»*/
+	int t[RSA_MAX],l[RSA_MAX],temp[RSA_MAX]; /*/tæ”¾å…¥2ï¼Œlæ”¾å…¥1ï¼›*/
 	int w[RSA_MAX],s[RSA_MAX],c[RSA_MAX],b[RSA_MAX],i;
 	for(i=0;i<RSA_MAX-1;i++) {
 		b[i]=l[i]=t[i]=w[i]=0;
@@ -427,7 +427,7 @@ void expmod(int a[RSA_MAX] ,int p[RSA_MAX] ,int n[RSA_MAX],int *m)
 		}
 		divt(b,t,w,c);/*// c=p mod 2  w= p /2*/	
 		mov(w,b);/*//p=p/2*/
-		if (cmp(c,l)==0) { /*/ÓàÊıc==1*/
+		if (cmp(c,l)==0) { /*/ä½™æ•°c==1*/
 			for(i=0;i<RSA_MAX;i++) {
 				w[i]=0;
 			}
@@ -436,7 +436,7 @@ void expmod(int a[RSA_MAX] ,int p[RSA_MAX] ,int n[RSA_MAX],int *m)
 			for (i=0;i<RSA_MAX;i++) {
 				w[i]=c[i]=0;
 			}
-			divt(temp,n,w,c);/* /cÎªÓàc=temp % n£¬wÎªÉÌw=temp/n */
+			divt(temp,n,w,c);/* /cä¸ºä½™c=temp % nï¼Œwä¸ºå•†w=temp/n */
 			mov(c,temp);
 		}
 		for(i=0;i<RSA_MAX;i++) {
@@ -457,8 +457,8 @@ void expmod(int a[RSA_MAX] ,int p[RSA_MAX] ,int n[RSA_MAX],int *m)
 		c[i]=0;
 	}
 	divt(s,n,w,c);
-	mov (c,m);/*ÓàÊıs¸øm*/
-	m[RSA_MAX-2]=a[RSA_MAX-2];/*ÎªºóÃæµÄºº×ÖÏÔÊ¾ĞèÒª£¬ÓÃµÚ99Î»×öÎª±ê¼Ç*/
+	mov (c,m);/*ä½™æ•°sç»™m*/
+	m[RSA_MAX-2]=a[RSA_MAX-2];/*ä¸ºåé¢çš„æ±‰å­—æ˜¾ç¤ºéœ€è¦ï¼Œç”¨ç¬¬99ä½åšä¸ºæ ‡è®°*/
 	//return; /*/k=temp*k%n;*/
 }
 
@@ -515,7 +515,7 @@ int   is_prime_san(int p[RSA_MAX] )
 }
 
 
-int coprime(int e[RSA_MAX],int s[RSA_MAX]) /*//// ÇóÁ½¸ö´óÊıÖ®¼äÊÇ·ñ»¥ÖÊ////*/
+int coprime(int e[RSA_MAX],int s[RSA_MAX]) /*//// æ±‚ä¸¤ä¸ªå¤§æ•°ä¹‹é—´æ˜¯å¦äº’è´¨////*/
 
 {
     int a[RSA_MAX],b[RSA_MAX],c[RSA_MAX],d[RSA_MAX],o[RSA_MAX],l[RSA_MAX];
@@ -577,7 +577,7 @@ void prime_random(int *p,int *q)
 	p[p[RSA_MAX-1]-1]=k;
 
 	}while((is_prime_san(p))!=1);
-		//printf("ËØÊı p Îª  : ");
+		//printf("ç´ æ•° p ä¸º  : ");
     //for(i=0;i<p[RSA_MAX-1];i++)
 	//{
 	//printf("%d",p[p[RSA_MAX-1]-i-1]);
@@ -594,7 +594,7 @@ void prime_random(int *p,int *q)
 	}
 
 	}while((is_prime_san(q))!=1);
-		//printf("ËØÊı q Îª : ");
+		//printf("ç´ æ•° q ä¸º : ");
     //for(i=0;i<q[RSA_MAX-1];i++)
 	//{
 	//printf("%d",q[q[RSA_MAX-1]-i-1]);
@@ -608,7 +608,7 @@ void  erand(int e[RSA_MAX],int m[RSA_MAX])
 	int i,k;
 	time_t t;
 	e[RSA_MAX-1]=5;
-	//printf("Ëæ»ú²úÉúÒ»¸öÓë(p-1)*(q-1)»¥ËØµÄ e :");
+	//printf("éšæœºäº§ç”Ÿä¸€ä¸ªä¸(p-1)*(q-1)äº’ç´ çš„ e :");
 		do
 	{
 			t=time(NULL);
@@ -678,15 +678,15 @@ void rsad(int e[RSA_MAX],int g[RSA_MAX],int *d)
 			for(i=0;i<RSA_MAX;i++)
 				temp[i]=d[i]=0;
 	    	divt(t,g,temp,d);
-    //printf("ÓÉÒÔÉÏµÄ(p-1)*(q-1)ºÍ e ¼ÆËãµÃ³öµÄ d : ");
+    //printf("ç”±ä»¥ä¸Šçš„(p-1)*(q-1)å’Œ e è®¡ç®—å¾—å‡ºçš„ d : ");
     //for(i=0;i<d[RSA_MAX-1];i++)
 	//printf("%d",d[d[RSA_MAX-1]-i-1]);
     //printf("\n\n");
 }
 
 
-/*/Çó½âÃÜÃÜÔ¿dµÄº¯Êı(¸ù¾İEuclidËã·¨)96403770511368768000*/
-unsigned long  rsa(unsigned long p,unsigned long q,unsigned long e)  /*/Çó½âÃÜÃÜÔ¿dµÄº¯Êı(¸ù¾İEuclidËã·¨)*/
+/*/æ±‚è§£å¯†å¯†é’¥dçš„å‡½æ•°(æ ¹æ®Euclidç®—æ³•)96403770511368768000*/
+unsigned long  rsa(unsigned long p,unsigned long q,unsigned long e)  /*/æ±‚è§£å¯†å¯†é’¥dçš„å‡½æ•°(æ ¹æ®Euclidç®—æ³•)*/
 {
 unsigned long g,k,r,n1,n2,t;
 unsigned long b1=0,b2=1;
@@ -718,10 +718,10 @@ unsigned long b1=0,b2=1;
     return (g+b2)%g;
 }
 
-/*/------------------------------------------µ¼Èëµ¼³ö¹«Ô¿ºÍË½Ô¿------------------------------------/*/
+/*/------------------------------------------å¯¼å…¥å¯¼å‡ºå…¬é’¥å’Œç§é’¥------------------------------------/*/
 
 /*
-void loadskey(int d[RSA_MAX],int n[RSA_MAX]) //µ¼ÈëË½Ô¿
+void loadskey(int d[RSA_MAX],int n[RSA_MAX]) //å¯¼å…¥ç§é’¥
 {
 	{
 	FILE *fp;
@@ -731,11 +731,11 @@ void loadskey(int d[RSA_MAX],int n[RSA_MAX]) //µ¼ÈëË½Ô¿
 		d[i]=n[i]=0;
 	while(1)
 	{
-	printf("Îªµ¼Èë(d,n)£¬ÇëÊäÈë½âÃÜÃÜÔ¿¶ÔÎÄ¼şµÄÂ·¾¶: \n");
+	printf("ä¸ºå¯¼å…¥(d,n)ï¼Œè¯·è¾“å…¥è§£å¯†å¯†é’¥å¯¹æ–‡ä»¶çš„è·¯å¾„: \n");
     scanf("%s",filename);
 	 if((fp=fopen(filename,"r"))==NULL)
 	 {
-	   printf("ÊäÈëµÄÎÄ¼ş²»´æÔÚ£¬ÇëÖØĞÂÊäÈë!\n");   
+	   printf("è¾“å…¥çš„æ–‡ä»¶ä¸å­˜åœ¨ï¼Œè¯·é‡æ–°è¾“å…¥!\n");   
 	 }
 	 else break;
 	}
@@ -760,16 +760,16 @@ void loadskey(int d[RSA_MAX],int n[RSA_MAX]) //µ¼ÈëË½Ô¿
 	 	for(i=0;i<k;i++)
 	    	n[i]=str[k-i-1]-48;
 		n[RSA_MAX-1]=k;
-		printf("\n½âÃÜÃÜÔ¿ d : ");
+		printf("\nè§£å¯†å¯†é’¥ d : ");
 		for(i=0;i<d[RSA_MAX-1];i++)
 		    printf("%d",d[d[RSA_MAX-1]-i-1]);
 		printf("\n");
-		printf("\n    ¹«Ô¿ n : ");
+		printf("\n    å…¬é’¥ n : ");
 		for(i=0;i<n[RSA_MAX-1];i++)
 		    printf("%d",n[n[RSA_MAX-1]-i-1]);
 		printf("\n");
 		fclose(fp);
-		printf("\nµ¼Èë(d,n)³É¹¦!\n");
+		printf("\nå¯¼å…¥(d,n)æˆåŠŸ!\n");
 		getchar();
 }
 */
@@ -783,7 +783,7 @@ void rsa_init()
 {
 	int i;
 	for (i=0;i<RSA_MAX;i++) {
-		m_global[i]=p_global[i]=q_global[i]=n_global[i]=d_global[i]=e_global[i]=0;/*/¼òµ¥³õÊ¼»¯Ò»ÏÂ*/
+		m_global[i]=p_global[i]=q_global[i]=n_global[i]=d_global[i]=e_global[i]=0;/*/ç®€å•åˆå§‹åŒ–ä¸€ä¸‹*/
 	}
 }
 
@@ -793,7 +793,7 @@ void rsa_gen_key(int RSA_Public_Key_d[RSA_MAX], int RSA_Public_Key_n[RSA_MAX])
 	for (i=0;i<RSA_MAX;i++) {
              m_global[i]=p_global[i]=q_global[i]=n_global[i]=d_global[i]=e_global[i]=0;
 	}
-	prime_random(p_global,q_global);/*/Ëæ»ú²úÉúÁ½¸ö´óËØÊı*/
+	prime_random(p_global,q_global);/*/éšæœºäº§ç”Ÿä¸¤ä¸ªå¤§ç´ æ•°*/
 	mul(p_global,q_global,n_global); // Get n.
 	mov(p_global,p1_global);
 	p1_global[0]--;      
@@ -884,7 +884,7 @@ void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 		c=ch;
 		k=0;
 		if(c<0) {
-			c=abs(c);/*/°Ñ¸ºÊıÈ¡Õı²¢ÇÒ×öÒ»¸ö±ê¼Ç*/
+			c=abs(c);/*/æŠŠè´Ÿæ•°å–æ­£å¹¶ä¸”åšä¸€ä¸ªæ ‡è®°*/
 			p1->bignum[RSA_MAX-2]='0';
 		} else {
 			p1->bignum[RSA_MAX-2]='1';
@@ -922,7 +922,7 @@ void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 			expmod( p->bignum , e ,n ,p1->bignum); // Here will crash! Who can fix it???
 			ch=p1->bignum[RSA_MAX-2];
 			dest.push_back(ch);
-			if ((p1->bignum[RSA_MAX-1]/10) ==0) { /*/ÅĞ¶Ïp1->bignum[99]µÄÊÇ·ñ´óÓÚÊ®£»*/
+			if ((p1->bignum[RSA_MAX-1]/10) ==0) { /*/åˆ¤æ–­p1->bignum[99]çš„æ˜¯å¦å¤§äºåï¼›*/
 				ch=0+48;
 				dest.push_back(ch);
 				ch=p1->bignum[RSA_MAX-1]+48;
@@ -997,7 +997,7 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 
 	p1=h;
 	k=0;
-	if(h!=NULL) { /*/tempÎªÔİ´æASIICÂëµÄintÖµ*/
+	if(h!=NULL) { /*/tempä¸ºæš‚å­˜ASIICç çš„intå€¼*/
 		do {
 			p2=(struct slink * )malloc(LEN);
 			//for(i=0;i<RSA_MAX;i++) {
@@ -1007,7 +1007,7 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 			temp=p2->bignum[0]+p2->bignum[1]*10+p2->bignum[2]*100;
 			if (( p2->bignum[RSA_MAX-2])=='0') {
 				temp=0-temp;
-			}/*/×ª»¯ÎªÕıÈ·µÄASIICÂë£¬Èç-78-96ĞÎ³Éºº×Ö	*/	 
+			}/*/è½¬åŒ–ä¸ºæ­£ç¡®çš„ASIICç ï¼Œå¦‚-78-96å½¢æˆæ±‰å­—	*/	 
 			ch=temp;/*  str[k]--->ch */
 			dest.push_back(ch);
 			k++;
