@@ -58,9 +58,9 @@ void base64_encode(std::vector<unsigned char> &v, std::string &str)
 #endif
 
 #ifdef SERVER_EDITION
-void base64_decode(std::string const& encoded_string, std::vector<unsigned char> &dest_code)
+void base64_decode(std::string &encoded_string, std::vector<unsigned char> &dest_code)
 {
-  int in_len = encoded_string.size();
+  int in_len = encoded_string.length();
   int i = 0;
   int j = 0;
   int in_ = 0;

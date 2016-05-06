@@ -563,7 +563,7 @@ void prime_random(int *p,int *q)
 	do
 	{
 			t=time(NULL);
-    srand((unsigned long)t);
+    srand((unsigned int)t);
 	for(i=1;i<p[RSA_MAX-1]-1;i++)
 	{
 	k=rand()%10;
@@ -586,7 +586,7 @@ void prime_random(int *p,int *q)
 		do
 	{
 			t=time(NULL);
-    srand((unsigned long)t);
+    srand((unsigned int)t);
 	for(i=1;i<q[RSA_MAX-1];i++)
 	{
 	k=rand()%10;
@@ -612,7 +612,7 @@ void  erand(int e[RSA_MAX],int m[RSA_MAX])
 		do
 	{
 			t=time(NULL);
-    srand((unsigned long)t);
+    srand((unsigned int)t);
 	for(i=0;i<e[RSA_MAX-1]-1;i++)
 	{
 	k=rand()%10;
@@ -686,10 +686,10 @@ void rsad(int e[RSA_MAX],int g[RSA_MAX],int *d)
 
 
 /*/求解密密钥d的函数(根据Euclid算法)96403770511368768000*/
-unsigned long  rsa(unsigned long p,unsigned long q,unsigned long e)  /*/求解密密钥d的函数(根据Euclid算法)*/
+unsigned int  rsa(unsigned int p,unsigned int q,unsigned int e)  /*/求解密密钥d的函数(根据Euclid算法)*/
 {
-unsigned long g,k,r,n1,n2,t;
-unsigned long b1=0,b2=1;
+unsigned int g,k,r,n1,n2,t;
+unsigned int b1=0,b2=1;
 
  g=(p-1)*(q-1);
  n1=g;
@@ -873,6 +873,9 @@ void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 	struct slink  *h;
 
 	p=p1=p2=(struct slink * )malloc(LEN);
+	for(i=0;i<RSA_MAX;i++) {
+		p->bignum[i]=0;
+	}
 	h=NULL;
 
 	count=0;
@@ -906,6 +909,9 @@ void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 		p2=p1;
 		if (j < len -1) {
 			p1=(struct slink * )malloc(LEN);
+			for(i=0;i<RSA_MAX;i++) {
+				p1->bignum[i]=0;
+			}
 		}
 	}
 	p2->next=NULL; 
@@ -916,10 +922,10 @@ void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 	if(h!=NULL) {
 		do {
 			p1=(struct slink * )malloc(LEN);
-			//for(i=0;i<RSA_MAX;i++) {
-				//p1->bignum[i]=0;
-			//}
-			expmod( p->bignum , e ,n ,p1->bignum); // Here will crash! Who can fix it???
+			for(i=0;i<RSA_MAX;i++) {
+				p1->bignum[i]=0;
+			}
+			expmod( p->bignum , e ,n ,p1->bignum);
 			ch=p1->bignum[RSA_MAX-2];
 			dest.push_back(ch);
 			if ((p1->bignum[RSA_MAX-1]/10) ==0) { /*/判断p1->bignum[99]的是否大于十；*/
@@ -956,6 +962,9 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 	j=3;
 	count=0;
 	h=p1=p2=(struct slink * )malloc(LEN);
+	for(i=0;i<RSA_MAX;i++) {
+		p1->bignum[i]=0;
+	}
 
 	size_t l =0;
 	size_t len = src.size();
@@ -987,6 +996,9 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 				p2=p1;
 				if (l < len -1) {
 					p1=(struct slink * )malloc(LEN);
+					for(i=0;i<RSA_MAX;i++) {
+						p1->bignum[i]=0;
+					}
 				}
 			}
 		}
@@ -1000,9 +1012,9 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 	if(h!=NULL) { /*/temp为暂存ASIIC码的int值*/
 		do {
 			p2=(struct slink * )malloc(LEN);
-			//for(i=0;i<RSA_MAX;i++) {
-				//p2->bignum[i]=0;
-			//}
+			for(i=0;i<RSA_MAX;i++) {
+				p2->bignum[i]=0;
+			}
 			expmod( p1->bignum , d ,n ,p2->bignum);		  
 			temp=p2->bignum[0]+p2->bignum[1]*10+p2->bignum[2]*100;
 			if (( p2->bignum[RSA_MAX-2])=='0') {

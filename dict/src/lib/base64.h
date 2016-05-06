@@ -10,7 +10,7 @@
 
 
 #ifdef SERVER_EDITION
-void base64_decode(std::string const& encoded_string, std::vector<unsigned char> &dest_code);
+void base64_decode(std::string &encoded_string, std::vector<unsigned char> &dest_code);
 #endif
 
 #ifdef CLIENT_EDITION
