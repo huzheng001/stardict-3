@@ -1,4 +1,5 @@
 ﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # uyghur2dict
 # By Abdisalam (anatilim@gmail.com), inspired by Michael Robinson's hanzim2dict converter.
