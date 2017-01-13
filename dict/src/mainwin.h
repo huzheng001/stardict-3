@@ -92,6 +92,7 @@ private:
 	static void on_main_menu_keepabove_toggled(GtkCheckMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_downloaddict_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_newversion_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
+	static void on_main_menu_donate_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_help_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
 	static void on_main_menu_quit_activate(GtkMenuItem *menuitem, TopWin *oTopWin);
