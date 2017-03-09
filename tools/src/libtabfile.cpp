@@ -22,6 +22,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
+#include <sstream>
 #include <glib/gstdio.h>
 #include <glib.h>
 
@@ -228,9 +229,10 @@ static bool write_dictionary(const char *filename, GArray *array)
 	g_message("%s wordcount: %d.", get_impl(basefilename), array->len);
 
 #ifndef _WIN32
-	std::string command(std::string("dictzip ") + dicfilename);
+	std::stringstream command;
+	command << "dictzip \"" << dicfilename << "\"";
 	int result;
-	result = system(command.c_str());
+	result = system(command.str().c_str());
 	if (result == -1) {
 		g_print("system() error!\n");
 	}
