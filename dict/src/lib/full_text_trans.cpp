@@ -501,7 +501,7 @@ void FullTextTrans::build_request(
 	if(engine_index==TranslateEngine_Google){
 		httpMethod = HTTP_METHOD_GET;
 		host = "translate.google.com";
-		file = "/translate_t?ie=UTF-8";
+		file = "/#";
 		allow_absolute_URI = true;
 	} else if(engine_index==TranslateEngine_Yahoo){
 		httpMethod = HTTP_METHOD_POST;
@@ -525,9 +525,8 @@ void FullTextTrans::build_request(
 	} */
 
 	if(engine_index==TranslateEngine_Google) {
-		file += "&sl=";
 		file += engines[engine_index].srclangs[fromlang_index].code;
-		file += "&tl=";
+		file += "/";
 		const size_t tolangind = engines[engine_index].srclangs[fromlang_index].tolangind;
 		file += engines[engine_index].tgtlangs[tolangind][tolang_index].code;
 	} else if(engine_index==TranslateEngine_Yahoo || engine_index==TranslateEngine_ExciteJapan) {
@@ -564,7 +563,7 @@ void FullTextTrans::build_request(
 		}
 	}
 	if (engine_index == TranslateEngine_Google) {
-		file += "&text=";
+		file += "/";
 		file += text;
 	} else if(engine_index == TranslateEngine_Yahoo) {
 		body += "&trtext=";
@@ -685,7 +684,7 @@ void FullTextTrans::parse_response(const char* buffer, size_t buffer_len, glong 
 			}
 		}
 	} else if (engine_index == TranslateEngine_Google) {
-		static const char * const GoogleTranslateStartMark = "<span id=result_box ";
+		static const char * const GoogleTranslateStartMark = "<span id=\"result_box\" ";
 		static const char * const GoogleTranslateEndMark = "</div>";
 
 		do {
