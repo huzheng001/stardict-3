@@ -26,7 +26,7 @@
 #include "articleview.h"
 #include "readword.h"
 
-const guint MAX_HISTORY_WORD_ITEM_NUM=20;
+const guint MAX_HISTORY_WORD_ITEM_NUM=200;
 const guint MAX_BACK_WORD_ITEM_NUM=10;
 
 const int MIN_WINDOW_WIDTH=200;
@@ -139,6 +139,12 @@ public:
 	void grab_focus() {
 		gtk_widget_grab_focus(gtk_bin_get_child(GTK_BIN(WordCombo)));
 	}
+
+    GtkListStore *get_wordcombo_model() {
+		return GTK_LIST_STORE(gtk_combo_box_get_model(
+					GTK_COMBO_BOX(WordCombo)));
+	}
+
 };
 
 class ListWin {
@@ -193,12 +199,21 @@ private:
 	static void on_selection_changed(GtkTreeSelection *selection, ResultWin *oResultWin);
 };
 
+class HistoryWin {
+public:
+	GtkWidget *treeview;
+	void Create(GtkWidget *notebook);
+private:
+	static void on_selection_changed(GtkTreeSelection *selection, HistoryWin *oHistoryWin);
+};
+
 class IndexWin {
 public:
 	GtkWidget *notebook;
 
 	ListWin oListWin;
 	ResultWin oResultWin;
+	HistoryWin oHistoryWin;
 	TreeWin oTreeWin;
 
 	IndexWin();
@@ -219,6 +234,7 @@ private:
 	static void on_appendix_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void on_translate_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
+	static void on_history_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin);
 	static void PreviousCallback(GtkWidget *widget, LeftWin *oLeftWin);
 	static void NextCallback(GtkWidget *widget, LeftWin *oLeftWin);
 	static void on_choose_group_button_clicked(GtkWidget *widget, LeftWin *oLeftWin);
