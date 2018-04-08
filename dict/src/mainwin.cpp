@@ -1448,6 +1448,8 @@ void HistoryWin::Create(GtkWidget *notebook)
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes (
 		"word", renderer, "text", 0, NULL);
 	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+	g_signal_connect (G_OBJECT (treeview), "key_press_event",
+		G_CALLBACK (on_key_pressed), this);
 
 	GtkTreeSelection *selection = gtk_tree_view_get_selection (
 		GTK_TREE_VIEW (treeview));
@@ -1463,6 +1465,30 @@ void HistoryWin::Create(GtkWidget *notebook)
 
 	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
+}
+
+gboolean HistoryWin::on_key_pressed(GtkWidget *widget, GdkEventKey *event,
+		HistoryWin *oHistoryWin)
+{
+	if (event->type==GDK_KEY_PRESS &&
+			(event->keyval==GDK_Delete || event->keyval==GDK_KP_Delete)) {
+		GtkTreeModel *model;
+		GtkTreeIter iter;
+		GtkTreeSelection *selection = gtk_tree_view_get_selection (
+				GTK_TREE_VIEW (oHistoryWin->treeview));
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+			gtk_tree_selection_select_iter(selection, &iter);
+			// Select last row
+			if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+				gint total = gtk_tree_model_iter_n_children(model, NULL);
+				gtk_tree_model_iter_nth_child (model, &iter, NULL, total-1);
+				gtk_tree_selection_select_iter(selection, &iter);
+			}
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 void HistoryWin::on_selection_changed(GtkTreeSelection *selection, HistoryWin *oHistoryWin)

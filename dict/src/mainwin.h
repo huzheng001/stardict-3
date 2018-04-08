@@ -205,6 +205,7 @@ public:
 	void Create(GtkWidget *notebook);
 private:
 	static void on_selection_changed(GtkTreeSelection *selection, HistoryWin *oHistoryWin);
+	static gboolean on_key_pressed(GtkWidget *widget, GdkEventKey *event, HistoryWin *oHistoryWin);
 };
 
 class IndexWin {
