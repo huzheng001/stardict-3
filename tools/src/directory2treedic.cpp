@@ -99,10 +99,10 @@ void my_dir_close(MyDir *mydir)
 	g_free(mydir);
 }
 
-void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
+void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, gint32 *wordcount)
 {
 	gchar *utf8filename;
-	glong tmpglong, offset_old;
+	gint32 tmpgint32, offset_old;
 	gchar *p;
 	gsize bytes_written;
 	
@@ -116,17 +116,17 @@ void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
 		return;
 	}
 	fwrite(utf8filename,sizeof(gchar), bytes_written+1, tdxfile);
-	tmpglong = g_htonl(0);
-	fwrite(&(tmpglong),sizeof(glong),1,tdxfile); //need more work...
-	tmpglong = g_htonl(0);
-	fwrite(&(tmpglong),sizeof(glong),1,tdxfile); //need more work...
-	glong subcount_offset = ftell(tdxfile);
-	tmpglong = g_htonl(0);
-	fwrite(&(tmpglong),sizeof(glong),1,tdxfile); //it will be rewrite later.
+	tmpgint32 = g_htonl(0);
+	fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile); //need more work...
+	tmpgint32 = g_htonl(0);
+	fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile); //need more work...
+	gint32 subcount_offset = ftell(tdxfile);
+	tmpgint32 = g_htonl(0);
+	fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile); //it will be rewrite later.
 
 	(*wordcount)++;
 	
-	glong subwordcount = 0;
+	gint32 subwordcount = 0;
 	
 	MyDir* mydir = my_dir_open(dirname);
 	const gchar *filename;
@@ -135,7 +135,7 @@ void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
 	FILE *file;
 	struct stat stats;
 	gchar *buffer = NULL;
-	glong last_buffersize=0;
+	gint32 last_buffersize=0;
 	gint dirname_len = strlen(dirname);
 	while ((filename = my_dir_read_name(mydir))!=NULL) {
 		if (filename[0]=='.') //hiden file.
@@ -165,12 +165,12 @@ void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
 				fwrite(buffer, 1, stats.st_size, dicfile);				
 								
 				fwrite(utf8filename,sizeof(gchar), bytes_written+1, tdxfile);
-				tmpglong = g_htonl(offset_old);
-				fwrite(&(tmpglong),sizeof(glong),1,tdxfile);
-				tmpglong = g_htonl(stats.st_size);
-				fwrite(&(tmpglong),sizeof(glong),1,tdxfile);
-				tmpglong = g_htonl(0);
-				fwrite(&(tmpglong),sizeof(glong),1,tdxfile);
+				tmpgint32 = g_htonl(offset_old);
+				fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile);
+				tmpgint32 = g_htonl(stats.st_size);
+				fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile);
+				tmpgint32 = g_htonl(0);
+				fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile);
 				
 				g_free(utf8filename);								
 				(*wordcount)++;
@@ -184,10 +184,10 @@ void add_dir(FILE *tdxfile, FILE *dicfile, char *dirname, glong *wordcount)
 	my_dir_close(mydir);
 	g_free(buffer);
 	
-	glong tmp_offset = ftell(tdxfile);
+	gint32 tmp_offset = ftell(tdxfile);
 	fseek(tdxfile,subcount_offset,SEEK_SET);
-	tmpglong = g_htonl(subwordcount);
-	fwrite(&(tmpglong),sizeof(glong),1,tdxfile);
+	tmpgint32 = g_htonl(subwordcount);
+	fwrite(&(tmpgint32),sizeof(gint32),1,tdxfile);
 	fseek(tdxfile,tmp_offset,SEEK_SET);
 }
 
@@ -228,11 +228,11 @@ void convert(char *dirname)
 	dicfile = fopen(filename,"w");
 
 
-	glong wordcount = 0;
+	gint32 wordcount = 0;
 	
 	add_dir(tdxfile, dicfile, dirname, &wordcount);
 		
-	g_print("wordcount: %ld\n",wordcount);
+	g_print("wordcount: %d\n",wordcount);
 	
 	fclose(tdxfile);
 	fclose(dicfile);
@@ -240,7 +240,7 @@ void convert(char *dirname)
 	sprintf(filename, "%s.ifo", dirname);
 	ifofile = fopen(filename,"w");
 	fprintf(ifofile, "StarDict's treedict ifo file\nversion=2.4.2\n");
-	fprintf(ifofile, "wordcount=%ld\n", wordcount);
+	fprintf(ifofile, "wordcount=%d\n", wordcount);
 	sprintf(filename, "%s.tdx", dirname);
 	stat (filename, &stats);
 	fprintf(ifofile, "tdxfilesize=%ld\n", (long) stats.st_size);
