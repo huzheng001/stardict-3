@@ -3,7 +3,7 @@ The following text describes options specific to StarDict dictionary project. Pa
 To Install StarDict:
 type:
 =============
-./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-festival
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-festival --disable-scrollkeeper
 make
 make install
 =============
