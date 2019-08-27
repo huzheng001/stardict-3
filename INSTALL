@@ -3,12 +3,13 @@ The following text describes options specific to StarDict dictionary project. Pa
 To Install StarDict:
 type:
 =============
-./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-festival --disable-scrollkeeper
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-scrollkeeper
 make
 make install
 =============
 Dictdotcn plugin is outdated and have no use now.
-Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently. In Debian linux, you can use it!
+Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently. See: https://bugzilla.redhat.com/show_bug.cgi?id=242607
+In Debian linux, it have fixed this bug, so you can use it!
 
 You can use:
 =============
