@@ -1,4 +1,4 @@
-EXTRA_DIST = attachment.png docklet_gpe_normal.png docklet_gpe_scan.png docklet_gpe_stop.png docklet_normal.png docklet_scan.png docklet_stop.png index_appendix.png index_dictlist.png index_translate.png index_wazard.png pronounce.png splash.png video.png
+EXTRA_DIST = attachment.png docklet_gpe_normal.png docklet_gpe_scan.png docklet_gpe_stop.png docklet_normal.png docklet_scan.png docklet_stop.png index_appendix.png index_dictlist.png index_translate.png index_wazard.png pronounce.png splash.png splash_base.png video.png
 
 skindefaultdir = $(datadir)/stardict/pixmaps
 

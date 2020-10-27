@@ -199,7 +199,7 @@ bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs)
 		return true;
 	}
 	obj->type = StarDictPlugInType_VIRTUALDICT;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Info"), _("Info virtual dictionary."), _("Show the info documents."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict-4.sourceforge.net</website></plugin_info>", _("Info"), _("Info virtual dictionary."), _("Show the info documents."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;

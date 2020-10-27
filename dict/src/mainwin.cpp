@@ -25,7 +25,7 @@
 #include <algorithm>
 
 #ifdef _WIN32
-#define VERSION "4.0.0"
+#define VERSION "3.0.7"
 #  include <gdk/gdkwin32.h>
 #endif
 
@@ -614,6 +614,8 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 		"Hu Zheng <huzheng001@gmail.com>",
 		"Sergey <kubtek@gmail.com>",
 		"Evgeniy <dushistov@mail.ru>",
+		"Alex Murygin <murygin@aitoc.com>",
+		"Tao Wang <dancefire@gmail.com>",
 		"Opera Wang <wangvisual@sohu.com>",
 		"Ma Su'an <msa@wri.com.cn>",
 		NULL
@@ -631,7 +633,7 @@ void TopWin::on_main_menu_about_activate(GtkMenuItem *menuitem, TopWin *oTopWin)
 			      "version", VERSION,
 			      "website", "http://stardict-4.sourceforge.net",
 			      "comments", _("StarDict is an international dictionary for GNOME."),
-			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy\n" "Copyright \xc2\xa9 2007-2011 by Hu Zheng, Sergey\n" "Copyright \xc2\xa9 2012-2017 by Hu Zheng",
+			      "copyright", "Copyright \xc2\xa9 1999 by Ma Su'an\n" "Copyright \xc2\xa9 2002 by Opera Wang\n" "Copyright \xc2\xa9 2003-2004 by Hu Zheng\n" "Copyright \xc2\xa9 2005-2006 by Hu Zheng, Evgeniy\n" "Copyright \xc2\xa9 2007-2011 by Hu Zheng, Sergey\n" "Copyright \xc2\xa9 2012-2020 by Hu Zheng",
 			      "authors", (const char **)authors,
 			      "documenters", (const char **)documenters,
 			      "translator-credits", strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

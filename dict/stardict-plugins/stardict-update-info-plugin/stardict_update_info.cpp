@@ -26,7 +26,7 @@
 #include <windows.h>
 #endif
 
-static const int my_version_num = 40000000; // As 4,00,00,000, so the version is 4.0.0.0
+static const int my_version_num = 30007000; // As 3,00,07,000, so the version is 3.0.7.0
 static int latest_version_num;
 static int last_prompt_num;
 static std::string version_msg_title;
@@ -119,7 +119,7 @@ static void configure()
 		g_free(content);
 
 		if (new_show_ads) {
-			plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, NULL);
+			plugin_service->send_http_request("stardict-4.sourceforge.net", "/UPDATE", on_get_http_response, NULL);
 		} else {
 			plugin_service->set_news(NULL, NULL);
 		}
@@ -135,7 +135,7 @@ DLLIMPORT bool stardict_plugin_init(StarDictPlugInObject *obj, IAppDirs* appDirs
 		return true;
 	}
 	obj->type = StarDictPlugInType_MISC;
-	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://www.stardict.org</website></plugin_info>", _("Update Info"), _("Update information."), _("Get the update information from the Internet."));
+	obj->info_xml = g_strdup_printf("<plugin_info><name>%s</name><version>1.0</version><short_desc>%s</short_desc><long_desc>%s</long_desc><author>Hu Zheng &lt;huzheng001@gmail.com&gt;</author><website>http://stardict-4.sourceforge.net</website></plugin_info>", _("Update Info"), _("Update information."), _("Get the update information from the Internet."));
 	obj->configure_func = configure;
 	plugin_info = obj->plugin_info;
 	plugin_service = obj->plugin_service;
@@ -257,7 +257,7 @@ static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
 		gtk_window_set_title (GTK_WINDOW (dialog), version_msg_title.c_str());
 		if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES) {
-			plugin_service->show_url("http://www.stardict.org");
+			plugin_service->show_url("http://stardict-4.sourceforge.net");
 		}
 		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(prompt))) {
 			updated = true;
@@ -291,7 +291,7 @@ static void on_get_http_response(const char *buffer, size_t buffer_len, gpointer
 // Don't use g_idle_add to call send_http_request(), as it may be called before mainloop, and before the window is created, which may cause crash when set the news.
 DLLIMPORT void stardict_misc_plugin_on_mainwin_finish(void)
 {
-	plugin_service->send_http_request("www.stardict.org", "/UPDATE", on_get_http_response, NULL);
+	plugin_service->send_http_request("stardict-4.sourceforge.net", "/UPDATE", on_get_http_response, NULL);
 }
 
 DLLIMPORT bool stardict_misc_plugin_init(void)

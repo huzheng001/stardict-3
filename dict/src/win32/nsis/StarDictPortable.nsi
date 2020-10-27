@@ -2,7 +2,7 @@
 ;See http://PortableApps.com/PidginPortable
 ;path to file: PortableApps\PidginPortable\Other\Source\PidginPortableU.nsi
 
-;Website: http://www.stardict.org
+;Website: http://stardict-4.sourceforge.net
 
 ;This program is free software; you can redistribute it and/or
 ;modify it under the terms of the GNU General Public License
@@ -21,8 +21,8 @@
 !define NAME "StarDictPortable"
 !define PORTABLEAPPNAME "StarDict Portable"
 !define APPNAME "StarDict"
-!define VER "4.0.0.0"
-!define WEBSITE "www.stardict.org"
+!define VER "3.0.7.0"
+!define WEBSITE "stardict-4.sourceforge.net"
 !define DEFAULTEXE "stardict.exe"
 !define DEFAULTAPPDIR "StarDict"
 !define DEFAULTGTKDIR "GTK"
