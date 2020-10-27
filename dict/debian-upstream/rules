@@ -41,6 +41,7 @@ build-stamp:
 		--localstatedir=/var \
 		--disable-schemas-install \
 		--disable-dictdotcn \
+		--disable-scrollkeeper \
 		--disable-tools
 	$(MAKE)
 
@@ -96,21 +97,21 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs -pstardict dict/ChangeLog
-	dh_installdocs -pstardict
+#	dh_installchangelogs -pstardict dict/ChangeLog
+#	dh_installdocs -pstardict
 #	dh_installexamples
 #	dh_install
 	dh_installmenu -pstardict
 #	dh_installdebconf	
-	dh_installman -pstardict
-	dh_scrollkeeper
+#	dh_installman -pstardict
+#	dh_scrollkeeper
 	dh_gconf
 #	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
 #	dh_perl
-	dh_pysupport /usr/bin/stardict
+#	dh_pysupport /usr/bin/stardict
 #	dh_makeshlibs
 	dh_installdeb
 	dh_shlibdeps -L stardict -l debian/stardict/usr/bin

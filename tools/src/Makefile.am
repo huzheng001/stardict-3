@@ -15,6 +15,7 @@ noinst_PROGRAMS = stardict-editor pydict2dic olddic2newdic oxford2dic directory2
 	dictbuilder tabfile2sql KangXi Unihan xiaoxuetang-ja wubi ydp2dict \
 	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
 	sd2foldoc	\
+	xml_meaning \
 	stardict-text2bin stardict-bin2text stardict-repair
 
 AM_CPPFLAGS = $(STARDICT_CFLAGS) -I$(top_builddir) -I$(top_srcdir)
@@ -80,6 +81,10 @@ mova_SOURCES = mova.cpp
 xmlinout_LDFLAGS =
 xmlinout_LDADD = $(STARDICT_LIBS)
 xmlinout_SOURCES = xmlinout.cpp
+
+xml_meaning_LDFLAGS =
+xml_meaning_LDADD = $(STARDICT_LIBS)
+xml_meaning_SOURCES = xml_meaning.cpp
 
 soothill_LDFLAGS =
 soothill_LDADD = $(STARDICT_LIBS)
