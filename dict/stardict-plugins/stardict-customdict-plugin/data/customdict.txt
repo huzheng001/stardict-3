@@ -6,7 +6,7 @@ The <span foreground="red" weight="bold">best</span> dictionary software in the 
 
 huzheng	Hu Zheng	胡正	Hunzen
 x
-The author of <iref href="http://www.stardict.org">StarDict</iref>.\nEmail: huzheng001@gmail.com\nHome website: <iref>http://www.huzheng.org</iref>
+The author of <iref href="http://stardict-4.sourceforge.net">StarDict</iref>.\nEmail: huzheng001@gmail.com\nHome website: <iref>http://www.huzheng.org</iref>
 
 MiniGUI	迷你龟
 x

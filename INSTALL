@@ -11,6 +11,8 @@ Dictdotcn plugin is outdated and have no use now.
 Festival in Fedora linux have some problem and it will cause festival plugin crash, so we need to disable it presently(by --disable-festival). See: https://bugzilla.redhat.com/show_bug.cgi?id=242607
 In Debian linux, it have fixed this bug, so you can use it!
 
+For developers, you can add --disable-deprecations option!
+
 You can use:
 =============
 ./configure --disable-gnome-support --prefix=/usr

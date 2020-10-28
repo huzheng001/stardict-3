@@ -2,7 +2,7 @@
 #  include "config.h"
 #endif
 
-#include "advertisement.h"
+#include "customdict.h"
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
@@ -255,8 +255,8 @@ DLLIMPORT bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject 
 	obj->lookup_func = lookup;
 	obj->dict_name = _("User Dict");
 	datapath = plugin_info->datadir;
-	datapath += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "advertisement";
-	bool failed = load_dict((datapath + G_DIR_SEPARATOR_S "advertisement.txt").c_str());
+	datapath += G_DIR_SEPARATOR_S "data" G_DIR_SEPARATOR_S "customdict";
+	bool failed = load_dict((datapath + G_DIR_SEPARATOR_S "customdict.txt").c_str());
 	if (failed)
 		return true;
 	g_print(_("User dict plug-in loaded.\n"));

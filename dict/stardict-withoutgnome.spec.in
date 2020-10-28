@@ -30,7 +30,7 @@ It has powerful features such as "Glob-style pattern matching,"
 %setup -q
 
 %build
-%configure --disable-gnome-support --disable-schemas-install --disable-dictdotcn --disable-festival --disable-tools
+%configure --disable-gnome-support --disable-schemas-install --disable-dictdotcn --disable-scrollkeeper --disable-festival --disable-tools
 make -k %{_smp_mflags}
 
 %install

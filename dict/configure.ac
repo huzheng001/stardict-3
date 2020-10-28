@@ -223,16 +223,16 @@ fi
 AC_SUBST(YOUDAODICT_PLUGIN_DIR)
 
 
-AC_ARG_ENABLE([advertisement],
-	AS_HELP_STRING([--disable-advertisement],[Disable advertisement virtual dict plugin (default: enabled)]),
-	[enable_advertisement=$enableval],
-	[enable_advertisement=yes])
-if test "x$enable_advertisement" = "xyes" ; then
-	ADVERTISEMENT_PLUGIN_DIR="stardict-advertisement-plugin"
+AC_ARG_ENABLE([customdict],
+	AS_HELP_STRING([--disable-customdict],[Disable customdict virtual dict plugin (default: enabled)]),
+	[enable_customdict=$enableval],
+	[enable_customdict=yes])
+if test "x$enable_customdict" = "xyes" ; then
+	CUSTOMDICT_PLUGIN_DIR="stardict-customdict-plugin"
 else
-	ADVERTISEMENT_PLUGIN_DIR=
+	CUSTOMDICT_PLUGIN_DIR=
 fi
-AC_SUBST(ADVERTISEMENT_PLUGIN_DIR)
+AC_SUBST(CUSTOMDICT_PLUGIN_DIR)
 
 AC_ARG_ENABLE([man],
 	AS_HELP_STRING([--disable-man],[Disable man virtual dict plugin (default: enabled)]),
@@ -561,8 +561,8 @@ src/win32/acrobat/win32/Makefile
 src/win32/nsis/Makefile
 src/win32/PortableApps.com/Makefile
 stardict-plugins/Makefile
-stardict-plugins/stardict-advertisement-plugin/Makefile
-stardict-plugins/stardict-advertisement-plugin/data/Makefile
+stardict-plugins/stardict-customdict-plugin/Makefile
+stardict-plugins/stardict-customdict-plugin/data/Makefile
 stardict-plugins/stardict-man-plugin/Makefile
 stardict-plugins/stardict-info-plugin/Makefile
 stardict-plugins/stardict-fortune-plugin/Makefile
