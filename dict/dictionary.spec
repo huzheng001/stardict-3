@@ -4,7 +4,7 @@
 %define dictname  oxford-gb
 
 
-Summary: %{dictname} dictionary data files for StarDict2
+Summary: %{dictname} dictionary data files for StarDict
 Name: stardict-%{dictname}
 Version: %ver
 Release: %rel
@@ -14,12 +14,12 @@ Source: stardict-%{dictname}-%{ver}.tar.bz2
 BuildRoot: /var/tmp/%{name}-%{version}-root
 BuildArchitectures: noarch
 
-URL: http://www.stardict.org
+URL: http://stardict-4.sourceforge.net
 
 Requires: stardict >= 2.4.2
 
 %description
-%{dictname} dictionary data files for StarDict2.
+%{dictname} dictionary data files for StarDict.
 
 %prep
 %setup

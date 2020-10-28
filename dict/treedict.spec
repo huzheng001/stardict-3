@@ -4,7 +4,7 @@
 %define dictname infoBrowse-zh_CN
 
 
-Summary: %{dictname} tree dictionary data files for StarDict2
+Summary: %{dictname} tree dictionary data files for StarDict
 Name: stardict-treedict-%{dictname}
 Version: %ver
 Release: %rel
@@ -14,12 +14,12 @@ Source: stardict-treedict-%{dictname}-%{ver}.tar.bz2
 BuildRoot: /var/tmp/%{name}-%{version}-root
 BuildArchitectures: noarch
 
-URL: http://www.stardict.org
+URL: http://stardict-4.sourceforge.net
 
 Requires: stardict >= 2.4.2
 
 %description
-%{dictname} tree dictionary data files for StarDict2.
+%{dictname} tree dictionary data files for StarDict.
 
 %prep
 %setup

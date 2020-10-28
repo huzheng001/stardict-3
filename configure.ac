@@ -4,7 +4,7 @@
 AC_PREREQ(2.59)
 AC_INIT([StarDict], 3.0.7, [http://stardict-4.sourceforge.net])
 AC_CONFIG_AUX_DIR([.])
-AM_INIT_AUTOMAKE([1.9 tar-ustar dist-bzip2])
+AM_INIT_AUTOMAKE([1.9 tar-ustar dist-xz])
 
 AC_CONFIG_MACRO_DIR([m4])
 

@@ -7,8 +7,8 @@ Version:	%{version}
 Release:	1%{?dist}
 Group: 		Applications/System
 License: 	GPLv3
-URL: 		http://www.stardict.org
-Source0:	http://sourceforge.net/projects/stardict-4/files/%{version}/%{name}-%{version}.tar.bz2
+URL: 		http://stardict-4.sourceforge.net
+Source0:	http://sourceforge.net/projects/stardict-4/files/%{version}/%{name}-%{version}.tar.xz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: gtk3, enchant, espeak, libbonobo, libgnome, libsigc++20 >= 2.0.17

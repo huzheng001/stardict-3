@@ -5,7 +5,7 @@ AC_PREREQ(2.59)
 AC_INIT([StarDict lib], 3.0.7, [http://stardict-4.sourceforge.net])
 AC_CONFIG_SRCDIR([src/libcommon.cpp])
 AC_CONFIG_AUX_DIR([.])
-AM_INIT_AUTOMAKE([tar-ustar dist-bzip2])
+AM_INIT_AUTOMAKE([tar-ustar dist-xz])
 AC_CONFIG_HEADERS([config.h])
 AH_BOTTOM([#include <config-custom.h>])
 
