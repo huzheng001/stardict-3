@@ -420,7 +420,7 @@ resource_storage::~resource_storage(void)
 TLoadResult resource_storage::load(const std::string& dirname)
 {
 	clear();
-	std::auto_ptr<resource_database> t_db(new resource_database);
+	std::unique_ptr<resource_database> t_db(new resource_database);
 	TLoadResult res = t_db->load(dirname);
 	if(res == lrOK) {
 		g_message(rdb_loaded_db_msg);
@@ -433,7 +433,7 @@ TLoadResult resource_storage::load(const std::string& dirname)
 		verif_result = t_db->get_verif_result();
 		return lrError;
 	}
-	std::auto_ptr<resource_files> t_files(new resource_files);
+	std::unique_ptr<resource_files> t_files(new resource_files);
 	res = t_files->load(dirname);
 	if(res == lrOK) {
 		g_message(rdb_loaded_files_msg);

@@ -293,7 +293,7 @@ void WnCourt::on_destroy_callback (GtkWidget *object, WnCourt *wncourt)
 
 void WnCourt::on_realize_callback(GtkWidget *widget, WnCourt *wncourt)
 {
-	GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
+	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_LEFT_PTR);
 	gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 	g_object_unref(cursor);
@@ -312,7 +312,7 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 			wnobj * b;
 			if (event->x > wncourt->widget_width - 15 && event->y > wncourt->widget_height - 15) {
 				wncourt->resizing = true;
-				GdkCursor* cursor = gdk_cursor_new(GDK_SIZING);
+				GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_SIZING);
 				gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 				g_object_unref(cursor);
@@ -360,7 +360,7 @@ gboolean WnCourt::on_button_release_event_callback(GtkWidget * widget, GdkEventB
 			wncourt->dragball = NULL;
 		}
 		if (wncourt->resizing) {
-			GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
+			GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_LEFT_PTR);
 			gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 			g_object_unref(cursor);
@@ -455,12 +455,14 @@ WnCourt::WnCourt(size_t dictid, lookup_dict_func_t lookup_dict_, FreeResultData_
 	gtk_widget_set_size_request (drawing_area, widget_width, widget_height);
 	gtk_widget_add_events(drawing_area, GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK | GDK_POINTER_MOTION_MASK);
 #if GTK_MAJOR_VERSION >= 3
+/*
 	GdkRGBA color;
 	color.red = 1;
 	color.green = 1;
 	color.blue = 1;
 	color.alpha = 1;
 	gtk_widget_override_background_color(drawing_area, GTK_STATE_FLAG_NORMAL, &color);
+*/
 #else
 	GdkColor color;
 	color.red = 65535;

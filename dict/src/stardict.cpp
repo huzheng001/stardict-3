@@ -2090,7 +2090,7 @@ void AppCore::Init(const gchar *queryword)
 
 #ifdef CONFIG_GNOME
   stardict_app_server =
-    stardict_application_server_new(gdk_screen_get_default());
+    stardict_application_server_new(NULL);
 #endif
 
 	stardict_splash.on_mainwin_finish();

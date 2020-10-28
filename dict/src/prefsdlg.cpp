@@ -1111,23 +1111,23 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
                 GTK_STOCK_OK,
                 GTK_RESPONSE_OK,
                 NULL);
-    GtkWidget *table = gtk_table_new(2, 2, FALSE);
-    gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(account_dialog))), table);
-    gtk_container_set_border_width(GTK_CONTAINER(table), 6);
+    GtkWidget *grid = gtk_grid_new();
+    gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(account_dialog))), grid);
+    gtk_container_set_border_width(GTK_CONTAINER(grid), 6);
     GtkWidget *label = gtk_label_new_with_mnemonic(_("_User Name:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, .5);
     GtkWidget *user_entry = gtk_entry_new ();
     gtk_label_set_mnemonic_widget(GTK_LABEL(label), user_entry);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, (GtkAttachOptions)0, 6, 4);
-    gtk_table_attach(GTK_TABLE(table), user_entry, 1, 2, 0, 1, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_grid_attach(GTK_GRID(grid), label, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), user_entry, 1, 0, 1, 1);
     label = gtk_label_new_with_mnemonic(_("_Password:"));
     gtk_misc_set_alignment (GTK_MISC (label), 0, .5);
     GtkWidget *passwd_entry = gtk_entry_new ();
     gtk_entry_set_visibility(GTK_ENTRY(passwd_entry), FALSE);
     g_signal_connect(G_OBJECT(passwd_entry),"activate", G_CALLBACK(on_account_passwd_entry_activated), account_dialog);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), passwd_entry);
-    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, (GtkAttachOptions)0, 6, 4);
-    gtk_table_attach(GTK_TABLE(table), passwd_entry, 1, 2, 1, 2, GTK_EXPAND, (GtkAttachOptions)0, 0, 4);
+    gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), passwd_entry, 1, 1, 1, 1);
     gtk_dialog_set_default_response(GTK_DIALOG(account_dialog), GTK_RESPONSE_OK);
     gtk_window_set_resizable(GTK_WINDOW(account_dialog), FALSE);
     gtk_widget_show_all(GTK_WIDGET(account_dialog));
@@ -1465,9 +1465,9 @@ void PrefsDlg::setup_network_netdict()
     gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
 	GtkWidget *comboboxentry = gtk_combo_box_text_new_with_entry();
 	gtk_table_attach(GTK_TABLE(table), comboboxentry, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.net");
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.cc");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict2.stardict.net");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.me");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.cc");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.site");
 	eStarDictServer=GTK_ENTRY(gtk_bin_get_child(GTK_BIN(comboboxentry)));
 	const std::string &server= conf->get_string_at("network/server");
@@ -2598,14 +2598,14 @@ bool PrefsDlg::ShowModal()
 		if (ch && ch[0])
 			server = ch;
 		else
-			server = _("dict.stardict.net");
+			server = _("dict2.stardict.net");
 		conf->set_string_at("network/server", server);
 		int port;
 		ch = gtk_entry_get_text(eStarDictServerPort);
 		if (ch && ch[0])
 			port = atoi(ch);
 		else
-			port = 2628;
+			port = 2629;
 		conf->set_int_at("network/port", port);
 		gpAppFrame->oStarDictClient.set_server(server, port);
 

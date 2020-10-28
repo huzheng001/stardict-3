@@ -646,9 +646,10 @@ void rsad(int e[RSA_MAX],int g[RSA_MAX],int *d)
 	 for(i=0;i<RSA_MAX;i++)
 				k[i]=w[i]=0;
 		divt(n1,n2,k,w);/*/k=n1/n2;*/
-	 for(i=0;i<RSA_MAX;i++)
+	 for(i=0;i<RSA_MAX;i++) {
 		temp[i]=0;
-		mul(k,n2,temp);/*/temp=k*n2;*/
+	 }
+	 mul(k,n2,temp);/*/temp=k*n2;*/
     for(i=0;i<RSA_MAX;i++)
 		r[i]=0;
         sub(n1,temp,r);

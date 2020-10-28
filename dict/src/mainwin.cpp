@@ -110,7 +110,7 @@ void TopWin::Create(GtkWidget *vbox)
 	WordCombo = gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(list_store));
 	gtk_combo_box_set_entry_text_column(GTK_COMBO_BOX(WordCombo), 0);
 	g_object_unref (G_OBJECT(list_store));
-	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+	gtk_widget_set_focus_on_click(GTK_WIDGET(WordCombo), FALSE);
 	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
@@ -2569,7 +2569,7 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (engine_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (engine_combobox), renderer, "text", 0, NULL);
-	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(engine_combobox), FALSE);
+	gtk_widget_set_focus_on_click(GTK_WIDGET(engine_combobox), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox), engine_combobox, false, false, 0);
 	label = gtk_label_new(":");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -2577,7 +2577,7 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (fromlang_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (fromlang_combobox), renderer, "text", 0, NULL);
-	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(fromlang_combobox), FALSE);
+	gtk_widget_set_focus_on_click(GTK_WIDGET(fromlang_combobox), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox), fromlang_combobox, false, false, 0);
 	label = gtk_label_new(_("To"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -2585,7 +2585,7 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (tolang_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (tolang_combobox), renderer, "text", 0, NULL);
-	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(tolang_combobox), FALSE);
+	gtk_widget_set_focus_on_click(GTK_WIDGET(tolang_combobox), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox), tolang_combobox, false, false, 0);
 	SetEngine(conf->get_int_at("translate/engine"));
 	SetFromLang(true, conf->get_int_at("translate/fromlang"));
