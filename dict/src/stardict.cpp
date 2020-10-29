@@ -274,7 +274,9 @@ void AppCore::Create(const gchar *queryword)
 	window = hildon_window_new();
 	hildon_program_add_window(program, HILDON_WINDOW(window));
 #else
+#if defined(CONFIG_GNOME)
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+#endif
 #endif
 
 // Init oStarDictPlugins after we get window.
@@ -2095,7 +2097,9 @@ void AppCore::Init(const gchar *queryword)
 
 	stardict_splash.on_mainwin_finish();
 	oStarDictPlugins->MiscPlugins.on_mainwin_finish();
+#ifdef CONFIG_GNOME
 	gtk_main();
+#endif
 }
 
 void AppCore::Quit()
@@ -2116,7 +2120,9 @@ void AppCore::Quit()
 #endif
 	unlock_keys.reset(0);
 	conf.reset(0);
+#ifdef CONFIG_GNOME
 	gtk_main_quit();
+#endif
 }
 
 void AppCore::on_main_win_hide_list_changed(const baseconfval* hideval)
@@ -2327,6 +2333,15 @@ void synchronize_crt_enviroment(void)
 }
 #endif
 
+#if defined(CONFIG_GNOME)
+#else
+static void activateMe(GtkApplication *app, const char *query_word) {
+    GtkWidget *app_window = gtk_application_window_new(app);
+    gpAppFrame->window = app_window;
+    gpAppFrame->Init(query_word);
+}
+#endif
+
 #ifdef _WIN32
 DLLIMPORT int stardict_main(HINSTANCE hInstance, int argc, char **argv)
 #else
@@ -2347,7 +2362,7 @@ int main(int argc,char **argv)
 #if defined(_WIN32) && defined(_MSC_VER)
 	synchronize_crt_enviroment();
 #endif
-#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_GNOME) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
+#if defined(CONFIG_GNOME)
 	gtk_init(&argc, &argv);
 #endif
 	/* Register an interim logger.
@@ -2442,7 +2457,16 @@ int main(int argc,char **argv)
 	g_debug(_("StarDict configuration loaded."));
 	AppCore oAppCore;
 	gpAppFrame = &oAppCore;
+#if defined(CONFIG_GNOME)
 	oAppCore.Init(query_word);
-
 	return EXIT_SUCCESS;
+#else
+    GtkApplication *app;
+    app = gtk_application_new("com.app.stardict", G_APPLICATION_FLAGS_NONE);
+    g_signal_connect(app, "activate", G_CALLBACK(activateMe), (gpointer) query_word);
+    int status;
+    status = g_application_run(G_APPLICATION(app), argc, argv);
+    g_object_unref(app);
+    return status;
+#endif
 }

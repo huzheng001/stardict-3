@@ -15,7 +15,7 @@ For developers, you can add --disable-deprecations option!
 
 You can use:
 =============
-./configure --disable-gnome-support --prefix=/usr
+./configure --disable-gnome-support --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn
 =============
 to build the "gtk library only" version of StarDict.
 
