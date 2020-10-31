@@ -1437,6 +1437,87 @@ void ResultWin::on_selection_changed(GtkTreeSelection *selection, ResultWin *oRe
 }
 
 /**************************************************/
+void HistoryWin::Create(GtkWidget *notebook)
+{
+
+	GtkListStore *model = gpAppFrame->oTopWin.get_wordcombo_model();
+
+	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
+	gtk_widget_show(treeview);
+	g_object_unref (model);
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
+	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
+	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes (
+		"word", renderer, "text", 0, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+	g_signal_connect (G_OBJECT (treeview), "key_press_event",
+		G_CALLBACK (on_key_pressed), this);
+
+	GtkTreeSelection *selection = gtk_tree_view_get_selection (
+		GTK_TREE_VIEW (treeview));
+	g_signal_connect (G_OBJECT (selection), "changed",
+		G_CALLBACK (on_selection_changed), this);
+
+	GtkWidget *scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
+	gtk_widget_show(scrolledwindow);
+	gtk_scrolled_window_set_shadow_type (
+		GTK_SCROLLED_WINDOW (scrolledwindow), GTK_SHADOW_ETCHED_IN);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
+		GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+	gtk_container_add(GTK_CONTAINER(scrolledwindow),treeview);
+	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolledwindow, NULL);
+}
+
+gboolean HistoryWin::on_key_pressed(GtkWidget *widget, GdkEventKey *event,
+		HistoryWin *oHistoryWin)
+{
+	if (event->type==GDK_KEY_PRESS &&
+			(event->keyval==GDK_KEY_Delete || event->keyval==GDK_KEY_KP_Delete)) {
+		GtkTreeModel *model;
+		GtkTreeIter iter;
+		GtkTreeSelection *selection = gtk_tree_view_get_selection (
+				GTK_TREE_VIEW (oHistoryWin->treeview));
+		if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+			gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+			gtk_tree_selection_select_iter(selection, &iter);
+			// Select last row
+			if (!gtk_tree_selection_get_selected(selection, &model, &iter)) {
+				gint total = gtk_tree_model_iter_n_children(model, NULL);
+				gtk_tree_model_iter_nth_child (model, &iter, NULL, total-1);
+				gtk_tree_selection_select_iter(selection, &iter);
+			}
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+void HistoryWin::on_selection_changed(GtkTreeSelection *selection, HistoryWin *oHistoryWin)
+{
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+
+	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+		gchar *word;
+		gtk_tree_model_get (model, &iter, 0, &word, -1);
+		gpAppFrame->SimpleLookupToTextWin(word, NULL);
+		bool enable_netdict = conf->get_bool_at(
+			"network/enable_netdict");
+		if (enable_netdict) {
+			STARDICT::Cmd *c = new STARDICT::Cmd(
+				STARDICT::CMD_DEFINE, word);
+			if (!gpAppFrame->oStarDictClient.try_cache(c)) {
+				gpAppFrame->waiting_mainwin_lookupcmd_seq = c->seq;
+				gpAppFrame->oStarDictClient.send_commands(1, c);
+			}
+		}
+		gpAppFrame->LookupNetDict(word, true);
+		g_free(word);
+	}
+}
+
+/**************************************************/
 LeftWin::LeftWin()
 {
 	choosegroup_menu = NULL;
@@ -1490,6 +1571,16 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_widget_set_tooltip_text(translate_button,_("Full-Text Translation"));
 	g_signal_connect(G_OBJECT(translate_button),"toggled", G_CALLBACK(on_translate_button_toggled), this);
 
+	GtkWidget *history_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(wazard_button));
+	gtk_widget_set_can_focus (history_button, FALSE);
+	gtk_toggle_button_set_mode(GTK_TOGGLE_BUTTON(history_button), false);
+	gtk_box_pack_start(GTK_BOX(vbox),history_button, false, false, 0);
+	image = gtk_image_new_from_pixbuf(get_impl(gpAppFrame->oAppSkin.index_history));
+	gtk_container_add (GTK_CONTAINER (history_button), image);
+	gtk_widget_show_all(history_button);
+	gtk_widget_set_tooltip_text(history_button,_("History"));
+	g_signal_connect(G_OBJECT(history_button),"toggled", G_CALLBACK(on_history_button_toggled), this);
+	
 	if (has_treedict) {
 		GtkWidget *appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(translate_button));
 		gtk_widget_set_can_focus (appendix_button, FALSE);
@@ -1546,6 +1637,14 @@ void LeftWin::on_result_button_toggled(GtkToggleButton *button, LeftWin *oLeftWi
 	if (gtk_toggle_button_get_active(button)) {
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 0);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.oIndexWin.notebook), 1);
+	}
+}
+
+void LeftWin::on_history_button_toggled(GtkToggleButton *button, LeftWin *oLeftWin)
+{
+	if (gtk_toggle_button_get_active(button)) {
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.notebook), 0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(gpAppFrame->oMidWin.oIndexWin.notebook), 2);
 	}
 }
 
@@ -1655,6 +1754,7 @@ bool IndexWin::Create(GtkWidget *hpaned)
 	gtk_notebook_set_show_border(GTK_NOTEBOOK(notebook),FALSE);
 	oListWin.Create(notebook);
 	oResultWin.Create(notebook);
+	oHistoryWin.Create(notebook);
 
 	return oTreeWin.Create(notebook);
 }

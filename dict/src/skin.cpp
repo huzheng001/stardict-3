@@ -183,6 +183,8 @@ void AppSkin::load()
 	index_appendix.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"index_dictlist.png";
 	index_dictlist.reset(load_image_from_file(filename));
+	filename=pixmaps_dir+"index_history.png";
+	index_history.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"index_translate.png";
 	index_translate.reset(load_image_from_file(filename));
 	filename=pixmaps_dir+"pronounce.png";
