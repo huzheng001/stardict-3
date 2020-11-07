@@ -31,7 +31,7 @@ void dump_file()
 	MYSQL mysql;
 	if (!mysql_init(&mysql))
 		return;
-	if (!mysql_real_connect(&mysql, CONN_HOST , CONN_USER , CONN_PASS, NULL , MYSQL_PORT, NULL, 0))
+	if (!mysql_real_connect(&mysql, CONN_HOST , CONN_USER , CONN_PASS, NULL , 0 , NULL, 0))
 		return;
 	if (mysql_select_db(&mysql, CONN_DB))
 		return;
