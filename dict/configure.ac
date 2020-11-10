@@ -45,21 +45,34 @@ dnl ================================================================
 dnl spell plugin checks: enchant.
 dnl ================================================================
 
-ENCHANT_REQUIRED=1.2.0
+ENCHANT1_REQUIRED=1.2.0
+ENCHANT2_REQUIRED=2.2.3
 AC_ARG_ENABLE([spell],
 	AS_HELP_STRING([--disable-spell],[Disable spell plugin (default: enabled)]),
 	[enable_enchant=$enableval],
 	[enable_enchant=yes])
 
 if test "x$enable_enchant" = "xyes" ; then
-	PKG_CHECK_MODULES(ENCHANT, enchant >= $ENCHANT_REQUIRED, \
-			have_enchant=yes, have_enchant=no)
-	if test "x$have_enchant" = "xyes"; then
-		ENCHANT_CFLAGS="${ENCHANT_CFLAGS}"
-		ENCHANT_LIBS="${ENCHANT_LIBS}"
-		SPELL_PLUGIN_DIR="stardict-spell-plugin"
+	PKG_CHECK_MODULES([ENCHANT2], enchant-2 >= $ENCHANT2_REQUIRED, \
+			have_enchant2=yes, have_enchant2=no)
+	PKG_CHECK_MODULES([ENCHANT1], enchant >= $ENCHANT1_REQUIRED, \
+			have_enchant1=yes, have_enchant1=no)
+	if test "x$have_enchant2" = "xyes"; then
+		if test "x$have_enchant1" = "xyes"; then
+			AC_MSG_ERROR([You have both Enchant 1.x and Enchant 2.x installed. This is not supported.])
+		else
+			ENCHANT_CFLAGS="${ENCHANT2_CFLAGS}"
+			ENCHANT_LIBS="${ENCHANT2_LIBS}"
+			SPELL_PLUGIN_DIR="stardict-spell-plugin"
+		fi
 	else
-		AC_MSG_ERROR([Enchant library not found or too old. Use --disable-spell to build without spell plugin.])
+		if test "x$have_enchant1" = "xyes"; then
+			ENCHANT_CFLAGS="${ENCHANT1_CFLAGS}"
+			ENCHANT_LIBS="${ENCHANT1_LIBS}"
+			SPELL_PLUGIN_DIR="stardict-spell-plugin"
+		else
+			AC_MSG_ERROR([Enchant library not found or too old. Use --disable-spell to build without spell plugin.])
+		fi
 	fi
 else
 	ENCHANT_CFLAGS=
@@ -451,7 +464,7 @@ STARDICT_CFLAGS="-Wall $STARDICT_CFLAGS"
 dnl
 dnl Start of zlib checks
 dnl
-AC_CHECK_LIB(z,zlibVersion,STARDICT_LIBS="$STARDICT_LIBS -lz",[AC_MSG_ERROR([zlib not found, or gcc-c++ not installed])])
+AC_CHECK_LIB(z,zlibVersion,STARDICT_LIBS="$STARDICT_LIBS -lz",[AC_MSG_ERROR([zlib not found, or gcc g++ not installed])])
 # For the first AC_CHECK_LIB, if failed, it may because of compiler didn't installed. So add this warning for the first AC_CHECK_LIB macro.
 
 

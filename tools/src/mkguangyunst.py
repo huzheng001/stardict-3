@@ -15,6 +15,6 @@ for line in sys.stdin.readlines():
 	pinyin= words[13]
 	psyun = words[22]
 	if beizhu == '':
-		print "%s\t%s %s%s%s%s%s%s %sQIE PINYIN%s PSYUN%s\\n%s" % (romazi, muci, sheng, yunbu, she, hu, deng, diao, fanqie, pinyin, psyun, chars)
+		print("%s\t%s %s%s%s%s%s%s %sQIE PINYIN%s PSYUN%s\\n%s" % (romazi, muci, sheng, yunbu, she, hu, deng, diao, fanqie, pinyin, psyun, chars))
 	else:
-		print "%s\t%s %s%s%s%s%s%s %sQIE PINYIN%s PSYUN%s\\n%s\\n%s" % (romazi, muci, sheng, yunbu, she, hu, deng, diao, fanqie, pinyin, psyun, chars, beizhu)
+		print("%s\t%s %s%s%s%s%s%s %sQIE PINYIN%s PSYUN%s\\n%s\\n%s" % (romazi, muci, sheng, yunbu, she, hu, deng, diao, fanqie, pinyin, psyun, chars, beizhu))

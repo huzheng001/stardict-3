@@ -830,7 +830,7 @@ bool AppCore::LocalSmartLookupToFloat(const gchar* sWord, int BeginPos)
 		
 		bool bFound = false;
 		for (size_t iLib=0;iLib<scan_dictmask.size();iLib++)
-			BuildResultData(scan_dictmask, SearchWord, iIndex, false, iLib, pppWord, ppppWordData, bFound, 2);
+			BuildResultData(scan_dictmask, SearchWord, iIndex, NULL, iLib, pppWord, ppppWordData, bFound, 2);
 		for (size_t iLib=0; iLib<scan_dictmask.size(); iLib++)
 			BuildVirtualDictData(scan_dictmask, SearchWord, iLib, pppWord, ppppWordData, bFound);
 		

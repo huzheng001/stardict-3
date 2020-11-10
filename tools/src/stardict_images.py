@@ -67,7 +67,7 @@ def stardict_images(srcFilePath, rootDir):
   if not rootDir:
     # srcFilePath = rootDir + "/pixmaps/stardict.xcf"
     if not srcFilePath.endswith("/pixmaps/stardict.xcf"):
-      print 'Unable to automatically detect StarDict root directory. Specify non-blank root directory parameter.'
+      print('Unable to automatically detect StarDict root directory. Specify non-blank root directory parameter.')
       return
     dstDirPath = os.path.dirname(srcFilePath)
     dstDirPath = os.path.dirname(dstDirPath)

@@ -31,6 +31,7 @@
 #include "spring.h"
 
 #include <vector>
+#include <cstring>
 using namespace std;
 
 class scene_t {

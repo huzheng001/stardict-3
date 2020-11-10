@@ -9,7 +9,7 @@ import os
 
 if __name__ == "__main__":
 	os.system("mkdir tif")
-	pages = range(1, 1683+1)
+	pages = list(range(1, 1683+1))
 	for i in pages:
 		page = str(i)
 		print(page)

@@ -24,7 +24,6 @@
 # $ dictzip hanzim.dict
 #
 
-from string import split
 from struct import pack
 
 class Word:
@@ -37,12 +36,12 @@ class Word:
 wordmap = {}
 
 file = open("ChineseUyghurStarDict.txt", "r")
-lines = map(lambda x: split(x[:-1], '\t\t'), file.readlines())
+lines = [x[:-1].split('\t\t') for x in file.readlines()]
 
 for line in lines:
     code = line[0]
     definition = line[1]
-    if wordmap.has_key(code):
+    if code in wordmap:
         wordmap[code].add(definition)
     else:
         wordmap[code] = Word(code, definition)
@@ -86,3 +85,4 @@ ifo.write("email=anatilim@gmail.com\n")
 ifo.write("description=感谢新疆维吾尔自治区语委会、新疆青少年出版社为我们提供《汉维词典》的词库\n")
 ifo.write("sametypesequence=m\n")
 ifo.close()
+

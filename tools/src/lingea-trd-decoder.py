@@ -49,34 +49,34 @@ VERSION = "0.4"
 
 import getopt, sys
 def usage():
-   print "Lingea Dictionary Decoder"
-   print "-------------------------"
-   print "Version: %s" % VERSION
-   print "Copyright (C) 2007 - Klokan Petr Pridal, Petr Dlouhy"
-   print
-   print "Usage: python lingea-trd-decoder.py DICTIONARY.trd > DICTIONARY.tab"
-   print "Result convertion by stardict-tools: /usr/lib/stardict-tools/tabfile"
-   print
-   print "    -o <num>      --out-style        : Output style"
-   print "                                          0   no tags"
-   print "                                          1   \\n tags"
-   print "                                          2   html tags"
-   print "    -h            --help             : Print this message"
-   print "    -d            --debug            : Degub"
-   print "    -r            --debug-header     : Degub - print headers"
-   print "    -a            --debug-all        : Degub - print all records"
-   print "    -l            --debug-limit      : Degub limit"
-   print
-   print "For HTML support in StarDict dictionary .ifo has to contain:"
-   print "sametypesequence=g"
-   print "!!! Change the .ifo file after generation by tabfile !!!"
-   print
+   print("Lingea Dictionary Decoder")
+   print("-------------------------")
+   print("Version: %s" % VERSION)
+   print("Copyright (C) 2007 - Klokan Petr Pridal, Petr Dlouhy")
+   print()
+   print("Usage: python lingea-trd-decoder.py DICTIONARY.trd > DICTIONARY.tab")
+   print("Result conversion by stardict-tools: /usr/lib/stardict-tools/tabfile")
+   print()
+   print("    -o <num>      --out-style        : Output style")
+   print("                                          0   no tags")
+   print("                                          1   \\n tags")
+   print("                                          2   html tags")
+   print("    -h            --help             : Print this message")
+   print("    -d            --debug            : Degub")
+   print("    -r            --debug-header     : Degub - print headers")
+   print("    -a            --debug-all        : Degub - print all records")
+   print("    -l            --debug-limit      : Degub limit")
+   print()
+   print("For HTML support in StarDict dictionary .ifo has to contain:")
+   print("sametypesequence=g")
+   print("!!! Change the .ifo file after generation by tabfile !!!")
+   print()
 
 try:
    opts, args = getopt.getopt(sys.argv[1:], "hdo:ral:", ["help", "debug", "out-style=", "debug-header", "debug-all", "debug-limit="])
 except getopt.GetoptError:
    usage()
-   print "ERROR: Bad option"
+   print("ERROR: Bad option")
    sys.exit(2)
    
 import locale
@@ -94,7 +94,7 @@ for o, a in opts:
       OUTSTYLE = locale.atoi(a)
       if OUTSTYLE > 2:
          usage()
-         print "ERROR: Output style not specified"
+         print("ERROR: Output style not specified")
    if o in ("-r", "--debug-header"):
       # If DEBUG and DEBUGHEADER, then print just all header records
       DEBUGHEADER = True
@@ -113,7 +113,7 @@ if len(args) == 1:
     FILENAME = args[0]
 else:
    usage()
-   print "ERROR: You have to specify .trd file to decode"
+   print("ERROR: You have to specify .trd file to decode")
    sys.exit(2)
 
 from struct import *
@@ -428,7 +428,7 @@ def out( comment = "", skip = False):
             comment = comment % s
         else:
             comment = comment % bs[pos]
-    if DEBUG: print "%03d %s %s | %s | %03d" % (pos, toBin(bs[pos]),comment, s, (triple + pos))
+    if DEBUG: print("%03d %s %s | %s | %03d" % (pos, toBin(bs[pos]),comment, s, (triple + pos)))
     if skip:
         pos += triple + 1
         return s.replace('`','') # Remove '`' character from words
@@ -671,14 +671,14 @@ if DEBUG:
         s = decode(getRec(i))
         if DEBUGHEADER:
             # print s.split('\t')[0]
-            print s
+            print(s)
         if DEBUGLIMIT > 0 and not s.endswith('\n'):
             DEBUG = True
-            print "-"*80
-            print "%s) at address %s" % (i, toBin(index[i]))
-            print
+            print("-"*80)
+            print("%s) at address %s" % (i, toBin(index[i])))
+            print()
             s = decode(getRec(i))
-            print s
+            print(s)
             DEBUGLIMIT -= 1
     DEBUG = True
 else:
@@ -686,10 +686,10 @@ else:
     for i in range(1,entryCount):
         s = decode(getRec(i))
         if s.endswith('\n'):
-            print s,
+            print(s, end=' ')
         else:
-            print s
-            print "!!! RECORD STRUCTURE DECODING ERROR !!!"
-            print "Please run this script in DEBUG mode and repair DATA BLOCK(S) section in function decode()"
-            print "If you succeed with whole dictionary send report (name of the dictionary and source code of script) to slovniky@googlegroups.com"
+            print(s)
+            print("!!! RECORD STRUCTURE DECODING ERROR !!!")
+            print("Please run this script in DEBUG mode and repair DATA BLOCK(S) section in function decode()")
+            print("If you succeed with whole dictionary send report (name of the dictionary and source code of script) to slovniky@googlegroups.com")
             break

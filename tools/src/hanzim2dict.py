@@ -22,8 +22,6 @@
 # $ dictzip hanzim.dict
 #
 
-from string import split
-from codecs import getdecoder, getencoder
 from struct import pack
 
 class Word:
@@ -34,39 +32,37 @@ class Word:
         self.definition.append(definition)
 
 wordmap = {}
-fromGB = getdecoder("GB2312")
-toUTF = getencoder("utf_8")
 
-file = open("zidianf.gb", "r")
-lines = map(lambda x: split(x[:-1], '\t'), file.readlines())
+file = open("zidianf.gb", "r", encoding = "GBK")
+lines = [x[:-1].split('\t') for x in file.readlines()]
 
 for line in lines:
-    code = toUTF(fromGB(line[0])[0])[0]
+    code = line[0]
     pinyin = line[2]
     definition = '<'+pinyin+'> '+line[3]+' ['+line[1]+']'
-    if wordmap.has_key(code):
+    if code in wordmap:
         wordmap[code].add(definition)
     else:
         wordmap[code] = Word(code, definition)
 
 for filename in ("cidianf.gb", "sanzicidianf.gb"):
-    file = open(filename, "r")
-    lines = map(lambda x: split(x[:-1], '\t'), file.readlines())
+    file = open(filename, "r", encoding = "GBK")
+    lines = [x[:-1].split('\t') for x in file.readlines()]
 
     for line in lines:
         if len(line) < 2:
-            print len(line)
+            print((len(line)))
             continue
-        code = toUTF(fromGB(line[0][:-2])[0])[0]
+        code = line[0][:-2]
         definition = line[1]+' ['+line[0][-1:]+']'
-        if wordmap.has_key(code):
+        if code in wordmap:
             wordmap[code].add(definition)
         else:
             wordmap[code] = Word(code, definition)
 
 dict = open("hanzim.dict", "wb")
 idx = open("hanzim.idx", "wb")
-ifo = open("hanzim.ifo", "wb")
+ifo = open("hanzim.ifo", "w")
 offset = 0
 count = 0
 keylen = 0
@@ -84,14 +80,14 @@ for key in keys:
         deftext += d
         multi = True
 
-    dict.write(deftext)
+    dict.write(deftext.encode())
 
-    idx.write(key+'\0')
+    idx.write((key+'\0').encode())
     idx.write(pack("!I", offset))
     idx.write(pack("!I", len(deftext)))
     offset += len(deftext)
     count += 1
-    keylen += len(key)
+    keylen += len(key.encode())
 
 dict.close()
 idx.close()
