@@ -209,6 +209,38 @@ AC_SUBST(ESPEAK_LIBS)
 AC_SUBST(ESPEAK_PLUGIN_DIR)
 
 dnl ================================================================
+dnl espeak-ng tts plugin checks.
+dnl ================================================================
+
+AC_ARG_ENABLE([espeak_ng],
+	AS_HELP_STRING([--disable-espeak-ng],[Disable espeak-ng tts plugin (default: enabled)]),
+	[enable_espeak_ng=$enableval],
+	[enable_espeak_ng=yes])
+
+if test "x$enable_espeak_ng" = "xyes" ; then
+	AC_CHECK_HEADERS([espeak-ng/speak_lib.h],
+		[
+			ESPEAK_NG_LIBS="-lespeak-ng"
+			ESPEAK_NG_CFLAGS=
+			ESPEAK_NG_PLUGIN_DIR="stardict-espeak-ng-tts-plugin"
+		],
+		[
+			AC_MSG_ERROR([Espeak-ng library not found. Use --disable-espeak-ng to build without espeak-ng plugin.])
+		],
+		[]
+	)
+else
+	ESPEAK_NG_CFLAGS=
+	ESPEAK_NG_LIBS=
+	ESPEAK_NG_PLUGIN_DIR=
+fi
+
+AC_SUBST(ESPEAK_NG_CFLAGS)
+AC_SUBST(ESPEAK_NG_LIBS)
+AC_SUBST(ESPEAK_NG_PLUGIN_DIR)
+
+
+dnl ================================================================
 dnl other plugin checks.
 dnl ================================================================
 
@@ -589,6 +621,7 @@ stardict-plugins/stardict-gucharmap-plugin/Makefile
 stardict-plugins/stardict-festival-tts-plugin/Makefile
 stardict-plugins/stardict-flite-tts-plugin/Makefile
 stardict-plugins/stardict-espeak-tts-plugin/Makefile
+stardict-plugins/stardict-espeak-ng-tts-plugin/Makefile
 stardict-plugins/stardict-wiki-parsedata-plugin/Makefile
 stardict-plugins/stardict-powerword-parsedata-plugin/Makefile
 stardict-plugins/stardict-xdxf-parsedata-plugin/Makefile
