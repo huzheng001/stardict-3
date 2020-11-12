@@ -179,7 +179,7 @@ public:
 	StarDictClient();
 	~StarDictClient();
 
-	void set_server(const char *host, int port = 2628);
+	void set_server(const char *host, int port = 2629);
 	void set_auth(const char *user, const char *md5saltpasswd);
 	bool try_cache(STARDICT::Cmd *c);
 	void send_commands(int num, ...);
