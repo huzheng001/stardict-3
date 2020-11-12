@@ -1032,6 +1032,16 @@ void rsa_decrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &de
 }
 #endif
 
+#ifdef SERVER_EDITION
+void buffer_to_vector(unsigned char *buffer, size_t buffer_len, std::vector<unsigned char> &v)
+{
+	v.clear();
+	for (size_t i = 0; i< buffer_len; i++) {
+		v.push_back(buffer[i]);
+	}
+}
+#endif
+
 #ifdef CLIENT_EDITION
 void string_to_vector(std::string &str, std::vector<unsigned char> &v)
 {
