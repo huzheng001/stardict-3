@@ -24,6 +24,7 @@ void rsa_public_key_str_to_bin(std::string &public_key, int e[RSA_MAX], int n[RS
 void rsa_encrypt(std::vector<unsigned char> &src, std::vector<unsigned char> &dest, int *e, int *n);
 
 void string_to_vector(std::string &str, std::vector<unsigned char> &v);
+void vector_to_string(std::vector<unsigned char> &v, std::string &str);
 #endif
 
 

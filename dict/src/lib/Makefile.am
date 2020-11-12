@@ -18,7 +18,6 @@ libstardict_la_SOURCES = \
 	treedict.cpp treedict.h	\
 	md5.c md5.h	\
 	rsa.cpp rsa.h	\
-	base64.cpp base64.h	\
 	stardict_client.cpp stardict_client.h \
 	sockets.cpp sockets.h \
 	http_client.cpp http_client.h	\

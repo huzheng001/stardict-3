@@ -1043,7 +1043,6 @@ void string_to_vector(std::string &str, std::vector<unsigned char> &v)
 }
 #endif
 
-#ifdef SERVER_EDITION
 void vector_to_string(std::vector<unsigned char> &v, std::string &str)
 {
 	str.clear();
@@ -1052,5 +1051,4 @@ void vector_to_string(std::vector<unsigned char> &v, std::string &str)
 		str += v[i];
 	}
 }
-#endif
 

@@ -32,7 +32,7 @@
 #include <stdio.h>
 #include "sockets.h"
 #include "md5.h"
-#include "base64.h"
+#include "rsa.h"
 #include "utils.h"
 
 #include "stardict_client.h"
@@ -120,12 +120,15 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		string_to_vector(passwd1, v);
 		std::vector<unsigned char> v2;
 		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
-		std::string base64_rsa_passwd;
-		base64_encode(v2, base64_rsa_passwd);
+
+		std::string v2_passwd;
+		vector_to_string(v2, v2_passwd);
+		gchar *str_base64 = g_base64_encode((const guchar *)(v2_passwd.c_str()), v2_passwd.length());
 
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
-		arg_escape(earg2, base64_rsa_passwd.c_str());
+		arg_escape(earg2, str_base64);
+		g_free(str_base64);
 		arg_escape(earg3, email);
 		this->data = g_strdup_printf("register %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
@@ -143,19 +146,24 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		string_to_vector(old_passwd1, v);
 		std::vector<unsigned char> v2;
 		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
-		std::string base64_rsa_old_passwd;
-		base64_encode(v2, base64_rsa_old_passwd);
+
+		std::string v2_passwd;
+		vector_to_string(v2, v2_passwd);
+		gchar *str_base64 = g_base64_encode((const guchar *)(v2_passwd.c_str()), v2_passwd.length());
 
 		std::string new_passwd1 = new_passwd;
 		string_to_vector(new_passwd1, v);
 		rsa_encrypt(v, v2, RSA_Public_Key_e, RSA_Public_Key_n);
-		std::string base64_rsa_new_passwd;
-		base64_encode(v2, base64_rsa_new_passwd);
+
+		vector_to_string(v2, v2_passwd);
+		gchar *str_base64_2 = g_base64_encode((const guchar *)(v2_passwd.c_str()), v2_passwd.length());
 
 		std::string earg1, earg2, earg3;
 		arg_escape(earg1, user);
-		arg_escape(earg2, base64_rsa_old_passwd.c_str());
-		arg_escape(earg3, base64_rsa_new_passwd.c_str());
+		arg_escape(earg2, str_base64);
+		g_free(str_base64);
+		arg_escape(earg3, str_base64_2);
+		g_free(str_base64_2);
 		this->data = g_strdup_printf("change_password %s %s %s\n", earg1.c_str(), earg2.c_str(), earg3.c_str());
 		break;
 	}
