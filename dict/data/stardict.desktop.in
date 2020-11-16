@@ -1,5 +1,6 @@
 [Desktop Entry]
 _Name=StarDict
+_GenericName=Dictionary
 _Comment=Lookup words
 Exec=stardict
 Terminal=false

@@ -165,7 +165,7 @@ void convert(char *filename,char *idxheadfilename)
 	//as now all old stardict dictionaries use these two feature.	
 	
 	FILE *idxfile,*dicfile;
-	gchar str[256],basename[256];
+	gchar str[1024],basename[256];
 	
 	strcpy(basename,idxheadfilename);
 	basename[strlen(idxheadfilename)-8]='\0';

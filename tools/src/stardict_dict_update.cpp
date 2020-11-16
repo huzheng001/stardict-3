@@ -77,7 +77,7 @@ void convert_idxfile(gchar *idxfilename)
 	unlink(fullfilename);
 	
 
-	gchar newidxfilename[256];
+	gchar newidxfilename[1024];
 	sprintf(newidxfilename, "%s.idx", basefilename);
 	FILE *file;
 	if (!(file = fopen (newidxfilename, "wb"))) {

@@ -358,7 +358,7 @@ std::string textual_dict_gen_t::get_chunk_file_name(size_t chunk_num) const
 {
 	const std::string& filename = xmlfilenamemain;
 	std::string basefilename, ext;
-	std::string::size_type pos = filename.find_last_of("."G_DIR_SEPARATOR_S);
+	std::string::size_type pos = filename.find_last_of("." G_DIR_SEPARATOR_S);
 	if(pos != std::string::npos && filename[pos] == '.') {
 		basefilename = filename.substr(0, pos);
 		ext = filename.substr(pos);

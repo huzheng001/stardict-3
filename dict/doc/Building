@@ -35,17 +35,17 @@ How to build StarDict
 
 Linux
 
-Build stardict-*.tar.bz2
+Build stardict-*.tar.xz
 
  ./autogen.sh
- ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-festival
- make dist-bzip2
+ ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-gnome-support --disable-scrollkeeper
+ make dist-xz
  
 
 Build stardict-*.rpm
 
  cp dict/stardict.spec /root/rpmbuild/SPECS/
- cp stardict-*.tar.bz2 /root/rpmbuild/SOURCES/
+ cp stardict-*.tar.xz /root/rpmbuild/SOURCES/
  cd /root/rpmbuild/SPECS/
  rpmbuild -bb stardict.spec
  

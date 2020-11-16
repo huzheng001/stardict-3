@@ -135,7 +135,7 @@ void convert(char *filename)
 		pp = worditem.definition;
 		if ((pp1 = strstr(pp, "2>"))) {
 			definition.clear();
-			static char number_str[4];
+			static char number_str[256];
 			static char tmp_char;
 			for (int i=3; i<= 121+1; i++) {
 				tmp_char = *pp1;

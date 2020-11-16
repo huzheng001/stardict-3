@@ -136,9 +136,9 @@ static void convert_dslfile(const std::string &infile)
 	else
 		cur_workdir = ".";
 
-	std::auto_ptr<ParserBase> parser(ParsersRepo::get_instance().create_codec("dsl"));
+	std::unique_ptr<ParserBase> parser(ParsersRepo::get_instance().create_codec("dsl"));
 	g_assert(parser.get());
-	std::auto_ptr<GeneratorBase> generator(GeneratorsRepo::get_instance().create_codec("stardict"));
+	std::unique_ptr<GeneratorBase> generator(GeneratorsRepo::get_instance().create_codec("stardict"));
 	g_assert(generator.get());
 	Connector connector(*generator, cur_workdir);
 	

@@ -191,7 +191,7 @@ void convert(const char *filename, print_info_t print_info)
 	g_free(str);
 
 #ifndef _WIN32
-	gchar command[256];
+	gchar command[1024];
         sprintf(command, "dictzip %s", dicfilename);
 	int result;
         result = system(command);

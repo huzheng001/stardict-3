@@ -441,7 +441,7 @@ void builddata(gchar *datafilename, glong &wordcount, glong &idxfilesize, glong 
 	g_array_free(array,TRUE);
 	g_array_free(array2,TRUE);
 
-	gchar command[256];
+	gchar command[1024];
 	sprintf(command, "dictzip %s", dicfilename);
 	int result;
 	result = system(command);

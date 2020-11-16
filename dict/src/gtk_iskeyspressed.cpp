@@ -77,8 +77,8 @@ bool gtk_hotkeys::is_pressed(void)
   GdkDisplay *display = gdk_screen_get_display(screen);
   GdkModifierType mask;
 #if GTK_MAJOR_VERSION >= 3
-  GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
-  GdkDevice  *pointer = gdk_device_manager_get_client_pointer (device_manager);
+  GdkSeat *gdk_seat = gdk_display_get_default_seat (display);
+  GdkDevice  *pointer = gdk_seat_get_pointer (gdk_seat);
   gdk_device_get_state(pointer, gtk_widget_get_window(GTK_WIDGET(win)), NULL, &mask);
 #else
 	gdk_display_get_pointer(display, NULL, NULL, NULL, &mask);

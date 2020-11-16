@@ -207,7 +207,7 @@ void convert(char *filename, char *wikiname, char *wikidate)
         g_print("%s wordcount: %d\n", filename, array->len);
 	g_array_free(array,TRUE);
 
-	gchar command[256];
+	gchar command[1024];
         sprintf(command, "dictzip %s", dicfilename);
 	int result;
         result = system(command);

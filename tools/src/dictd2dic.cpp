@@ -142,13 +142,13 @@ void convert(char *basefilename)
 	fclose (indexfile);
 	buffer[stats.st_size] = '\0';
 
-	gchar dictdzfilename[256];
+	gchar dictdzfilename[1024];
 	sprintf(dictdzfilename, "%s.dz", dictfilename);
 	if (stat (dictdzfilename, &stats) == -1) {
 	} else {
-		gchar dictgzfilename[256];
+		gchar dictgzfilename[1024];
 		sprintf(dictgzfilename, "%s.gz", dictfilename);
-		gchar command[256];
+		gchar command[3000];
 		sprintf(command, "mv %s %s", dictdzfilename, dictgzfilename);
 		int result;
 		result = system(command);
@@ -345,7 +345,7 @@ void convert(char *basefilename)
 	fprintf(ifofile, "StarDict's dict ifo file\nversion=2.4.2\nwordcount=%ld\nidxfilesize=%ld\nbookname=%s\nsametypesequence=m\n", wordcount, stats.st_size, basefilename);
 	fclose(ifofile);
 
-	gchar command[256];
+	gchar command[1024];
 	sprintf(command, "dictzip dictd_" DICTD_WEBSITE "_%s.dict", basefilename);
 	int result;
 	result = system(command);

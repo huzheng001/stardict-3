@@ -77,7 +77,7 @@ static void get_all_plugin_list(std::list<DictItemId> &plugin_all_list)
 	std::list<std::string> plugin_disable_list;
 	std::list<std::string> plugins_dirs;
 	plugins_dirs.push_back(conf_dirs->get_plugin_dir());
-	for_each_file(plugins_dirs, "."G_MODULE_SUFFIX, plugin_order_list,
+	for_each_file(plugins_dirs, "." G_MODULE_SUFFIX, plugin_order_list,
 		plugin_disable_list, GetAllPluginList(plugin_all_list));
 }
 

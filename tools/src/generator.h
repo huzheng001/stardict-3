@@ -156,9 +156,9 @@ private:
 	std::string format_;
 	std::string version_;
 	bool enc_key_;
-	std::auto_ptr<IGeneratorDictOps> std_dict_ops_;
+	std::unique_ptr<IGeneratorDictOps> std_dict_ops_;
 	IGeneratorDictOps *dict_ops_;
-	std::auto_ptr<Logger> logger_;
+	std::unique_ptr<Logger> logger_;
 };
 
 class GeneratorsRepo : public CodecsRepo<GeneratorBase, GeneratorsRepo> {};

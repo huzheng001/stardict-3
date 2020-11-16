@@ -103,7 +103,7 @@ grab_ungrab_with_ignorable_modifiers (GdkWindow *rootwin,
 static gboolean
 do_grab_key (Binding *binding)
 {
-	GdkKeymap *keymap = gdk_keymap_get_default ();
+	GdkKeymap *keymap = gdk_keymap_get_for_display ( gdk_display_get_default() );
 	GdkWindow *rootwin = gdk_get_default_root_window ();
 
 	EggVirtualModifierType virtual_mods = (EggVirtualModifierType)0;
@@ -219,7 +219,7 @@ filter_func (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 static void
 keymap_changed (GdkKeymap *map)
 {
-	GdkKeymap *keymap = gdk_keymap_get_default ();
+	GdkKeymap *keymap = gdk_keymap_get_for_display ( gdk_display_get_default() );
 	GSList *iter;
 
 	TRACE (g_print ("Keymap changed! Regrabbing keys..."));
@@ -240,7 +240,7 @@ keymap_changed (GdkKeymap *map)
 void
 tomboy_keybinder_init (void)
 {
-	GdkKeymap *keymap = gdk_keymap_get_default ();
+	GdkKeymap *keymap = gdk_keymap_get_for_display ( gdk_display_get_default() );
 	GdkWindow *rootwin = gdk_get_default_root_window ();
 
 	lookup_ignorable_modifiers (keymap);

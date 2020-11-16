@@ -1468,6 +1468,8 @@ void PrefsDlg::setup_network_netdict()
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict2.stardict.net");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.me");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.cc");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.org");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.cn");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboboxentry), "dict.stardict.site");
 	eStarDictServer=GTK_ENTRY(gtk_bin_get_child(GTK_BIN(comboboxentry)));
 	const std::string &server= conf->get_string_at("network/server");
