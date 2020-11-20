@@ -1204,7 +1204,13 @@ int StarDictClient::parse_wordlist(STARDICT::Cmd* cmd, gchar *buf)
                 return 1;
             }
         } else {
-            cmd->wordlist_response->push_back(buf);
+            if (cmd->wordlist_response->size() >= 250) {
+                // Prevent too many strings! 250 should be enough!
+                // CMD_NEXT is 30.
+                // CMD_PREVIOUS is 15.
+            } else {
+                cmd->wordlist_response->push_back(buf);
+            }
         }
     }
     return 2;
