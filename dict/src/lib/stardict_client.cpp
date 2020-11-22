@@ -1204,13 +1204,17 @@ int StarDictClient::parse_wordlist(STARDICT::Cmd* cmd, gchar *buf)
                 return 1;
             }
         } else {
-            if (cmd->wordlist_response->size() >= 250) {
-                // Prevent too many strings! 250 should be enough!
-                // CMD_NEXT is 30.
-                // CMD_PREVIOUS is 15.
-            } else {
-                cmd->wordlist_response->push_back(buf);
-            }
+            if (cmd->command == STARDICT::CMD_PREVIOUS) {
+				if (cmd->wordlist_response->size() >= 50) { // Prevent too many strings! CMD_PREVIOUS is 15(client) or 50(server).
+	            } else {
+	                cmd->wordlist_response->push_back(buf);
+	            }
+			} else { // STARDICT::CMD_NEXT
+				if (cmd->wordlist_response->size() >= 100) { // Prevent too many strings! CMD_NEXT is 30(client) or 100(server).
+	            } else {
+	                cmd->wordlist_response->push_back(buf);
+	            }
+			}
         }
     }
     return 2;
