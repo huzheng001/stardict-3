@@ -4,7 +4,7 @@
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appversion "3.0.7">
   <!ENTITY manrevision "3.0.7">
-  <!ENTITY date "Jan 2013">
+  <!ENTITY date "Nov 2020">
   <!ENTITY app "StarDict">
   <!ENTITY app_port "StarDict Portable">
   <!ENTITY app_t "<application>StarDict</application>">

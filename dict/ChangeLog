@@ -1,4 +1,4 @@
-2020.10.29
+2020.11.23
 StarDict-3.0.7 (MasterWork 传世之作) released.
 Add some babylon dictionaries.
 Add some BigDict dictionaries.
@@ -11,6 +11,11 @@ Add info plugin.
 Add flite TTS plugin.
 Add YouDao.com netdict plugin.
 Thanks GreenLunar for the Hebrew translation!
+Many small changes.
+
+2020.11.23
+StarDict-3.0.6.2 (Nice) released.
+Provide Windows exe version.
 Many small changes.
 
 2015.1.27
