@@ -235,7 +235,7 @@ private:
  * retreat to environment variables. For example, STARDICT_DATA_DIR for 
  * data_dir.
  * */
-class AppDirs: public IAppDirs
+class AppDirs final : public IAppDirs
 {
 public:
 	explicit AppDirs(const std::string& dirs_config_file);

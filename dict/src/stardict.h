@@ -71,7 +71,7 @@ class DictManageDlg;
 class PluginManageDlg;
 class PrefsDlg;
 
-class AppCore : public sigc::trackable {
+class AppCore final : public sigc::trackable {
 private:
 	DictManageDlg *dict_manage_dlg;
 	PluginManageDlg *plugin_manage_dlg;
