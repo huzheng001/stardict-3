@@ -1,7 +1,7 @@
 Format for StarDict dictionary files
 ------------------------------------
 
-StarDict homepage: http:///www.stardict.org
+StarDict homepage: http://stardict-4.sourceforge.net
 
 {0}. Number and Byte-order Conventions
 When you record the numbers that identify sizes, offsets, etc., you
@@ -250,7 +250,7 @@ version=2.4.8
 =====
 Then a line like this:
 url=/usr/share/stardict/dic/stardict-somedict-2.4.2/somedict.idx
-This line should have a ending '\n'.
+This line should has a ending '\n'.
 
 StarDict will try to create the .oft file at the same directory of 
 the .ifo file first, if failed, then try to create it at 
@@ -465,7 +465,7 @@ this type identifier is reserved for experimental extensions.
 {8}. Resource Storage
 Resource Storage store the external file in 'r' resource file list, the 
 image in html code, the image, media and other files in wiki tag.
-It have two forms:
+It has two forms:
 1. Direct directories and files in the "res" sub-directory.
 2. The res.rifo, res.ridx and res.rdic database.
 Direct files may have file name encoding problem, as Linux use UTF-8 and 
@@ -611,4 +611,4 @@ English.
 
 Hu Zheng <huzheng001@gmail.com>
 http://www.huzheng.org
-2007.4.24
+2020.11.28

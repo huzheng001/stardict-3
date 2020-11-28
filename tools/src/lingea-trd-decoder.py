@@ -4,7 +4,7 @@
 # Script for decoding Lingea Dictionary (.trd) file
 # Result is <header>\t<definition> file, convertable easily
 # by stardict-editor from package stardict-tools into native
-# Stardict dictionary (stardict.sf.net and www.stardict.org)
+# Stardict dictionary (http://stardict-4.sourceforge.net and http://www.stardict.net)
 # 
 # Copyright (C) 2007 - Klokan Petr Přidal (www.klokan.cz)
 #

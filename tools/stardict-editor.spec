@@ -10,7 +10,7 @@ Version:    %{version}
 Release:	%{release}
 License: 	GPL
 Vendor:		GNOME
-URL: 		http://www.stardict.org
+URL: 		http://stardict-4.sourceforge.net
 Group: 		Applications/System
 Source0:	%{name}-%{version}.tar.bz2
 Packager:       Hu Zheng <huzheng_001@163.com>

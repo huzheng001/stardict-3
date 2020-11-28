@@ -2569,7 +2569,7 @@ void DictManageDlg::on_download_eventbox_clicked(GtkWidget *widget, GdkEventButt
 void DictManageDlg::on_upgrade_eventbox_clicked(GtkWidget *widget, GdkEventButton *event, DictManageDlg *oDictManageDlg)
 {
 	if (oDictManageDlg->upgrade_url.empty()) {
-		show_url("http://www.stardict.org/finance.php");
+		show_url("http://www.stardict.net/finance.php");
 	} else {
 		show_url(oDictManageDlg->upgrade_url.c_str());
 	}

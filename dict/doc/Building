@@ -93,7 +93,9 @@ StarDict does not support staged installs, that is you may not use DESTDIR varia
 
 StarDict needs to know at compile time all details of the installation otherwise it would not be able to find its data and it'd fail to start. If you need to change installation dirs use configure parameters like --prefix.
 
-Notice: you can download dictionaries on the StarDict forum: http://www.stardict.org/forum
+Notice: you can download dictionaries on the StarDict forum: http://www.stardict.org/forum/ or http://stardict.huzheng.org
+
+
 Ubuntu
 
 Tested on Ubuntu 11.10
