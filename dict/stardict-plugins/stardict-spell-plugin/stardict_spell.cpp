@@ -265,6 +265,7 @@ static bool load_custom_langs()
 		dict = enchant_broker_request_dict(broker, i->c_str());
 		if (dict) {
 			dictlist.push_back(dict);
+			g_print(_("Find %s spellchecking dictionary!\n"), i->c_str());
 		} else {
 			g_print(_("Warning: failure when requesting a spellchecking dictionary for %s language.\n"), i->c_str());
 		}
@@ -273,7 +274,7 @@ static bool load_custom_langs()
 		enchant_broker_free(broker);
 		broker = NULL;
 		g_print(_("Error, no spellchecking dictionary available!\n"));
-		return true;
+		return false;
 	} else {
 		return false;
 	}
@@ -302,28 +303,32 @@ static bool load_auto_lang()
 	bool found;
 	EnchantDict *dict;
 	if (no_dict) {
-		if (enchant_broker_dict_exists(broker, "en_US") && ((dict = enchant_broker_request_dict(broker, "en_US"))!=NULL))
+		if (enchant_broker_dict_exists(broker, "en_US") && ((dict = enchant_broker_request_dict(broker, "en_US"))!=NULL)) {
+			g_print(_("Find en_US spellchecking dictionary!\n"));
 			found = true;
-		else
+		} else {
 			found = false;
+		}
 	} else {
-		if ((dict = enchant_broker_request_dict(broker, languages[i]))!=NULL)
+		if ((dict = enchant_broker_request_dict(broker, languages[i]))!=NULL) {
+			g_print(_("Find %s spellchecking dictionary!\n"), languages[i]);
 			found = true;
-		else
+		} else {
 			found = false;
+		}
 	}
 	if (!found) {
 		enchant_broker_free(broker);
 		broker = NULL;
 		g_print(_("Error, no spellchecking dictionary available!\n"));
-		return true;
+		return false;
 	} else {
 		dictlist.push_back(dict);
 		return false;
 	}
 }
 
-static void on_use_custom__ckbutton_toggled(GtkToggleButton *button, GtkWidget *hbox)
+static void on_use_custom_ckbutton_toggled(GtkToggleButton *button, GtkWidget *hbox)
 {
 	gtk_widget_set_sensitive(hbox, gtk_toggle_button_get_active(button));
 }
@@ -347,13 +352,33 @@ static void configure()
 	GtkWidget *hbox = gtk_hbox_new(FALSE, 5);
 #endif
 	gtk_widget_set_sensitive(hbox, use_custom);
-	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_use_custom__ckbutton_toggled), hbox);
+	g_signal_connect(G_OBJECT(check_button), "toggled", G_CALLBACK(on_use_custom_ckbutton_toggled), hbox);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, false, false, 0);
 	label = gtk_label_new(_("Custom languages:"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
 	GtkWidget *entry = gtk_entry_new();
 	gtk_entry_set_text(GTK_ENTRY(entry), custom_langs.c_str());
 	gtk_box_pack_start(GTK_BOX(hbox), entry, false, false, 0);
+
+	std::string language_names;
+	const gchar * const * lang_names = g_get_language_names ();
+	int i = 0;
+	while (true) {
+		if (i == 0) {
+		} else {
+			language_names += ' ';
+		}
+		if (lang_names[i]==NULL) {
+			break;
+		} else {
+			language_names += lang_names[i];
+		}
+		i++;
+	}
+	label = gtk_label_new(language_names.c_str());
+	gtk_label_set_selectable(GTK_LABEL(label), true);
+	gtk_box_pack_start(GTK_BOX(vbox), label, false, false, 0);
+
 	gtk_widget_show_all(vbox);
 	gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area(GTK_DIALOG(window))), vbox);
 	gtk_dialog_run(GTK_DIALOG(window));
