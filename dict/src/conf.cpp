@@ -126,8 +126,11 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/translate/fromlang", 0);
 	add_entry("/apps/stardict/preferences/translate/tolang", 0);
 	add_entry("/apps/stardict/preferences/dictionary/enable_sound_event", true);
+#ifdef _WIN32
+#else
 	add_entry("/apps/stardict/preferences/dictionary/use_tts_program", false);
 	add_entry("/apps/stardict/preferences/dictionary/tts_program_cmdline", std::string()); // absolute command
+#endif
 	add_entry("/apps/stardict/preferences/main_window/hide_list", false);
 	add_entry("/apps/stardict/preferences/dictionary/scan_selection", true);
 	add_entry("/apps/stardict/preferences/dictionary/bookname_style", 0);
@@ -186,11 +189,12 @@ AppConf::AppConf() :
 	//add_entry("/apps/stardict/preferences/dictionary/add_new_dict_in_active_group", true);
 	//add_entry("/apps/stardict/preferences/dictionary/add_new_plugin_in_active_group", true);
 
-	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #if defined(_WIN32)
-	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command
+	//add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("play")); // absolute command
+	//add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #else
 	add_entry("/apps/stardict/preferences/dictionary/sound_play_command", std::string("aplay")); // absolute command
+	add_entry("/apps/stardict/preferences/dictionary/always_use_sound_play_command", false);
 #endif
 	add_entry("/apps/stardict/preferences/dictionary/video_play_command", std::string("play")); // absolute command
 #if defined(CONFIG_GPE)

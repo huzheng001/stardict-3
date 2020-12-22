@@ -37,12 +37,14 @@
 
 #include "desktop.h"
 
+#if GTK_MAJOR_VERSION >= 3
 
 #ifndef _WIN32
 #  include "canberra.h"
 #  include "canberra-gtk.h"
 #endif
 
+#endif
 
 
 
@@ -176,13 +178,19 @@ mci_end:
 		return; // error
 	}
 #else
+
+#if GTK_MAJOR_VERSION >= 3
 	if (conf->get_bool_at("dictionary/always_use_sound_play_command")) {
-		const std::string &playcmd=
-			conf->get_string_at("dictionary/sound_play_command");
+		const std::string &playcmd = conf->get_string_at("dictionary/sound_play_command");
 		spawn_command(playcmd.c_str(), filename.c_str());
 	} else {
 		ca_context_play(ca_gtk_context_get(), 0, CA_PROP_MEDIA_FILENAME, filename.c_str(), NULL);
 	}
+#else
+	const std::string &playcmd = conf->get_string_at("dictionary/sound_play_command");
+	spawn_command(playcmd.c_str(), filename.c_str());
+#endif
+
 #endif
 }
 

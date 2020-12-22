@@ -306,7 +306,8 @@ stardict_editor_SOURCES = stardict-editor.cpp libtabfile.cpp libtabfile.h \
 	generator.cpp generator.h log.cpp log.h mapfile.cpp mapfile.h \
 	normalize_tags.cpp normalize_tags.h parser.cpp parser.h \
 	process.cpp process.h repository.h resource.h stardict_generator.cpp \
-	utils.cpp utils.h xml.cpp xml.h
+	utils.cpp utils.h xml.cpp \
+	xml.h
 
 EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	jm2stardict.py uyghur2dict.py ncce2stardict.pl parse-oxford.perl \

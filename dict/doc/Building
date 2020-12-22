@@ -38,7 +38,7 @@ Linux
 Build stardict-*.tar.xz
 
  ./autogen.sh
- ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-gucharmap --disable-dictdotcn --disable-gnome-support --disable-scrollkeeper
+ ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-gnome-support --disable-scrollkeeper
  make dist-xz
  
 

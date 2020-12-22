@@ -1688,7 +1688,11 @@ void PrefsDlg::on_setup_mainwin_transparent_scale_changed(GtkRange *range, Prefs
 {
 	gint transparent = (gint)gtk_range_get_value(range);
 	conf->set_int_at("main_window/transparent", transparent);
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_set_opacity(gpAppFrame->window, (100-transparent)/100.0);
+#else
+	gtk_window_set_opacity(GTK_WINDOW(gpAppFrame->window), (100-transparent)/100.0);
+#endif
 }
 
 void PrefsDlg::on_setup_mainwin_skin_changed(GtkComboBox *combobox, PrefsDlg *oPrefsDlg)
