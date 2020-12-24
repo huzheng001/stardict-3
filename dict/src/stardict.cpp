@@ -1979,7 +1979,6 @@ void AppCore::reload_dicts()
 
 void AppCore::PopupDictManageDlg()
 {
-
 	if (!dict_manage_dlg) {
 		dict_manage_dlg = new DictManageDlg(GTK_WINDOW(window), get_impl(oAppSkin.index_wazard), get_impl(oAppSkin.index_appendix));
 		bool dictmanage_config_changed;

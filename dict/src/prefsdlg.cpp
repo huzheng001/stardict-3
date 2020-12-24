@@ -254,7 +254,10 @@ void PrefsDlg::create_categories_tree(void)
 
   treeview = gtk_tree_view_new_with_model (model);
   g_object_unref (G_OBJECT (model));
-  //gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+  gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 
   categories_tree = treeview;
   categories_tree_model = model;
@@ -1387,7 +1390,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
         gchar *error_msg = NULL;
         const gchar *user = gtk_entry_get_text(GTK_ENTRY(user_entry));
         const gchar *passwd = gtk_entry_get_text(GTK_ENTRY(passwd_entry));
-        const gchar *passwd_again = gtk_entry_get_text(GTK_ENTRY(passwd_again_entry));
+		const gchar *passwd_again = gtk_entry_get_text(GTK_ENTRY(passwd_again_entry));
         const gchar *email = gtk_entry_get_text(GTK_ENTRY(email_entry));
         if (!user[0])
             error_msg = _("Please input the user name.");
@@ -1395,7 +1398,7 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
             error_msg = _("Please input the password.");
         else if (!passwd_again[0])
             error_msg = _("Please input the password again.");
-	else if (strcmp(passwd, passwd_again)!=0)
+		else if (strcmp(passwd, passwd_again)!=0)
            error_msg = _("Two passwords are not the same!");
         else if (!email[0])
             error_msg = _("Please input the email.");
@@ -1510,7 +1513,7 @@ void PrefsDlg::setup_network_netdict()
 #if GTK_MAJOR_VERSION >= 3
 	hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
 #else
-	GtkWidget *hbox1 = gtk_hbox_new(FALSE, 6);
+	hbox1 = gtk_hbox_new(FALSE, 6);
 #endif
     gtk_box_pack_start(GTK_BOX(hbox1),button,false,false,0);
     gtk_box_pack_start(GTK_BOX(vbox1),hbox1,false,false,0);
@@ -2178,7 +2181,10 @@ void PrefsDlg::setup_mainwin_searchwebsite_page()
 
 	searchwebsite_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	g_object_unref (G_OBJECT (model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (searchwebsite_treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (searchwebsite_treeview), TRUE);
+#endif
 
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (searchwebsite_treeview));
@@ -2621,7 +2627,6 @@ bool PrefsDlg::ShowModal()
 		if (ch)
 			conf->set_string_at("dictionary/sound_play_command", ch);
 #endif
-
 		ch = gtk_entry_get_text(eVideoPlayCommand);
 		if (ch)
 			conf->set_string_at("dictionary/video_play_command", ch);

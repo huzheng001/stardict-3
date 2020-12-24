@@ -168,7 +168,7 @@ STARDICT::Cmd::Cmd(int cmd, ...)
 		break;
 	}
 	case CMD_AUTH:
-        	this->auth = new AuthInfo();
+		this->auth = new AuthInfo();
 		this->auth->user = va_arg( ap, const char * );
 		this->auth->md5saltpasswd = va_arg( ap, const char * );
 		break;
@@ -1284,15 +1284,15 @@ int StarDictClient::parse_dict_result(STARDICT::Cmd* cmd, gchar *buf)
             cmd->reading_status = 3;
             reading_type_ = READ_STRING;
         } else {
-	    if (datasize > 4*1024*1024) {
-	    	g_print(_("Drop data for security. Data too big! More than 4M!\n"));
-		return 1;
-	    } else {
-		    cmd->reading_status = 5;
-		    size_data = (char *)g_realloc(buf, datasize + sizeof(guint32));
-		    size_count = datasize + sizeof(guint32);
-		    size_left = datasize;
-	    }
+		    if (datasize > 4*1024*1024) {
+		    	g_print(_("Drop data for security. Data too big! More than 4M!\n"));
+				return 1;
+	    	} else {
+			    cmd->reading_status = 5;
+			    size_data = (char *)g_realloc(buf, datasize + sizeof(guint32));
+			    size_count = datasize + sizeof(guint32);
+			    size_left = datasize;
+	    	}
         }
     } else if (cmd->reading_status == 5) {
             cmd->lookup_response->dict_response.dict_result_list.back()->word_result_list.back()->datalist.push_back(buf);

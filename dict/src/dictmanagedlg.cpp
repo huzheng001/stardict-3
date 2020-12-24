@@ -300,7 +300,10 @@ void NetworkAddDlg::Show(GtkWindow *parent_win)
 	model = gtk_tree_store_new(NETWORK_ADD_DLG_COLUMN_NUMBER, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	g_object_unref (G_OBJECT (model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
@@ -1245,7 +1248,7 @@ gboolean DictManageDlg::on_dictlist_treeview_button_press(GtkWidget * widget, Gd
 	if (event->type==GDK_2BUTTON_PRESS && event->button == 1) {
 		oDictManageDlg->show_dict_info();
 		return true;
-	}else if (event->button == 3) {
+	} else if (event->button == 3) {
 		gtk_menu_popup(GTK_MENU(oDictManageDlg->popup_menu1), NULL, NULL, NULL, NULL, event->button, event->time);
 		return false; //So it can be selected.
 	} else {
@@ -1303,7 +1306,10 @@ GtkWidget *DictManageDlg::create_dict_tree(TDictTree dicttree)
 	else if (dicttree == DictTree_NetworkDict)
 		network_treeview = now_treeview;
 	g_object_unref (G_OBJECT (now_tree_model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#endif
 	
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
@@ -1409,7 +1415,10 @@ GtkWidget *DictManageDlg::create_dictmanage_tree()
 	g_signal_connect(G_OBJECT(dictmanage_treeview), "button_press_event",
 		G_CALLBACK(on_dicttree_and_manage_treeview_button_press), this);
 	g_object_unref (G_OBJECT (dictmanage_tree_model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (dictmanage_treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (dictmanage_treeview), TRUE);
+#endif
 	
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dictmanage_treeview));
@@ -2018,7 +2027,11 @@ void DictManageDlg::show_add_dict_dialog(GtkTreeIter *parent_iter)
 	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(now_tree_model));
 	g_object_unref (G_OBJECT (now_tree_model));
 	g_signal_connect (G_OBJECT (now_treeview), "button_press_event", G_CALLBACK (on_add_dict_dialog_treeview_button_press), dialog);
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#endif
+
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (now_treeview));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
