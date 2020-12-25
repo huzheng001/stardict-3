@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 3.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 15:16+0800\n"
+"POT-Creation-Date: 2020-12-25 09:35+0800\n"
 "PO-Revision-Date: 2014-09-29 02:33+0400\n"
 "Last-Translator: Kirill Kirillov <kirill.kirillov@gmail.com>\n"
 "Language-Team: Kirill Kirillov <kirill.kirillov@gmail.com>\n"
@@ -25,14 +25,18 @@ msgid "stardict application"
 msgstr "приложение stardict"
 
 #: ../data/stardict.desktop.in.h:1 ../data/stardict.appdata.xml.in.h:1
-#: ../src/docklet.cpp:87 ../src/docklet.cpp:301 ../src/mainwin.cpp:625
-#: ../src/stardict.cpp:273 ../src/stardict.cpp:368 ../src/stardict.cpp:2401
+#: ../src/docklet.cpp:87 ../src/docklet.cpp:301 ../src/mainwin.cpp:632
+#: ../src/stardict.cpp:273 ../src/stardict.cpp:375 ../src/stardict.cpp:2420
 msgid "StarDict"
 msgstr "StarDict"
 
 #: ../data/stardict.desktop.in.h:2
 msgid "Lookup words"
 msgstr "Поиск определений слов"
+
+#: ../data/stardict.desktop.in.h:3 ../src/mainwin.cpp:635
+msgid "StarDict is an international dictionary for GNOME."
+msgstr "StarDict это международный словарь для GNOME."
 
 #: ../data/stardict.schemas.in.h:1
 msgid "Scan selection"
@@ -422,12 +426,12 @@ msgid "Activate portable mode"
 msgstr "Включить переносной режим"
 
 #. Default stardictd server.
-#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2601
+#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2613
 #, fuzzy
-msgid "dict.stardict.net"
+msgid "dict2.stardict.net"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:350
+#: ../src/conf.cpp:354
 #, fuzzy, no-c-format
 msgid ""
 "StarDict.net\thttp://www.stardict.net\thttp://www.stardict.net/query.php?q="
@@ -469,86 +473,86 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:377
+#: ../src/conf.cpp:381
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:389
+#: ../src/conf.cpp:393
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:402
+#: ../src/conf.cpp:406
 msgid "darwin_use_custom_font=0"
 msgstr "darwin_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:414
+#: ../src/conf.cpp:418
 msgid "darwin_custom_font="
 msgstr "darwin_custom_font="
 
-#: ../src/conf.cpp:472
+#: ../src/conf.cpp:476
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr "Не удалось найти файл конфигурации каталогов StarDict: %s."
 
-#: ../src/conf.cpp:486
+#: ../src/conf.cpp:490
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr "Не удалось найти каталог пользовательских настроек: %s."
 
-#: ../src/conf.cpp:493
+#: ../src/conf.cpp:497
 #, c-format
 msgid "Cannot create user config directory %s."
 msgstr "Не удалось создать каталог пользовательских настроек %s."
 
-#: ../src/conf.cpp:501
+#: ../src/conf.cpp:505
 #, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr "Не удалось найти каталог пользовательского кэша: %s."
 
-#: ../src/conf.cpp:511
+#: ../src/conf.cpp:515
 #, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr "Не удалось найти каталог с данными: %s."
 
-#: ../src/conf.cpp:521
+#: ../src/conf.cpp:525
 #, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr "Не удалось найти каталог журналов: %s."
 
-#: ../src/conf.cpp:528
+#: ../src/conf.cpp:532
 #, c-format
 msgid "Cannot create log directory %s."
 msgstr "Не удалось создать каталог журналов %s."
 
-#: ../src/conf.cpp:534
+#: ../src/conf.cpp:538
 #, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr "Не удалось найти каталог DLL: %s."
 
-#: ../src/conf.cpp:543
+#: ../src/conf.cpp:547
 #, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr "Не удалось найти каталог пользовательского кэша: %s."
 
-#: ../src/conf.cpp:555
+#: ../src/conf.cpp:559
 #, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr "Не удалось найти каталог переводов интерфейса: %s."
 
-#: ../src/desktop.cpp:201
+#: ../src/desktop.cpp:209
 #, c-format
 msgid "Show help action failed with the following error message: \"%s\""
 msgstr "Не удалось показать справку из-за следующей ошибки: \"%s\""
 
-#: ../src/desktop.cpp:210 ../src/desktop.cpp:218
+#: ../src/desktop.cpp:218 ../src/desktop.cpp:226
 #, c-format
 msgid "Unable to find help file %s."
 msgstr "Не удалось найти файл справки %s."
 
-#: ../src/desktop.cpp:266
+#: ../src/desktop.cpp:274
 msgid ""
 "You are about to enable network dictionaries. Be aware that enabling network "
 "dictionaries poses a security risk. Your text will be sent to remote "
@@ -585,66 +589,66 @@ msgstr "Не удалось удалить файл: %s"
 msgid "Only level %d user can choose this dictionary!"
 msgstr "Только пользователь уровня %d может выбрать этот словарь!"
 
-#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:586
-#: ../src/dictmanagedlg.cpp:3117
+#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:589
+#: ../src/dictmanagedlg.cpp:3130
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Вы можете выбрать только %d словаря(ей)."
 
-#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1213
-#: ../src/dictmanagedlg.cpp:1333 ../src/dictmanagedlg.cpp:1436
-#: ../src/dictmanagedlg.cpp:2030 ../src/dictmanagedlg.cpp:3034
-#: ../src/stardict.cpp:1142
+#: ../src/dictmanagedlg.cpp:314 ../src/dictmanagedlg.cpp:1216
+#: ../src/dictmanagedlg.cpp:1339 ../src/dictmanagedlg.cpp:1445
+#: ../src/dictmanagedlg.cpp:2043 ../src/dictmanagedlg.cpp:3047
+#: ../src/stardict.cpp:1149
 msgid "Dictionary Name"
 msgstr "Название словаря"
 
-#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1214
-#: ../src/dictmanagedlg.cpp:1353 ../src/dictmanagedlg.cpp:1450
-#: ../src/dictmanagedlg.cpp:2038 ../src/dictmanagedlg.cpp:3035
+#: ../src/dictmanagedlg.cpp:319 ../src/dictmanagedlg.cpp:1217
+#: ../src/dictmanagedlg.cpp:1359 ../src/dictmanagedlg.cpp:1459
+#: ../src/dictmanagedlg.cpp:2051 ../src/dictmanagedlg.cpp:3048
 msgid "Word count"
 msgstr "Количество слов"
 
-#: ../src/dictmanagedlg.cpp:348
+#: ../src/dictmanagedlg.cpp:351
 msgid "Browse Dictionaries"
 msgstr "Просмотреть словари"
 
-#: ../src/dictmanagedlg.cpp:563
+#: ../src/dictmanagedlg.cpp:566
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Эти настройки войдут в силу только после перезапуска StarDict."
 
-#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1303
+#: ../src/dictmanagedlg.cpp:579 ../src/lib/stddict.cpp:1303
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: ../src/dictmanagedlg.cpp:606 ../src/dictmanagedlg.cpp:1882
+#: ../src/dictmanagedlg.cpp:609 ../src/dictmanagedlg.cpp:1891
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Словари поиска</span>"
 
-#: ../src/dictmanagedlg.cpp:616 ../src/dictmanagedlg.cpp:1892
+#: ../src/dictmanagedlg.cpp:619 ../src/dictmanagedlg.cpp:1901
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">Словари сканирования</span>"
 
-#: ../src/dictmanagedlg.cpp:666 ../src/dictmanagedlg.cpp:870
+#: ../src/dictmanagedlg.cpp:669 ../src/dictmanagedlg.cpp:873
 msgid "Virtual Dictionary"
 msgstr "Виртуальный словарь"
 
-#: ../src/dictmanagedlg.cpp:689 ../src/dictmanagedlg.cpp:890
+#: ../src/dictmanagedlg.cpp:692 ../src/dictmanagedlg.cpp:893
 msgid "Network Dictionary"
 msgstr "Сетевой словарь"
 
-#: ../src/dictmanagedlg.cpp:770
+#: ../src/dictmanagedlg.cpp:773
 msgid "Local"
 msgstr "Локальный"
 
-#: ../src/dictmanagedlg.cpp:873
+#: ../src/dictmanagedlg.cpp:876
 msgid "Virtual"
 msgstr "Виртуальный"
 
-#: ../src/dictmanagedlg.cpp:893 ../src/prefsdlg.cpp:129
+#: ../src/dictmanagedlg.cpp:896 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr "Сеть"
 
-#: ../src/dictmanagedlg.cpp:1141
+#: ../src/dictmanagedlg.cpp:1144
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
@@ -652,7 +656,7 @@ msgstr ""
 "Вы можете создать несколько групп словарей, например \"Изучение английского"
 "\", \"Изучение немецкого\" и быстро переключаться между ними."
 
-#: ../src/dictmanagedlg.cpp:1152
+#: ../src/dictmanagedlg.cpp:1155
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
@@ -660,144 +664,144 @@ msgstr ""
 "Словари поиска используются для показа результатов в главном окне, "
 "сканирования - для показа во всплывающем окне."
 
-#: ../src/dictmanagedlg.cpp:1200 ../src/dictmanagedlg.cpp:3023
+#: ../src/dictmanagedlg.cpp:1203 ../src/dictmanagedlg.cpp:3036
 msgid "Dictionary Information"
 msgstr "Информация о словаре"
 
-#: ../src/dictmanagedlg.cpp:1215 ../src/dictmanagedlg.cpp:3037
+#: ../src/dictmanagedlg.cpp:1218 ../src/dictmanagedlg.cpp:3050
 msgid "Author"
 msgstr "Автор"
 
-#: ../src/dictmanagedlg.cpp:1216 ../src/dictmanagedlg.cpp:3038
+#: ../src/dictmanagedlg.cpp:1219 ../src/dictmanagedlg.cpp:3051
 msgid "Email"
 msgstr "Эл. почта"
 
-#: ../src/dictmanagedlg.cpp:1217 ../src/dictmanagedlg.cpp:3039
+#: ../src/dictmanagedlg.cpp:1220 ../src/dictmanagedlg.cpp:3052
 msgid "Website"
 msgstr "Сайт"
 
-#: ../src/dictmanagedlg.cpp:1218 ../src/dictmanagedlg.cpp:3040
+#: ../src/dictmanagedlg.cpp:1221 ../src/dictmanagedlg.cpp:3053
 msgid "Description"
 msgstr "Описание"
 
-#: ../src/dictmanagedlg.cpp:1219 ../src/dictmanagedlg.cpp:3041
+#: ../src/dictmanagedlg.cpp:1222 ../src/dictmanagedlg.cpp:3054
 msgid "Date"
 msgstr "Дата"
 
-#: ../src/dictmanagedlg.cpp:1220
+#: ../src/dictmanagedlg.cpp:1223
 msgid "File name"
 msgstr "Имя файла"
 
-#: ../src/dictmanagedlg.cpp:1319 ../src/dictmanagedlg.cpp:1425
+#: ../src/dictmanagedlg.cpp:1325 ../src/dictmanagedlg.cpp:1434
 #: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "Включить"
 
-#: ../src/dictmanagedlg.cpp:1361 ../src/dictmanagedlg.cpp:2044
+#: ../src/dictmanagedlg.cpp:1367 ../src/dictmanagedlg.cpp:2057
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/dictmanagedlg.cpp:1811
+#: ../src/dictmanagedlg.cpp:1820
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr "Удалить указанную группу словарей?"
 
-#: ../src/dictmanagedlg.cpp:1828
+#: ../src/dictmanagedlg.cpp:1837
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr "Удалить указанную подгруппу словарей?"
 
-#: ../src/dictmanagedlg.cpp:1848
+#: ../src/dictmanagedlg.cpp:1857
 msgid "New dict group"
 msgstr "Новая группа словарей"
 
-#: ../src/dictmanagedlg.cpp:1855
+#: ../src/dictmanagedlg.cpp:1864
 msgid "Group name:"
 msgstr "Название группы:"
 
-#: ../src/dictmanagedlg.cpp:1917
+#: ../src/dictmanagedlg.cpp:1926
 msgid "Add dictionary"
 msgstr "Добавить словарь"
 
-#: ../src/dictmanagedlg.cpp:2050
+#: ../src/dictmanagedlg.cpp:2063
 msgid "Path"
 msgstr "Путь"
 
-#: ../src/dictmanagedlg.cpp:2473 ../src/prefsdlg.cpp:1950
+#: ../src/dictmanagedlg.cpp:2486 ../src/prefsdlg.cpp:1959
 msgid "Add"
 msgstr "Добавить"
 
-#: ../src/dictmanagedlg.cpp:2480
+#: ../src/dictmanagedlg.cpp:2493
 msgid "Delete"
 msgstr "Удалить"
 
-#: ../src/dictmanagedlg.cpp:2487
+#: ../src/dictmanagedlg.cpp:2500
 msgid "Information"
 msgstr "Информация"
 
-#: ../src/dictmanagedlg.cpp:2500
+#: ../src/dictmanagedlg.cpp:2513
 msgid "Move to top"
 msgstr "Переместить в начало"
 
-#: ../src/dictmanagedlg.cpp:2507
+#: ../src/dictmanagedlg.cpp:2520
 msgid "Move up"
 msgstr "Переместить вверх"
 
-#: ../src/dictmanagedlg.cpp:2514
+#: ../src/dictmanagedlg.cpp:2527
 msgid "Move down"
 msgstr "Переместить вниз"
 
-#: ../src/dictmanagedlg.cpp:2521
+#: ../src/dictmanagedlg.cpp:2534
 msgid "Move to bottom"
 msgstr "Переместить в конец"
 
-#: ../src/dictmanagedlg.cpp:2645
+#: ../src/dictmanagedlg.cpp:2658
 msgid "D_ict List"
 msgstr "С_писок словарей"
 
-#: ../src/dictmanagedlg.cpp:2664
+#: ../src/dictmanagedlg.cpp:2677
 msgid "Manage _Dict"
 msgstr "_Управление словарями"
 
-#: ../src/dictmanagedlg.cpp:2682
+#: ../src/dictmanagedlg.cpp:2695
 msgid "T_ree dictionaries"
 msgstr "_Древовидные словари"
 
-#: ../src/dictmanagedlg.cpp:2700
+#: ../src/dictmanagedlg.cpp:2713
 msgid "_Network dictionaries"
 msgstr "Се_тевые словари"
 
-#: ../src/dictmanagedlg.cpp:2733 ../src/dictmanagedlg.cpp:2742
+#: ../src/dictmanagedlg.cpp:2746 ../src/dictmanagedlg.cpp:2755
 msgid "_Show information"
 msgstr "_Показать подсказку"
 
-#: ../src/dictmanagedlg.cpp:2750
+#: ../src/dictmanagedlg.cpp:2763
 msgid "Select _All"
 msgstr "_Включить все"
 
-#: ../src/dictmanagedlg.cpp:2756
+#: ../src/dictmanagedlg.cpp:2769
 msgid "_Unselect all"
 msgstr "В_ыключить все"
 
-#: ../src/dictmanagedlg.cpp:2784
+#: ../src/dictmanagedlg.cpp:2797
 msgid "Visit "
 msgstr "Посетите "
 
-#: ../src/dictmanagedlg.cpp:2792
+#: ../src/dictmanagedlg.cpp:2805
 msgid " to download dictionaries!"
 msgstr " для загрузки словарей."
 
-#: ../src/dictmanagedlg.cpp:2801
+#: ../src/dictmanagedlg.cpp:2814
 msgid "Upgrade Now!"
 msgstr "Обновить сейчас"
 
-#: ../src/dictmanagedlg.cpp:2826
+#: ../src/dictmanagedlg.cpp:2839
 msgid "Manage Dictionaries"
 msgstr "Управление словарями"
 
-#: ../src/dictmanagedlg.cpp:3036
+#: ../src/dictmanagedlg.cpp:3049
 msgid "Synonym word count"
 msgstr "Количество синонимов"
 
-#: ../src/dictmanagedlg.cpp:3055
+#: ../src/dictmanagedlg.cpp:3068
 msgid "Download Now!"
 msgstr "Загрузить сейчас"
 
@@ -805,15 +809,15 @@ msgstr "Загрузить сейчас"
 msgid "Scan"
 msgstr "Сканировать"
 
-#: ../src/docklet.cpp:122 ../src/floatwin.cpp:960 ../src/mainwin.cpp:2890
+#: ../src/docklet.cpp:122 ../src/floatwin.cpp:960 ../src/mainwin.cpp:3004
 msgid "Quit"
 msgstr "Выйти"
 
-#: ../src/docklet.cpp:138 ../src/mainwin.cpp:2857
+#: ../src/docklet.cpp:138 ../src/mainwin.cpp:2971
 msgid "_Scan"
 msgstr "_Сканировать"
 
-#: ../src/docklet.cpp:148 ../src/mainwin.cpp:725
+#: ../src/docklet.cpp:148 ../src/mainwin.cpp:739
 msgid "_Quit"
 msgstr "В_ыйти"
 
@@ -821,9 +825,9 @@ msgstr "В_ыйти"
 msgid "StarDict - Scanning"
 msgstr "StarDict - Сканирование"
 
-#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2197 ../src/mainwin.cpp:2227
-#: ../src/stardict.cpp:1017 ../src/stardict.cpp:1031 ../src/stardict.cpp:1036
-#: ../src/stardict.cpp:1041 ../src/stardict.cpp:1538 ../src/stardict.cpp:1671
+#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2311 ../src/mainwin.cpp:2341
+#: ../src/stardict.cpp:1024 ../src/stardict.cpp:1038 ../src/stardict.cpp:1043
+#: ../src/stardict.cpp:1048 ../src/stardict.cpp:1545 ../src/stardict.cpp:1678
 msgid "<Not Found!>"
 msgstr "<Не найдено!>"
 
@@ -876,7 +880,7 @@ msgstr "_Копировать"
 msgid "_Save"
 msgstr "Со_хранить"
 
-#: ../src/floatwin.cpp:1074 ../src/mainwin.cpp:2394
+#: ../src/floatwin.cpp:1074 ../src/mainwin.cpp:2508
 msgid "_Query"
 msgstr "_Запросить"
 
@@ -888,7 +892,7 @@ msgstr "_Воспроизвести"
 msgid "_Fuzzy query"
 msgstr "_Нечёткий запрос"
 
-#: ../src/floatwin.cpp:1200
+#: ../src/floatwin.cpp:1204
 msgid "Looking up..."
 msgstr "Поиск..."
 
@@ -932,118 +936,122 @@ msgstr "По_лнотекстовый поиск"
 msgid "Clear _history"
 msgstr "Очистить _историю"
 
-#: ../src/mainwin.cpp:622
+#: ../src/mainwin.cpp:629
 msgid "translator_credits"
 msgstr ""
 "Alex Murygin <murygin@aitoc.com>\n"
 "Kirill Kirillov <kirill.kirillov@gmail.com>\n"
 "Евгений Душистов <dushistov@mail.ru>"
 
-#: ../src/mainwin.cpp:628
-msgid "StarDict is an international dictionary for GNOME."
-msgstr "StarDict это международный словарь для GNOME."
-
-#: ../src/mainwin.cpp:659
+#: ../src/mainwin.cpp:666
 msgid "Pr_eferences"
 msgstr "_Настройки"
 
-#: ../src/mainwin.cpp:667
+#: ../src/mainwin.cpp:674
 msgid "Manage _dictionaries"
 msgstr "_Управление словарями"
 
-#: ../src/mainwin.cpp:674
+#: ../src/mainwin.cpp:681
 msgid "Manage _plugins"
 msgstr "У_правление модулями"
 
-#: ../src/mainwin.cpp:684
+#: ../src/mainwin.cpp:691
 msgid "_Keep window above"
 msgstr ""
 
-#: ../src/mainwin.cpp:693
+#: ../src/mainwin.cpp:700
 msgid "Download dict_ionaries"
 msgstr "_Загрузка словарей"
 
-#: ../src/mainwin.cpp:700
+#: ../src/mainwin.cpp:707
 msgid "_New version"
 msgstr "Но_вая версия"
 
-#: ../src/mainwin.cpp:709
+#: ../src/mainwin.cpp:714
+msgid "D_onate"
+msgstr ""
+
+#: ../src/mainwin.cpp:723
 msgid "_Help"
 msgstr "_Справка"
 
-#: ../src/mainwin.cpp:716
+#: ../src/mainwin.cpp:730
 msgid "_About"
 msgstr "_О программе"
 
-#: ../src/mainwin.cpp:1455
+#: ../src/mainwin.cpp:1550
 msgid "List"
 msgstr "Список"
 
-#: ../src/mainwin.cpp:1466
+#: ../src/mainwin.cpp:1561
 msgid "Result"
 msgstr "Результат"
 
-#: ../src/mainwin.cpp:1476
+#: ../src/mainwin.cpp:1571
 msgid "Full-Text Translation"
 msgstr "Полнотекстовый перевод"
 
-#: ../src/mainwin.cpp:1487
+#: ../src/mainwin.cpp:1581
+msgid "History"
+msgstr ""
+
+#: ../src/mainwin.cpp:1592
 msgid "Tree"
 msgstr "Дерево"
 
-#: ../src/mainwin.cpp:1498
+#: ../src/mainwin.cpp:1603
 msgid "Choose dict group"
 msgstr "Выбрать группу словарей"
 
-#: ../src/mainwin.cpp:1509
+#: ../src/mainwin.cpp:1614
 msgid "Next word (Alt+Down)"
 msgstr "Следующее слово (Alt+Down)"
 
-#: ../src/mainwin.cpp:1519
+#: ../src/mainwin.cpp:1624
 msgid "Previous word (Alt+Up)"
 msgstr "Предыдущее слово (Alt+Up)"
 
-#: ../src/mainwin.cpp:1571
+#: ../src/mainwin.cpp:1684
 msgid "Enable Net Dict"
 msgstr "Включить сетевые словари"
 
-#: ../src/mainwin.cpp:1718
+#: ../src/mainwin.cpp:1832
 msgid "Show the word list"
 msgstr "Показать список со словами"
 
-#: ../src/mainwin.cpp:1733
+#: ../src/mainwin.cpp:1847
 msgid "Hide the word list"
 msgstr "Скрыть список со словами"
 
-#: ../src/mainwin.cpp:1751
+#: ../src/mainwin.cpp:1865
 msgid "Copy"
 msgstr "Копировать"
 
-#: ../src/mainwin.cpp:1765
+#: ../src/mainwin.cpp:1879
 msgid "Pronounce the word (Enter)"
 msgstr "Произнести слово (ввод)"
 
-#: ../src/mainwin.cpp:1779
+#: ../src/mainwin.cpp:1893
 msgid "Save to file (Alt+E)"
 msgstr "Сохранить в файл (Alt+E)"
 
-#: ../src/mainwin.cpp:1789
+#: ../src/mainwin.cpp:1903
 msgid "Print"
 msgstr "Печатать"
 
-#: ../src/mainwin.cpp:1804
+#: ../src/mainwin.cpp:1918
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "Искать в области определений слова (Ctrl+F)"
 
-#: ../src/mainwin.cpp:1989
+#: ../src/mainwin.cpp:2103
 msgid "Close"
 msgstr ""
 
-#: ../src/mainwin.cpp:2004
+#: ../src/mainwin.cpp:2118
 msgid "Find"
 msgstr "Найти"
 
-#: ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2130
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -1054,7 +1062,7 @@ msgstr ""
 "Перейдите на сайт StarDict, загрузите какие-нибудь словари: %s%s%s и "
 "поместите их в %s."
 
-#: ../src/mainwin.cpp:2054
+#: ../src/mainwin.cpp:2168
 msgid ""
 "        Welcome to StarDict!\n"
 "\n"
@@ -1090,7 +1098,7 @@ msgstr ""
 "   Когда всплывающее окно сообщает, что слово не найдено, можно дважды "
 "нажать левую кнопку мыши для нечёткого запроса.\n"
 
-#: ../src/mainwin.cpp:2071
+#: ../src/mainwin.cpp:2185
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk. It "
@@ -1193,85 +1201,85 @@ msgstr ""
 "будет полезной, но БЕЗ КАКИХ ЛИБО ГАРАНТИЙ; без гарантии, что правописание "
 "слова, определение и фонетическая информация верны.\n"
 
-#: ../src/mainwin.cpp:2219 ../src/stardict.cpp:1375
+#: ../src/mainwin.cpp:2333 ../src/stardict.cpp:1382
 msgid "Found no words matching this pattern!"
 msgstr "Не найдено слов совпадающих с шаблоном!"
 
-#: ../src/mainwin.cpp:2221 ../src/stardict.cpp:1400
+#: ../src/mainwin.cpp:2335 ../src/stardict.cpp:1407
 msgid "Found no words matching this regular expression!"
 msgstr "Не найдено слов совпадающих с регулярным выражением!"
 
-#: ../src/mainwin.cpp:2223 ../src/stardict.cpp:1287
+#: ../src/mainwin.cpp:2337 ../src/stardict.cpp:1294
 msgid "There are too many spelling errors :-("
 msgstr "Слишком много ошибок написания :-("
 
-#: ../src/mainwin.cpp:2225 ../src/stardict.cpp:1202 ../src/stardict.cpp:1251
+#: ../src/mainwin.cpp:2339 ../src/stardict.cpp:1209 ../src/stardict.cpp:1258
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "Не существует словарной статьи с данным словом. :-("
 
-#: ../src/mainwin.cpp:2313
+#: ../src/mainwin.cpp:2427
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Слово \"%s\" не найдено."
 
-#: ../src/mainwin.cpp:2385 ../src/mainwin.cpp:2504
+#: ../src/mainwin.cpp:2499 ../src/mainwin.cpp:2618
 msgid "_Pronounce"
 msgstr "_Произнести слово"
 
-#: ../src/mainwin.cpp:2531
+#: ../src/mainwin.cpp:2645
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>Полнотекстовый перевод</b>"
 
-#: ../src/mainwin.cpp:2568
+#: ../src/mainwin.cpp:2682
 msgid "To"
 msgstr "На"
 
-#: ../src/mainwin.cpp:2609
+#: ../src/mainwin.cpp:2723
 msgid "_Translate"
 msgstr "_Перевести"
 
-#: ../src/mainwin.cpp:2639
+#: ../src/mainwin.cpp:2753
 msgid "Powered by -"
 msgstr "Предоставлено -"
 
-#: ../src/mainwin.cpp:2718
+#: ../src/mainwin.cpp:2832
 msgid "Please input some words to translate."
 msgstr "Введите текст для перевода"
 
-#: ../src/mainwin.cpp:2726
+#: ../src/mainwin.cpp:2840
 msgid "Connecting..."
 msgstr "Соединение..."
 
-#: ../src/mainwin.cpp:2866
+#: ../src/mainwin.cpp:2980
 msgid "Scan the selection"
 msgstr "Сканировать выделенное"
 
-#: ../src/mainwin.cpp:2880
+#: ../src/mainwin.cpp:2994
 msgid "Show info"
 msgstr "Показать подсказку"
 
-#: ../src/mainwin.cpp:2940 ../src/prefsdlg.cpp:2571
+#: ../src/mainwin.cpp:3054 ../src/prefsdlg.cpp:2583
 msgid "Preferences"
 msgstr "Настройки"
 
-#: ../src/mainwin.cpp:2950
+#: ../src/mainwin.cpp:3064
 msgid "Manage dictionaries"
 msgstr "Управление словарями"
 
-#: ../src/mainwin.cpp:2960
+#: ../src/mainwin.cpp:3074
 msgid "Go to the StarDict website"
 msgstr "Перейти на сайт StarDict"
 
-#: ../src/mainwin.cpp:2972
+#: ../src/mainwin.cpp:3086
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Искать в словарях в Интернет - Правая кнопка: список сайтов"
 
-#: ../src/mainwin.cpp:3208
+#: ../src/mainwin.cpp:3322
 #, c-format
 msgid "Wrong InternetSearch URL! More than 1 '%%' in the string!\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:3212
+#: ../src/mainwin.cpp:3326
 #, c-format
 msgid "Wrong InternetSearch URL! No '%%s' in the string!\n"
 msgstr ""
@@ -1331,31 +1339,31 @@ msgstr "<b>Информация о модуле</b>"
 msgid "Manage Plugins"
 msgstr "Управление модулями"
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:422
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:425
 msgid "Scan Selection"
 msgstr "Сканирование выделенного"
 
-#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:590
+#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:593
 msgid "Font"
 msgstr "Шрифт"
 
-#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:656
+#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:659
 msgid "Cache"
 msgstr "Кэш"
 
-#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:759
+#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:762
 msgid "Export"
 msgstr "Экспорт"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:945
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:948
 msgid "Sound"
 msgstr "Звук"
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1059
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1062
 msgid "Video"
 msgstr "Видео"
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:815
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:818
 msgid "Article rendering"
 msgstr "Отображение словарной статьи"
 
@@ -1363,32 +1371,32 @@ msgstr "Отображение словарной статьи"
 msgid "Dict management"
 msgstr "Управление словарями"
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1442
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1445
 msgid "Net Dict"
 msgstr "Сетевые словари"
 
-#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1531
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1536
 msgid "Web browser"
 msgstr "Веб-браузер"
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1587
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1592
 msgid "Input"
 msgstr "Ввод"
 
 #: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
-#: ../src/prefsdlg.cpp:1754 ../src/prefsdlg.cpp:2267 ../src/prefsdlg.cpp:2303
+#: ../src/prefsdlg.cpp:1763 ../src/prefsdlg.cpp:2279 ../src/prefsdlg.cpp:2315
 msgid "Options"
 msgstr "Настройки"
 
-#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:2134
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:2143
 msgid "Search website"
 msgstr "Поиск в интернете"
 
-#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2370
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2382
 msgid "Appearance"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2385
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2404
 msgid "Dictionary"
 msgstr "Словарь"
 
@@ -1404,63 +1412,63 @@ msgstr "Значок в области уведомления"
 msgid "Floating window"
 msgstr "Всплывающее окно"
 
-#: ../src/prefsdlg.cpp:272
+#: ../src/prefsdlg.cpp:275
 msgid "Categories"
 msgstr "Категории"
 
-#: ../src/prefsdlg.cpp:429
+#: ../src/prefsdlg.cpp:432
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "_Сканировать только если нажата клавиша-модификатор"
 
-#: ../src/prefsdlg.cpp:449
+#: ../src/prefsdlg.cpp:452
 msgid "H_ide floating window when modifier key released."
 msgstr "_Прятать всплывающее окно когда клавиша-модификатор отпущена"
 
-#: ../src/prefsdlg.cpp:463
+#: ../src/prefsdlg.cpp:466
 msgid "Scan modifier _key:"
 msgstr "_Клавиша-модификатор сканирования:"
 
-#: ../src/prefsdlg.cpp:484
+#: ../src/prefsdlg.cpp:487
 msgid "_Scan clipboard."
 msgstr "_Сканировать содержимое буфера обмена"
 
-#: ../src/prefsdlg.cpp:498
+#: ../src/prefsdlg.cpp:501
 msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "_Использовать комбинацию клавиш для включения сканирования:"
 
-#: ../src/prefsdlg.cpp:552 ../src/prefsdlg.cpp:554
+#: ../src/prefsdlg.cpp:555 ../src/prefsdlg.cpp:557
 msgid "Choose dictionary font"
 msgstr "Выбрать шрифт для словаря"
 
-#: ../src/prefsdlg.cpp:558 ../src/prefsdlg.cpp:623
+#: ../src/prefsdlg.cpp:561 ../src/prefsdlg.cpp:626
 msgid "Choose"
 msgstr "Выбрать"
 
-#: ../src/prefsdlg.cpp:566 ../src/prefsdlg.cpp:568
+#: ../src/prefsdlg.cpp:569 ../src/prefsdlg.cpp:571
 msgid "Dictionary font"
 msgstr "Шрифт словаря"
 
-#: ../src/prefsdlg.cpp:597
+#: ../src/prefsdlg.cpp:600
 msgid "_Use custom font."
 msgstr "_Использовать свой шрифт"
 
-#: ../src/prefsdlg.cpp:613
+#: ../src/prefsdlg.cpp:616
 msgid "Dictionary _font:"
 msgstr "_Шрифт словаря:"
 
-#: ../src/prefsdlg.cpp:664
+#: ../src/prefsdlg.cpp:667
 msgid "Create c_ache files to speed up loading."
 msgstr "Использовать к_эш для увеличения скорости загрузки"
 
-#: ../src/prefsdlg.cpp:669
+#: ../src/prefsdlg.cpp:672
 msgid "_Sort word list by collation function."
 msgstr "_Сортировать список слов с помощью функции сравнения"
 
-#: ../src/prefsdlg.cpp:682
+#: ../src/prefsdlg.cpp:685
 msgid "\tCollation _function:"
 msgstr "\t_Функция сравнения:"
 
-#: ../src/prefsdlg.cpp:714
+#: ../src/prefsdlg.cpp:717
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
@@ -1468,214 +1476,215 @@ msgstr ""
 "После включение сортировки, загрузка словарей в первый раз может занять "
 "некоторое время из-за необходимости заново проиндексировать словари."
 
-#: ../src/prefsdlg.cpp:724
+#: ../src/prefsdlg.cpp:727
 msgid "C_lean all cache files"
 msgstr "О_чистить кэш"
 
-#: ../src/prefsdlg.cpp:741
+#: ../src/prefsdlg.cpp:744
 msgid "Open file..."
 msgstr "Открыть файл..."
 
-#: ../src/prefsdlg.cpp:768
+#: ../src/prefsdlg.cpp:771
 msgid "_Only export words."
 msgstr "_Экспортировать только слова"
 
-#: ../src/prefsdlg.cpp:779
+#: ../src/prefsdlg.cpp:782
 msgid "File name:"
 msgstr "Имя файла:"
 
-#: ../src/prefsdlg.cpp:792
+#: ../src/prefsdlg.cpp:795
 msgid "_Browse..."
 msgstr "_Выбрать..."
 
-#: ../src/prefsdlg.cpp:830
+#: ../src/prefsdlg.cpp:833
 msgid "Dictionary name showing style:"
 msgstr "Стиль отображения названий словарей:"
 
-#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1744
+#: ../src/prefsdlg.cpp:836 ../src/prefsdlg.cpp:1753
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:98
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:109
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:125
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../src/prefsdlg.cpp:834
+#: ../src/prefsdlg.cpp:837
 msgid "One blank line"
 msgstr "Одна пустая строка"
 
-#: ../src/prefsdlg.cpp:835
+#: ../src/prefsdlg.cpp:838
 msgid "Two blank lines"
 msgstr "Две пустые строки"
 
-#: ../src/prefsdlg.cpp:842
+#: ../src/prefsdlg.cpp:845
 #, fuzzy
 msgid "Highlight _search term"
 msgstr "_Выделять искомое слово"
 
-#: ../src/prefsdlg.cpp:852
+#: ../src/prefsdlg.cpp:855
 msgid "Dictionary management"
 msgstr "Управление словарями"
 
-#: ../src/prefsdlg.cpp:862
+#: ../src/prefsdlg.cpp:865
 msgid "Don't load _bad dictionaries."
 msgstr "_Не загружать испорченные словари"
 
-#: ../src/prefsdlg.cpp:954
+#: ../src/prefsdlg.cpp:957
 #, fuzzy
 msgid "Enable _sound event."
 msgstr "_Включить звуки для событий"
 
-#: ../src/prefsdlg.cpp:970
+#: ../src/prefsdlg.cpp:973
 msgid "Command for playing sound files:"
 msgstr "Команда для воспроизведения звуковых файлов:"
 
-#: ../src/prefsdlg.cpp:981
+#: ../src/prefsdlg.cpp:984
 msgid "Always use sound play command."
 msgstr "Всегда использовать команду воспроизведения звуков."
 
-#: ../src/prefsdlg.cpp:988
+#: ../src/prefsdlg.cpp:991
 msgid "RealPeopleTTS search path:"
 msgstr "Каталоги со звуковыми файлами произношений слов:"
 
-#: ../src/prefsdlg.cpp:1023
+#: ../src/prefsdlg.cpp:1026
 #, fuzzy
 msgid "_Default"
 msgstr "По умолчанию"
 
-#: ../src/prefsdlg.cpp:1030
+#: ../src/prefsdlg.cpp:1033
 msgid "Enable _TTS program."
 msgstr "Использовать программу синтеза речи"
 
-#: ../src/prefsdlg.cpp:1042
+#: ../src/prefsdlg.cpp:1045
 msgid "Command line:"
 msgstr "Команда:"
 
-#: ../src/prefsdlg.cpp:1072
+#: ../src/prefsdlg.cpp:1075
 msgid "Command for playing video files:"
 msgstr "Команда для воспроизведения видеофайлов:"
 
-#: ../src/prefsdlg.cpp:1106
+#: ../src/prefsdlg.cpp:1109
 msgid "Account"
 msgstr "Учетная запись"
 
-#: ../src/prefsdlg.cpp:1117 ../src/prefsdlg.cpp:1356
+#: ../src/prefsdlg.cpp:1120 ../src/prefsdlg.cpp:1359
 msgid "_User Name:"
 msgstr "_Имя пользователя:"
 
-#: ../src/prefsdlg.cpp:1123 ../src/prefsdlg.cpp:1362
+#: ../src/prefsdlg.cpp:1126 ../src/prefsdlg.cpp:1365
 msgid "_Password:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1146 ../src/prefsdlg.cpp:1395
+#: ../src/prefsdlg.cpp:1149 ../src/prefsdlg.cpp:1398
 msgid "Please input the password."
 msgstr "Введите пароль."
 
-#: ../src/prefsdlg.cpp:1224
+#: ../src/prefsdlg.cpp:1227
 #, fuzzy
 msgid "Please setup the user name and password first!"
 msgstr "Введите имя пользователя."
 
-#: ../src/prefsdlg.cpp:1234
+#: ../src/prefsdlg.cpp:1237
 msgid "Change password"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1245
+#: ../src/prefsdlg.cpp:1248
 #, fuzzy
 msgid "Current _password:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1252
+#: ../src/prefsdlg.cpp:1255
 #, fuzzy
 msgid "_New password:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1259
+#: ../src/prefsdlg.cpp:1262
 msgid "Con_firm new password:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1277
+#: ../src/prefsdlg.cpp:1280
 #, fuzzy
 msgid "Please input the corrent password!"
 msgstr "Введите пароль."
 
-#: ../src/prefsdlg.cpp:1279
+#: ../src/prefsdlg.cpp:1282
 #, fuzzy
 msgid "Please input the new password!"
 msgstr "Введите пароль."
 
-#: ../src/prefsdlg.cpp:1281
+#: ../src/prefsdlg.cpp:1284
 #, fuzzy
 msgid "Please input the password again!"
 msgstr "Введите пароль."
 
-#: ../src/prefsdlg.cpp:1283 ../src/prefsdlg.cpp:1399
+#: ../src/prefsdlg.cpp:1286 ../src/prefsdlg.cpp:1402
 msgid "Two passwords are not the same!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1285
+#: ../src/prefsdlg.cpp:1288
 msgid "Password didn't change!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1297
+#: ../src/prefsdlg.cpp:1300
 msgid "Corrent password is wrong!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1345
+#: ../src/prefsdlg.cpp:1348
 msgid "Register"
 msgstr "Регистрация"
 
-#: ../src/prefsdlg.cpp:1369
+#: ../src/prefsdlg.cpp:1372
 #, fuzzy
 msgid "Password _again:"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1376
+#: ../src/prefsdlg.cpp:1379
 msgid "_Email:"
 msgstr "Эл_ектронная почта:"
 
-#: ../src/prefsdlg.cpp:1393
+#: ../src/prefsdlg.cpp:1396
 msgid "Please input the user name."
 msgstr "Введите имя пользователя."
 
-#: ../src/prefsdlg.cpp:1397
+#: ../src/prefsdlg.cpp:1400
 #, fuzzy
 msgid "Please input the password again."
 msgstr "Введите пароль."
 
-#: ../src/prefsdlg.cpp:1401
+#: ../src/prefsdlg.cpp:1404
 msgid "Please input the email."
 msgstr "Введите адрес электронной почты."
 
-#: ../src/prefsdlg.cpp:1403
+#: ../src/prefsdlg.cpp:1406
 msgid "Please input a valid email."
 msgstr "Введите правильный адрес электронной почты."
 
-#: ../src/prefsdlg.cpp:1452
+#: ../src/prefsdlg.cpp:1455
 msgid "Enable _network dictionaries."
 msgstr "Включить _сетевые словари"
 
-#: ../src/prefsdlg.cpp:1464
+#: ../src/prefsdlg.cpp:1467
 msgid "StarDict server:"
 msgstr "Сервер StarDict:"
 
-#: ../src/prefsdlg.cpp:1475
+#: ../src/prefsdlg.cpp:1480
 msgid "Port:"
 msgstr "Порт:"
 
-#: ../src/prefsdlg.cpp:1484
+#: ../src/prefsdlg.cpp:1489
 msgid "Account:"
 msgstr "Учетная запись:"
 
-#: ../src/prefsdlg.cpp:1496
+#: ../src/prefsdlg.cpp:1501
 #, fuzzy
 msgid "Change _password"
 msgstr "_Пароль:"
 
-#: ../src/prefsdlg.cpp:1506
+#: ../src/prefsdlg.cpp:1511
 msgid "_Register an account"
 msgstr "З_арегистрировать учетную запись"
 
-#: ../src/prefsdlg.cpp:1516
+#: ../src/prefsdlg.cpp:1521
 msgid ""
 "Warning: Requests to remote StarDict server are sent over the network in an "
 "unencrypted form. Do not enable this if you are translating sensitive "
@@ -1685,136 +1694,136 @@ msgstr ""
 "незашифрованном виде. Не включайте эту настройку, если вы переводите "
 "конфиденциальные документы."
 
-#: ../src/prefsdlg.cpp:1544
+#: ../src/prefsdlg.cpp:1549
 msgid "Command for opening URLs:"
 msgstr "Команда для открытия URL-адресов:"
 
-#: ../src/prefsdlg.cpp:1557
+#: ../src/prefsdlg.cpp:1562
 #, fuzzy
 msgid "_Always use this command for opening URLs."
 msgstr "Всегда использовать эту команду для открытия URL-адресов"
 
-#: ../src/prefsdlg.cpp:1598
+#: ../src/prefsdlg.cpp:1603
 msgid "_Search while typing."
 msgstr "_Искать во время набора"
 
-#: ../src/prefsdlg.cpp:1611
+#: ../src/prefsdlg.cpp:1616
 msgid "Word change _timeout:"
 msgstr "_Задержка после изменения слова:"
 
-#: ../src/prefsdlg.cpp:1620
+#: ../src/prefsdlg.cpp:1625
 msgid "(default:300 ms)"
 msgstr "(по умолчанию: 300 мс)"
 
-#: ../src/prefsdlg.cpp:1622
+#: ../src/prefsdlg.cpp:1627
 msgid "Show the _first word when not found."
 msgstr "Показывать _первое слово, когда ничего не найдено"
 
-#: ../src/prefsdlg.cpp:1701
+#: ../src/prefsdlg.cpp:1710
 msgid "Skin change will take effect after application restart"
 msgstr "Смена стиля вступит в силу после перезапуска приложения"
 
-#: ../src/prefsdlg.cpp:1765
+#: ../src/prefsdlg.cpp:1774
 msgid "_Auto run StarDict after boot."
 msgstr "_Автоматически загружать StarDict после загрузки"
 
-#: ../src/prefsdlg.cpp:1810
+#: ../src/prefsdlg.cpp:1819
 msgid "Skin:"
 msgstr "Стиль:"
 
-#: ../src/prefsdlg.cpp:1827
+#: ../src/prefsdlg.cpp:1836
 msgid "Hide main window when _starting StarDict."
 msgstr "Прятать главное окно при запуске StarDict"
 
-#: ../src/prefsdlg.cpp:1844
+#: ../src/prefsdlg.cpp:1853
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "_Использовать комбинацию клавиш для открытия главного окна:"
 
-#: ../src/prefsdlg.cpp:1866 ../src/prefsdlg.cpp:2452
+#: ../src/prefsdlg.cpp:1875 ../src/prefsdlg.cpp:2464
 msgid "_Transparency:"
 msgstr "_Прозрачность:"
 
-#: ../src/prefsdlg.cpp:1963 ../src/prefsdlg.cpp:2189
+#: ../src/prefsdlg.cpp:1972 ../src/prefsdlg.cpp:2201
 msgid "Website Name"
 msgstr "Название сайта"
 
-#: ../src/prefsdlg.cpp:1975 ../src/prefsdlg.cpp:2197
+#: ../src/prefsdlg.cpp:1984 ../src/prefsdlg.cpp:2209
 msgid "Website link"
 msgstr "Адрес сайта"
 
-#: ../src/prefsdlg.cpp:1986 ../src/prefsdlg.cpp:2205
+#: ../src/prefsdlg.cpp:1995 ../src/prefsdlg.cpp:2217
 msgid "Website search link"
 msgstr "Поисковая ссылка"
 
-#: ../src/prefsdlg.cpp:2007
+#: ../src/prefsdlg.cpp:2016
 msgid "Please input the website name."
 msgstr "Введите название сайта."
 
-#: ../src/prefsdlg.cpp:2009
+#: ../src/prefsdlg.cpp:2018
 msgid "Please input the website link."
 msgstr "Введите адрес сайта."
 
-#: ../src/prefsdlg.cpp:2011
+#: ../src/prefsdlg.cpp:2020
 msgid "Please input the website search link."
 msgstr "Введите поисковую ссылку."
 
-#: ../src/prefsdlg.cpp:2017 ../src/prefsdlg.cpp:2097
+#: ../src/prefsdlg.cpp:2026 ../src/prefsdlg.cpp:2106
 #, fuzzy
 msgid "The website search link contain more than 1 \"%\" characters!"
 msgstr "\"Разумная\" ссылка должена содержать \"%%s\" строчку для поиска слов."
 
-#: ../src/prefsdlg.cpp:2020 ../src/prefsdlg.cpp:2100
+#: ../src/prefsdlg.cpp:2029 ../src/prefsdlg.cpp:2109
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%s\" string for querying a word."
 msgstr "Поисковая ссылка должна содержать символы «%%s» для запроса слова."
 
-#: ../src/prefsdlg.cpp:2275
+#: ../src/prefsdlg.cpp:2287
 msgid "When middle mouse button is clicked:"
 msgstr "Когда нажата средняя кнопка мыши"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:2279
+#: ../src/prefsdlg.cpp:2291
 msgid "Query selection in floating window"
 msgstr "Запрашивать во всплывающем окне"
 
-#: ../src/prefsdlg.cpp:2280
+#: ../src/prefsdlg.cpp:2292
 msgid "Query selection in main window"
 msgstr "Запрашивать в главном окне"
 
-#: ../src/prefsdlg.cpp:2281
+#: ../src/prefsdlg.cpp:2293
 msgid "Do nothing"
 msgstr "Ничего не делать"
 
-#: ../src/prefsdlg.cpp:2310
+#: ../src/prefsdlg.cpp:2322
 msgid "_Pronounce the word when it pops up."
 msgstr "_Произносить слово при открытии всплывающего окна"
 
-#: ../src/prefsdlg.cpp:2319
+#: ../src/prefsdlg.cpp:2331
 msgid "_Show floating window if word not found."
 msgstr "П_оказать всплывающее окно если слово не найдено"
 
-#: ../src/prefsdlg.cpp:2393
+#: ../src/prefsdlg.cpp:2405
 msgid "Max window _width:"
 msgstr "Максимальная _ширина окна:"
 
-#: ../src/prefsdlg.cpp:2403
+#: ../src/prefsdlg.cpp:2415
 msgid "(default:320)"
 msgstr "(по умолчанию: 320)"
 
-#: ../src/prefsdlg.cpp:2407
+#: ../src/prefsdlg.cpp:2419
 msgid "Max window hei_ght:"
 msgstr "Максимальная _высота окна:"
 
-#: ../src/prefsdlg.cpp:2415
+#: ../src/prefsdlg.cpp:2427
 msgid "(default:240)"
 msgstr "(по умолчанию: 240)"
 
-#: ../src/prefsdlg.cpp:2424
+#: ../src/prefsdlg.cpp:2436
 msgid "_Use custom background color:"
 msgstr "_Использовать свой цвет фона:"
 
-#: ../src/prefsdlg.cpp:2549
+#: ../src/prefsdlg.cpp:2561
 msgid "Cat_egories:"
 msgstr "_Категории:"
 
@@ -1855,57 +1864,57 @@ msgstr "Команда запуска TTS"
 msgid "StarDict starting..."
 msgstr "StarDict запускается..."
 
-#: ../src/stardict.cpp:1106
+#: ../src/stardict.cpp:1113
 msgid "Full-text Search"
 msgstr "Полнотекстовый поиск"
 
-#: ../src/stardict.cpp:1137
+#: ../src/stardict.cpp:1144
 msgid "Search"
 msgstr "Поиск"
 
-#: ../src/stardict.cpp:1222 ../src/stardict.cpp:1642
+#: ../src/stardict.cpp:1229 ../src/stardict.cpp:1649
 msgid "Full-text search..."
 msgstr "Полнотекстовый поиск..."
 
-#: ../src/stardict.cpp:1631
+#: ../src/stardict.cpp:1638
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Нажмите ввод чтобы увидеть список слов совпадающих с шаблоном."
 
-#: ../src/stardict.cpp:1634
+#: ../src/stardict.cpp:1641
 msgid "Press Enter to list the words that match this regular expression."
 msgstr ""
 "Нажмите ввод чтобы увидеть список слов совпадающих с регулярным выражением."
 
-#: ../src/stardict.cpp:1638
+#: ../src/stardict.cpp:1645
 msgid "Fuzzy query..."
 msgstr "Нечёткий запрос..."
 
-#: ../src/stardict.cpp:2078
+#: ../src/stardict.cpp:2084
 msgid "Loading skin..."
 msgstr "Загрузка стиля..."
 
-#: ../src/stardict.cpp:2084
+#: ../src/stardict.cpp:2090
 msgid "Skin loaded."
 msgstr "Стиль загружен."
 
-#: ../src/stardict.cpp:2250
+#: ../src/stardict.cpp:2260
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict уже запущен. Используется запущенный процесс."
 
-#: ../src/stardict.cpp:2369
+#: ../src/stardict.cpp:2388
 msgid "- Lookup words"
 msgstr "- Поиск слов"
 
-#: ../src/stardict.cpp:2374
+#: ../src/stardict.cpp:2393
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "Не удалось разобрать параметры программы: %s\n"
 
-#: ../src/stardict.cpp:2440
+#: ../src/stardict.cpp:2459
 msgid "Loading StarDict configuration..."
 msgstr "Загружается конфигурация StarDict..."
 
-#: ../src/stardict.cpp:2442
+#: ../src/stardict.cpp:2461
 msgid "StarDict configuration loaded."
 msgstr "Файл конфигурации StarDict загружен."
 
@@ -2190,75 +2199,75 @@ msgstr "Не удалось понять ответ системы перево�
 msgid "Conversion error."
 msgstr "Ошибка преобразования."
 
-#: ../src/lib/stardict_client.cpp:743
+#: ../src/lib/stardict_client.cpp:751
 #, fuzzy, c-format
 msgid "Can not reslove %s: %s\n"
 msgstr "Не могу открыть: %s - %s\n"
 
-#: ../src/lib/stardict_client.cpp:759
+#: ../src/lib/stardict_client.cpp:767
 #, fuzzy
 msgid "Can not create socket: "
 msgstr "Не удалось создать каталог журналов %s."
 
-#: ../src/lib/stardict_client.cpp:773
+#: ../src/lib/stardict_client.cpp:781
 #, fuzzy, c-format
 msgid "Can not connect to %s: %s\n"
 msgstr "Невозможно подключиться к gconf."
 
-#: ../src/lib/stardict_client.cpp:795
+#: ../src/lib/stardict_client.cpp:803
 #, c-format
 msgid "Unable to set the channel as non-blocking: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:880 ../src/lib/stardict_client.cpp:903
+#: ../src/lib/stardict_client.cpp:888 ../src/lib/stardict_client.cpp:911
 #, c-format
 msgid "Error while reading reply from server: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:935
+#: ../src/lib/stardict_client.cpp:943
 #, c-format
 msgid "Server temporarily unavailable!\n"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:937
+#: ../src/lib/stardict_client.cpp:945
 #, c-format
 msgid "Unexpected status code %d\n"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:975
+#: ../src/lib/stardict_client.cpp:983
 #, fuzzy, c-format
 msgid "Client denied: %s"
 msgstr "Проверка подлинности запрещена: %s"
 
-#: ../src/lib/stardict_client.cpp:988
+#: ../src/lib/stardict_client.cpp:996
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "Проверка подлинности запрещена: %s"
 
-#: ../src/lib/stardict_client.cpp:1001
+#: ../src/lib/stardict_client.cpp:1009
 #, c-format
 msgid "Register failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1006
+#: ../src/lib/stardict_client.cpp:1014
 msgid "Register success!"
 msgstr "Успешная регистрация."
 
-#: ../src/lib/stardict_client.cpp:1015
+#: ../src/lib/stardict_client.cpp:1023
 #, fuzzy, c-format
 msgid "Change password failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1020
+#: ../src/lib/stardict_client.cpp:1028
 msgid "Change password success!"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1038
+#: ../src/lib/stardict_client.cpp:1046
 #, fuzzy, c-format
 msgid "Set Dict Mask failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1056
+#: ../src/lib/stardict_client.cpp:1064
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
@@ -2266,32 +2275,32 @@ msgstr ""
 "Учётная запись не настроена. Откройте страницу «Сетевые словари» в окне "
 "настроек и зарегистрируйте учётную запись."
 
-#: ../src/lib/stardict_client.cpp:1059
+#: ../src/lib/stardict_client.cpp:1067
 #, fuzzy, c-format
 msgid "Get Dict Mask failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1083
+#: ../src/lib/stardict_client.cpp:1091
 #, fuzzy, c-format
 msgid "Get dir info failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1106
+#: ../src/lib/stardict_client.cpp:1114
 #, fuzzy, c-format
 msgid "Get dict info failed: %s"
 msgstr "Регистрация не удалась: %s"
 
-#: ../src/lib/stardict_client.cpp:1129
+#: ../src/lib/stardict_client.cpp:1137
 #, fuzzy, c-format
 msgid "Get ad info failed: %s"
 msgstr "Не удалось разобрать параметры программы: %s\n"
 
-#: ../src/lib/stardict_client.cpp:1158
+#: ../src/lib/stardict_client.cpp:1166
 #, c-format
 msgid "Get max dict count failed: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1213
+#: ../src/lib/stardict_client.cpp:1231
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
@@ -2299,7 +2308,7 @@ msgstr ""
 "Нет выбранных словарей. Для их добавления используйте «Управление словарями» "
 "-> «Сетевые словари» -> «Добавить»."
 
-#: ../src/lib/stardict_client.cpp:1270
+#: ../src/lib/stardict_client.cpp:1288
 #, c-format
 msgid "Drop data for security. Data too big! More than 4M!\n"
 msgstr ""
@@ -2413,25 +2422,25 @@ msgstr "Статус проверки '%s': словарь в порядке"
 msgid "Verification status of '%s': dictionary is broken"
 msgstr "Статус проверки '%s': словарь испорчен"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:237
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:237
 #, c-format
 msgid "Error: User dict plugin version doesn't match!\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:256
 msgid "User Dict"
 msgstr "Пользовательский словарь"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
 msgid "User virtual dictionary."
 msgstr "Виртуальный словарь пользователя."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
 msgid "Show the user dictionary."
 msgstr "Показывает пользовательский словарь."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:262
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
 #, c-format
 msgid "User dict plug-in loaded.\n"
 msgstr "Модуль пользовательского словаря загружен.\n"
@@ -2478,9 +2487,9 @@ msgid "Query result from Dict.cn website."
 msgstr "Результат запроса к сайту Dict.cn."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
-#, c-format
-msgid "Dict.cn plug-in loaded.\n"
-msgstr "Модуль сетевого словаря Dict.cn загружен.\n"
+#, fuzzy, c-format
+msgid "Dict.cn network dictionary plug-in loaded.\n"
+msgstr "Сетевой словарь Dict.cn."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:142
@@ -2519,20 +2528,22 @@ msgstr "Результат запроса к сайту Dict.cn."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, fuzzy, c-format
-msgid "YouDao.com plug-in loaded.\n"
-msgstr "Модуль сетевого словаря Dict.cn загружен.\n"
+msgid "YouDao.com network dictionary plug-in loaded.\n"
+msgstr "Сетевой словарь Dict.cn."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
 msgid "Espeak TTS configuration"
 msgstr "Конфигурация Espeak TTS"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:95
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:95
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:122
 msgid "Voice type:"
 msgstr "Тип голоса:"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:121
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:121
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:143
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:159
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:194
@@ -2567,6 +2578,46 @@ msgstr "Espeak TTS"
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
 #, c-format
 msgid "Espeak plug-in loaded.\n"
+msgstr "Модуль espeak загружен.\n"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
+#, fuzzy
+msgid "Espeak-ng TTS configuration"
+msgstr "Конфигурация Espeak TTS"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:131
+#, fuzzy
+msgid "Loading Espeak-ng plug-in..."
+msgstr "Загружается модуль Espeak..."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:133
+#, fuzzy, c-format
+msgid "Error: Espeak-ng plugin version doesn't match!\n"
+msgstr "Модуль разбора HTML-страниц не найден."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Espeak-ng"
+msgstr "Espeak"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Espeak-ng TTS."
+msgstr "Программа синтеза речи еspeak."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Pronounce words by Espeak-ng TTS engine."
+msgstr "Произносит слова с помощью программы синтеза речи espeak."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:170
+#, fuzzy
+msgid "Espeak-ng TTS"
+msgstr "Espeak TTS"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
+#, fuzzy, c-format
+msgid "Espeak-ng plug-in loaded.\n"
 msgstr "Модуль espeak загружен.\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
@@ -2638,7 +2689,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, fuzzy, c-format
-msgid "Flite plug-in loaded.\n"
+msgid "Flite TTS plug-in loaded.\n"
 msgstr "Модуль сетевого словаря Dict.cn загружен.\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
@@ -3106,7 +3157,13 @@ msgstr "Произносит слова с помощью программа с�
 msgid "SAPI tts plug-in loaded.\n"
 msgstr "Модуль SAPI TTS загружен.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:269
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:314
+#, fuzzy, c-format
+msgid "Find %s spellchecking dictionary!\n"
+msgstr "Ошибка: отсутствует словарь для проверки орфографии.\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:270
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
@@ -3114,54 +3171,59 @@ msgid ""
 msgstr ""
 "Внимание: сбой при обращении к словарю проверки правописания для языка %s.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:275
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:276
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
 #, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr "Ошибка: отсутствует словарь для проверки орфографии.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:333
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:307
+#, fuzzy, c-format
+msgid "Find en_US spellchecking dictionary!\n"
+msgstr "Ошибка: отсутствует словарь для проверки орфографии.\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:338
 msgid "Spell check configuration"
 msgstr "Настройка проверки орфографии"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:339
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:344
 msgid "_Use custom languages."
 msgstr "_Использовать свои языки"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:342
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:347
 msgid "For example: \"en_US de\""
 msgstr "Например: «en_US ru»"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:352
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:357
 msgid "Custom languages:"
 msgstr "Свои языки:"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:397
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:422
 msgid "Loading Spelling plug-in..."
 msgstr "Загружается модуль проверки орфографии..."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:399
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:424
 #, c-format
 msgid "Error: Spell plugin version doesn't match!\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell Check"
 msgstr "Проверка орфографии"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell check virtual dictionary."
 msgstr "Виртуальный словарь проверки орфографии."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell check the input words and show the correct suggestion."
 msgstr "Проверяет введённые слова и показывает варианты написания."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:429
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:454
 msgid "Spelling Suggestion"
 msgstr "Варианты написания"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:459
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
 #, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr "Модуль проверки орфографии загружен.\n"
@@ -3322,55 +3384,62 @@ msgstr "Разбор данных WordNet."
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr "Модуль разбора данных WordNet загружен.\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:543
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
 msgid "XDXF parser configuration"
 msgstr "Конфигурация модуля разбора данных XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:581
 msgid "Abbreviation"
 msgstr "Сокращение"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:573
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:600
 msgid "Example"
 msgstr "Пример"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:585
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:617
 msgid "Extra key phrase"
 msgstr "Дополнительная ключевая фраза"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:597
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:634
 msgid "Emphasize"
 msgstr "Выделение"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:609
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:651
 msgid "Reference"
 msgstr "Ссылка"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:640
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:700
 msgid "Loading XDXF data parsing plug-in..."
 msgstr "Загружается модуль разбора данных XDXF..."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:642
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:702
 #, fuzzy, c-format
 msgid "Error: XDXF data parsing plugin version doesn't match!\n"
 msgstr "Модуль разбора данных формата XDXF не найден."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "XDXF data parsing"
 msgstr "Разбор данных XDXF"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "XDXF data parsing engine."
 msgstr "Система разбора данных XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "Parse the XDXF data."
 msgstr "Разбор данных XDXF."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:670
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "Модуль разбора данных XDXF загружен.\n"
+
+#~ msgid "Dict.cn plug-in loaded.\n"
+#~ msgstr "Модуль сетевого словаря Dict.cn загружен.\n"
+
+#, fuzzy
+#~ msgid "YouDao.com plug-in loaded.\n"
+#~ msgstr "Модуль сетевого словаря Dict.cn загружен.\n"
 
 #~ msgid "Settings"
 #~ msgstr "Параметры"

@@ -254,7 +254,7 @@ DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)
 	obj->dict_name = _("www.YouDao.com");
 	obj->dict_link = "http://www.youdao.com";
 	obj->dict_cacheid = YOUDAODICT;
-	g_print(_("YouDao.com plug-in loaded.\n"));
+	g_print(_("YouDao.com network dictionary plug-in loaded.\n"));
 	return false;
 }
 

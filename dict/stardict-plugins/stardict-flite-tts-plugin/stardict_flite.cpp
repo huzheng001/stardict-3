@@ -214,6 +214,6 @@ bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 	}
 	obj->saytext_func = saytext;
 	obj->tts_name = _("Flite TTS");
-	g_print(_("Flite plug-in loaded.\n"));
+	g_print(_("Flite TTS plug-in loaded.\n"));
 	return false;
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 15:16+0800\n"
+"POT-Creation-Date: 2020-12-25 09:35+0800\n"
 "PO-Revision-Date: 2008-10-10 13:23+0100\n"
 "Last-Translator: TychoBarfy <tycho.barfy@gmx.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -25,14 +25,18 @@ msgid "stardict application"
 msgstr "StarDict-Anwendung"
 
 #: ../data/stardict.desktop.in.h:1 ../data/stardict.appdata.xml.in.h:1
-#: ../src/docklet.cpp:87 ../src/docklet.cpp:301 ../src/mainwin.cpp:625
-#: ../src/stardict.cpp:273 ../src/stardict.cpp:368 ../src/stardict.cpp:2401
+#: ../src/docklet.cpp:87 ../src/docklet.cpp:301 ../src/mainwin.cpp:632
+#: ../src/stardict.cpp:273 ../src/stardict.cpp:375 ../src/stardict.cpp:2420
 msgid "StarDict"
 msgstr "StarDict"
 
 #: ../data/stardict.desktop.in.h:2
 msgid "Lookup words"
 msgstr "Wörter nachschlagen"
+
+#: ../data/stardict.desktop.in.h:3 ../src/mainwin.cpp:635
+msgid "StarDict is an international dictionary for GNOME."
+msgstr "StarDict ist ein internationales Wörterbuch für GNOME."
 
 #: ../data/stardict.schemas.in.h:1
 #, fuzzy
@@ -431,12 +435,12 @@ msgid "Activate portable mode"
 msgstr ""
 
 #. Default stardictd server.
-#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2601
+#: ../src/conf.cpp:114 ../src/prefsdlg.cpp:2613
 #, fuzzy
-msgid "dict.stardict.net"
+msgid "dict2.stardict.net"
 msgstr "dict.stardict.org"
 
-#: ../src/conf.cpp:350
+#: ../src/conf.cpp:354
 #, fuzzy, no-c-format
 msgid ""
 "StarDict.net\thttp://www.stardict.net\thttp://www.stardict.net/query.php?q="
@@ -478,88 +482,88 @@ msgstr ""
 "cmudict?in=%s\n"
 
 #. You may translate it to "win32_use_custom_font=1" for your language.
-#: ../src/conf.cpp:377
+#: ../src/conf.cpp:381
 msgid "win32_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "win32_custom_font=tahoma 9".
-#: ../src/conf.cpp:389
+#: ../src/conf.cpp:393
 msgid "win32_custom_font="
 msgstr "win32_custom_font="
 
 #. You may translate it to "darwin_use_custom_font=1" for your language.
-#: ../src/conf.cpp:402
+#: ../src/conf.cpp:406
 #, fuzzy
 msgid "darwin_use_custom_font=0"
 msgstr "win32_use_custom_font=0"
 
 #. You may translate it as "darwin_custom_font=STSong 12".
-#: ../src/conf.cpp:414
+#: ../src/conf.cpp:418
 #, fuzzy
 msgid "darwin_custom_font="
 msgstr "win32_custom_font="
 
-#: ../src/conf.cpp:472
+#: ../src/conf.cpp:476
 #, c-format
 msgid "Unable to resolve StarDict directories config file: %s."
 msgstr ""
 
-#: ../src/conf.cpp:486
+#: ../src/conf.cpp:490
 #, c-format
 msgid "Unable to resolve user config directory: %s."
 msgstr ""
 
-#: ../src/conf.cpp:493
+#: ../src/conf.cpp:497
 #, fuzzy, c-format
 msgid "Cannot create user config directory %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:501
+#: ../src/conf.cpp:505
 #, fuzzy, c-format
 msgid "Unable to resolve user cache directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:511
+#: ../src/conf.cpp:515
 #, fuzzy, c-format
 msgid "Unable to resolve data directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:521
+#: ../src/conf.cpp:525
 #, fuzzy, c-format
 msgid "Unable to resolve log directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:528
+#: ../src/conf.cpp:532
 #, fuzzy, c-format
 msgid "Cannot create log directory %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:534
+#: ../src/conf.cpp:538
 #, fuzzy, c-format
 msgid "Unable to resolve DLL directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:543
+#: ../src/conf.cpp:547
 #, fuzzy, c-format
 msgid "Unable to resolve plugin directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/conf.cpp:555
+#: ../src/conf.cpp:559
 #, fuzzy, c-format
 msgid "Unable to resolve locale directory: %s."
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/desktop.cpp:201
+#: ../src/desktop.cpp:209
 #, c-format
 msgid "Show help action failed with the following error message: \"%s\""
 msgstr ""
 
-#: ../src/desktop.cpp:210 ../src/desktop.cpp:218
+#: ../src/desktop.cpp:218 ../src/desktop.cpp:226
 #, c-format
 msgid "Unable to find help file %s."
 msgstr ""
 
-#: ../src/desktop.cpp:266
+#: ../src/desktop.cpp:274
 msgid ""
 "You are about to enable network dictionaries. Be aware that enabling network "
 "dictionaries poses a security risk. Your text will be sent to remote "
@@ -586,66 +590,66 @@ msgstr ""
 msgid "Only level %d user can choose this dictionary!"
 msgstr "Nur Level-%d-Nutzer können dieses Wörterbuch wählen!"
 
-#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:586
-#: ../src/dictmanagedlg.cpp:3117
+#: ../src/dictmanagedlg.cpp:189 ../src/dictmanagedlg.cpp:589
+#: ../src/dictmanagedlg.cpp:3130
 #, c-format
 msgid "You can only choose %d dictionaries."
 msgstr "Sie können nur %d Wörterbücher wählen."
 
-#: ../src/dictmanagedlg.cpp:311 ../src/dictmanagedlg.cpp:1213
-#: ../src/dictmanagedlg.cpp:1333 ../src/dictmanagedlg.cpp:1436
-#: ../src/dictmanagedlg.cpp:2030 ../src/dictmanagedlg.cpp:3034
-#: ../src/stardict.cpp:1142
+#: ../src/dictmanagedlg.cpp:314 ../src/dictmanagedlg.cpp:1216
+#: ../src/dictmanagedlg.cpp:1339 ../src/dictmanagedlg.cpp:1445
+#: ../src/dictmanagedlg.cpp:2043 ../src/dictmanagedlg.cpp:3047
+#: ../src/stardict.cpp:1149
 msgid "Dictionary Name"
 msgstr "Name des Wörterbuchs"
 
-#: ../src/dictmanagedlg.cpp:316 ../src/dictmanagedlg.cpp:1214
-#: ../src/dictmanagedlg.cpp:1353 ../src/dictmanagedlg.cpp:1450
-#: ../src/dictmanagedlg.cpp:2038 ../src/dictmanagedlg.cpp:3035
+#: ../src/dictmanagedlg.cpp:319 ../src/dictmanagedlg.cpp:1217
+#: ../src/dictmanagedlg.cpp:1359 ../src/dictmanagedlg.cpp:1459
+#: ../src/dictmanagedlg.cpp:2051 ../src/dictmanagedlg.cpp:3048
 msgid "Word count"
 msgstr "Wortanzahl"
 
-#: ../src/dictmanagedlg.cpp:348
+#: ../src/dictmanagedlg.cpp:351
 msgid "Browse Dictionaries"
 msgstr "Wörterbücher durchsuchen"
 
-#: ../src/dictmanagedlg.cpp:563
+#: ../src/dictmanagedlg.cpp:566
 msgid "These settings will take effect the next time you run StarDict."
 msgstr "Diese Einstellungen werden beim nächsten Start von StarDict aktiv."
 
-#: ../src/dictmanagedlg.cpp:576 ../src/lib/stddict.cpp:1303
+#: ../src/dictmanagedlg.cpp:579 ../src/lib/stddict.cpp:1303
 msgid "Loading..."
 msgstr "Lade..."
 
-#: ../src/dictmanagedlg.cpp:606 ../src/dictmanagedlg.cpp:1882
+#: ../src/dictmanagedlg.cpp:609 ../src/dictmanagedlg.cpp:1891
 msgid "<span foreground=\"red\">Query Dict</span>"
 msgstr "<span foreground=\"red\">Frage Dict ab</span>"
 
-#: ../src/dictmanagedlg.cpp:616 ../src/dictmanagedlg.cpp:1892
+#: ../src/dictmanagedlg.cpp:619 ../src/dictmanagedlg.cpp:1901
 msgid "<span foreground=\"red\">Scan Dict</span>"
 msgstr "<span foreground=\"red\">Wörterbuch scannen</span>"
 
-#: ../src/dictmanagedlg.cpp:666 ../src/dictmanagedlg.cpp:870
+#: ../src/dictmanagedlg.cpp:669 ../src/dictmanagedlg.cpp:873
 msgid "Virtual Dictionary"
 msgstr "Virtuelles Wörterbuch"
 
-#: ../src/dictmanagedlg.cpp:689 ../src/dictmanagedlg.cpp:890
+#: ../src/dictmanagedlg.cpp:692 ../src/dictmanagedlg.cpp:893
 msgid "Network Dictionary"
 msgstr "Netzwerk-Wörterbuch"
 
-#: ../src/dictmanagedlg.cpp:770
+#: ../src/dictmanagedlg.cpp:773
 msgid "Local"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:873
+#: ../src/dictmanagedlg.cpp:876
 msgid "Virtual"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:893 ../src/prefsdlg.cpp:129
+#: ../src/dictmanagedlg.cpp:896 ../src/prefsdlg.cpp:129
 msgid "Network"
 msgstr "Netzwerk"
 
-#: ../src/dictmanagedlg.cpp:1141
+#: ../src/dictmanagedlg.cpp:1144
 msgid ""
 "You can have multiple groups of dictionaries, such as \"Study English\", "
 "\"Learn German\", and switch them instantly."
@@ -653,7 +657,7 @@ msgstr ""
 "Sie haben mehrere Gruppen von Wörterbüchern, wie etwas \"Study English\", "
 "\"Learn German\" und wechseln Sie auf der Stelle."
 
-#: ../src/dictmanagedlg.cpp:1152
+#: ../src/dictmanagedlg.cpp:1155
 msgid ""
 "The Query Dict will show in the main window, the Scan Dict will show in the "
 "floating window."
@@ -661,146 +665,146 @@ msgstr ""
 "Das Abfrage-Dict zeigt alles im Hauptfenster an, das Such-Dict im "
 "schwebenden Fenster."
 
-#: ../src/dictmanagedlg.cpp:1200 ../src/dictmanagedlg.cpp:3023
+#: ../src/dictmanagedlg.cpp:1203 ../src/dictmanagedlg.cpp:3036
 msgid "Dictionary Information"
 msgstr "Wörterbuch-Information"
 
-#: ../src/dictmanagedlg.cpp:1215 ../src/dictmanagedlg.cpp:3037
+#: ../src/dictmanagedlg.cpp:1218 ../src/dictmanagedlg.cpp:3050
 msgid "Author"
 msgstr "Autor"
 
-#: ../src/dictmanagedlg.cpp:1216 ../src/dictmanagedlg.cpp:3038
+#: ../src/dictmanagedlg.cpp:1219 ../src/dictmanagedlg.cpp:3051
 msgid "Email"
 msgstr "E-Mail"
 
-#: ../src/dictmanagedlg.cpp:1217 ../src/dictmanagedlg.cpp:3039
+#: ../src/dictmanagedlg.cpp:1220 ../src/dictmanagedlg.cpp:3052
 msgid "Website"
 msgstr "Webseite"
 
-#: ../src/dictmanagedlg.cpp:1218 ../src/dictmanagedlg.cpp:3040
+#: ../src/dictmanagedlg.cpp:1221 ../src/dictmanagedlg.cpp:3053
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../src/dictmanagedlg.cpp:1219 ../src/dictmanagedlg.cpp:3041
+#: ../src/dictmanagedlg.cpp:1222 ../src/dictmanagedlg.cpp:3054
 msgid "Date"
 msgstr "Datum"
 
-#: ../src/dictmanagedlg.cpp:1220
+#: ../src/dictmanagedlg.cpp:1223
 msgid "File name"
 msgstr "Dateiname"
 
-#: ../src/dictmanagedlg.cpp:1319 ../src/dictmanagedlg.cpp:1425
+#: ../src/dictmanagedlg.cpp:1325 ../src/dictmanagedlg.cpp:1434
 #: ../src/pluginmanagedlg.cpp:431
 msgid "Enable"
 msgstr "Aktivieren"
 
-#: ../src/dictmanagedlg.cpp:1361 ../src/dictmanagedlg.cpp:2044
+#: ../src/dictmanagedlg.cpp:1367 ../src/dictmanagedlg.cpp:2057
 msgid "Type"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:1811
+#: ../src/dictmanagedlg.cpp:1820
 msgid "Are you sure you want to delete this group of dictionaries?"
 msgstr ""
 "Sind Sie sicher, dass Sie diese Gruppe von Wörterbüchern löschen wollen?"
 
-#: ../src/dictmanagedlg.cpp:1828
+#: ../src/dictmanagedlg.cpp:1837
 msgid "Are you sure you want to delete this sub-group of dictionaries?"
 msgstr ""
 "Sind Sie sicher, dass Sie diese Untergruppe von Wörterbüchern löschen wollen?"
 
-#: ../src/dictmanagedlg.cpp:1848
+#: ../src/dictmanagedlg.cpp:1857
 msgid "New dict group"
 msgstr "Neue Dict-Gruppe"
 
-#: ../src/dictmanagedlg.cpp:1855
+#: ../src/dictmanagedlg.cpp:1864
 msgid "Group name:"
 msgstr "Gruppenname:"
 
-#: ../src/dictmanagedlg.cpp:1917
+#: ../src/dictmanagedlg.cpp:1926
 msgid "Add dictionary"
 msgstr "Wörterbuch hinzufügen"
 
-#: ../src/dictmanagedlg.cpp:2050
+#: ../src/dictmanagedlg.cpp:2063
 msgid "Path"
 msgstr ""
 
-#: ../src/dictmanagedlg.cpp:2473 ../src/prefsdlg.cpp:1950
+#: ../src/dictmanagedlg.cpp:2486 ../src/prefsdlg.cpp:1959
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: ../src/dictmanagedlg.cpp:2480
+#: ../src/dictmanagedlg.cpp:2493
 msgid "Delete"
 msgstr "Löschen"
 
-#: ../src/dictmanagedlg.cpp:2487
+#: ../src/dictmanagedlg.cpp:2500
 msgid "Information"
 msgstr "Informationen"
 
-#: ../src/dictmanagedlg.cpp:2500
+#: ../src/dictmanagedlg.cpp:2513
 msgid "Move to top"
 msgstr "Nach ganz oben"
 
-#: ../src/dictmanagedlg.cpp:2507
+#: ../src/dictmanagedlg.cpp:2520
 msgid "Move up"
 msgstr "Nach oben"
 
-#: ../src/dictmanagedlg.cpp:2514
+#: ../src/dictmanagedlg.cpp:2527
 msgid "Move down"
 msgstr "Nach unten"
 
-#: ../src/dictmanagedlg.cpp:2521
+#: ../src/dictmanagedlg.cpp:2534
 msgid "Move to bottom"
 msgstr "Nach ganz unten"
 
-#: ../src/dictmanagedlg.cpp:2645
+#: ../src/dictmanagedlg.cpp:2658
 msgid "D_ict List"
 msgstr "Dict-L_iste"
 
-#: ../src/dictmanagedlg.cpp:2664
+#: ../src/dictmanagedlg.cpp:2677
 msgid "Manage _Dict"
 msgstr "Wörterbuch verwalten"
 
-#: ../src/dictmanagedlg.cpp:2682
+#: ../src/dictmanagedlg.cpp:2695
 msgid "T_ree dictionaries"
 msgstr "B_aumwörterbücher"
 
-#: ../src/dictmanagedlg.cpp:2700
+#: ../src/dictmanagedlg.cpp:2713
 msgid "_Network dictionaries"
 msgstr "_Netzwerk-Wörterbücher"
 
-#: ../src/dictmanagedlg.cpp:2733 ../src/dictmanagedlg.cpp:2742
+#: ../src/dictmanagedlg.cpp:2746 ../src/dictmanagedlg.cpp:2755
 msgid "_Show information"
 msgstr "Informationen an_zeigen"
 
-#: ../src/dictmanagedlg.cpp:2750
+#: ../src/dictmanagedlg.cpp:2763
 msgid "Select _All"
 msgstr "_Alles auswählen"
 
-#: ../src/dictmanagedlg.cpp:2756
+#: ../src/dictmanagedlg.cpp:2769
 msgid "_Unselect all"
 msgstr "Alles a_bwählen"
 
-#: ../src/dictmanagedlg.cpp:2784
+#: ../src/dictmanagedlg.cpp:2797
 msgid "Visit "
 msgstr "Besuchen"
 
-#: ../src/dictmanagedlg.cpp:2792
+#: ../src/dictmanagedlg.cpp:2805
 msgid " to download dictionaries!"
 msgstr ", um Wörterbücher herunterzuladen!"
 
-#: ../src/dictmanagedlg.cpp:2801
+#: ../src/dictmanagedlg.cpp:2814
 msgid "Upgrade Now!"
 msgstr "Jetzt aktualisieren!"
 
-#: ../src/dictmanagedlg.cpp:2826
+#: ../src/dictmanagedlg.cpp:2839
 msgid "Manage Dictionaries"
 msgstr "Wörterbuchverwaltung"
 
-#: ../src/dictmanagedlg.cpp:3036
+#: ../src/dictmanagedlg.cpp:3049
 msgid "Synonym word count"
 msgstr "Anzahl Synonyme"
 
-#: ../src/dictmanagedlg.cpp:3055
+#: ../src/dictmanagedlg.cpp:3068
 msgid "Download Now!"
 msgstr "Jetzt herunterladen!"
 
@@ -808,15 +812,15 @@ msgstr "Jetzt herunterladen!"
 msgid "Scan"
 msgstr "Scannen"
 
-#: ../src/docklet.cpp:122 ../src/floatwin.cpp:960 ../src/mainwin.cpp:2890
+#: ../src/docklet.cpp:122 ../src/floatwin.cpp:960 ../src/mainwin.cpp:3004
 msgid "Quit"
 msgstr "Ende"
 
-#: ../src/docklet.cpp:138 ../src/mainwin.cpp:2857
+#: ../src/docklet.cpp:138 ../src/mainwin.cpp:2971
 msgid "_Scan"
 msgstr "_Scannen"
 
-#: ../src/docklet.cpp:148 ../src/mainwin.cpp:725
+#: ../src/docklet.cpp:148 ../src/mainwin.cpp:739
 msgid "_Quit"
 msgstr "_Ende"
 
@@ -824,9 +828,9 @@ msgstr "_Ende"
 msgid "StarDict - Scanning"
 msgstr "StarDict - Beim Scannen"
 
-#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2197 ../src/mainwin.cpp:2227
-#: ../src/stardict.cpp:1017 ../src/stardict.cpp:1031 ../src/stardict.cpp:1036
-#: ../src/stardict.cpp:1041 ../src/stardict.cpp:1538 ../src/stardict.cpp:1671
+#: ../src/floatwin.cpp:144 ../src/mainwin.cpp:2311 ../src/mainwin.cpp:2341
+#: ../src/stardict.cpp:1024 ../src/stardict.cpp:1038 ../src/stardict.cpp:1043
+#: ../src/stardict.cpp:1048 ../src/stardict.cpp:1545 ../src/stardict.cpp:1678
 msgid "<Not Found!>"
 msgstr "<Nicht gefunden!>"
 
@@ -879,7 +883,7 @@ msgstr "_Kopieren"
 msgid "_Save"
 msgstr "_Speichern"
 
-#: ../src/floatwin.cpp:1074 ../src/mainwin.cpp:2394
+#: ../src/floatwin.cpp:1074 ../src/mainwin.cpp:2508
 msgid "_Query"
 msgstr "_Suche"
 
@@ -892,7 +896,7 @@ msgstr "_Abspielen"
 msgid "_Fuzzy query"
 msgstr "Fuzzy-Suche"
 
-#: ../src/floatwin.cpp:1200
+#: ../src/floatwin.cpp:1204
 msgid "Looking up..."
 msgstr ""
 
@@ -938,120 +942,124 @@ msgstr "Volltextsuche"
 msgid "Clear _history"
 msgstr ""
 
-#: ../src/mainwin.cpp:622
+#: ../src/mainwin.cpp:629
 msgid "translator_credits"
 msgstr "Übersetzer_Credits"
 
-#: ../src/mainwin.cpp:628
-msgid "StarDict is an international dictionary for GNOME."
-msgstr "StarDict ist ein internationales Wörterbuch für GNOME."
-
-#: ../src/mainwin.cpp:659
+#: ../src/mainwin.cpp:666
 msgid "Pr_eferences"
 msgstr "_Einstellungen"
 
-#: ../src/mainwin.cpp:667
+#: ../src/mainwin.cpp:674
 #, fuzzy
 msgid "Manage _dictionaries"
 msgstr "Wörterbücher verwalten."
 
-#: ../src/mainwin.cpp:674
+#: ../src/mainwin.cpp:681
 #, fuzzy
 msgid "Manage _plugins"
 msgstr "Plugin-Verwaltung"
 
-#: ../src/mainwin.cpp:684
+#: ../src/mainwin.cpp:691
 msgid "_Keep window above"
 msgstr ""
 
-#: ../src/mainwin.cpp:693
+#: ../src/mainwin.cpp:700
 #, fuzzy
 msgid "Download dict_ionaries"
 msgstr ", um Wörterbücher herunterzuladen!"
 
-#: ../src/mainwin.cpp:700
+#: ../src/mainwin.cpp:707
 #, fuzzy
 msgid "_New version"
 msgstr "_Neue Version"
 
-#: ../src/mainwin.cpp:709
+#: ../src/mainwin.cpp:714
+msgid "D_onate"
+msgstr ""
+
+#: ../src/mainwin.cpp:723
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../src/mainwin.cpp:716
+#: ../src/mainwin.cpp:730
 msgid "_About"
 msgstr "_Über"
 
-#: ../src/mainwin.cpp:1455
+#: ../src/mainwin.cpp:1550
 msgid "List"
 msgstr "Liste"
 
-#: ../src/mainwin.cpp:1466
+#: ../src/mainwin.cpp:1561
 msgid "Result"
 msgstr "Ergebnis"
 
-#: ../src/mainwin.cpp:1476
+#: ../src/mainwin.cpp:1571
 msgid "Full-Text Translation"
 msgstr "Volltext-Übersetzung"
 
-#: ../src/mainwin.cpp:1487
+#: ../src/mainwin.cpp:1581
+msgid "History"
+msgstr ""
+
+#: ../src/mainwin.cpp:1592
 msgid "Tree"
 msgstr "Baum"
 
-#: ../src/mainwin.cpp:1498
+#: ../src/mainwin.cpp:1603
 msgid "Choose dict group"
 msgstr "Dict-Gruppe wählen"
 
-#: ../src/mainwin.cpp:1509
+#: ../src/mainwin.cpp:1614
 msgid "Next word (Alt+Down)"
 msgstr "Nächstes Wort (Alt+Runter)"
 
-#: ../src/mainwin.cpp:1519
+#: ../src/mainwin.cpp:1624
 msgid "Previous word (Alt+Up)"
 msgstr "Vorheriges Wort (Alt+Rauf)"
 
-#: ../src/mainwin.cpp:1571
+#: ../src/mainwin.cpp:1684
 msgid "Enable Net Dict"
 msgstr "Net Dict aktivieren"
 
-#: ../src/mainwin.cpp:1718
+#: ../src/mainwin.cpp:1832
 msgid "Show the word list"
 msgstr "Wörterliste anzeigen"
 
-#: ../src/mainwin.cpp:1733
+#: ../src/mainwin.cpp:1847
 msgid "Hide the word list"
 msgstr "Wörterliste verbergen"
 
-#: ../src/mainwin.cpp:1751
+#: ../src/mainwin.cpp:1865
 msgid "Copy"
 msgstr "Kopieren"
 
-#: ../src/mainwin.cpp:1765
+#: ../src/mainwin.cpp:1879
 #, fuzzy
 msgid "Pronounce the word (Enter)"
 msgstr "Aussprache des Worts"
 
-#: ../src/mainwin.cpp:1779
+#: ../src/mainwin.cpp:1893
 msgid "Save to file (Alt+E)"
 msgstr "In Datei speichern (Alt+E)"
 
-#: ../src/mainwin.cpp:1789
+#: ../src/mainwin.cpp:1903
 msgid "Print"
 msgstr "Drucken"
 
-#: ../src/mainwin.cpp:1804
+#: ../src/mainwin.cpp:1918
 msgid "Search in the definition text (Ctrl+F)"
 msgstr "In der Definition suchen (Strg+F)"
 
-#: ../src/mainwin.cpp:1989
+#: ../src/mainwin.cpp:2103
 msgid "Close"
 msgstr ""
 
-#: ../src/mainwin.cpp:2004
+#: ../src/mainwin.cpp:2118
 msgid "Find"
 msgstr "Suchen"
 
-#: ../src/mainwin.cpp:2016
+#: ../src/mainwin.cpp:2130
 #, c-format
 msgid ""
 "Warning! No dictionary is loaded.\n"
@@ -1063,7 +1071,7 @@ msgstr ""
 "herunter:\n"
 "%s%s%s und speichern Sie diese in %s."
 
-#: ../src/mainwin.cpp:2054
+#: ../src/mainwin.cpp:2168
 #, fuzzy
 msgid ""
 "        Welcome to StarDict!\n"
@@ -1100,7 +1108,7 @@ msgstr ""
 "   Wenn im schwebenden Fenster angezeigt wird, dass das Wort nicht gefunden "
 "wurde, können sie per Doppelklick eine Fuzzy-Suche starten.\n"
 
-#: ../src/mainwin.cpp:2071
+#: ../src/mainwin.cpp:2185
 msgid ""
 "       Welcome to StarDict\n"
 "StarDict is a Cross-Platform and international dictionary written in Gtk. It "
@@ -1209,85 +1217,85 @@ msgstr ""
 "Aussprache, Definitionen und phonetische Informationen der Wörter korrekt "
 "sind.\n"
 
-#: ../src/mainwin.cpp:2219 ../src/stardict.cpp:1375
+#: ../src/mainwin.cpp:2333 ../src/stardict.cpp:1382
 msgid "Found no words matching this pattern!"
 msgstr "Keine Wörter passen auf dieses Suchmuster!"
 
-#: ../src/mainwin.cpp:2221 ../src/stardict.cpp:1400
+#: ../src/mainwin.cpp:2335 ../src/stardict.cpp:1407
 msgid "Found no words matching this regular expression!"
 msgstr "Keine Wörter passen auf diesen RegEx!"
 
-#: ../src/mainwin.cpp:2223 ../src/stardict.cpp:1287
+#: ../src/mainwin.cpp:2337 ../src/stardict.cpp:1294
 msgid "There are too many spelling errors :-("
 msgstr "Zu viele Rechtschreibfehler :-("
 
-#: ../src/mainwin.cpp:2225 ../src/stardict.cpp:1202 ../src/stardict.cpp:1251
+#: ../src/mainwin.cpp:2339 ../src/stardict.cpp:1209 ../src/stardict.cpp:1258
 msgid "There are no dictionary articles containing this word. :-("
 msgstr "es gibt keine Wörterbuchartikel mit diesem Wort. :-("
 
-#: ../src/mainwin.cpp:2313
+#: ../src/mainwin.cpp:2427
 #, c-format
 msgid "The text \"%s\" was not found."
 msgstr "Der Text \"%s\" wurde nicht gefunden."
 
-#: ../src/mainwin.cpp:2385 ../src/mainwin.cpp:2504
+#: ../src/mainwin.cpp:2499 ../src/mainwin.cpp:2618
 msgid "_Pronounce"
 msgstr "Aussprache"
 
-#: ../src/mainwin.cpp:2531
+#: ../src/mainwin.cpp:2645
 msgid "<b>Full-Text Translation</b>"
 msgstr "<b>Volltext-Übersetzung</b>"
 
-#: ../src/mainwin.cpp:2568
+#: ../src/mainwin.cpp:2682
 msgid "To"
 msgstr "Nach"
 
-#: ../src/mainwin.cpp:2609
+#: ../src/mainwin.cpp:2723
 msgid "_Translate"
 msgstr "Übersetzen"
 
-#: ../src/mainwin.cpp:2639
+#: ../src/mainwin.cpp:2753
 msgid "Powered by -"
 msgstr "Unterstützt durch -"
 
-#: ../src/mainwin.cpp:2718
+#: ../src/mainwin.cpp:2832
 msgid "Please input some words to translate."
 msgstr "Bitte zu übersetzende Wörter eingeben."
 
-#: ../src/mainwin.cpp:2726
+#: ../src/mainwin.cpp:2840
 msgid "Connecting..."
 msgstr "Verbinde..."
 
-#: ../src/mainwin.cpp:2866
+#: ../src/mainwin.cpp:2980
 msgid "Scan the selection"
 msgstr "Auswahl scannen"
 
-#: ../src/mainwin.cpp:2880
+#: ../src/mainwin.cpp:2994
 msgid "Show info"
 msgstr "Info anzeigen"
 
-#: ../src/mainwin.cpp:2940 ../src/prefsdlg.cpp:2571
+#: ../src/mainwin.cpp:3054 ../src/prefsdlg.cpp:2583
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: ../src/mainwin.cpp:2950
+#: ../src/mainwin.cpp:3064
 msgid "Manage dictionaries"
 msgstr "Wörterbücher verwalten."
 
-#: ../src/mainwin.cpp:2960
+#: ../src/mainwin.cpp:3074
 msgid "Go to the StarDict website"
 msgstr "Besuchen Sie die StarDict Webseite"
 
-#: ../src/mainwin.cpp:2972
+#: ../src/mainwin.cpp:3086
 msgid "Search an Internet dictionary - Right button: website list"
 msgstr "Such in einem Internet-Wörterbuch - Rechte Taste: Liste der Webseiten"
 
-#: ../src/mainwin.cpp:3208
+#: ../src/mainwin.cpp:3322
 #, c-format
 msgid "Wrong InternetSearch URL! More than 1 '%%' in the string!\n"
 msgstr ""
 
-#: ../src/mainwin.cpp:3212
+#: ../src/mainwin.cpp:3326
 #, c-format
 msgid "Wrong InternetSearch URL! No '%%s' in the string!\n"
 msgstr ""
@@ -1347,31 +1355,31 @@ msgstr "<b>Plugin Details</b>"
 msgid "Manage Plugins"
 msgstr "Plugins verwalten"
 
-#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:422
+#: ../src/prefsdlg.cpp:85 ../src/prefsdlg.cpp:425
 msgid "Scan Selection"
 msgstr "Auswahl scannen"
 
-#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:590
+#: ../src/prefsdlg.cpp:86 ../src/prefsdlg.cpp:593
 msgid "Font"
 msgstr "Schriftart"
 
-#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:656
+#: ../src/prefsdlg.cpp:87 ../src/prefsdlg.cpp:659
 msgid "Cache"
 msgstr "Cache"
 
-#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:759
+#: ../src/prefsdlg.cpp:88 ../src/prefsdlg.cpp:762
 msgid "Export"
 msgstr "Export"
 
-#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:945
+#: ../src/prefsdlg.cpp:89 ../src/prefsdlg.cpp:948
 msgid "Sound"
 msgstr "Sound"
 
-#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1059
+#: ../src/prefsdlg.cpp:90 ../src/prefsdlg.cpp:1062
 msgid "Video"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:815
+#: ../src/prefsdlg.cpp:91 ../src/prefsdlg.cpp:818
 msgid "Article rendering"
 msgstr "Artikel-Wiedergabe"
 
@@ -1380,32 +1388,32 @@ msgstr "Artikel-Wiedergabe"
 msgid "Dict management"
 msgstr "_Wörterbuchverwaltung"
 
-#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1442
+#: ../src/prefsdlg.cpp:97 ../src/prefsdlg.cpp:1445
 msgid "Net Dict"
 msgstr "Net Dict"
 
-#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1531
+#: ../src/prefsdlg.cpp:98 ../src/prefsdlg.cpp:1536
 msgid "Web browser"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1587
+#: ../src/prefsdlg.cpp:104 ../src/prefsdlg.cpp:1592
 msgid "Input"
 msgstr "Eingabe"
 
 #: ../src/prefsdlg.cpp:105 ../src/prefsdlg.cpp:113 ../src/prefsdlg.cpp:120
-#: ../src/prefsdlg.cpp:1754 ../src/prefsdlg.cpp:2267 ../src/prefsdlg.cpp:2303
+#: ../src/prefsdlg.cpp:1763 ../src/prefsdlg.cpp:2279 ../src/prefsdlg.cpp:2315
 msgid "Options"
 msgstr "Optionen"
 
-#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:2134
+#: ../src/prefsdlg.cpp:106 ../src/prefsdlg.cpp:2143
 msgid "Search website"
 msgstr "Webseite durchsuchen"
 
-#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2370
+#: ../src/prefsdlg.cpp:121 ../src/prefsdlg.cpp:2382
 msgid "Appearance"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2385
+#: ../src/prefsdlg.cpp:128 ../src/stardict.cpp:2404
 msgid "Dictionary"
 msgstr "Wörterbuch"
 
@@ -1421,64 +1429,64 @@ msgstr "Infobereich Symbol"
 msgid "Floating window"
 msgstr "Schwebendes Fenster"
 
-#: ../src/prefsdlg.cpp:272
+#: ../src/prefsdlg.cpp:275
 msgid "Categories"
 msgstr "Kategorien"
 
-#: ../src/prefsdlg.cpp:429
+#: ../src/prefsdlg.cpp:432
 msgid "_Only scan while the modifier key is being pressed."
 msgstr "_Nur beim Drücken der Modifier-Taste suchen."
 
-#: ../src/prefsdlg.cpp:449
+#: ../src/prefsdlg.cpp:452
 msgid "H_ide floating window when modifier key released."
 msgstr "Schwebendes Fenster beim Loslassen der Modifier-Taste verbergen."
 
-#: ../src/prefsdlg.cpp:463
+#: ../src/prefsdlg.cpp:466
 msgid "Scan modifier _key:"
 msgstr "Scan-Modifier-_Taste:"
 
-#: ../src/prefsdlg.cpp:484
+#: ../src/prefsdlg.cpp:487
 msgid "_Scan clipboard."
 msgstr "Zwischenablage durch_suchen."
 
-#: ../src/prefsdlg.cpp:498
+#: ../src/prefsdlg.cpp:501
 #, fuzzy
 msgid "_Use scan hotkey: Ctrl+Alt+X."
 msgstr "Scan-_HotKey: Strg+Alt+F1 verwenden."
 
-#: ../src/prefsdlg.cpp:552 ../src/prefsdlg.cpp:554
+#: ../src/prefsdlg.cpp:555 ../src/prefsdlg.cpp:557
 msgid "Choose dictionary font"
 msgstr "Wählen Sie die Schriftart"
 
-#: ../src/prefsdlg.cpp:558 ../src/prefsdlg.cpp:623
+#: ../src/prefsdlg.cpp:561 ../src/prefsdlg.cpp:626
 msgid "Choose"
 msgstr "Wählen"
 
-#: ../src/prefsdlg.cpp:566 ../src/prefsdlg.cpp:568
+#: ../src/prefsdlg.cpp:569 ../src/prefsdlg.cpp:571
 msgid "Dictionary font"
 msgstr "Schriftart für die Wörterbücher"
 
-#: ../src/prefsdlg.cpp:597
+#: ../src/prefsdlg.cpp:600
 msgid "_Use custom font."
 msgstr "Eigene Schriftart _verwenden."
 
-#: ../src/prefsdlg.cpp:613
+#: ../src/prefsdlg.cpp:616
 msgid "Dictionary _font:"
 msgstr "Schri_ftart für Wörterbücher:"
 
-#: ../src/prefsdlg.cpp:664
+#: ../src/prefsdlg.cpp:667
 msgid "Create c_ache files to speed up loading."
 msgstr "C_ache-Dateien zur Ladebeschleunigung erzeugen."
 
-#: ../src/prefsdlg.cpp:669
+#: ../src/prefsdlg.cpp:672
 msgid "_Sort word list by collation function."
 msgstr "_Sortiere Wortliste per Vergleichsfunktion."
 
-#: ../src/prefsdlg.cpp:682
+#: ../src/prefsdlg.cpp:685
 msgid "\tCollation _function:"
 msgstr "\tVergleichs_funktion:"
 
-#: ../src/prefsdlg.cpp:714
+#: ../src/prefsdlg.cpp:717
 msgid ""
 "After enabled collation, when load the dictionaries for the first time, it "
 "will take some time for sorting, please wait for a moment."
@@ -1486,310 +1494,311 @@ msgstr ""
 "Nach aktiviertem Vergleich, wird es wegen dem Sortieren etwas dauern, wenn "
 "das Wörterbuch das erste Mal gestartet wird. Bitte einen Moment Geduld."
 
-#: ../src/prefsdlg.cpp:724
+#: ../src/prefsdlg.cpp:727
 msgid "C_lean all cache files"
 msgstr "Alle _Cache-Dateien entfernen"
 
-#: ../src/prefsdlg.cpp:741
+#: ../src/prefsdlg.cpp:744
 msgid "Open file..."
 msgstr "Datei öffnen..."
 
-#: ../src/prefsdlg.cpp:768
+#: ../src/prefsdlg.cpp:771
 msgid "_Only export words."
 msgstr "M_ur Wörter exportieren"
 
-#: ../src/prefsdlg.cpp:779
+#: ../src/prefsdlg.cpp:782
 msgid "File name:"
 msgstr "Dateiname:"
 
-#: ../src/prefsdlg.cpp:792
+#: ../src/prefsdlg.cpp:795
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
-#: ../src/prefsdlg.cpp:830
+#: ../src/prefsdlg.cpp:833
 #, fuzzy
 msgid "Dictionary name showing style:"
 msgstr "Name des Wörterbuchs"
 
-#: ../src/prefsdlg.cpp:833 ../src/prefsdlg.cpp:1744
+#: ../src/prefsdlg.cpp:836 ../src/prefsdlg.cpp:1753
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:98
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:98
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:109
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:125
 msgid "Default"
 msgstr "Vorgabe"
 
-#: ../src/prefsdlg.cpp:834
+#: ../src/prefsdlg.cpp:837
 msgid "One blank line"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:835
+#: ../src/prefsdlg.cpp:838
 msgid "Two blank lines"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:842
+#: ../src/prefsdlg.cpp:845
 #, fuzzy
 msgid "Highlight _search term"
 msgstr "Suchtext _hervorheben"
 
-#: ../src/prefsdlg.cpp:852
+#: ../src/prefsdlg.cpp:855
 #, fuzzy
 msgid "Dictionary management"
 msgstr "Name des Wörterbuchs"
 
-#: ../src/prefsdlg.cpp:862
+#: ../src/prefsdlg.cpp:865
 #, fuzzy
 msgid "Don't load _bad dictionaries."
 msgstr ", um Wörterbücher herunterzuladen!"
 
-#: ../src/prefsdlg.cpp:954
+#: ../src/prefsdlg.cpp:957
 #, fuzzy
 msgid "Enable _sound event."
 msgstr "_Sound-Ereignis aktivieren."
 
-#: ../src/prefsdlg.cpp:970
+#: ../src/prefsdlg.cpp:973
 #, fuzzy
 msgid "Command for playing sound files:"
 msgstr "Befehl zu Abspielen von wav-Dateien:"
 
-#: ../src/prefsdlg.cpp:981
+#: ../src/prefsdlg.cpp:984
 msgid "Always use sound play command."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:988
+#: ../src/prefsdlg.cpp:991
 msgid "RealPeopleTTS search path:"
 msgstr "RealPeopleTTS-Suchpfad:"
 
-#: ../src/prefsdlg.cpp:1023
+#: ../src/prefsdlg.cpp:1026
 #, fuzzy
 msgid "_Default"
 msgstr "Vorgabe"
 
-#: ../src/prefsdlg.cpp:1030
+#: ../src/prefsdlg.cpp:1033
 #, fuzzy
 msgid "Enable _TTS program."
 msgstr "TTS-Programm _verwenden."
 
-#: ../src/prefsdlg.cpp:1042
+#: ../src/prefsdlg.cpp:1045
 #, fuzzy
 msgid "Command line:"
 msgstr "Befehlszeile:"
 
-#: ../src/prefsdlg.cpp:1072
+#: ../src/prefsdlg.cpp:1075
 #, fuzzy
 msgid "Command for playing video files:"
 msgstr "Befehl zu Abspielen von wav-Dateien:"
 
-#: ../src/prefsdlg.cpp:1106
+#: ../src/prefsdlg.cpp:1109
 msgid "Account"
 msgstr "Account"
 
-#: ../src/prefsdlg.cpp:1117 ../src/prefsdlg.cpp:1356
+#: ../src/prefsdlg.cpp:1120 ../src/prefsdlg.cpp:1359
 msgid "_User Name:"
 msgstr "_Benutzername"
 
-#: ../src/prefsdlg.cpp:1123 ../src/prefsdlg.cpp:1362
+#: ../src/prefsdlg.cpp:1126 ../src/prefsdlg.cpp:1365
 msgid "_Password:"
 msgstr "_Passwort:"
 
-#: ../src/prefsdlg.cpp:1146 ../src/prefsdlg.cpp:1395
+#: ../src/prefsdlg.cpp:1149 ../src/prefsdlg.cpp:1398
 msgid "Please input the password."
 msgstr "Bitte Passwort eingeben."
 
-#: ../src/prefsdlg.cpp:1224
+#: ../src/prefsdlg.cpp:1227
 #, fuzzy
 msgid "Please setup the user name and password first!"
 msgstr "Bitte Benutzernamen eingeben."
 
-#: ../src/prefsdlg.cpp:1234
+#: ../src/prefsdlg.cpp:1237
 msgid "Change password"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1245
+#: ../src/prefsdlg.cpp:1248
 #, fuzzy
 msgid "Current _password:"
 msgstr "_Passwort:"
 
-#: ../src/prefsdlg.cpp:1252
+#: ../src/prefsdlg.cpp:1255
 #, fuzzy
 msgid "_New password:"
 msgstr "_Passwort:"
 
-#: ../src/prefsdlg.cpp:1259
+#: ../src/prefsdlg.cpp:1262
 msgid "Con_firm new password:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1277
+#: ../src/prefsdlg.cpp:1280
 #, fuzzy
 msgid "Please input the corrent password!"
 msgstr "Bitte Passwort eingeben."
 
-#: ../src/prefsdlg.cpp:1279
+#: ../src/prefsdlg.cpp:1282
 #, fuzzy
 msgid "Please input the new password!"
 msgstr "Bitte Passwort eingeben."
 
-#: ../src/prefsdlg.cpp:1281
+#: ../src/prefsdlg.cpp:1284
 #, fuzzy
 msgid "Please input the password again!"
 msgstr "Bitte Passwort eingeben."
 
-#: ../src/prefsdlg.cpp:1283 ../src/prefsdlg.cpp:1399
+#: ../src/prefsdlg.cpp:1286 ../src/prefsdlg.cpp:1402
 msgid "Two passwords are not the same!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1285
+#: ../src/prefsdlg.cpp:1288
 msgid "Password didn't change!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1297
+#: ../src/prefsdlg.cpp:1300
 msgid "Corrent password is wrong!"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1345
+#: ../src/prefsdlg.cpp:1348
 msgid "Register"
 msgstr "Registrieren"
 
-#: ../src/prefsdlg.cpp:1369
+#: ../src/prefsdlg.cpp:1372
 #, fuzzy
 msgid "Password _again:"
 msgstr "_Passwort:"
 
-#: ../src/prefsdlg.cpp:1376
+#: ../src/prefsdlg.cpp:1379
 msgid "_Email:"
 msgstr "E-Mail"
 
-#: ../src/prefsdlg.cpp:1393
+#: ../src/prefsdlg.cpp:1396
 msgid "Please input the user name."
 msgstr "Bitte Benutzernamen eingeben."
 
-#: ../src/prefsdlg.cpp:1397
+#: ../src/prefsdlg.cpp:1400
 #, fuzzy
 msgid "Please input the password again."
 msgstr "Bitte Passwort eingeben."
 
-#: ../src/prefsdlg.cpp:1401
+#: ../src/prefsdlg.cpp:1404
 msgid "Please input the email."
 msgstr "Bitte E-Mail eingeben."
 
-#: ../src/prefsdlg.cpp:1403
+#: ../src/prefsdlg.cpp:1406
 msgid "Please input a valid email."
 msgstr "Bitte gültige E-Mail eingeben."
 
-#: ../src/prefsdlg.cpp:1452
+#: ../src/prefsdlg.cpp:1455
 msgid "Enable _network dictionaries."
 msgstr "Netzwerk-Wörterbücher aktivieren."
 
-#: ../src/prefsdlg.cpp:1464
+#: ../src/prefsdlg.cpp:1467
 msgid "StarDict server:"
 msgstr "StarDict-Server:"
 
-#: ../src/prefsdlg.cpp:1475
+#: ../src/prefsdlg.cpp:1480
 msgid "Port:"
 msgstr "Port:"
 
-#: ../src/prefsdlg.cpp:1484
+#: ../src/prefsdlg.cpp:1489
 msgid "Account:"
 msgstr "Account:"
 
-#: ../src/prefsdlg.cpp:1496
+#: ../src/prefsdlg.cpp:1501
 #, fuzzy
 msgid "Change _password"
 msgstr "_Passwort:"
 
-#: ../src/prefsdlg.cpp:1506
+#: ../src/prefsdlg.cpp:1511
 msgid "_Register an account"
 msgstr "_Registrieren"
 
-#: ../src/prefsdlg.cpp:1516
+#: ../src/prefsdlg.cpp:1521
 msgid ""
 "Warning: Requests to remote StarDict server are sent over the network in an "
 "unencrypted form. Do not enable this if you are translating sensitive "
 "documents."
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1544
+#: ../src/prefsdlg.cpp:1549
 #, fuzzy
 msgid "Command for opening URLs:"
 msgstr "Befehl zu Abspielen von wav-Dateien:"
 
-#: ../src/prefsdlg.cpp:1557
+#: ../src/prefsdlg.cpp:1562
 #, fuzzy
 msgid "_Always use this command for opening URLs."
 msgstr "Befehl zu Abspielen von wav-Dateien:"
 
-#: ../src/prefsdlg.cpp:1598
+#: ../src/prefsdlg.cpp:1603
 msgid "_Search while typing."
 msgstr "Beim tippen _suchen"
 
-#: ../src/prefsdlg.cpp:1611
+#: ../src/prefsdlg.cpp:1616
 msgid "Word change _timeout:"
 msgstr "Wortwechsel-_Timeout:"
 
-#: ../src/prefsdlg.cpp:1620
+#: ../src/prefsdlg.cpp:1625
 #, fuzzy
 msgid "(default:300 ms)"
 msgstr "(Vorgabe:300)"
 
-#: ../src/prefsdlg.cpp:1622
+#: ../src/prefsdlg.cpp:1627
 msgid "Show the _first word when not found."
 msgstr "_Erstes Wort anzeigen, wenn nichts gefunden wurde."
 
-#: ../src/prefsdlg.cpp:1701
+#: ../src/prefsdlg.cpp:1710
 msgid "Skin change will take effect after application restart"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1765
+#: ../src/prefsdlg.cpp:1774
 msgid "_Auto run StarDict after boot."
 msgstr "StarDict nach Systemstart _automatisch ausführen."
 
-#: ../src/prefsdlg.cpp:1810
+#: ../src/prefsdlg.cpp:1819
 msgid "Skin:"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:1827
+#: ../src/prefsdlg.cpp:1836
 msgid "Hide main window when _starting StarDict."
 msgstr "StarDict mit verborgenem Hauptfenster starten"
 
-#: ../src/prefsdlg.cpp:1844
+#: ../src/prefsdlg.cpp:1853
 msgid "_Use open main window hotkey: Ctrl+Alt+Z."
 msgstr "HotKey zum _Öffnen des Hauptfensters verwenden: Strg+Alt+Z."
 
-#: ../src/prefsdlg.cpp:1866 ../src/prefsdlg.cpp:2452
+#: ../src/prefsdlg.cpp:1875 ../src/prefsdlg.cpp:2464
 msgid "_Transparency:"
 msgstr "_Transparenz:"
 
-#: ../src/prefsdlg.cpp:1963 ../src/prefsdlg.cpp:2189
+#: ../src/prefsdlg.cpp:1972 ../src/prefsdlg.cpp:2201
 msgid "Website Name"
 msgstr "Name der Webseite"
 
-#: ../src/prefsdlg.cpp:1975 ../src/prefsdlg.cpp:2197
+#: ../src/prefsdlg.cpp:1984 ../src/prefsdlg.cpp:2209
 msgid "Website link"
 msgstr "Link der Webseite"
 
-#: ../src/prefsdlg.cpp:1986 ../src/prefsdlg.cpp:2205
+#: ../src/prefsdlg.cpp:1995 ../src/prefsdlg.cpp:2217
 msgid "Website search link"
 msgstr "Suchlink der Webseite"
 
-#: ../src/prefsdlg.cpp:2007
+#: ../src/prefsdlg.cpp:2016
 msgid "Please input the website name."
 msgstr "Bitte Namen der Webseite eingeben."
 
-#: ../src/prefsdlg.cpp:2009
+#: ../src/prefsdlg.cpp:2018
 msgid "Please input the website link."
 msgstr "Bitte Link eingeben."
 
-#: ../src/prefsdlg.cpp:2011
+#: ../src/prefsdlg.cpp:2020
 msgid "Please input the website search link."
 msgstr "Bitte Suchlink der Webseite eingeben."
 
-#: ../src/prefsdlg.cpp:2017 ../src/prefsdlg.cpp:2097
+#: ../src/prefsdlg.cpp:2026 ../src/prefsdlg.cpp:2106
 #, fuzzy
 msgid "The website search link contain more than 1 \"%\" characters!"
 msgstr ""
 "Der Suchlink für die Webseite sollte eine Zeichenkette \"%%s\" für das "
 "gesuchte Wort enthalten."
 
-#: ../src/prefsdlg.cpp:2020 ../src/prefsdlg.cpp:2100
+#: ../src/prefsdlg.cpp:2029 ../src/prefsdlg.cpp:2109
 #, fuzzy, c-format
 msgid ""
 "The website search link should contain a \"%s\" string for querying a word."
@@ -1797,55 +1806,55 @@ msgstr ""
 "Der Suchlink der Webseite sollte eine Zeichenkette \"%%s\" für das gesuchte "
 "Wort enthalten."
 
-#: ../src/prefsdlg.cpp:2275
+#: ../src/prefsdlg.cpp:2287
 #, fuzzy
 msgid "When middle mouse button is clicked:"
 msgstr "Suche im schwebenden Fenster bei Klick der mittleren Maustaste"
 
 #. order of items must match the TNotifAreaMiddleClickAction enum
-#: ../src/prefsdlg.cpp:2279
+#: ../src/prefsdlg.cpp:2291
 #, fuzzy
 msgid "Query selection in floating window"
 msgstr "Suche im Hauptfenster"
 
-#: ../src/prefsdlg.cpp:2280
+#: ../src/prefsdlg.cpp:2292
 #, fuzzy
 msgid "Query selection in main window"
 msgstr "Suche im Hauptfenster"
 
-#: ../src/prefsdlg.cpp:2281
+#: ../src/prefsdlg.cpp:2293
 msgid "Do nothing"
 msgstr ""
 
-#: ../src/prefsdlg.cpp:2310
+#: ../src/prefsdlg.cpp:2322
 msgid "_Pronounce the word when it pops up."
 msgstr "_Wort beim Erscheinen aussprechen."
 
-#: ../src/prefsdlg.cpp:2319
+#: ../src/prefsdlg.cpp:2331
 msgid "_Show floating window if word not found."
 msgstr "_Schwebendes Fenster anzeigen, wenn Wort nicht gefunden wurde."
 
-#: ../src/prefsdlg.cpp:2393
+#: ../src/prefsdlg.cpp:2405
 msgid "Max window _width:"
 msgstr "Max. Fenster_breite:"
 
-#: ../src/prefsdlg.cpp:2403
+#: ../src/prefsdlg.cpp:2415
 msgid "(default:320)"
 msgstr "(Vorgabe:320)"
 
-#: ../src/prefsdlg.cpp:2407
+#: ../src/prefsdlg.cpp:2419
 msgid "Max window hei_ght:"
 msgstr "Max. Fenster_höhe:"
 
-#: ../src/prefsdlg.cpp:2415
+#: ../src/prefsdlg.cpp:2427
 msgid "(default:240)"
 msgstr "(Vorgabe:240)"
 
-#: ../src/prefsdlg.cpp:2424
+#: ../src/prefsdlg.cpp:2436
 msgid "_Use custom background color:"
 msgstr "Eigene Hintergrundfarbe _verwenden."
 
-#: ../src/prefsdlg.cpp:2549
+#: ../src/prefsdlg.cpp:2561
 msgid "Cat_egories:"
 msgstr "Kate_gorien:"
 
@@ -1887,60 +1896,60 @@ msgstr "Befehl TTS"
 msgid "StarDict starting..."
 msgstr "StarDict - Beim Scannen"
 
-#: ../src/stardict.cpp:1106
+#: ../src/stardict.cpp:1113
 msgid "Full-text Search"
 msgstr "Volltextsuche"
 
-#: ../src/stardict.cpp:1137
+#: ../src/stardict.cpp:1144
 msgid "Search"
 msgstr "_Suchen:"
 
-#: ../src/stardict.cpp:1222 ../src/stardict.cpp:1642
+#: ../src/stardict.cpp:1229 ../src/stardict.cpp:1649
 msgid "Full-text search..."
 msgstr "Volltextsuche..."
 
-#: ../src/stardict.cpp:1631
+#: ../src/stardict.cpp:1638
 msgid "Press Enter to list the words that match the pattern."
 msgstr "Drücken Sie Enter um passende Wörter anzeigen zu lassen."
 
-#: ../src/stardict.cpp:1634
+#: ../src/stardict.cpp:1641
 #, fuzzy
 msgid "Press Enter to list the words that match this regular expression."
 msgstr "Drücken Sie Eingabe, um aud diesen RegEx passende Wörter anzuzeigen."
 
-#: ../src/stardict.cpp:1638
+#: ../src/stardict.cpp:1645
 msgid "Fuzzy query..."
 msgstr "Fuzzy-Suche..."
 
-#: ../src/stardict.cpp:2078
+#: ../src/stardict.cpp:2084
 #, fuzzy
 msgid "Loading skin..."
 msgstr "Lade..."
 
-#: ../src/stardict.cpp:2084
+#: ../src/stardict.cpp:2090
 #, fuzzy
 msgid "Skin loaded."
 msgstr "Espeak-Plugin geladen.\n"
 
-#: ../src/stardict.cpp:2250
+#: ../src/stardict.cpp:2260
 msgid "StarDict is already running. Using the running process."
 msgstr "StarDict läuft bereits. Verwende den laufenden Prozess."
 
-#: ../src/stardict.cpp:2369
+#: ../src/stardict.cpp:2388
 msgid "- Lookup words"
 msgstr "- Schlagenwörter"
 
-#: ../src/stardict.cpp:2374
+#: ../src/stardict.cpp:2393
 #, c-format
 msgid "Options parsing failed: %s\n"
 msgstr "Verarbeiten der Optionen fehlgeschlagen: %s\n"
 
-#: ../src/stardict.cpp:2440
+#: ../src/stardict.cpp:2459
 #, fuzzy
 msgid "Loading StarDict configuration..."
 msgstr "Dict.cn Konfiguration"
 
-#: ../src/stardict.cpp:2442
+#: ../src/stardict.cpp:2461
 #, fuzzy
 msgid "StarDict configuration loaded."
 msgstr "Wörterbuch Konfigurations-XML"
@@ -2234,75 +2243,75 @@ msgstr "Index der Übersetzungs-Engine."
 msgid "Conversion error."
 msgstr "Konvertierungsfehler!\n"
 
-#: ../src/lib/stardict_client.cpp:743
+#: ../src/lib/stardict_client.cpp:751
 #, fuzzy, c-format
 msgid "Can not reslove %s: %s\n"
 msgstr "Kann nicht öffnen: %s - %s\n"
 
-#: ../src/lib/stardict_client.cpp:759
+#: ../src/lib/stardict_client.cpp:767
 #, fuzzy
 msgid "Can not create socket: "
 msgstr "Kann %s nicht erzeugen."
 
-#: ../src/lib/stardict_client.cpp:773
+#: ../src/lib/stardict_client.cpp:781
 #, fuzzy, c-format
 msgid "Can not connect to %s: %s\n"
 msgstr "Keine Verbindung zu gconf."
 
-#: ../src/lib/stardict_client.cpp:795
+#: ../src/lib/stardict_client.cpp:803
 #, c-format
 msgid "Unable to set the channel as non-blocking: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:880 ../src/lib/stardict_client.cpp:903
+#: ../src/lib/stardict_client.cpp:888 ../src/lib/stardict_client.cpp:911
 #, c-format
 msgid "Error while reading reply from server: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:935
+#: ../src/lib/stardict_client.cpp:943
 #, c-format
 msgid "Server temporarily unavailable!\n"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:937
+#: ../src/lib/stardict_client.cpp:945
 #, c-format
 msgid "Unexpected status code %d\n"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:975
+#: ../src/lib/stardict_client.cpp:983
 #, fuzzy, c-format
 msgid "Client denied: %s"
 msgstr "Authentifizierung verweigert: %s"
 
-#: ../src/lib/stardict_client.cpp:988
+#: ../src/lib/stardict_client.cpp:996
 #, c-format
 msgid "Authentication denied: %s"
 msgstr "Authentifizierung verweigert: %s"
 
-#: ../src/lib/stardict_client.cpp:1001
+#: ../src/lib/stardict_client.cpp:1009
 #, c-format
 msgid "Register failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1006
+#: ../src/lib/stardict_client.cpp:1014
 msgid "Register success!"
 msgstr "Registrieren erfolgreich!"
 
-#: ../src/lib/stardict_client.cpp:1015
+#: ../src/lib/stardict_client.cpp:1023
 #, fuzzy, c-format
 msgid "Change password failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1020
+#: ../src/lib/stardict_client.cpp:1028
 msgid "Change password success!"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1038
+#: ../src/lib/stardict_client.cpp:1046
 #, fuzzy, c-format
 msgid "Set Dict Mask failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1056
+#: ../src/lib/stardict_client.cpp:1064
 msgid ""
 "You haven't setup the account. Please open the \"Net Dict\" page in the "
 "Preferences dialog and register an account first."
@@ -2310,32 +2319,32 @@ msgstr ""
 "Sie haben den Account nicht eingerichtet. Bitte die Seite \"Net Dict\" im "
 "Dialog öffnen und zuerst einen Account registrieren."
 
-#: ../src/lib/stardict_client.cpp:1059
+#: ../src/lib/stardict_client.cpp:1067
 #, fuzzy, c-format
 msgid "Get Dict Mask failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1083
+#: ../src/lib/stardict_client.cpp:1091
 #, fuzzy, c-format
 msgid "Get dir info failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1106
+#: ../src/lib/stardict_client.cpp:1114
 #, fuzzy, c-format
 msgid "Get dict info failed: %s"
 msgstr "Registrieren fehlgeschlagen: %s"
 
-#: ../src/lib/stardict_client.cpp:1129
+#: ../src/lib/stardict_client.cpp:1137
 #, fuzzy, c-format
 msgid "Get ad info failed: %s"
 msgstr "Verarbeiten der Optionen fehlgeschlagen: %s\n"
 
-#: ../src/lib/stardict_client.cpp:1158
+#: ../src/lib/stardict_client.cpp:1166
 #, c-format
 msgid "Get max dict count failed: %s"
 msgstr ""
 
-#: ../src/lib/stardict_client.cpp:1213
+#: ../src/lib/stardict_client.cpp:1231
 msgid ""
 "You haven't chosen any dictionaries, please choose some by clicking \"Manage "
 "Dict\"->\"Network dictionaries\"->\"Add\"."
@@ -2343,7 +2352,7 @@ msgstr ""
 "Sie haben keine Wörterbücher gewählt, bitte wählen Sie eines durch Klick auf "
 "\"Wörterbuch verwalten\"->\"Netzwerk-Wörterbücher\"->\"Hinzufügen\"."
 
-#: ../src/lib/stardict_client.cpp:1270
+#: ../src/lib/stardict_client.cpp:1288
 #, c-format
 msgid "Drop data for security. Data too big! More than 4M!\n"
 msgstr ""
@@ -2447,25 +2456,25 @@ msgstr ""
 msgid "Verification status of '%s': dictionary is broken"
 msgstr ""
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:237
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:237
 #, c-format
 msgid "Error: User dict plugin version doesn't match!\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:256
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:256
 msgid "User Dict"
 msgstr "Benutzer-Dict"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
 msgid "User virtual dictionary."
 msgstr "Virtuelles Benutzer-Wörterbuch."
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:241
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:241
 msgid "Show the user dictionary."
 msgstr "Benutzer-Wörterbuch anzeigen"
 
-#: ../stardict-plugins/stardict-advertisement-plugin/advertisement.cpp:262
+#: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
 #, c-format
 msgid "User dict plug-in loaded.\n"
 msgstr "Benutzer-Dict-Plugin geladen.\n"
@@ -2513,9 +2522,9 @@ msgid "Query result from Dict.cn website."
 msgstr "Abfrageergebnis der Dict.cn-Webseite."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
-#, c-format
-msgid "Dict.cn plug-in loaded.\n"
-msgstr "Dict.cn-Plugin geladen.\n"
+#, fuzzy, c-format
+msgid "Dict.cn network dictionary plug-in loaded.\n"
+msgstr "Dict.cn Netzwerk-Wörterbuch."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:142
@@ -2554,20 +2563,22 @@ msgstr "Abfrageergebnis der Dict.cn-Webseite."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, fuzzy, c-format
-msgid "YouDao.com plug-in loaded.\n"
-msgstr "Dict.cn-Plugin geladen.\n"
+msgid "YouDao.com network dictionary plug-in loaded.\n"
+msgstr "Dict.cn Netzwerk-Wörterbuch."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
 msgid "Espeak TTS configuration"
 msgstr "Espeak-TTS Konfiguration"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:95
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:95
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:106
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:122
 msgid "Voice type:"
 msgstr "Stimmtyp:"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:121
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:121
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:143
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:159
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:194
@@ -2603,6 +2614,46 @@ msgstr "Espeak-TTS"
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
 #, c-format
 msgid "Espeak plug-in loaded.\n"
+msgstr "Espeak-Plugin geladen.\n"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
+#, fuzzy
+msgid "Espeak-ng TTS configuration"
+msgstr "Espeak-TTS Konfiguration"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:131
+#, fuzzy
+msgid "Loading Espeak-ng plug-in..."
+msgstr "Espeak-Plugin geladen.\n"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:133
+#, fuzzy, c-format
+msgid "Error: Espeak-ng plugin version doesn't match!\n"
+msgstr "HTML-Datenanalyse-Plugin nicht gefunden!"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Espeak-ng"
+msgstr "Espeak"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Espeak-ng TTS."
+msgstr "Espeak-TTS."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:137
+#, fuzzy
+msgid "Pronounce words by Espeak-ng TTS engine."
+msgstr "Aussprache der Wörter durch Espeak TTS-Engine."
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:170
+#, fuzzy
+msgid "Espeak-ng TTS"
+msgstr "Espeak-TTS"
+
+#: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
+#, fuzzy, c-format
+msgid "Espeak-ng plug-in loaded.\n"
 msgstr "Espeak-Plugin geladen.\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
@@ -2675,7 +2726,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, fuzzy, c-format
-msgid "Flite plug-in loaded.\n"
+msgid "Flite TTS plug-in loaded.\n"
 msgstr "Dict.cn-Plugin geladen.\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
@@ -3149,7 +3200,13 @@ msgstr "Aussprache der Wörter durch SAPI TTS-Engine."
 msgid "SAPI tts plug-in loaded.\n"
 msgstr "SAPI tts-Plugin geladen.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:269
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:314
+#, fuzzy, c-format
+msgid "Find %s spellchecking dictionary!\n"
+msgstr "Fehler, kein Rechtschreibwörterbuch verfügbar!\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:270
 #, c-format
 msgid ""
 "Warning: failure when requesting a spellchecking dictionary for %s "
@@ -3158,56 +3215,61 @@ msgstr ""
 "Warnung: Fehler bei der Abfrage eines Rechtschreibwörterbuchs für Sprache "
 "%s.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:275
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:318
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:276
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:323
 #, c-format
 msgid "Error, no spellchecking dictionary available!\n"
 msgstr "Fehler, kein Rechtschreibwörterbuch verfügbar!\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:333
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:307
+#, fuzzy, c-format
+msgid "Find en_US spellchecking dictionary!\n"
+msgstr "Fehler, kein Rechtschreibwörterbuch verfügbar!\n"
+
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:338
 msgid "Spell check configuration"
 msgstr "Rechtschreibprüfung Konfiguration"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:339
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:344
 msgid "_Use custom languages."
 msgstr "Eigene Srachen _verwenden."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:342
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:347
 msgid "For example: \"en_US de\""
 msgstr "Zum Beispiel: \"en_US de\""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:352
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:357
 msgid "Custom languages:"
 msgstr "Eigene Sprachen:"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:397
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:422
 #, fuzzy
 msgid "Loading Spelling plug-in..."
 msgstr "Aussprache-Plugin geladen.\n"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:399
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:424
 #, c-format
 msgid "Error: Spell plugin version doesn't match!\n"
 msgstr ""
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell Check"
 msgstr "Rechtschreibprüfung"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell check virtual dictionary."
 msgstr "Virtuelles Rechtschreibprüfungs-Wörterbuchs."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:403
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:428
 msgid "Spell check the input words and show the correct suggestion."
 msgstr ""
 "Rechtschreibung der Eingabewörter prüfen und Korrekturvorschläge anzeigen."
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:429
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:454
 msgid "Spelling Suggestion"
 msgstr "Aussprachevorschlag"
 
-#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:459
+#: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
 #, c-format
 msgid "Spelling plugin loaded.\n"
 msgstr "Aussprache-Plugin geladen.\n"
@@ -3373,58 +3435,65 @@ msgstr "Analysiere die WordNet-Daten."
 msgid "WordNet data parsing plug-in loaded.\n"
 msgstr "WordNet-Datenanalyse-Plugin geladen.\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:543
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
 #, fuzzy
 msgid "XDXF parser configuration"
 msgstr "Man Konfiguration"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:560
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:581
 msgid "Abbreviation"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:573
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:600
 msgid "Example"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:585
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:617
 msgid "Extra key phrase"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:597
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:634
 msgid "Emphasize"
 msgstr ""
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:609
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:651
 #, fuzzy
 msgid "Reference"
 msgstr "Einstellungen"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:640
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:700
 #, fuzzy
 msgid "Loading XDXF data parsing plug-in..."
 msgstr "XDXF-Datenanalyse-Plugin geladen.\n"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:642
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:702
 #, fuzzy, c-format
 msgid "Error: XDXF data parsing plugin version doesn't match!\n"
 msgstr "XDXF-Datenanalyse-Plugin nicht gefunden!"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "XDXF data parsing"
 msgstr "XDXF-Datenanalyse"
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "XDXF data parsing engine."
 msgstr "XDXF-Datenanalyse-Engine."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:646
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:706
 msgid "Parse the XDXF data."
 msgstr "Analysiere XDXF-Daten."
 
-#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:670
+#: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
 #, c-format
 msgid "XDXF data parsing plug-in loaded.\n"
 msgstr "XDXF-Datenanalyse-Plugin geladen.\n"
+
+#~ msgid "Dict.cn plug-in loaded.\n"
+#~ msgstr "Dict.cn-Plugin geladen.\n"
+
+#, fuzzy
+#~ msgid "YouDao.com plug-in loaded.\n"
+#~ msgstr "Dict.cn-Plugin geladen.\n"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"

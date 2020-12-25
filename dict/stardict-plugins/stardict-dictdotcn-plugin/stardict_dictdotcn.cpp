@@ -459,7 +459,7 @@ DLLIMPORT bool stardict_netdict_plugin_init(StarDictNetDictPlugInObject *obj)
 	obj->dict_name = _("Dict.cn");
 	obj->dict_link = "http://www.dict.cn";
 	obj->dict_cacheid = DICTDOTCN;
-	g_print(_("Dict.cn plug-in loaded.\n"));
+	g_print(_("Dict.cn network dictionary plug-in loaded.\n"));
 	return false;
 }
 
