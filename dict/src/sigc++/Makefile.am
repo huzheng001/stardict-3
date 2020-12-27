@@ -56,7 +56,7 @@ EXTRA_DIST = $(sigc_m4) $(sigc_built_h) $(sigc_built_cc) \
   functors/functors.h \
   functors/slot_base.h \
   adaptors/adaptors.h \
- adaptors/bound_argument.h \
+  adaptors/bound_argument.h \
   adaptors/lambda/lambda.h
 
 

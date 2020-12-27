@@ -8,4 +8,5 @@ libcommon_la_SOURCES = \
 	lib_chars.cpp lib_chars.h \
 	lib_dict_data_block.cpp lib_dict_data_block.h \
 	lib_res_store.cpp lib_res_store.h \
-	lib_dict_verify.cpp lib_dict_verify.h
+	lib_dict_verify.cpp \
+	lib_dict_verify.h

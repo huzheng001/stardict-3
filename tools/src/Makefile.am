@@ -16,7 +16,8 @@ noinst_PROGRAMS = stardict-editor pydict2dic olddic2newdic oxford2dic directory2
 	wordnet lingvosound2resdb resdatabase2dir dir2resdatabase stardict-index \
 	sd2foldoc	\
 	xml_meaning \
-	stardict-text2bin stardict-bin2text stardict-repair
+	stardict-text2bin stardict-bin2text \
+	stardict-repair
 
 AM_CPPFLAGS = $(STARDICT_CFLAGS) -I$(top_builddir) -I$(top_srcdir)
 
@@ -117,7 +118,8 @@ buddhist_SOURCES = buddhist.cpp
 tabfile_CPPFLAGS = $(AM_CPPFLAGS) $(COMMONLIB_CPPFLAGS)
 tabfile_LDFLAGS =
 tabfile_LDADD = $(COMMONLIB_LIB) $(STARDICT_LIBS)
-tabfile_SOURCES = tabfile.cpp libtabfile.cpp libtabfile.h
+tabfile_SOURCES = tabfile.cpp libtabfile.cpp \
+					libtabfile.h
 
 cedict_LDFLAGS =
 cedict_LDADD = $(STARDICT_LIBS)
@@ -177,12 +179,14 @@ tabfile2sql_SOURCES = tabfile2sql.cpp
 babylon_CPPFLAGS = $(AM_CPPFLAGS) $(COMMONLIB_CPPFLAGS)
 babylon_LDFLAGS =
 babylon_LDADD = $(COMMONLIB_LIB) $(STARDICT_LIBS)
-babylon_SOURCES = babylon.cpp libbabylonfile.cpp libbabylonfile.h
+babylon_SOURCES = babylon.cpp libbabylonfile.cpp \
+					libbabylonfile.h
 
 stardict2txt_CPPFLAGS = $(AM_CPPFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict2txt_LDFLAGS =
 stardict2txt_LDADD = $(COMMONLIB_LIB) $(STARDICT_LIBS)
-stardict2txt_SOURCES = stardict2txt.cpp libstardict2txt.cpp libstardict2txt.h
+stardict2txt_SOURCES = stardict2txt.cpp libstardict2txt.cpp \
+						libstardict2txt.h
 
 stardict_dict_update_LDFLAGS = 
 stardict_dict_update_LDADD = $(STARDICT_LIBS)			
@@ -210,7 +214,8 @@ exc2i2e_SOURCES = exc2i2e.c
 
 dictbuilder_LDFLAGS = 
 dictbuilder_LDADD = $(STARDICT_LIBS)
-dictbuilder_SOURCES = dictbuilder.cpp dictbuilder-tree.h
+dictbuilder_SOURCES = dictbuilder.cpp \
+						dictbuilder-tree.h
 
 downloadwiki_LDFLAGS = 
 downloadwiki_LDADD = $(STARDICT_LIBS)
@@ -242,7 +247,8 @@ wordnet_SOURCES = wordnet.cpp
 
 sd2foldoc_LDFLAGS =
 sd2foldoc_LDADD = $(STARDICT_LIBS)
-sd2foldoc_SOURCES = sd2foldoc.cpp libsd2foldoc.cpp libsd2foldoc.h
+sd2foldoc_SOURCES = sd2foldoc.cpp libsd2foldoc.cpp \
+						libsd2foldoc.h
 
 stardict_index_CPPFLAGS = $(AM_CPPFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict_index_LDFLAGS =
@@ -261,7 +267,8 @@ stardict_bin2text_SOURCES = stardict_bin2text.cpp \
 	lib_stardict_bin2text.cpp lib_stardict_bin2text.h \
 	lib_common_dict.cpp lib_common_dict.h \
 	lib_binary_parser_unify.h lib_binary_parser_unify.cpp \
-	lib_dict_repair.cpp lib_dict_repair.h
+	lib_dict_repair.cpp \
+	lib_dict_repair.h
 
 stardict_text2bin_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict_text2bin_LDFLAGS =
@@ -271,7 +278,8 @@ stardict_text2bin_SOURCES = stardict_text2bin.cpp \
 	lib_common_dict.cpp lib_common_dict.h \
 	lib_textual_dict_parser.cpp lib_textual_dict_parser.h \
 	lib_binary_dict_generator.cpp lib_binary_dict_generator.h \
-	lib_dict_repair.cpp lib_dict_repair.h
+	lib_dict_repair.cpp \
+	lib_dict_repair.h
 
 stardict_repair_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict_repair_LDFLAGS =
@@ -281,7 +289,8 @@ stardict_repair_SOURCES = stardict_repair.cpp \
 	lib_common_dict.cpp lib_common_dict.h \
 	lib_binary_parser_unify.cpp lib_binary_parser_unify.h \
 	lib_binary_dict_generator.cpp lib_binary_dict_generator.h \
-	lib_dict_repair.cpp lib_dict_repair.h
+	lib_dict_repair.cpp \
+	lib_dict_repair.h
 
 stardict_editor_CPPFLAGS = $(AM_CPPFLAGS) $(LIBXML_CFLAGS) $(EXPAT_CFLAGS) $(COMMONLIB_CPPFLAGS)
 stardict_editor_LDFLAGS =
@@ -316,4 +325,5 @@ EXTRA_DIST = example.ifo example_treedict.tar.bz2 hanzim2dict.py \
 	extractKangXi.py makevietdict.py mkguangyunst.py stmerge.py \
 	lingea-trd-decoder.py \
 	dicts-dump.pl \
-	stardict_images.sh stardict_images.py
+	stardict_images.sh \
+	stardict_images.py

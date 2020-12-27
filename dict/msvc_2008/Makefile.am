@@ -20,4 +20,5 @@ EXTRA_DIST = config.h glib_wrapper.c stardict.sln stardictrc.rc	\
 		stardict.vcproj \
 		textouthook.vcproj \
 		textoutspy.vcproj \
-		gtk.vsprops main.vsprops
+		gtk.vsprops \
+		main.vsprops

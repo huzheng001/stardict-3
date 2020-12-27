@@ -1,4 +1,5 @@
-EXTRA_DIST = menushow.wav buttonactive.wav
+EXTRA_DIST = 
 
 soundsdir =	$(datadir)/stardict/sounds
-sounds_DATA = $(EXTRA_DIST)
+sounds_DATA = menushow.wav \
+				buttonactive.wav

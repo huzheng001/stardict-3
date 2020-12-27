@@ -45,7 +45,8 @@ t_lookupdata_DEPENDENCIES = $(top_builddir)/src/lib/libstardict.la
 
 t_convert_old_ini_SOURCES = t_convert_old_ini.cpp \
 	$(top_srcdir)/src/config_file.h \
-	$(top_srcdir)/src/inifile.h $(top_srcdir)/src/inifile.cpp
+	$(top_srcdir)/src/inifile.h \
+	$(top_srcdir)/src/inifile.cpp
 
 t_articleview_SOURCES = t_articleview.cpp
 

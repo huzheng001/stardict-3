@@ -17,7 +17,8 @@ stardict_wiki_parsedata_la_SOURCES = stardict_wiki_parsedata.cpp	\
 					global.cpp global.h	\
 					stardict_wiki2xml.cpp stardict_wiki2xml.h	\
 					TXML.cpp TXML.h	\
-					WIKI2XML.cpp WIKI2XML.h
+					WIKI2XML.cpp \
+					WIKI2XML.h
 
 stardict_wiki_parsedata_la_LDFLAGS = 	-avoid-version \
 					-module \
