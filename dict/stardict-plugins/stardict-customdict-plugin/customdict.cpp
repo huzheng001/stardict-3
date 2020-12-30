@@ -259,7 +259,7 @@ DLLIMPORT bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject 
 	bool failed = load_dict((datapath + G_DIR_SEPARATOR_S "customdict.txt").c_str());
 	if (failed)
 		return true;
-	g_print(_("User dict plug-in loaded.\n"));
+	g_print(_("User dict plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }
 

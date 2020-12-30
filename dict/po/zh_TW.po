@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.4.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 09:35+0800\n"
+"POT-Creation-Date: 2020-12-30 11:35+0800\n"
 "PO-Revision-Date: 2007-08-12 21:52+0800\n"
 "Last-Translator: Tetralet <tetralet@gmail.com>\n"
 "Language-Team: Chinese/Traditional\n"
@@ -2469,8 +2469,8 @@ msgid "Show the user dictionary."
 msgstr "顯示個人辭典。"
 
 #: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
-#, c-format
-msgid "User dict plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "User dict plug-in [32m[loaded][0m.\n"
 msgstr "已載入個人辭典擴充元件。\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:247
@@ -2519,7 +2519,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
 #, fuzzy, c-format
-msgid "Dict.cn network dictionary plug-in loaded.\n"
+msgid "Dict.cn network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "啟用網路辭典(_n)。"
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
@@ -2558,7 +2558,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, fuzzy, c-format
-msgid "YouDao.com network dictionary plug-in loaded.\n"
+msgid "YouDao.com network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "啟用網路辭典(_n)。"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
@@ -2609,8 +2609,8 @@ msgid "Espeak TTS"
 msgstr "Espeak TTS"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
-#, c-format
-msgid "Espeak plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Espeak plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Espeak 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
@@ -2650,7 +2650,7 @@ msgstr "Espeak TTS"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
 #, fuzzy, c-format
-msgid "Espeak-ng plug-in loaded.\n"
+msgid "Espeak-ng plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Espeak 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
@@ -2685,8 +2685,8 @@ msgid "Festival TTS"
 msgstr "Festival TTS"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:194
-#, c-format
-msgid "Festival plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Festival plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Festival 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:109
@@ -2724,7 +2724,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, fuzzy, c-format
-msgid "Flite TTS plug-in loaded.\n"
+msgid "Flite TTS plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
@@ -2849,8 +2849,8 @@ msgid "Show information about Unicode characters."
 msgstr "顯示萬國碼字元相關資訊。"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:419
-#, c-format
-msgid "Gucharmap plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Gucharmap plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Gucharmap 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
@@ -2879,7 +2879,7 @@ msgstr "分析 HTML 內容。"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
 #, fuzzy, c-format
-msgid "HTML data parsing plug-in loaded.\n"
+msgid "HTML data parsing plug-in [32m[loaded][0m.\n"
 msgstr "已載入 HTML 內容分析擴充元件。\n"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:179
@@ -2916,8 +2916,8 @@ msgid "Show the man pages."
 msgstr "顯示 man 說明手冊。"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
-#, c-format
-msgid "Man plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Man plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:166
@@ -2957,7 +2957,7 @@ msgstr "顯示 man 說明手冊。"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:233
 #, fuzzy, c-format
-msgid "Info plug-in loaded.\n"
+msgid "Info plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:137
@@ -3007,7 +3007,7 @@ msgstr "顯示單字列表"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:198
 #, fuzzy, c-format
-msgid "Fortune plug-in loaded.\n"
+msgid "Fortune plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:137
@@ -3062,7 +3062,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:198
 #, fuzzy, c-format
-msgid "Cal plug-in loaded.\n"
+msgid "Cal plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
@@ -3091,7 +3091,7 @@ msgstr "分析 PowerWord 內容。"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
 #, fuzzy, c-format
-msgid "PowerWord data parsing plug-in loaded.\n"
+msgid "PowerWord data parsing plug-in [32m[loaded][0m.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:191
@@ -3144,7 +3144,7 @@ msgstr "從網際網路獲得更新資訊。"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:285
 #, fuzzy, c-format
-msgid "QQWry plug-in loaded.\n"
+msgid "QQWry plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Man 擴充元件。\n"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
@@ -3200,7 +3200,7 @@ msgstr "使用 Espeak TTS(語音合成) 引擎進行單字發音。"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
 #, fuzzy, c-format
-msgid "SAPI tts plug-in loaded.\n"
+msgid "SAPI tts plug-in [32m[loaded][32m.\n"
 msgstr "拼字擴充元件已載入。\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
@@ -3273,7 +3273,7 @@ msgstr "建議拼字"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
 #, fuzzy, c-format
-msgid "Spelling plugin loaded.\n"
+msgid "Spelling plugin [32m[loaded][0m.\n"
 msgstr "拼字擴充元件已載入。\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
@@ -3332,8 +3332,8 @@ msgid "_Don't show this until the next update."
 msgstr ""
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:341
-#, c-format
-msgid "Update info plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Update info plug-in [32m[loaded][0m.\n"
 msgstr "已載入更新通知擴充元件。\n"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
@@ -3362,7 +3362,7 @@ msgstr "分析 wiki 內容。"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
 #, fuzzy, c-format
-msgid "Wiki data parsing plug-in loaded.\n"
+msgid "Wiki data parsing plug-in [32m[loaded][0m.\n"
 msgstr "已載入 Wiki 內容分析擴充元件。\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
@@ -3407,7 +3407,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
 #, fuzzy, c-format
-msgid "WordNet dict rendering plug-in loaded.\n"
+msgid "WordNet dict rendering plug-in [32m[loaded][0m.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
@@ -3437,7 +3437,7 @@ msgstr "分析 PowerWord 內容。"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
 #, fuzzy, c-format
-msgid "WordNet data parsing plug-in loaded.\n"
+msgid "WordNet data parsing plug-in [32m[loaded][0m.\n"
 msgstr "已載入 PowerWord 內容分析擴充元件。\n"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
@@ -3492,8 +3492,12 @@ msgstr "分析 XDXF 內容。"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
 #, fuzzy, c-format
-msgid "XDXF data parsing plug-in loaded.\n"
+msgid "XDXF data parsing plug-in [32m[loaded][0m.\n"
 msgstr "已載入 XDXF 內容分析擴充元件。\n"
+
+#, fuzzy
+#~ msgid "Flite TTS plug-in loaded.\n"
+#~ msgstr "已載入 Man 擴充元件。\n"
 
 #, fuzzy
 #~ msgid "Dict.cn plug-in loaded.\n"

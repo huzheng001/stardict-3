@@ -195,6 +195,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Calendar");
-	g_print(_("Cal plug-in loaded.\n"));
+	g_print(_("Cal plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }

@@ -230,6 +230,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 		need_prefix = true;
 	}
 	g_key_file_free(keyfile);
-	g_print(_("Info plug-in loaded.\n"));
+	g_print(_("Info plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }

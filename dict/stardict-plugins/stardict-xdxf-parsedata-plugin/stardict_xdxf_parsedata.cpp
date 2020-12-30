@@ -727,7 +727,7 @@ DLLIMPORT bool stardict_parsedata_plugin_init(StarDictParseDataPlugInObject *obj
 		load_config_file(color_scheme);
 	XDXFParser::fill_replace_arr();
 	obj->parse_func = parse;
-	g_print(_("XDXF data parsing plug-in loaded.\n"));
+	g_print(_("XDXF data parsing plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }
 

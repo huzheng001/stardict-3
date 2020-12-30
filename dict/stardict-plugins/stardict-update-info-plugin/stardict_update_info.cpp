@@ -338,7 +338,7 @@ DLLIMPORT bool stardict_misc_plugin_init(void)
 		show_ads = true;
 	}
 	g_key_file_free(keyfile);
-	g_print(_("Update info plug-in loaded.\n"));
+	g_print(_("Update info plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }
 

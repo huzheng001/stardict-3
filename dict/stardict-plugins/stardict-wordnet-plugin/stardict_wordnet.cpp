@@ -158,7 +158,7 @@ DLLIMPORT bool stardict_specialdict_plugin_init(StarDictSpecialDictPlugInObject 
 	g_key_file_free(keyfile);
 	obj->render_widget_func = render_widget;
 	obj->dict_type = "wordnet";
-	g_print(_("WordNet dict rendering plug-in loaded.\n"));
+	g_print(_("WordNet dict rendering plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }
 

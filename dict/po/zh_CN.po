@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 09:35+0800\n"
+"POT-Creation-Date: 2020-12-30 11:35+0800\n"
 "PO-Revision-Date: 2014-05-27 13:57+0700\n"
 "Last-Translator: Tao Wang <dancefire@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -340,7 +340,9 @@ msgstr "星际译王是一个跨平台的国际化的词典软件，使用Gtk库
 msgid ""
 "It has powerful features, such as \"Glob-style pattern matching,\" \"Scan "
 "selected word,\" \"Fuzzy query\" and \"Full-text search\"."
-msgstr "它功能强大，实用性强，具有“通配符匹配”、“选中区取词”、“模糊查询”、“全文检索”等强大功能。"
+msgstr ""
+"它功能强大，实用性强，具有“通配符匹配”、“选中区取词”、“模糊查询”、“全文检"
+"索”等强大功能。"
 
 #: ../src/articleview.cpp:307
 msgid "XDXF data parsing plug-in is not found!"
@@ -2366,8 +2368,8 @@ msgstr "显示用户词典。"
 
 #: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
 #, c-format
-msgid "User dict plug-in loaded.\n"
-msgstr "用户词典插件加载成功。\n"
+msgid "User dict plug-in [32m[loaded][0m.\n"
+msgstr "用户词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:247
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:254
@@ -2412,8 +2414,8 @@ msgstr "从Dict.cn网站来查询结果。"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
 #, c-format
-msgid "Dict.cn network dictionary plug-in loaded.\n"
-msgstr "Dict.cn网络词典插件加载成功。\n"
+msgid "Dict.cn network dictionary plug-in [32m[loaded][0m.\n"
+msgstr "Dict.cn网络词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:142
@@ -2449,8 +2451,8 @@ msgstr "从YouDao.com网站查询结果。"
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, c-format
-msgid "YouDao.com network dictionary plug-in loaded.\n"
-msgstr "YouDao.com网络词典插件加载成功。\n"
+msgid "YouDao.com network dictionary plug-in [32m[loaded][0m.\n"
+msgstr "YouDao.com网络词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
 msgid "Espeak TTS configuration"
@@ -2498,8 +2500,8 @@ msgstr "Espeak TTS"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
 #, c-format
-msgid "Espeak plug-in loaded.\n"
-msgstr "Espeak插件加载成功。\n"
+msgid "Espeak plug-in [32m[loaded][0m.\n"
+msgstr "Espeak插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
 msgid "Espeak-ng TTS configuration"
@@ -2532,8 +2534,8 @@ msgstr "Espeak-ng TTS"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
 #, c-format
-msgid "Espeak-ng plug-in loaded.\n"
-msgstr "Espeak-ng插件加载成功。\n"
+msgid "Espeak-ng plug-in [32m[loaded][0m.\n"
+msgstr "Espeak-ng插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
 msgid "Festival TTS configuration"
@@ -2566,8 +2568,8 @@ msgstr "Fesitval TTS"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:194
 #, c-format
-msgid "Festival plug-in loaded.\n"
-msgstr "Festival插件加载成功。\n"
+msgid "Festival plug-in [32m[loaded][0m.\n"
+msgstr "Festival插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:109
 msgid "Flite TTS configuration"
@@ -2600,8 +2602,8 @@ msgstr "Flite TTS"
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, c-format
-msgid "Flite TTS plug-in loaded.\n"
-msgstr "Flite TTS插件加载成功。\n"
+msgid "Flite TTS plug-in [32m[loaded][0m.\n"
+msgstr "Flite TTS插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
 msgid "[not a printable character]"
@@ -2724,8 +2726,8 @@ msgstr "显示Unicode字符信息。"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:419
 #, c-format
-msgid "Gucharmap plug-in loaded.\n"
-msgstr "Gucharmap插件加载成功。\n"
+msgid "Gucharmap plug-in [32m[loaded][0m.\n"
+msgstr "Gucharmap插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
 msgid "Loading HTML data parsing plug-in..."
@@ -2750,8 +2752,8 @@ msgstr "解析HTML数据。"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
 #, c-format
-msgid "HTML data parsing plug-in loaded.\n"
-msgstr "HTML数据解析插件加载成功。\n"
+msgid "HTML data parsing plug-in [32m[loaded][0m.\n"
+msgstr "HTML数据解析插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:179
 msgid "Man configuration"
@@ -2786,8 +2788,8 @@ msgstr "显示Man手册。"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
 #, c-format
-msgid "Man plug-in loaded.\n"
-msgstr "Man虚拟词典插件加载成功。\n"
+msgid "Man plug-in [32m[loaded][0m.\n"
+msgstr "Man虚拟词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:166
 msgid "Info configuration"
@@ -2822,14 +2824,15 @@ msgstr "显示info文档。"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:233
 #, c-format
-msgid "Info plug-in loaded.\n"
-msgstr "Info虚拟词典插件加载成功。\n"
+msgid "Info plug-in [32m[loaded][0m.\n"
+msgstr "Info虚拟词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:137
 msgid ""
 "<b><span foreground=\"red\">fortune</span> program is not found! Please "
 "install it!</b>"
-msgstr "<b><span foreground=\"red\">fortune</span>程序未找到！请安装这个程序！</b>"
+msgstr ""
+"<b><span foreground=\"red\">fortune</span>程序未找到！请安装这个程序！</b>"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:150
 msgid "Fortune configuration"
@@ -2867,8 +2870,8 @@ msgstr "显示名人名言。"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:198
 #, c-format
-msgid "Fortune plug-in loaded.\n"
-msgstr "Fortune虚拟词典插件加载成功。\n"
+msgid "Fortune plug-in [32m[loaded][0m.\n"
+msgstr "Fortune虚拟词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:137
 msgid ""
@@ -2915,8 +2918,8 @@ msgstr "日历"
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:198
 #, c-format
-msgid "Cal plug-in loaded.\n"
-msgstr "Cal虚拟词典插件加载成功。\n"
+msgid "Cal plug-in [32m[loaded][0m.\n"
+msgstr "Cal虚拟词典插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 msgid "Loading PowerWord data parsing plug-in..."
@@ -2941,8 +2944,8 @@ msgstr "解析PowerWord数据。"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
 #, c-format
-msgid "PowerWord data parsing plug-in loaded.\n"
-msgstr "PowerWord数据解析插件加载成功。\n"
+msgid "PowerWord data parsing plug-in [32m[loaded][0m.\n"
+msgstr "PowerWord数据解析插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:191
 #, c-format
@@ -2996,8 +2999,8 @@ msgstr "根据IP显示地址信息。"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:285
 #, c-format
-msgid "QQWry plug-in loaded.\n"
-msgstr "QQWry插件加载成功。\n"
+msgid "QQWry plug-in [32m[loaded][0m.\n"
+msgstr "QQWry插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
 msgid "SAPI TTS configuration"
@@ -3047,8 +3050,8 @@ msgstr "使用SAPI TTS引擎朗读单词。"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
 #, c-format
-msgid "SAPI tts plug-in loaded.\n"
-msgstr "SAPI TTS插件加载成功。\n"
+msgid "SAPI tts plug-in [32m[loaded][32m.\n"
+msgstr "SAPI TTS插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:314
@@ -3117,8 +3120,8 @@ msgstr "拼写建议"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
 #, c-format
-msgid "Spelling plugin loaded.\n"
-msgstr "拼写检查插件加载成功。\n"
+msgid "Spelling plugin [32m[loaded][0m.\n"
+msgstr "拼写检查插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update information"
@@ -3175,8 +3178,8 @@ msgstr "在下次更新前不再显示此对话框(_D)。"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:341
 #, c-format
-msgid "Update info plug-in loaded.\n"
-msgstr "更新信息插件加载成功。\n"
+msgid "Update info plug-in [32m[loaded][0m.\n"
+msgstr "更新信息插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
 msgid "Loading Wiki data parsing plug-in..."
@@ -3201,8 +3204,8 @@ msgstr "解析Wiki数据。"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
 #, c-format
-msgid "Wiki data parsing plug-in loaded.\n"
-msgstr "Wiki数据解析插件加载成功。\n"
+msgid "Wiki data parsing plug-in [32m[loaded][0m.\n"
+msgstr "Wiki数据解析插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
 msgid "WordNet configuration"
@@ -3246,8 +3249,8 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
 #, c-format
-msgid "WordNet dict rendering plug-in loaded.\n"
-msgstr "WordNet词典渲染插件加载成功。\n"
+msgid "WordNet dict rendering plug-in [32m[loaded][0m.\n"
+msgstr "WordNet词典渲染插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
 msgid "Loading WordNet data parsing plug-in..."
@@ -3272,8 +3275,8 @@ msgstr "解析WordNet数据。"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
 #, c-format
-msgid "WordNet data parsing plug-in loaded.\n"
-msgstr "WordNet数据解析插件加载成功。\n"
+msgid "WordNet data parsing plug-in [32m[loaded][0m.\n"
+msgstr "WordNet数据解析插件[32m[加载成功][0m。\n"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
 msgid "XDXF parser configuration"
@@ -3322,8 +3325,8 @@ msgstr "解析XDXF数据。"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
 #, c-format
-msgid "XDXF data parsing plug-in loaded.\n"
-msgstr "XDXF数据解析插件加载成功。\n"
+msgid "XDXF data parsing plug-in [32m[loaded][0m.\n"
+msgstr "XDXF数据解析插件[32m[加载成功][0m。\n"
 
 #~ msgid "Dict.cn plug-in loaded.\n"
 #~ msgstr "Dict.cn网络词典插件加载成功。\n"

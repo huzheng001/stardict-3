@@ -168,6 +168,6 @@ bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 	}
 	obj->saytext_func = saytext;
 	obj->tts_name = _("Espeak-ng TTS");
-	g_print(_("Espeak-ng plug-in loaded.\n"));
+	g_print(_("Espeak-ng plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }

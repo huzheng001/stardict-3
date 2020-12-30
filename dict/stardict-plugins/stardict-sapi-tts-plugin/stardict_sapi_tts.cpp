@@ -303,7 +303,7 @@ DLLIMPORT bool stardict_tts_plugin_init(StarDictTtsPlugInObject *obj)
 	pVoice->SetRate(rate);
 	obj->saytext_func = saytext;
 	obj->tts_name = _("SAPI TTS");
-	g_print(_("SAPI tts plug-in loaded.\n"));
+	g_print(_("SAPI tts plug-in \033[32m[loaded]\033[32m.\n"));
 	return false;
 }
 

@@ -195,6 +195,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 {
 	obj->lookup_func = lookup;
 	obj->dict_name = _("Fortune");
-	g_print(_("Fortune plug-in loaded.\n"));
+	g_print(_("Fortune plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }

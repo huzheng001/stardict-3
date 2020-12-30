@@ -244,6 +244,6 @@ bool stardict_virtualdict_plugin_init(StarDictVirtualDictPlugInObject *obj)
 	}
 	g_key_file_free(keyfile);
 	g_unsetenv("MANPAGER");
-	g_print(_("Man plug-in loaded.\n"));
+	g_print(_("Man plug-in \033[32m[loaded]\033[0m.\n"));
 	return false;
 }

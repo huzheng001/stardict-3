@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stardict 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 09:35+0800\n"
+"POT-Creation-Date: 2020-12-30 11:35+0800\n"
 "PO-Revision-Date: 2007-06-21 22:57+0800\n"
 "Last-Translator: Erdal Ronahî <erdal.ronahi@gmail.com>\n"
 "Language-Team: KURDISH <ku@li.org>\n"
@@ -2366,9 +2366,9 @@ msgid "Show the user dictionary."
 msgstr "Ferhengan îdare bike"
 
 #: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
-#, c-format
-msgid "User dict plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "User dict plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:247
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:254
@@ -2415,7 +2415,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
 #, fuzzy, c-format
-msgid "Dict.cn network dictionary plug-in loaded.\n"
+msgid "Dict.cn network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "Ferhengan îdare bike"
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
@@ -2453,7 +2453,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, fuzzy, c-format
-msgid "YouDao.com network dictionary plug-in loaded.\n"
+msgid "YouDao.com network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "Ferhengan îdare bike"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
@@ -2501,9 +2501,9 @@ msgid "Espeak TTS"
 msgstr ""
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
-#, c-format
-msgid "Espeak plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Espeak plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
 #, fuzzy
@@ -2537,7 +2537,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
 #, fuzzy, c-format
-msgid "Espeak-ng plug-in loaded.\n"
+msgid "Espeak-ng plug-in [32m[loaded][0m.\n"
 msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
@@ -2570,9 +2570,9 @@ msgid "Festival TTS"
 msgstr ""
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:194
-#, c-format
-msgid "Festival plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Festival plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:109
 #, fuzzy
@@ -2606,7 +2606,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, fuzzy, c-format
-msgid "Flite TTS plug-in loaded.\n"
+msgid "Flite TTS plug-in [32m[loaded][0m.\n"
 msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
@@ -2731,7 +2731,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:419
 #, c-format
-msgid "Gucharmap plug-in loaded.\n"
+msgid "Gucharmap plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
@@ -2757,7 +2757,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
 #, c-format
-msgid "HTML data parsing plug-in loaded.\n"
+msgid "HTML data parsing plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:179
@@ -2793,9 +2793,9 @@ msgid "Show the man pages."
 msgstr ""
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
-#, c-format
-msgid "Man plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Man plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:166
 #, fuzzy
@@ -2831,9 +2831,9 @@ msgid "Show the info documents."
 msgstr ""
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:233
-#, c-format
-msgid "Info plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Info plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:137
 msgid ""
@@ -2879,9 +2879,9 @@ msgid "Show the fortune."
 msgstr "Lîsteya peyvan nîşan bide"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:198
-#, c-format
-msgid "Fortune plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Fortune plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:137
 msgid ""
@@ -2930,9 +2930,9 @@ msgid "Calendar"
 msgstr ""
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:198
-#, c-format
-msgid "Cal plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Cal plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
 msgid "Loading PowerWord data parsing plug-in..."
@@ -2957,7 +2957,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
 #, c-format
-msgid "PowerWord data parsing plug-in loaded.\n"
+msgid "PowerWord data parsing plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:191
@@ -3008,9 +3008,9 @@ msgid "Show address information by IP."
 msgstr "Ferheng"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:285
-#, c-format
-msgid "QQWry plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "QQWry plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
 msgid "SAPI TTS configuration"
@@ -3060,9 +3060,9 @@ msgid "Pronounce words by SAPI TTS engine."
 msgstr ""
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
-#, c-format
-msgid "SAPI tts plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "SAPI tts plug-in [32m[loaded][32m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:314
@@ -3130,9 +3130,9 @@ msgid "Spelling Suggestion"
 msgstr ""
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
-#, c-format
-msgid "Spelling plugin loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Spelling plugin [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
 msgid "Update information"
@@ -3189,9 +3189,9 @@ msgid "_Don't show this until the next update."
 msgstr ""
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:341
-#, c-format
-msgid "Update info plug-in loaded.\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Update info plug-in [32m[loaded][0m.\n"
+msgstr "Ferhengên darî"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
 msgid "Loading Wiki data parsing plug-in..."
@@ -3216,7 +3216,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
 #, c-format
-msgid "Wiki data parsing plug-in loaded.\n"
+msgid "Wiki data parsing plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
@@ -3258,7 +3258,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
 #, c-format
-msgid "WordNet dict rendering plug-in loaded.\n"
+msgid "WordNet dict rendering plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
@@ -3284,7 +3284,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
 #, c-format
-msgid "WordNet data parsing plug-in loaded.\n"
+msgid "WordNet data parsing plug-in [32m[loaded][0m.\n"
 msgstr ""
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
@@ -3336,8 +3336,16 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
 #, c-format
-msgid "XDXF data parsing plug-in loaded.\n"
+msgid "XDXF data parsing plug-in [32m[loaded][0m.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Espeak-ng plug-in loaded.\n"
+#~ msgstr "Ferhengên darî"
+
+#, fuzzy
+#~ msgid "Flite TTS plug-in loaded.\n"
+#~ msgstr "Ferhengên darî"
 
 #~ msgid "_Fuzzy Query"
 #~ msgstr "Lêgerandina sist (fuzî)"

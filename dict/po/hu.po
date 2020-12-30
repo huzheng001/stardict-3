@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-25 09:35+0800\n"
+"POT-Creation-Date: 2020-12-30 11:35+0800\n"
 "PO-Revision-Date: 2008-07-09 20:57+0200\n"
 "Last-Translator: Lisovszki Sándor <lisovszki@gmail.com>\n"
 "Language-Team: hungarian <mypclinuxos.com>\n"
@@ -2466,8 +2466,8 @@ msgid "Show the user dictionary."
 msgstr "Felhasználói szótár megjelenítése."
 
 #: ../stardict-plugins/stardict-customdict-plugin/customdict.cpp:262
-#, c-format
-msgid "User dict plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "User dict plug-in [32m[loaded][0m.\n"
 msgstr "Felhasználói szótár bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:247
@@ -2514,7 +2514,7 @@ msgstr "Lekérdezés innen: Dict cn weboldal."
 
 #: ../stardict-plugins/stardict-dictdotcn-plugin/stardict_dictdotcn.cpp:462
 #, fuzzy, c-format
-msgid "Dict.cn network dictionary plug-in loaded.\n"
+msgid "Dict.cn network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "Dict cn hálózati szótár."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:136
@@ -2554,7 +2554,7 @@ msgstr "Lekérdezés innen: Dict cn weboldal."
 
 #: ../stardict-plugins/stardict-youdaodict-plugin/stardict_youdaodict.cpp:257
 #, fuzzy, c-format
-msgid "YouDao.com network dictionary plug-in loaded.\n"
+msgid "YouDao.com network dictionary plug-in [32m[loaded][0m.\n"
 msgstr "Dict cn hálózati szótár."
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:82
@@ -2603,8 +2603,8 @@ msgid "Espeak TTS"
 msgstr "Ebeszéd TTS"
 
 #: ../stardict-plugins/stardict-espeak-tts-plugin/stardict_espeak.cpp:171
-#, c-format
-msgid "Espeak plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Espeak plug-in [32m[loaded][0m.\n"
 msgstr "Ebeszéd bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:82
@@ -2644,7 +2644,7 @@ msgstr "Ebeszéd TTS"
 
 #: ../stardict-plugins/stardict-espeak-ng-tts-plugin/stardict_espeak_ng.cpp:171
 #, fuzzy, c-format
-msgid "Espeak-ng plug-in loaded.\n"
+msgid "Espeak-ng plug-in [32m[loaded][0m.\n"
 msgstr "Ebeszéd bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:93
@@ -2678,8 +2678,8 @@ msgid "Festival TTS"
 msgstr "Fesztivál TTS"
 
 #: ../stardict-plugins/stardict-festival-tts-plugin/stardict_festival.cpp:194
-#, c-format
-msgid "Festival plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Festival plug-in [32m[loaded][0m.\n"
 msgstr "Fesztivál bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:109
@@ -2717,8 +2717,8 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-flite-tts-plugin/stardict_flite.cpp:217
 #, fuzzy, c-format
-msgid "Flite TTS plug-in loaded.\n"
-msgstr "Dict cn bővítmény betöltve.\n"
+msgid "Flite TTS plug-in [32m[loaded][0m.\n"
+msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:225
 msgid "[not a printable character]"
@@ -2841,8 +2841,8 @@ msgid "Show information about Unicode characters."
 msgstr "Információk megjelenítése az Unicode karakterekről."
 
 #: ../stardict-plugins/stardict-gucharmap-plugin/stardict_gucharmap.cpp:419
-#, c-format
-msgid "Gucharmap plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Gucharmap plug-in [32m[loaded][0m.\n"
 msgstr "Gucharmap bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:588
@@ -2868,8 +2868,8 @@ msgid "Parse the HTML data."
 msgstr "HTML adat elemzése."
 
 #: ../stardict-plugins/stardict-html-parsedata-plugin/stardict_html_parsedata.cpp:606
-#, c-format
-msgid "HTML data parsing plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "HTML data parsing plug-in [32m[loaded][0m.\n"
 msgstr "HTML adatelemző bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:179
@@ -2906,8 +2906,8 @@ msgid "Show the man pages."
 msgstr "Man oldalak megjelenítése."
 
 #: ../stardict-plugins/stardict-man-plugin/stardict_man.cpp:247
-#, c-format
-msgid "Man plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Man plug-in [32m[loaded][0m.\n"
 msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:166
@@ -2948,7 +2948,7 @@ msgstr "Man oldalak megjelenítése."
 
 #: ../stardict-plugins/stardict-info-plugin/stardict_info.cpp:233
 #, fuzzy, c-format
-msgid "Info plug-in loaded.\n"
+msgid "Info plug-in [32m[loaded][0m.\n"
 msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:137
@@ -2998,7 +2998,7 @@ msgstr "Szólista megjelenítése"
 
 #: ../stardict-plugins/stardict-fortune-plugin/stardict_fortune.cpp:198
 #, fuzzy, c-format
-msgid "Fortune plug-in loaded.\n"
+msgid "Fortune plug-in [32m[loaded][0m.\n"
 msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:137
@@ -3053,7 +3053,7 @@ msgstr ""
 
 #: ../stardict-plugins/stardict-cal-plugin/stardict_cal.cpp:198
 #, fuzzy, c-format
-msgid "Cal plug-in loaded.\n"
+msgid "Cal plug-in [32m[loaded][0m.\n"
 msgstr "Man bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:689
@@ -3079,8 +3079,8 @@ msgid "Parse the PowerWord data."
 msgstr "PowerWord adat elemzése."
 
 #: ../stardict-plugins/stardict-powerword-parsedata-plugin/stardict_powerword_parsedata.cpp:707
-#, c-format
-msgid "PowerWord data parsing plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "PowerWord data parsing plug-in [32m[loaded][0m.\n"
 msgstr "PowerWord adatelemző bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:191
@@ -3136,8 +3136,8 @@ msgid "Show address information by IP."
 msgstr "Az cím információinak megjelenítése az IP által."
 
 #: ../stardict-plugins/stardict-qqwry-plugin/stardict_qqwry.cpp:285
-#, c-format
-msgid "QQWry plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "QQWry plug-in [32m[loaded][0m.\n"
 msgstr "QQWry bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:107
@@ -3188,8 +3188,8 @@ msgid "Pronounce words by SAPI TTS engine."
 msgstr "Szavak kiejtése a SAPI TTS motorral."
 
 #: ../stardict-plugins/stardict-sapi-tts-plugin/stardict_sapi_tts.cpp:306
-#, c-format
-msgid "SAPI tts plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "SAPI tts plug-in [32m[loaded][32m.\n"
 msgstr "SAPI tts bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:268
@@ -3261,8 +3261,8 @@ msgid "Spelling Suggestion"
 msgstr "Helyesírási javaslat"
 
 #: ../stardict-plugins/stardict-spell-plugin/stardict_spell.cpp:484
-#, c-format
-msgid "Spelling plugin loaded.\n"
+#, fuzzy, c-format
+msgid "Spelling plugin [32m[loaded][0m.\n"
 msgstr "Helyesírás bővítőmodul betöltve.\n"
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:67
@@ -3320,8 +3320,8 @@ msgid "_Don't show this until the next update."
 msgstr "_Ne mutasd ezt a következő frissítésig."
 
 #: ../stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp:341
-#, c-format
-msgid "Update info plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Update info plug-in [32m[loaded][0m.\n"
 msgstr "Frissítési információ bővítmény betöltve.\n"
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:50
@@ -3347,8 +3347,8 @@ msgid "Parse the wiki data."
 msgstr "Wiki adatok elemzése."
 
 #: ../stardict-plugins/stardict-wiki-parsedata-plugin/stardict_wiki_parsedata.cpp:68
-#, c-format
-msgid "Wiki data parsing plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "Wiki data parsing plug-in [32m[loaded][0m.\n"
 msgstr "Wiki adatelemző modul betöltve.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:83
@@ -3395,8 +3395,8 @@ msgstr ""
 "rengeteg köszönet a nyílt forráskódú megosztásért!"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet.cpp:161
-#, c-format
-msgid "WordNet dict rendering plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "WordNet dict rendering plug-in [32m[loaded][0m.\n"
 msgstr "WordNet megjelenítő motor betöltve.\n"
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:144
@@ -3422,8 +3422,8 @@ msgid "Parse the WordNet data."
 msgstr "WordNet adatok elemzése."
 
 #: ../stardict-plugins/stardict-wordnet-plugin/stardict_wordnet_parsedata.cpp:162
-#, c-format
-msgid "WordNet data parsing plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "WordNet data parsing plug-in [32m[loaded][0m.\n"
 msgstr "WordNet adatelemző modul betöltve.\n"
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:564
@@ -3475,9 +3475,13 @@ msgid "Parse the XDXF data."
 msgstr "XDFX adatok elemzése."
 
 #: ../stardict-plugins/stardict-xdxf-parsedata-plugin/stardict_xdxf_parsedata.cpp:730
-#, c-format
-msgid "XDXF data parsing plug-in loaded.\n"
+#, fuzzy, c-format
+msgid "XDXF data parsing plug-in [32m[loaded][0m.\n"
 msgstr "XDFX adatelemző modul betöltve.\n"
+
+#, fuzzy
+#~ msgid "Flite TTS plug-in loaded.\n"
+#~ msgstr "Dict cn bővítmény betöltve.\n"
 
 #~ msgid "Dict.cn plug-in loaded.\n"
 #~ msgstr "Dict cn bővítmény betöltve.\n"
