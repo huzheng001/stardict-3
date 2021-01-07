@@ -1164,8 +1164,9 @@ void PrefsDlg::on_setup_network_account_button_clicked(GtkWidget *widget, PrefsD
         struct MD5Context ctx;
         unsigned char digest[16];
         MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)"LoveCher", 8); //StarDict-Protocol 0.4, add front md5 salt.
         MD5Update(&ctx, (const unsigned char*)passwd, strlen(passwd));
-        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add end md5 salt.
         MD5Final(digest, &ctx );
         char hex[33];
         for (int i = 0; i < 16; i++)
@@ -1290,8 +1291,9 @@ void PrefsDlg::on_setup_network_changepassword_button_clicked(GtkWidget *widget,
         	struct MD5Context ctx;
         	unsigned char digest[16];
         	MD5Init(&ctx);
+        	MD5Update(&ctx, (const unsigned char*)"LoveCher", 8); //StarDict-Protocol 0.4, add front md5 salt.
         	MD5Update(&ctx, (const unsigned char*)corrent_password, strlen(corrent_password));
-        	MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        	MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add end md5 salt.
         	MD5Final(digest, &ctx );
         	for (int i = 0; i < 16; i++)
 			sprintf( hex+2*i, "%02x", digest[i] );
@@ -1316,8 +1318,9 @@ void PrefsDlg::on_setup_network_changepassword_button_clicked(GtkWidget *widget,
         struct MD5Context ctx;
         unsigned char digest[16];
         MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)"LoveCher", 8); //StarDict-Protocol 0.4, add front md5 salt.
         MD5Update(&ctx, (const unsigned char*)new_password, strlen(new_password));
-        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add end md5 salt.
         MD5Final(digest, &ctx );
         char hex2[33];
         for (int i = 0; i < 16; i++)
@@ -1420,8 +1423,9 @@ void PrefsDlg::on_setup_network_register_button_clicked(GtkWidget *widget, Prefs
         struct MD5Context ctx;
         unsigned char digest[16];
         MD5Init(&ctx);
+        MD5Update(&ctx, (const unsigned char*)"LoveCher", 8); //StarDict-Protocol 0.4, add front md5 salt.
         MD5Update(&ctx, (const unsigned char*)passwd, strlen(passwd));
-        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add md5 salt.
+        MD5Update(&ctx, (const unsigned char*)"StarDict", 8); //StarDict-Protocol 0.4, add end md5 salt.
         MD5Final(digest, &ctx );
         char hex[33];
         for (int i = 0; i < 16; i++)
