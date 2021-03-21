@@ -105,7 +105,7 @@ void Clipboard::ClipboardReceived(gchar* sToken)
 		return;
 	}
 
-	if (g_str_has_prefix(sToken,"http://") || g_str_has_prefix(sToken,"ftp://")) {
+	if (g_str_has_prefix(sToken,"http://") || g_str_has_prefix(sToken,"https://") || g_str_has_prefix(sToken,"ftp://")) {
 		LastClipWord.clear();
 		return;
 	}
