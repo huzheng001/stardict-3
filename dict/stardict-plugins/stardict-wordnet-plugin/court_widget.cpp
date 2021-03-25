@@ -293,7 +293,11 @@ void WnCourt::on_destroy_callback (GtkWidget *object, WnCourt *wncourt)
 
 void WnCourt::on_realize_callback(GtkWidget *widget, WnCourt *wncourt)
 {
+#if GTK_MAJOR_VERSION >= 3
 	GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_LEFT_PTR);
+#else
+	GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
+#endif
 	gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 	g_object_unref(cursor);
@@ -312,7 +316,11 @@ gboolean WnCourt::on_button_press_event_callback(GtkWidget * widget, GdkEventBut
 			wnobj * b;
 			if (event->x > wncourt->widget_width - 15 && event->y > wncourt->widget_height - 15) {
 				wncourt->resizing = true;
+#if GTK_MAJOR_VERSION >= 3
 				GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_SIZING);
+#else
+				GdkCursor* cursor = gdk_cursor_new(GDK_SIZING);
+#endif
 				gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 				g_object_unref(cursor);
@@ -360,7 +368,11 @@ gboolean WnCourt::on_button_release_event_callback(GtkWidget * widget, GdkEventB
 			wncourt->dragball = NULL;
 		}
 		if (wncourt->resizing) {
+#if GTK_MAJOR_VERSION >= 3
 			GdkCursor* cursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_LEFT_PTR);
+#else
+			GdkCursor* cursor = gdk_cursor_new(GDK_LEFT_PTR);
+#endif
 			gdk_window_set_cursor(gtk_widget_get_window(widget), cursor);
 #if GTK_MAJOR_VERSION >= 3
 			g_object_unref(cursor);
