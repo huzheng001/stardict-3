@@ -11,6 +11,7 @@ EXTRA_DIST = \
 	INSTALL			\
 	ABOUT-NLS		\
 	autogen.sh		\
+	stardict-fedora.spec	\
 	stardict.spec.in stardict-withoutgnome.spec.in \
 	dictionary.spec	\
 	treedict.spec	\
