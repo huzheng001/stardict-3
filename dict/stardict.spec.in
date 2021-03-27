@@ -11,7 +11,7 @@ URL: 		http://stardict-4.sourceforge.net
 Source0:	https://sourceforge.net/projects/stardict-4/files/%{version}/%{name}-%{version}.tar.xz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires: gtk3, enchant, espeak, libbonobo, libgnome, libsigc++20 >= 2.0.17
+Requires: gtk3, enchant, espeak, libsigc++20 >= 2.0.17
 Requires: gucharmap, libcanberra, libcanberra-gtk3
 Requires: flite
 #Requires: festival, speech-tools
@@ -20,7 +20,7 @@ Requires(post): GConf2, scrollkeeper
 Requires(postun): scrollkeeper
 
 BuildRequires: desktop-file-utils, gettext, intltool, perl-XML-Parser, scrollkeeper
-BuildRequires: gtk3-devel, enchant-devel, espeak-devel, libbonobo-devel, libgnome-devel, libsigc++20-devel
+BuildRequires: gtk3-devel, enchant-devel, espeak-devel, libsigc++20-devel
 BuildRequires: gucharmap-devel, flite-devel, libcanberra-devel, libcanberra-gtk3-devel
 #BuildRequires: festival-devel, speech-tools-devel
 

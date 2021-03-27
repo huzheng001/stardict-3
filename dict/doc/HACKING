@@ -60,6 +60,12 @@ dict/src/mainwin.cpp
 dict/src/lib/plugin.h
 dict/stardict-plugins/stardict-update-info-plugin/stardict_update_info.cpp
 dict/help/C/stardict.xml
+dict/help/mk/stardict.xml
+dict/help/nl/stardict.xml
+dict/help/ru/stardict.xml
+dict/help/uk/stardict.xml
+dict/help/zh_CN/stardict.xml
+dict/help/zh_TW/stardict.xml
 dict/stardict-installer.nsi
 dict/src/win32/nsis/StarDictPortable.nsi
 dict/src/win32/nsis/StarDictEditorPortable.nsi
