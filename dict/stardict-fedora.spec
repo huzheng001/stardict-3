@@ -10,7 +10,7 @@ Release:        1%{?dist}
 # refer to README
 License:        GPLv3+ and GPLv2+ and CPL
 URL:            http://stardict-4.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}-4/%{name}-%{version}-github.tar.xz
+Source0:        http://downloads.sourceforge.net/%{name}-4/%{version}/%{name}-%{version}-github.tar.xz
 
 BuildRequires: make
 BuildRequires: gcc-c++
