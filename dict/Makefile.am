@@ -13,7 +13,7 @@ EXTRA_DIST = \
 	autogen.sh		\
 	stardict-fedora.spec	\
 	stardict.spec.in stardict-withoutgnome.spec.in \
-	dictionary.spec	\
+	dictionary.spec	stardict-fedora-dic-xxxx.spec	\
 	treedict.spec	\
 	stardict-installer.nsi stardict-prepare-installer.js \
 	omf.make		\
