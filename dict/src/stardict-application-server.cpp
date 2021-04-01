@@ -51,18 +51,30 @@ stardict_application_server_factory (BonoboGenericFactory *this_factory,
 }
 
 BonoboObject *
+#if GTK_MAJOR_VERSION >= 3
 stardict_application_server_new (GdkScreen *screen_null)
+#else
+stardict_application_server_new (GdkScreen *screen)
+#endif
 {
 	BonoboGenericFactory *factory;
+#if GTK_MAJOR_VERSION >= 3
 	GdkDisplay *display;
 	const char           *display_name;
+#else
+	char                 *display_name;
+#endif
 	char                 *registration_id;
 
 	/* We must ensure an instance of stardict per screen
 	 * as stardict has no multiscreen support 
 	 */
+#if GTK_MAJOR_VERSION >= 3
 	display = gdk_display_get_default();
 	display_name = gdk_display_get_name(display);
+#else
+	display_name = gdk_screen_make_display_name (screen);
+#endif
 	registration_id = bonobo_activation_make_registration_id (
 					"OAFIID:GNOME_Stardict_Factory",
 					display_name);
@@ -71,6 +83,10 @@ stardict_application_server_new (GdkScreen *screen_null)
 					      stardict_application_server_factory,
 					      NULL);
 
+#if GTK_MAJOR_VERSION >= 3
+#else
+	g_free (display_name);
+#endif
 	g_free (registration_id);
 
 	return BONOBO_OBJECT (factory);
