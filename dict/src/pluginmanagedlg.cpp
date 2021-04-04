@@ -418,7 +418,10 @@ GtkWidget *PluginManageDlg::create_plugin_list()
 	init_tree_model(plugin_tree_model);
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(plugin_tree_model));
 	g_object_unref (G_OBJECT (plugin_tree_model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 	g_signal_connect (G_OBJECT (treeview), "button_press_event", G_CALLBACK (on_treeview_button_press), this);
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));

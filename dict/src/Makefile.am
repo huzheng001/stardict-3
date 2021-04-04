@@ -96,7 +96,7 @@ stardict_SOURCES = 			                \
 	desktop.cpp desktop.h	\
 	log.cpp log.h \
 	cmdlineopts.cpp \
-    cmdlineopts.h
+	cmdlineopts.h
 
 if GNOME_SUPPORT
 $(IDL_SOURCES): $(IDL_FILE)

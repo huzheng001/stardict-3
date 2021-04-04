@@ -79,7 +79,7 @@ private:
 	std::string host_;
 	int port_;
 	bool is_connected_;
-	std::auto_ptr<DICT::Cmd> cmd_;
+	std::unique_ptr<DICT::Cmd> cmd_;
 	typedef std::map<size_t, DICT::Definition> DefMap;
 	DefMap defmap_;
 	size_t last_index_;

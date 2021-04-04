@@ -1136,7 +1136,10 @@ void LookupDataDialog::show()
 	}
 	GtkWidget *now_treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(now_tree_model));
 	g_object_unref (G_OBJECT (now_tree_model));
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (now_treeview), TRUE);
+#endif
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 	renderer = gtk_cell_renderer_toggle_new ();

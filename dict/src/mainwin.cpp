@@ -931,7 +931,10 @@ void ListWin::Create(GtkWidget *notebook)
 	treeview_ = GTK_TREE_VIEW(gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_model)));
 	nowIsList = true;
 	gtk_widget_show(GTK_WIDGET(treeview_));
-	//gtk_tree_view_set_rules_hint(treeview_, TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint(treeview_, TRUE);
+#endif
 	gtk_tree_view_set_headers_visible(treeview_, FALSE);
 
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
@@ -1288,7 +1291,10 @@ bool TreeWin::Create(GtkWidget *notebook)
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	gtk_widget_show(treeview);
 	g_object_unref (model);
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
@@ -1382,7 +1388,10 @@ void ResultWin::Create(GtkWidget *notebook)
 	treeview = gtk_tree_view_new_with_model (GTK_TREE_MODEL(model));
 	gtk_widget_show(treeview);
 	g_object_unref (model);
-	//gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#if GTK_MAJOR_VERSION >= 3
+#else
+	gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (treeview), TRUE);
+#endif
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (treeview), FALSE);
 	GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
 	GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes ("word", renderer,
