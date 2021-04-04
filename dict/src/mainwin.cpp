@@ -110,7 +110,11 @@ void TopWin::Create(GtkWidget *vbox)
 	WordCombo = gtk_combo_box_new_with_model_and_entry(GTK_TREE_MODEL(list_store));
 	gtk_combo_box_set_entry_text_column(GTK_COMBO_BOX(WordCombo), 0);
 	g_object_unref (G_OBJECT(list_store));
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_set_focus_on_click(GTK_WIDGET(WordCombo), FALSE);
+#else
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+#endif
 	gtk_container_forall(GTK_CONTAINER(WordCombo), unfocus_combo_arrow, this);
 	gtk_widget_set_size_request(WordCombo,60,-1);
 	gtk_widget_show(WordCombo);
@@ -1589,7 +1593,7 @@ void LeftWin::Create(GtkWidget *hbox, bool has_treedict)
 	gtk_widget_show_all(history_button);
 	gtk_widget_set_tooltip_text(history_button,_("History"));
 	g_signal_connect(G_OBJECT(history_button),"toggled", G_CALLBACK(on_history_button_toggled), this);
-	
+
 	if (has_treedict) {
 		GtkWidget *appendix_button = gtk_radio_button_new_from_widget(GTK_RADIO_BUTTON(translate_button));
 		gtk_widget_set_can_focus (appendix_button, FALSE);
@@ -2678,7 +2682,11 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (engine_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (engine_combobox), renderer, "text", 0, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_set_focus_on_click(GTK_WIDGET(engine_combobox), FALSE);
+#else
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+#endif
 	gtk_box_pack_start(GTK_BOX(hbox), engine_combobox, false, false, 0);
 	label = gtk_label_new(":");
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -2686,7 +2694,11 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (fromlang_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (fromlang_combobox), renderer, "text", 0, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_set_focus_on_click(GTK_WIDGET(fromlang_combobox), FALSE);
+#else
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+#endif
 	gtk_box_pack_start(GTK_BOX(hbox), fromlang_combobox, false, false, 0);
 	label = gtk_label_new(_("To"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, false, false, 0);
@@ -2694,7 +2706,11 @@ void TransWin::Create(GtkWidget *notebook)
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (tolang_combobox), renderer, TRUE);
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (tolang_combobox), renderer, "text", 0, NULL);
+#if GTK_MAJOR_VERSION >= 3
 	gtk_widget_set_focus_on_click(GTK_WIDGET(tolang_combobox), FALSE);
+#else
+	gtk_combo_box_set_focus_on_click(GTK_COMBO_BOX(WordCombo), FALSE);
+#endif
 	gtk_box_pack_start(GTK_BOX(hbox), tolang_combobox, false, false, 0);
 	SetEngine(conf->get_int_at("translate/engine"));
 	SetFromLang(true, conf->get_int_at("translate/fromlang"));
