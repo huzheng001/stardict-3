@@ -2098,8 +2098,11 @@ void AppCore::Init(const gchar *queryword)
 	Create(queryword);
 
 #ifdef CONFIG_GNOME
-  stardict_app_server =
-    stardict_application_server_new(NULL);
+#if GTK_MAJOR_VERSION >= 3
+  stardict_app_server = stardict_application_server_new(NULL);
+#else
+  stardict_app_server = stardict_application_server_new(gdk_screen_get_default());
+#endif
 #endif
 
 	stardict_splash.on_mainwin_finish();
@@ -2369,7 +2372,7 @@ int main(int argc,char **argv)
 #if defined(_WIN32) && defined(_MSC_VER)
 	synchronize_crt_enviroment();
 #endif
-#if defined(CONFIG_GNOME)
+#if defined(_WIN32) || defined(CONFIG_GTK) || defined(CONFIG_GNOME) || defined(CONFIG_MAEMO) || defined(CONFIG_DARWIN)
 	gtk_init(&argc, &argv);
 #endif
 	/* Register an interim logger.
