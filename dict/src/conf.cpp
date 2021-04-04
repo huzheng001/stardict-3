@@ -116,6 +116,7 @@ AppConf::AppConf() :
 	add_entry("/apps/stardict/preferences/network/user", std::string());
 	add_entry("/apps/stardict/preferences/network/md5saltpasswd", std::string());
 	// may store relative path
+	add_entry("/apps/stardict/preferences/main_window/input_word", std::string());
 	add_entry("/apps/stardict/preferences/main_window/skin", std::string());
 	add_entry("/apps/stardict/preferences/main_window/hide_on_startup", false);
 	add_entry("/apps/stardict/preferences/main_window/keep_above", false);

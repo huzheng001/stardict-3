@@ -478,6 +478,9 @@ void AppCore::on_mainwin_show_event(GtkWidget * window, AppCore *app)
 		// We need to set the hpaned position after the window showed, or it will become incorrect.
 		int pos=conf->get_int_at("main_window/hpaned_pos");
 		gtk_paned_set_position(GTK_PANED(app->oMidWin.hpaned), pos);
+
+		const std::string& input_word = conf->get_string_at("main_window/input_word");
+		app->oTopWin.SetText(input_word.c_str(), true);
 	}
 }
 
@@ -2122,6 +2125,9 @@ void AppCore::Quit()
 	}
 	gint pos = gtk_paned_get_position(GTK_PANED(oMidWin.hpaned));
 	conf->set_int_at("main_window/hpaned_pos", pos);
+
+	const char *s = oTopWin.get_text();
+	conf->set_string_at("main_window/input_word", std::string(s));
 
 	End();
 
