@@ -3,4 +3,4 @@
 # to check for upstream updates and more.
 # Site		Directory		Pattern			Version	Script
 version=3
-https://sourceforge.net/projects/stardict-4/files/([\d.]*)/stardict-([\d.]*)\.tar\.xz/download
+https://sourceforge.net/projects/stardict-4/files/([\d.]*)/stardict-([\d.]*)-github\.tar\.xz/download
