@@ -376,6 +376,12 @@ void AppCore::Create(const gchar *queryword)
 	gtk_window_set_icon(GTK_WINDOW(window),
 			    get_impl(oAppSkin.icon));
 	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+
+	if (queryword && queryword[0]) {
+		have_queryword = true;
+	} else {
+		have_queryword = false;
+	}
 	g_signal_connect (G_OBJECT (window), "show", G_CALLBACK (on_mainwin_show_event), this);
 	g_signal_connect (G_OBJECT (window), "delete_event", G_CALLBACK (on_delete_event), this);
 	g_signal_connect (G_OBJECT (window), "window_state_event", G_CALLBACK (on_window_state_event), this);
@@ -479,8 +485,11 @@ void AppCore::on_mainwin_show_event(GtkWidget * window, AppCore *app)
 		int pos=conf->get_int_at("main_window/hpaned_pos");
 		gtk_paned_set_position(GTK_PANED(app->oMidWin.hpaned), pos);
 
-		const std::string& input_word = conf->get_string_at("main_window/input_word");
-		app->oTopWin.SetText(input_word.c_str(), true);
+		if (app->have_queryword) {
+		} else {
+			const std::string& input_word = conf->get_string_at("main_window/input_word");
+			app->oTopWin.SetText(input_word.c_str(), true);
+		}
 	}
 }
 
