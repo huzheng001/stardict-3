@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#define RSA_MAX 100
+#define RSA_MAX 800
 
 //#define SERVER_EDITION
 #define CLIENT_EDITION
