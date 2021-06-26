@@ -6,7 +6,7 @@ AC_INIT([StarDict], 3.0.7, [http://stardict-4.sourceforge.net])
 AC_CONFIG_AUX_DIR([.])
 AM_INIT_AUTOMAKE([1.9 tar-ustar dist-xz])
 
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIRS([m4])
 
 # Checks for programs.
 # Checks for libraries.
