@@ -24,11 +24,12 @@
 #include <cstring>
 #include <sys/stat.h>
 #include <glib/gi18n.h>
-#include <algorithm>
 
 #ifdef _WIN32
 #  include <gdk/gdkwin32.h>
 #endif
+
+#include <algorithm>
 
 #include "stardict.h"
 #include "conf.h"

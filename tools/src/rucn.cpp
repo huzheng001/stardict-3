@@ -19,8 +19,6 @@
 #  include "config.h"
 #endif
 
-#include <gtk/gtk.h>
-
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>

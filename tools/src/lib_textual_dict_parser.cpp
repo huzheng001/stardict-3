@@ -22,7 +22,7 @@
 #include <libxml/xmlreader.h>
 #include <libxml/xinclude.h>
 #include <cstring>
-#include <iostream>
+//#include <iostream>
 #include <vector>
 #include <algorithm>
 #include "lib_stardict_text2bin.h"

@@ -22,12 +22,14 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-#include <algorithm>
 
 #ifdef _WIN32
 #define VERSION "3.0.7"
 #  include <gdk/gdkwin32.h>
 #endif
+
+#include <list>
+#include <algorithm>
 
 #include "conf.h"
 #include "desktop.h"
@@ -2058,15 +2060,15 @@ gboolean TextWin::OnSearchKeyPress(GtkWidget *widget, GdkEventKey *event,
 
 void TextWin::OnFindSearchPanel(GtkWidget *widget, TextWin *oTextWin)
 {
-  const gchar *text=gtk_entry_get_text(oTextWin->eSearch);
-  if (text && *text) {
-    if (oTextWin->Find(text, oTextWin->search_from_beginning)) {
-      oTextWin->search_from_beginning = FALSE;
-
-      oTextWin->find_text = text;
-    } else
-      oTextWin->search_from_beginning = TRUE;
-  }
+	const gchar *text=gtk_entry_get_text(oTextWin->eSearch);
+	if (text && *text) {
+		if (oTextWin->Find(text, oTextWin->search_from_beginning)) {
+			oTextWin->search_from_beginning = FALSE;
+			oTextWin->find_text = text;
+		} else {
+			oTextWin->search_from_beginning = TRUE;
+		}
+	}
 }
 
 void TextWin::ShowSearchPanel()

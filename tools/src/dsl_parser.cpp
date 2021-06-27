@@ -26,12 +26,13 @@
 #  include "config.h"
 #endif
 
+#include <glib/gi18n.h>
 #include <cctype>
 #include <cerrno>
 #include <algorithm>
 #include <iterator>
+#include <vector>
 #include <list>
-#include <glib/gi18n.h>
 
 #include "charset_conv.h"
 #include "dsl_ipa.h"

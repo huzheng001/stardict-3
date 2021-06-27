@@ -25,9 +25,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
-
-#include <gtk/gtk.h>
 #include <glib.h>
+
 
 #define DICTD_WEBSITE "freedict2"
 //#define DICTD_WEBSITE "www.dict.org"

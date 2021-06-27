@@ -15,8 +15,9 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstdio>
 #include <locale.h>
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "libtabfile.h"
 

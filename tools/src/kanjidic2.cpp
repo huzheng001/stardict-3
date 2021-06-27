@@ -21,8 +21,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-
-#include <gtk/gtk.h>
 #include <glib.h>
 
 #include <string>

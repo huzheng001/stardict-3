@@ -20,6 +20,7 @@
 #endif
 
 #include <cstring>
+#include <vector>
 #include <algorithm>
 #include "lib_binary_dict_generator.h"
 #include "lib_dict_verify.h"

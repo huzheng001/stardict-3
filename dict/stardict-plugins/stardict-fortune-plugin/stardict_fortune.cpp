@@ -17,11 +17,12 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "stardict_fortune.h"
 #include <glib/gi18n.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <cstring>
 #include <string>
+
+#include "stardict_fortune.h"
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static const StarDictPluginSystemService *plugin_service;

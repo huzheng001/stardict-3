@@ -26,7 +26,6 @@
 
 #include <string>
 
-#include <gtk/gtk.h>
 #include <glib.h>
 
 bool isde(guchar c)

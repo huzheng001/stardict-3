@@ -24,7 +24,6 @@
 
 #include <string>
 
-#include <gtk/gtk.h>
 #include <glib.h>
 
 void convert(char *filename)

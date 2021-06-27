@@ -30,7 +30,6 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
-#include <gtk/gtk.h>
 #include <glib.h>
 
 #define LIB_WORD_ENGLISH 0
@@ -481,7 +480,6 @@ main(int argc,char * argv [])
 	}
 	
 	setlocale(LC_ALL, "");
-	gtk_init (&argc, &argv);
 	convert(argv[1],argv[2]);
 	return FALSE;
 }

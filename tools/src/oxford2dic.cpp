@@ -29,7 +29,6 @@
 
 #include <string>
 
-#include <gtk/gtk.h>
 #include <glib.h>
 
 struct _worditem

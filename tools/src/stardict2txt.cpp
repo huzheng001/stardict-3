@@ -16,7 +16,7 @@
  */
 
 #include <locale.h>
-#include <gtk/gtk.h>
+#include <glib.h>
 
 #include "libstardict2txt.h"
 

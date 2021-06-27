@@ -3,6 +3,8 @@
 #endif
 
 #include <cstring>
+#include <string>
+
 #include "libbgl2txt.h"
 #include "bgl_babylonreader.h"
 #include "bgl_stardictbuilder.h"

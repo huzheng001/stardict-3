@@ -20,8 +20,8 @@
 #endif
 
 #include <string>
-#include <vector>
 #include <algorithm>
+#include <vector>
 #include "lib_binary_parser_unify.h"
 
 struct article_t

@@ -21,7 +21,6 @@
 
 #include <stdlib.h>
 #include <locale.h>
-#include <gtk/gtk.h>
 #include <string>
 #include <iostream>
 #include <sstream>

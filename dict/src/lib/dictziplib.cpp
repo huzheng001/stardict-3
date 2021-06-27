@@ -1,4 +1,4 @@
-/* dictziplib.c --
+/* dictziplib.cpp --
  * This file is a modify version of dictd-1.9.7's data.c
  *
  * data.c -- 

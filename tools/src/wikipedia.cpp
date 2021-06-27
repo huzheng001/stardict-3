@@ -27,7 +27,7 @@
 #include <sys/mman.h>
 
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 // for systems where O_LARGEFILE is not defined
 #ifndef O_LARGEFILE

@@ -18,6 +18,7 @@
  */
 
 #include <glib.h>
+#include <gtk/gtk.h>
 #include "log.h"
 
 class CmdLineOptions {

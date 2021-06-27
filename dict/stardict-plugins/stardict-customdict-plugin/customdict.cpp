@@ -2,7 +2,6 @@
 #  include "config.h"
 #endif
 
-#include "customdict.h"
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
@@ -10,11 +9,13 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "../../src/lib/utils.h"
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
+
+#include "../../src/lib/utils.h"
+#include "customdict.h"
 
 static const StarDictPluginSystemInfo *plugin_info = NULL;
 static std::string datapath;

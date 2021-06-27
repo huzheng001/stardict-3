@@ -35,9 +35,10 @@
 #include <glib.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <vector>
 #include <string>
+#include <vector>
 #include <sstream>
+#include <map>
 #include <algorithm>
 
 #include "utils.h"

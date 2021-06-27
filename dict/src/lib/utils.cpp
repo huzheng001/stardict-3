@@ -22,12 +22,12 @@
 #  include "config.h"
 #endif
 
-#include <cstring>
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
-#include <cstdlib>
 #include <gtk/gtk.h>
+#include <cstring>
+#include <cstdlib>
 #include <fcntl.h>
 #include <cerrno>
 
@@ -43,6 +43,8 @@
 #ifndef O_BINARY
 #define O_BINARY 0
 #endif
+
+#include <list>
 
 #include "libcommon.h"
 #include "utils.h"

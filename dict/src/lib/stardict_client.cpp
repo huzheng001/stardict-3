@@ -28,8 +28,8 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
-#include <stdlib.h>
-#include <stdio.h>
+#include <algorithm>
+
 #include "sockets.h"
 #include "md5.h"
 #include "rsa.h"

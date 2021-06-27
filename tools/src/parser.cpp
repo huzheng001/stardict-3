@@ -28,6 +28,7 @@
 
 #include <glib/gi18n.h>
 #include <glib.h>
+#include <string>
 
 #include "utils.h"
 #include "resource.h"

@@ -4,6 +4,7 @@ SUBDIRS = m4 src stardict-plugins tests pixmaps po help data doc \
     debian-upstream \
     mac_dist \
     msvc_2008
+
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
@@ -19,8 +20,7 @@ EXTRA_DIST = \
 	omf.make		\
 	intltool-extract.in 	\
 	intltool-merge.in 	\
-	intltool-update.in	\
-	gnome-doc-utils.make
+	intltool-update.in
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper --disable-schemas-install
 DISTCLEANFILES = intltool-extract intltool-merge intltool-update

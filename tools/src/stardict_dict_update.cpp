@@ -23,8 +23,6 @@
 #include <string.h>
 #include <sys/stat.h>
 
-
-#include <gtk/gtk.h>
 #include <glib.h>
 
 void convert_idxfile(gchar *idxfilename)

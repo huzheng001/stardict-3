@@ -21,12 +21,12 @@
 #  include "config.h"
 #endif
 
-#include <sstream>
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <glib/gi18n.h>
-#include <iostream>
 #include <cstdio>
+#include <iostream>
+#include <sstream>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif

@@ -17,8 +17,10 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>
 #include <glib.h>
+
+#include <string>
+#include <algorithm>
 #include "compositelookup.h"
 
 CompositeLookup::CompositeLookup(void)

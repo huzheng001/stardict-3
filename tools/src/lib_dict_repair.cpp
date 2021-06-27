@@ -19,8 +19,9 @@
 #  include "config.h"
 #endif
 
-#include <algorithm>
 #include <string>
+#include <vector>
+#include <algorithm>
 #include "lib_dict_repair.h"
 #include "lib_chars.h"
 

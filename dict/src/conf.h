@@ -25,14 +25,15 @@
 #endif
 
 #include <glib.h>
-#include <map>
-#include <memory>
-#include <string>
 #include <cstring>
 
 #ifdef _WIN32
 #  include <windows.h>
 #endif
+
+#include <string>
+#include <memory>
+#include <map>
 
 #include "config_file.h"
 #include "lib/iappdirs.h"

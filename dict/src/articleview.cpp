@@ -23,9 +23,11 @@
 #endif
 
 #include <cstring>
-#include <iostream>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+
+#include <iostream>
+#include <vector>
 
 #include "conf.h"
 #include "lib/utils.h"

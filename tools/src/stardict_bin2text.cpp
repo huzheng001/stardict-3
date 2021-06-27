@@ -23,7 +23,6 @@
 #include <string>
 #include <stdlib.h>
 #include <locale.h>
-#include <gtk/gtk.h>
 #include <glib.h>
 #include "lib_stardict_bin2text.h"
 #include "libcommon.h"

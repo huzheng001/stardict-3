@@ -17,8 +17,8 @@
  * along with StarDict.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "WIKI2XML.h"
 #include <glib.h>
+#include "WIKI2XML.h"
 
 TTableInfo::TTableInfo ()
 	{

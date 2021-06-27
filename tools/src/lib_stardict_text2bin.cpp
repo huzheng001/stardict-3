@@ -19,7 +19,9 @@
 #  include "config.h"
 #endif
 
+#include <cstdlib>
 #include <cstring>
+#include <string>
 #include <iostream>
 #include <vector>
 #include <algorithm>

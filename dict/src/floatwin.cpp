@@ -22,12 +22,13 @@
 #endif
 
 #include <cstring>
-#include <string>
 #include <glib/gi18n.h>
 
 #ifdef _WIN32
 #  include <gdk/gdkwin32.h>
 #endif
+
+#include <string>
 
 #include "stardict.h"
 #include "desktop.h"

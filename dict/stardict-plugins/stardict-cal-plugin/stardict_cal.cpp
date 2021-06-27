@@ -19,6 +19,7 @@
 
 #include "stardict_cal.h"
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <stdlib.h>
 #include <cstring>
 #include <string>

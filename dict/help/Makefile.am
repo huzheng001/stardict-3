@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in.
 ## always include gnome-doc-utils.make because we need to generate DocBook files in linguas dirs
-include $(top_srcdir)/gnome-doc-utils.make
+#include $(top_srcdir)/gnome-doc-utils.make
 if GNOME_SUPPORT
 GNOME_DIST_HOOK = doc-dist-hook
 else

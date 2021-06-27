@@ -20,10 +20,9 @@
 #include "stardict_gucharmap.h"
 #include <glib/gi18n.h>
 #include <gucharmap/gucharmap.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <cstring>
 #include <string>
-#include <cstdlib>
 
 static const StarDictPluginSystemService *plugin_service;
 

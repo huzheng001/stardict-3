@@ -19,12 +19,11 @@
 #  include "config.h"
 #endif
 
-#include <iostream>
-#include <string>
 #include <stdlib.h>
 #include <locale.h>
-#include <gtk/gtk.h>
 #include <glib.h>
+#include <string>
+#include <iostream>
 #include "libcommon.h"
 #include "lib_stardict_text2bin.h"
 

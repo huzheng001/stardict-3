@@ -20,6 +20,7 @@
 #include <string.h>
 #include <glib.h>
 
+#include <string>
 #include "utils.h"
 #include "m_ctype.h"
 #include "collation.h"

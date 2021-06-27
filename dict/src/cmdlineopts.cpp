@@ -24,6 +24,8 @@
 #  include <windows.h>
 #endif
 
+#include <memory>
+
 #include "cmdlineopts.h"
 #include "log.h"
 
