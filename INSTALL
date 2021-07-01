@@ -3,6 +3,7 @@ The following text describes options specific to StarDict dictionary project. Pa
 To Install StarDict:
 type:
 =============
+./autogen.sh
 ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man --disable-dictdotcn --disable-gnome-support --disable-scrollkeeper
 make
 make install
