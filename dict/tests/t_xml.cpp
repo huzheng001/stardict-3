@@ -42,6 +42,7 @@ static bool decode(const char *probe, const char *exp)
 
 int main()
 {
+	setlocale(LC_ALL, "");
 	const char *probe[] = {
 		"aa &lt; &gt;&amp; &apos; &quot; bb",
 		"",

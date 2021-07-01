@@ -112,6 +112,7 @@ bool lookup_test(const index_vect_t &index_vect, rindex_file *pindex)
  * t_res_database <res database info file> */
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
 	if(argc != 2)
 		return 1;
 	std::string rifo_url(argv[1]);

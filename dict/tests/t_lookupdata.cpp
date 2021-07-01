@@ -32,6 +32,7 @@
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
 	gtk_init(&argc, &argv);
 	
 	Libs libs(NULL, false, CollationLevel_NONE, COLLATE_FUNC_NONE);

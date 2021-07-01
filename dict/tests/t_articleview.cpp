@@ -99,6 +99,8 @@ static bool check_xdxf2pango(const char *in, const char *out,
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
+
 	const char *ar1 = "<k>nick</k> <k>name</k>\n"
 		"<tr>neim</tr>\n"
 		"<abr>noun.</abr> <co>In the rest of article we used latinitsu</co>\n"

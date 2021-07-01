@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
 {
 	dicts_list_t dicts;
 	List dirs;
+	setlocale(LC_ALL, "");
 	gtk_init(&argc, &argv);
 	clock_t t=clock();
 #if !defined(_WIN32)

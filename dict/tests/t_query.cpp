@@ -51,6 +51,7 @@ add_analyse_query_test(std::vector<std::pair<std::string, std::pair<query_t, std
 
 int main()
 {
+	setlocale(LC_ALL, "");
 	std::vector<std::pair<std::string, std::pair<query_t, std::string> > > aq_tests;
 
 	add_analyse_query_test(aq_tests, "/fuzzy", qtFUZZY, "fuzzy");

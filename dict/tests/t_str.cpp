@@ -622,6 +622,7 @@ void test_is_ascii_alpha(void)
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
 	test_extract_word();
 	test_extract_capitalized_word();
 	test_copy_normalize_trim_spaces();

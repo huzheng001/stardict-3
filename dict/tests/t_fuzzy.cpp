@@ -64,6 +64,7 @@ static double average_time(std::vector<double> &time_arr)
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, "");
 	gtk_init(&argc, &argv);
 	
 	Libs libs(NULL, false, CollationLevel_NONE, COLLATE_FUNC_NONE);
