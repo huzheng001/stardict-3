@@ -6,21 +6,21 @@ echo "Boostrapping common lib..."
 	echo;
 	echo "You must have libtool installed to compile common lib";
 	echo;
-	exit;
+	exit 1;
 }
 
 (automake --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
 	echo "You must have automake installed to compile common lib";
 	echo;
-	exit;
+	exit 1;
 }
 
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
 	echo "You must have autoconf installed to compile common lib";
 	echo;
-	exit;
+	exit 1;
 }
 
 echo "Generating configuration files for common lib, please wait...."
@@ -39,7 +39,7 @@ aclocal -I m4 || exit;
 echo "Running autoheader...."
 autoheader || exit;
 echo "Running automake --add-missing --copy...."
-automake --add-missing --copy;
+automake --add-missing --copy || exit;
 echo "Running autoconf ...."
 autoconf || exit;
 echo "Running automake ...."
