@@ -2,7 +2,10 @@
 
 echo "Bootstrapping StarDict root..."
 
-# (libtoolize --version) < /dev/null > /dev/null 2>&1 || {
+# libtoolize=libtoolize
+# command -v "$libtoolize" > /dev/null || libtoolize=glibtoolize
+#
+# ("$libtoolize" --version) < /dev/null > /dev/null 2>&1 || {
 # 	echo;
 # 	echo "You must have libtool installed to compile StarDict";
 # 	echo;
@@ -31,8 +34,8 @@ test -z "$srcdir" && srcdir=.
 topdir=`pwd`
 
 cd "$srcdir"
-# echo "Running libtoolize, please ignore non-fatal messages...."
-# echo n | libtoolize --copy --force || exit;
+# echo "Running $libtoolize, please ignore non-fatal messages...."
+# echo n | "$libtoolize" --copy --force || exit;
 
 echo "Running aclocal...."
 test -d m4 || mkdir m4
