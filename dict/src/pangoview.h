@@ -18,7 +18,7 @@
  */
 
 #ifndef PANGOVIEW_H
-#define PAGNOVIEW_H
+#define PANGOVIEW_H
 
 #include <list>
 #include <string>
