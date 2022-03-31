@@ -1,7 +1,7 @@
 #!/bin/sh
 # Run this to generate all the initial makefiles, etc.
 
-echo "Boostrapping StarDict dictionary..."
+echo "Bootstrapping StarDict dictionary..."
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.

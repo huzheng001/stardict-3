@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Boostrapping common lib..."
+echo "Bootstrapping common lib..."
 
 (libtoolize --version) < /dev/null > /dev/null 2>&1 || {
 	echo;

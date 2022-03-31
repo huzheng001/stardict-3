@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Boostrapping StarDict tools..."
+echo "Bootstrapping StarDict tools..."
 
 (libtoolize --version) < /dev/null > /dev/null 2>&1 || {
 	echo;
